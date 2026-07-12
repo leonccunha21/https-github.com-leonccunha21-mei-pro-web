@@ -102,3 +102,40 @@ export async function saveUserSale(userId: string, sale: Sale): Promise<void> {
     handleFirestoreError(error, OperationType.WRITE, `${path}/${sale.id}`);
   }
 }
+
+export async function clearUserProducts(userId: string): Promise<void> {
+  const path = `users/${userId}/products`;
+  try {
+    const querySnapshot = await getDocs(collection(db, path));
+    for (const d of querySnapshot.docs) {
+      await deleteDoc(d.ref);
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+  }
+}
+
+export async function clearUserCategories(userId: string): Promise<void> {
+  const path = `users/${userId}/categories`;
+  try {
+    const querySnapshot = await getDocs(collection(db, path));
+    for (const d of querySnapshot.docs) {
+      await deleteDoc(d.ref);
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+  }
+}
+
+export async function clearUserSales(userId: string): Promise<void> {
+  const path = `users/${userId}/sales`;
+  try {
+    const querySnapshot = await getDocs(collection(db, path));
+    for (const d of querySnapshot.docs) {
+      await deleteDoc(d.ref);
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+  }
+}
+

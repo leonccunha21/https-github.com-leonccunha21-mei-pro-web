@@ -42,7 +42,10 @@ import {
   saveUserProduct, 
   saveUserCategory, 
   saveUserSale, 
-  deleteUserProduct 
+  deleteUserProduct,
+  clearUserProducts,
+  clearUserCategories,
+  clearUserSales
 } from './lib/dbSync';
 
 export default function App() {
@@ -58,12 +61,22 @@ export default function App() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loadingCloud, setLoadingCloud] = useState<boolean>(false);
 
-  // Initial local storage fallback loading
+  // Initial local storage fallback loading with smart demo data detector
   useEffect(() => {
     if (!user) {
-      const savedProducts = localStorage.getItem('loja_products');
-      const savedSales = localStorage.getItem('loja_sales');
-      const savedCategories = localStorage.getItem('loja_categories');
+      let savedProducts = localStorage.getItem('loja_products');
+      let savedSales = localStorage.getItem('loja_sales');
+      let savedCategories = localStorage.getItem('loja_categories');
+
+      // Smart detector to automatically clear previous demo data
+      if (savedProducts && savedProducts.includes('ELE-SW01')) {
+        savedProducts = null;
+        savedSales = null;
+        savedCategories = null;
+        localStorage.removeItem('loja_products');
+        localStorage.removeItem('loja_sales');
+        localStorage.removeItem('loja_categories');
+      }
 
       if (savedProducts) {
         setProducts(JSON.parse(savedProducts));
@@ -146,7 +159,8 @@ export default function App() {
       } else if (changedProduct) {
         await saveUserProduct(user.uid, changedProduct);
       } else {
-        // Full list sync (e.g. on full imports)
+        // Full list overwrite - clear the collection and save new ones
+        await clearUserProducts(user.uid);
         for (const p of updatedProducts) {
           await saveUserProduct(user.uid, p);
         }
@@ -162,6 +176,8 @@ export default function App() {
       if (changedSale) {
         await saveUserSale(user.uid, changedSale);
       } else {
+        // Full list overwrite - clear the collection and save new ones
+        await clearUserSales(user.uid);
         for (const s of updatedSales) {
           await saveUserSale(user.uid, s);
         }
@@ -177,6 +193,8 @@ export default function App() {
       if (changedCategory) {
         await saveUserCategory(user.uid, changedCategory);
       } else {
+        // Full list overwrite - clear the collection and save new ones
+        await clearUserCategories(user.uid);
         for (const c of updatedCategories) {
           await saveUserCategory(user.uid, c);
         }

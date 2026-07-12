@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { Product, Sale, Category } from '../types';
+import * as XLSX from 'xlsx';
 import { 
   Download, 
   Upload, 
@@ -49,10 +50,12 @@ export default function Reports({
   onResetDatabase 
 }: ReportsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const excelInputRef = useRef<HTMLInputElement>(null);
   
   // Basic states
   const [importSuccess, setImportSuccess] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
+  const [importingExcel, setImportingExcel] = useState(false);
 
   // Google APIs states
   const [exportingProducts, setExportingProducts] = useState(false);
@@ -344,8 +347,140 @@ export default function Reports({
     reader.readAsText(file);
   };
 
+  // Local Excel / CSV File Import Parser
+  const handleImportExcelOrCsv = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    const file = files[0];
+    setImportingExcel(true);
+    setImportError(null);
+    setGoogleSuccessMsg(null);
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = event.target?.result;
+        if (!data) throw new Error('Não foi possível ler os dados do arquivo.');
+
+        const workbook = XLSX.read(data, { type: 'array' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        
+        // Convert sheet to dynamic rows
+        const jsonRows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        
+        if (!jsonRows || jsonRows.length < 2) {
+          throw new Error('O arquivo selecionado está vazio ou não possui uma linha de cabeçalho.');
+        }
+
+        const importedProducts: Product[] = [];
+        const newCategories = [...categories];
+
+        // Read and sanitize headers
+        const headerRow = jsonRows[0].map((h: any) => String(h || '').trim().toLowerCase());
+        
+        // Helper to find column index matching keywords
+        const findColIndex = (keywords: string[]) => {
+          return headerRow.findIndex(h => keywords.some(keyword => h.includes(keyword)));
+        };
+
+        // Auto-detect columns
+        let codeIdx = findColIndex(['código', 'codigo', 'sku', 'ref', 'id', 'referencia']);
+        let nameIdx = findColIndex(['nome', 'produto', 'descrição', 'descricao', 'item', 'name']);
+        let categoryIdx = findColIndex(['categoria', 'grupo', 'setor', 'tipo', 'category']);
+        let costPriceIdx = findColIndex(['custo', 'preço custo', 'preco custo', 'compra', 'cost']);
+        let salePriceIdx = findColIndex(['venda', 'preço venda', 'preco venda', 'valor', 'price']);
+        let stockIdx = findColIndex(['estoque', 'qtd', 'quantidade', 'stock', 'saldo', 'atual']);
+        let minStockIdx = findColIndex(['mínimo', 'minimo', 'estoque mínimo', 'estoque minimo', 'min']);
+
+        // Safe fallback defaults based on standard templates
+        if (codeIdx === -1) codeIdx = 0;
+        if (nameIdx === -1) nameIdx = 1;
+        if (categoryIdx === -1) categoryIdx = 2;
+        if (costPriceIdx === -1) costPriceIdx = 3;
+        if (salePriceIdx === -1) salePriceIdx = 4;
+        if (stockIdx === -1) stockIdx = 5;
+        if (minStockIdx === -1) minStockIdx = 6;
+
+        // Iterate rows skipping header row at index 0
+        for (let i = 1; i < jsonRows.length; i++) {
+          const row = jsonRows[i];
+          if (!row || row.length === 0) continue;
+          
+          const rawName = row[nameIdx];
+          if (rawName === undefined || String(rawName).trim() === '') continue; // skip nameless rows
+          
+          const name = String(rawName).trim();
+          const code = row[codeIdx] !== undefined ? String(row[codeIdx]).trim() : `SKU-${Date.now()}-${i}`;
+          const categoryName = row[categoryIdx] !== undefined ? String(row[categoryIdx]).trim() : 'Geral';
+          
+          // Safe price parsing
+          const costPriceRaw = row[costPriceIdx] !== undefined ? String(row[costPriceIdx]) : '0';
+          const salePriceRaw = row[salePriceIdx] !== undefined ? String(row[salePriceIdx]) : '0';
+          const stockRaw = row[stockIdx] !== undefined ? String(row[stockIdx]) : '0';
+          const minStockRaw = row[minStockIdx] !== undefined ? String(row[minStockIdx]) : '0';
+
+          const costPrice = Math.max(0, parseFloat(costPriceRaw.replace(/[^0-9.,]/g, '').replace(',', '.')) || 0);
+          const salePrice = Math.max(0, parseFloat(salePriceRaw.replace(/[^0-9.,]/g, '').replace(',', '.')) || 0);
+          
+          // Integer parsing
+          const stock = Math.max(0, parseInt(stockRaw.replace(/[^0-9]/g, ''), 10) || 0);
+          const minStock = Math.max(0, parseInt(minStockRaw.replace(/[^0-9]/g, ''), 10) || 0);
+
+          // Add category if not existing
+          if (categoryName && !newCategories.find(c => c.name.toLowerCase() === categoryName.toLowerCase())) {
+            newCategories.push({
+              id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+              name: categoryName
+            });
+          }
+
+          importedProducts.push({
+            id: `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}_${i}`,
+            code,
+            name,
+            category: categoryName,
+            costPrice,
+            salePrice,
+            stock,
+            minStock,
+            createdAt: new Date().toISOString()
+          });
+        }
+
+        if (importedProducts.length === 0) {
+          throw new Error('Nenhum produto válido foi extraído da planilha. Certifique-se de que os dados estão estruturados com uma linha de cabeçalho.');
+        }
+
+        // Apply changes
+        onImportDatabase({
+          products: importedProducts,
+          categories: newCategories,
+          sales: sales
+        });
+
+        setImportSuccess(true);
+        setGoogleSuccessMsg(`Planilha extraída! ${importedProducts.length} produtos importados com sucesso.`);
+        setTimeout(() => setImportSuccess(false), 5000);
+      } catch (err: any) {
+        setImportError(err.message || 'Erro ao processar o arquivo de planilha.');
+      } finally {
+        setImportingExcel(false);
+        if (e.target) e.target.value = ''; // Reset file input
+      }
+    };
+
+    reader.onerror = () => {
+      setImportError('Ocorreu um erro ao carregar o arquivo físico do computador.');
+      setImportingExcel(false);
+    };
+
+    reader.readAsArrayBuffer(file);
+  };
+
   const handleResetClick = () => {
-    if (window.confirm('CUIDADO: Tem certeza que deseja resetar o banco de dados?\n\nIsso removerá TODOS os dados atuais e reiniciará o sistema com as configurações e dados de demonstração originais.')) {
+    if (window.confirm('CUIDADO: Tem certeza que deseja ZERAR o banco de dados?\n\nIsso removerá PERMANENTEMENTE todos os seus produtos, categorias e histórico de vendas atuais, deixando o banco de dados totalmente limpo.')) {
       onResetDatabase();
     }
   };
@@ -703,12 +838,43 @@ export default function Reports({
                 <p className="text-[10px] text-slate-400 mt-1">Substitui o estado atual do sistema com os dados de um arquivo local.</p>
               </div>
 
+              {/* Excel / CSV Import */}
+              <div className="border-t border-slate-100 pt-4">
+                <p className="text-xs font-bold text-indigo-600 uppercase mb-2 flex items-center gap-1.5">
+                  <FileSpreadsheet className="h-4 w-4" />
+                  Extrair de Planilha (Excel / CSV)
+                </p>
+                <input
+                  type="file"
+                  ref={excelInputRef}
+                  accept=".xlsx,.xls,.csv"
+                  onChange={handleImportExcelOrCsv}
+                  className="hidden"
+                />
+                <button
+                  id="import-excel-trigger"
+                  onClick={() => excelInputRef.current?.click()}
+                  disabled={importingExcel}
+                  className="w-full py-2.5 px-4 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 hover:border-indigo-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
+                >
+                  {importingExcel ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Upload className="h-3.5 w-3.5" />
+                  )}
+                  Extrair e Carregar Planilha (.xlsx, .csv)
+                </button>
+                <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
+                  💡 Carregue qualquer arquivo <strong>.xlsx, .xls ou .csv</strong>. O importador inteligente detectará automaticamente as colunas de SKU, Nome, Categoria, Preço de Custo, Preço de Venda, Estoque e Estoque Mínimo.
+                </p>
+              </div>
+
               <hr className="border-slate-100 my-4" />
 
               {/* Danger Zone */}
               <div className="space-y-2 bg-rose-50/20 p-3 rounded-lg border border-rose-100/40">
                 <span className="text-[10px] font-bold text-rose-700 uppercase tracking-wider block">Zona de Perigo</span>
-                <p className="text-[10px] text-slate-500">Ações irreversíveis de redefinição de dados do sistema.</p>
+                <p className="text-[10px] text-slate-500">Exclusão permanente e redefinição de dados.</p>
                 
                 <button
                   id="reset-db-btn"
@@ -716,7 +882,7 @@ export default function Reports({
                   className="w-full py-2 px-3 bg-white hover:bg-rose-50 border border-rose-200 hover:border-rose-300 text-rose-700 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all mt-2 cursor-pointer"
                 >
                   <RefreshCcw className="h-3 w-3" />
-                  Resetar para Dados de Demonstração
+                  Zerar Todo o Banco de Dados
                 </button>
               </div>
             </div>
