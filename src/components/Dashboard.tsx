@@ -42,6 +42,9 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   const productSalesMap: Record<string, { name: string; qty: number; revenue: number; profit: number }> = {};
   
   completedSales.forEach(sale => {
+    const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
+    const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
+
     sale.items.forEach(item => {
       if (!productSalesMap[item.productId]) {
         productSalesMap[item.productId] = {
@@ -51,9 +54,12 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
           profit: 0
         };
       }
+      const effectiveTotal = item.total * discountRatio;
+      const effectiveProfit = effectiveTotal - (item.costPrice * item.quantity);
+
       productSalesMap[item.productId].qty += item.quantity;
-      productSalesMap[item.productId].revenue += item.total;
-      productSalesMap[item.productId].profit += (item.total - (item.costPrice * item.quantity));
+      productSalesMap[item.productId].revenue += effectiveTotal;
+      productSalesMap[item.productId].profit += effectiveProfit;
     });
   });
 
@@ -130,25 +136,38 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
           <h1 id="dashboard-title" className="text-2xl font-bold tracking-tight text-slate-900">Painel de Controle</h1>
           <p className="text-sm text-slate-500 mt-1">Visão geral do desempenho de vendas, estoque e rentabilidade da sua loja.</p>
         </div>
-        <div className="flex items-center gap-2 self-start md:self-auto bg-slate-100 p-1 rounded-lg border border-slate-200/50">
+        
+        <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+          {/* Quick Sale Action Button */}
           <button
-            id="range-7days"
-            onClick={() => setTimeRange('7days')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-              timeRange === '7days' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
-            }`}
+            id="quick-start-sale-btn"
+            onClick={() => onNavigate('pos')}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
           >
-            Últimos 7 Dias
+            <ShoppingBag className="h-4 w-4" />
+            Iniciar Nova Venda
           </button>
-          <button
-            id="range-30days"
-            onClick={() => setTimeRange('30days')}
-            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-              timeRange === '30days' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
-            }`}
-          >
-            Últimos 14 Dias
-          </button>
+
+          <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
+            <button
+              id="range-7days"
+              onClick={() => setTimeRange('7days')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                timeRange === '7days' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              Últimos 7 Dias
+            </button>
+            <button
+              id="range-30days"
+              onClick={() => setTimeRange('30days')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                timeRange === '30days' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              Últimos 14 Dias
+            </button>
+          </div>
         </div>
       </div>
 

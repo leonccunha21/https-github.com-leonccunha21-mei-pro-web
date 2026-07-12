@@ -183,3 +183,31 @@ export async function fetchSpreadsheetValues(
     throw error;
   }
 }
+
+/**
+ * Exports a Google Spreadsheet as an XLSX file (ArrayBuffer) from Google Drive.
+ */
+export async function exportSpreadsheetAsArrayBuffer(
+  accessToken: string,
+  spreadsheetId: string
+): Promise<ArrayBuffer> {
+  try {
+    const response = await fetch(
+      `https://www.googleapis.com/drive/v3/files/${spreadsheetId}/export?mimeType=application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`,
+      {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error('Falha ao exportar planilha do Drive para XLSX. Verifique se o arquivo é válido.');
+    }
+
+    return await response.arrayBuffer();
+  } catch (error) {
+    console.error('Erro exportSpreadsheetAsArrayBuffer:', error);
+    throw error;
+  }
+}

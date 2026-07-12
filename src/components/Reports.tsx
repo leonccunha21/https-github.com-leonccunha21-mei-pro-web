@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Product, Sale, Category } from '../types';
+import { Product, Sale, Category, SaleItem } from '../types';
 import * as XLSX from 'xlsx';
 import { 
   Download, 
@@ -16,15 +16,409 @@ import {
   ExternalLink,
   FolderOpen,
   CloudLightning,
-  Loader2
+  Loader2,
+  ShoppingBag
 } from 'lucide-react';
 import { 
   createSpreadsheet, 
   uploadBackupFile, 
   listUserSpreadsheets, 
   fetchSpreadsheetValues,
+  exportSpreadsheetAsArrayBuffer,
   GoogleDriveFile
 } from '../lib/googleApi';
+
+// Shared spreadsheet parsing function for local files and Google Sheets
+function parseProductsSheet(rows: any[][]): { importedProducts: Product[]; categoriesFromProducts: string[] } {
+  if (!rows || rows.length < 2) {
+    throw new Error('A planilha de produtos está vazia ou não possui cabeçalho.');
+  }
+
+  // Find the best header row dynamically (most keyword matches)
+  let headerRowIndex = 0;
+  let maxMatches = -1;
+  const allKeywords = [
+    'nome', 'produto', 'descrição', 'descricao', 'item', 'name', 'titulo', 'título',
+    'código', 'codigo', 'sku', 'ref', 'id', 'referência', 'referencia', 'cod',
+    'categoria', 'grupo', 'setor', 'tipo', 'category',
+    'custo', 'compra', 'cost',
+    'venda', 'preço', 'preco', 'price', 'valor',
+    'estoque', 'qtd', 'quantidade', 'stock', 'saldo'
+  ];
+
+  for (let r = 0; r < Math.min(rows.length, 15); r++) {
+    const row = rows[r];
+    if (!row) continue;
+    let matches = 0;
+    for (const cell of row) {
+      const val = String(cell || '').trim().toLowerCase();
+      if (val && allKeywords.some(kw => val.includes(kw))) {
+        matches++;
+      }
+    }
+    if (matches > maxMatches) {
+      maxMatches = matches;
+      headerRowIndex = r;
+    }
+  }
+
+  const headerRow = rows[headerRowIndex].map((h: any) => String(h || '').trim().toLowerCase());
+  
+  const findColIndex = (keywords: string[]) => {
+    return headerRow.findIndex(h => keywords.some(keyword => h.includes(keyword)));
+  };
+
+  let codeIdx = findColIndex(['código', 'codigo', 'sku', 'ref', 'id', 'referência', 'referencia', 'cod']);
+  let nameIdx = findColIndex(['nome', 'produto', 'descrição', 'descricao', 'item', 'name', 'titulo', 'título', 'artigo']);
+  let categoryIdx = findColIndex(['categoria', 'grupo', 'setor', 'tipo', 'category', 'família', 'familia', 'departamento']);
+  let costPriceIdx = findColIndex(['custo', 'preço custo', 'preco custo', 'compra', 'cost', 'vlr custo', 'valor custo']);
+  let salePriceIdx = findColIndex(['venda', 'preço venda', 'preco venda', 'valor', 'price', 'preço', 'preco', 'vlr venda', 'valor venda']);
+  let stockIdx = findColIndex(['estoque', 'qtd', 'quantidade', 'stock', 'saldo', 'atual', 'quant', 'qnt']);
+  let minStockIdx = findColIndex(['mínimo', 'minimo', 'estoque mínimo', 'estoque minimo', 'min', 'est. min', 'est.min']);
+
+  // Fallbacks if no columns matched
+  if (codeIdx === -1) codeIdx = 0;
+  if (nameIdx === -1) {
+    nameIdx = headerRow.findIndex((h, idx) => idx !== codeIdx && h !== '');
+    if (nameIdx === -1) nameIdx = 1;
+  }
+  if (categoryIdx === -1) categoryIdx = 2;
+  if (costPriceIdx === -1) costPriceIdx = 3;
+  if (salePriceIdx === -1) salePriceIdx = 4;
+  if (stockIdx === -1) stockIdx = 5;
+  if (minStockIdx === -1) minStockIdx = 6;
+
+  const importedProducts: Product[] = [];
+  const categoriesFromProducts: string[] = [];
+
+  const getFloatVal = (row: any[], idx: number) => {
+    if (idx === -1 || idx >= row.length || row[idx] === undefined || row[idx] === null) return 0;
+    if (typeof row[idx] === 'number') return row[idx];
+    const raw = String(row[idx]).trim();
+    if (!raw) return 0;
+
+    if (!isNaN(Number(raw))) return Number(raw);
+
+    let clean = raw.replace(/[R$\s]/g, '');
+    if (clean.includes('.') && clean.includes(',')) {
+      if (clean.indexOf('.') < clean.indexOf(',')) {
+        clean = clean.replace(/\./g, '').replace(',', '.');
+      } else {
+        clean = clean.replace(/,/g, '');
+      }
+    } else if (clean.includes(',')) {
+      clean = clean.replace(/,/g, '.');
+    } else if (clean.includes('.')) {
+      const parts = clean.split('.');
+      if (parts.length === 2 && parts[1].length === 3) {
+        clean = clean.replace(/\./g, '');
+      } else if (parts.length > 2) {
+        clean = clean.replace(/\./g, '');
+      }
+    }
+    clean = clean.replace(/[^0-9.]/g, '');
+    return parseFloat(clean) || 0;
+  };
+
+  const getIntVal = (row: any[], idx: number) => {
+    if (idx === -1 || idx >= row.length || row[idx] === undefined || row[idx] === null) return 0;
+    if (typeof row[idx] === 'number') return Math.round(row[idx]);
+    const raw = String(row[idx]).trim();
+    if (!raw) return 0;
+    const clean = raw.replace(/[^0-9]/g, '');
+    return parseInt(clean, 10) || 0;
+  };
+
+  for (let i = headerRowIndex + 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (!row || row.length === 0) continue;
+    
+    // Skip mostly empty rows
+    const nonEmulatorCells = row.filter(cell => cell !== undefined && String(cell).trim() !== '');
+    if (nonEmulatorCells.length === 0) continue;
+
+    let name = '';
+    if (nameIdx !== -1 && nameIdx < row.length && row[nameIdx] !== undefined) {
+      name = String(row[nameIdx]).trim();
+    }
+
+    if (!name) {
+      // Look for any text column if detected name column is blank
+      for (let col = 0; col < row.length; col++) {
+        if (col !== codeIdx && row[col] !== undefined && String(row[col]).trim() !== '' && isNaN(Number(row[col]))) {
+          name = String(row[col]).trim();
+          break;
+        }
+      }
+    }
+
+    if (!name) continue; // skip nameless rows
+
+    let code = '';
+    if (codeIdx !== -1 && codeIdx < row.length && row[codeIdx] !== undefined) {
+      code = String(row[codeIdx]).trim();
+    }
+    if (!code) {
+      code = `SKU-${1000 + i}`;
+    }
+
+    let categoryName = 'Geral';
+    if (categoryIdx !== -1 && categoryIdx < row.length && row[categoryIdx] !== undefined) {
+      const rawCat = String(row[categoryIdx]).trim();
+      if (rawCat) categoryName = rawCat;
+    }
+
+    if (categoryName && !categoriesFromProducts.some(c => c.toLowerCase() === categoryName.toLowerCase())) {
+      categoriesFromProducts.push(categoryName);
+    }
+
+    const costPrice = Math.max(0, getFloatVal(row, costPriceIdx));
+    const salePrice = Math.max(0, getFloatVal(row, salePriceIdx));
+    const stock = Math.max(0, getIntVal(row, stockIdx));
+    const minStock = Math.max(0, getIntVal(row, minStockIdx));
+
+    importedProducts.push({
+      id: `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}_${i}`,
+      code,
+      name,
+      category: categoryName,
+      costPrice,
+      salePrice,
+      stock,
+      minStock,
+      createdAt: new Date().toISOString()
+    });
+  }
+
+  return { importedProducts, categoriesFromProducts };
+}
+
+function parseCategoriesSheet(rows: any[][]): string[] {
+  let headerRowIndex = 0;
+  for (let r = 0; r < Math.min(rows.length, 10); r++) {
+    const row = rows[r];
+    if (!row) continue;
+    if (row.some(cell => String(cell || '').toLowerCase().includes('categoria'))) {
+      headerRowIndex = r;
+      break;
+    }
+  }
+
+  const categories: string[] = [];
+  for (let i = headerRowIndex + 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (!row || row.length === 0) continue;
+    const catName = String(row[0] || '').trim();
+    if (catName && !categories.some(c => c.toLowerCase() === catName.toLowerCase())) {
+      categories.push(catName);
+    }
+  }
+  return categories;
+}
+
+function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
+  let headerRowIndex = 0;
+  let maxMatches = -1;
+  const keywords = ['id da venda', 'venda', 'cliente', 'pagamento', 'itens', 'faturamento', 'total', 'status'];
+
+  for (let r = 0; r < Math.min(rows.length, 15); r++) {
+    const row = rows[r];
+    if (!row) continue;
+    let matches = 0;
+    for (const cell of row) {
+      const val = String(cell || '').trim().toLowerCase();
+      if (val && keywords.some(kw => val.includes(kw))) {
+        matches++;
+      }
+    }
+    if (matches > maxMatches) {
+      maxMatches = matches;
+      headerRowIndex = r;
+    }
+  }
+
+  const headerRow = rows[headerRowIndex].map((h: any) => String(h || '').trim().toLowerCase());
+  
+  const findColIndex = (kwList: string[]) => {
+    return headerRow.findIndex(h => kwList.some(kw => h.includes(kw)));
+  };
+
+  const idIdx = findColIndex(['id', 'código', 'codigo', 'venda']);
+  const dateIdx = findColIndex(['data', 'data/hora', 'date']);
+  const clientIdx = findColIndex(['cliente', 'nome', 'client']);
+  const phoneIdx = findColIndex(['telefone', 'celular', 'fone', 'phone']);
+  const paymentIdx = findColIndex(['pagamento', 'forma', 'meio', 'method']);
+  const itemsIdx = findColIndex(['itens', 'produtos', 'item', 'descrição', 'descricao']);
+  const costIdx = findColIndex(['custo', 'custo total', 'total cost']);
+  const revenueIdx = findColIndex(['faturamento', 'valor', 'total', 'venda total', 'revenue']);
+  const statusIdx = findColIndex(['status', 'situação', 'situacao']);
+
+  const getFloatVal = (row: any[], idx: number) => {
+    if (idx === -1 || idx >= row.length || row[idx] === undefined || row[idx] === null) return 0;
+    if (typeof row[idx] === 'number') return row[idx];
+    const raw = String(row[idx]).trim();
+    if (!raw) return 0;
+
+    if (!isNaN(Number(raw))) return Number(raw);
+
+    let clean = raw.replace(/[R$\s]/g, '');
+    if (clean.includes('.') && clean.includes(',')) {
+      if (clean.indexOf('.') < clean.indexOf(',')) {
+        clean = clean.replace(/\./g, '').replace(',', '.');
+      } else {
+        clean = clean.replace(/,/g, '');
+      }
+    } else if (clean.includes(',')) {
+      clean = clean.replace(/,/g, '.');
+    } else if (clean.includes('.')) {
+      const parts = clean.split('.');
+      if (parts.length === 2 && parts[1].length === 3) {
+        clean = clean.replace(/\./g, '');
+      } else if (parts.length > 2) {
+        clean = clean.replace(/\./g, '');
+      }
+    }
+    clean = clean.replace(/[^0-9.]/g, '');
+    return parseFloat(clean) || 0;
+  };
+
+  const sales: Sale[] = [];
+
+  for (let i = headerRowIndex + 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (!row || row.length === 0) continue;
+    if (row.every(c => c === null || c === undefined || String(c).trim() === '')) continue;
+
+    const id = (idIdx !== -1 && idIdx < row.length && row[idIdx]) ? String(row[idIdx]).trim() : `venda_${Date.now()}_${i}`;
+    
+    let rawDate = (dateIdx !== -1 && dateIdx < row.length && row[dateIdx]) ? String(row[dateIdx]).trim() : '';
+    let saleDate = new Date().toISOString();
+    if (rawDate) {
+      const d = new Date(rawDate);
+      if (!isNaN(d.getTime())) {
+        saleDate = d.toISOString();
+      } else {
+        const match = rawDate.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+        if (match) {
+          const day = parseInt(match[1], 10);
+          const month = parseInt(match[2], 10) - 1;
+          const year = parseInt(match[3], 10);
+          const parsed = new Date(year, month, day, 12, 0, 0);
+          if (!isNaN(parsed.getTime())) {
+            saleDate = parsed.toISOString();
+          }
+        }
+      }
+    }
+
+    const clientName = (clientIdx !== -1 && clientIdx < row.length && row[clientIdx]) ? String(row[clientIdx]).trim() : undefined;
+    const clientPhone = (phoneIdx !== -1 && phoneIdx < row.length && row[phoneIdx]) ? String(row[phoneIdx]).trim() : undefined;
+    
+    let paymentMethod: any = 'pix';
+    if (paymentIdx !== -1 && paymentIdx < row.length && row[paymentIdx]) {
+      const pLower = String(row[paymentIdx]).trim().toLowerCase();
+      if (pLower.includes('dinheiro') || pLower.includes('money')) paymentMethod = 'money';
+      else if (pLower.includes('crédito') || pLower.includes('credito') || pLower.includes('credit')) paymentMethod = 'card_credit';
+      else if (pLower.includes('débito') || pLower.includes('debito') || pLower.includes('debit')) paymentMethod = 'card_debit';
+      else if (pLower.includes('transf') || pLower.includes('banc')) paymentMethod = 'transfer';
+    }
+
+    const itemsStr = (itemsIdx !== -1 && itemsIdx < row.length && row[itemsIdx]) ? String(row[itemsIdx]).trim() : '';
+    const saleItems: SaleItem[] = [];
+
+    if (itemsStr) {
+      const parts = itemsStr.split(',');
+      for (const p of parts) {
+        const itemStr = p.trim();
+        if (!itemStr) continue;
+
+        const match = itemStr.match(/(.+?)\s*\((\d+)\s*x?\)/i) || itemStr.match(/(.+?)\s*x\s*(\d+)/i) || itemStr.match(/(\d+)\s*x\s*(.+)/i);
+        let pName = itemStr;
+        let qty = 1;
+
+        if (match) {
+          if (isNaN(Number(match[1]))) {
+            pName = match[1].trim();
+            qty = parseInt(match[2], 10) || 1;
+          } else {
+            qty = parseInt(match[1], 10) || 1;
+            pName = match[2].trim();
+          }
+        }
+
+        const pNameLower = pName.toLowerCase().trim();
+        let matchedProd = productsList.find(pr => 
+          pr.name.toLowerCase().trim() === pNameLower || 
+          pr.code.toLowerCase().trim() === pNameLower
+        );
+
+        if (!matchedProd) {
+          // Soft match fallback
+          matchedProd = productsList.find(pr => 
+            pr.name.toLowerCase().includes(pNameLower) || 
+            pNameLower.includes(pr.name.toLowerCase())
+          );
+        }
+
+        const costPrice = matchedProd ? matchedProd.costPrice : 0;
+        const salePrice = matchedProd ? matchedProd.salePrice : 0;
+        const finalProdName = matchedProd ? matchedProd.name : pName;
+
+        saleItems.push({
+          productId: matchedProd ? matchedProd.id : `p_temp_${Math.random().toString(36).substring(2,6)}`,
+          productName: finalProdName,
+          quantity: qty,
+          costPrice,
+          salePrice,
+          total: salePrice * qty
+        });
+      }
+    }
+
+    const totalCost = getFloatVal(row, costIdx) || saleItems.reduce((sum, item) => sum + (item.costPrice * item.quantity), 0);
+    const total = getFloatVal(row, revenueIdx) || saleItems.reduce((sum, item) => sum + item.total, 0);
+    const profit = total - totalCost;
+
+    let status: 'completed' | 'cancelled' = 'completed';
+    if (statusIdx !== -1 && statusIdx < row.length && row[statusIdx]) {
+      const sLower = String(row[statusIdx]).trim().toLowerCase();
+      if (sLower.includes('canc') || sLower.includes('estor')) {
+        status = 'cancelled';
+      }
+    }
+
+    sales.push({
+      id,
+      date: saleDate,
+      clientName,
+      clientPhone,
+      paymentMethod,
+      items: saleItems,
+      totalCost,
+      total,
+      profit,
+      status
+    });
+  }
+
+  return sales;
+}
+
+function parseSpreadsheetRows(rows: any[][], categoriesList: Category[]): { importedProducts: Product[]; newCategories: Category[] } {
+  const { importedProducts, categoriesFromProducts } = parseProductsSheet(rows);
+  const newCategories = [...categoriesList];
+  
+  categoriesFromProducts.forEach(catName => {
+    if (!newCategories.some(c => c.name.toLowerCase() === catName.toLowerCase())) {
+      newCategories.push({
+        id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+        name: catName
+      });
+    }
+  });
+
+  return { importedProducts, newCategories };
+}
 
 interface ReportsProps {
   products: Product[];
@@ -53,7 +447,7 @@ export default function Reports({
   const excelInputRef = useRef<HTMLInputElement>(null);
   
   // Basic states
-  const [importSuccess, setImportSuccess] = useState(false);
+  const [importSuccessMsg, setImportSuccessMsg] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
   const [importingExcel, setImportingExcel] = useState(false);
 
@@ -70,6 +464,15 @@ export default function Reports({
   const [lastExportedSheetUrl, setLastExportedSheetUrl] = useState<string | null>(null);
   const [lastBackupUrl, setLastBackupUrl] = useState<string | null>(null);
   const [googleSuccessMsg, setGoogleSuccessMsg] = useState<string | null>(null);
+
+  const [isInIframe, setIsInIframe] = useState(false);
+  useEffect(() => {
+    try {
+      setIsInIframe(window.self !== window.top);
+    } catch (e) {
+      setIsInIframe(true);
+    }
+  }, []);
 
   // Filter completed sales
   const completedSales = sales.filter(s => s.status === 'completed');
@@ -94,6 +497,9 @@ export default function Reports({
   categoryStats['Outros'] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
 
   completedSales.forEach(sale => {
+    const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
+    const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
+
     sale.items.forEach(item => {
       // Find category of original product
       const origProduct = products.find(p => p.id === item.productId);
@@ -103,10 +509,13 @@ export default function Reports({
         categoryStats[catName] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
       }
 
+      const effectiveTotal = item.total * discountRatio;
+      const effectiveProfit = effectiveTotal - (item.costPrice * item.quantity);
+
       categoryStats[catName].itemsSold += item.quantity;
-      categoryStats[catName].revenue += item.total;
+      categoryStats[catName].revenue += effectiveTotal;
       categoryStats[catName].cost += item.costPrice * item.quantity;
-      categoryStats[catName].profit += (item.total - (item.costPrice * item.quantity));
+      categoryStats[catName].profit += effectiveProfit;
     });
   });
 
@@ -120,6 +529,42 @@ export default function Reports({
     .sort((a, b) => b.revenue - a.revenue);
 
   const maxCategoryRevenue = Math.max(...activeCategoryReports.map(c => c.revenue), 100);
+
+  // Product Sales Volume & Profit map
+  const productStats: Record<string, { productName: string; category: string; revenue: number; cost: number; profit: number; itemsSold: number }> = {};
+
+  completedSales.forEach(sale => {
+    const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
+    const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
+
+    sale.items.forEach(item => {
+      const origProduct = products.find(p => p.id === item.productId);
+      const catName = origProduct ? origProduct.category : 'Outros';
+      const key = item.productId || item.productName;
+
+      if (!productStats[key]) {
+        productStats[key] = {
+          productName: item.productName,
+          category: catName,
+          revenue: 0,
+          cost: 0,
+          profit: 0,
+          itemsSold: 0
+        };
+      }
+
+      const effectiveTotal = item.total * discountRatio;
+      const effectiveProfit = effectiveTotal - (item.costPrice * item.quantity);
+
+      productStats[key].itemsSold += item.quantity;
+      productStats[key].revenue += effectiveTotal;
+      productStats[key].cost += item.costPrice * item.quantity;
+      productStats[key].profit += effectiveProfit;
+    });
+  });
+
+  const activeProductReports = Object.values(productStats)
+    .sort((a, b) => b.revenue - a.revenue);
 
   // Load user's Google Drive Spreadsheets list when accessToken is available
   useEffect(() => {
@@ -181,13 +626,25 @@ export default function Reports({
     setExportingSales(true);
     setGoogleSuccessMsg(null);
     try {
-      const headers = ['ID da Venda', 'Data', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Custo Total (R$)', 'Faturamento (R$)', 'Lucro Líquido (R$)', 'Status'];
+      const headers = [
+        'ID da Venda', 
+        'Data', 
+        'Cliente', 
+        'Telefone', 
+        'Forma de Pagamento', 
+        'Produtos Vendidos', 
+        'Custo Total (R$)', 
+        'Faturamento (R$)', 
+        'Lucro Líquido (R$)', 
+        'Status'
+      ];
       const rows = sales.map(s => [
         s.id,
         new Date(s.date).toLocaleString('pt-BR'),
         s.clientName || 'Cliente Geral',
         s.clientPhone || '-',
         s.paymentMethod,
+        s.items.map(item => `${item.productName} (${item.quantity}x)`).join(', '),
         s.totalCost,
         s.total,
         s.profit,
@@ -235,65 +692,112 @@ export default function Reports({
     }
   };
 
-  // Import products from select spreadsheet
+  // Import products, sales, and categories from select Google Spreadsheet
   const handleImportFromSheets = async () => {
     if (!accessToken || !selectedSpreadsheetId) return;
     setImportingFromSheet(true);
     setImportError(null);
     setGoogleSuccessMsg(null);
     try {
-      // Fetch entire active sheet values (A1 to G500 range)
-      const rows = await fetchSpreadsheetValues(accessToken, selectedSpreadsheetId, 'Sheet1!A1:G500');
-      if (!rows || rows.length < 2) {
-        throw new Error('A planilha selecionada está vazia ou não possui cabeçalho na "Sheet1".');
+      // Export spreadsheet from Google Drive as raw XLSX array buffer
+      const arrayBuffer = await exportSpreadsheetAsArrayBuffer(accessToken, selectedSpreadsheetId);
+      const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+      
+      let importedProducts: Product[] = [];
+      let importedCategories: Category[] = [...categories];
+      let importedSales: Sale[] = [...sales];
+      
+      let hasProductsSheet = false;
+      let hasSalesSheet = false;
+      let hasCategoriesSheet = false;
+
+      let productsSheetData: any[][] | null = null;
+      let salesSheetData: any[][] | null = null;
+      let categoriesSheetData: any[][] | null = null;
+
+      for (const sheetName of workbook.SheetNames) {
+        const worksheet = workbook.Sheets[sheetName];
+        const jsonRows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        if (!jsonRows || jsonRows.length < 2) continue;
+
+        // Identify sheet type based on sheetName or first row headers
+        const nameLower = sheetName.toLowerCase();
+        const firstRow = jsonRows[0].map(h => String(h || '').trim().toLowerCase());
+        
+        const isProducts = nameLower.includes('prod') || nameLower.includes('estoq') || firstRow.includes('nome do produto') || firstRow.includes('preço de venda');
+        const isSales = nameLower.includes('vend') || nameLower.includes('saída') || firstRow.includes('id da venda') || firstRow.includes('itens vendidos') || firstRow.includes('produtos vendidos');
+        const isCategories = nameLower.includes('cat') || nameLower.includes('setor') || firstRow.includes('nome da categoria');
+
+        if (isProducts && !productsSheetData) {
+          productsSheetData = jsonRows;
+          hasProductsSheet = true;
+        } else if (isSales && !salesSheetData) {
+          salesSheetData = jsonRows;
+          hasSalesSheet = true;
+        } else if (isCategories && !categoriesSheetData) {
+          categoriesSheetData = jsonRows;
+          hasCategoriesSheet = true;
+        }
       }
 
-      const importedProducts: Product[] = [];
-      const newCategories = [...categories];
-
-      // Parse starts at 1 to skip headers row
-      for (let i = 1; i < rows.length; i++) {
-        const row = rows[i];
-        if (!row || row.length === 0 || !row[1]) continue; // Skip empty rows or unnamed products
-
-        const categoryName = row[2] ? String(row[2]).trim() : 'Geral';
-        
-        // Auto-create category if missing
-        if (categoryName && !newCategories.find(c => c.name.toLowerCase() === categoryName.toLowerCase())) {
-          newCategories.push({
-            id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-            name: categoryName
-          });
+      // Fallback: If no products sheet was detected, treat the first sheet as products!
+      if (!hasProductsSheet && workbook.SheetNames.length > 0) {
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const jsonRows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        if (jsonRows && jsonRows.length >= 2) {
+          productsSheetData = jsonRows;
+          hasProductsSheet = true;
         }
+      }
 
-        importedProducts.push({
-          id: `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}_${i}`,
-          code: row[0] ? String(row[0]).trim() : `SKU-${Date.now()}-${i}`,
-          name: String(row[1]).trim(),
-          category: categoryName,
-          costPrice: Math.max(0, parseFloat(String(row[3]).replace(/[^0-9.,]/g, '').replace(',', '.')) || 0),
-          salePrice: Math.max(0, parseFloat(String(row[4]).replace(/[^0-9.,]/g, '').replace(',', '.')) || 0),
-          stock: Math.max(0, parseInt(row[5]) || 0),
-          minStock: Math.max(0, parseInt(row[6]) || 0),
-          createdAt: new Date().toISOString()
+      // Parse categories sheet first
+      if (categoriesSheetData) {
+        const parsedCats = parseCategoriesSheet(categoriesSheetData);
+        parsedCats.forEach(cName => {
+          if (!importedCategories.some(c => c.name.toLowerCase() === cName.toLowerCase())) {
+            importedCategories.push({
+              id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+              name: cName
+            });
+          }
         });
       }
 
-      if (importedProducts.length === 0) {
-        throw new Error('Nenhum produto válido encontrado. Certifique-se que o Nome esteja na coluna B e as colunas correspondam.');
+      // Parse products sheet second
+      if (productsSheetData) {
+        const parsed = parseProductsSheet(productsSheetData);
+        importedProducts = parsed.importedProducts;
+        parsed.categoriesFromProducts.forEach(cName => {
+          if (!importedCategories.some(c => c.name.toLowerCase() === cName.toLowerCase())) {
+            importedCategories.push({
+              id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+              name: cName
+            });
+          }
+        });
       }
 
+      // Parse sales sheet third
+      if (salesSheetData) {
+        importedSales = parseSalesSheet(salesSheetData, importedProducts.length > 0 ? importedProducts : products);
+      }
+
+      // Apply changes
       onImportDatabase({
-        products: importedProducts,
-        categories: newCategories,
-        sales: sales
+        products: importedProducts.length > 0 ? importedProducts : products,
+        categories: importedCategories,
+        sales: importedSales
       });
 
-      setImportSuccess(true);
-      setGoogleSuccessMsg(`Importação realizada! ${importedProducts.length} produtos carregados com sucesso.`);
-      setTimeout(() => setImportSuccess(false), 5000);
+      let successMsg = 'Planilha do Google Drive importada com sucesso! ';
+      if (importedProducts.length > 0) successMsg += `${importedProducts.length} produtos carregados. `;
+      if (hasSalesSheet) successMsg += `${importedSales.length} vendas cadastradas. `;
+
+      setGoogleSuccessMsg(successMsg);
+      setImportError(null);
     } catch (err: any) {
-      setImportError(err.message || 'Erro ao processar dados da planilha.');
+      setImportError(err.message || 'Erro ao processar dados da planilha do Google Drive.');
     } finally {
       setImportingFromSheet(false);
     }
@@ -334,9 +838,9 @@ export default function Reports({
             sales: parsed.sales,
             categories: parsed.categories
           });
-          setImportSuccess(true);
+          setImportSuccessMsg('Backup offline em formato JSON restaurado com sucesso!');
           setImportError(null);
-          setTimeout(() => setImportSuccess(false), 4000);
+          setTimeout(() => setImportSuccessMsg(null), 6000);
         } else {
           setImportError('Estrutura de arquivo inválida. O backup precisa conter categorias, produtos e histórico de vendas.');
         }
@@ -364,105 +868,101 @@ export default function Reports({
         if (!data) throw new Error('Não foi possível ler os dados do arquivo.');
 
         const workbook = XLSX.read(data, { type: 'array' });
-        const firstSheetName = workbook.SheetNames[0];
-        const worksheet = workbook.Sheets[firstSheetName];
         
-        // Convert sheet to dynamic rows
-        const jsonRows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        let importedProducts: Product[] = [];
+        let importedCategories: Category[] = [...categories];
+        let importedSales: Sale[] = [...sales];
         
-        if (!jsonRows || jsonRows.length < 2) {
-          throw new Error('O arquivo selecionado está vazio ou não possui uma linha de cabeçalho.');
+        let hasProductsSheet = false;
+        let hasSalesSheet = false;
+        let hasCategoriesSheet = false;
+
+        let productsSheetData: any[][] | null = null;
+        let salesSheetData: any[][] | null = null;
+        let categoriesSheetData: any[][] | null = null;
+
+        for (const sheetName of workbook.SheetNames) {
+          const worksheet = workbook.Sheets[sheetName];
+          const jsonRows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          if (!jsonRows || jsonRows.length < 2) continue;
+
+          // Identify sheet type based on sheetName or first row headers
+          const nameLower = sheetName.toLowerCase();
+          const firstRow = jsonRows[0].map(h => String(h || '').trim().toLowerCase());
+          
+          const isProducts = nameLower.includes('prod') || nameLower.includes('estoq') || firstRow.includes('nome do produto') || firstRow.includes('preço de venda');
+          const isSales = nameLower.includes('vend') || nameLower.includes('saída') || firstRow.includes('id da venda') || firstRow.includes('itens vendidos') || firstRow.includes('produtos vendidos');
+          const isCategories = nameLower.includes('cat') || nameLower.includes('setor') || firstRow.includes('nome da categoria');
+
+          if (isProducts && !productsSheetData) {
+            productsSheetData = jsonRows;
+            hasProductsSheet = true;
+          } else if (isSales && !salesSheetData) {
+            salesSheetData = jsonRows;
+            hasSalesSheet = true;
+          } else if (isCategories && !categoriesSheetData) {
+            categoriesSheetData = jsonRows;
+            hasCategoriesSheet = true;
+          }
         }
 
-        const importedProducts: Product[] = [];
-        const newCategories = [...categories];
-
-        // Read and sanitize headers
-        const headerRow = jsonRows[0].map((h: any) => String(h || '').trim().toLowerCase());
-        
-        // Helper to find column index matching keywords
-        const findColIndex = (keywords: string[]) => {
-          return headerRow.findIndex(h => keywords.some(keyword => h.includes(keyword)));
-        };
-
-        // Auto-detect columns
-        let codeIdx = findColIndex(['código', 'codigo', 'sku', 'ref', 'id', 'referencia']);
-        let nameIdx = findColIndex(['nome', 'produto', 'descrição', 'descricao', 'item', 'name']);
-        let categoryIdx = findColIndex(['categoria', 'grupo', 'setor', 'tipo', 'category']);
-        let costPriceIdx = findColIndex(['custo', 'preço custo', 'preco custo', 'compra', 'cost']);
-        let salePriceIdx = findColIndex(['venda', 'preço venda', 'preco venda', 'valor', 'price']);
-        let stockIdx = findColIndex(['estoque', 'qtd', 'quantidade', 'stock', 'saldo', 'atual']);
-        let minStockIdx = findColIndex(['mínimo', 'minimo', 'estoque mínimo', 'estoque minimo', 'min']);
-
-        // Safe fallback defaults based on standard templates
-        if (codeIdx === -1) codeIdx = 0;
-        if (nameIdx === -1) nameIdx = 1;
-        if (categoryIdx === -1) categoryIdx = 2;
-        if (costPriceIdx === -1) costPriceIdx = 3;
-        if (salePriceIdx === -1) salePriceIdx = 4;
-        if (stockIdx === -1) stockIdx = 5;
-        if (minStockIdx === -1) minStockIdx = 6;
-
-        // Iterate rows skipping header row at index 0
-        for (let i = 1; i < jsonRows.length; i++) {
-          const row = jsonRows[i];
-          if (!row || row.length === 0) continue;
-          
-          const rawName = row[nameIdx];
-          if (rawName === undefined || String(rawName).trim() === '') continue; // skip nameless rows
-          
-          const name = String(rawName).trim();
-          const code = row[codeIdx] !== undefined ? String(row[codeIdx]).trim() : `SKU-${Date.now()}-${i}`;
-          const categoryName = row[categoryIdx] !== undefined ? String(row[categoryIdx]).trim() : 'Geral';
-          
-          // Safe price parsing
-          const costPriceRaw = row[costPriceIdx] !== undefined ? String(row[costPriceIdx]) : '0';
-          const salePriceRaw = row[salePriceIdx] !== undefined ? String(row[salePriceIdx]) : '0';
-          const stockRaw = row[stockIdx] !== undefined ? String(row[stockIdx]) : '0';
-          const minStockRaw = row[minStockIdx] !== undefined ? String(row[minStockIdx]) : '0';
-
-          const costPrice = Math.max(0, parseFloat(costPriceRaw.replace(/[^0-9.,]/g, '').replace(',', '.')) || 0);
-          const salePrice = Math.max(0, parseFloat(salePriceRaw.replace(/[^0-9.,]/g, '').replace(',', '.')) || 0);
-          
-          // Integer parsing
-          const stock = Math.max(0, parseInt(stockRaw.replace(/[^0-9]/g, ''), 10) || 0);
-          const minStock = Math.max(0, parseInt(minStockRaw.replace(/[^0-9]/g, ''), 10) || 0);
-
-          // Add category if not existing
-          if (categoryName && !newCategories.find(c => c.name.toLowerCase() === categoryName.toLowerCase())) {
-            newCategories.push({
-              id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-              name: categoryName
-            });
+        // Fallback: If no products sheet was detected, treat the first sheet as products!
+        if (!hasProductsSheet && workbook.SheetNames.length > 0) {
+          const firstSheetName = workbook.SheetNames[0];
+          const worksheet = workbook.Sheets[firstSheetName];
+          const jsonRows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+          if (jsonRows && jsonRows.length >= 2) {
+            productsSheetData = jsonRows;
+            hasProductsSheet = true;
           }
+        }
 
-          importedProducts.push({
-            id: `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}_${i}`,
-            code,
-            name,
-            category: categoryName,
-            costPrice,
-            salePrice,
-            stock,
-            minStock,
-            createdAt: new Date().toISOString()
+        // Parse categories sheet first
+        if (categoriesSheetData) {
+          const parsedCats = parseCategoriesSheet(categoriesSheetData);
+          parsedCats.forEach(cName => {
+            if (!importedCategories.some(c => c.name.toLowerCase() === cName.toLowerCase())) {
+              importedCategories.push({
+                id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+                name: cName
+              });
+            }
           });
         }
 
-        if (importedProducts.length === 0) {
-          throw new Error('Nenhum produto válido foi extraído da planilha. Certifique-se de que os dados estão estruturados com uma linha de cabeçalho.');
+        // Parse products sheet second
+        if (productsSheetData) {
+          const parsed = parseProductsSheet(productsSheetData);
+          importedProducts = parsed.importedProducts;
+          parsed.categoriesFromProducts.forEach(cName => {
+            if (!importedCategories.some(c => c.name.toLowerCase() === cName.toLowerCase())) {
+              importedCategories.push({
+                id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+                name: cName
+              });
+            }
+          });
+        }
+
+        // Parse sales sheet third
+        if (salesSheetData) {
+          importedSales = parseSalesSheet(salesSheetData, importedProducts.length > 0 ? importedProducts : products);
         }
 
         // Apply changes
         onImportDatabase({
-          products: importedProducts,
-          categories: newCategories,
-          sales: sales
+          products: importedProducts.length > 0 ? importedProducts : products,
+          categories: importedCategories,
+          sales: importedSales
         });
 
-        setImportSuccess(true);
-        setGoogleSuccessMsg(`Planilha extraída! ${importedProducts.length} produtos importados com sucesso.`);
-        setTimeout(() => setImportSuccess(false), 5000);
+        let successMsg = 'Planilha importada com sucesso! ';
+        if (importedProducts.length > 0) successMsg += `${importedProducts.length} produtos carregados. `;
+        if (hasSalesSheet) successMsg += `${importedSales.length} vendas cadastradas. `;
+        
+        setImportSuccessMsg(successMsg);
+        setImportError(null);
+        setTimeout(() => setImportSuccessMsg(null), 6000);
       } catch (err: any) {
         setImportError(err.message || 'Erro ao processar o arquivo de planilha.');
       } finally {
@@ -477,6 +977,155 @@ export default function Reports({
     };
 
     reader.readAsArrayBuffer(file);
+  };
+
+  // Local Excel (.xlsx) Stock Export
+  const handleExportStockToExcel = () => {
+    try {
+      const headers = ['Código/SKU', 'Nome do Produto', 'Categoria', 'Preço de Custo (R$)', 'Preço de Venda (R$)', 'Estoque', 'Estoque Mínimo'];
+      const rows = products.map(p => [
+        p.code,
+        p.name,
+        p.category,
+        p.costPrice,
+        p.salePrice,
+        p.stock,
+        p.minStock
+      ]);
+
+      const wsData = [headers, ...rows];
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(wsData);
+      XLSX.utils.book_append_sheet(wb, ws, 'Estoque');
+      XLSX.writeFile(wb, `Estoque_Inventario_${new Date().toISOString().substring(0, 10)}.xlsx`);
+      
+      setImportSuccessMsg('Estoque exportado para Excel (.xlsx) com sucesso!');
+      setTimeout(() => setImportSuccessMsg(null), 5000);
+    } catch (err: any) {
+      setImportError('Erro ao exportar estoque para Excel: ' + err.message);
+    }
+  };
+
+  // Local Excel (.xlsx) Sales Export
+  const handleExportSalesToExcel = () => {
+    try {
+      const headers = [
+        'ID da Venda', 
+        'Data', 
+        'Cliente', 
+        'Telefone', 
+        'Forma de Pagamento', 
+        'Produtos Vendidos', 
+        'Custo Total (R$)', 
+        'Faturamento (R$)', 
+        'Lucro Líquido (R$)', 
+        'Status'
+      ];
+      const rows = sales.map(s => [
+        s.id,
+        new Date(s.date).toLocaleString('pt-BR'),
+        s.clientName || 'Cliente Geral',
+        s.clientPhone || '-',
+        s.paymentMethod,
+        s.items.map(item => `${item.productName} (${item.quantity}x)`).join(', '),
+        s.totalCost,
+        s.total,
+        s.profit,
+        s.status === 'completed' ? 'Concluída' : 'Cancelada'
+      ]);
+
+      const wsData = [headers, ...rows];
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.aoa_to_sheet(wsData);
+      XLSX.utils.book_append_sheet(wb, ws, 'Histórico de Vendas');
+      XLSX.writeFile(wb, `Historico_Vendas_${new Date().toISOString().substring(0, 10)}.xlsx`);
+
+      setImportSuccessMsg('Histórico de vendas exportado para Excel (.xlsx) com sucesso!');
+      setTimeout(() => setImportSuccessMsg(null), 5000);
+    } catch (err: any) {
+      setImportError('Erro ao exportar vendas para Excel: ' + err.message);
+    }
+  };
+
+  // Download Standard Import Template
+  const handleDownloadTemplate = () => {
+    try {
+      const wb = XLSX.utils.book_new();
+
+      // 1. Products Sheet
+      const prodHeaders = ['Código/SKU', 'Nome do Produto', 'Categoria', 'Preço de Custo', 'Preço de Venda', 'Estoque', 'Estoque Mínimo'];
+      const prodSampleRows = [
+        ['SKU-1001', 'Camiseta Masculina Algodão', 'Vestuário', '25.00', '59.90', '100', '10'],
+        ['SKU-1002', 'Calça Jeans Premium', 'Vestuário', '45.00', '119.90', '50', '5'],
+        ['SKU-1003', 'Tênis Running Confort', 'Calçados', '75.00', '189.90', '30', '3'],
+        ['SKU-1004', 'Boné Casual Streetwear', 'Acessórios', '12.50', '39.90', '150', '15'],
+        ['SKU-1005', 'Cinto de Couro Clássico', 'Acessórios', '18.00', '49.90', '40', '8'],
+      ];
+      const prodWs = XLSX.utils.aoa_to_sheet([prodHeaders, ...prodSampleRows]);
+      prodWs['!cols'] = [
+        { wch: 15 }, // SKU
+        { wch: 30 }, // Nome do Produto
+        { wch: 18 }, // Categoria
+        { wch: 15 }, // Preço de Custo
+        { wch: 15 }, // Preço de Venda
+        { wch: 10 }, // Estoque
+        { wch: 15 }, // Estoque Mínimo
+      ];
+      XLSX.utils.book_append_sheet(wb, prodWs, 'Produtos (Estoque)');
+
+      // 2. Sales Sheet
+      const salesHeaders = [
+        'ID da Venda', 
+        'Data', 
+        'Cliente', 
+        'Telefone', 
+        'Forma de Pagamento', 
+        'Itens Vendidos (Nome e Qtd)', 
+        'Custo Total', 
+        'Faturamento', 
+        'Lucro Líquido', 
+        'Status'
+      ];
+      const salesSampleRows = [
+        ['venda_1', '12/07/2026 14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'Camiseta Masculina Algodão (2x), Calça Jeans Premium (1x)', '95.00', '239.70', '144.70', 'Concluída'],
+        ['venda_2', '12/07/2026 15:15', 'João Silva', '', 'dinheiro', 'Boné Casual Streetwear (1x)', '12.50', '39.90', '27.40', 'Concluída'],
+        ['venda_3', '12/07/2026 16:00', 'Ana Oliveira', '(11) 98888-2222', 'card_credit', 'Cinto de Couro Clássico (1x)', '18.00', '49.90', '31.90', 'Concluída']
+      ];
+      const salesWs = XLSX.utils.aoa_to_sheet([salesHeaders, ...salesSampleRows]);
+      salesWs['!cols'] = [
+        { wch: 15 }, // ID
+        { wch: 20 }, // Data
+        { wch: 20 }, // Cliente
+        { wch: 18 }, // Telefone
+        { wch: 20 }, // Pagamento
+        { wch: 45 }, // Itens
+        { wch: 15 }, // Custo Total
+        { wch: 15 }, // Faturamento
+        { wch: 15 }, // Lucro
+        { wch: 12 }, // Status
+      ];
+      XLSX.utils.book_append_sheet(wb, salesWs, 'Histórico de Vendas');
+
+      // 3. Categories Sheet
+      const catHeaders = ['Nome da Categoria'];
+      const catSampleRows = [
+        ['Vestuário'],
+        ['Calçados'],
+        ['Acessórios']
+      ];
+      const catWs = XLSX.utils.aoa_to_sheet([catHeaders, ...catSampleRows]);
+      catWs['!cols'] = [
+        { wch: 25 } // Categoria
+      ];
+      XLSX.utils.book_append_sheet(wb, catWs, 'Lista de Categorias');
+
+      XLSX.writeFile(wb, 'Modelo_Importacao_GestaoPro_Completo.xlsx');
+      
+      setImportSuccessMsg('Modelo oficial multi-abas baixado! Preencha Produtos, Vendas e Categorias e faça o upload.');
+      setTimeout(() => setImportSuccessMsg(null), 8000);
+    } catch (err: any) {
+      setImportError('Erro ao gerar modelo de planilha: ' + err.message);
+    }
   };
 
   const handleResetClick = () => {
@@ -526,300 +1175,258 @@ export default function Reports({
       {/* Reports and Backup splits */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        {/* Category breakdown reports chart */}
-        <div id="reports-categories-card" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm lg:col-span-7">
-          <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
-            <PieChart className="h-5 w-5 text-slate-500" />
-            <div>
-              <h2 className="text-base font-bold text-slate-900">Desempenho de Vendas por Categoria</h2>
-              <p className="text-xs text-slate-400 mt-0.5">Visão analítica de faturamento, volume de peças e lucratividade de cada setor.</p>
+        {/* LEFT COLUMN: Charts & Rankings (7 cols) */}
+        <div className="lg:col-span-7 space-y-6">
+          
+          {/* Category breakdown reports chart */}
+          <div id="reports-categories-card" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
+              <PieChart className="h-5 w-5 text-slate-500" />
+              <div>
+                <h2 className="text-base font-bold text-slate-900">Desempenho de Vendas por Categoria</h2>
+                <p className="text-xs text-slate-400 mt-0.5">Visão analítica de faturamento, volume de peças e lucratividade de cada setor.</p>
+              </div>
             </div>
-          </div>
 
-          {activeCategoryReports.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <p className="text-sm font-medium">Nenhum setor registrou vendas ainda.</p>
-              <p className="text-xs mt-0.5">As estatísticas serão listadas conforme novas compras forem efetuadas no caixa.</p>
-            </div>
-          ) : (
-            <div className="space-y-5">
-              {activeCategoryReports.map((cat, idx) => {
-                const percentageOfMax = (cat.revenue / maxCategoryRevenue) * 100;
-                const catMargin = cat.revenue > 0 ? (cat.profit / cat.revenue) * 100 : 0;
-                
-                return (
-                  <div key={idx} className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="font-bold text-slate-700">{cat.categoryName}</span>
-                      <span className="font-mono text-slate-500">
-                        {cat.itemsSold} un. vendidas •{' '}
-                        <strong className="text-slate-900 font-bold">
-                          {cat.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                        </strong>
-                      </span>
-                    </div>
+            {activeCategoryReports.length === 0 ? (
+              <div className="text-center py-12 text-slate-400">
+                <p className="text-sm font-medium">Nenhum setor registrou vendas ainda.</p>
+                <p className="text-xs mt-0.5">As estatísticas serão listadas conforme novas compras forem efetuadas no caixa.</p>
+              </div>
+            ) : (
+              <div className="space-y-5">
+                {activeCategoryReports.map((cat, idx) => {
+                  const percentageOfMax = (cat.revenue / maxCategoryRevenue) * 100;
+                  const catMargin = cat.revenue > 0 ? (cat.profit / cat.revenue) * 100 : 0;
+                  
+                  return (
+                    <div key={idx} className="space-y-1.5">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-bold text-slate-700">{cat.categoryName}</span>
+                        <span className="font-mono text-slate-500">
+                          {cat.itemsSold} un. vendidas •{' '}
+                          <strong className="text-slate-900 font-bold">
+                            {cat.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                          </strong>
+                        </span>
+                      </div>
 
-                    {/* Progress Bar with faturamento ratio */}
-                    <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden flex relative">
-                      <div 
-                        style={{ width: `${percentageOfMax}%` }} 
-                        className="bg-indigo-600 h-full rounded-full transition-all duration-500"
-                      />
-                    </div>
+                      {/* Progress Bar with faturamento ratio */}
+                      <div className="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden flex relative">
+                        <div 
+                          style={{ width: `${percentageOfMax}%` }} 
+                          className="bg-indigo-600 h-full rounded-full transition-all duration-500"
+                        />
+                      </div>
 
-                    {/* Detailed info of costs, margins */}
-                    <div className="flex items-center justify-between text-[11px] text-slate-400">
-                      <span>Custo de Estoque: {cat.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                      <div className="flex gap-2">
-                        <span className="text-emerald-600 font-semibold">Lucro Líquido: {cat.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                        <span className="text-indigo-600 font-bold font-mono">Margem: {catMargin.toFixed(0)}%</span>
+                      {/* Detailed info of costs, margins */}
+                      <div className="flex items-center justify-between text-[11px] text-slate-400">
+                        <span>Custo de Estoque: {cat.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                        <div className="flex gap-2">
+                          <span className="text-emerald-600 font-semibold">Lucro Líquido: {cat.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                          <span className="text-indigo-600 font-bold font-mono">Margem: {catMargin.toFixed(0)}%</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          {/* Product performance report card */}
+          <div id="reports-products-card" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
+              <ShoppingBag className="h-5 w-5 text-slate-500" />
+              <div>
+                <h2 className="text-base font-bold text-slate-900">Desempenho de Vendas por Produto</h2>
+                <p className="text-xs text-slate-400 mt-0.5">Visão detalhada de faturamento, peças vendidas e rentabilidade individual.</p>
+              </div>
             </div>
-          )}
+
+            {activeProductReports.length === 0 ? (
+              <div className="text-center py-12 text-slate-400">
+                <p className="text-sm font-medium">Nenhum produto registrou vendas ainda.</p>
+                <p className="text-xs mt-0.5">O ranking de vendas individuais aparecerá assim que você realizar novas vendas.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <th className="pb-3 pr-2">Produto</th>
+                      <th className="pb-3 text-center">Un.</th>
+                      <th className="pb-3 text-right">Faturamento</th>
+                      <th className="pb-3 text-right">Lucro</th>
+                      <th className="pb-3 text-right">Margem</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-xs">
+                    {activeProductReports.slice(0, 8).map((prod, idx) => {
+                      const prodMargin = prod.revenue > 0 ? (prod.profit / prod.revenue) * 100 : 0;
+                      return (
+                        <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                          <td className="py-2.5 pr-2 font-bold text-slate-900">
+                            <p className="line-clamp-1" title={prod.productName}>{prod.productName}</p>
+                            <span className="text-[9px] text-slate-400 font-normal uppercase tracking-wider">{prod.category}</span>
+                          </td>
+                          <td className="py-2.5 text-center font-mono text-slate-600">{prod.itemsSold}</td>
+                          <td className="py-2.5 text-right font-mono text-slate-900 font-medium">
+                            {prod.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                          </td>
+                          <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">
+                            {prod.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                          </td>
+                          <td className="py-2.5 text-right font-mono font-bold text-indigo-600">{prodMargin.toFixed(0)}%</td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                {activeProductReports.length > 8 && (
+                  <p className="text-[10px] text-slate-400 text-center mt-3 font-semibold">
+                    Mostrando os 8 produtos mais vendidos.
+                  </p>
+                )}
+              </div>
+            )}
+          </div>
+
         </div>
 
         {/* Database Maintenance and Cloud Workspace integration */}
         <div className="lg:col-span-5 space-y-6">
           
-          {/* Google Workspace Cloud Integrations Card */}
+          {/* Card 1: Ferramentas de Planilha Excel (100% Offline, Totalmente Funcional) */}
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-5">
-            <div className="border-b border-slate-200 pb-3 flex items-center justify-between">
-              <div>
-                <h2 className="text-base font-bold text-slate-900 flex items-center gap-1.5">
-                  <Cloud className="h-5 w-5 text-indigo-600" />
-                  Nuvem & Google Workspace
-                </h2>
-                <p className="text-xs text-slate-400 mt-0.5">Sincronização Firestore, Google Drive e Google Sheets.</p>
-              </div>
-              {user && (
-                <span className="text-[10px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                  Conectado
-                </span>
-              )}
-            </div>
-
-            {/* Google success notifications */}
-            {googleSuccessMsg && (
-              <div className="p-3 bg-indigo-50 border border-indigo-100 text-indigo-900 rounded-lg text-xs font-semibold flex flex-col gap-1.5">
-                <div className="flex items-center gap-2">
-                  <CheckCircle className="h-4 w-4 text-indigo-600 shrink-0" />
-                  <span>{googleSuccessMsg}</span>
-                </div>
-                {lastExportedSheetUrl && (
-                  <a 
-                    href={lastExportedSheetUrl} 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="text-[11px] text-indigo-600 hover:text-indigo-800 underline font-bold flex items-center gap-1 mt-0.5"
-                  >
-                    <ExternalLink className="h-3 w-3" />
-                    Abrir Planilha no Google Sheets
-                  </a>
-                )}
-                {lastBackupUrl && (
-                  <a 
-                    href={lastBackupUrl} 
-                    target="_blank" 
-                    rel="noreferrer" 
-                    className="text-[11px] text-indigo-600 hover:text-indigo-800 underline font-bold flex items-center gap-1 mt-0.5"
-                  >
-                    <FolderOpen className="h-3 w-3" />
-                    Ver Backup no Google Drive
-                  </a>
-                )}
-              </div>
-            )}
-
-            {!user ? (
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center space-y-3.5">
-                <div className="mx-auto w-10 h-10 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center">
-                  <CloudLightning className="h-5 w-5" />
-                </div>
-                <div className="space-y-1">
-                  <h4 className="text-xs font-bold text-slate-800">Sincronização em Nuvem Desativada</h4>
-                  <p className="text-[11px] text-slate-500 max-w-xs mx-auto">Conecte sua conta do Google para ativar o banco de dados Firebase na nuvem e habilitar exportações automáticas para Planilhas e Drive.</p>
-                </div>
-
-                {/* Google styled button */}
-                <button
-                  onClick={onGoogleLogin}
-                  className="mx-auto flex items-center justify-center gap-2.5 bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-700 py-2 px-4 rounded-lg shadow-xs transition-all text-xs font-bold cursor-pointer"
-                >
-                  <svg className="h-4 w-4" viewBox="0 0 24 24" width="16" height="16">
-                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z" fill="#FBBC05"/>
-                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-                  </svg>
-                  Entrar com o Google
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 flex items-center justify-between text-xs">
-                  <div className="flex items-center gap-2.5">
-                    {user.photoURL ? (
-                      <img src={user.photoURL} alt={user.displayName} className="w-8 h-8 rounded-full border border-slate-200" referrerPolicy="no-referrer" />
-                    ) : (
-                      <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold">
-                        {user.displayName?.[0] || 'G'}
-                      </div>
-                    )}
-                    <div>
-                      <p className="font-bold text-slate-800">{user.displayName || 'Minha Loja'}</p>
-                      <p className="text-[10px] text-slate-500">{user.email}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={onGoogleLogout}
-                    className="py-1 px-2.5 text-[10px] font-bold text-rose-600 hover:bg-rose-50 rounded border border-transparent hover:border-rose-200 transition-colors cursor-pointer"
-                  >
-                    Desconectar
-                  </button>
-                </div>
-
-                {/* Spreadsheet Export blocks */}
-                <div className="space-y-2.5">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Integração com Google Sheets</span>
-                  
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      disabled={exportingProducts}
-                      onClick={handleExportStockToSheets}
-                      className="py-2.5 px-3 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 text-emerald-800 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
-                    >
-                      {exportingProducts ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      ) : (
-                        <FileSpreadsheet className="h-3.5 w-3.5" />
-                      )}
-                      Exportar Estoque
-                    </button>
-
-                    <button
-                      disabled={exportingSales}
-                      onClick={handleExportSalesToSheets}
-                      className="py-2.5 px-3 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 text-indigo-800 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
-                    >
-                      {exportingSales ? (
-                        <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                      ) : (
-                        <FileSpreadsheet className="h-3.5 w-3.5" />
-                      )}
-                      Exportar Vendas
-                    </button>
-                  </div>
-                </div>
-
-                {/* Drive Backups block */}
-                <div className="space-y-2">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Google Drive Cloud Backups</span>
-                  <button
-                    disabled={uploadingBackup}
-                    onClick={handleBackupToDrive}
-                    className="w-full py-2.5 px-4 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer shadow-xs"
-                  >
-                    {uploadingBackup ? (
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                    ) : (
-                      <Cloud className="h-3.5 w-3.5 text-indigo-400" />
-                    )}
-                    Salvar Backup no Google Drive
-                  </button>
-                  <p className="text-[10px] text-slate-400">Envia um arquivo JSON criptografado e seguro com o estado completo de dados da sua loja para sua nuvem pessoal.</p>
-                </div>
-
-                {/* Google Sheet Import block */}
-                <div className="space-y-2.5 border-t border-slate-100 pt-3.5">
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Importar Estoque do Google Sheets</span>
-                  {loadingSpreadsheets ? (
-                    <div className="flex items-center gap-2 py-2 text-xs text-slate-500">
-                      <Loader2 className="h-3.5 w-3.5 animate-spin text-indigo-600" />
-                      <span>Buscando planilhas no Google Drive...</span>
-                    </div>
-                  ) : spreadsheets.length === 0 ? (
-                    <p className="text-[11px] text-slate-400 bg-slate-50 p-2.5 rounded border border-dashed">Nenhuma planilha compatível encontrada no seu Google Drive. Crie ou carregue planilhas para importar produtos.</p>
-                  ) : (
-                    <div className="space-y-2">
-                      <p className="text-[10px] text-slate-500">Selecione uma planilha no seu Google Drive para carregar produtos automaticamente na sua loja.</p>
-                      <div className="flex gap-2">
-                        <select
-                          value={selectedSpreadsheetId}
-                          onChange={(e) => setSelectedSpreadsheetId(e.target.value)}
-                          className="flex-1 text-xs bg-white border border-slate-200 rounded-lg p-2 font-medium"
-                        >
-                          {spreadsheets.map((sheet) => (
-                            <option key={sheet.id} value={sheet.id}>
-                              {sheet.name} ({new Date(sheet.modifiedTime).toLocaleDateString()})
-                            </option>
-                          ))}
-                        </select>
-                        <button
-                          disabled={importingFromSheet || !selectedSpreadsheetId}
-                          onClick={handleImportFromSheets}
-                          className="py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-all disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer"
-                        >
-                          {importingFromSheet ? (
-                            <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                          ) : (
-                            <Upload className="h-3.5 w-3.5" />
-                          )}
-                          Importar
-                        </button>
-                      </div>
-                      <p className="text-[10px] text-indigo-600 font-semibold bg-indigo-50/50 p-2 rounded border border-indigo-100/40">💡 Para que a importação funcione, sua planilha deve conter colunas na Sheet1: A:Código/SKU, B:Nome, C:Categoria, D:Custo, E:Venda, F:Estoque, G:Estoque Mínimo. (O cabeçalho deve estar na linha 1).</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Local Backups & Danger Zone Card */}
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-6">
             <div className="border-b border-slate-200 pb-3">
-              <h2 className="text-base font-bold text-slate-900">Backup Local & Zona de Perigo</h2>
-              <p className="text-xs text-slate-400 mt-0.5">Operações manuais de arquivos offline e exclusão.</p>
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <FileSpreadsheet className="h-5 w-5 text-emerald-600" />
+                Planilhas Excel (.xlsx) & Importação
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">Importe ou exporte dados de produtos e vendas offline instantaneamente.</p>
             </div>
 
-            {/* Feedback triggers for local backups */}
-            {importSuccess && !googleSuccessMsg && (
-              <div id="import-success-box" className="p-3 bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-100 text-xs flex items-center gap-2">
+            {/* Notification indicators */}
+            {importSuccessMsg && (
+              <div className="p-3 bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-100 text-xs flex items-center gap-2">
                 <CheckCircle className="h-4 w-4 shrink-0 text-emerald-600" />
-                <span>Backup local restaurado com sucesso!</span>
+                <span>{importSuccessMsg}</span>
               </div>
             )}
 
             {importError && !googleSuccessMsg && (
-              <div id="import-error-box" className="p-3 bg-rose-50 text-rose-800 rounded-lg border border-rose-100 text-xs flex items-start gap-2">
+              <div className="p-3 bg-rose-50 text-rose-800 rounded-lg border border-rose-100 text-xs flex items-start gap-2">
                 <ShieldAlert className="h-4 w-4 shrink-0 text-rose-600 mt-0.5" />
                 <span>{importError}</span>
               </div>
             )}
 
             <div className="space-y-4">
-              {/* Local Export */}
+              {/* 1. Download Model Template */}
+              <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/60 space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-slate-800 uppercase tracking-wider block">1. Planilha Modelo Oficial</span>
+                  <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.5 rounded uppercase">Recomendado</span>
+                </div>
+                <p className="text-xs text-slate-500 leading-relaxed">
+                  Baixe nosso modelo padrão com as colunas corretas. Preencha seus produtos para que o sistema alinhe todos os preços, custos e estoque perfeitamente.
+                </p>
+                <button
+                  onClick={handleDownloadTemplate}
+                  className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs"
+                >
+                  <Download className="h-4 w-4" />
+                  Baixar Planilha Modelo (.xlsx)
+                </button>
+              </div>
+
+              {/* 2. Import Excel/CSV Sheet */}
+              <div className="space-y-2">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">2. Enviar Planilha Preenchida</span>
+                <input
+                  type="file"
+                  ref={excelInputRef}
+                  accept=".xlsx,.xls,.csv"
+                  onChange={handleImportExcelOrCsv}
+                  className="hidden"
+                />
+                <button
+                  onClick={() => excelInputRef.current?.click()}
+                  disabled={importingExcel}
+                  className="w-full py-2.5 px-4 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 hover:border-indigo-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
+                >
+                  {importingExcel ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Upload className="h-4 w-4" />
+                  )}
+                  Extrair e Carregar Planilha (.xlsx, .csv)
+                </button>
+                <div className="text-[10px] text-slate-400 bg-slate-50 p-2.5 rounded border border-slate-100 space-y-1.5">
+                  <p className="font-bold text-slate-600 uppercase">Colunas esperadas na planilha:</p>
+                  <ul className="list-disc list-inside space-y-0.5 font-mono text-slate-500">
+                    <li>A: Código/SKU</li>
+                    <li>B: Nome do Produto</li>
+                    <li>C: Categoria</li>
+                    <li>D: Preço de Custo</li>
+                    <li>E: Preço de Venda</li>
+                    <li>F: Estoque</li>
+                    <li>G: Estoque Mínimo</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* 3. Local Exports */}
+              <div className="pt-3 border-t border-slate-100 space-y-2.5">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">3. Exportar para Excel (.xlsx)</span>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={handleExportStockToExcel}
+                    className="py-2.5 px-3 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Download className="h-3.5 w-3.5 text-slate-500" />
+                    Exportar Estoque
+                  </button>
+
+                  <button
+                    onClick={handleExportSalesToExcel}
+                    className="py-2.5 px-3 bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-800 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Download className="h-3.5 w-3.5 text-slate-500" />
+                    Exportar Vendas
+                  </button>
+                </div>
+                <p className="text-[10px] text-slate-400 text-center">Gera arquivos compatíveis com o Excel com um clique.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 2: Backup Local JSON & Zona de Perigo */}
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-5">
+            <div className="border-b border-slate-200 pb-3">
+              <h2 className="text-base font-bold text-slate-900">Backup Local & Zona de Perigo</h2>
+              <p className="text-xs text-slate-400 mt-0.5">Operações manuais de arquivos offline e exclusão.</p>
+            </div>
+
+            <div className="space-y-4">
+              {/* Local JSON Backup Export */}
               <div>
-                <p className="text-xs font-bold text-slate-500 uppercase mb-2">Exportar Dados Offline</p>
+                <p className="text-xs font-bold text-slate-500 uppercase mb-1.5">Exportar Backup Completo</p>
                 <button
                   id="export-db-btn"
                   onClick={handleExportDatabase}
-                  className="w-full py-2.5 px-4 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors"
+                  className="w-full py-2 px-3 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors"
                 >
-                  <Download className="h-3.5 w-3.5 text-slate-500" />
+                  <Download className="h-3.5 w-3.5 text-slate-400" />
                   Baixar Backup JSON (.json)
                 </button>
-                <p className="text-[10px] text-slate-400 mt-1">Gera um arquivo offline para arquivamento no seu computador local.</p>
+                <p className="text-[10px] text-slate-400 mt-1">Salva todo o estado (estoque, categorias e vendas) em um único arquivo JSON.</p>
               </div>
 
-              {/* Local Import */}
+              {/* Local JSON Backup Import */}
               <div>
-                <p className="text-xs font-bold text-slate-500 uppercase mb-2">Restaurar Dados Offline</p>
+                <p className="text-xs font-bold text-slate-500 uppercase mb-1.5">Restaurar Backup Completo</p>
                 <input
                   type="file"
                   ref={fileInputRef}
@@ -830,62 +1437,189 @@ export default function Reports({
                 <button
                   id="import-db-trigger"
                   onClick={() => fileInputRef.current?.click()}
-                  className="w-full py-2.5 px-4 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors"
+                  className="w-full py-2 px-3 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors"
                 >
-                  <Upload className="h-3.5 w-3.5 text-slate-500" />
+                  <Upload className="h-3.5 w-3.5 text-slate-400" />
                   Carregar Backup JSON (.json)
                 </button>
-                <p className="text-[10px] text-slate-400 mt-1">Substitui o estado atual do sistema com os dados de um arquivo local.</p>
               </div>
 
-              {/* Excel / CSV Import */}
-              <div className="border-t border-slate-100 pt-4">
-                <p className="text-xs font-bold text-indigo-600 uppercase mb-2 flex items-center gap-1.5">
-                  <FileSpreadsheet className="h-4 w-4" />
-                  Extrair de Planilha (Excel / CSV)
-                </p>
-                <input
-                  type="file"
-                  ref={excelInputRef}
-                  accept=".xlsx,.xls,.csv"
-                  onChange={handleImportExcelOrCsv}
-                  className="hidden"
-                />
-                <button
-                  id="import-excel-trigger"
-                  onClick={() => excelInputRef.current?.click()}
-                  disabled={importingExcel}
-                  className="w-full py-2.5 px-4 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 hover:border-indigo-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer"
-                >
-                  {importingExcel ? (
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                  ) : (
-                    <Upload className="h-3.5 w-3.5" />
-                  )}
-                  Extrair e Carregar Planilha (.xlsx, .csv)
-                </button>
-                <p className="text-[10px] text-slate-500 mt-1.5 leading-relaxed">
-                  💡 Carregue qualquer arquivo <strong>.xlsx, .xls ou .csv</strong>. O importador inteligente detectará automaticamente as colunas de SKU, Nome, Categoria, Preço de Custo, Preço de Venda, Estoque e Estoque Mínimo.
-                </p>
-              </div>
-
-              <hr className="border-slate-100 my-4" />
+              <hr className="border-slate-100 my-2" />
 
               {/* Danger Zone */}
-              <div className="space-y-2 bg-rose-50/20 p-3 rounded-lg border border-rose-100/40">
+              <div className="space-y-1.5 bg-rose-50/20 p-3 rounded-lg border border-rose-100/40">
                 <span className="text-[10px] font-bold text-rose-700 uppercase tracking-wider block">Zona de Perigo</span>
                 <p className="text-[10px] text-slate-500">Exclusão permanente e redefinição de dados.</p>
                 
                 <button
                   id="reset-db-btn"
                   onClick={handleResetClick}
-                  className="w-full py-2 px-3 bg-white hover:bg-rose-50 border border-rose-200 hover:border-rose-300 text-rose-700 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all mt-2 cursor-pointer"
+                  className="w-full py-2 px-3 bg-white hover:bg-rose-50 border border-rose-200 hover:border-rose-300 text-rose-700 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1.5 transition-all mt-1 cursor-pointer"
                 >
                   <RefreshCcw className="h-3 w-3" />
                   Zerar Todo o Banco de Dados
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Card 3: Google Cloud (Sincronização opcional) */}
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div className="border-b border-slate-200 pb-2 flex items-center justify-between">
+              <div>
+                <h2 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                  <Cloud className="h-4 w-4 text-indigo-500" />
+                  Sincronização em Nuvem (Opcional)
+                </h2>
+                <p className="text-[10px] text-slate-400">Salve no Firestore e exporte para Google Sheets.</p>
+              </div>
+              {user && (
+                <span className="text-[9px] bg-emerald-50 text-emerald-700 border border-emerald-200 px-1.5 py-0.5 rounded-full font-bold flex items-center gap-0.5">
+                  <span className="w-1 h-1 bg-emerald-500 rounded-full animate-pulse"></span>
+                  Nuvem Ativa
+                </span>
+              )}
+            </div>
+
+            {/* Iframe Cookie Policy / Auto-logout Alert */}
+            {isInIframe && (
+              <div className="p-2.5 bg-amber-50 border border-amber-200 text-amber-900 rounded-lg text-[10px] space-y-1">
+                <p className="font-bold flex items-center gap-1">
+                  <ShieldAlert className="h-3 w-3 text-amber-600 shrink-0" />
+                  Visualização em Painel (Iframe)
+                </p>
+                <p className="leading-relaxed text-slate-600">
+                  Os navegadores (como o Chrome) bloqueiam cookies de login em telas embutidas. Se o site desconectar sozinho, por favor <strong>abra o app em uma nova aba</strong> usando o botão do topo para ter login persistente!
+                </p>
+              </div>
+            )}
+
+            {/* Google success notifications */}
+            {googleSuccessMsg && (
+              <div className="p-2.5 bg-indigo-50 border border-indigo-100 text-indigo-900 rounded-lg text-[11px] font-semibold flex flex-col gap-1">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle className="h-3.5 w-3.5 text-indigo-600 shrink-0" />
+                  <span>{googleSuccessMsg}</span>
+                </div>
+                {lastExportedSheetUrl && (
+                  <a 
+                    href={lastExportedSheetUrl} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-[10px] text-indigo-600 hover:text-indigo-800 underline font-bold flex items-center gap-0.5"
+                  >
+                    <ExternalLink className="h-3 w-3" />
+                    Abrir Planilha no Google Sheets
+                  </a>
+                )}
+                {lastBackupUrl && (
+                  <a 
+                    href={lastBackupUrl} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="text-[10px] text-indigo-600 hover:text-indigo-800 underline font-bold flex items-center gap-0.5"
+                  >
+                    <FolderOpen className="h-3 w-3" />
+                    Ver Backup no Google Drive
+                  </a>
+                )}
+              </div>
+            )}
+
+            {!user ? (
+              <div className="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center space-y-2.5">
+                <p className="text-[10px] text-slate-500 leading-relaxed">Conecte sua conta do Google para ativar o backup automático na nuvem e exportar para planilhas online.</p>
+                <button
+                  onClick={onGoogleLogin}
+                  className="mx-auto flex items-center justify-center gap-2 bg-white border border-slate-300 hover:border-slate-400 hover:bg-slate-50 text-slate-700 py-1.5 px-3 rounded-lg shadow-xs transition-all text-[11px] font-bold cursor-pointer"
+                >
+                  <svg className="h-3.5 w-3.5" viewBox="0 0 24 24">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.85z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.85c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                  </svg>
+                  Conectar Conta Google
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <div className="bg-slate-50 p-2 rounded border border-slate-100 flex items-center justify-between text-[11px]">
+                  <div className="flex items-center gap-1.5 min-w-0">
+                    {user.photoURL && (
+                      <img src={user.photoURL} alt={user.displayName} className="w-6 h-6 rounded-full border" referrerPolicy="no-referrer" />
+                    )}
+                    <span className="font-bold truncate text-slate-700">{user.displayName || 'Conectado'}</span>
+                  </div>
+                  <button
+                    onClick={onGoogleLogout}
+                    className="text-[9px] font-bold text-rose-600 hover:bg-rose-50 px-1.5 py-0.5 rounded border transition-colors cursor-pointer"
+                  >
+                    Desconectar
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    disabled={exportingProducts}
+                    onClick={handleExportStockToSheets}
+                    className="py-1.5 px-2.5 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 text-emerald-800 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors disabled:opacity-50 cursor-pointer"
+                  >
+                    Exportar Estoque (Sheets)
+                  </button>
+
+                  <button
+                    disabled={exportingSales}
+                    onClick={handleExportSalesToSheets}
+                    className="py-1.5 px-2.5 bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 text-indigo-800 rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 transition-colors disabled:opacity-50 cursor-pointer"
+                  >
+                    Exportar Vendas (Sheets)
+                  </button>
+                </div>
+
+                <button
+                  disabled={uploadingBackup}
+                  onClick={handleBackupToDrive}
+                  className="w-full py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-[11px] font-bold flex items-center justify-center gap-1.5 transition-colors disabled:opacity-50 cursor-pointer"
+                >
+                  Salvar Backup no Google Drive
+                </button>
+
+                {/* Import from Drive */}
+                <div className="space-y-2 border-t border-slate-100 pt-3">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Importar de Planilha Drive</span>
+                  {loadingSpreadsheets ? (
+                    <div className="flex items-center gap-1 py-1 text-[11px] text-slate-500">
+                      <Loader2 className="h-3 w-3 animate-spin text-indigo-600" />
+                      <span>Buscando planilhas...</span>
+                    </div>
+                  ) : spreadsheets.length === 0 ? (
+                    <p className="text-[10px] text-slate-400">Nenhuma planilha encontrada no seu Google Drive.</p>
+                  ) : (
+                    <div className="flex gap-2">
+                      <select
+                        value={selectedSpreadsheetId}
+                        onChange={(e) => setSelectedSpreadsheetId(e.target.value)}
+                        className="flex-1 text-[11px] bg-white border border-slate-200 rounded-lg p-1.5 font-medium"
+                      >
+                        {spreadsheets.map((sheet) => (
+                          <option key={sheet.id} value={sheet.id}>
+                            {sheet.name}
+                          </option>
+                        ))}
+                      </select>
+                      <button
+                        disabled={importingFromSheet || !selectedSpreadsheetId}
+                        onClick={handleImportFromSheets}
+                        className="py-1.5 px-2.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold flex items-center justify-center gap-1 cursor-pointer"
+                      >
+                        Carregar
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
 
         </div>

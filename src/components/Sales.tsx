@@ -31,6 +31,7 @@ interface SalesProps {
 export default function Sales({ products, onRegisterSale, onNavigate }: SalesProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [allowNegativeStock, setAllowNegativeStock] = useState(true);
 
   // Cart state
   const [cart, setCart] = useState<{
@@ -68,9 +69,10 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
 
   // Add to cart helper
   const handleAddToCart = (product: Product) => {
-    if (product.stock <= 0) {
-      setErrorMessage(`O produto "${product.name}" está esgotado!`);
-      setTimeout(() => setErrorMessage(null), 4000);
+    const isOut = product.stock <= 0;
+    if (isOut && !allowNegativeStock) {
+      setErrorMessage(`O produto "${product.name}" está com estoque esgotado! Ative "Permitir venda sem estoque" no topo para vendê-lo mesmo assim.`);
+      setTimeout(() => setErrorMessage(null), 5000);
       return;
     }
 
@@ -78,8 +80,8 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       const existingIndex = prev.findIndex(item => item.product.id === product.id);
       if (existingIndex > -1) {
         const item = prev[existingIndex];
-        // Check stock
-        if (item.quantity >= product.stock) {
+        // Check stock if strict control is on
+        if (!allowNegativeStock && item.quantity >= product.stock) {
           setErrorMessage(`Estoque máximo atingido para "${product.name}" (${product.stock} un disponíveis).`);
           setTimeout(() => setErrorMessage(null), 4000);
           return prev;
@@ -107,7 +109,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       return prev.map(item => {
         if (item.product.id === productId) {
           const maxStock = item.product.stock;
-          if (quantity > maxStock) {
+          if (!allowNegativeStock && quantity > maxStock) {
             setErrorMessage(`Estoque máximo atingido para "${item.product.name}" (${maxStock} un).`);
             setTimeout(() => setErrorMessage(null), 4000);
             return { ...item, quantity: maxStock };
@@ -149,16 +151,18 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       return;
     }
 
-    // Double check stock levels
-    for (const item of cart) {
-      const realProduct = products.find(p => p.id === item.product.id);
-      if (!realProduct) {
-        setErrorMessage(`Produto "${item.product.name}" não foi encontrado no estoque.`);
-        return;
-      }
-      if (item.quantity > realProduct.stock) {
-        setErrorMessage(`Inconsistência de estoque: "${item.product.name}" possui apenas ${realProduct.stock} unidades disponíveis.`);
-        return;
+    // Double check stock levels if strict mode is active
+    if (!allowNegativeStock) {
+      for (const item of cart) {
+        const realProduct = products.find(p => p.id === item.product.id);
+        if (!realProduct) {
+          setErrorMessage(`Produto "${item.product.name}" não foi encontrado no estoque.`);
+          return;
+        }
+        if (item.quantity > realProduct.stock) {
+          setErrorMessage(`Inconsistência de estoque: "${item.product.name}" possui apenas ${realProduct.stock} unidades disponíveis.`);
+          return;
+        }
       }
     }
 
@@ -200,9 +204,25 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-5">
-        <h1 id="pos-title" className="text-2xl font-bold tracking-tight text-slate-900">Frente de Caixa (PDV)</h1>
-        <p className="text-sm text-slate-500 mt-1">Registre as vendas rápidas de balcão da sua loja com baixa automática no estoque.</p>
+      <div className="border-b border-slate-200 pb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 id="pos-title" className="text-2xl font-bold tracking-tight text-slate-900">Frente de Caixa (PDV)</h1>
+          <p className="text-sm text-slate-500 mt-1">Registre as vendas rápidas de balcão da sua loja com baixa automática no estoque.</p>
+        </div>
+        
+        {/* Toggle option for selling without stock constraint */}
+        <div className="flex items-center gap-2.5 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto shadow-xs">
+          <label className="text-xs font-bold text-slate-600 cursor-pointer select-none" htmlFor="allow-negative-stock-toggle">
+            Permitir venda sem estoque
+          </label>
+          <input
+            id="allow-negative-stock-toggle"
+            type="checkbox"
+            checked={allowNegativeStock}
+            onChange={(e) => setAllowNegativeStock(e.target.checked)}
+            className="w-4 h-4 text-indigo-600 bg-white border-slate-300 rounded-sm focus:ring-indigo-500 cursor-pointer"
+          />
+        </div>
       </div>
 
       {/* Message banners */}
@@ -274,9 +294,9 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
               return (
                 <div 
                   key={product.id}
-                  onClick={() => !isOut && handleAddToCart(product)}
+                  onClick={() => handleAddToCart(product)}
                   className={`bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between relative group select-none ${
-                    isOut ? 'opacity-60 cursor-not-allowed border-rose-100 bg-rose-50/5' : 'hover:border-indigo-500'
+                    isOut && !allowNegativeStock ? 'opacity-75 border-rose-250 bg-rose-50/10' : 'hover:border-indigo-500'
                   }`}
                 >
                   {/* Cart count badge */}

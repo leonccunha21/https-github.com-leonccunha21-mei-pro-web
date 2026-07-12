@@ -61,22 +61,24 @@ export default function App() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loadingCloud, setLoadingCloud] = useState<boolean>(false);
 
-  // Initial local storage fallback loading with smart demo data detector
+  // Initial local storage fallback loading with force clean
   useEffect(() => {
     if (!user) {
-      let savedProducts = localStorage.getItem('loja_products');
-      let savedSales = localStorage.getItem('loja_sales');
-      let savedCategories = localStorage.getItem('loja_categories');
-
-      // Smart detector to automatically clear previous demo data
-      if (savedProducts && savedProducts.includes('ELE-SW01')) {
-        savedProducts = null;
-        savedSales = null;
-        savedCategories = null;
+      const isCleanedLocal = localStorage.getItem('force_clean_database_v3');
+      if (!isCleanedLocal) {
         localStorage.removeItem('loja_products');
         localStorage.removeItem('loja_sales');
         localStorage.removeItem('loja_categories');
+        localStorage.setItem('force_clean_database_v3', 'true');
+        setProducts([]);
+        setSales([]);
+        setCategories([]);
+        return;
       }
+
+      const savedProducts = localStorage.getItem('loja_products');
+      const savedSales = localStorage.getItem('loja_sales');
+      const savedCategories = localStorage.getItem('loja_categories');
 
       if (savedProducts) {
         setProducts(JSON.parse(savedProducts));
@@ -110,23 +112,42 @@ export default function App() {
       const cloudSales = await loadUserSales(uid);
 
       if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
+        // We have cloud data, so load it!
         setProducts(cloudProducts);
         setCategories(cloudCategories);
         setSales(cloudSales);
       } else {
-        // First login, upload current local state to Cloud so user has their data immediately
-        for (const p of products) {
-          await saveUserProduct(uid, p);
-        }
-        for (const c of categories) {
-          await saveUserCategory(uid, c);
-        }
-        for (const s of sales) {
-          await saveUserSale(uid, s);
+        // Cloud database is empty. If the user has local data, upload it so they don't lose it!
+        const localProducts = localStorage.getItem('loja_products');
+        const localSales = localStorage.getItem('loja_sales');
+        const localCategories = localStorage.getItem('loja_categories');
+
+        const parsedProducts: Product[] = localProducts ? JSON.parse(localProducts) : products;
+        const parsedSales: Sale[] = localSales ? JSON.parse(localSales) : sales;
+        const parsedCategories: Category[] = localCategories ? JSON.parse(localCategories) : categories;
+
+        if (parsedProducts.length > 0 || parsedCategories.length > 0 || parsedSales.length > 0) {
+          console.log("Sincronizando dados locais existentes para a nuvem recém-conectada...");
+          for (const p of parsedProducts) {
+            await saveUserProduct(uid, p);
+          }
+          for (const c of parsedCategories) {
+            await saveUserCategory(uid, c);
+          }
+          for (const s of parsedSales) {
+            await saveUserSale(uid, s);
+          }
+          setProducts(parsedProducts);
+          setCategories(parsedCategories);
+          setSales(parsedSales);
+        } else {
+          setProducts([]);
+          setCategories([]);
+          setSales([]);
         }
       }
     } catch (err) {
-      console.error("Erro ao carregar dados da nuvem:", err);
+      console.error("Erro ao carregar ou sincronizar dados da nuvem:", err);
     } finally {
       setLoadingCloud(false);
     }

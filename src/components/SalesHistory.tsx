@@ -195,8 +195,11 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                       </td>
 
                       {/* Items count */}
-                      <td className="py-3 px-4 text-center font-mono font-medium text-slate-600">
-                        {totalItems} un
+                      <td className="py-3 px-4">
+                        <span className="font-mono font-medium text-slate-700 block">{totalItems} un</span>
+                        <span className="text-[10px] text-slate-400 block max-w-[180px] truncate mt-0.5" title={sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', ')}>
+                          {sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', ')}
+                        </span>
                       </td>
 
                       {/* Payment method */}
