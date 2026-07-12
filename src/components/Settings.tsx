@@ -16,7 +16,10 @@ import {
   Store,
   User,
   Save,
-  CheckCircle2
+  CheckCircle2,
+  HardDrive,
+  AlertTriangle,
+  Globe
 } from 'lucide-react';
 import {
   createSpreadsheet,

@@ -21,7 +21,7 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ products, sales, onNavigate }: DashboardProps) {
-  const [timeRange, setTimeRange] = useState<'1day' | '30days'>('1day');
+  const [timeRange, setTimeRange] = useState<'1day' | '7days' | '30days'>('1day');
 
   // Filter completed sales
   const completedSales = sales.filter(s => s.status === 'completed');
@@ -69,7 +69,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
 
   // Prepare dynamic chart data for last 7 days
   const getChartData = () => {
-    const daysToCount = timeRange === '1day' ? 1 : 30;
+    const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : 30;
     const data: { dateLabel: string; revenue: number; profit: number; rawDate: Date }[] = [];
     
     for (let i = daysToCount - 1; i >= 0; i--) {
@@ -157,6 +157,15 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
               }`}
             >
               Último Dia
+            </button>
+            <button
+              id="range-7days"
+              onClick={() => setTimeRange('7days')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                timeRange === '7days' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              Últimos 7 Dias
             </button>
             <button
               id="range-30days"

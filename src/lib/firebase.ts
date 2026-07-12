@@ -67,6 +67,7 @@ export const googleSignIn = async (): Promise<{ user: User; accessToken: string 
     }
 
     cachedAccessToken = credential.accessToken;
+    tokenObtainedAt = Date.now();
     if (typeof window !== 'undefined') {
       localStorage.setItem('mei_pro_google_access_token', cachedAccessToken);
     }
@@ -79,12 +80,54 @@ export const googleSignIn = async (): Promise<{ user: User; accessToken: string 
   }
 };
 
-// Retrieve cached access token
+// Token expiry tracking
+let tokenObtainedAt: number = 0;
+const TOKEN_LIFETIME_MS = 55 * 60 * 1000; // 55 minutes (tokens last ~1h)
+
+// Retrieve cached access token, refresh if expired
 export const getAccessToken = async (): Promise<string | null> => {
   if (typeof window !== 'undefined' && !cachedAccessToken) {
     cachedAccessToken = localStorage.getItem('mei_pro_google_access_token');
   }
+
+  // If token exists but may be expired, try to refresh via re-authentication
+  if (cachedAccessToken && tokenObtainedAt > 0 && Date.now() - tokenObtainedAt > TOKEN_LIFETIME_MS) {
+    console.log('Token expirado, tentando refresh...');
+    const refreshed = await refreshAccessToken();
+    if (refreshed) return refreshed;
+  }
+
   return cachedAccessToken;
+};
+
+// Try to refresh the Google OAuth access token by re-authenticating silently
+const refreshAccessToken = async (): Promise<string | null> => {
+  try {
+    const currentUser = auth.currentUser;
+    if (!currentUser) return null;
+
+    // Re-authenticate with popup to get fresh token
+    const credential = await signInWithPopup(auth, provider);
+    const newCredential = GoogleAuthProvider.credentialFromResult(credential);
+    if (newCredential?.accessToken) {
+      cachedAccessToken = newCredential.accessToken;
+      tokenObtainedAt = Date.now();
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('mei_pro_google_access_token', cachedAccessToken);
+      }
+      console.log('Token refreshed com sucesso');
+      return cachedAccessToken;
+    }
+  } catch (err) {
+    console.error('Falha ao refresh token:', err);
+    // If refresh fails, clear token so user re-authenticates manually
+    cachedAccessToken = null;
+    tokenObtainedAt = 0;
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('mei_pro_google_access_token');
+    }
+  }
+  return null;
 };
 
 // Sign out trigger
