@@ -28,6 +28,7 @@ import {
   Loader2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import appVersion from '../package.json';
 
 // Firebase Imports
 import { 
@@ -60,22 +61,12 @@ export default function App() {
   const [user, setUser] = useState<any>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [loadingCloud, setLoadingCloud] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState<string | null>(null);
+  const loadingCloudRef = React.useRef<boolean>(false);
 
-  // Initial local storage fallback loading with force clean
+  // Initial local storage fallback loading
   useEffect(() => {
     if (!user) {
-      const isCleanedLocal = localStorage.getItem('force_clean_database_v3');
-      if (!isCleanedLocal) {
-        localStorage.removeItem('loja_products');
-        localStorage.removeItem('loja_sales');
-        localStorage.removeItem('loja_categories');
-        localStorage.setItem('force_clean_database_v3', 'true');
-        setProducts([]);
-        setSales([]);
-        setCategories([]);
-        return;
-      }
-
       const savedProducts = localStorage.getItem('loja_products');
       const savedSales = localStorage.getItem('loja_sales');
       const savedCategories = localStorage.getItem('loja_categories');
@@ -105,6 +96,8 @@ export default function App() {
 
   // Sync Cloud Data
   const loadCloudData = async (uid: string) => {
+    if (loadingCloudRef.current) return;
+    loadingCloudRef.current = true;
     setLoadingCloud(true);
     try {
       const cloudProducts = await loadUserProducts(uid);
@@ -112,43 +105,49 @@ export default function App() {
       const cloudSales = await loadUserSales(uid);
 
       if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
-        // We have cloud data, so load it!
         setProducts(cloudProducts);
         setCategories(cloudCategories);
         setSales(cloudSales);
+        localStorage.setItem('loja_products', JSON.stringify(cloudProducts));
+        localStorage.setItem('loja_sales', JSON.stringify(cloudSales));
+        localStorage.setItem('loja_categories', JSON.stringify(cloudCategories));
       } else {
-        // Cloud database is empty. If the user has local data, upload it so they don't lose it!
         const localProducts = localStorage.getItem('loja_products');
         const localSales = localStorage.getItem('loja_sales');
         const localCategories = localStorage.getItem('loja_categories');
 
-        const parsedProducts: Product[] = localProducts ? JSON.parse(localProducts) : products;
-        const parsedSales: Sale[] = localSales ? JSON.parse(localSales) : sales;
-        const parsedCategories: Category[] = localCategories ? JSON.parse(localCategories) : categories;
+        const parsedProducts: Product[] = localProducts ? JSON.parse(localProducts) : initialProducts;
+        const parsedSales: Sale[] = localSales ? JSON.parse(localSales) : initialSales;
+        const parsedCategories: Category[] = localCategories ? JSON.parse(localCategories) : initialCategories;
 
-        if (parsedProducts.length > 0 || parsedCategories.length > 0 || parsedSales.length > 0) {
-          console.log("Sincronizando dados locais existentes para a nuvem recém-conectada...");
-          for (const p of parsedProducts) {
-            await saveUserProduct(uid, p);
-          }
-          for (const c of parsedCategories) {
-            await saveUserCategory(uid, c);
-          }
-          for (const s of parsedSales) {
-            await saveUserSale(uid, s);
-          }
-          setProducts(parsedProducts);
-          setCategories(parsedCategories);
-          setSales(parsedSales);
-        } else {
-          setProducts([]);
-          setCategories([]);
-          setSales([]);
+        // Always set state first so the user sees data immediately
+        setProducts(parsedProducts);
+        setCategories(parsedCategories);
+        setSales(parsedSales);
+        localStorage.setItem('loja_products', JSON.stringify(parsedProducts));
+        localStorage.setItem('loja_sales', JSON.stringify(parsedSales));
+        localStorage.setItem('loja_categories', JSON.stringify(parsedCategories));
+
+        // Then upload to cloud in background (resilient - individual failures don't block)
+        console.log(`Enviando ${parsedProducts.length} produtos, ${parsedCategories.length} categorias, ${parsedSales.length} vendas para a nuvem...`);
+        let failedProducts = 0;
+        for (const p of parsedProducts) {
+          try { await saveUserProduct(uid, p); } catch { failedProducts++; }
         }
+        let failedCategories = 0;
+        for (const c of parsedCategories) {
+          try { await saveUserCategory(uid, c); } catch { failedCategories++; }
+        }
+        let failedSales = 0;
+        for (const s of parsedSales) {
+          try { await saveUserSale(uid, s); } catch { failedSales++; }
+        }
+        console.log(`Upload concluído. Falhas: ${failedProducts} produtos, ${failedCategories} categorias, ${failedSales} vendas`);
       }
     } catch (err) {
       console.error("Erro ao carregar ou sincronizar dados da nuvem:", err);
     } finally {
+      loadingCloudRef.current = false;
       setLoadingCloud(false);
     }
   };
@@ -236,15 +235,26 @@ export default function App() {
 
   // --- GOOGLE AUTH HANDLERS ---
   const handleGoogleLogin = async () => {
+    setLoginError(null);
     try {
       const result = await googleSignIn();
       if (result) {
         setUser(result.user);
         setAccessToken(result.accessToken);
-        await loadCloudData(result.user.uid);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erro no login com Google:", error);
+      let msg = 'Erro ao fazer login com Google.';
+      if (error?.code === 'auth/unauthorized-domain') {
+        msg = 'Domínio não autorizado. Adicione este domínio no Firebase Console > Authentication > Settings > Authorized Domains.';
+      } else if (error?.code === 'auth/popup-blocked') {
+        msg = 'Popup bloqueado pelo navegador. Permita popups para este site.';
+      } else if (error?.code === 'auth/popup-closed-by-user') {
+        msg = 'Janela de login fechada antes de concluir.';
+      } else if (error?.message) {
+        msg = 'Erro: ' + error.message;
+      }
+      setLoginError(msg);
     }
   };
 
@@ -519,17 +529,20 @@ export default function App() {
             <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex flex-col gap-2">
               <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Modo Offline</p>
               <p className="text-[10px] text-slate-400 leading-normal">Dados salvos localmente. Conecte sua conta para salvar na nuvem e usar planilhas.</p>
+              {loginError && (
+                <p className="text-[10px] text-rose-600 leading-normal bg-rose-50 p-2 rounded-lg border border-rose-100">{loginError}</p>
+              )}
               <button 
                 onClick={handleGoogleLogin}
                 className="w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
               >
-                Conectar Conta
+                Conectar Conta Google
               </button>
             </div>
           )}
         </div>
 
-        {/* Footer info box (time and date) */}
+        {/* Footer info box (time, date and version) */}
         <div className="p-4 border-t border-slate-100 bg-slate-50/50 text-xs text-slate-500 space-y-1.5 hidden md:block m-4 rounded-xl border border-slate-200">
           <div className="flex items-center gap-2">
             <Clock className="h-3.5 w-3.5 text-indigo-600" />
@@ -538,6 +551,7 @@ export default function App() {
           <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
             {new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'short' })}
           </p>
+          <p className="text-[10px] text-slate-300 font-mono mt-1">v{appVersion.version}</p>
         </div>
       </aside>
 

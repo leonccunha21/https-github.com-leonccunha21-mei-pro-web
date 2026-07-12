@@ -25,19 +25,38 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'cancelled'>('all');
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
+  const [showProductSummary, setShowProductSummary] = useState(false);
   
   // Selected sale for detail modal
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+
+  // Product sales summary
+  const productSummary = useMemo(() => {
+    const map: Record<string, { name: string; qty: number; revenue: number; cost: number }> = {};
+    sales.filter(s => s.status === 'completed').forEach(sale => {
+      sale.items.forEach(item => {
+        const key = item.productName.toLowerCase();
+        if (!map[key]) map[key] = { name: item.productName, qty: 0, revenue: 0, cost: 0 };
+        map[key].qty += item.quantity;
+        map[key].revenue += item.total;
+        map[key].cost += item.costPrice * item.quantity;
+      });
+    });
+    return Object.values(map).sort((a, b) => b.qty - a.qty);
+  }, [sales]);
 
   // Filter sales
   const filteredSales = useMemo(() => {
     return [...sales]
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // Newest first
       .filter(s => {
-        // Search by Client Name or Sale ID
+        // Search by Client Name, Sale ID, or Product Name
         const clientNameMatch = s.clientName?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
         const idMatch = s.id.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesSearch = searchQuery === '' || clientNameMatch || idMatch;
+        const productNameMatch = s.items.some(item => 
+          item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        const matchesSearch = searchQuery === '' || clientNameMatch || idMatch || productNameMatch;
 
         // Status match
         const matchesStatus = statusFilter === 'all' || s.status === statusFilter;
@@ -95,7 +114,7 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
           <input
             id="sales-search"
             type="text"
-            placeholder="Buscar por nome do cliente ou código da venda..."
+            placeholder="Buscar por cliente, produto ou código da venda..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 hover:bg-slate-100/50 focus:bg-white text-slate-900 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
@@ -135,6 +154,56 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
           </select>
         </div>
       </div>
+
+      {/* Product Summary Toggle */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setShowProductSummary(!showProductSummary)}
+          className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-colors ${
+            showProductSummary 
+              ? 'bg-indigo-50 border-indigo-200 text-indigo-700' 
+              : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+          }`}
+        >
+          {showProductSummary ? 'Ocultar Resumo' : 'Ver Resumo por Produto'} ({productSummary.length} produtos)
+        </button>
+      </div>
+
+      {/* Product Summary Table */}
+      {showProductSummary && (
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="p-4 border-b border-slate-200 bg-slate-50">
+            <h3 className="text-sm font-bold text-slate-900">Produtos Mais Vendidos (Resumo Geral)</h3>
+            <p className="text-xs text-slate-400 mt-0.5">Lista consolidada de todos os produtos vendidos com quantidades e valores.</p>
+          </div>
+          <div className="overflow-x-auto max-h-80">
+            <table className="w-full text-left border-collapse">
+              <thead className="sticky top-0 bg-white">
+                <tr className="border-b border-slate-200 text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  <th className="py-2 px-4">#</th>
+                  <th className="py-2 px-4">Produto</th>
+                  <th className="py-2 px-4 text-center">Qtd Vendida</th>
+                  <th className="py-2 px-4 text-right">Faturamento</th>
+                  <th className="py-2 px-4 text-right">Custo</th>
+                  <th className="py-2 px-4 text-right">Lucro</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-xs">
+                {productSummary.map((item, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50/50">
+                    <td className="py-1.5 px-4 font-mono text-slate-400">{idx + 1}</td>
+                    <td className="py-1.5 px-4 font-semibold text-slate-900">{item.name}</td>
+                    <td className="py-1.5 px-4 text-center font-mono">{item.qty}</td>
+                    <td className="py-1.5 px-4 text-right font-mono">{item.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-1.5 px-4 text-right font-mono text-slate-500">{item.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-1.5 px-4 text-right font-mono text-emerald-600 font-bold">{(item.revenue - item.cost).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Sales List Table */}
       <div id="sales-table-card" className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">

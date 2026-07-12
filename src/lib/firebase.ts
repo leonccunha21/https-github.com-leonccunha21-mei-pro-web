@@ -5,15 +5,21 @@ import {
   GoogleAuthProvider, 
   signOut, 
   onAuthStateChanged, 
-  User 
+  User,
+  connectAuthEmulator
 } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+
+// Use named database if specified, otherwise default
+const dbId = firebaseConfig.firestoreDatabaseId && firebaseConfig.firestoreDatabaseId !== '(default)' 
+  ? firebaseConfig.firestoreDatabaseId 
+  : undefined;
+export const db = dbId ? getFirestore(app, dbId) : getFirestore(app);
 
 // Setup OAuth Google Provider
 export const provider = new GoogleAuthProvider();
