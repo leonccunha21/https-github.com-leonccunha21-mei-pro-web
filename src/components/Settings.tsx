@@ -13,9 +13,10 @@ import {
   FolderOpen,
   Loader2,
   Settings as SettingsIcon,
-  HardDrive,
-  Globe,
-  AlertTriangle
+  Store,
+  User,
+  Save,
+  CheckCircle2
 } from 'lucide-react';
 import {
   createSpreadsheet,
@@ -25,6 +26,30 @@ import {
   exportSpreadsheetAsArrayBuffer,
   GoogleDriveFile
 } from '../lib/googleApi';
+
+export interface StoreInfo {
+  name: string;
+  cnpj: string;
+  phone: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  ownerName: string;
+  notes: string;
+}
+
+const defaultStoreInfo: StoreInfo = {
+  name: 'ZM Store',
+  cnpj: '',
+  phone: '',
+  email: '',
+  address: '',
+  city: '',
+  state: '',
+  ownerName: '',
+  notes: ''
+};
 
 function parseProductsSheet(rows: any[][]): { importedProducts: Product[]; categoriesFromProducts: string[] } {
   if (!rows || rows.length < 2) {
@@ -403,6 +428,19 @@ export default function Settings({
 }: SettingsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const excelInputRef = useRef<HTMLInputElement>(null);
+
+  // Store profile
+  const [storeInfo, setStoreInfo] = useState<StoreInfo>(() => {
+    const saved = localStorage.getItem('zm_store_info');
+    return saved ? JSON.parse(saved) : defaultStoreInfo;
+  });
+  const [storeSaved, setStoreSaved] = useState(false);
+
+  const handleSaveStoreInfo = () => {
+    localStorage.setItem('zm_store_info', JSON.stringify(storeInfo));
+    setStoreSaved(true);
+    setTimeout(() => setStoreSaved(false), 3000);
+  };
 
   const [importSuccessMsg, setImportSuccessMsg] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
@@ -793,6 +831,69 @@ export default function Settings({
           Configurações
         </h1>
         <p className="text-sm text-slate-500 mt-1">Importe, exporte, faça backup e gerencie sua conta.</p>
+      </div>
+
+      {/* Store Profile */}
+      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div className="border-b border-slate-200 pb-3">
+          <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+            <Store className="h-5 w-5 text-indigo-600" />
+            Perfil da Loja
+          </h2>
+          <p className="text-xs text-slate-400 mt-0.5">Informações que aparecem nos recibos e documentos.</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Nome da Loja</label>
+            <input type="text" value={storeInfo.name} onChange={e => setStoreInfo({ ...storeInfo, name: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">CNPJ</label>
+            <input type="text" value={storeInfo.cnpj} onChange={e => setStoreInfo({ ...storeInfo, cnpj: e.target.value })} placeholder="00.000.000/0000-00" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Telefone</label>
+            <input type="text" value={storeInfo.phone} onChange={e => setStoreInfo({ ...storeInfo, phone: e.target.value })} placeholder="(00) 00000-0000" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">E-mail</label>
+            <input type="email" value={storeInfo.email} onChange={e => setStoreInfo({ ...storeInfo, email: e.target.value })} placeholder="contato@zmstore.com.br" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
+          <div className="md:col-span-2">
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Endereço</label>
+            <input type="text" value={storeInfo.address} onChange={e => setStoreInfo({ ...storeInfo, address: e.target.value })} placeholder="Rua, número, bairro" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Cidade</label>
+            <input type="text" value={storeInfo.city} onChange={e => setStoreInfo({ ...storeInfo, city: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Estado</label>
+            <input type="text" value={storeInfo.state} onChange={e => setStoreInfo({ ...storeInfo, state: e.target.value })} placeholder="SP" maxLength={2} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Responsável</label>
+            <input type="text" value={storeInfo.ownerName} onChange={e => setStoreInfo({ ...storeInfo, ownerName: e.target.value })} className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
+          <div className="md:col-span-2">
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Observações (aparece no recibo)</label>
+            <textarea value={storeInfo.notes} onChange={e => setStoreInfo({ ...storeInfo, notes: e.target.value })} rows={2} placeholder="Obrigado pela preferência!" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 resize-none" />
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button onClick={handleSaveStoreInfo} className="py-2 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <Save className="h-3.5 w-3.5" />
+            Salvar Perfil
+          </button>
+          {storeSaved && (
+            <span className="text-xs text-emerald-600 font-bold flex items-center gap-1">
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              Salvo!
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

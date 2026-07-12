@@ -17,6 +17,7 @@ import Sales from './components/Sales';
 import SalesHistory from './components/SalesHistory';
 import Reports from './components/Reports';
 import Settings from './components/Settings';
+import OsOrcamento from './components/OsOrcamento';
 import { 
   LayoutDashboard, 
   Package, 
@@ -24,6 +25,7 @@ import {
   History, 
   BarChart3, 
   Settings as SettingsIcon,
+  ClipboardList,
   Clock,
   Cloud,
   Loader2
@@ -417,7 +419,7 @@ export default function App() {
               <div className="w-4 h-4 border-2 border-white"></div>
             </div>
             <div>
-              <h2 className="font-bold text-base tracking-tight text-slate-950">GESTÃO.PRO</h2>
+              <h2 className="font-bold text-base tracking-tight text-slate-950">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
               <span className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
             </div>
           </div>
@@ -494,7 +496,21 @@ export default function App() {
               Relatórios
             </button>
 
-            {/* Tab 6: Settings */}
+            {/* Tab 6: OS & Orçamentos */}
+            <button
+              id="nav-os"
+              onClick={() => setActiveTab('os')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'os' 
+                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              <ClipboardList className="h-4 w-4" />
+              OS / Orçamento
+            </button>
+
+            {/* Tab 7: Settings */}
             <button
               id="nav-settings"
               onClick={() => setActiveTab('settings')}
@@ -625,6 +641,13 @@ export default function App() {
                 products={products}
                 sales={sales}
                 categories={categories}
+              />
+            )}
+
+            {activeTab === 'os' && (
+              <OsOrcamento 
+                products={products}
+                storeInfo={JSON.parse(localStorage.getItem('zm_store_info') || '{}')}
               />
             )}
 

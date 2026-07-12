@@ -41,4 +41,31 @@ export interface Category {
   name: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings';
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os';
+
+export interface OsItem {
+  id: string;
+  description: string;
+  quantity: number;
+  unitPrice: number;
+  total: number;
+}
+
+export interface ServiceOrder {
+  id: string;
+  type: 'os' | 'orcamento';
+  number: number;
+  date: string;
+  clientName: string;
+  clientPhone: string;
+  clientAddress?: string;
+  device?: string;
+  defect?: string;
+  items: OsItem[];
+  subtotal: number;
+  discount: number;
+  total: number;
+  status: 'aberta' | 'em_andamento' | 'concluida' | 'cancelada' | 'aprovada' | 'rejeitada';
+  notes?: string;
+  createdAt: string;
+}

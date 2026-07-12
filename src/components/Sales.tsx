@@ -12,7 +12,9 @@ import {
   CheckCircle2, 
   UserPlus, 
   DollarSign,
-  AlertCircle
+  AlertCircle,
+  Printer,
+  FileText
 } from 'lucide-react';
 
 interface SalesProps {
@@ -50,6 +52,118 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   // Checkout feedback
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<boolean>(false);
+  const [lastSaleData, setLastSaleData] = useState<{
+    items: SaleItem[];
+    clientName?: string;
+    clientPhone?: string;
+    paymentMethod: PaymentMethod;
+    discount: number;
+    total: number;
+    subtotal: number;
+    notes?: string;
+  } | null>(null);
+
+  const paymentMethodLabels: Record<string, string> = {
+    money: 'Dinheiro',
+    card_credit: 'Cartão Crédito',
+    card_debit: 'Cartão Débito',
+    pix: 'PIX',
+    transfer: 'Transferência'
+  };
+
+  const generateReceipt = () => {
+    if (!lastSaleData) return;
+    const storeInfo = JSON.parse(localStorage.getItem('zm_store_info') || '{}');
+    const saleId = `V${Date.now().toString(36).toUpperCase()}`;
+
+    const itemsHtml = lastSaleData.items.map(item => `
+      <tr>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;font-size:12px">${item.productName}</td>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:center;font-size:12px">${item.quantity}x</td>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:right;font-size:12px">R$ ${item.salePrice.toFixed(2)}</td>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:right;font-size:12px;font-weight:bold">R$ ${item.total.toFixed(2)}</td>
+      </tr>
+    `).join('');
+
+    const discountAmount = (lastSaleData.subtotal * lastSaleData.discount) / 100;
+
+    const receiptHtml = `
+      <html><head><title>Recibo - ${saleId}</title>
+      <style>
+        body { font-family: 'Courier New', monospace; padding: 15px; max-width: 350px; margin: 0 auto; font-size: 12px; color: #333; }
+        .center { text-align: center; }
+        .bold { font-weight: bold; }
+        .line { border-top: 1px dashed #333; margin: 8px 0; }
+        .line2 { border-top: 2px solid #333; margin: 8px 0; }
+        table { width: 100%; border-collapse: collapse; }
+        .total-row { font-size: 14px; font-weight: bold; border-top: 2px solid #333; padding-top: 5px; }
+        .footer { text-align: center; margin-top: 15px; font-size: 10px; color: #666; }
+        @media print { body { padding: 5px; max-width: 100%; } }
+      </style></head><body>
+      <div class="center bold" style="font-size:16px">${storeInfo.name || 'ZM Store'}</div>
+      ${storeInfo.cnpj ? `<div class="center" style="font-size:10px">CNPJ: ${storeInfo.cnpj}</div>` : ''}
+      ${storeInfo.phone ? `<div class="center" style="font-size:10px">${storeInfo.phone}</div>` : ''}
+      ${storeInfo.address ? `<div class="center" style="font-size:10px">${storeInfo.address} - ${storeInfo.city || ''}/${storeInfo.state || ''}</div>` : ''}
+      
+      <div class="line2"></div>
+      <div class="center bold">COMPROVANTE DE VENDA</div>
+      <div class="line2"></div>
+      
+      <div style="margin:8px 0">
+        <div style="font-size:10px">Venda: <span class="bold">${saleId}</span></div>
+        <div style="font-size:10px">Data: ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+        ${lastSaleData.clientName ? `<div style="font-size:10px">Cliente: <span class="bold">${lastSaleData.clientName}</span></div>` : ''}
+        ${lastSaleData.clientPhone ? `<div style="font-size:10px">Tel: ${lastSaleData.clientPhone}</div>` : ''}
+      </div>
+
+      <div class="line"></div>
+      
+      <table>
+        <thead>
+          <tr style="font-size:10px;color:#666">
+            <th style="text-align:left;padding-bottom:3px">Item</th>
+            <th style="text-align:center;padding-bottom:3px">Qtd</th>
+            <th style="text-align:right;padding-bottom:3px">Preço</th>
+            <th style="text-align:right;padding-bottom:3px">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsHtml}
+        </tbody>
+      </table>
+
+      <div class="line"></div>
+      
+      <div style="text-align:right">
+        <div>Subtotal: R$ ${lastSaleData.subtotal.toFixed(2)}</div>
+        ${lastSaleData.discount > 0 ? `<div style="color:#e11d48">Desconto (${lastSaleData.discount}%): -R$ ${discountAmount.toFixed(2)}</div>` : ''}
+        <div class="total-row" style="font-size:16px;margin-top:5px">TOTAL: R$ ${lastSaleData.total.toFixed(2)}</div>
+      </div>
+      
+      <div class="line"></div>
+      
+      <div style="font-size:10px">
+        <div>Pagamento: <span class="bold">${paymentMethodLabels[lastSaleData.paymentMethod] || lastSaleData.paymentMethod}</span></div>
+      </div>
+
+      ${lastSaleData.notes ? `<div style="font-size:10px;margin-top:5px"><strong>Obs:</strong> ${lastSaleData.notes}</div>` : ''}
+      
+      <div class="line2"></div>
+      <div class="footer">
+        <div class="bold">Obrigado pela preferência!</div>
+        ${storeInfo.notes ? `<div>${storeInfo.notes}</div>` : ''}
+        <div style="margin-top:5px">${storeInfo.name || 'ZM Store'} - ${storeInfo.phone || ''}</div>
+      </div>
+      <script>window.onload=function(){window.print();}</script>
+      </body></html>
+    `;
+
+    const receiptWindow = window.open('', '_blank');
+    if (receiptWindow) {
+      receiptWindow.document.write(receiptHtml);
+      receiptWindow.document.close();
+    }
+  };
 
   // Categories helper
   const categories = useMemo(() => {
@@ -177,12 +291,28 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     }));
 
     // Perform sale
+    const subtotal = saleItems.reduce((acc, item) => acc + item.total, 0);
+    const discountAmount = (subtotal * discountPercent) / 100;
+    const finalTotal = Math.max(0, subtotal - discountAmount);
+
     onRegisterSale({
       items: saleItems,
       clientName: clientName.trim() || undefined,
       clientPhone: clientPhone.trim() || undefined,
       paymentMethod,
       discount: discountPercent,
+      notes: saleNotes.trim() || undefined
+    });
+
+    // Save sale data for receipt generation before resetting
+    setLastSaleData({
+      items: saleItems,
+      clientName: clientName.trim() || undefined,
+      clientPhone: clientPhone.trim() || undefined,
+      paymentMethod,
+      discount: discountPercent,
+      total: finalTotal,
+      subtotal,
       notes: saleNotes.trim() || undefined
     });
 
@@ -229,10 +359,16 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       {successMessage && (
         <div id="sale-success-alert" className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl flex items-start gap-3">
           <CheckCircle2 className="h-5 w-5 text-emerald-600 shrink-0 mt-0.5" />
-          <div>
+          <div className="flex-1">
             <p className="font-bold">Venda realizada com sucesso!</p>
-            <p className="text-xs text-emerald-700 mt-0.5">O estoque foi atualizado e a transação foi registrada no histórico financeiro.</p>
+            <p className="text-xs text-emerald-700 mt-0.5">Estoque atualizado e transação registrada.</p>
           </div>
+          {lastSaleData && (
+            <button onClick={generateReceipt} className="py-1.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0">
+              <Printer className="h-3.5 w-3.5" />
+              Recibo
+            </button>
+          )}
         </div>
       )}
 
