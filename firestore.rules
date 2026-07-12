@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Safety Net: Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Authentication helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Products collection rules
+    match /users/{userId}/products/{productId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidId(productId) && isValidProduct(request.resource.data);
+      allow update: if isOwner(userId) && isValidId(productId) && isValidProduct(request.resource.data);
+      allow delete: if isOwner(userId);
+    }
+
+    // Sales collection rules
+    match /users/{userId}/sales/{saleId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidId(saleId) && isValidSale(request.resource.data);
+      allow update: if isOwner(userId) && isValidId(saleId) && isValidSale(request.resource.data);
+      allow delete: if isOwner(userId);
+    }
+
+    // Categories collection rules
+    match /users/{userId}/categories/{categoryId} {
+      allow read: if isOwner(userId);
+      allow create: if isOwner(userId) && isValidId(categoryId) && isValidCategory(request.resource.data);
+      allow update: if isOwner(userId) && isValidId(categoryId) && isValidCategory(request.resource.data);
+      allow delete: if isOwner(userId);
+    }
+
+    // Entity Shape Validation Helpers
+    function isValidProduct(data) {
+      return data.keys().hasAll(['id', 'code', 'name', 'category', 'costPrice', 'salePrice', 'stock', 'minStock', 'createdAt'])
+        && data.id is string && data.id.size() <= 128
+        && data.code is string && data.code.size() <= 50
+        && data.name is string && data.name.size() <= 100
+        && data.category is string && data.category.size() <= 100
+        && data.costPrice is number && data.costPrice >= 0
+        && data.salePrice is number && data.salePrice >= 0
+        && data.stock is number && data.stock >= 0
+        && data.minStock is number && data.minStock >= 0
+        && (!('description' in data) || (data.description is string && data.description.size() <= 500))
+        && data.createdAt is string;
+    }
+
+    function isValidCategory(data) {
+      return data.keys().hasAll(['id', 'name'])
+        && data.id is string && data.id.size() <= 128
+        && data.name is string && data.name.size() <= 100;
+    }
+
+    function isValidSale(data) {
+      return data.keys().hasAll(['id', 'date', 'items', 'paymentMethod', 'total', 'totalCost', 'profit', 'status'])
+        && data.id is string && data.id.size() <= 128
+        && data.date is string
+        && data.paymentMethod is string
+        && data.total is number && data.total >= 0
+        && data.totalCost is number && data.totalCost >= 0
+        && data.profit is number
+        && data.status is string
+        && (!('notes' in data) || (data.notes is string && data.notes.size() <= 500))
+        && (!('clientName' in data) || (data.clientName is string && data.clientName.size() <= 100))
+        && (!('clientPhone' in data) || (data.clientPhone is string && data.clientPhone.size() <= 30))
+        && data.items is list;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Gerenciador de Loja",
+  "description": "Sistema completo para gestão de vendas, estoque, produtos, custos, preços de venda e lucros.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
