@@ -41,4 +41,4 @@ export interface Category {
   name: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports';
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings';

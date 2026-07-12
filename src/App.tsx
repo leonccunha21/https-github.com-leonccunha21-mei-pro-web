@@ -16,13 +16,14 @@ import Products from './components/Products';
 import Sales from './components/Sales';
 import SalesHistory from './components/SalesHistory';
 import Reports from './components/Reports';
+import Settings from './components/Settings';
 import { 
   LayoutDashboard, 
   Package, 
   ShoppingCart, 
   History, 
   BarChart3, 
-  Store,
+  Settings as SettingsIcon,
   Clock,
   Cloud,
   Loader2
@@ -99,12 +100,28 @@ export default function App() {
     if (loadingCloudRef.current) return;
     loadingCloudRef.current = true;
     setLoadingCloud(true);
+
+    // 1. Always load local data first so the user sees something immediately
+    const localProducts = localStorage.getItem('loja_products');
+    const localSales = localStorage.getItem('loja_sales');
+    const localCategories = localStorage.getItem('loja_categories');
+
+    const parsedProducts: Product[] = localProducts ? JSON.parse(localProducts) : initialProducts;
+    const parsedSales: Sale[] = localSales ? JSON.parse(localSales) : initialSales;
+    const parsedCategories: Category[] = localCategories ? JSON.parse(localCategories) : initialCategories;
+
+    setProducts(parsedProducts);
+    setCategories(parsedCategories);
+    setSales(parsedSales);
+
+    // 2. Try to load from cloud
     try {
       const cloudProducts = await loadUserProducts(uid);
       const cloudCategories = await loadUserCategories(uid);
       const cloudSales = await loadUserSales(uid);
 
       if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
+        console.log(`Cloud OK: ${cloudProducts.length} produtos, ${cloudCategories.length} categorias, ${cloudSales.length} vendas`);
         setProducts(cloudProducts);
         setCategories(cloudCategories);
         setSales(cloudSales);
@@ -112,40 +129,23 @@ export default function App() {
         localStorage.setItem('loja_sales', JSON.stringify(cloudSales));
         localStorage.setItem('loja_categories', JSON.stringify(cloudCategories));
       } else {
-        const localProducts = localStorage.getItem('loja_products');
-        const localSales = localStorage.getItem('loja_sales');
-        const localCategories = localStorage.getItem('loja_categories');
-
-        const parsedProducts: Product[] = localProducts ? JSON.parse(localProducts) : initialProducts;
-        const parsedSales: Sale[] = localSales ? JSON.parse(localSales) : initialSales;
-        const parsedCategories: Category[] = localCategories ? JSON.parse(localCategories) : initialCategories;
-
-        // Always set state first so the user sees data immediately
-        setProducts(parsedProducts);
-        setCategories(parsedCategories);
-        setSales(parsedSales);
-        localStorage.setItem('loja_products', JSON.stringify(parsedProducts));
-        localStorage.setItem('loja_sales', JSON.stringify(parsedSales));
-        localStorage.setItem('loja_categories', JSON.stringify(parsedCategories));
-
-        // Then upload to cloud in background (resilient - individual failures don't block)
-        console.log(`Enviando ${parsedProducts.length} produtos, ${parsedCategories.length} categorias, ${parsedSales.length} vendas para a nuvem...`);
+        console.log('Cloud vazia. Enviando dados locais...');
         let failedProducts = 0;
         for (const p of parsedProducts) {
-          try { await saveUserProduct(uid, p); } catch { failedProducts++; }
+          try { await saveUserProduct(uid, p); } catch (e) { failedProducts++; }
         }
         let failedCategories = 0;
         for (const c of parsedCategories) {
-          try { await saveUserCategory(uid, c); } catch { failedCategories++; }
+          try { await saveUserCategory(uid, c); } catch (e) { failedCategories++; }
         }
         let failedSales = 0;
         for (const s of parsedSales) {
-          try { await saveUserSale(uid, s); } catch { failedSales++; }
+          try { await saveUserSale(uid, s); } catch (e) { failedSales++; }
         }
-        console.log(`Upload concluído. Falhas: ${failedProducts} produtos, ${failedCategories} categorias, ${failedSales} vendas`);
+        console.log(`Upload OK. Falhas: ${failedProducts}/${parsedProducts.length} produtos, ${failedCategories}/${parsedCategories.length} cats, ${failedSales}/${parsedSales.length} vendas`);
       }
     } catch (err) {
-      console.error("Erro ao carregar ou sincronizar dados da nuvem:", err);
+      console.error("Erro na nuvem (usando dados locais):", err);
     } finally {
       loadingCloudRef.current = false;
       setLoadingCloud(false);
@@ -493,6 +493,20 @@ export default function App() {
               <BarChart3 className="h-4 w-4" />
               Relatórios
             </button>
+
+            {/* Tab 6: Settings */}
+            <button
+              id="nav-settings"
+              onClick={() => setActiveTab('settings')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'settings' 
+                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
+                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+              }`}
+            >
+              <SettingsIcon className="h-4 w-4" />
+              Configurações
+            </button>
           </nav>
         </div>
 
@@ -608,6 +622,14 @@ export default function App() {
 
             {activeTab === 'reports' && (
               <Reports 
+                products={products}
+                sales={sales}
+                categories={categories}
+              />
+            )}
+
+            {activeTab === 'settings' && (
+              <Settings 
                 products={products}
                 sales={sales}
                 categories={categories}
