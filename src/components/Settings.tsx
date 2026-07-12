@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Product, Sale, Category, SaleItem } from '../types';
+import { Product, Sale, Category, SaleItem, StoreInfo } from '../types';
 import * as XLSX from 'xlsx';
 import {
   Download,
@@ -29,18 +29,6 @@ import {
   exportSpreadsheetAsArrayBuffer,
   GoogleDriveFile
 } from '../lib/googleApi';
-
-export interface StoreInfo {
-  name: string;
-  cnpj: string;
-  phone: string;
-  email: string;
-  address: string;
-  city: string;
-  state: string;
-  ownerName: string;
-  notes: string;
-}
 
 const defaultStoreInfo: StoreInfo = {
   name: 'ZM Store',
@@ -98,7 +86,7 @@ function parseProductsSheet(rows: any[][]): { importedProducts: Product[]; categ
   let costPriceIdx = findColIndex(['custo', 'preço custo', 'preco custo', 'compra', 'cost', 'vlr custo', 'valor custo']);
   let salePriceIdx = findColIndex(['venda', 'preço venda', 'preco venda', 'valor', 'price', 'preço', 'preco', 'vlr venda', 'valor venda']);
   let stockIdx = findColIndex(['estoque', 'qtd', 'quantidade', 'stock', 'saldo', 'atual', 'quant', 'qnt']);
-  let minStockIdx = findColIndex(['mínimo', 'minimo', 'estoque mínimo', 'estoque minimo', 'min', 'est. min', 'est.min']);
+  let minStockIdx = findColIndex(['mínimo', 'minimo', 'estoque mínimo', 'estoque minimo', 'min', 'est. min', 'est.min', 'est min', 'mín', 'min ']);
 
   if (codeIdx === -1) codeIdx = 0;
   if (nameIdx === -1) {
@@ -434,8 +422,10 @@ export default function Settings({
 
   // Store profile
   const [storeInfo, setStoreInfo] = useState<StoreInfo>(() => {
-    const saved = localStorage.getItem('zm_store_info');
-    return saved ? JSON.parse(saved) : defaultStoreInfo;
+    try {
+      const saved = localStorage.getItem('zm_store_info');
+      return saved ? JSON.parse(saved) : defaultStoreInfo;
+    } catch { return defaultStoreInfo; }
   });
   const [storeSaved, setStoreSaved] = useState(false);
 
@@ -615,8 +605,14 @@ export default function Settings({
       });
 
       let successMsg = 'Planilha do Google Drive importada com sucesso! ';
-      if (importedProducts.length > 0) successMsg += `${importedProducts.length} produtos. `;
+      if (importedProducts.length > 0) {
+        successMsg += `${importedProducts.length} produtos. `;
+      } else {
+        successMsg += 'Nenhum produto encontrado. ';
+      }
       if (hasSalesSheet) successMsg += `${importedSales.length} vendas. `;
+      const catCount = importedCategories.length - categories.length;
+      if (catCount > 0) successMsg += `${catCount} categorias novas.`;
       setGoogleSuccessMsg(successMsg);
       setImportError(null);
     } catch (err: any) {
@@ -736,13 +732,24 @@ export default function Settings({
         });
 
         let successMsg = 'Planilha importada com sucesso! ';
-        if (importedProducts.length > 0) successMsg += `${importedProducts.length} produtos. `;
+        if (importedProducts.length > 0) {
+          successMsg += `${importedProducts.length} produtos encontrados. `;
+        } else {
+          successMsg += 'Nenhum produto encontrado na planilha. Verifique se as colunas estão corretas. ';
+        }
         if (hasSalesSheet) successMsg += `${importedSales.length} vendas. `;
+        const catCount = importedCategories.length - categories.length;
+        if (catCount > 0) successMsg += `${catCount} categorias novas.`;
         setImportSuccessMsg(successMsg);
         setImportError(null);
-        setTimeout(() => setImportSuccessMsg(null), 6000);
+        setTimeout(() => setImportSuccessMsg(null), 10000);
       } catch (err: any) {
-        setImportError(err.message || 'Erro ao processar o arquivo.');
+        const msg = err.message || 'Erro ao processar o arquivo.';
+        if (msg.includes('planilha está vazia')) {
+          setImportError('A planilha está vazia ou não possui dados. Baixe o modelo oficial e preencha os dados.');
+        } else {
+          setImportError('Erro ao processar: ' + msg);
+        }
       } finally {
         setImportingExcel(false);
         if (e.target) e.target.value = '';
@@ -798,23 +805,61 @@ export default function Settings({
         ['SKU-1001', 'Camiseta Masculina', 'Vestuário', '25.00', '59.90', '100', '10'],
         ['SKU-1002', 'Calça Jeans', 'Vestuário', '45.00', '119.90', '50', '5'],
         ['SKU-1003', 'Tênis Running', 'Calçados', '75.00', '189.90', '30', '3'],
+        ['SKU-1004', 'Boné Aba Reta', 'Acessórios', '8.00', '29.90', '200', '20'],
+        ['SKU-1005', 'Bolsa Couro', 'Acessórios', '35.00', '89.90', '40', '5'],
       ];
       const prodWs = XLSX.utils.aoa_to_sheet([prodHeaders, ...prodSampleRows]);
       XLSX.utils.book_append_sheet(wb, prodWs, 'Produtos');
 
       const salesHeaders = ['ID da Venda', 'Data', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Itens Vendidos', 'Custo Total', 'Faturamento', 'Lucro Líquido', 'Status'];
       const salesSampleRows = [
-        ['venda_1', '12/07/2026 14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'Camiseta Masculina (2x)', '50.00', '119.80', '69.80', 'Concluída'],
+        ['venda_001', '12/07/2026 14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'Camiseta Masculina (2x), Boné Aba Reta (1x)', '58.00', '149.80', '91.80', 'Concluída'],
+        ['venda_002', '12/07/2026 16:45', 'João Silva', '(11) 98888-2222', 'credito', 'Calça Jeans (1x)', '45.00', '119.90', '74.90', 'Concluída'],
+        ['venda_003', '13/07/2026 10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'Tênis Running (1x), Bolsa Couro (1x)', '110.00', '279.80', '169.80', 'Concluída'],
       ];
       const salesWs = XLSX.utils.aoa_to_sheet([salesHeaders, ...salesSampleRows]);
       XLSX.utils.book_append_sheet(wb, salesWs, 'Vendas');
 
-      const catWs = XLSX.utils.aoa_to_sheet([['Nome da Categoria'], ['Vestuário'], ['Calçados']]);
+      const catWs = XLSX.utils.aoa_to_sheet([['Nome da Categoria'], ['Vestuário'], ['Calçados'], ['Acessórios']]);
       XLSX.utils.book_append_sheet(wb, catWs, 'Categorias');
 
+      const instrHeaders = ['Instruções de Preenchimento'];
+      const instrRows = [
+        [''],
+        ['PLANILHA DE PRODUTOS (aba "Produtos")'],
+        ['• Preencha todas as colunas conforme o modelo'],
+        ['• Código/SKU: identificador único do produto (ex: SKU-001)'],
+        ['• Nome do Produto: nome completo do produto'],
+        ['• Categoria: agrupamento do produto (ex: Vestuário, Calçados)'],
+        ['• Preço de Custo: valor que o produto custa (use ponto para decimal)'],
+        ['• Preço de Venda: valor que o produto será vendido'],
+        ['• Estoque: quantidade atual em estoque'],
+        ['• Estoque Mínimo: quantidade mínima para alerta de estoque baixo'],
+        [''],
+        ['PLANILHA DE VENDAS (aba "Vendas")'],
+        ['• ID da Venda: código único da venda (ex: venda_001)'],
+        ['• Data: formato DD/MM/AAAA HH:MM'],
+        ['• Cliente: nome do cliente (opcional)'],
+        ['• Telefone: telefone do cliente (opcional)'],
+        ['• Forma de Pagamento: pix, credito, debito, dinheiro, transferencia'],
+        ['• Itens Vendidos: produto (quantidadex), produto2 (quantidade2x)'],
+        ['• Custo Total: soma dos custos dos itens vendidos'],
+        ['• Faturamento: valor total recebido'],
+        ['• Lucro Líquido: Faturamento - Custo Total'],
+        ['• Status: Concluída ou Cancelada'],
+        [''],
+        ['PLANILHA DE CATEGORIAS (aba "Categorias")'],
+        ['• Nome da Categoria: nome de cada categoria (uma por linha)'],
+        [''],
+        ['DICA: Você pode apagar as linhas de exemplo e preencher com seus próprios dados.'],
+        ['Ao importar, os dados substituirão todos os dados atuais.'],
+      ];
+      const instrWs = XLSX.utils.aoa_to_sheet([instrHeaders, ...instrRows]);
+      XLSX.utils.book_append_sheet(wb, instrWs, 'Instruções');
+
       XLSX.writeFile(wb, 'Modelo_Importacao_GestaoPro.xlsx');
-      setImportSuccessMsg('Modelo oficial baixado!');
-      setTimeout(() => setImportSuccessMsg(null), 5000);
+      setImportSuccessMsg('Modelo oficial baixado! Preencha os dados e importe pela opção "Carregar Planilha".');
+      setTimeout(() => setImportSuccessMsg(null), 8000);
     } catch (err: any) {
       setImportError('Erro ao gerar modelo: ' + err.message);
     }

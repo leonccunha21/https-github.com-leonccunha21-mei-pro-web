@@ -6,7 +6,7 @@ import {
   deleteDoc 
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from './firebase';
-import { Product, Sale, Category } from '../types';
+import { Product, Sale, Category, ServiceOrder } from '../types';
 
 /**
  * Products
@@ -129,6 +129,56 @@ export async function clearUserCategories(userId: string): Promise<void> {
 
 export async function clearUserSales(userId: string): Promise<void> {
   const path = `users/${userId}/sales`;
+  try {
+    const querySnapshot = await getDocs(collection(db, path));
+    for (const d of querySnapshot.docs) {
+      await deleteDoc(d.ref);
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+  }
+}
+
+/**
+ * Service Orders (OS / Orçamentos)
+ */
+export async function loadUserOrders(userId: string): Promise<ServiceOrder[]> {
+  const path = `users/${userId}/orders`;
+  try {
+    const querySnapshot = await getDocs(collection(db, path));
+    const items: ServiceOrder[] = [];
+    querySnapshot.forEach((d) => {
+      items.push(d.data() as ServiceOrder);
+    });
+    return items.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  } catch (error) {
+    handleFirestoreError(error, OperationType.GET, path);
+    return [];
+  }
+}
+
+export async function saveUserOrder(userId: string, order: ServiceOrder): Promise<void> {
+  const path = `users/${userId}/orders`;
+  try {
+    const docRef = doc(db, path, order.id);
+    await setDoc(docRef, order);
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, `${path}/${order.id}`);
+  }
+}
+
+export async function deleteUserOrder(userId: string, orderId: string): Promise<void> {
+  const path = `users/${userId}/orders`;
+  try {
+    const docRef = doc(db, path, orderId);
+    await deleteDoc(docRef);
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, `${path}/${orderId}`);
+  }
+}
+
+export async function clearUserOrders(userId: string): Promise<void> {
+  const path = `users/${userId}/orders`;
   try {
     const querySnapshot = await getDocs(collection(db, path));
     for (const d of querySnapshot.docs) {

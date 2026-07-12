@@ -4,7 +4,8 @@ import {
   Sale, 
   Category, 
   ActiveTab, 
-  PaymentMethod 
+  PaymentMethod,
+  StoreInfo
 } from './types';
 import { 
   initialProducts, 
@@ -70,29 +71,35 @@ export default function App() {
   // Initial local storage fallback loading
   useEffect(() => {
     if (!user) {
-      const savedProducts = localStorage.getItem('loja_products');
-      const savedSales = localStorage.getItem('loja_sales');
-      const savedCategories = localStorage.getItem('loja_categories');
+      try {
+        const savedProducts = localStorage.getItem('loja_products');
+        const savedSales = localStorage.getItem('loja_sales');
+        const savedCategories = localStorage.getItem('loja_categories');
 
-      if (savedProducts) {
-        setProducts(JSON.parse(savedProducts));
-      } else {
+        if (savedProducts) {
+          setProducts(JSON.parse(savedProducts));
+        } else {
+          setProducts(initialProducts);
+          localStorage.setItem('loja_products', JSON.stringify(initialProducts));
+        }
+
+        if (savedSales) {
+          setSales(JSON.parse(savedSales));
+        } else {
+          setSales(initialSales);
+          localStorage.setItem('loja_sales', JSON.stringify(initialSales));
+        }
+
+        if (savedCategories) {
+          setCategories(JSON.parse(savedCategories));
+        } else {
+          setCategories(initialCategories);
+          localStorage.setItem('loja_categories', JSON.stringify(initialCategories));
+        }
+      } catch {
         setProducts(initialProducts);
-        localStorage.setItem('loja_products', JSON.stringify(initialProducts));
-      }
-
-      if (savedSales) {
-        setSales(JSON.parse(savedSales));
-      } else {
         setSales(initialSales);
-        localStorage.setItem('loja_sales', JSON.stringify(initialSales));
-      }
-
-      if (savedCategories) {
-        setCategories(JSON.parse(savedCategories));
-      } else {
         setCategories(initialCategories);
-        localStorage.setItem('loja_categories', JSON.stringify(initialCategories));
       }
     }
   }, [user]);
@@ -108,9 +115,17 @@ export default function App() {
     const localSales = localStorage.getItem('loja_sales');
     const localCategories = localStorage.getItem('loja_categories');
 
-    const parsedProducts: Product[] = localProducts ? JSON.parse(localProducts) : initialProducts;
-    const parsedSales: Sale[] = localSales ? JSON.parse(localSales) : initialSales;
-    const parsedCategories: Category[] = localCategories ? JSON.parse(localCategories) : initialCategories;
+    let parsedProducts: Product[] = initialProducts;
+    let parsedSales: Sale[] = initialSales;
+    let parsedCategories: Category[] = initialCategories;
+
+    try {
+      parsedProducts = localProducts ? JSON.parse(localProducts) : initialProducts;
+      parsedSales = localSales ? JSON.parse(localSales) : initialSales;
+      parsedCategories = localCategories ? JSON.parse(localCategories) : initialCategories;
+    } catch {
+      // Corrupted localStorage, use defaults
+    }
 
     setProducts(parsedProducts);
     setCategories(parsedCategories);
@@ -181,10 +196,10 @@ export default function App() {
       } else if (changedProduct) {
         await saveUserProduct(user.uid, changedProduct);
       } else {
-        // Full list overwrite - clear the collection and save new ones
-        await clearUserProducts(user.uid);
+        // Full list overwrite — write each product individually (setDoc is idempotent)
+        // No destructive clear. Orphaned docs are cleaned up on next full import.
         for (const p of updatedProducts) {
-          await saveUserProduct(user.uid, p);
+          try { await saveUserProduct(user.uid, p); } catch {}
         }
       }
     }
@@ -267,13 +282,19 @@ export default function App() {
       setAccessToken(null);
       
       // Reload local values
-      const savedProducts = localStorage.getItem('loja_products');
-      const savedSales = localStorage.getItem('loja_sales');
-      const savedCategories = localStorage.getItem('loja_categories');
+      try {
+        const savedProducts = localStorage.getItem('loja_products');
+        const savedSales = localStorage.getItem('loja_sales');
+        const savedCategories = localStorage.getItem('loja_categories');
 
-      setProducts(savedProducts ? JSON.parse(savedProducts) : initialProducts);
-      setSales(savedSales ? JSON.parse(savedSales) : initialSales);
-      setCategories(savedCategories ? JSON.parse(savedCategories) : initialCategories);
+        setProducts(savedProducts ? JSON.parse(savedProducts) : initialProducts);
+        setSales(savedSales ? JSON.parse(savedSales) : initialSales);
+        setCategories(savedCategories ? JSON.parse(savedCategories) : initialCategories);
+      } catch {
+        setProducts(initialProducts);
+        setSales(initialSales);
+        setCategories(initialCategories);
+      }
     }
   };
 
@@ -345,18 +366,21 @@ export default function App() {
     };
 
     // 3. Deduct stock quantities from inventory products
+    const changedProducts: Product[] = [];
     const updatedProducts = products.map(p => {
       const soldItem = saleData.items.find(item => item.productId === p.id);
       if (soldItem) {
-        return {
+        const updated = {
           ...p,
           stock: Math.max(0, p.stock - soldItem.quantity)
         };
+        changedProducts.push(updated);
+        return updated;
       }
       return p;
     });
 
-    saveProductsToStorage(updatedProducts, undefined); // sync stock update to all products
+    saveProductsToStorage(updatedProducts, undefined);
     saveSalesToStorage([newSale, ...sales], newSale);
   };
 
@@ -647,7 +671,8 @@ export default function App() {
             {activeTab === 'os' && (
               <OsOrcamento 
                 products={products}
-                storeInfo={JSON.parse(localStorage.getItem('zm_store_info') || '{}')}
+                storeInfo={(() => { try { return JSON.parse(localStorage.getItem('zm_store_info') || 'null') as StoreInfo; } catch { return { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '' } as StoreInfo; } })()}
+                userId={user?.uid}
               />
             )}
 

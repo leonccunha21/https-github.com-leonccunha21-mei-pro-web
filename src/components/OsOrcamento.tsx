@@ -1,26 +1,22 @@
-import React, { useState, useMemo } from 'react';
-import { ServiceOrder, OsItem, Product } from '../types';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { ServiceOrder, OsItem, Product, StoreInfo } from '../types';
 import {
   FileText,
   Plus,
   Search,
-  Filter,
   Eye,
   Trash2,
   X,
   Printer,
-  Download,
   ClipboardList,
-  CheckCircle2,
-  XCircle,
-  Clock,
-  Edit3
+  CheckCircle2
 } from 'lucide-react';
-import * as XLSX from 'xlsx';
+import { loadUserOrders, saveUserOrder, deleteUserOrder } from '../lib/dbSync';
 
 interface OsOrcamentoProps {
   products: Product[];
-  storeInfo: any;
+  storeInfo: StoreInfo;
+  userId?: string | null;
 }
 
 const generateId = () => `os_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
@@ -38,19 +34,14 @@ const statusLabels: Record<string, { label: string; color: string }> = {
   rejeitada: { label: 'Rejeitada', color: 'bg-rose-100 text-rose-700' }
 };
 
-const paymentLabels: Record<string, string> = {
-  money: 'Dinheiro',
-  card_credit: 'Cartão Crédito',
-  card_debit: 'Cartão Débito',
-  pix: 'PIX',
-  transfer: 'Transferência'
-};
-
-export default function OsOrcamento({ products, storeInfo }: OsOrcamentoProps) {
+export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamentoProps) {
   const [orders, setOrders] = useState<ServiceOrder[]>(() => {
-    const saved = localStorage.getItem('zm_service_orders');
-    return saved ? JSON.parse(saved) : [];
+    try {
+      const saved = localStorage.getItem('zm_service_orders');
+      return saved ? JSON.parse(saved) : [];
+    } catch { return []; }
   });
+  const loadedFromCloud = useRef(false);
   const [activeView, setActiveView] = useState<'list' | 'form' | 'detail'>('list');
   const [selectedOrder, setSelectedOrder] = useState<ServiceOrder | null>(null);
   const [filterType, setFilterType] = useState<'all' | 'os' | 'orcamento'>('all');
@@ -74,9 +65,46 @@ export default function OsOrcamento({ products, storeInfo }: OsOrcamentoProps) {
   const [itemQty, setItemQty] = useState(1);
   const [itemPrice, setItemPrice] = useState(0);
 
+  // Load from cloud on mount
+  useEffect(() => {
+    if (!userId || loadedFromCloud.current) return;
+    loadedFromCloud.current = true;
+    loadUserOrders(userId).then(cloudOrders => {
+      if (cloudOrders.length > 0) {
+        setOrders(cloudOrders);
+        localStorage.setItem('zm_service_orders', JSON.stringify(cloudOrders));
+      } else {
+        // Cloud empty, upload local data
+        const localOrders = orders;
+        if (localOrders.length > 0) {
+          for (const o of localOrders) {
+            saveUserOrder(userId, o).catch(() => {});
+          }
+        }
+      }
+    }).catch(() => {});
+  }, [userId]);
+
+  // Warn before leaving form with unsaved data
+  useEffect(() => {
+    if (activeView !== 'form') return;
+    const hasData = clientName.trim() || formItems.length > 0;
+    if (!hasData) return;
+    const handler = (e: BeforeUnloadEvent) => { e.preventDefault(); e.returnValue = ''; };
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [activeView, clientName, formItems]);
+
   const saveOrders = (newOrders: ServiceOrder[]) => {
     setOrders(newOrders);
     localStorage.setItem('zm_service_orders', JSON.stringify(newOrders));
+    if (userId) {
+      // Sync last changed order to cloud
+      // For full sync we save all in background
+      for (const o of newOrders) {
+        saveUserOrder(userId, o).catch(() => {});
+      }
+    }
   };
 
   const filteredOrders = useMemo(() => {
@@ -163,6 +191,7 @@ export default function OsOrcamento({ products, storeInfo }: OsOrcamentoProps) {
   const handleDelete = (orderId: string) => {
     if (window.confirm('Excluir esta ordem/orçamento?')) {
       saveOrders(orders.filter(o => o.id !== orderId));
+      if (userId) deleteUserOrder(userId, orderId).catch(() => {});
       if (selectedOrder?.id === orderId) {
         setSelectedOrder(null);
         setActiveView('list');
@@ -174,7 +203,7 @@ export default function OsOrcamento({ products, storeInfo }: OsOrcamentoProps) {
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
 
-    const store = storeInfo || {};
+    const store: StoreInfo = storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '' };
     const itemsHtml = order.items.map(item => `
       <tr>
         <td style="padding:6px;border-bottom:1px solid #eee">${item.description}</td>

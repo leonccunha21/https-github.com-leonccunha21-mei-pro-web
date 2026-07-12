@@ -2,11 +2,34 @@
  * Google Drive and Google Sheets REST API Wrappers
  */
 
+import { clearAccessToken } from './firebase';
+
 export interface GoogleDriveFile {
   id: string;
   name: string;
   webViewLink: string;
   modifiedTime: string;
+}
+
+/**
+ * Helper to handle Google API auth errors (401/403)
+ */
+function handleAuthError(response: Response, err: any): never {
+  const status = response.status;
+  const msg = err?.error?.message || '';
+  
+  if (status === 401 || status === 403) {
+    clearAccessToken();
+    if (msg.includes('has not been used') || msg.includes('is disabled')) {
+      throw new Error('A API do Google não está habilitada. Acesse o Google Cloud Console e ative as APIs Drive e Sheets.');
+    }
+    if (msg.includes('invalid_token') || msg.includes('Token has been expired') || msg.includes('Token expired')) {
+      throw new Error('Sessão Google expirada. Faça login novamente com sua conta Google.');
+    }
+    throw new Error('Acesso negado pelo Google. Faça login novamente com sua conta Google.');
+  }
+  
+  throw new Error(msg || 'Erro desconhecido na API do Google.');
 }
 
 /**
@@ -27,7 +50,7 @@ export async function listUserSpreadsheets(accessToken: string): Promise<GoogleD
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
-      throw new Error(err.error?.message || 'Falha ao listar planilhas do Google Drive.');
+      handleAuthError(response, err);
     }
 
     const data = await response.json();
@@ -65,7 +88,7 @@ export async function createSpreadsheet(
 
     if (!createResponse.ok) {
       const err = await createResponse.json().catch(() => ({}));
-      throw new Error(err.error?.message || 'Falha ao criar nova planilha no Google Sheets.');
+      handleAuthError(createResponse, err);
     }
 
     const spreadsheet = await createResponse.json();
@@ -90,7 +113,7 @@ export async function createSpreadsheet(
 
     if (!writeResponse.ok) {
       const err = await writeResponse.json().catch(() => ({}));
-      throw new Error(err.error?.message || 'Planilha criada, mas falhou ao preencher os dados.');
+      handleAuthError(writeResponse, err);
     }
 
     return { id: spreadsheetId, webViewLink };
@@ -142,7 +165,7 @@ export async function uploadBackupFile(
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
-      throw new Error(err.error?.message || 'Falha ao fazer upload do backup no Google Drive.');
+      handleAuthError(response, err);
     }
 
     return await response.json();
@@ -173,7 +196,7 @@ export async function fetchSpreadsheetValues(
 
     if (!response.ok) {
       const err = await response.json().catch(() => ({}));
-      throw new Error(err.error?.message || 'Falha ao ler dados da planilha do Google Sheets.');
+      handleAuthError(response, err);
     }
 
     const data = await response.json();
@@ -202,6 +225,11 @@ export async function exportSpreadsheetAsArrayBuffer(
     );
 
     if (!response.ok) {
+      const errText = await response.text().catch(() => '');
+      if (response.status === 401 || response.status === 403) {
+        clearAccessToken();
+        throw new Error('Acesso negado pelo Google. Faça login novamente com sua conta Google.');
+      }
       throw new Error('Falha ao exportar planilha do Drive para XLSX. Verifique se o arquivo é válido.');
     }
 

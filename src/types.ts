@@ -43,6 +43,18 @@ export interface Category {
 
 export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os';
 
+export interface StoreInfo {
+  name: string;
+  cnpj: string;
+  phone: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  ownerName: string;
+  notes: string;
+}
+
 export interface OsItem {
   id: string;
   description: string;

@@ -23,10 +23,22 @@ interface DashboardProps {
 export default function Dashboard({ products, sales, onNavigate }: DashboardProps) {
   const [timeRange, setTimeRange] = useState<'1day' | '7days' | '30days'>('1day');
 
-  // Filter completed sales
-  const completedSales = sales.filter(s => s.status === 'completed');
+  // Filter completed sales by time range
+  const completedSales = sales.filter(s => {
+    if (s.status !== 'completed') return false;
+    const saleDate = new Date(s.date);
+    const now = new Date();
+    const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : 30;
+    const cutoff = new Date();
+    cutoff.setDate(now.getDate() - daysToCount);
+    cutoff.setHours(0, 0, 0, 0);
+    return saleDate >= cutoff;
+  });
 
-  // Calculate metrics
+  // All completed sales (for top products across all time)
+  const allCompletedSales = sales.filter(s => s.status === 'completed');
+
+  // Calculate metrics (filtered by time range)
   const totalRevenue = completedSales.reduce((acc, s) => acc + s.total, 0);
   const totalCost = completedSales.reduce((acc, s) => acc + s.totalCost, 0);
   const totalProfit = totalRevenue - totalCost;
@@ -38,10 +50,10 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   const totalInventoryCostValue = products.reduce((acc, p) => acc + (p.stock * p.costPrice), 0);
   const totalInventoryRetailValue = products.reduce((acc, p) => acc + (p.stock * p.salePrice), 0);
 
-  // Top Selling Products
+  // Top Selling Products (uses all sales, not filtered by time)
   const productSalesMap: Record<string, { name: string; qty: number; revenue: number; profit: number }> = {};
   
-  completedSales.forEach(sale => {
+  allCompletedSales.forEach(sale => {
     const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
     const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
 

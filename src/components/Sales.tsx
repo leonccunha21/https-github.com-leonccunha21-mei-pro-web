@@ -73,7 +73,8 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
 
   const generateReceipt = () => {
     if (!lastSaleData) return;
-    const storeInfo = JSON.parse(localStorage.getItem('zm_store_info') || '{}');
+    let storeInfo: Record<string, string> = {};
+    try { storeInfo = JSON.parse(localStorage.getItem('zm_store_info') || '{}'); } catch {}
     const saleId = `V${Date.now().toString(36).toUpperCase()}`;
 
     const itemsHtml = lastSaleData.items.map(item => `
@@ -363,12 +364,19 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
             <p className="font-bold">Venda realizada com sucesso!</p>
             <p className="text-xs text-emerald-700 mt-0.5">Estoque atualizado e transação registrada.</p>
           </div>
-          {lastSaleData && (
-            <button onClick={generateReceipt} className="py-1.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold flex items-center gap-1.5 transition-colors cursor-pointer shrink-0">
-              <Printer className="h-3.5 w-3.5" />
-              Recibo
-            </button>
-          )}
+        </div>
+      )}
+
+      {/* Persistent receipt button */}
+      {lastSaleData && (
+        <div className="flex gap-2">
+          <button onClick={generateReceipt} className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-bold flex items-center gap-2 transition-colors cursor-pointer shadow-sm">
+            <Printer className="h-4 w-4" />
+            Imprimir Último Recibo
+          </button>
+          <button onClick={() => setLastSaleData(null)} className="py-2 px-3 text-slate-400 hover:text-slate-600 text-sm rounded-lg transition-colors cursor-pointer">
+            Dispensar
+          </button>
         </div>
       )}
 

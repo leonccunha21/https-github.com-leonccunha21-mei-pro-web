@@ -39,6 +39,7 @@ export const initAuth = (
   // Restore cached accessToken from localStorage if available
   if (typeof window !== 'undefined' && !cachedAccessToken) {
     cachedAccessToken = localStorage.getItem('mei_pro_google_access_token');
+    if (cachedAccessToken) tokenObtainedAt = Date.now(); // assume recently obtained
   }
 
   return onAuthStateChanged(auth, async (user: User | null) => {
@@ -82,52 +83,29 @@ export const googleSignIn = async (): Promise<{ user: User; accessToken: string 
 
 // Token expiry tracking
 let tokenObtainedAt: number = 0;
-const TOKEN_LIFETIME_MS = 55 * 60 * 1000; // 55 minutes (tokens last ~1h)
 
-// Retrieve cached access token, refresh if expired
+// Retrieve cached access token
 export const getAccessToken = async (): Promise<string | null> => {
   if (typeof window !== 'undefined' && !cachedAccessToken) {
     cachedAccessToken = localStorage.getItem('mei_pro_google_access_token');
+    if (cachedAccessToken) tokenObtainedAt = Date.now();
   }
-
-  // If token exists but may be expired, try to refresh via re-authentication
-  if (cachedAccessToken && tokenObtainedAt > 0 && Date.now() - tokenObtainedAt > TOKEN_LIFETIME_MS) {
-    console.log('Token expirado, tentando refresh...');
-    const refreshed = await refreshAccessToken();
-    if (refreshed) return refreshed;
-  }
-
   return cachedAccessToken;
 };
 
-// Try to refresh the Google OAuth access token by re-authenticating silently
-const refreshAccessToken = async (): Promise<string | null> => {
-  try {
-    const currentUser = auth.currentUser;
-    if (!currentUser) return null;
+// Check if token is likely expired (> 50 minutes old)
+export const isTokenExpired = (): boolean => {
+  if (!cachedAccessToken || tokenObtainedAt === 0) return true;
+  return Date.now() - tokenObtainedAt > 50 * 60 * 1000;
+};
 
-    // Re-authenticate with popup to get fresh token
-    const credential = await signInWithPopup(auth, provider);
-    const newCredential = GoogleAuthProvider.credentialFromResult(credential);
-    if (newCredential?.accessToken) {
-      cachedAccessToken = newCredential.accessToken;
-      tokenObtainedAt = Date.now();
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('mei_pro_google_access_token', cachedAccessToken);
-      }
-      console.log('Token refreshed com sucesso');
-      return cachedAccessToken;
-    }
-  } catch (err) {
-    console.error('Falha ao refresh token:', err);
-    // If refresh fails, clear token so user re-authenticates manually
-    cachedAccessToken = null;
-    tokenObtainedAt = 0;
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('mei_pro_google_access_token');
-    }
+// Force clear token (on auth errors)
+export const clearAccessToken = () => {
+  cachedAccessToken = null;
+  tokenObtainedAt = 0;
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('mei_pro_google_access_token');
   }
-  return null;
 };
 
 // Sign out trigger
