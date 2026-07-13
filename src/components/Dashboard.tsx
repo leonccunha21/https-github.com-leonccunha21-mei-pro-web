@@ -46,9 +46,6 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
     });
   }, [sales, timeRange, customStart, customEnd]);
 
-  // All completed sales (for top products)
-  const allCompletedSales = useMemo(() => sales.filter(s => s.status === 'completed'), [sales]);
-
   // Calculate metrics
   const totalRevenue = completedSales.reduce((acc, s) => acc + s.total, 0);
   const totalCost = completedSales.reduce((acc, s) => acc + s.totalCost, 0);
@@ -64,7 +61,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   // Top Selling Products
   const topProducts = useMemo(() => {
     const productSalesMap: Record<string, { name: string; qty: number; revenue: number; profit: number }> = {};
-    allCompletedSales.forEach(sale => {
+    completedSales.forEach(sale => {
       const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
       const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
       sale.items.forEach(item => {
@@ -79,7 +76,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       });
     });
     return Object.values(productSalesMap).sort((a, b) => b.qty - a.qty).slice(0, 5);
-  }, [allCompletedSales]);
+  }, [completedSales]);
 
   // Prepare chart data based on time range
   const chartData = useMemo(() => {

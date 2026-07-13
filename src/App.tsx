@@ -666,6 +666,7 @@ export default function App() {
               <Products 
                 products={products}
                 categories={categories}
+                sales={sales}
                 onAddProduct={handleAddProduct}
                 onUpdateProduct={handleUpdateProduct}
                 onDeleteProduct={handleDeleteProduct}
