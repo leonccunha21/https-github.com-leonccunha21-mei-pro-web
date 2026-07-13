@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { Product, Sale, Category, SaleItem, StoreInfo } from '../types';
+import { Product, Sale, Category, SaleItem, StoreInfo, Expense } from '../types';
 import * as XLSX from 'xlsx';
 import {
   Download,
@@ -420,6 +420,8 @@ interface SettingsProps {
   onGoogleLogout: () => Promise<void>;
   onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[]; expenses: Expense[] }) => void;
   onResetDatabase: () => void;
+  onSaveStoreInfo: (uid: string, info: StoreInfo) => Promise<any>;
+  onLoadStoreInfo: (uid: string) => Promise<any>;
 }
 
 export default function Settings({

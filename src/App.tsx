@@ -116,14 +116,7 @@ export default function App() {
       setProducts([]);
       setSales([]);
       setCategories([]);
-      return;
     }
-
-    // For cloud users, cloud data will be loaded by loadCloudData
-    // Clear to avoid showing stale data while cloud loads
-    setProducts([]);
-    setSales([]);
-    setCategories([]);
   }, [user, authInitialized]);
 
   // Stock cleanup: deduplicate and remove empty products (runs once)
@@ -174,20 +167,48 @@ export default function App() {
     const localStoreInfo = localStorage.getItem('zm_store_info');
     const deletedProductIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
 
-    let parsedProducts: Product[] = initialProducts;
-    let parsedSales: Sale[] = initialSales;
-    let parsedExpenses: Expense[] = initialExpenses;
-    let parsedCategories: Category[] = initialCategories;
+    let parsedProducts: Product[] = [];
+    let parsedSales: Sale[] = [];
+    let parsedExpenses: Expense[] = [];
+    let parsedCategories: Category[] = [];
     let parsedStoreInfo: StoreInfo | null = null;
 
     try {
-      if (localProducts) parsedProducts = JSON.parse(localProducts);
-      if (localSales) parsedSales = JSON.parse(localSales);
-      if (localExpenses) parsedExpenses = JSON.parse(localExpenses);
-      if (localCategories) parsedCategories = JSON.parse(localCategories);
+      if (localProducts) {
+        parsedProducts = runStockCleanup(JSON.parse(localProducts));
+      }
+      if (!parsedProducts || parsedProducts.length === 0) {
+        parsedProducts = runStockCleanup(initialProducts);
+      }
+
+      if (localSales) {
+        parsedSales = JSON.parse(localSales);
+      }
+      if (!parsedSales || parsedSales.length === 0) {
+        parsedSales = initialSales;
+      }
+
+      if (localExpenses) {
+        parsedExpenses = JSON.parse(localExpenses);
+      }
+      if (!parsedExpenses || parsedExpenses.length === 0) {
+        parsedExpenses = initialExpenses;
+      }
+
+      if (localCategories) {
+        parsedCategories = JSON.parse(localCategories);
+      }
+      if (!parsedCategories || parsedCategories.length === 0) {
+        parsedCategories = initialCategories;
+      }
+
       if (localStoreInfo) parsedStoreInfo = JSON.parse(localStoreInfo);
     } catch {
       // Corrupted localStorage, use seed data
+      parsedProducts = runStockCleanup(initialProducts);
+      parsedSales = initialSales;
+      parsedExpenses = initialExpenses;
+      parsedCategories = initialCategories;
     }
 
     setProducts(parsedProducts);
@@ -218,59 +239,108 @@ export default function App() {
 
       if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
         // Merge local + cloud: keep everything from both sources, but respect deletions
-        const localProductMap = new Map(parsedProducts.map(p => [p.id, p]));
-        const cloudProductMap = new Map(cloudProducts.map(p => [p.id, p]));
         const deletedSet = new Set(deletedProductIds);
 
-        // Merge products: local items + cloud items not in local AND not deleted
-        const mergedProducts = [...parsedProducts];
-        for (const cp of cloudProducts) {
-          if (!localProductMap.has(cp.id) && !deletedSet.has(cp.id)) {
-            const correct = categorizeProduct(cp.name);
-            mergedProducts.push(cp.category === correct ? cp : { ...cp, category: correct });
+        // Merge products: cloud version takes precedence for identical IDs
+        const mergedProductsMap = new Map<string, Product>();
+        for (const lp of parsedProducts) {
+          if (!deletedSet.has(lp.id)) {
+            mergedProductsMap.set(lp.id, lp);
           }
         }
+        for (const cp of cloudProducts) {
+          if (!deletedSet.has(cp.id)) {
+            const correct = categorizeProduct(cp.name);
+            const correctedCp = cp.category === correct ? cp : { ...cp, category: correct };
+            mergedProductsMap.set(cp.id, correctedCp);
+          }
+        }
+        const mergedProducts = Array.from(mergedProductsMap.values());
 
-        // Merge categories: union of both
-        const localCatMap = new Map(parsedCategories.map(c => [c.id, c]));
-        const mergedCategories = [...parsedCategories];
+        // Merge categories: cloud version takes precedence
+        const mergedCategoriesMap = new Map<string, Category>();
+        for (const lc of parsedCategories) {
+          mergedCategoriesMap.set(lc.id, lc);
+        }
         for (const cc of cloudCategories) {
-          if (!localCatMap.has(cc.id)) mergedCategories.push(cc);
+          mergedCategoriesMap.set(cc.id, cc);
         }
+        const mergedCategories = Array.from(mergedCategoriesMap.values());
 
-        // Merge sales: union of both
-        const localSaleMap = new Map(parsedSales.map(s => [s.id, s]));
-        const mergedSales = [...parsedSales];
+        // Merge sales: cloud version takes precedence
+        const mergedSalesMap = new Map<string, Sale>();
+        for (const ls of parsedSales) {
+          mergedSalesMap.set(ls.id, ls);
+        }
         for (const cs of cloudSales) {
-          if (!localSaleMap.has(cs.id)) mergedSales.push(cs);
+          mergedSalesMap.set(cs.id, cs);
         }
+        const mergedSales = Array.from(mergedSalesMap.values()).sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+        );
 
-        console.log(`Sync: local ${parsedProducts.length}p/${parsedCategories.length}c/${parsedSales.length}s | cloud ${cloudProducts.length}p/${cloudCategories.length}c/${cloudSales.length}s | deleted ${deletedProductIds.length} | merged ${mergedProducts.length}p/${mergedCategories.length}c/${mergedSales.length}s`);
+        const cleanedMergedProducts = runStockCleanup(mergedProducts);
 
-        setProducts(mergedProducts);
+        console.log(`Sync: local ${parsedProducts.length}p/${parsedCategories.length}c/${parsedSales.length}s | cloud ${cloudProducts.length}p/${cloudCategories.length}c/${cloudSales.length}s | deleted ${deletedProductIds.length} | merged & cleaned ${cleanedMergedProducts.length}p/${mergedCategories.length}c/${mergedSales.length}s`);
+
+        setProducts(cleanedMergedProducts);
         setCategories(mergedCategories);
         setSales(mergedSales);
-        localStorage.setItem('loja_products', JSON.stringify(mergedProducts));
+        localStorage.setItem('loja_products', JSON.stringify(cleanedMergedProducts));
         localStorage.setItem('loja_sales', JSON.stringify(mergedSales));
         localStorage.setItem('loja_categories', JSON.stringify(mergedCategories));
 
-        // Push merged result to cloud (sync both directions)
-        for (const p of mergedProducts) {
-          try { await saveUserProduct(uid, p); } catch {}
+        // Push merged result to cloud (sync both directions - ONLY if they differ or are missing to minimize writes/quota)
+        const cloudProductMap = new Map(cloudProducts.map(cp => [cp.id, cp]));
+        for (const p of cleanedMergedProducts) {
+          const cp = cloudProductMap.get(p.id);
+          if (!cp || JSON.stringify(cp) !== JSON.stringify(p)) {
+            try { await saveUserProduct(uid, p); } catch {}
+          }
         }
+
+        const cloudCategoryMap = new Map(cloudCategories.map(cc => [cc.id, cc]));
         for (const c of mergedCategories) {
-          try { await saveUserCategory(uid, c); } catch {}
+          const cc = cloudCategoryMap.get(c.id);
+          if (!cc || JSON.stringify(cc) !== JSON.stringify(c)) {
+            try { await saveUserCategory(uid, c); } catch {}
+          }
         }
+
+        const cloudSaleMap = new Map(cloudSales.map(cs => [cs.id, cs]));
         for (const s of mergedSales) {
-          try { await saveUserSale(uid, s); } catch {}
+          const cs = cloudSaleMap.get(s.id);
+          if (!cs || JSON.stringify(cs) !== JSON.stringify(s)) {
+            try { await saveUserSale(uid, s); } catch {}
+          }
         }
 
         // Also delete removed products from cloud
-        for (const deletedId of deletedProductIds) {
+        const finalDeletedProductIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
+        for (const deletedId of finalDeletedProductIds) {
           try { await deleteUserProduct(uid, deletedId); } catch {}
         }
       } else {
         console.log('Cloud vazia. Enviando dados locais...');
+        
+        // If they had no local products (parsedProducts is empty) and cloud is empty, seed them with initialProducts
+        if (!localProducts) {
+          parsedProducts = initialProducts;
+          parsedCategories = initialCategories;
+          parsedSales = initialSales;
+          parsedExpenses = initialExpenses;
+          
+          setProducts(parsedProducts);
+          setCategories(parsedCategories);
+          setSales(parsedSales);
+          setExpenses(parsedExpenses);
+          
+          localStorage.setItem('loja_products', JSON.stringify(parsedProducts));
+          localStorage.setItem('loja_categories', JSON.stringify(parsedCategories));
+          localStorage.setItem('loja_sales', JSON.stringify(parsedSales));
+          localStorage.setItem('loja_expenses', JSON.stringify(parsedExpenses));
+        }
+
         let failedProducts = 0;
         for (const p of parsedProducts) {
           try { await saveUserProduct(uid, p); } catch (e) { failedProducts++; }
@@ -583,7 +653,8 @@ export default function App() {
 
   // Import whole database from external source
   const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[] }) => {
-    saveProductsToStorage(imported.products);
+    const cleanedProducts = runStockCleanup(imported.products);
+    saveProductsToStorage(cleanedProducts);
     saveSalesToStorage(imported.sales);
     saveCategoriesToStorage(imported.categories);
     if (imported.expenses) {
@@ -602,32 +673,76 @@ export default function App() {
 
   // --- STOCK CLEANUP ---
   function runStockCleanup(productsToClean: Product[]): Product[] {
-    // Step 1 & 2: Merge by normalized name (case-insensitive, trimmed)
-    const byName = new Map<string, Product[]>();
+    if (productsToClean.length === 0) return [];
+
+    // Group products by normalized name (case-insensitive, trimmed, space-normalized, accent-normalized)
+    const normalizeName = (name: string) => {
+      return name
+        .trim()
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '') // remove accents
+        .replace(/\s+/g, ' '); // normalize whitespace to single spaces
+    };
+
+    const byNormalizedName = new Map<string, Product[]>();
     for (const p of productsToClean) {
-      const key = p.name.trim().toLowerCase();
-      if (!byName.has(key)) byName.set(key, []);
-      byName.get(key)!.push(p);
+      if (!p.name) continue;
+      const key = normalizeName(p.name);
+      if (!byNormalizedName.has(key)) {
+        byNormalizedName.set(key, []);
+      }
+      byNormalizedName.get(key)!.push(p);
     }
+
     let merged: Product[] = [];
-    for (const group of byName.values()) {
+    const productsToDeleteFromCloud: string[] = [];
+
+    for (const group of byNormalizedName.values()) {
       if (group.length === 1) {
         merged.push(group[0]);
         continue;
       }
-      // Keep the one with highest stock; sum stock from duplicates
-      group.sort((a, b) => b.stock - a.stock);
+
+      // Group elements sorted by creation date descending to get the most recent one first.
+      group.sort((a, b) => {
+        const timeA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const timeB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        if (timeB !== timeA) {
+          return timeB - timeA; // Descending (most recent first)
+        }
+        return b.id.localeCompare(a.id); // Tie breaker
+      });
+
       const best = { ...group[0] };
-      for (let i = 1; i < group.length; i++) {
-        best.stock += group[i].stock;
-        if (best.costPrice === 0 && group[i].costPrice > 0) best.costPrice = group[i].costPrice;
-        if (best.salePrice === 0 && group[i].salePrice > 0) best.salePrice = group[i].salePrice;
+
+      // Sum stock from duplicates
+      let totalStock = 0;
+      for (const p of group) {
+        totalStock += p.stock || 0;
       }
+      best.stock = totalStock;
+
+      // Ensure costPrice comes from a valid one if best is 0, but keep best's details (including the most recent salePrice)
+      for (let i = 1; i < group.length; i++) {
+        if (best.costPrice === 0 && group[i].costPrice > 0) {
+          best.costPrice = group[i].costPrice;
+        }
+        productsToDeleteFromCloud.push(group[i].id);
+      }
+
       merged.push(best);
     }
 
-    // Step 3: Remove products with stock=0 AND salePrice=0
-    const cleaned = merged.filter(p => !(p.stock === 0 && p.salePrice === 0));
+    // Save the IDs of duplicate products we are removing so we can delete them from Cloud/Local
+    if (productsToDeleteFromCloud.length > 0) {
+      const deletedIdsFromStorage = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
+      const updatedDeletedIds = Array.from(new Set([...deletedIdsFromStorage, ...productsToDeleteFromCloud]));
+      localStorage.setItem('loja_deleted_products', JSON.stringify(updatedDeletedIds));
+    }
+
+    // Remove empty/placeholder products if they are completely empty
+    const cleaned = merged.filter(p => !(p.stock === 0 && p.salePrice === 0 && p.name.trim() === ''));
     return cleaned;
   }
 
@@ -828,6 +943,7 @@ export default function App() {
                 { tab: 'cashflow', label: 'Fluxo de Caixa', icon: DollarSign },
                 { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList },
                 { tab: 'debtors', label: 'Devedores', icon: Users },
+                { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
                 const Icon = item.icon;
                 return (
@@ -1166,6 +1282,7 @@ export default function App() {
                 products={products}
                 sales={sales}
                 categories={categories}
+                expenses={expenses}
                 user={user}
                 accessToken={accessToken}
                 onGoogleLogin={handleGoogleLogin}

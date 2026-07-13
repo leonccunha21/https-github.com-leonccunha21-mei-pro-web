@@ -52,6 +52,11 @@ service cloud.firestore {
       allow delete: if isOwner(userId);
     }
 
+    // Configuration / storeInfo collection rules
+    match /users/{userId}/config/{configId} {
+      allow read, write: if isOwner(userId);
+    }
+
     // Entity Shape Validation Helpers
     function isValidProduct(data) {
       return data.keys().hasAll(['id', 'code', 'name', 'category', 'costPrice', 'salePrice', 'stock', 'minStock', 'createdAt'])

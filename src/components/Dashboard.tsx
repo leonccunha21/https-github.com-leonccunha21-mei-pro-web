@@ -52,9 +52,12 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       cutoff.setHours(0, 0, 0, 0);
       return saleDate >= cutoff;
     });
-    result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
-    if (selectedMonth !== 'all') {
-      result = result.filter(s => new Date(s.date).getMonth() + 1 === selectedMonth);
+    // Only apply dropdown year/month filters if we are NOT in custom date range mode
+    if (timeRange !== 'custom') {
+      result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
+      if (selectedMonth !== 'all') {
+        result = result.filter(s => new Date(s.date).getMonth() + 1 === selectedMonth);
+      }
     }
     return result;
   }, [sales, timeRange, customStart, customEnd, selectedYear, selectedMonth]);
@@ -315,35 +318,37 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
           ))}
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
-            <Calendar className="h-3.5 w-3.5 text-slate-400 ml-1.5" />
-            <select
-              value={selectedYear}
-              onChange={e => setSelectedYear(parseInt(e.target.value))}
-              className="bg-transparent text-[11px] sm:text-xs font-medium text-slate-900 border-none outline-none focus:outline-none cursor-pointer py-1 pr-2"
-            >
-              {availableYears.map(y => (
-                <option key={y} value={y}>{y}</option>
-              ))}
-            </select>
+        {timeRange !== 'custom' && (
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
+              <Calendar className="h-3.5 w-3.5 text-slate-400 ml-1.5" />
+              <select
+                value={selectedYear}
+                onChange={e => setSelectedYear(parseInt(e.target.value))}
+                className="bg-transparent text-[11px] sm:text-xs font-medium text-slate-900 border-none outline-none focus:outline-none cursor-pointer py-1 pr-2"
+              >
+                {availableYears.map(y => (
+                  <option key={y} value={y}>{y}</option>
+                ))}
+              </select>
+            </div>
+            <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
+              <span className="text-[11px] sm:text-xs font-medium text-slate-400 ml-1.5">Mês:</span>
+              <select
+                value={selectedMonth}
+                onChange={e => setSelectedMonth(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
+                className="bg-transparent text-[11px] sm:text-xs font-medium text-slate-900 border-none outline-none focus:outline-none cursor-pointer py-1 pr-2"
+              >
+                <option value="all">Todos os Meses</option>
+                {Array.from({ length: 12 }, (_, i) => i + 1).map(m => (
+                  <option key={m} value={m}>
+                    {new Date(2000, m - 1, 1).toLocaleDateString('pt-BR', { month: 'long' })}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
-            <span className="text-[11px] sm:text-xs font-medium text-slate-400 ml-1.5">Mês:</span>
-            <select
-              value={selectedMonth}
-              onChange={e => setSelectedMonth(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
-              className="bg-transparent text-[11px] sm:text-xs font-medium text-slate-900 border-none outline-none focus:outline-none cursor-pointer py-1 pr-2"
-            >
-              <option value="all">Todos os Meses</option>
-              {Array.from({ length: 12 }, (_, i) => i + 1).map(m => (
-                <option key={m} value={m}>
-                  {new Date(2000, m - 1, 1).toLocaleDateString('pt-BR', { month: 'long' })}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
+        )}
         </div>
       </div>
 
