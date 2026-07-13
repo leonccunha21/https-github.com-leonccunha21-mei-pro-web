@@ -525,6 +525,52 @@ function writeDataTs(products, sales, categories, expenses) {
   console.log(`data.json generated: ${OUTPUT_DATA_JSON} (${(Buffer.byteLength(dataJson) / 1024 / 1024).toFixed(2)} MB)`);
 }
 
+// Preserve operational data (CRM, Compras, Fechamento) when (re)writing local-db.json.
+// The running app stores its live state in data/local-db.json; regenerating from the
+// spreadsheet must NOT wipe customers/suppliers/purchases/cashSessions/orders/storeInfo.
+function writeLocalDb(products, sales, categories, expenses) {
+  const LOCAL_DB_PATH = path.join(PROJECT_ROOT, 'data', 'local-db.json');
+  const preserved = {
+    customers: [],
+    suppliers: [],
+    purchases: [],
+    cashSessions: [],
+    orders: [],
+    storeInfo: null,
+    initialized: true
+  };
+  if (fs.existsSync(LOCAL_DB_PATH)) {
+    try {
+      const existing = JSON.parse(fs.readFileSync(LOCAL_DB_PATH, 'utf-8'));
+      preserved.customers = existing.customers || [];
+      preserved.suppliers = existing.suppliers || [];
+      preserved.purchases = existing.purchases || [];
+      preserved.cashSessions = existing.cashSessions || [];
+      preserved.orders = existing.orders || [];
+      preserved.storeInfo = existing.storeInfo !== undefined ? existing.storeInfo : null;
+      preserved.initialized = existing.initialized !== undefined ? existing.initialized : true;
+      console.log(`local-db.json existente: preservando ${preserved.customers.length} clientes, ${preserved.suppliers.length} fornecedores, ${preserved.purchases.length} compras, ${preserved.cashSessions.length} fechamentos.`);
+    } catch (e) {
+      console.log('local-db.json existente inválido, será recriado:', e.message);
+    }
+  }
+  const db = {
+    products,
+    sales,
+    categories,
+    expenses,
+    customers: preserved.customers,
+    suppliers: preserved.suppliers,
+    purchases: preserved.purchases,
+    cashSessions: preserved.cashSessions,
+    orders: preserved.orders,
+    storeInfo: preserved.storeInfo,
+    initialized: preserved.initialized
+  };
+  fs.writeFileSync(LOCAL_DB_PATH, JSON.stringify(db, null, 2), 'utf-8');
+  console.log(`local-db.json atualizado (dados operacionais preservados): ${LOCAL_DB_PATH}`);
+}
+
 // 6. Generate categories list
 const categorySet = new Set(finalProducts.map(p => p.category));
 const finalCategories = [];
@@ -539,6 +585,9 @@ for (const cat of categorySet) {
 
 // Generate data.ts / data.json FIRST (before backup Excel, so it works even if Excel is open)
 writeDataTs(finalProducts, finalSales, finalCategories, expenses2024);
+
+// Refresh local-db.json preserving operational data (CRM, Compras, Fechamento)
+writeLocalDb(finalProducts, finalSales, finalCategories, expenses2024);
 
 // 7. Generate Backup Excel (with error handling so it doesn't block data generation)
 try {
