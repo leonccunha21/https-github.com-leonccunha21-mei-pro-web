@@ -138,7 +138,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
 
   // Stock alerts
   const physicalProducts = products.filter(p => !isServiceProduct(p) && !p.archived);
-  const lowStockProducts = physicalProducts.filter(p => p.status !== 'indisponivel' && p.stock <= p.minStock);
+  const lowStockProducts = physicalProducts.filter(p => p.status !== 'indisponivel' && p.minStock > 0 && p.stock <= p.minStock);
   const totalInventoryQuantity = physicalProducts.reduce((acc, p) => acc + p.stock, 0);
   const totalInventoryCostValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.costPrice), 0);
   const totalInventoryRetailValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.salePrice), 0);
@@ -151,25 +151,35 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
     return item.productName.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
   };
 
-  // Top Selling Products
+  // Top Selling Products (ranked by quantity sold — "Mais Vendidos")
   const topProducts = useMemo(() => {
-    const productSalesMap: Record<string, { name: string; qty: number; revenue: number; profit: number }> = {};
+    const productSalesMap: Record<string, { name: string; qty: number; revenue: number; profit: number; variants: Record<string, number> }> = {};
     completedSales.forEach(sale => {
       const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
       const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
       sale.items.forEach(item => {
         const key = itemKey(item);
         if (!productSalesMap[key]) {
-          productSalesMap[key] = { name: item.productName, qty: 0, revenue: 0, profit: 0 };
+          productSalesMap[key] = { name: item.productName, qty: 0, revenue: 0, profit: 0, variants: {} };
         }
+        const entry = productSalesMap[key];
+        entry.variants[item.productName] = (entry.variants[item.productName] || 0) + item.quantity;
         const effectiveTotal = item.total * discountRatio;
         const effectiveProfit = effectiveTotal - (item.costPrice * item.quantity);
-        productSalesMap[key].qty += item.quantity;
-        productSalesMap[key].revenue += effectiveTotal;
-        productSalesMap[key].profit += effectiveProfit;
+        entry.qty += item.quantity;
+        entry.revenue += effectiveTotal;
+        entry.profit += effectiveProfit;
       });
     });
-    return Object.values(productSalesMap).sort((a, b) => b.qty - a.qty).slice(0, 5);
+    return Object.values(productSalesMap)
+      .map(e => ({
+        name: Object.entries(e.variants).sort((a, b) => b[1] - a[1])[0][0],
+        qty: e.qty,
+        revenue: e.revenue,
+        profit: e.profit,
+      }))
+      .sort((a, b) => b.qty - a.qty || b.revenue - a.revenue || a.name.localeCompare(b.name))
+      .slice(0, 5);
   }, [completedSales]);
 
   // Prepare chart data based on time range

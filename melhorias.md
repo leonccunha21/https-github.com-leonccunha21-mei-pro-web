@@ -43,12 +43,16 @@
 [ok] Removido botão duplicado "Devedores" no menu lateral (ficou apenas o submenu em Vendas).
 [ok] Pipeline (processar_dados.cjs) protegido: ao (re)gerar data/local-db.json, preserva clientes, fornecedores, compras e fechamentos (não apaga os dados dos novos módulos).
 [ok] Controle de recebimento de Marketplace (Shopee/TikTok/OLX) na tela Devedores: toggle "Marketplace", lista de pedidos com canal e ID do pedido (ecommerceOrderId), KPIs de A Receber/Recebidos e botão "Recebido" (marca quando o valor caiu na conta, ~1 mês). Tipo Sale ganha campo saleChannel.
+[ok] Empréstimos: botão "WhatsApp" (ícone de balão) em cada empréstimo que abre wa.me com mensagem de cobrança automática (nome, valor total capital+juros, vencimento e, se atrasado, dias de atraso). Telefone normalizado com DDI 55.
+[ok] Dashboard "Alertas de Reposição": agora só lista produtos com estoque mínimo > 0 (itens com mínimo 0 não aparecem, nem no KPI de Estoque Baixo).
+[ok] Dashboard "Mais Vendidos": ordenação corrigida e determinística por volume (qty), com desempate por faturamento e nome; nome do produto resolvido pela variante mais vendida. Reage ao filtro de data/ano/período do topo.
 
 ## Pendências / o que não ficou ok (preencher ao validar)
 [ ] __________________________________________________
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.6 [ok] — 13/07/2026: botão WhatsApp de cobrança nos empréstimos; Alertas de Reposição só com mínimo > 0; Mais Vendidos ordenado por volume e reativo ao filtro.
 - v2.6.5 [ok] — 13/07/2026: controle de recebimento de Marketplace (Shopee/TikTok/OLX) em Devedores: canal + ID do pedido, KPIs e botão "Recebido".
 - v2.6.4 [ok] — 13/07/2026: removido botão duplicado "Devedores" do menu lateral.
 - v2.6.3 [ok] — 13/07/2026: local-db.json fora do git (banco nao volta por pull/bot); build dist com Empréstimos; correção de visibilidade do módulo.

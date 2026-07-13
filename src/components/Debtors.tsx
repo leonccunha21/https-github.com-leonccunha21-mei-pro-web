@@ -15,7 +15,8 @@ import {
   HandCoins,
   Plus,
   Trash2,
-  ShoppingBag
+  ShoppingBag,
+  MessageCircle
 } from 'lucide-react';
 
 interface DebtorsProps {
@@ -176,6 +177,26 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
   const loanDaysOverdue = (l: Loan) => {
     if (l.status === 'paid') return 0;
     return Math.floor((Date.now() - new Date(l.dueDate).getTime()) / (1000 * 60 * 60 * 24));
+  };
+
+  const buildLoanWhatsAppMessage = (l: Loan) => {
+    const overdue = loanDaysOverdue(l);
+    const remaining = loanRemaining(l);
+    const firstName = l.borrowerName.trim().split(' ')[0] || l.borrowerName;
+    const vence = formatDate(l.dueDate);
+    const head = `Olá ${firstName}, tudo bem?`;
+    const body = overdue > 0
+      ? `Passando para lembrar que o empréstimo de *${formatCurrency(remaining)}* (capital ${formatCurrency(l.principal)} + juros ${formatCurrency(l.interest)}) venceu em ${vence} e está ${overdue} dia(s) em atraso.`
+      : `Passando para lembrar que o empréstimo de *${formatCurrency(remaining)}* (capital ${formatCurrency(l.principal)} + juros ${formatCurrency(l.interest)}) vence no dia ${vence}.`;
+    return `${head}\n${body}\nAgradeço se puder acertar o valor o quanto antes. Obrigado!`;
+  };
+
+  const openLoanWhatsApp = (l: Loan) => {
+    let phone = (l.borrowerPhone || '').replace(/\D/g, '');
+    if (phone && !phone.startsWith('55')) phone = '55' + phone;
+    const text = encodeURIComponent(buildLoanWhatsAppMessage(l));
+    const url = phone ? `https://wa.me/${phone}?text=${text}` : `https://wa.me/?text=${text}`;
+    window.open(url, '_blank');
   };
 
   const formatDate = (iso: string) => {
@@ -691,6 +712,7 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
                             <button onClick={() => handleLoanPay(l)} className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold cursor-pointer" title="Quitar">Quitar</button>
                           </>
                         )}
+                        <button onClick={() => openLoanWhatsApp(l)} className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-600 cursor-pointer" title="Enviar cobrança via WhatsApp"><MessageCircle className="h-3.5 w-3.5" /></button>
                         <button onClick={() => removeLoan(l.id)} className="p-1.5 rounded-lg bg-red-50 dark:bg-red-900/30 hover:bg-red-100 text-red-600 cursor-pointer" title="Remover"><Trash2 className="h-3.5 w-3.5" /></button>
                       </div>
                     </div>
