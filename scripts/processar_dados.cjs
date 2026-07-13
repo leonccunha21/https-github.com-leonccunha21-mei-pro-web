@@ -2,9 +2,10 @@ const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
-const SPREADSHEET_PATH = 'C:/Users/leo/Documents/https-github.com-leonccunha21-mei-pro-web/arquivos excel/arquivo princial.xlsx';
-const OUTPUT_EXCEL = 'C:/Users/leo/Documents/https-github.com-leonccunha21-mei-pro-web/arquivos excel/Backup_Dados_Completos.xlsx';
-const OUTPUT_DATA_TS = 'C:/Users/leo/Documents/https-github.com-leonccunha21-mei-pro-web/src/data.ts';
+const PROJECT_ROOT = path.resolve(__dirname, '..');
+const SPREADSHEET_PATH = path.join(PROJECT_ROOT, 'data', 'excel', 'arquivo princial.xlsx');
+const OUTPUT_EXCEL = path.join(PROJECT_ROOT, 'data', 'excel', 'Backup_Dados_Completos.xlsx');
+const OUTPUT_DATA_TS = path.join(PROJECT_ROOT, 'src', 'data.ts');
 // Inline categorize logic from src/lib/categorize.ts
 const DEFAULT_CATEGORY = 'Diversos';
 function categorizeProduct(name) {

@@ -69,7 +69,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_2",
@@ -80,7 +80,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5.9,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_3",
@@ -91,7 +91,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_4",
@@ -102,7 +102,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_5",
@@ -113,7 +113,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_6",
@@ -124,7 +124,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_7",
@@ -135,7 +135,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 2,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_8",
@@ -146,7 +146,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_9",
@@ -157,7 +157,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_10",
@@ -168,7 +168,7 @@ export const initialProducts: Product[] = [
     "salePrice": 9.9,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_11",
@@ -179,7 +179,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_12",
@@ -190,7 +190,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_13",
@@ -201,7 +201,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_14",
@@ -212,7 +212,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_15",
@@ -223,7 +223,7 @@ export const initialProducts: Product[] = [
     "salePrice": 9,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_16",
@@ -234,7 +234,7 @@ export const initialProducts: Product[] = [
     "salePrice": 17.18,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_17",
@@ -245,7 +245,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_18",
@@ -256,7 +256,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_19",
@@ -267,7 +267,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_20",
@@ -278,7 +278,7 @@ export const initialProducts: Product[] = [
     "salePrice": 14,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_21",
@@ -289,7 +289,7 @@ export const initialProducts: Product[] = [
     "salePrice": 16,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_22",
@@ -300,7 +300,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_23",
@@ -311,7 +311,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_24",
@@ -322,7 +322,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_25",
@@ -333,7 +333,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_26",
@@ -344,7 +344,7 @@ export const initialProducts: Product[] = [
     "salePrice": 13,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_27",
@@ -355,7 +355,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_28",
@@ -366,7 +366,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_29",
@@ -377,7 +377,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_30",
@@ -388,7 +388,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_31",
@@ -399,7 +399,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_32",
@@ -410,7 +410,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_33",
@@ -421,7 +421,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_34",
@@ -432,7 +432,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_35",
@@ -443,7 +443,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_36",
@@ -454,7 +454,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_37",
@@ -465,7 +465,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_38",
@@ -476,7 +476,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_39",
@@ -487,7 +487,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_40",
@@ -498,7 +498,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_41",
@@ -509,7 +509,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_42",
@@ -520,7 +520,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_43",
@@ -531,7 +531,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_44",
@@ -542,7 +542,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_45",
@@ -553,7 +553,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_46",
@@ -564,7 +564,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_47",
@@ -575,7 +575,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_48",
@@ -586,7 +586,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_49",
@@ -597,7 +597,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_50",
@@ -608,7 +608,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_51",
@@ -619,7 +619,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_52",
@@ -630,7 +630,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_53",
@@ -641,7 +641,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_54",
@@ -652,7 +652,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_55",
@@ -663,7 +663,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_56",
@@ -674,7 +674,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_57",
@@ -685,7 +685,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_58",
@@ -696,7 +696,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_59",
@@ -707,7 +707,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_60",
@@ -718,7 +718,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_61",
@@ -729,7 +729,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_62",
@@ -740,7 +740,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_63",
@@ -751,7 +751,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_64",
@@ -762,7 +762,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_65",
@@ -773,7 +773,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_66",
@@ -784,7 +784,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_67",
@@ -795,7 +795,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_68",
@@ -806,7 +806,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_69",
@@ -817,7 +817,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_70",
@@ -828,7 +828,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_71",
@@ -839,7 +839,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_72",
@@ -850,7 +850,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_73",
@@ -861,7 +861,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_74",
@@ -872,7 +872,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2.7,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_75",
@@ -883,7 +883,7 @@ export const initialProducts: Product[] = [
     "salePrice": 210,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_76",
@@ -894,7 +894,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_77",
@@ -905,7 +905,7 @@ export const initialProducts: Product[] = [
     "salePrice": 9,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_78",
@@ -916,7 +916,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_79",
@@ -927,7 +927,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_80",
@@ -938,7 +938,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_81",
@@ -949,7 +949,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_82",
@@ -960,7 +960,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_83",
@@ -971,7 +971,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_84",
@@ -982,7 +982,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_85",
@@ -993,7 +993,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_86",
@@ -1004,7 +1004,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_87",
@@ -1015,7 +1015,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_88",
@@ -1026,7 +1026,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_89",
@@ -1037,7 +1037,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_90",
@@ -1048,7 +1048,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_91",
@@ -1059,7 +1059,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_92",
@@ -1070,7 +1070,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1080,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_93",
@@ -1081,7 +1081,7 @@ export const initialProducts: Product[] = [
     "salePrice": 34.24,
     "stock": 1028,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_94",
@@ -1092,7 +1092,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_95",
@@ -1103,7 +1103,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_96",
@@ -1114,7 +1114,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_97",
@@ -1125,7 +1125,7 @@ export const initialProducts: Product[] = [
     "salePrice": 19,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_98",
@@ -1136,7 +1136,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_99",
@@ -1147,7 +1147,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_100",
@@ -1158,7 +1158,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_101",
@@ -1169,7 +1169,7 @@ export const initialProducts: Product[] = [
     "salePrice": 14,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_102",
@@ -1180,7 +1180,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_103",
@@ -1191,7 +1191,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_104",
@@ -1202,7 +1202,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_105",
@@ -1213,7 +1213,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_106",
@@ -1224,7 +1224,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_107",
@@ -1235,7 +1235,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_108",
@@ -1246,7 +1246,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_109",
@@ -1257,7 +1257,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_110",
@@ -1268,7 +1268,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_111",
@@ -1279,7 +1279,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12.88,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_112",
@@ -1290,7 +1290,7 @@ export const initialProducts: Product[] = [
     "salePrice": 34.75,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_113",
@@ -1301,7 +1301,7 @@ export const initialProducts: Product[] = [
     "salePrice": 13,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_114",
@@ -1312,7 +1312,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_115",
@@ -1323,7 +1323,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_116",
@@ -1334,7 +1334,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_117",
@@ -1345,7 +1345,7 @@ export const initialProducts: Product[] = [
     "salePrice": 28.1,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_118",
@@ -1356,7 +1356,7 @@ export const initialProducts: Product[] = [
     "salePrice": 14.99,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_119",
@@ -1367,7 +1367,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_120",
@@ -1378,7 +1378,7 @@ export const initialProducts: Product[] = [
     "salePrice": 17,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_121",
@@ -1389,7 +1389,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_122",
@@ -1400,7 +1400,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6.26,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_123",
@@ -1411,7 +1411,7 @@ export const initialProducts: Product[] = [
     "salePrice": 600,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_124",
@@ -1422,7 +1422,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_125",
@@ -1433,7 +1433,7 @@ export const initialProducts: Product[] = [
     "salePrice": 17,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_126",
@@ -1444,7 +1444,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_127",
@@ -1455,7 +1455,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_128",
@@ -1466,7 +1466,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_129",
@@ -1477,7 +1477,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.345Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_130",
@@ -1488,7 +1488,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_131",
@@ -1499,7 +1499,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_132",
@@ -1510,7 +1510,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_133",
@@ -1521,7 +1521,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_134",
@@ -1532,7 +1532,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_135",
@@ -1543,7 +1543,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_136",
@@ -1554,7 +1554,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_137",
@@ -1565,7 +1565,7 @@ export const initialProducts: Product[] = [
     "salePrice": 44,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_138",
@@ -1576,7 +1576,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_139",
@@ -1587,7 +1587,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18.79,
     "stock": 192,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_140",
@@ -1598,7 +1598,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_141",
@@ -1609,7 +1609,7 @@ export const initialProducts: Product[] = [
     "salePrice": 48,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_142",
@@ -1620,7 +1620,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_143",
@@ -1631,7 +1631,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 2,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_144",
@@ -1642,7 +1642,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_145",
@@ -1653,7 +1653,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15.11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_146",
@@ -1664,7 +1664,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_147",
@@ -1675,7 +1675,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_148",
@@ -1686,7 +1686,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_149",
@@ -1697,7 +1697,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_150",
@@ -1708,7 +1708,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_151",
@@ -1719,7 +1719,7 @@ export const initialProducts: Product[] = [
     "salePrice": 17,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_152",
@@ -1730,7 +1730,7 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_153",
@@ -1741,7 +1741,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_154",
@@ -1752,7 +1752,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_155",
@@ -1763,7 +1763,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_156",
@@ -1774,7 +1774,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_157",
@@ -1785,7 +1785,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_158",
@@ -1796,7 +1796,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_159",
@@ -1807,7 +1807,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_160",
@@ -1818,7 +1818,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_161",
@@ -1829,7 +1829,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_162",
@@ -1840,7 +1840,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_163",
@@ -1851,7 +1851,7 @@ export const initialProducts: Product[] = [
     "salePrice": 9,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_164",
@@ -1862,7 +1862,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_165",
@@ -1873,7 +1873,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_166",
@@ -1884,7 +1884,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_167",
@@ -1895,7 +1895,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_168",
@@ -1906,7 +1906,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_169",
@@ -1917,7 +1917,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_170",
@@ -1928,7 +1928,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_171",
@@ -1939,7 +1939,7 @@ export const initialProducts: Product[] = [
     "salePrice": 32,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_172",
@@ -1950,7 +1950,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_173",
@@ -1961,7 +1961,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_174",
@@ -1972,7 +1972,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8.8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_175",
@@ -1983,7 +1983,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_176",
@@ -1994,7 +1994,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_177",
@@ -2005,7 +2005,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_178",
@@ -2016,7 +2016,7 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_179",
@@ -2027,7 +2027,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_180",
@@ -2038,7 +2038,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_181",
@@ -2049,7 +2049,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_182",
@@ -2060,7 +2060,7 @@ export const initialProducts: Product[] = [
     "salePrice": 22,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_183",
@@ -2071,7 +2071,7 @@ export const initialProducts: Product[] = [
     "salePrice": 13.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_184",
@@ -2082,7 +2082,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_185",
@@ -2093,7 +2093,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_186",
@@ -2104,7 +2104,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_187",
@@ -2115,7 +2115,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_188",
@@ -2126,7 +2126,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_189",
@@ -2137,7 +2137,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_190",
@@ -2148,7 +2148,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_191",
@@ -2159,7 +2159,7 @@ export const initialProducts: Product[] = [
     "salePrice": 16.75,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_192",
@@ -2170,7 +2170,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_193",
@@ -2181,7 +2181,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_194",
@@ -2192,7 +2192,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10.99,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_195",
@@ -2203,7 +2203,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_196",
@@ -2214,7 +2214,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0.05,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_197",
@@ -2225,7 +2225,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_198",
@@ -2236,7 +2236,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0.8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_199",
@@ -2247,7 +2247,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_200",
@@ -2258,7 +2258,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_201",
@@ -2269,7 +2269,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_202",
@@ -2280,7 +2280,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_203",
@@ -2291,7 +2291,7 @@ export const initialProducts: Product[] = [
     "salePrice": 22.02,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_204",
@@ -2302,7 +2302,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_205",
@@ -2313,7 +2313,7 @@ export const initialProducts: Product[] = [
     "salePrice": 32.95,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_206",
@@ -2324,7 +2324,7 @@ export const initialProducts: Product[] = [
     "salePrice": 55.2,
     "stock": 95,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_207",
@@ -2335,7 +2335,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_208",
@@ -2346,7 +2346,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_209",
@@ -2357,7 +2357,7 @@ export const initialProducts: Product[] = [
     "salePrice": 3.8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_210",
@@ -2368,7 +2368,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_211",
@@ -2379,7 +2379,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_212",
@@ -2390,7 +2390,7 @@ export const initialProducts: Product[] = [
     "salePrice": 17.06,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_213",
@@ -2401,7 +2401,7 @@ export const initialProducts: Product[] = [
     "salePrice": 17,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_214",
@@ -2412,7 +2412,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_215",
@@ -2423,7 +2423,7 @@ export const initialProducts: Product[] = [
     "salePrice": 36.9,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_216",
@@ -2434,7 +2434,7 @@ export const initialProducts: Product[] = [
     "salePrice": 23,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_217",
@@ -2445,7 +2445,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_218",
@@ -2456,7 +2456,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_219",
@@ -2467,7 +2467,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_220",
@@ -2478,7 +2478,7 @@ export const initialProducts: Product[] = [
     "salePrice": 52.99,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_221",
@@ -2489,7 +2489,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_222",
@@ -2500,7 +2500,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_223",
@@ -2511,7 +2511,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_224",
@@ -2522,7 +2522,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_225",
@@ -2533,7 +2533,7 @@ export const initialProducts: Product[] = [
     "salePrice": 38,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_226",
@@ -2544,7 +2544,7 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_227",
@@ -2555,7 +2555,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_228",
@@ -2566,7 +2566,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_229",
@@ -2577,7 +2577,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_230",
@@ -2588,7 +2588,7 @@ export const initialProducts: Product[] = [
     "salePrice": 34.19,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.479Z"
   },
   {
     "id": "p_231",
@@ -2599,7 +2599,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_232",
@@ -2610,7 +2610,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_233",
@@ -2621,7 +2621,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_234",
@@ -2632,7 +2632,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_235",
@@ -2643,7 +2643,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_236",
@@ -2654,7 +2654,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0.5,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_237",
@@ -2665,7 +2665,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_238",
@@ -2676,7 +2676,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_239",
@@ -2687,7 +2687,7 @@ export const initialProducts: Product[] = [
     "salePrice": 13,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_240",
@@ -2698,7 +2698,7 @@ export const initialProducts: Product[] = [
     "salePrice": 28,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_241",
@@ -2709,7 +2709,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_242",
@@ -2720,7 +2720,7 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_243",
@@ -2731,7 +2731,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_244",
@@ -2742,7 +2742,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_245",
@@ -2753,7 +2753,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0.29425,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_246",
@@ -2764,7 +2764,7 @@ export const initialProducts: Product[] = [
     "salePrice": 16,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_247",
@@ -2775,7 +2775,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_248",
@@ -2786,7 +2786,7 @@ export const initialProducts: Product[] = [
     "salePrice": 32.33,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_249",
@@ -2797,7 +2797,7 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_250",
@@ -2808,7 +2808,7 @@ export const initialProducts: Product[] = [
     "salePrice": 28,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_251",
@@ -2819,7 +2819,7 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_252",
@@ -2830,7 +2830,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_253",
@@ -2841,7 +2841,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_254",
@@ -2852,7 +2852,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_255",
@@ -2863,7 +2863,7 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_256",
@@ -2874,7 +2874,7 @@ export const initialProducts: Product[] = [
     "salePrice": 13,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_257",
@@ -2885,7 +2885,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_258",
@@ -2896,7 +2896,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_259",
@@ -2907,7 +2907,7 @@ export const initialProducts: Product[] = [
     "salePrice": 37,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_260",
@@ -2918,7 +2918,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_261",
@@ -2929,7 +2929,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_262",
@@ -2940,7 +2940,7 @@ export const initialProducts: Product[] = [
     "salePrice": 77,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_263",
@@ -2951,7 +2951,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15.38,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_264",
@@ -2962,7 +2962,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_265",
@@ -2973,7 +2973,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_266",
@@ -2984,7 +2984,7 @@ export const initialProducts: Product[] = [
     "salePrice": 99,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_267",
@@ -2995,7 +2995,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_268",
@@ -3006,7 +3006,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_269",
@@ -3017,7 +3017,7 @@ export const initialProducts: Product[] = [
     "salePrice": 16.9,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_270",
@@ -3028,7 +3028,7 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_271",
@@ -3039,7 +3039,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_272",
@@ -3050,7 +3050,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_273",
@@ -3061,7 +3061,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_274",
@@ -3072,7 +3072,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_275",
@@ -3083,7 +3083,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_276",
@@ -3094,7 +3094,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_277",
@@ -3105,7 +3105,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_278",
@@ -3116,7 +3116,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_279",
@@ -3127,7 +3127,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_280",
@@ -3138,7 +3138,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_281",
@@ -3149,7 +3149,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_282",
@@ -3160,7 +3160,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_283",
@@ -3171,7 +3171,7 @@ export const initialProducts: Product[] = [
     "salePrice": 350,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_284",
@@ -3182,7 +3182,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_285",
@@ -3193,7 +3193,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_286",
@@ -3204,7 +3204,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_287",
@@ -3215,7 +3215,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_288",
@@ -3226,7 +3226,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100.32,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_289",
@@ -3237,7 +3237,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_290",
@@ -3248,7 +3248,7 @@ export const initialProducts: Product[] = [
     "salePrice": 9,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_291",
@@ -3259,7 +3259,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_292",
@@ -3270,7 +3270,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_293",
@@ -3281,7 +3281,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_294",
@@ -3292,7 +3292,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_295",
@@ -3303,7 +3303,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_296",
@@ -3314,7 +3314,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4.54,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_297",
@@ -3325,7 +3325,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_298",
@@ -3336,7 +3336,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_299",
@@ -3347,7 +3347,7 @@ export const initialProducts: Product[] = [
     "salePrice": 43,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_300",
@@ -3358,7 +3358,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_301",
@@ -3369,7 +3369,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25.99,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_302",
@@ -3380,7 +3380,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_303",
@@ -3391,7 +3391,7 @@ export const initialProducts: Product[] = [
     "salePrice": 306,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_304",
@@ -3402,7 +3402,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_305",
@@ -3413,7 +3413,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_306",
@@ -3424,7 +3424,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_307",
@@ -3435,7 +3435,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_308",
@@ -3446,7 +3446,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_309",
@@ -3457,7 +3457,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_310",
@@ -3468,7 +3468,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_311",
@@ -3479,7 +3479,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_312",
@@ -3490,7 +3490,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_313",
@@ -3501,7 +3501,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4.6,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_314",
@@ -3512,7 +3512,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_315",
@@ -3523,7 +3523,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_316",
@@ -3534,7 +3534,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_317",
@@ -3545,7 +3545,7 @@ export const initialProducts: Product[] = [
     "salePrice": 13,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_318",
@@ -3556,7 +3556,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_319",
@@ -3567,7 +3567,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_320",
@@ -3578,7 +3578,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_321",
@@ -3589,7 +3589,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_322",
@@ -3600,7 +3600,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_323",
@@ -3611,7 +3611,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_324",
@@ -3622,7 +3622,7 @@ export const initialProducts: Product[] = [
     "salePrice": 17,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_325",
@@ -3633,7 +3633,7 @@ export const initialProducts: Product[] = [
     "salePrice": 14,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_326",
@@ -3644,7 +3644,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_327",
@@ -3655,7 +3655,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_328",
@@ -3666,7 +3666,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4.99,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_329",
@@ -3677,7 +3677,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_330",
@@ -3688,7 +3688,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45.84,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_331",
@@ -3699,7 +3699,7 @@ export const initialProducts: Product[] = [
     "salePrice": 360,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_332",
@@ -3710,7 +3710,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_333",
@@ -3721,7 +3721,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_334",
@@ -3732,7 +3732,7 @@ export const initialProducts: Product[] = [
     "salePrice": 110,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_335",
@@ -3743,7 +3743,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 7,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_336",
@@ -3754,7 +3754,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 58,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_337",
@@ -3765,7 +3765,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 5,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_338",
@@ -3776,7 +3776,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 68,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_339",
@@ -3787,7 +3787,7 @@ export const initialProducts: Product[] = [
     "salePrice": 24.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_340",
@@ -3798,7 +3798,7 @@ export const initialProducts: Product[] = [
     "salePrice": 414.33,
     "stock": 95,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_341",
@@ -3809,7 +3809,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 997,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_342",
@@ -3820,7 +3820,7 @@ export const initialProducts: Product[] = [
     "salePrice": 85,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_343",
@@ -3831,7 +3831,7 @@ export const initialProducts: Product[] = [
     "salePrice": 33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_344",
@@ -3842,7 +3842,7 @@ export const initialProducts: Product[] = [
     "salePrice": 140,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_345",
@@ -3853,7 +3853,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_346",
@@ -3864,7 +3864,7 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_347",
@@ -3875,7 +3875,7 @@ export const initialProducts: Product[] = [
     "salePrice": 14.2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_348",
@@ -3886,7 +3886,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_349",
@@ -3897,7 +3897,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_350",
@@ -3908,7 +3908,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_351",
@@ -3919,7 +3919,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_352",
@@ -3930,7 +3930,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_353",
@@ -3941,7 +3941,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_354",
@@ -3952,7 +3952,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_355",
@@ -3963,7 +3963,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_356",
@@ -3974,7 +3974,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_357",
@@ -3985,7 +3985,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_358",
@@ -3996,7 +3996,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_359",
@@ -4007,7 +4007,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_360",
@@ -4018,7 +4018,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_361",
@@ -4029,7 +4029,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_362",
@@ -4040,7 +4040,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_363",
@@ -4051,7 +4051,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_364",
@@ -4062,7 +4062,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_365",
@@ -4073,7 +4073,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_366",
@@ -4084,7 +4084,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_367",
@@ -4095,7 +4095,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_368",
@@ -4106,7 +4106,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_369",
@@ -4117,7 +4117,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_370",
@@ -4128,7 +4128,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_371",
@@ -4139,7 +4139,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_372",
@@ -4150,7 +4150,7 @@ export const initialProducts: Product[] = [
     "salePrice": 63.3,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_373",
@@ -4161,7 +4161,7 @@ export const initialProducts: Product[] = [
     "salePrice": 16.89,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_374",
@@ -4172,7 +4172,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_375",
@@ -4183,7 +4183,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_376",
@@ -4194,7 +4194,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_377",
@@ -4205,7 +4205,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_378",
@@ -4216,7 +4216,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_379",
@@ -4227,7 +4227,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_380",
@@ -4238,7 +4238,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_381",
@@ -4249,7 +4249,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_382",
@@ -4260,7 +4260,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_383",
@@ -4271,7 +4271,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_384",
@@ -4282,7 +4282,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_385",
@@ -4293,7 +4293,7 @@ export const initialProducts: Product[] = [
     "salePrice": 115,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_386",
@@ -4304,7 +4304,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_387",
@@ -4315,7 +4315,7 @@ export const initialProducts: Product[] = [
     "salePrice": 12.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_388",
@@ -4326,7 +4326,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_389",
@@ -4337,7 +4337,7 @@ export const initialProducts: Product[] = [
     "salePrice": 44,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_390",
@@ -4348,7 +4348,7 @@ export const initialProducts: Product[] = [
     "salePrice": 140,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_391",
@@ -4359,7 +4359,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_392",
@@ -4370,7 +4370,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_393",
@@ -4381,7 +4381,7 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_394",
@@ -4392,7 +4392,7 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_395",
@@ -4403,7 +4403,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_396",
@@ -4414,7 +4414,7 @@ export const initialProducts: Product[] = [
     "salePrice": 28,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_397",
@@ -4425,7 +4425,7 @@ export const initialProducts: Product[] = [
     "salePrice": 11.41,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_398",
@@ -4436,7 +4436,7 @@ export const initialProducts: Product[] = [
     "salePrice": 27.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_399",
@@ -4447,7 +4447,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_400",
@@ -4458,7 +4458,7 @@ export const initialProducts: Product[] = [
     "salePrice": 165,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_401",
@@ -4469,7 +4469,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_402",
@@ -4480,7 +4480,7 @@ export const initialProducts: Product[] = [
     "salePrice": 98,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_403",
@@ -4491,7 +4491,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_404",
@@ -4502,7 +4502,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_405",
@@ -4513,7 +4513,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_406",
@@ -4524,7 +4524,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_407",
@@ -4535,7 +4535,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_408",
@@ -4546,7 +4546,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_409",
@@ -4557,7 +4557,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_410",
@@ -4568,7 +4568,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_411",
@@ -4579,7 +4579,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_412",
@@ -4590,7 +4590,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_413",
@@ -4601,7 +4601,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_414",
@@ -4612,7 +4612,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_415",
@@ -4623,7 +4623,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_416",
@@ -4634,7 +4634,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_417",
@@ -4645,7 +4645,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_418",
@@ -4656,7 +4656,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.346Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_419",
@@ -4667,7 +4667,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_420",
@@ -4678,7 +4678,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_421",
@@ -4689,7 +4689,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_422",
@@ -4700,7 +4700,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_423",
@@ -4711,7 +4711,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_424",
@@ -4722,7 +4722,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_425",
@@ -4733,7 +4733,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_426",
@@ -4744,7 +4744,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_427",
@@ -4755,7 +4755,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_428",
@@ -4766,7 +4766,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_429",
@@ -4777,7 +4777,7 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_430",
@@ -4788,7 +4788,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_431",
@@ -4799,7 +4799,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_432",
@@ -4810,7 +4810,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_433",
@@ -4821,7 +4821,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_434",
@@ -4832,7 +4832,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_435",
@@ -4843,7 +4843,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_436",
@@ -4854,7 +4854,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_437",
@@ -4865,7 +4865,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_438",
@@ -4876,7 +4876,7 @@ export const initialProducts: Product[] = [
     "salePrice": 290,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_439",
@@ -4887,7 +4887,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_440",
@@ -4898,7 +4898,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_441",
@@ -4909,7 +4909,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_442",
@@ -4920,7 +4920,7 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_443",
@@ -4931,7 +4931,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_444",
@@ -4942,7 +4942,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_445",
@@ -4953,7 +4953,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_446",
@@ -4964,7 +4964,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_447",
@@ -4975,7 +4975,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_448",
@@ -4986,7 +4986,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_449",
@@ -4997,7 +4997,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_450",
@@ -5008,7 +5008,7 @@ export const initialProducts: Product[] = [
     "salePrice": 202,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_451",
@@ -5019,7 +5019,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_452",
@@ -5030,7 +5030,7 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_453",
@@ -5041,7 +5041,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_454",
@@ -5052,7 +5052,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_455",
@@ -5063,7 +5063,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_456",
@@ -5074,7 +5074,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_457",
@@ -5085,7 +5085,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_458",
@@ -5096,7 +5096,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_459",
@@ -5107,7 +5107,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_460",
@@ -5118,7 +5118,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_461",
@@ -5129,7 +5129,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_462",
@@ -5140,7 +5140,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_463",
@@ -5151,7 +5151,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_464",
@@ -5162,7 +5162,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_465",
@@ -5173,7 +5173,7 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_466",
@@ -5184,7 +5184,7 @@ export const initialProducts: Product[] = [
     "salePrice": 190,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_467",
@@ -5195,7 +5195,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_468",
@@ -5206,7 +5206,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_469",
@@ -5217,7 +5217,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_470",
@@ -5228,7 +5228,7 @@ export const initialProducts: Product[] = [
     "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_471",
@@ -5239,7 +5239,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_472",
@@ -5250,7 +5250,7 @@ export const initialProducts: Product[] = [
     "salePrice": 350,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_473",
@@ -5261,7 +5261,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_474",
@@ -5272,7 +5272,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_475",
@@ -5283,7 +5283,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_476",
@@ -5294,7 +5294,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_477",
@@ -5305,7 +5305,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_478",
@@ -5316,7 +5316,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_479",
@@ -5327,7 +5327,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_480",
@@ -5338,7 +5338,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_481",
@@ -5349,7 +5349,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_482",
@@ -5360,7 +5360,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_483",
@@ -5371,7 +5371,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6.36,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_484",
@@ -5382,7 +5382,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5.89,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_485",
@@ -5393,7 +5393,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_486",
@@ -5404,7 +5404,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_487",
@@ -5415,7 +5415,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15.72,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_488",
@@ -5426,7 +5426,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_489",
@@ -5437,7 +5437,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_490",
@@ -5448,7 +5448,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_491",
@@ -5459,7 +5459,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_492",
@@ -5470,7 +5470,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_493",
@@ -5481,7 +5481,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_494",
@@ -5492,7 +5492,7 @@ export const initialProducts: Product[] = [
     "salePrice": 44,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_495",
@@ -5503,7 +5503,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_496",
@@ -5514,7 +5514,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_497",
@@ -5525,7 +5525,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_498",
@@ -5536,7 +5536,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_499",
@@ -5547,7 +5547,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_500",
@@ -5558,7 +5558,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_501",
@@ -5569,7 +5569,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_502",
@@ -5580,7 +5580,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_503",
@@ -5591,7 +5591,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_504",
@@ -5602,7 +5602,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_505",
@@ -5613,7 +5613,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_506",
@@ -5624,7 +5624,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_507",
@@ -5635,7 +5635,7 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_508",
@@ -5646,7 +5646,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.480Z"
   },
   {
     "id": "p_509",
@@ -5657,7 +5657,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_510",
@@ -5668,7 +5668,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_511",
@@ -5679,7 +5679,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_512",
@@ -5690,7 +5690,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_513",
@@ -5701,7 +5701,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_514",
@@ -5712,7 +5712,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_515",
@@ -5723,7 +5723,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_516",
@@ -5734,7 +5734,7 @@ export const initialProducts: Product[] = [
     "salePrice": 85,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_517",
@@ -5745,7 +5745,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_518",
@@ -5756,7 +5756,7 @@ export const initialProducts: Product[] = [
     "salePrice": 450,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_519",
@@ -5767,7 +5767,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_520",
@@ -5778,7 +5778,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_521",
@@ -5789,7 +5789,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_522",
@@ -5800,7 +5800,7 @@ export const initialProducts: Product[] = [
     "salePrice": 130,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_523",
@@ -5811,7 +5811,7 @@ export const initialProducts: Product[] = [
     "salePrice": 120,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_524",
@@ -5822,7 +5822,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_525",
@@ -5833,7 +5833,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_526",
@@ -5844,7 +5844,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_527",
@@ -5855,7 +5855,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_528",
@@ -5866,7 +5866,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_529",
@@ -5877,7 +5877,7 @@ export const initialProducts: Product[] = [
     "salePrice": 22.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_530",
@@ -5888,7 +5888,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_531",
@@ -5899,7 +5899,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_532",
@@ -5910,7 +5910,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_533",
@@ -5921,7 +5921,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_534",
@@ -5932,7 +5932,7 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_535",
@@ -5943,7 +5943,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_536",
@@ -5954,7 +5954,7 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_537",
@@ -5965,7 +5965,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_538",
@@ -5976,7 +5976,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_539",
@@ -5987,7 +5987,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_540",
@@ -5998,7 +5998,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_541",
@@ -6009,7 +6009,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_542",
@@ -6020,7 +6020,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_543",
@@ -6031,7 +6031,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_544",
@@ -6042,7 +6042,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_545",
@@ -6053,7 +6053,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_546",
@@ -6064,7 +6064,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_547",
@@ -6075,7 +6075,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_548",
@@ -6086,7 +6086,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_549",
@@ -6097,7 +6097,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_550",
@@ -6108,7 +6108,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_551",
@@ -6119,7 +6119,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_552",
@@ -6130,7 +6130,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_553",
@@ -6141,7 +6141,7 @@ export const initialProducts: Product[] = [
     "salePrice": 136.9,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_554",
@@ -6152,7 +6152,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_555",
@@ -6163,7 +6163,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_556",
@@ -6174,7 +6174,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_557",
@@ -6185,7 +6185,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_558",
@@ -6196,7 +6196,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_559",
@@ -6207,7 +6207,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_560",
@@ -6218,7 +6218,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_561",
@@ -6229,7 +6229,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_562",
@@ -6240,7 +6240,7 @@ export const initialProducts: Product[] = [
     "salePrice": 184.82,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_563",
@@ -6251,7 +6251,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_564",
@@ -6262,7 +6262,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_565",
@@ -6273,7 +6273,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_566",
@@ -6284,7 +6284,7 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_567",
@@ -6295,7 +6295,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_568",
@@ -6306,7 +6306,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_569",
@@ -6317,7 +6317,7 @@ export const initialProducts: Product[] = [
     "salePrice": 277,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_570",
@@ -6328,7 +6328,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_571",
@@ -6339,7 +6339,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_572",
@@ -6350,7 +6350,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_573",
@@ -6361,7 +6361,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_574",
@@ -6372,7 +6372,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_575",
@@ -6383,7 +6383,7 @@ export const initialProducts: Product[] = [
     "salePrice": 48.28,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_576",
@@ -6394,7 +6394,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_577",
@@ -6405,7 +6405,7 @@ export const initialProducts: Product[] = [
     "salePrice": 135,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_578",
@@ -6416,7 +6416,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_579",
@@ -6427,7 +6427,7 @@ export const initialProducts: Product[] = [
     "salePrice": 125,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_580",
@@ -6438,7 +6438,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_581",
@@ -6449,7 +6449,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_582",
@@ -6460,7 +6460,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_583",
@@ -6471,7 +6471,7 @@ export const initialProducts: Product[] = [
     "salePrice": 0.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_584",
@@ -6482,7 +6482,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_585",
@@ -6493,7 +6493,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_586",
@@ -6504,7 +6504,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_587",
@@ -6515,7 +6515,7 @@ export const initialProducts: Product[] = [
     "salePrice": 135,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_588",
@@ -6526,7 +6526,7 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_589",
@@ -6537,7 +6537,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_590",
@@ -6548,7 +6548,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_591",
@@ -6559,7 +6559,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_592",
@@ -6570,7 +6570,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_593",
@@ -6581,7 +6581,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_594",
@@ -6592,7 +6592,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_595",
@@ -6603,7 +6603,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_596",
@@ -6614,7 +6614,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_597",
@@ -6625,7 +6625,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_598",
@@ -6636,7 +6636,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_599",
@@ -6647,7 +6647,7 @@ export const initialProducts: Product[] = [
     "salePrice": 370,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_600",
@@ -6658,7 +6658,7 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_601",
@@ -6669,7 +6669,7 @@ export const initialProducts: Product[] = [
     "salePrice": 260,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_602",
@@ -6680,7 +6680,7 @@ export const initialProducts: Product[] = [
     "salePrice": 123.28,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_603",
@@ -6691,7 +6691,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_604",
@@ -6702,7 +6702,7 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_605",
@@ -6713,7 +6713,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_606",
@@ -6724,7 +6724,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_607",
@@ -6735,7 +6735,7 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_608",
@@ -6746,7 +6746,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_609",
@@ -6757,7 +6757,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_610",
@@ -6768,7 +6768,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_611",
@@ -6779,7 +6779,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_612",
@@ -6790,7 +6790,7 @@ export const initialProducts: Product[] = [
     "salePrice": 120,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_613",
@@ -6801,7 +6801,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_614",
@@ -6812,7 +6812,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_615",
@@ -6823,7 +6823,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_616",
@@ -6834,7 +6834,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_617",
@@ -6845,7 +6845,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_618",
@@ -6856,7 +6856,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_619",
@@ -6867,7 +6867,7 @@ export const initialProducts: Product[] = [
     "salePrice": 170,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_620",
@@ -6878,7 +6878,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_621",
@@ -6889,7 +6889,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_622",
@@ -6900,7 +6900,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_623",
@@ -6911,7 +6911,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_624",
@@ -6922,7 +6922,7 @@ export const initialProducts: Product[] = [
     "salePrice": 110,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_625",
@@ -6933,7 +6933,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_626",
@@ -6944,7 +6944,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_627",
@@ -6955,7 +6955,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2020,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_628",
@@ -6966,7 +6966,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_629",
@@ -6977,7 +6977,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_630",
@@ -6988,7 +6988,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_631",
@@ -6999,7 +6999,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_632",
@@ -7010,7 +7010,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_633",
@@ -7021,7 +7021,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_634",
@@ -7032,7 +7032,7 @@ export const initialProducts: Product[] = [
     "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_635",
@@ -7043,7 +7043,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_636",
@@ -7054,7 +7054,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_637",
@@ -7065,7 +7065,7 @@ export const initialProducts: Product[] = [
     "salePrice": 61.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_638",
@@ -7076,7 +7076,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_639",
@@ -7087,7 +7087,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_640",
@@ -7098,7 +7098,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_641",
@@ -7109,7 +7109,7 @@ export const initialProducts: Product[] = [
     "salePrice": 110,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_642",
@@ -7120,7 +7120,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_643",
@@ -7131,7 +7131,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_644",
@@ -7142,7 +7142,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_645",
@@ -7153,7 +7153,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_646",
@@ -7164,7 +7164,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_647",
@@ -7175,7 +7175,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_648",
@@ -7186,7 +7186,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_649",
@@ -7197,7 +7197,7 @@ export const initialProducts: Product[] = [
     "salePrice": 165,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_650",
@@ -7208,7 +7208,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_651",
@@ -7219,7 +7219,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_652",
@@ -7230,7 +7230,7 @@ export const initialProducts: Product[] = [
     "salePrice": 165,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_653",
@@ -7241,7 +7241,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_654",
@@ -7252,7 +7252,7 @@ export const initialProducts: Product[] = [
     "salePrice": 85,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_655",
@@ -7263,7 +7263,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_656",
@@ -7274,7 +7274,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_657",
@@ -7285,7 +7285,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_658",
@@ -7296,7 +7296,7 @@ export const initialProducts: Product[] = [
     "salePrice": 315,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_659",
@@ -7307,7 +7307,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_660",
@@ -7318,7 +7318,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_661",
@@ -7329,7 +7329,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_662",
@@ -7340,7 +7340,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_663",
@@ -7351,7 +7351,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_664",
@@ -7362,7 +7362,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_665",
@@ -7373,7 +7373,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_666",
@@ -7384,7 +7384,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_667",
@@ -7395,7 +7395,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_668",
@@ -7406,7 +7406,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_669",
@@ -7417,7 +7417,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_670",
@@ -7428,7 +7428,7 @@ export const initialProducts: Product[] = [
     "salePrice": 26,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_671",
@@ -7439,7 +7439,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_672",
@@ -7450,7 +7450,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_673",
@@ -7461,7 +7461,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_674",
@@ -7472,7 +7472,7 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_675",
@@ -7483,7 +7483,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_676",
@@ -7494,7 +7494,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_677",
@@ -7505,7 +7505,7 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_678",
@@ -7516,7 +7516,7 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_679",
@@ -7527,7 +7527,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_680",
@@ -7538,7 +7538,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_681",
@@ -7549,7 +7549,7 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_682",
@@ -7560,7 +7560,7 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_683",
@@ -7571,7 +7571,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_684",
@@ -7582,7 +7582,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_685",
@@ -7593,7 +7593,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_686",
@@ -7604,7 +7604,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_687",
@@ -7615,7 +7615,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_688",
@@ -7626,7 +7626,7 @@ export const initialProducts: Product[] = [
     "salePrice": 400,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_689",
@@ -7637,7 +7637,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_690",
@@ -7648,7 +7648,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_691",
@@ -7659,7 +7659,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.347Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_692",
@@ -7670,7 +7670,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_693",
@@ -7681,7 +7681,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_694",
@@ -7692,7 +7692,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_695",
@@ -7703,7 +7703,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_696",
@@ -7714,7 +7714,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_697",
@@ -7725,7 +7725,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_698",
@@ -7736,7 +7736,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_699",
@@ -7747,7 +7747,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_700",
@@ -7758,7 +7758,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_701",
@@ -7769,7 +7769,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_702",
@@ -7780,7 +7780,7 @@ export const initialProducts: Product[] = [
     "salePrice": 120,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_703",
@@ -7791,7 +7791,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_704",
@@ -7802,7 +7802,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_705",
@@ -7813,7 +7813,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_706",
@@ -7824,7 +7824,7 @@ export const initialProducts: Product[] = [
     "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_707",
@@ -7835,7 +7835,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_708",
@@ -7846,7 +7846,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_709",
@@ -7857,7 +7857,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_710",
@@ -7868,7 +7868,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_711",
@@ -7879,7 +7879,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_712",
@@ -7890,7 +7890,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_713",
@@ -7901,7 +7901,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_714",
@@ -7912,7 +7912,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_715",
@@ -7923,7 +7923,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_716",
@@ -7934,7 +7934,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_717",
@@ -7945,7 +7945,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_718",
@@ -7956,7 +7956,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_719",
@@ -7967,7 +7967,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_720",
@@ -7978,7 +7978,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_721",
@@ -7989,7 +7989,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_722",
@@ -8000,7 +8000,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_723",
@@ -8011,7 +8011,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_724",
@@ -8022,7 +8022,7 @@ export const initialProducts: Product[] = [
     "salePrice": 85,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_725",
@@ -8033,7 +8033,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_726",
@@ -8044,7 +8044,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_727",
@@ -8055,7 +8055,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_728",
@@ -8066,7 +8066,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_729",
@@ -8077,7 +8077,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_730",
@@ -8088,7 +8088,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_731",
@@ -8099,7 +8099,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_732",
@@ -8110,7 +8110,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_733",
@@ -8121,7 +8121,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_734",
@@ -8132,7 +8132,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_735",
@@ -8143,7 +8143,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_736",
@@ -8154,7 +8154,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_737",
@@ -8165,7 +8165,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_738",
@@ -8176,7 +8176,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_739",
@@ -8187,7 +8187,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_740",
@@ -8198,7 +8198,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_741",
@@ -8209,7 +8209,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_742",
@@ -8220,7 +8220,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_743",
@@ -8231,7 +8231,7 @@ export const initialProducts: Product[] = [
     "salePrice": 255,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_744",
@@ -8242,7 +8242,7 @@ export const initialProducts: Product[] = [
     "salePrice": 220,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_745",
@@ -8253,7 +8253,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_746",
@@ -8264,7 +8264,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_747",
@@ -8275,7 +8275,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_748",
@@ -8286,7 +8286,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_749",
@@ -8297,7 +8297,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_750",
@@ -8308,7 +8308,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_751",
@@ -8319,7 +8319,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_752",
@@ -8330,7 +8330,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_753",
@@ -8341,7 +8341,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_754",
@@ -8352,7 +8352,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_755",
@@ -8363,7 +8363,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_756",
@@ -8374,7 +8374,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_757",
@@ -8385,7 +8385,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_758",
@@ -8396,7 +8396,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_759",
@@ -8407,7 +8407,7 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_760",
@@ -8418,7 +8418,7 @@ export const initialProducts: Product[] = [
     "salePrice": 600,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_761",
@@ -8429,7 +8429,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_762",
@@ -8440,7 +8440,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_763",
@@ -8451,7 +8451,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_764",
@@ -8462,7 +8462,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_765",
@@ -8473,7 +8473,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_766",
@@ -8484,7 +8484,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_767",
@@ -8495,7 +8495,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_768",
@@ -8506,7 +8506,7 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_769",
@@ -8517,7 +8517,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_770",
@@ -8528,7 +8528,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_771",
@@ -8539,7 +8539,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_772",
@@ -8550,7 +8550,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_773",
@@ -8561,7 +8561,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_774",
@@ -8572,7 +8572,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_775",
@@ -8583,7 +8583,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_776",
@@ -8594,7 +8594,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.481Z"
   },
   {
     "id": "p_777",
@@ -8605,7 +8605,7 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_778",
@@ -8616,7 +8616,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_779",
@@ -8627,7 +8627,7 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_780",
@@ -8638,7 +8638,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_781",
@@ -8649,7 +8649,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_782",
@@ -8660,7 +8660,7 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_783",
@@ -8671,7 +8671,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_784",
@@ -8682,7 +8682,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_785",
@@ -8693,7 +8693,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_786",
@@ -8704,7 +8704,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_787",
@@ -8715,7 +8715,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_788",
@@ -8726,7 +8726,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_789",
@@ -8737,7 +8737,7 @@ export const initialProducts: Product[] = [
     "salePrice": 28.3,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_790",
@@ -8748,7 +8748,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_791",
@@ -8759,7 +8759,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_792",
@@ -8770,7 +8770,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_793",
@@ -8781,7 +8781,7 @@ export const initialProducts: Product[] = [
     "salePrice": 110,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_794",
@@ -8792,7 +8792,7 @@ export const initialProducts: Product[] = [
     "salePrice": 42.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_795",
@@ -8803,7 +8803,7 @@ export const initialProducts: Product[] = [
     "salePrice": 27.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_796",
@@ -8814,7 +8814,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4.76,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_797",
@@ -8825,7 +8825,7 @@ export const initialProducts: Product[] = [
     "salePrice": 386,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_798",
@@ -8836,7 +8836,7 @@ export const initialProducts: Product[] = [
     "salePrice": 95,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_799",
@@ -8847,7 +8847,7 @@ export const initialProducts: Product[] = [
     "salePrice": 21.19,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_800",
@@ -8858,7 +8858,7 @@ export const initialProducts: Product[] = [
     "salePrice": 48.7,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_801",
@@ -8869,7 +8869,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5.87,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_802",
@@ -8880,7 +8880,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15.76,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_803",
@@ -8891,7 +8891,7 @@ export const initialProducts: Product[] = [
     "salePrice": 41.9,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_804",
@@ -8902,7 +8902,7 @@ export const initialProducts: Product[] = [
     "salePrice": 112.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_805",
@@ -8913,7 +8913,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_806",
@@ -8924,7 +8924,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_807",
@@ -8935,7 +8935,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_808",
@@ -8946,7 +8946,7 @@ export const initialProducts: Product[] = [
     "salePrice": 33.2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_809",
@@ -8957,7 +8957,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_810",
@@ -8968,7 +8968,7 @@ export const initialProducts: Product[] = [
     "salePrice": 153,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_811",
@@ -8979,7 +8979,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_812",
@@ -8990,7 +8990,7 @@ export const initialProducts: Product[] = [
     "salePrice": 44.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_813",
@@ -9001,7 +9001,7 @@ export const initialProducts: Product[] = [
     "salePrice": 85.16,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_814",
@@ -9012,7 +9012,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_815",
@@ -9023,7 +9023,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_816",
@@ -9034,7 +9034,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_817",
@@ -9045,7 +9045,7 @@ export const initialProducts: Product[] = [
     "salePrice": 42,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_818",
@@ -9056,7 +9056,7 @@ export const initialProducts: Product[] = [
     "salePrice": 123.12,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_819",
@@ -9067,7 +9067,7 @@ export const initialProducts: Product[] = [
     "salePrice": 19.71,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_820",
@@ -9078,7 +9078,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_821",
@@ -9089,7 +9089,7 @@ export const initialProducts: Product[] = [
     "salePrice": 32,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_822",
@@ -9100,7 +9100,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_823",
@@ -9111,7 +9111,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_824",
@@ -9122,7 +9122,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_825",
@@ -9133,7 +9133,7 @@ export const initialProducts: Product[] = [
     "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_826",
@@ -9144,7 +9144,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_827",
@@ -9155,7 +9155,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_828",
@@ -9166,7 +9166,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_829",
@@ -9177,7 +9177,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_830",
@@ -9188,7 +9188,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_831",
@@ -9199,7 +9199,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_832",
@@ -9210,7 +9210,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_833",
@@ -9221,7 +9221,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_834",
@@ -9232,7 +9232,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_835",
@@ -9243,7 +9243,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_836",
@@ -9254,7 +9254,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_837",
@@ -9265,7 +9265,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_838",
@@ -9276,7 +9276,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_839",
@@ -9287,7 +9287,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_840",
@@ -9298,7 +9298,7 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_841",
@@ -9309,7 +9309,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_842",
@@ -9320,7 +9320,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_843",
@@ -9331,7 +9331,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_844",
@@ -9342,7 +9342,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_845",
@@ -9353,7 +9353,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_846",
@@ -9364,7 +9364,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_847",
@@ -9375,7 +9375,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_848",
@@ -9386,7 +9386,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_849",
@@ -9397,7 +9397,7 @@ export const initialProducts: Product[] = [
     "salePrice": 14,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_850",
@@ -9408,7 +9408,7 @@ export const initialProducts: Product[] = [
     "salePrice": 29.74,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_851",
@@ -9419,7 +9419,7 @@ export const initialProducts: Product[] = [
     "salePrice": 29.74,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_852",
@@ -9430,7 +9430,7 @@ export const initialProducts: Product[] = [
     "salePrice": 21,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_853",
@@ -9441,7 +9441,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15.13,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_854",
@@ -9452,7 +9452,7 @@ export const initialProducts: Product[] = [
     "salePrice": 4.54,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_855",
@@ -9463,7 +9463,7 @@ export const initialProducts: Product[] = [
     "salePrice": 34,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_856",
@@ -9474,7 +9474,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_857",
@@ -9485,7 +9485,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_858",
@@ -9496,7 +9496,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_859",
@@ -9507,7 +9507,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_860",
@@ -9518,7 +9518,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15.09,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_861",
@@ -9529,7 +9529,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_862",
@@ -9540,7 +9540,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_863",
@@ -9551,7 +9551,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_864",
@@ -9562,7 +9562,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_865",
@@ -9573,7 +9573,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_866",
@@ -9584,7 +9584,7 @@ export const initialProducts: Product[] = [
     "salePrice": 270,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_867",
@@ -9595,7 +9595,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_868",
@@ -9606,7 +9606,7 @@ export const initialProducts: Product[] = [
     "salePrice": 185,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_869",
@@ -9617,7 +9617,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_870",
@@ -9628,7 +9628,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_871",
@@ -9639,7 +9639,7 @@ export const initialProducts: Product[] = [
     "salePrice": 325,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_872",
@@ -9650,7 +9650,7 @@ export const initialProducts: Product[] = [
     "salePrice": 140,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_873",
@@ -9661,7 +9661,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_874",
@@ -9672,7 +9672,7 @@ export const initialProducts: Product[] = [
     "salePrice": 105,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_875",
@@ -9683,7 +9683,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_876",
@@ -9694,7 +9694,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_877",
@@ -9705,7 +9705,7 @@ export const initialProducts: Product[] = [
     "salePrice": 350,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_878",
@@ -9716,7 +9716,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_879",
@@ -9727,7 +9727,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_880",
@@ -9738,7 +9738,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_881",
@@ -9749,7 +9749,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_882",
@@ -9760,7 +9760,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_883",
@@ -9771,7 +9771,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_884",
@@ -9782,7 +9782,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_885",
@@ -9793,7 +9793,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_886",
@@ -9804,7 +9804,7 @@ export const initialProducts: Product[] = [
     "salePrice": 400,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_887",
@@ -9815,7 +9815,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_888",
@@ -9826,7 +9826,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_889",
@@ -9837,7 +9837,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_890",
@@ -9848,7 +9848,7 @@ export const initialProducts: Product[] = [
     "salePrice": 378.4,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_891",
@@ -9859,7 +9859,7 @@ export const initialProducts: Product[] = [
     "salePrice": 41.6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_892",
@@ -9870,7 +9870,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_893",
@@ -9881,7 +9881,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_894",
@@ -9892,7 +9892,7 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_895",
@@ -9903,7 +9903,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_896",
@@ -9914,7 +9914,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_897",
@@ -9925,7 +9925,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_898",
@@ -9936,7 +9936,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_899",
@@ -9947,7 +9947,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_900",
@@ -9958,7 +9958,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_901",
@@ -9969,7 +9969,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_902",
@@ -9980,7 +9980,7 @@ export const initialProducts: Product[] = [
     "salePrice": 646.4,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_903",
@@ -9991,7 +9991,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_904",
@@ -10002,7 +10002,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_905",
@@ -10013,7 +10013,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_906",
@@ -10024,7 +10024,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18.8,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_907",
@@ -10035,7 +10035,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_908",
@@ -10046,7 +10046,7 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_909",
@@ -10057,7 +10057,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_910",
@@ -10068,7 +10068,7 @@ export const initialProducts: Product[] = [
     "salePrice": 14.54000000000002,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_911",
@@ -10079,7 +10079,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_912",
@@ -10090,7 +10090,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.482Z"
   },
   {
     "id": "p_913",
@@ -10101,7 +10101,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_914",
@@ -10112,7 +10112,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_915",
@@ -10123,7 +10123,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_916",
@@ -10134,7 +10134,7 @@ export const initialProducts: Product[] = [
     "salePrice": 600,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_917",
@@ -10145,7 +10145,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_918",
@@ -10156,7 +10156,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_919",
@@ -10167,7 +10167,7 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_920",
@@ -10178,7 +10178,7 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_921",
@@ -10189,7 +10189,7 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_922",
@@ -10200,7 +10200,7 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_923",
@@ -10211,7 +10211,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_924",
@@ -10222,7 +10222,7 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_925",
@@ -10233,7 +10233,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_926",
@@ -10244,7 +10244,7 @@ export const initialProducts: Product[] = [
     "salePrice": 43.52,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_927",
@@ -10255,7 +10255,7 @@ export const initialProducts: Product[] = [
     "salePrice": 453.69,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_928",
@@ -10266,7 +10266,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_929",
@@ -10277,7 +10277,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_930",
@@ -10288,7 +10288,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_931",
@@ -10299,7 +10299,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_932",
@@ -10310,7 +10310,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_933",
@@ -10321,7 +10321,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_934",
@@ -10332,7 +10332,7 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_935",
@@ -10343,7 +10343,7 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_936",
@@ -10354,7 +10354,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_937",
@@ -10365,7 +10365,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_938",
@@ -10376,7 +10376,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_939",
@@ -10387,7 +10387,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18.22,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_940",
@@ -10398,7 +10398,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_941",
@@ -10409,7 +10409,7 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_942",
@@ -10420,7 +10420,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_943",
@@ -10431,7 +10431,7 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_944",
@@ -10442,7 +10442,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_945",
@@ -10453,7 +10453,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_946",
@@ -10464,7 +10464,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_947",
@@ -10475,7 +10475,7 @@ export const initialProducts: Product[] = [
     "salePrice": 235,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_948",
@@ -10486,7 +10486,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_949",
@@ -10497,7 +10497,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_950",
@@ -10508,7 +10508,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_951",
@@ -10519,7 +10519,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_952",
@@ -10530,7 +10530,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_953",
@@ -10541,7 +10541,7 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_954",
@@ -10552,7 +10552,7 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_955",
@@ -10563,7 +10563,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_956",
@@ -10574,7 +10574,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_957",
@@ -10585,7 +10585,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_958",
@@ -10596,7 +10596,7 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_959",
@@ -10607,7 +10607,7 @@ export const initialProducts: Product[] = [
     "salePrice": 18,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_960",
@@ -10618,7 +10618,7 @@ export const initialProducts: Product[] = [
     "salePrice": 250,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_961",
@@ -10629,7 +10629,7 @@ export const initialProducts: Product[] = [
     "salePrice": 130,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_962",
@@ -10640,7 +10640,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_963",
@@ -10651,7 +10651,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_964",
@@ -10662,7 +10662,7 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_965",
@@ -10673,7 +10673,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_966",
@@ -10684,7 +10684,7 @@ export const initialProducts: Product[] = [
     "salePrice": 945.51,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_967",
@@ -10695,7 +10695,7 @@ export const initialProducts: Product[] = [
     "salePrice": 395.2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_968",
@@ -10706,7 +10706,7 @@ export const initialProducts: Product[] = [
     "salePrice": 751.6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_969",
@@ -10717,7 +10717,7 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_970",
@@ -10728,7 +10728,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_971",
@@ -10739,7 +10739,7 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_972",
@@ -10750,7 +10750,7 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_973",
@@ -10761,7 +10761,7 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_974",
@@ -10772,7 +10772,7 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_975",
@@ -10783,7 +10783,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_976",
@@ -10794,7 +10794,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_977",
@@ -10805,7 +10805,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_978",
@@ -10816,7 +10816,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_979",
@@ -10827,7 +10827,7 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_980",
@@ -10838,7 +10838,7 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_981",
@@ -10849,7 +10849,7 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   },
   {
     "id": "p_982",
@@ -10860,7 +10860,7 @@ export const initialProducts: Product[] = [
     "salePrice": 350,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T15:53:42.348Z"
+    "createdAt": "2026-07-13T16:07:50.483Z"
   }
 ];
 

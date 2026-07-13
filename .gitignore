@@ -7,3 +7,6 @@ coverage/
 .env*
 !.env.example
 .vercel
+scripts/legacy/
+arquivos excel/
+data/excel/~$*.xlsx
