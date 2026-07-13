@@ -331,6 +331,7 @@ for (const sale of allSales) {
     profit: roundCurrency(sale.profit),
     ecommerceOrderId: sale.ecommerceOrderId || undefined,
     saleType: sale.saleType,
+    saleChannel: sale.saleChannel,
     notes: sale.saleChannel !== 'Loja Física' ? `[client_data]{"channel":"${sale.saleChannel}"}` : undefined,
     status: 'completed'
   });
@@ -392,6 +393,24 @@ try {
 }
 console.log(`Expenses extracted: ${expenses2024.length}`);
 
+// data.ts generation function (must be defined before use)
+function writeDataTs(products, sales, categories, expenses) {
+  const dataJson = JSON.stringify({ products, sales, categories, expenses });
+  fs.writeFileSync(OUTPUT_DATA_JSON, dataJson, 'utf-8');
+  
+  let output = `import { Product, Sale, Category, Expense } from './types';\n\n`;
+  output += `import raw from './data.json';\n\n`;
+  output += `const d = raw as { categories: Category[]; products: Product[]; sales: Sale[]; expenses: Expense[] };\n\n`;
+  output += `export const initialCategories = d.categories;\n`;
+  output += `export const initialProducts = d.products;\n`;
+  output += `export const initialSales = d.sales;\n`;
+  output += `export const initialExpenses = d.expenses;\n`;
+  
+  fs.writeFileSync(OUTPUT_DATA_TS, output, 'utf-8');
+  console.log(`data.ts generated: ${OUTPUT_DATA_TS} (${(Buffer.byteLength(output) / 1024 / 1024).toFixed(2)} MB)`);
+  console.log(`data.json generated: ${OUTPUT_DATA_JSON} (${(Buffer.byteLength(dataJson) / 1024 / 1024).toFixed(2)} MB)`);
+}
+
 // 6. Generate categories list
 const categorySet = new Set(finalProducts.map(p => p.category));
 const finalCategories = [];
@@ -404,8 +423,12 @@ for (const cat of categorySet) {
   cid++;
 }
 
-// 7. Generate Backup Excel
-const backupWb = XLSX.utils.book_new();
+// Generate data.ts / data.json FIRST (before backup Excel, so it works even if Excel is open)
+writeDataTs(finalProducts, finalSales, finalCategories, expenses2024);
+
+// 7. Generate Backup Excel (with error handling so it doesn't block data generation)
+try {
+  const backupWb = XLSX.utils.book_new();
 
 // Identification sheet
 const identData = [
@@ -481,10 +504,14 @@ const expensesExport = expenses2024.map(e => ({
 const expSheet = XLSX.utils.json_to_sheet(expensesExport);
 XLSX.utils.book_append_sheet(backupWb, expSheet, 'Despesas');
 
-XLSX.writeFile(backupWb, OUTPUT_EXCEL);
-console.log(`\nBackup Excel saved: ${OUTPUT_EXCEL}`);
+try {
+  XLSX.writeFile(backupWb, OUTPUT_EXCEL);
+  console.log(`\nBackup Excel saved: ${OUTPUT_EXCEL}`);
+} catch (e) {
+  console.log(`\nBackup Excel could not be saved (file may be open): ${e.message}`);
+}
 
-// 8. Generate data.ts
+// data.ts generation function (must be defined before first call)
 function writeDataTs(products, sales, categories, expenses) {
   const dataJson = JSON.stringify({ products, sales, categories, expenses });
   fs.writeFileSync(OUTPUT_DATA_JSON, dataJson, 'utf-8');
@@ -501,8 +528,6 @@ function writeDataTs(products, sales, categories, expenses) {
   console.log(`data.ts generated: ${OUTPUT_DATA_TS} (${(Buffer.byteLength(output) / 1024 / 1024).toFixed(2)} MB)`);
   console.log(`data.json generated: ${OUTPUT_DATA_JSON} (${(Buffer.byteLength(dataJson) / 1024 / 1024).toFixed(2)} MB)`);
 }
-
-writeDataTs(finalProducts, finalSales, finalCategories, expenses2024);
 
 // 9. Summary
 console.log('\n========== RESUMO ==========');
@@ -529,5 +554,9 @@ for (const year of [2024, 2025, 2026]) {
   const totalCost = yearSales.reduce((a, s) => a + s.totalCost, 0);
   const totalProfit = yearSales.reduce((a, s) => a + s.profit, 0);
   const totalQty = yearSales.reduce((a, s) => a + s.qty, 0);
-  console.log(`\n${year}: ${yearSales.length} itens / R$ ${totalVal.toFixed(2)} / Custo: R$ ${totalCost.toFixed(2)} / Lucro: R$ ${totalProfit.toFixed(2)}`);
+console.log(`\n${year}: ${yearSales.length} itens / R$ ${totalVal.toFixed(2)} / Custo: R$ ${totalCost.toFixed(2)} / Lucro: R$ ${totalProfit.toFixed(2)}`);
+  }
+
+} catch (e) {
+  console.log(`\nBackup Excel could not be saved (file may be open): ${e.message}`);
 }

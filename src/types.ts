@@ -10,6 +10,8 @@ export interface Product {
   status: 'disponivel' | 'indisponivel';
   description?: string;
   createdAt: string;
+  archived?: boolean;
+  archivedAt?: string;
 }
 
 export interface SaleItem {

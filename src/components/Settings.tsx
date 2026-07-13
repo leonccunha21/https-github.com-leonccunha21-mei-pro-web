@@ -419,6 +419,8 @@ interface SettingsProps {
   onGoogleLogout: () => Promise<void>;
   onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[] }) => void;
   onResetDatabase: () => void;
+  onSaveStoreInfo: (info: StoreInfo) => void;
+  onLoadStoreInfo: () => Promise<StoreInfo | null>;
 }
 
 export default function Settings({
@@ -430,7 +432,9 @@ export default function Settings({
   onGoogleLogin,
   onGoogleLogout,
   onImportDatabase,
-  onResetDatabase
+  onResetDatabase,
+  onSaveStoreInfo,
+  onLoadStoreInfo
 }: SettingsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const excelInputRef = useRef<HTMLInputElement>(null);
@@ -443,12 +447,39 @@ export default function Settings({
     } catch { return defaultStoreInfo; }
   });
   const [storeSaved, setStoreSaved] = useState(false);
+  const [savingToCloud, setSavingToCloud] = useState(false);
 
-  const handleSaveStoreInfo = () => {
+  // Load store info from cloud on mount
+  useEffect(() => {
+    if (user?.uid) {
+      onLoadStoreInfo().then(cloudInfo => {
+        if (cloudInfo && (Object.keys(cloudInfo).some(k => cloudInfo[k]) || !localStorage.getItem('zm_store_info'))) {
+          const merged = { ...defaultStoreInfo, ...JSON.parse(localStorage.getItem('zm_store_info') || '{}'), ...cloudInfo };
+          setStoreInfo(merged);
+          localStorage.setItem('zm_store_info', JSON.stringify(merged));
+          window.dispatchEvent(new Event('storeInfoChanged'));
+        }
+      });
+    }
+  }, [user?.uid, onLoadStoreInfo]);
+
+  const handleSaveStoreInfo = async () => {
     localStorage.setItem('zm_store_info', JSON.stringify(storeInfo));
     window.dispatchEvent(new Event('storeInfoChanged'));
     setStoreSaved(true);
     setTimeout(() => setStoreSaved(false), 3000);
+    
+    // Save to cloud
+    if (user?.uid) {
+      setSavingToCloud(true);
+      try {
+        await onSaveStoreInfo(storeInfo);
+      } catch (e) {
+        console.error('Erro ao salvar info da loja na nuvem:', e);
+      } finally {
+        setSavingToCloud(false);
+      }
+    }
   };
 
   const [importSuccessMsg, setImportSuccessMsg] = useState<string | null>(null);
@@ -1132,15 +1163,18 @@ export default function Settings({
         </div>
 
         <div className="flex items-center gap-3">
-          <button onClick={handleSaveStoreInfo} className="py-2 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer">
-            <Save className="h-3.5 w-3.5" />
-            Salvar Perfil
+          <button onClick={handleSaveStoreInfo} disabled={savingToCloud} className="py-2 px-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer disabled:opacity-50">
+            {savingToCloud ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
+            {savingToCloud ? 'Sincronizando...' : 'Salvar Perfil'}
           </button>
-          {storeSaved && (
+          {storeSaved && !savingToCloud && (
             <span className="text-xs text-emerald-600 font-bold flex items-center gap-1">
               <CheckCircle2 className="h-3.5 w-3.5" />
               Salvo!
             </span>
+          )}
+          {savingToCloud && (
+            <span className="text-xs text-indigo-600 font-medium">Enviando para nuvem...</span>
           )}
         </div>
       </div>

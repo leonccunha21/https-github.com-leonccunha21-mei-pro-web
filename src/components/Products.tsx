@@ -6,7 +6,7 @@ import {
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck,
-  Trash
+  Trash, Archive, RotateCcw
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -19,14 +19,17 @@ interface ProductsProps {
   onAddProduct: (product: Omit<Product, 'id' | 'createdAt'>) => void;
   onUpdateProduct: (product: Product) => void;
   onDeleteProduct: (id: string) => void;
+  onArchiveProduct: (id: string) => void;
+  onUnarchiveProduct: (id: string) => void;
   onClearAllProducts?: () => void;
   onAddCategory: (categoryName: string) => void;
 }
 
-export default function Products({ products, categories, sales, onAddProduct, onUpdateProduct, onDeleteProduct, onClearAllProducts, onAddCategory }: ProductsProps) {
+export default function Products({ products, categories, sales, onAddProduct, onUpdateProduct, onDeleteProduct, onArchiveProduct, onUnarchiveProduct, onClearAllProducts, onAddCategory }: ProductsProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out' | 'ok'>('all');
+  const [archivedFilter, setArchivedFilter] = useState<'active' | 'archived' | 'all'>('active');
   const [priceMin, setPriceMin] = useState('');
   const [priceMax, setPriceMax] = useState('');
   const [sortField, setSortField] = useState<SortField>('name');
@@ -106,6 +109,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
     return products.filter(p => {
       const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.code.toLowerCase().includes(searchQuery.toLowerCase());
       const matchCat = selectedCategory === 'all' || p.category === selectedCategory;
+      const matchArchived = archivedFilter === 'all' || (archivedFilter === 'active' ? !p.archived : p.archived);
       let matchStock = true;
       if (stockFilter === 'low') matchStock = p.status !== 'indisponivel' && p.stock > 0 && p.stock <= p.minStock;
       else if (stockFilter === 'out') matchStock = p.status !== 'indisponivel' && p.stock === 0;
@@ -113,9 +117,9 @@ export default function Products({ products, categories, sales, onAddProduct, on
       const price = p.salePrice;
       const matchMin = !priceMin || price >= Number(priceMin);
       const matchMax = !priceMax || price <= Number(priceMax);
-      return matchSearch && matchCat && matchStock && matchMin && matchMax;
+      return matchSearch && matchCat && matchArchived && matchStock && matchMin && matchMax;
     });
-  }, [products, searchQuery, selectedCategory, stockFilter, priceMin, priceMax]);
+  }, [products, searchQuery, selectedCategory, archivedFilter, stockFilter, priceMin, priceMax]);
 
   const sortedProducts = useMemo(() => {
     const sorted = [...filteredProducts];
@@ -137,8 +141,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
   const paginatedProducts = sortedProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  // Reset page when filters change (useEffect, not useMemo - this is a side effect)
-  React.useEffect(() => { setCurrentPage(1); }, [searchQuery, selectedCategory, stockFilter, priceMin, priceMax, itemsPerPage]);
+  // Reset page when filters change
+  React.useEffect(() => { setCurrentPage(1); }, [searchQuery, selectedCategory, archivedFilter, stockFilter, priceMin, priceMax, itemsPerPage]);
 
   // Memoize expensive calculations
   const totalStock = React.useMemo(() => sortedProducts.reduce((s, p) => s + p.stock, 0), [sortedProducts]);
@@ -363,6 +367,18 @@ export default function Products({ products, categories, sales, onAddProduct, on
               </button>
             ))}
           </div>
+          <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-200/40">
+            {([
+              { key: 'active' as const, label: 'Ativos' },
+              { key: 'archived' as const, label: 'Arquivados' },
+              { key: 'all' as const, label: 'Todos' },
+            ]).map(opt => (
+              <button key={opt.key} onClick={() => setArchivedFilter(opt.key)}
+                className={`px-2.5 py-1 text-[11px] font-semibold rounded-md transition-colors whitespace-nowrap ${archivedFilter === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
+                {opt.label}
+              </button>
+            ))}
+          </div>
         </div>
         <div className="flex flex-wrap items-center gap-3">
           <div className="flex items-center gap-2 text-xs text-slate-500">
@@ -457,7 +473,11 @@ export default function Products({ products, categories, sales, onAddProduct, on
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
                       <button onClick={() => handleOpenEditModal(p)} className="p-1.5 hover:bg-indigo-50 text-indigo-600 rounded-lg transition-colors"><Edit2 className="h-4 w-4" /></button>
-                      <button onClick={() => { if (window.confirm(`Excluir "${p.name}"?`)) onDeleteProduct(p.id); }} className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors"><Trash2 className="h-4 w-4" /></button>
+                      {p.archived ? (
+                        <button onClick={() => onUnarchiveProduct(p.id)} className="p-1.5 hover:bg-emerald-50 text-emerald-600 rounded-lg transition-colors" title="Restaurar"><RotateCcw className="h-4 w-4" /></button>
+                      ) : (
+                        <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1.5 hover:bg-amber-50 text-amber-600 rounded-lg transition-colors" title="Arquivar"><Archive className="h-4 w-4" /></button>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
@@ -566,7 +586,11 @@ export default function Products({ products, categories, sales, onAddProduct, on
                         <td className="py-2.5 px-3 text-center">
                           <div className="flex items-center justify-center gap-0.5">
                             <button onClick={() => handleOpenEditModal(p)} className="p-1 hover:bg-indigo-50 text-indigo-600 rounded transition-colors" title="Editar"><Edit2 className="h-3.5 w-3.5" /></button>
-                            <button onClick={() => { if (window.confirm(`Excluir "${p.name}"?`)) onDeleteProduct(p.id); }} className="p-1 hover:bg-rose-50 text-rose-600 rounded transition-colors" title="Excluir"><Trash2 className="h-3.5 w-3.5" /></button>
+                            {p.archived ? (
+                              <button onClick={() => onUnarchiveProduct(p.id)} className="p-1 hover:bg-emerald-50 text-emerald-600 rounded transition-colors" title="Restaurar"><RotateCcw className="h-3.5 w-3.5" /></button>
+                            ) : (
+                              <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1 hover:bg-amber-50 text-amber-600 rounded transition-colors" title="Arquivar"><Archive className="h-3.5 w-3.5" /></button>
+                            )}
                           </div>
                         </td>
                       </tr>

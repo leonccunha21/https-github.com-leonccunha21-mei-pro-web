@@ -51,10 +51,12 @@ import { roundCurrency } from './lib/currency';
 import { 
   loadUserProducts, 
   loadUserCategories, 
-  loadUserSales, 
+  loadUserSales,
+  loadUserStoreInfo,
   saveUserProduct, 
   saveUserCategory, 
   saveUserSale, 
+  saveUserStoreInfo,
   deleteUserProduct,
   clearUserProducts,
   clearUserCategories,
@@ -169,17 +171,21 @@ export default function App() {
     const localSales = localStorage.getItem('loja_sales');
     const localExpenses = localStorage.getItem('loja_expenses');
     const localCategories = localStorage.getItem('loja_categories');
+    const localStoreInfo = localStorage.getItem('zm_store_info');
+    const deletedProductIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
 
     let parsedProducts: Product[] = initialProducts;
     let parsedSales: Sale[] = initialSales;
     let parsedExpenses: Expense[] = initialExpenses;
     let parsedCategories: Category[] = initialCategories;
+    let parsedStoreInfo: StoreInfo | null = null;
 
     try {
       if (localProducts) parsedProducts = JSON.parse(localProducts);
       if (localSales) parsedSales = JSON.parse(localSales);
       if (localExpenses) parsedExpenses = JSON.parse(localExpenses);
       if (localCategories) parsedCategories = JSON.parse(localCategories);
+      if (localStoreInfo) parsedStoreInfo = JSON.parse(localStoreInfo);
     } catch {
       // Corrupted localStorage, use seed data
     }
@@ -188,52 +194,80 @@ export default function App() {
     setCategories(parsedCategories);
     setSales(parsedSales);
     setExpenses(parsedExpenses);
+    if (parsedStoreInfo) setStoreInfo(parsedStoreInfo);
 
     // 2. Try to load from cloud (parallelized)
     try {
-      const [cloudProducts, cloudCategories, cloudSales] = await Promise.all([
+      const [cloudProducts, cloudCategories, cloudSales, cloudStoreInfo] = await Promise.all([
         loadUserProducts(uid),
         loadUserCategories(uid),
         loadUserSales(uid),
+        loadUserStoreInfo(uid),
       ]);
 
+      // Merge StoreInfo: prefer cloud if it has more data, else local
+      let finalStoreInfo = parsedStoreInfo;
+      if (cloudStoreInfo && (Object.keys(cloudStoreInfo).some(k => cloudStoreInfo[k]) || !parsedStoreInfo)) {
+        finalStoreInfo = { ...parsedStoreInfo, ...cloudStoreInfo };
+        localStorage.setItem('zm_store_info', JSON.stringify(finalStoreInfo));
+        setStoreInfo(finalStoreInfo);
+      } else if (parsedStoreInfo && !cloudStoreInfo) {
+        // Local has data, cloud doesn't - push to cloud
+        await saveUserStoreInfo(uid, parsedStoreInfo);
+      }
+
       if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
-        const hasLocalData = localProducts !== null || localCategories !== null || localSales !== null;
+        // Merge local + cloud: keep everything from both sources, but respect deletions
+        const localProductMap = new Map(parsedProducts.map(p => [p.id, p]));
+        const cloudProductMap = new Map(cloudProducts.map(p => [p.id, p]));
+        const deletedSet = new Set(deletedProductIds);
 
-        if (!hasLocalData) {
-          // First-time load on this device: use cloud data
-          const fixedProducts = cloudProducts.map(p => {
-            const correct = categorizeProduct(p.name);
-            return p.category === correct ? p : { ...p, category: correct };
-          });
-          const anyCategoryChanged = fixedProducts.some((p, i) => cloudProducts[i]?.category !== p.category);
+        // Merge products: local items + cloud items not in local AND not deleted
+        const mergedProducts = [...parsedProducts];
+        for (const cp of cloudProducts) {
+          if (!localProductMap.has(cp.id) && !deletedSet.has(cp.id)) {
+            const correct = categorizeProduct(cp.name);
+            mergedProducts.push(cp.category === correct ? cp : { ...cp, category: correct });
+          }
+        }
 
-          console.log(`Cloud OK: ${cloudProducts.length} produtos, ${cloudCategories.length} categorias, ${cloudSales.length} vendas`);
-          setProducts(fixedProducts);
-          setCategories(cloudCategories);
-          setSales(cloudSales);
-          localStorage.setItem('loja_products', JSON.stringify(fixedProducts));
-          localStorage.setItem('loja_sales', JSON.stringify(cloudSales));
-          localStorage.setItem('loja_categories', JSON.stringify(cloudCategories));
+        // Merge categories: union of both
+        const localCatMap = new Map(parsedCategories.map(c => [c.id, c]));
+        const mergedCategories = [...parsedCategories];
+        for (const cc of cloudCategories) {
+          if (!localCatMap.has(cc.id)) mergedCategories.push(cc);
+        }
 
-          if (anyCategoryChanged) {
-            for (const p of fixedProducts) {
-              try { await saveUserProduct(uid, p); } catch {}
-            }
-          }
-        } else {
-          // Local data exists: prefer it (user's last actions are source of truth)
-          // Push local data to cloud to ensure sync
-          console.log(`Dados locais preferidos. Cloud: ${cloudProducts.length}p/${cloudCategories.length}c/${cloudSales.length}s`);
-          for (const p of parsedProducts) {
-            try { await saveUserProduct(uid, p); } catch (e) { /* silent */ }
-          }
-          for (const c of parsedCategories) {
-            try { await saveUserCategory(uid, c); } catch (e) { /* silent */ }
-          }
-          for (const s of parsedSales) {
-            try { await saveUserSale(uid, s); } catch (e) { /* silent */ }
-          }
+        // Merge sales: union of both
+        const localSaleMap = new Map(parsedSales.map(s => [s.id, s]));
+        const mergedSales = [...parsedSales];
+        for (const cs of cloudSales) {
+          if (!localSaleMap.has(cs.id)) mergedSales.push(cs);
+        }
+
+        console.log(`Sync: local ${parsedProducts.length}p/${parsedCategories.length}c/${parsedSales.length}s | cloud ${cloudProducts.length}p/${cloudCategories.length}c/${cloudSales.length}s | deleted ${deletedProductIds.length} | merged ${mergedProducts.length}p/${mergedCategories.length}c/${mergedSales.length}s`);
+
+        setProducts(mergedProducts);
+        setCategories(mergedCategories);
+        setSales(mergedSales);
+        localStorage.setItem('loja_products', JSON.stringify(mergedProducts));
+        localStorage.setItem('loja_sales', JSON.stringify(mergedSales));
+        localStorage.setItem('loja_categories', JSON.stringify(mergedCategories));
+
+        // Push merged result to cloud (sync both directions)
+        for (const p of mergedProducts) {
+          try { await saveUserProduct(uid, p); } catch {}
+        }
+        for (const c of mergedCategories) {
+          try { await saveUserCategory(uid, c); } catch {}
+        }
+        for (const s of mergedSales) {
+          try { await saveUserSale(uid, s); } catch {}
+        }
+
+        // Also delete removed products from cloud
+        for (const deletedId of deletedProductIds) {
+          try { await deleteUserProduct(uid, deletedId); } catch {}
         }
       } else {
         console.log('Cloud vazia. Enviando dados locais...');
@@ -420,14 +454,34 @@ export default function App() {
     saveProductsToStorage(updated, updatedProduct).catch(() => {});
   };
 
-  // Delete Product
-  const handleDeleteProduct = (id: string) => {
-    const updated = products.filter(p => p.id !== id);
-    saveProductsToStorage(updated, undefined, id).catch(() => {});
+  // Archive Product (soft delete)
+  const handleArchiveProduct = (id: string) => {
+    const updated = products.map(p => {
+      if (p.id === id) {
+        return { ...p, archived: true, archivedAt: new Date().toISOString() };
+      }
+      return p;
+    });
+    saveProductsToStorage(updated, updated.find(p => p.id === id)).catch(() => {});
   };
 
+  // Unarchive Product
+  const handleUnarchiveProduct = (id: string) => {
+    const updated = products.map(p => {
+      if (p.id === id) {
+        return { ...p, archived: false, archivedAt: undefined };
+      }
+      return p;
+    });
+    saveProductsToStorage(updated, updated.find(p => p.id === id)).catch(() => {});
+  };
+
+  // Delete Product - alias for archive (kept for compatibility)
+  const handleDeleteProduct = handleArchiveProduct;
+
   const handleClearAllProducts = () => {
-    saveProductsToStorage([]).catch(() => {});
+    const updated = products.map(p => ({ ...p, archived: true, archivedAt: new Date().toISOString() }));
+    saveProductsToStorage(updated).catch(() => {});
   };
 
   // Add Category
@@ -1039,6 +1093,8 @@ export default function App() {
                 onAddProduct={handleAddProduct}
                 onUpdateProduct={handleUpdateProduct}
                 onDeleteProduct={handleDeleteProduct}
+                onArchiveProduct={handleArchiveProduct}
+                onUnarchiveProduct={handleUnarchiveProduct}
                 onClearAllProducts={handleClearAllProducts}
                 onAddCategory={handleAddCategory}
               />

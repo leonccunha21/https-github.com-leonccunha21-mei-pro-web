@@ -2,11 +2,37 @@ import {
   collection, 
   doc, 
   getDocs, 
+  getDoc,
   setDoc, 
   deleteDoc 
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from './firebase';
-import { Product, Sale, Category, ServiceOrder } from '../types';
+import { Product, Sale, Category, StoreInfo, ServiceOrder } from '../types';
+
+/**
+ * Store Info
+ */
+export async function loadUserStoreInfo(userId: string): Promise<StoreInfo | null> {
+  const path = `users/${userId}/config/storeInfo`;
+  try {
+    const docRef = doc(db, path);
+    const snap = await getDoc(docRef);
+    return snap.exists() ? (snap.data() as StoreInfo) : null;
+  } catch (error) {
+    handleFirestoreError(error, OperationType.GET, path);
+    return null;
+  }
+}
+
+export async function saveUserStoreInfo(userId: string, info: StoreInfo): Promise<void> {
+  const path = `users/${userId}/config/storeInfo`;
+  try {
+    const docRef = doc(db, path);
+    await setDoc(docRef, info);
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+}
 
 /**
  * Products
