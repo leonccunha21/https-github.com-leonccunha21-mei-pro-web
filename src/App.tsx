@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import * as XLSX from 'xlsx';
 import { 
   Product, 
   Sale, 
@@ -31,7 +32,8 @@ import {
   Cloud,
   Loader2,
   Sun,
-  Moon
+  Moon,
+  PackageSearch
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
@@ -70,6 +72,7 @@ export default function App() {
   const [loginError, setLoginError] = useState<string | null>(null);
   const loadingCloudRef = React.useRef<boolean>(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [showVendasEstoque, setShowVendasEstoque] = useState(false);
 
   const toggleDarkMode = () => {
     setDarkMode(prev => {
@@ -119,6 +122,21 @@ export default function App() {
       }
     }
   }, [user]);
+
+  // Stock cleanup: deduplicate and remove empty products (runs once)
+  useEffect(() => {
+    if (localStorage.getItem('stock_cleanup_v1_done')) return;
+    setProducts(prev => {
+      if (prev.length === 0) return prev;
+      const cleaned = runStockCleanup(prev);
+      if (cleaned.length !== prev.length || cleaned.some((p, i) => prev[i]?.id !== p.id || prev[i]?.stock !== p.stock)) {
+        localStorage.setItem('loja_products', JSON.stringify(cleaned));
+        return cleaned;
+      }
+      return prev;
+    });
+    localStorage.setItem('stock_cleanup_v1_done', 'true');
+  }, []);
 
   // Sync Cloud Data
   const loadCloudData = async (uid: string) => {
@@ -447,6 +465,123 @@ export default function App() {
     setActiveTab('dashboard');
   };
 
+  // --- STOCK CLEANUP ---
+  function runStockCleanup(productsToClean: Product[]): Product[] {
+    // Step 1 & 2: Merge by normalized name (case-insensitive, trimmed)
+    const byName = new Map<string, Product[]>();
+    for (const p of productsToClean) {
+      const key = p.name.trim().toLowerCase();
+      if (!byName.has(key)) byName.set(key, []);
+      byName.get(key)!.push(p);
+    }
+    let merged: Product[] = [];
+    for (const group of byName.values()) {
+      if (group.length === 1) {
+        merged.push(group[0]);
+        continue;
+      }
+      // Keep the one with highest stock; sum totalStock across duplicates
+      group.sort((a, b) => b.stock - a.stock);
+      const best = { ...group[0] };
+      for (let i = 1; i < group.length; i++) {
+        best.stock = Math.max(best.stock, best.stock + group[i].stock - group[i].stock);
+        best.stock = Math.max(best.stock, group[i].stock);
+        if (best.costPrice === 0 && group[i].costPrice > 0) best.costPrice = group[i].costPrice;
+        if (best.salePrice === 0 && group[i].salePrice > 0) best.salePrice = group[i].salePrice;
+      }
+      merged.push(best);
+    }
+
+    // Step 3: Remove products with stock=0 AND salePrice=0
+    const cleaned = merged.filter(p => !(p.stock === 0 && p.salePrice === 0));
+    return cleaned;
+  }
+
+  // --- VERIFICAR VENDAS X ESTOQUE ---
+  const missingProducts = useMemo(() => {
+    if (!showVendasEstoque) return [];
+    const productNamesLower = new Set(products.map(p => p.name.trim().toLowerCase()));
+    const completedSales = sales.filter(s => s.status === 'completed');
+    const soldMap = new Map<string, { name: string; quantity: number; salePrice: number; costPrice: number }>();
+    for (const sale of completedSales) {
+      for (const item of sale.items) {
+        const key = item.productName.trim().toLowerCase();
+        if (productNamesLower.has(key)) continue;
+        const existing = soldMap.get(key);
+        if (existing) {
+          existing.quantity += item.quantity;
+          existing.salePrice = Math.max(existing.salePrice, item.salePrice);
+          existing.costPrice = Math.max(existing.costPrice, item.costPrice);
+        } else {
+          soldMap.set(key, {
+            name: item.productName.trim(),
+            quantity: item.quantity,
+            salePrice: item.salePrice,
+            costPrice: item.costPrice
+          });
+        }
+      }
+    }
+    return Array.from(soldMap.values());
+  }, [showVendasEstoque, products, sales]);
+
+  const suggestCategory = (name: string): string => {
+    const lower = name.toLowerCase();
+    if (lower.includes('iphone') || lower.includes('apple') || lower.includes('ipad') || lower.includes('macbook') || lower.includes('airpods') || lower.includes('apple watch') || lower.includes('cabo lightning') || lower.includes('cabo type c') || lower.includes('capa iphone')) return 'IPHONE';
+    if (lower.includes('samsung') || lower.includes('galaxy')) return 'SAMSUNG';
+    if (lower.includes('motorola') || lower.includes('moto')) return 'MOTOROLA';
+    if (lower.includes('xiaomi') || lower.includes('redmi') || lower.includes('poco')) return 'XIAOMI';
+    if (lower.includes('privacidade') || lower.includes('película') || lower.includes('pelicula') || lower.includes('vidro')) return 'Privacidade';
+    return 'Geral';
+  };
+
+  const handleAddSingleMissingProduct = (item: { name: string; quantity: number; salePrice: number; costPrice: number }) => {
+    const newProduct: Product = {
+      id: `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      code: `SKU-${Date.now()}`,
+      name: item.name,
+      category: suggestCategory(item.name),
+      costPrice: item.costPrice,
+      salePrice: item.salePrice,
+      stock: 0,
+      minStock: 5,
+      createdAt: new Date().toISOString()
+    };
+    const updated = [newProduct, ...products];
+    saveProductsToStorage(updated, newProduct);
+  };
+
+  const handleAddMissingProducts = () => {
+    const newProducts: Product[] = missingProducts.map(item => ({
+      id: `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      code: `SKU-${Date.now()}_${Math.random().toString(36).substring(2, 4)}`,
+      name: item.name,
+      category: suggestCategory(item.name),
+      costPrice: item.costPrice,
+      salePrice: item.salePrice,
+      stock: 0,
+      minStock: 5,
+      createdAt: new Date().toISOString()
+    }));
+    const updated = [...newProducts, ...products];
+    saveProductsToStorage(updated);
+    setShowVendasEstoque(false);
+  };
+
+  const handleExportMissingProducts = () => {
+    const data = missingProducts.map(item => ({
+      'Produto': item.name,
+      'Categoria Sugerida': suggestCategory(item.name),
+      'Qtd Vendida': item.quantity,
+      'Preço Venda': item.salePrice,
+      'Custo': item.costPrice
+    }));
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Produtos Ausentes');
+    XLSX.writeFile(wb, 'controle_vendas_estoque.xlsx');
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
       
@@ -476,6 +611,13 @@ export default function App() {
               title={darkMode ? 'Modo claro' : 'Modo escuro'}
             >
               {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+            <button
+              onClick={() => setShowVendasEstoque(true)}
+              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors cursor-pointer"
+              title="Verificar Vendas x Estoque"
+            >
+              <PackageSearch className="h-4 w-4" />
             </button>
           </div>
 
@@ -724,6 +866,101 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </main>
+
+      {/* MODAL: Verificar Vendas x Estoque */}
+      {showVendasEstoque && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 dark:border-slate-700">
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+              <div className="flex items-center gap-3">
+                <PackageSearch className="h-5 w-5 text-indigo-600" />
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Verificar Vendas x Estoque</h2>
+              </div>
+              <button
+                onClick={() => setShowVendasEstoque(false)}
+                className="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="flex-1 overflow-y-auto p-6">
+              {missingProducts.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-2xl">✓</span>
+                  </div>
+                  <p className="text-sm font-semibold text-slate-700 dark:text-slate-300">Todos os produtos vendidos existem no catálogo!</p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Nenhum produto ausente encontrado.</p>
+                </div>
+              ) : (
+                <>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                    {missingProducts.length} produto(s) vendido(s) que não existem no catálogo atual:
+                  </p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="border-b border-slate-200 dark:border-slate-700">
+                          <th className="text-left py-2 px-3 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Produto</th>
+                          <th className="text-left py-2 px-3 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Categoria Sugerida</th>
+                          <th className="text-center py-2 px-3 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Qtd Vendida</th>
+                          <th className="text-right py-2 px-3 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Preço Venda</th>
+                          <th className="text-right py-2 px-3 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Custo</th>
+                          <th className="text-center py-2 px-3 font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Ação</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {missingProducts.map((item, idx) => (
+                          <tr key={idx} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                            <td className="py-2.5 px-3 font-semibold text-slate-800 dark:text-slate-200">{item.name}</td>
+                            <td className="py-2.5 px-3">
+                              <span className="px-2 py-0.5 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 font-bold text-[10px] uppercase">
+                                {suggestCategory(item.name)}
+                              </span>
+                            </td>
+                            <td className="py-2.5 px-3 text-center font-mono text-slate-700 dark:text-slate-300">{item.quantity}</td>
+                            <td className="py-2.5 px-3 text-right font-mono text-slate-700 dark:text-slate-300">R$ {item.salePrice.toFixed(2)}</td>
+                            <td className="py-2.5 px-3 text-right font-mono text-slate-700 dark:text-slate-300">R$ {item.costPrice.toFixed(2)}</td>
+                            <td className="py-2.5 px-3 text-center">
+                              <button
+                                onClick={() => handleAddSingleMissingProduct(item)}
+                                className="px-3 py-1 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[10px] font-bold transition-colors cursor-pointer"
+                              >
+                                Cadastrar
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Footer */}
+            {missingProducts.length > 0 && (
+              <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-end gap-3">
+                <button
+                  onClick={handleExportMissingProducts}
+                  className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-2"
+                >
+                  Exportar Controle
+                </button>
+                <button
+                  onClick={handleAddMissingProducts}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer"
+                >
+                  Cadastrar Todos ({missingProducts.length})
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
     </div>
   );

@@ -14,7 +14,9 @@ import {
   DollarSign,
   AlertCircle,
   Printer,
-  FileText
+  FileText,
+  ChevronDown,
+  ChevronRight
 } from 'lucide-react';
 
 interface SalesProps {
@@ -45,6 +47,11 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   // Checkout info
   const [clientName, setClientName] = useState('');
   const [clientPhone, setClientPhone] = useState('');
+  const [clientCPF, setClientCPF] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
+  const [clientAddress, setClientAddress] = useState('');
+  const [saleChannel, setSaleChannel] = useState('Loja Física');
+  const [showClientDetails, setShowClientDetails] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('pix');
   const [discountPercent, setDiscountPercent] = useState<number>(0);
   const [customDiscountInput, setCustomDiscountInput] = useState<string>('');
@@ -73,6 +80,15 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     transfer: 'Transferência'
   };
 
+  const saleChannelLabels: Record<string, string> = {
+    'Loja Física': '🏪 Loja Física',
+    'Shopee': '🛒 Shopee',
+    'Magalu': '🛒 Magalu',
+    'E-commerce': '🌐 E-commerce',
+    'WhatsApp': '📱 WhatsApp',
+    'Outro': '📦 Outro'
+  };
+
   const generateReceipt = () => {
     if (!lastSaleData) return;
     let storeInfo: Record<string, string> = {};
@@ -89,6 +105,17 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     `).join('');
 
     const discountAmount = (lastSaleData.subtotal * lastSaleData.discount) / 100;
+
+    let extraClientHtml = '';
+    if (lastSaleData.notes) {
+      try {
+        const clientData = JSON.parse(lastSaleData.notes);
+        if (clientData.channel) extraClientHtml += `<div style="font-size:10px">Canal: ${clientData.channel}</div>`;
+        if (clientData.cpf) extraClientHtml += `<div style="font-size:10px">CPF/CNPJ: ${clientData.cpf}</div>`;
+        if (clientData.email) extraClientHtml += `<div style="font-size:10px">Email: ${clientData.email}</div>`;
+        if (clientData.address) extraClientHtml += `<div style="font-size:10px">Endereço: ${clientData.address}</div>`;
+      } catch {}
+    }
 
     const receiptHtml = `
       <html><head><title>Recibo - ${saleId}</title>
@@ -118,6 +145,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
         <div style="font-size:10px">Data: ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
         ${lastSaleData.clientName ? `<div style="font-size:10px">Cliente: <span class="bold">${lastSaleData.clientName}</span></div>` : ''}
         ${lastSaleData.clientPhone ? `<div style="font-size:10px">Tel: ${lastSaleData.clientPhone}</div>` : ''}
+        ${extraClientHtml}
       </div>
 
       <div class="line"></div>
@@ -320,13 +348,27 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     const discountAmount = (subtotal * discountPercent) / 100;
     const finalTotal = Math.max(0, subtotal - discountAmount);
 
+    // Build notes with client data and existing notes
+    const clientData: Record<string, string> = {};
+    if (clientCPF.trim()) clientData.cpf = clientCPF.trim();
+    if (clientEmail.trim()) clientData.email = clientEmail.trim();
+    if (clientAddress.trim()) clientData.address = clientAddress.trim();
+    clientData.channel = saleChannel;
+
+    const existingNotes = saleNotes.trim();
+    let combinedNotes = existingNotes;
+    if (Object.keys(clientData).length > 0) {
+      const clientJson = JSON.stringify(clientData);
+      combinedNotes = existingNotes ? `${existingNotes}\n[client_data]${clientJson}` : `[client_data]${clientJson}`;
+    }
+
     onRegisterSale({
       items: saleItems,
       clientName: clientName.trim() || undefined,
       clientPhone: clientPhone.trim() || undefined,
       paymentMethod,
       discount: discountPercent,
-      notes: saleNotes.trim() || undefined
+      notes: combinedNotes || undefined
     });
 
     // Save sale data for receipt generation before resetting
@@ -338,13 +380,18 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       discount: discountPercent,
       total: finalTotal,
       subtotal,
-      notes: saleNotes.trim() || undefined
+      notes: combinedNotes || undefined
     });
 
     // Reset Form
     setCart([]);
     setClientName('');
     setClientPhone('');
+    setClientCPF('');
+    setClientEmail('');
+    setClientAddress('');
+    setSaleChannel('Loja Física');
+    setShowClientDetails(false);
     setDiscountPercent(0);
     setCustomDiscountInput('');
     setShowMaxDiscountWarning(false);
@@ -654,6 +701,89 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
                   onChange={(e) => setClientPhone(e.target.value)}
                   className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                 />
+              </div>
+            </div>
+
+            {/* Collapsible Client Details Section */}
+            <div className="border border-slate-200 rounded-lg overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setShowClientDetails(!showClientDetails)}
+                className="w-full flex items-center justify-between px-3 py-2 bg-slate-100 hover:bg-slate-200/60 transition-colors cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <UserPlus className="h-3.5 w-3.5 text-indigo-600" />
+                  <span className="text-[10px] font-bold text-slate-700 uppercase tracking-wider">Dados do Cliente (Opcional)</span>
+                </div>
+                {showClientDetails ? (
+                  <ChevronDown className="h-4 w-4 text-slate-400" />
+                ) : (
+                  <ChevronRight className="h-4 w-4 text-slate-400" />
+                )}
+              </button>
+              
+              {showClientDetails && (
+                <div className="p-3 space-y-3 bg-white">
+                  {/* CPF/CNPJ */}
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">CPF / CNPJ</label>
+                    <input
+                      id="client-cpf"
+                      type="text"
+                      placeholder="000.000.000-00 ou 00.000.000/0000-00"
+                      value={clientCPF}
+                      onChange={(e) => setClientCPF(e.target.value)}
+                      className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all font-mono"
+                    />
+                  </div>
+
+                  {/* Email */}
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Email</label>
+                    <input
+                      id="client-email"
+                      type="email"
+                      placeholder="cliente@email.com"
+                      value={clientEmail}
+                      onChange={(e) => setClientEmail(e.target.value)}
+                      className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                    />
+                  </div>
+
+                  {/* Address */}
+                  <div>
+                    <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Endereço</label>
+                    <input
+                      id="client-address"
+                      type="text"
+                      placeholder="Rua, número, bairro, cidade"
+                      value={clientAddress}
+                      onChange={(e) => setClientAddress(e.target.value)}
+                      className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Canal de Venda (Sales Channel) */}
+            <div>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Canal de Venda</label>
+              <div className="grid grid-cols-3 gap-1.5">
+                {Object.entries(saleChannelLabels).map(([value, label]) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setSaleChannel(value)}
+                    className={`px-2 py-1.5 text-[10px] font-bold rounded-md transition-all ${
+                      saleChannel === value
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                ))}
               </div>
             </div>
 

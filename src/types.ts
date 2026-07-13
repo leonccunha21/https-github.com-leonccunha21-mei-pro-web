@@ -32,7 +32,7 @@ export interface Sale {
   total: number; // Valor Total Vendido
   totalCost: number; // Valor Total Pago (Custo)
   profit: number; // Lucro (Total - TotalCost)
-  status: 'completed' | 'cancelled';
+  status: 'completed' | 'cancelled' | 'pending';
   notes?: string;
 }
 

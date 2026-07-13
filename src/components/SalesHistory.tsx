@@ -14,7 +14,8 @@ import {
   TrendingUp,
   FileText,
   FileDown,
-  Printer
+  Printer,
+  AlertTriangle
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
@@ -22,13 +23,15 @@ interface SalesHistoryProps {
   sales: Sale[];
   products: Product[];
   onCancelSale: (saleId: string) => void;
+  onUpdateSale?: (updatedSale: Sale) => void;
 }
 
-export default function SalesHistory({ sales, products, onCancelSale }: SalesHistoryProps) {
+export default function SalesHistory({ sales, products, onCancelSale, onUpdateSale }: SalesHistoryProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'cancelled'>('all');
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
   const [showProductSummary, setShowProductSummary] = useState(false);
+  const [showDebtors, setShowDebtors] = useState(false);
   
   // Date range state
   const [dateRange, setDateRange] = useState<'today' | '7days' | '30days' | 'all' | 'custom'>('all');
@@ -69,6 +72,10 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
     return true;
   };
 
+  const isDebtorSale = (sale: Sale): boolean => {
+    return sale.status === 'pending' || sale.totalCost === 0 || sale.paymentMethod === 'transfer';
+  };
+
   // Product sales summary
   const productSummary = useMemo(() => {
     const map: Record<string, { name: string; qty: number; revenue: number; cost: number }> = {};
@@ -86,6 +93,26 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
 
   // Filter sales
   const filteredSales = useMemo(() => {
+    if (showDebtors) {
+      return [...sales]
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .filter(s => {
+          if (!isInDateRange(s.date)) return false;
+          if (!isDebtorSale(s)) return false;
+
+          const clientNameMatch = s.clientName?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
+          const idMatch = s.id.toLowerCase().includes(searchQuery.toLowerCase());
+          const productNameMatch = s.items.some(item => 
+            item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+          );
+          const matchesSearch = searchQuery === '' || clientNameMatch || idMatch || productNameMatch;
+
+          const matchesPayment = paymentFilter === 'all' || s.paymentMethod === paymentFilter;
+
+          return matchesSearch && matchesPayment;
+        });
+    }
+
     return [...sales]
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .filter(s => {
@@ -108,7 +135,14 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
 
         return matchesSearch && matchesStatus && matchesPayment;
       });
-  }, [sales, searchQuery, statusFilter, paymentFilter, dateRange, customStart, customEnd]);
+  }, [sales, searchQuery, statusFilter, paymentFilter, dateRange, customStart, customEnd, showDebtors, paymentFilter]);
+
+  // Debtor summary
+  const debtorSummary = useMemo(() => {
+    if (!showDebtors) return { total: 0, count: 0 };
+    const total = filteredSales.reduce((acc, s) => acc + s.total, 0);
+    return { total, count: filteredSales.length };
+  }, [filteredSales, showDebtors]);
 
   // Summary totals (only completed)
   const summaryTotals = useMemo(() => {
@@ -152,6 +186,13 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
     if (window.confirm(`ATENÇÃO: Deseja realmente CANCELAR esta venda?\n\nOs itens vendidos serão devolvidos automaticamente ao estoque.`)) {
       onCancelSale(sale.id);
       setSelectedSale(null);
+    }
+  };
+
+  const handleConfirmPayment = (sale: Sale) => {
+    if (window.confirm(`Deseja confirmar o recebimento do pagamento desta venda?\n\nVenda: #${sale.id.substring(0, 8)}\nCliente: ${sale.clientName || 'Não informado'}\nValor: R$ ${sale.total.toFixed(2)}`)) {
+      const updatedSale: Sale = { ...sale, status: 'completed' };
+      onUpdateSale?.(updatedSale);
     }
   };
 
@@ -261,7 +302,7 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
       'Valor Pago (Custo)': sale.totalCost,
       'Valor Vendido': sale.total,
       'Lucro': sale.status === 'cancelled' ? 0 : sale.profit,
-      'Status': sale.status === 'completed' ? 'Concluída' : 'Cancelada',
+      'Status': sale.status === 'completed' ? 'Concluída' : sale.status === 'cancelled' ? 'Cancelada' : 'Pendente',
     }));
 
     // Add summary row
@@ -359,7 +400,7 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
           <select
             id="sales-status-filter"
             value={statusFilter}
-            onChange={(e) => setStatusFilter(e.target.value as any)}
+            onChange={(e) => { setStatusFilter(e.target.value as any); setShowDebtors(false); }}
             className="w-full py-2 px-3 text-sm bg-slate-50 text-slate-700 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all cursor-pointer"
           >
             <option value="all">Todos os Status</option>
@@ -390,7 +431,19 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
       {/* Action buttons row */}
       <div className="flex items-center gap-2 flex-wrap">
         <button
-          onClick={() => setShowProductSummary(!showProductSummary)}
+          onClick={() => { setShowProductSummary(false); setShowDebtors(!showDebtors); }}
+          className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-colors flex items-center gap-1.5 ${
+            showDebtors 
+              ? 'bg-amber-50 border-amber-200 text-amber-700' 
+              : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+          }`}
+        >
+          <AlertTriangle className="h-4 w-4" />
+          Devedores ({sales.filter(s => isDebtorSale(s)).length})
+        </button>
+
+        <button
+          onClick={() => { setShowDebtors(false); setShowProductSummary(!showProductSummary); }}
           className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-colors ${
             showProductSummary 
               ? 'bg-indigo-50 border-indigo-200 text-indigo-700' 
@@ -408,6 +461,31 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
           Exportar para Excel
         </button>
       </div>
+
+      {/* Debtor Summary Card */}
+      {showDebtors && (
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-xl border border-amber-200 shadow-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+              <AlertTriangle className="h-5 w-5" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-amber-900">Vendas com Pagamento Pendente</h3>
+              <p className="text-xs text-amber-600 mt-0.5">Vendas que aguardam confirmação de recebimento.</p>
+            </div>
+          </div>
+          <div className="mt-4 grid grid-cols-2 gap-4">
+            <div className="bg-white/70 p-3 rounded-lg border border-amber-100">
+              <p className="text-[10px] font-bold text-amber-500 uppercase tracking-wider">Total em aberto</p>
+              <p className="text-lg font-black text-amber-900 font-mono mt-0.5">{formatCurrency(debtorSummary.total)}</p>
+            </div>
+            <div className="bg-white/70 p-3 rounded-lg border border-amber-100">
+              <p className="text-[10px] font-bold text-amber-500 uppercase tracking-wider">Nº de vendas pendentes</p>
+              <p className="text-lg font-black text-amber-900 font-mono mt-0.5">{debtorSummary.count} {debtorSummary.count === 1 ? 'venda' : 'vendas'}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Product Summary Table */}
       {showProductSummary && (
@@ -452,9 +530,14 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
             <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-400 mb-4">
               <FileText className="h-6 w-6" />
             </div>
-            <h3 className="text-sm font-bold text-slate-900">Nenhuma venda encontrada</h3>
+            <h3 className="text-sm font-bold text-slate-900">
+              {showDebtors ? 'Nenhuma venda pendente encontrada' : 'Nenhuma venda encontrada'}
+            </h3>
             <p className="text-xs text-slate-400 max-w-sm mx-auto mt-1">
-              Não foram localizados registros correspondentes aos filtros selecionados na sua base de vendas.
+              {showDebtors 
+                ? 'Não há vendas com pagamento pendente para os filtros selecionados.'
+                : 'Não foram localizados registros correspondentes aos filtros selecionados na sua base de vendas.'
+              }
             </p>
           </div>
         ) : (
@@ -476,6 +559,7 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
               <tbody className="divide-y divide-slate-100 text-sm">
                 {filteredSales.map(sale => {
                   const isCancelled = sale.status === 'cancelled';
+                  const isPending = sale.status === 'pending';
                   const totalItems = sale.items.reduce((acc, item) => acc + item.quantity, 0);
 
                   return (
@@ -483,6 +567,8 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                       key={sale.id}
                       className={`hover:bg-slate-50/50 transition-colors ${
                         isCancelled ? 'bg-rose-50/5 text-slate-400' : ''
+                      } ${
+                        isPending ? 'bg-amber-50/60' : ''
                       }`}
                     >
                       {/* ID / Date */}
@@ -539,6 +625,10 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-rose-50 text-rose-700 text-xs font-bold rounded-sm border border-rose-100">
                             <XCircle className="h-3 w-3 shrink-0" /> Cancelada
                           </span>
+                        ) : isPending ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded-sm border border-amber-200">
+                            <AlertTriangle className="h-3 w-3 shrink-0" /> Pendente
+                          </span>
                         ) : (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-sm border border-emerald-100">
                             <CheckCircle className="h-3 w-3 shrink-0" /> Concluída
@@ -549,6 +639,17 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                       {/* Details / Cancel Action */}
                       <td className="py-3 px-4 text-center">
                         <div className="flex items-center justify-center gap-1">
+                          {isPending && (
+                            <button
+                              id={`confirm-payment-${sale.id}`}
+                              onClick={() => handleConfirmPayment(sale)}
+                              className="p-1.5 hover:bg-amber-100 text-amber-600 rounded-lg transition-colors"
+                              title="Confirmar Pagamento"
+                            >
+                              <CheckCircle className="h-4 w-4" />
+                            </button>
+                          )}
+
                           <button
                             id={`details-${sale.id}`}
                             onClick={() => setSelectedSale(sale)}
@@ -579,16 +680,28 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
               <tfoot>
                 <tr className="bg-slate-100 border-t-2 border-slate-200 text-sm">
                   <td colSpan={4} className="py-3 px-4 font-bold text-slate-700 uppercase text-xs tracking-wider">
-                    Totais ({summaryTotals.totalCount} {summaryTotals.totalCount === 1 ? 'venda' : 'vendas'} concluídas)
+                    {showDebtors 
+                      ? `Total (${debtorSummary.count} ${debtorSummary.count === 1 ? 'venda' : 'vendas'} pendentes)`
+                      : `Totais (${summaryTotals.totalCount} ${summaryTotals.totalCount === 1 ? 'venda' : 'vendas'} concluídas)`
+                    }
                   </td>
                   <td className="py-3 px-4 text-right font-mono text-slate-600 font-bold">
-                    {formatCurrency(summaryTotals.totalRevenue - summaryTotals.totalProfit)}
+                    {showDebtors 
+                      ? formatCurrency(filteredSales.reduce((acc, s) => acc + s.totalCost, 0))
+                      : formatCurrency(summaryTotals.totalRevenue - summaryTotals.totalProfit)
+                    }
                   </td>
                   <td className="py-3 px-4 text-right font-mono text-slate-900 font-black text-base">
-                    {formatCurrency(summaryTotals.totalRevenue)}
+                    {showDebtors 
+                      ? formatCurrency(debtorSummary.total)
+                      : formatCurrency(summaryTotals.totalRevenue)
+                    }
                   </td>
                   <td className="py-3 px-4 text-right font-mono text-emerald-600 font-black text-base">
-                    {formatCurrency(summaryTotals.totalProfit)}
+                    {showDebtors 
+                      ? formatCurrency(debtorSummary.total - filteredSales.reduce((acc, s) => acc + s.totalCost, 0))
+                      : formatCurrency(summaryTotals.totalProfit)
+                    }
                   </td>
                   <td colSpan={2}></td>
                 </tr>
@@ -626,6 +739,11 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                 <div className="p-3 bg-rose-50 border border-rose-200 text-rose-800 rounded-lg flex items-center gap-2 text-xs">
                   <XCircle className="h-4 w-4 text-rose-600" />
                   <span className="font-bold">Esta transação foi estornada e cancelada. Itens devolvidos ao estoque físico.</span>
+                </div>
+              ) : selectedSale.status === 'pending' ? (
+                <div className="p-3 bg-amber-50 border border-amber-200 text-amber-800 rounded-lg flex items-center gap-2 text-xs">
+                  <AlertTriangle className="h-4 w-4 text-amber-600" />
+                  <span className="font-bold">Esta transação aguarda confirmação de pagamento.</span>
                 </div>
               ) : (
                 <div className="p-3 bg-emerald-50 border border-emerald-100 text-emerald-800 rounded-lg flex items-center gap-2 text-xs">
@@ -729,6 +847,16 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
             {/* Modal Actions */}
             <div className="p-5 border-t border-slate-200 flex items-center justify-between bg-slate-50">
               <div className="flex items-center gap-2">
+                {selectedSale.status === 'pending' && (
+                  <button
+                    id="confirm-payment-modal-btn"
+                    onClick={() => { handleConfirmPayment(selectedSale); setSelectedSale(null); }}
+                    className="px-4 py-2 border border-amber-200 text-amber-700 hover:bg-amber-50 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors"
+                  >
+                    <CheckCircle className="h-3.5 w-3.5" />
+                    Confirmar Pagamento
+                  </button>
+                )}
                 {selectedSale.status !== 'cancelled' && (
                   <button
                     id="refund-sale-btn"

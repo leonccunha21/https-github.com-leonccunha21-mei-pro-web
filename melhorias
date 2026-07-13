@@ -5,18 +5,14 @@
 
 ----------------------------------------------------------------------------------- nunca remover a parte das regras 
 
-[ok] adicionar no painel de controle inves de 7 e 14 dias, quedo de 1 dia e 30 dias
-[ok] mude o nome do site para ZM Store quando eu fizer login
-[ok] crie a area de configuraçao e perfil para eu adicionar algumas informaçoes referente a minha loja
-[ok] crie area de OS, orçamento
-[ok] ao final da vende crie um resivo e mande em pdf ou imagem
-[ok] site nao subiu ainda, suba novamente ao github para ve se assim vai
-
-[ok] confirme se os dados estao salvando corretamente e que eu consiga acessar de outros lugares e tudo esteja 100% sicronizado 
-[ok] atualize o arquivo em execel para eu poder subir os dados de la, pois o jeito que vc tinha feito para subir os dados nao funcionou
-
-[ok] adicione no painel geral o relatorio, 1 dia, 7 dias, 14 dias, 30 dias, 1 ano, e personalizado e verifique se na tela relatorio tem isso tbm, e aprimore a tela, deixe a mais completo possivel const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : timeRange === '30days' ? 30 : 365;
-[ok] Extrair TODAS as vendas de todas as abas (Vendas, Vendas 2025, Vendas 2026)
-[ok] Injetar produtos, categorias e vendas diretamente no data.ts
-[ok] Criar backup Excel completo com todos os dados atuais
-[ok] configuraçao, perfil de opçao de adicionar a logo da empresa, use isso no lugar do icone do site, e na criaçao de resibos, os e orçamentos
+[ok] em vendas crie um sub menu, para devedores, verifique na planilha as vendas que estao com status pendente e coloque la, e de opçao de eu confirmar pagamento e ja atualiza no banco
+[ok] em vendas na parte de registrar nova venda, coloque uma forma de ja add o cliente no ato da venda, e em cliente coloque os campos que faltam, nome, CPF/CNPJ, Email, Endereço
+[ok] confirme se na venda tem o campo ecommercer  se nao tiver coloque la  -> Canal de Venda (Loja Física, Shopee, Magalu, E-commerce, WhatsApp, Outro)
+[ok] preciso que faça uma limpeza no estoque, muitos dados repetidos remova os repetidos e com zero dados, organize novamente, caso tenha dados exemplo quantidade ou venda mescle eles em 1 so. deixe organizado. 
+[vi que no estoque tem opçao de exportar a planilha, mas para importar ela? deixe tudo isso na aba configuraçoes -> JA EXISTE desde v1.4
+[ok] Novo botão "Verificar Vendas x Estoque" no header
+[ok] Função que compara todos os itens vendidos (vendas concluídas) com o estoque cadastrado
+[ok] Encontra produtos vendidos que não existem no estoque (match por ID ou nome)
+[ok] Modal mostra a lista com: nome, categoria sugerida (inferida pelo nome), quantidade vendida, custo e preço de venda
+[ok] Você pode cadastrar individualmente ou cadastrar todos de uma vez
+[ok] Botão "Exportar Controle" gera planilha Excel com todos os produtos (cadastrados e faltantes) para ajustes finais
