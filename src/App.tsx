@@ -198,24 +198,41 @@ export default function App() {
       ]);
 
       if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
-        // Re-categorize cloud products based on their name (keeps stock consistent)
-        const fixedProducts = cloudProducts.map(p => {
-          const correct = categorizeProduct(p.name);
-          return p.category === correct ? p : { ...p, category: correct };
-        });
-        const anyCategoryChanged = fixedProducts.some((p, i) => cloudProducts[i]?.category !== p.category);
+        const hasLocalData = localProducts !== null || localCategories !== null || localSales !== null;
 
-        console.log(`Cloud OK: ${cloudProducts.length} produtos, ${cloudCategories.length} categorias, ${cloudSales.length} vendas`);
-        setProducts(fixedProducts);
-        setCategories(cloudCategories);
-        setSales(cloudSales);
-        localStorage.setItem('loja_products', JSON.stringify(fixedProducts));
-        localStorage.setItem('loja_sales', JSON.stringify(cloudSales));
-        localStorage.setItem('loja_categories', JSON.stringify(cloudCategories));
+        if (!hasLocalData) {
+          // First-time load on this device: use cloud data
+          const fixedProducts = cloudProducts.map(p => {
+            const correct = categorizeProduct(p.name);
+            return p.category === correct ? p : { ...p, category: correct };
+          });
+          const anyCategoryChanged = fixedProducts.some((p, i) => cloudProducts[i]?.category !== p.category);
 
-        if (anyCategoryChanged) {
-          for (const p of fixedProducts) {
-            try { await saveUserProduct(uid, p); } catch {}
+          console.log(`Cloud OK: ${cloudProducts.length} produtos, ${cloudCategories.length} categorias, ${cloudSales.length} vendas`);
+          setProducts(fixedProducts);
+          setCategories(cloudCategories);
+          setSales(cloudSales);
+          localStorage.setItem('loja_products', JSON.stringify(fixedProducts));
+          localStorage.setItem('loja_sales', JSON.stringify(cloudSales));
+          localStorage.setItem('loja_categories', JSON.stringify(cloudCategories));
+
+          if (anyCategoryChanged) {
+            for (const p of fixedProducts) {
+              try { await saveUserProduct(uid, p); } catch {}
+            }
+          }
+        } else {
+          // Local data exists: prefer it (user's last actions are source of truth)
+          // Push local data to cloud to ensure sync
+          console.log(`Dados locais preferidos. Cloud: ${cloudProducts.length}p/${cloudCategories.length}c/${cloudSales.length}s`);
+          for (const p of parsedProducts) {
+            try { await saveUserProduct(uid, p); } catch (e) { /* silent */ }
+          }
+          for (const c of parsedCategories) {
+            try { await saveUserCategory(uid, c); } catch (e) { /* silent */ }
+          }
+          for (const s of parsedSales) {
+            try { await saveUserSale(uid, s); } catch (e) { /* silent */ }
           }
         }
       } else {
@@ -269,16 +286,18 @@ export default function App() {
     localStorage.setItem('loja_products', JSON.stringify(updatedProducts));
     
     if (user) {
-      if (isDeletedId) {
-        await deleteUserProduct(user.uid, isDeletedId);
-      } else if (changedProduct) {
-        await saveUserProduct(user.uid, changedProduct);
-      } else {
-        // Full list overwrite — write each product individually (setDoc is idempotent)
-        // No destructive clear. Orphaned docs are cleaned up on next full import.
-        for (const p of updatedProducts) {
-          try { await saveUserProduct(user.uid, p); } catch {}
+      try {
+        if (isDeletedId) {
+          await deleteUserProduct(user.uid, isDeletedId);
+        } else if (changedProduct) {
+          await saveUserProduct(user.uid, changedProduct);
+        } else {
+          for (const p of updatedProducts) {
+            try { await saveUserProduct(user.uid, p); } catch {}
+          }
         }
+      } catch (e) {
+        console.error('Erro ao sincronizar produtos com a nuvem:', e);
       }
     }
   };
@@ -392,23 +411,23 @@ export default function App() {
       createdAt: new Date().toISOString()
     };
     const updated = [newProduct, ...products];
-    saveProductsToStorage(updated, newProduct);
+    saveProductsToStorage(updated, newProduct).catch(() => {});
   };
 
   // Update Product
   const handleUpdateProduct = (updatedProduct: Product) => {
     const updated = products.map(p => p.id === updatedProduct.id ? updatedProduct : p);
-    saveProductsToStorage(updated, updatedProduct);
+    saveProductsToStorage(updated, updatedProduct).catch(() => {});
   };
 
   // Delete Product
   const handleDeleteProduct = (id: string) => {
     const updated = products.filter(p => p.id !== id);
-    saveProductsToStorage(updated, undefined, id);
+    saveProductsToStorage(updated, undefined, id).catch(() => {});
   };
 
   const handleClearAllProducts = () => {
-    saveProductsToStorage([]);
+    saveProductsToStorage([]).catch(() => {});
   };
 
   // Add Category

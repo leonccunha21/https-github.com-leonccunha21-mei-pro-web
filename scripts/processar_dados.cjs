@@ -469,6 +469,18 @@ const saleExport = finalSales.map(s => ({
 const saleSheet = XLSX.utils.json_to_sheet(saleExport);
 XLSX.utils.book_append_sheet(backupWb, saleSheet, 'Vendas');
 
+// Expenses sheet
+const expensesExport = expenses2024.map(e => ({
+  'ID': e.id,
+  'Data': e.date.substring(0, 10),
+  'Categoria': e.category,
+  'Descrição': e.description,
+  'Valor': e.amount,
+  'Status': e.status === 'paid' ? 'Pago' : 'Pendente'
+}));
+const expSheet = XLSX.utils.json_to_sheet(expensesExport);
+XLSX.utils.book_append_sheet(backupWb, expSheet, 'Despesas');
+
 XLSX.writeFile(backupWb, OUTPUT_EXCEL);
 console.log(`\nBackup Excel saved: ${OUTPUT_EXCEL}`);
 
