@@ -46,12 +46,16 @@
 [ok] Empréstimos: botão "WhatsApp" (ícone de balão) em cada empréstimo que abre wa.me com mensagem de cobrança automática (nome, valor total capital+juros, vencimento e, se atrasado, dias de atraso). Telefone normalizado com DDI 55.
 [ok] Dashboard "Alertas de Reposição": agora só lista produtos com estoque mínimo > 0 (itens com mínimo 0 não aparecem, nem no KPI de Estoque Baixo).
 [ok] Dashboard "Mais Vendidos": ordenação corrigida e determinística por volume (qty), com desempate por faturamento e nome; nome do produto resolvido pela variante mais vendida. Reage ao filtro de data/ano/período do topo.
+[ok] Persistência local via IndexedDB: o banco (vendas, empréstimos, flags de marketplace, etc.) agora é salvo no navegador e sobrevive a recarregamentos mesmo no site publicado (sem backend). Antes, a cada reload o app resetava para o seed e perdia empréstimos/exclusões. `/api/db` continua como sincronização opcional quando há servidor local.
+[ok] Dashboard: botão de olho (Eye/EyeOff) no cabeçalho para ocultar/exibir todos os valores monetários (KPIs, avaliação de estoque, Mais Vendidos e pagamentos).
+[ok] Filtro de Marketplace (Devedores) normalizado: ignora variantes de "Loja Física" (LOJA FISICA, Loja Fisica, etc.) e usa saleChannel + ecommerceOrderId corretamente.
 
 ## Pendências / o que não ficou ok (preencher ao validar)
 [ ] __________________________________________________
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.7 [ok] — 13/07/2026: persistência local em IndexedDB (fim do reset do banco no site publicado); botão ocultar valores no Dashboard; filtro de Marketplace normalizado.
 - v2.6.6 [ok] — 13/07/2026: botão WhatsApp de cobrança nos empréstimos; Alertas de Reposição só com mínimo > 0; Mais Vendidos ordenado por volume e reativo ao filtro.
 - v2.6.5 [ok] — 13/07/2026: controle de recebimento de Marketplace (Shopee/TikTok/OLX) em Devedores: canal + ID do pedido, KPIs e botão "Recebido".
 - v2.6.4 [ok] — 13/07/2026: removido botão duplicado "Devedores" do menu lateral.

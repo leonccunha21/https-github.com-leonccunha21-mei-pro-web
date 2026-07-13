@@ -70,7 +70,10 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
     return sales.filter(s => s.status === 'pending').length;
   }, [sales]);
 
-  const isMarketplace = (s: Sale) => (s.saleChannel && s.saleChannel !== 'Loja Física') || !!s.ecommerceOrderId;
+  const isMarketplace = (s: Sale) => {
+    const ch = (s.saleChannel || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+    return (ch !== '' && ch !== 'loja fisica') || !!s.ecommerceOrderId;
+  };
 
   const marketplaceSales = useMemo(() => {
     const filtered = sales.filter(isMarketplace).filter(s => {

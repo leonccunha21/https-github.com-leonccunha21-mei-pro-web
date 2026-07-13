@@ -15,22 +15,100 @@ export interface LocalDb {
   initialized?: boolean;
 }
 
-export async function loadDb(): Promise<Partial<LocalDb>> {
-  const res = await fetch('/api/db');
-  if (!res.ok) throw new Error('Falha ao carregar o banco de dados local');
-  return (await res.json()) as Partial<LocalDb>;
+// The app is published as a static site (GitHub Pages) with NO backend server.
+// IndexedDB is used as the primary local store so the data (sales, loans,
+// marketplace flags, etc.) survives reloads. The optional `/api/db` server is
+// only used when running locally (best-effort sync) and never required.
+const DB_NAME = 'zmstore_local';
+const STORE = 'localdb';
+const KEY = 'main';
+
+function openDb(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    if (typeof indexedDB === 'undefined') {
+      reject(new Error('IndexedDB indisponivel'));
+      return;
+    }
+    const req = indexedDB.open(DB_NAME, 1);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE);
+    };
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function idbGet(): Promise<Partial<LocalDb> | null> {
+  const db = await openDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readonly');
+    const req = tx.objectStore(STORE).get(KEY);
+    req.onsuccess = () => resolve((req.result as Partial<LocalDb>) || null);
+    req.onerror = () => reject(req.error);
+  });
+}
+
+async function idbPut(value: LocalDb): Promise<void> {
+  const db = await openDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    tx.objectStore(STORE).put(value, KEY);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+export async function loadDb(): Promise<Partial<LocalDb> | null> {
+  // 1. IndexedDB (primary, works on the static site)
+  try {
+    const local = await idbGet();
+    if (local && (Array.isArray(local.sales) || Array.isArray(local.products))) {
+      return local;
+    }
+  } catch { /* ignore */ }
+
+  // 2. Optional local server (only when running with node server.js)
+  try {
+    const res = await fetch('/api/db');
+    if (res.ok) {
+      const db = (await res.json()) as Partial<LocalDb>;
+      idbPut(db as LocalDb).catch(() => {});
+      return db;
+    }
+  } catch { /* ignore */ }
+
+  return null;
 }
 
 export async function saveDb(db: LocalDb): Promise<void> {
-  const res = await fetch('/api/db', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(db),
-  });
-  if (!res.ok) throw new Error('Falha ao salvar o banco de dados local');
+  // 1. Always persist locally (IndexedDB)
+  try {
+    await idbPut(db);
+  } catch (e) {
+    console.error('Erro ao salvar no IndexedDB:', e);
+  }
+  // 2. Best-effort server sync (ignored on the static site)
+  try {
+    await fetch('/api/db', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(db),
+    });
+  } catch { /* ignore */ }
 }
 
 export async function resetDb(): Promise<void> {
-  const res = await fetch('/api/db/reset', { method: 'POST' });
-  if (!res.ok) throw new Error('Falha ao zerar o banco de dados local');
+  try {
+    const db = await openDb();
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).delete(KEY);
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+  } catch { /* ignore */ }
+  try {
+    await fetch('/api/db/reset', { method: 'POST' });
+  } catch { /* ignore */ }
 }

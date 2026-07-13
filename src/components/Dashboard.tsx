@@ -10,7 +10,9 @@ import {
   ShoppingBag,
   ArrowRight,
   Calendar,
-  Layers
+  Layers,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -81,6 +83,9 @@ function parseLocalDate(dateStr: string, defaultTime: string = '00:00:00'): Date
 
 export default function Dashboard({ products, sales, onNavigate }: DashboardProps) {
   const [timeRange, setTimeRange] = useState<'all' | '1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('all');
+  const [hideValues, setHideValues] = useState(false);
+  const money = (v: number) =>
+    hideValues ? 'R$ •••••' : v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
   const [customStart, setCustomStart] = useState(() => {
     const d = new Date(); d.setMonth(d.getMonth() - 1); return d.toISOString().split('T')[0];
   });
@@ -369,14 +374,21 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
             <p className="text-xs md:text-sm text-slate-500 mt-1">Visão geral do desempenho da sua loja.</p>
           </div>
           
-          <button
-            id="quick-start-sale-btn"
-            onClick={() => onNavigate('pos')}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 shadow-xs transition-colors cursor-pointer self-start sm:self-auto"
-          >
-            <ShoppingBag className="h-4 w-4" />
-            Nova Venda
-          </button>
+            <button
+              id="quick-start-sale-btn"
+              onClick={() => onNavigate('pos')}
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 shadow-xs transition-colors cursor-pointer self-start sm:self-auto"
+            >
+              <ShoppingBag className="h-4 w-4" />
+              Nova Venda
+            </button>
+            <button
+              onClick={() => setHideValues(v => !v)}
+              title={hideValues ? 'Mostrar valores' : 'Ocultar valores'}
+              className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer self-start sm:self-auto"
+            >
+              {hideValues ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+            </button>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -469,7 +481,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
             <div className="p-1.5 md:p-2 bg-emerald-50 rounded-lg text-emerald-600"><DollarSign className="h-4 w-4 md:h-5 md:w-5" /></div>
           </div>
           <div className="mt-3 md:mt-4">
-            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{totalRevenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{money(totalRevenue)}</span>
             <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs text-emerald-600">
               <TrendingUp className="h-3 w-3" />
               <span>{completedSales.length} vendas</span>
@@ -483,7 +495,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
             <div className="p-1.5 md:p-2 bg-amber-50 rounded-lg text-amber-600"><ArrowDownRight className="h-4 w-4 md:h-5 md:w-5" /></div>
           </div>
           <div className="mt-3 md:mt-4">
-            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{money(totalCost)}</span>
             <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs text-slate-500">
               <Layers className="h-3 w-3 text-slate-400" />
               <span className="hidden sm:inline">Custo das mercadorias</span>
@@ -498,7 +510,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
             <div className="p-1.5 md:p-2 bg-indigo-50 rounded-lg text-indigo-600"><TrendingUp className="h-4 w-4 md:h-5 md:w-5" /></div>
           </div>
           <div className="mt-3 md:mt-4">
-            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{totalProfit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{money(totalProfit)}</span>
             <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs text-indigo-600">
               <Percent className="h-3 w-3" />
               <span>Margem {averageMargin.toFixed(1)}%</span>
@@ -579,7 +591,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
                         <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: paymentMethodColors[method] }} />
                         <div className="min-w-0">
                           <p className="font-semibold text-slate-700 truncate text-[11px]">{label}</p>
-                          <p className="text-[10px] text-slate-400 font-mono">{value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} ({pct.toFixed(0)}%)</p>
+                          <p className="text-[10px] text-slate-400 font-mono">{money(value)} ({pct.toFixed(0)}%)</p>
                         </div>
                       </div>
                     );
@@ -656,8 +668,8 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
                     <p className="text-xs text-slate-400">{p.qty} un. vendidas</p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-sm font-bold text-slate-900">{p.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                    <p className="text-[10px] text-emerald-600 font-medium">Lucro: {p.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+                    <p className="text-sm font-bold text-slate-900">{money(p.revenue)}</p>
+                    <p className="text-[10px] text-emerald-600 font-medium">Lucro: {money(p.profit)}</p>
                   </div>
                 </div>
               ))}
@@ -683,10 +695,10 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
           <div className="border-t border-indigo-500/30 md:border-t-0 md:border-l md:border-indigo-500/30 md:pl-6 pt-4 md:pt-0">
             <span className="text-xs text-indigo-200 block">Valoração Estimada</span>
             <span className="text-2xl font-bold font-mono text-emerald-400 block mt-1">
-              {totalInventoryRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+              {money(totalInventoryRetailValue)}
             </span>
             <span className="text-[11px] text-indigo-100">
-              Custo: {totalInventoryCostValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+              Custo: {money(totalInventoryCostValue)}
             </span>
           </div>
         </div>

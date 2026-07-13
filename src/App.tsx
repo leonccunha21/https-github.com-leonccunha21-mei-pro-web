@@ -104,29 +104,31 @@ export default function App() {
     document.documentElement.classList.toggle('dark', darkMode);
   }, []);
 
-  // Load all data from the local backend on startup (100% local, no cloud)
+  // Load all data. The store is IndexedDB-backed (works on the static site);
+  // an optional local server is used only when available.
   useEffect(() => {
     (async () => {
       try {
         const db = await loadDb();
-        const initialized = db.initialized === true;
-        const p = initialized && Array.isArray(db.products) ? db.products : initialProducts;
-        const s = initialized && Array.isArray(db.sales) ? db.sales : initialSales;
-        const e = initialized && Array.isArray(db.expenses) ? db.expenses : initialExpenses;
-        const c = initialized && Array.isArray(db.categories) ? db.categories : initialCategories;
+        const hasDb = !!db && db.initialized === true;
+        const dbData = (db ?? {}) as Partial<LocalDb>;
+        const p = hasDb && Array.isArray(dbData.products) ? dbData.products : initialProducts;
+        const s = hasDb && Array.isArray(dbData.sales) ? dbData.sales : initialSales;
+        const e = hasDb && Array.isArray(dbData.expenses) ? dbData.expenses : initialExpenses;
+        const c = hasDb && Array.isArray(dbData.categories) ? dbData.categories : initialCategories;
         const seededProducts = runStockCleanup(p);
         setProducts(seededProducts);
         setSales(s);
         setExpenses(e);
         setCategories(c);
-        setOrders(initialized && Array.isArray(db.orders) ? db.orders : []);
-        const loadedCustomers = initialized && Array.isArray(db.customers) ? db.customers : [];
+        setOrders(hasDb && Array.isArray(dbData.orders) ? dbData.orders : []);
+        const loadedCustomers = hasDb && Array.isArray(dbData.customers) ? dbData.customers : [];
         setCustomers(loadedCustomers);
-        setSuppliers(initialized && Array.isArray(db.suppliers) ? db.suppliers : []);
-        setPurchases(initialized && Array.isArray(db.purchases) ? db.purchases : []);
-        setCashSessions(initialized && Array.isArray(db.cashSessions) ? db.cashSessions : []);
-        setLoans(initialized && Array.isArray(db.loans) ? db.loans : []);
-        if (db.storeInfo) {
+        setSuppliers(hasDb && Array.isArray(dbData.suppliers) ? dbData.suppliers : []);
+        setPurchases(hasDb && Array.isArray(dbData.purchases) ? dbData.purchases : []);
+        setCashSessions(hasDb && Array.isArray(dbData.cashSessions) ? dbData.cashSessions : []);
+        setLoans(hasDb && Array.isArray(dbData.loans) ? dbData.loans : []);
+        if (db && db.storeInfo) {
           setStoreInfo(db.storeInfo);
         }
         // Seed customers from existing sales (clientName) when there are none loaded
@@ -139,7 +141,7 @@ export default function App() {
         // First run: persist the seeded initial data and mark the DB as initialized
         // so a later "reset to empty" is respected (an empty DB is no longer
         // interpreted as "fresh install, reload defaults").
-        if (!initialized) {
+        if (!hasDb) {
           persist({
             products: seededProducts,
             sales: s,
@@ -147,11 +149,11 @@ export default function App() {
             expenses: e,
             orders: [],
             customers: seededCustomers,
-            suppliers: suppliers,
-            purchases: purchases,
-            cashSessions: cashSessions,
-            loans: loans,
-            storeInfo: db.storeInfo || null,
+            suppliers: [],
+            purchases: [],
+            cashSessions: [],
+            loans: [],
+            storeInfo: (db && db.storeInfo) || null,
             initialized: true,
           });
         }
@@ -160,6 +162,20 @@ export default function App() {
         setSales(initialSales);
         setExpenses(initialExpenses);
         setCategories(initialCategories);
+        persist({
+          products: initialProducts,
+          sales: initialSales,
+          categories: initialCategories,
+          expenses: initialExpenses,
+          orders: [],
+          customers: [],
+          suppliers: [],
+          purchases: [],
+          cashSessions: [],
+          loans: [],
+          storeInfo: null,
+          initialized: true,
+        });
       } finally {
         setLoading(false);
       }
