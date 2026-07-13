@@ -124,6 +124,20 @@ export interface CashSession {
   notes?: string;
 }
 
+export interface Loan {
+  id: string;
+  borrowerName: string;
+  borrowerPhone?: string;
+  loanDate: string; // Data em que pegou o dinheiro
+  dueDate: string;  // Data para pagamento
+  principal: number; // Valor emprestado
+  interest: number;  // Valor dos juros (R$)
+  paidAmount?: number; // Valor já recebido
+  status: 'open' | 'paid';
+  notes?: string;
+  createdAt: string;
+}
+
 export interface StoreInfo {
   name: string;
   cnpj: string;

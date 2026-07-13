@@ -37,6 +37,7 @@
 [ok] Compras & Fornecedores: cadastro de fornecedores + registro de compras com itens, custo e nota; entra no estoque e atualiza custo/venda dos produtos.
 [ok] Fechamento de Caixa: abertura (saldo inicial), sangria (retiradas com motivo), fechamento com contagem física e diferença esperado x contado.
 [ok] Descontos no PDV: já existia (%), agora autocompleta clientes cadastrados no checkout.
+[ok] Empréstimos (agiotagem) na tela Devedores: cadastro de nome, telefone, data que pegou, data para pagar, valor emprestado e valor dos juros; lista com total a receber, atraso em dias, recebimento parcial e quitação.
 [ok] Pipeline (processar_dados.cjs) protegido: ao (re)gerar data/local-db.json, preserva clientes, fornecedores, compras e fechamentos (não apaga os dados dos novos módulos).
 
 ## Pendências / o que não ficou ok (preencher ao validar)
@@ -44,6 +45,7 @@
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.2 [ok] — 13/07/2026: Empréstimos (agiotagem) na tela Devedores: nome, telefone, datas, valor emprestado + juros, recebimento parcial e quitação.
 - v2.6.1 [ok] — 13/07/2026: pipeline processar_dados.cjs protegido (preserva clientes/fornecedores/compras/fechamentos ao regerar local-db.json).
 - v2.6.0 [ok] — 13/07/2026: Clientes/CRM, Compras & Fornecedores (entrada de estoque), Fechamento de Caixa, autocomplete de clientes no PDV.
 - v2.5.0 [ok] — 13/07/2026: Devedores submenu+parcelas, Bot com throttle/retry, serviços sem qtd, pasta organizada, README.

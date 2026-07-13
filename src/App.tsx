@@ -12,7 +12,8 @@ import {
   Customer,
   Supplier,
   Purchase,
-  CashSession
+  CashSession,
+  Loan
 } from './types';
 import { initialProducts, initialSales, initialCategories, initialExpenses } from './data';
 
@@ -77,6 +78,7 @@ export default function App() {
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [cashSessions, setCashSessions] = useState<CashSession[]>([]);
+  const [loans, setLoans] = useState<Loan[]>([]);
 
   const [storeInfo, setStoreInfo] = useState(() => {
     try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
@@ -123,6 +125,7 @@ export default function App() {
         setSuppliers(initialized && Array.isArray(db.suppliers) ? db.suppliers : []);
         setPurchases(initialized && Array.isArray(db.purchases) ? db.purchases : []);
         setCashSessions(initialized && Array.isArray(db.cashSessions) ? db.cashSessions : []);
+        setLoans(initialized && Array.isArray(db.loans) ? db.loans : []);
         if (db.storeInfo) {
           setStoreInfo(db.storeInfo);
         }
@@ -147,6 +150,7 @@ export default function App() {
             suppliers: suppliers,
             purchases: purchases,
             cashSessions: cashSessions,
+            loans: loans,
             storeInfo: db.storeInfo || null,
             initialized: true,
           });
@@ -179,9 +183,10 @@ export default function App() {
     suppliers: Supplier[];
     purchases: Purchase[];
     cashSessions: CashSession[];
+    loans: Loan[];
     initialized?: boolean;
-  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [] });
-  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions };
+  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [], loans: [] });
+  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans };
 
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
@@ -200,6 +205,7 @@ export default function App() {
       suppliers: partial.suppliers ?? prev.suppliers ?? cur.suppliers,
       purchases: partial.purchases ?? prev.purchases ?? cur.purchases,
       cashSessions: partial.cashSessions ?? prev.cashSessions ?? cur.cashSessions,
+      loans: partial.loans ?? prev.loans ?? cur.loans,
       initialized: partial.initialized !== undefined ? partial.initialized : (prev.initialized !== undefined ? prev.initialized : cur.initialized),
     };
     pendingRef.current = merged;
@@ -256,6 +262,11 @@ export default function App() {
   const saveCashSessionsToStorage = (updatedSessions: CashSession[]) => {
     setCashSessions(updatedSessions);
     persist({ cashSessions: updatedSessions });
+  };
+
+  const saveLoansToStorage = (updatedLoans: Loan[]) => {
+    setLoans(updatedLoans);
+    persist({ loans: updatedLoans });
   };
 
   const handleStoreInfoChange = (info: StoreInfo) => {
@@ -521,6 +532,7 @@ export default function App() {
     saveSuppliersToStorage([]);
     savePurchasesToStorage([]);
     saveCashSessionsToStorage([]);
+    saveLoansToStorage([]);
     persist({ initialized: true });
     setActiveTab('dashboard');
   };
@@ -1179,10 +1191,12 @@ export default function App() {
             {activeTab === 'debtors' && (
               <Debtors 
                 sales={sales}
+                loans={loans}
                 onUpdateSale={(updatedSale) => {
                   const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
                   saveSalesToStorage(updatedSales, updatedSale);
                 }}
+                onSaveLoans={saveLoansToStorage}
               />
             )}
 

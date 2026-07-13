@@ -19,6 +19,7 @@ interface LocalDb {
   suppliers?: any[];
   purchases?: any[];
   cashSessions?: any[];
+  loans?: any[];
 }
 
 function ensureDb(): void {
@@ -67,13 +68,14 @@ app.put('/api/db', (req, res) => {
     suppliers: body.suppliers ?? current.suppliers ?? [],
     purchases: body.purchases ?? current.purchases ?? [],
     cashSessions: body.cashSessions ?? current.cashSessions ?? [],
+    loans: body.loans ?? current.loans ?? [],
   };
   writeDb(merged);
   res.json({ ok: true });
 });
 
 app.post('/api/db/reset', (_req, res) => {
-  writeDb({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [] });
+  writeDb({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [], loans: [] });
   res.json({ ok: true });
 });
 

@@ -1,4 +1,4 @@
-import { Product, Sale, Category, Expense, StoreInfo, ServiceOrder, Customer, Supplier, Purchase, CashSession } from '../types';
+import { Product, Sale, Category, Expense, StoreInfo, ServiceOrder, Customer, Supplier, Purchase, CashSession, Loan } from '../types';
 
 export interface LocalDb {
   products: Product[];
@@ -11,6 +11,7 @@ export interface LocalDb {
   suppliers: Supplier[];
   purchases: Purchase[];
   cashSessions: CashSession[];
+  loans: Loan[];
   initialized?: boolean;
 }
 
