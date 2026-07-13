@@ -49,6 +49,17 @@ function normalizeName(name) {
   return name.trim().replace(/\s+/g, ' ');
 }
 
+function normalizeNameKey(name) {
+  if (!name || typeof name !== 'string') return '';
+  return name
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') // remove accents
+    .replace(/[^a-z0-9]/g, '') // keep only alphanumeric
+    .replace(/\s+/g, ''); // remove spaces
+}
+
 // --- MAIN ---
 const wb = XLSX.readFile(SPREADSHEET_PATH);
 
@@ -84,14 +95,15 @@ for (let i = 1; i < prodRaw.length; i++) {
     category: categorizeProduct(name)
   };
 
-  if (productMap.has(name)) {
-    const existing = productMap.get(name);
+  const nameKey = normalizeNameKey(name);
+  if (productMap.has(nameKey)) {
+    const existing = productMap.get(nameKey);
     existing.stock += product.stock;
     existing.purchases += product.purchases;
     existing.sales += product.sales;
     if (product.salePrice > existing.salePrice) existing.salePrice = product.salePrice;
   } else {
-    productMap.set(name, product);
+    productMap.set(nameKey, product);
   }
 }
 
@@ -242,26 +254,27 @@ const costFromSalesMap = new Map(); // name -> { sum: totalCost, qty: totalQty }
 
 for (const sale of allSales) {
   const name = sale.productName;
+  const nameKey = normalizeNameKey(name);
   // Track sale prices for average calculation
-  if (!salePriceMap.has(name)) {
-    salePriceMap.set(name, { sum: 0, qty: 0 });
+  if (!salePriceMap.has(nameKey)) {
+    salePriceMap.set(nameKey, { sum: 0, qty: 0 });
   }
-  const sp = salePriceMap.get(name);
+  const sp = salePriceMap.get(nameKey);
   sp.sum += sale.totalValue;
   sp.qty += sale.qty;
 
   // Track cost data from sales for backup cost prices
   if (sale.totalCost > 0) {
-    if (!costFromSalesMap.has(name)) {
-      costFromSalesMap.set(name, { sum: 0, qty: 0 });
+    if (!costFromSalesMap.has(nameKey)) {
+      costFromSalesMap.set(nameKey, { sum: 0, qty: 0 });
     }
-    const c = costFromSalesMap.get(name);
+    const c = costFromSalesMap.get(nameKey);
     c.sum += sale.totalCost;
     c.qty += sale.qty;
   }
 
-  if (!productNames.has(name)) {
-    productMap.set(name, {
+  if (!productNames.has(nameKey)) {
+    productMap.set(nameKey, {
       name,
       purchases: 0,
       stock: 0,
@@ -272,10 +285,10 @@ for (const sale of allSales) {
       model: '',
       category: categorizeProduct(name)
     });
-    productNames.add(name);
+    productNames.add(nameKey);
     addedFromSales++;
   } else {
-    const existing = productMap.get(name);
+    const existing = productMap.get(nameKey);
     existing.sales = (existing.sales || 0) + sale.qty;
   }
 }
