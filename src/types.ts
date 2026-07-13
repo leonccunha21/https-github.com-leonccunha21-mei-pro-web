@@ -64,7 +64,65 @@ export interface Expense {
   notes?: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors' | 'cashflow';
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing';
+
+export interface Customer {
+  id: string;
+  name: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface Supplier {
+  id: string;
+  name: string;
+  phone?: string;
+  email?: string;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface PurchaseItem {
+  productId?: string;
+  productName: string;
+  quantity: number;
+  costPrice: number;
+  salePrice?: number;
+}
+
+export interface Purchase {
+  id: string;
+  date: string;
+  supplierId?: string;
+  supplierName?: string;
+  items: PurchaseItem[];
+  total: number;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface CashWithdrawal {
+  id: string;
+  date: string;
+  amount: number;
+  reason: string;
+}
+
+export interface CashSession {
+  id: string;
+  openDate: string;
+  closeDate?: string;
+  openingBalance: number;
+  closingBalance?: number;
+  expectedBalance?: number;
+  difference?: number;
+  status: 'open' | 'closed';
+  withdrawals: CashWithdrawal[];
+  notes?: string;
+}
 
 export interface StoreInfo {
   name: string;

@@ -32,11 +32,18 @@
 [ok] Bump de versão para 2.5.0
 [ok] Commit + push no GitHub (main)
 
+## Módulos de "sistema de vendas completo" (v2.6.0)
+[ok] Clientes/CRM: cadastro (nome, telefone, e-mail, endereço, obs) + histórico de compras + total gasto + débitos em aberto. Semeado automaticamente a partir dos clientes das vendas existentes.
+[ok] Compras & Fornecedores: cadastro de fornecedores + registro de compras com itens, custo e nota; entra no estoque e atualiza custo/venda dos produtos.
+[ok] Fechamento de Caixa: abertura (saldo inicial), sangria (retiradas com motivo), fechamento com contagem física e diferença esperado x contado.
+[ok] Descontos no PDV: já existia (%), agora autocompleta clientes cadastrados no checkout.
+
 ## Pendências / o que não ficou ok (preencher ao validar)
 [ ] __________________________________________________
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.0 [ok] — 13/07/2026: Clientes/CRM, Compras & Fornecedores (entrada de estoque), Fechamento de Caixa, autocomplete de clientes no PDV.
 - v2.5.0 [ok] — 13/07/2026: Devedores submenu+parcelas, Bot com throttle/retry, serviços sem qtd, pasta organizada, README.
 - v2.4.0 [ok] — 13/07/2026: ano dinâmico, filtro data, deduplicação, Mais Vendidos, SW off, planilha-mãe, Vendas 2023.
 - v2.3.0 — versão base anterior.

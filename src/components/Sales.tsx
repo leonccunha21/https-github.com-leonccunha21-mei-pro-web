@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Product, SaleItem, PaymentMethod } from '../types';
+import { Product, SaleItem, PaymentMethod, Customer } from '../types';
 import { roundCurrency } from '../lib/currency';
 import { 
   Search, 
@@ -23,6 +23,7 @@ import {
 
 interface SalesProps {
   products: Product[];
+  customers?: Customer[];
   onRegisterSale: (saleData: {
     items: SaleItem[];
     clientName?: string;
@@ -37,7 +38,7 @@ interface SalesProps {
   onNavigate: (tab: 'products') => void;
 }
 
-export default function Sales({ products, onRegisterSale, onNavigate }: SalesProps) {
+export default function Sales({ products, customers = [], onRegisterSale, onNavigate }: SalesProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [allowNegativeStock, setAllowNegativeStock] = useState(true);
@@ -711,10 +712,16 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
                     id="client-name"
                     type="text"
                     placeholder="Opcional"
+                    list="customer-suggestions"
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     className="w-full pl-8 pr-2 py-1.5 text-xs bg-white border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
                   />
+                  <datalist id="customer-suggestions">
+                    {customers.map(c => (
+                      <option key={c.id} value={c.name} />
+                    ))}
+                  </datalist>
                 </div>
               </div>
 

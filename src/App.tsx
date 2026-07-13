@@ -8,7 +8,11 @@ import {
   ActiveTab, 
   PaymentMethod,
   StoreInfo,
-  ServiceOrder
+  ServiceOrder,
+  Customer,
+  Supplier,
+  Purchase,
+  CashSession
 } from './types';
 import { initialProducts, initialSales, initialCategories, initialExpenses } from './data';
 
@@ -21,6 +25,9 @@ import Settings from './components/Settings';
 import OsOrcamento from './components/OsOrcamento';
 import Debtors from './components/Debtors';
 import CashFlow from './components/CashFlow';
+import Customers from './components/Customers';
+import Purchases from './components/Purchases';
+import CashClosing from './components/CashClosing';
 import { 
   LayoutDashboard, 
   Package, 
@@ -36,7 +43,9 @@ import {
   Moon,
   PackageSearch,
   Users,
-  DollarSign
+  DollarSign,
+  Truck,
+  Wallet
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
@@ -62,6 +71,12 @@ export default function App() {
   const [showVendasEstoque, setShowVendasEstoque] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [orders, setOrders] = useState<ServiceOrder[]>([]);
+
+  // Novos módulos (CRM, Compras, Fechamento de Caixa)
+  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
+  const [purchases, setPurchases] = useState<Purchase[]>([]);
+  const [cashSessions, setCashSessions] = useState<CashSession[]>([]);
 
   const [storeInfo, setStoreInfo] = useState(() => {
     try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
@@ -103,8 +118,20 @@ export default function App() {
         setExpenses(e);
         setCategories(c);
         setOrders(initialized && Array.isArray(db.orders) ? db.orders : []);
+        const loadedCustomers = initialized && Array.isArray(db.customers) ? db.customers : [];
+        setCustomers(loadedCustomers);
+        setSuppliers(initialized && Array.isArray(db.suppliers) ? db.suppliers : []);
+        setPurchases(initialized && Array.isArray(db.purchases) ? db.purchases : []);
+        setCashSessions(initialized && Array.isArray(db.cashSessions) ? db.cashSessions : []);
         if (db.storeInfo) {
           setStoreInfo(db.storeInfo);
+        }
+        // Seed customers from existing sales (clientName) when there are none loaded
+        const seededCustomers = (loadedCustomers.length === 0)
+          ? seedCustomersFromSales(s)
+          : loadedCustomers;
+        if (seededCustomers !== loadedCustomers) {
+          setCustomers(seededCustomers);
         }
         // First run: persist the seeded initial data and mark the DB as initialized
         // so a later "reset to empty" is respected (an empty DB is no longer
@@ -116,6 +143,10 @@ export default function App() {
             categories: c,
             expenses: e,
             orders: [],
+            customers: seededCustomers,
+            suppliers: suppliers,
+            purchases: purchases,
+            cashSessions: cashSessions,
             storeInfo: db.storeInfo || null,
             initialized: true,
           });
@@ -144,9 +175,13 @@ export default function App() {
     expenses: Expense[];
     orders: ServiceOrder[];
     storeInfo: StoreInfo | null;
+    customers: Customer[];
+    suppliers: Supplier[];
+    purchases: Purchase[];
+    cashSessions: CashSession[];
     initialized?: boolean;
-  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null });
-  stateRef.current = { products, sales, categories, expenses, orders, storeInfo };
+  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [] });
+  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions };
 
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
@@ -161,6 +196,10 @@ export default function App() {
       expenses: partial.expenses ?? prev.expenses ?? cur.expenses,
       orders: partial.orders ?? prev.orders ?? cur.orders,
       storeInfo: partial.storeInfo !== undefined ? partial.storeInfo : (prev.storeInfo !== undefined ? prev.storeInfo : cur.storeInfo),
+      customers: partial.customers ?? prev.customers ?? cur.customers,
+      suppliers: partial.suppliers ?? prev.suppliers ?? cur.suppliers,
+      purchases: partial.purchases ?? prev.purchases ?? cur.purchases,
+      cashSessions: partial.cashSessions ?? prev.cashSessions ?? cur.cashSessions,
       initialized: partial.initialized !== undefined ? partial.initialized : (prev.initialized !== undefined ? prev.initialized : cur.initialized),
     };
     pendingRef.current = merged;
@@ -197,6 +236,26 @@ export default function App() {
   const saveOrdersToStorage = (updatedOrders: ServiceOrder[]) => {
     setOrders(updatedOrders);
     persist({ orders: updatedOrders });
+  };
+
+  const saveCustomersToStorage = (updatedCustomers: Customer[]) => {
+    setCustomers(updatedCustomers);
+    persist({ customers: updatedCustomers });
+  };
+
+  const saveSuppliersToStorage = (updatedSuppliers: Supplier[]) => {
+    setSuppliers(updatedSuppliers);
+    persist({ suppliers: updatedSuppliers });
+  };
+
+  const savePurchasesToStorage = (updatedPurchases: Purchase[]) => {
+    setPurchases(updatedPurchases);
+    persist({ purchases: updatedPurchases });
+  };
+
+  const saveCashSessionsToStorage = (updatedSessions: CashSession[]) => {
+    setCashSessions(updatedSessions);
+    persist({ cashSessions: updatedSessions });
   };
 
   const handleStoreInfoChange = (info: StoreInfo) => {
@@ -458,8 +517,84 @@ export default function App() {
     saveCategoriesToStorage([]);
     saveExpensesToStorage([]);
     saveOrdersToStorage([]);
+    saveCustomersToStorage([]);
+    saveSuppliersToStorage([]);
+    savePurchasesToStorage([]);
+    saveCashSessionsToStorage([]);
     persist({ initialized: true });
     setActiveTab('dashboard');
+  };
+
+  // Derive customers from the distinct clientName present in sales (used to
+  // seed the CRM on existing databases that predate the Customer module).
+  function seedCustomersFromSales(salesToScan: Sale[]): Customer[] {
+    const normalizeName = (name: string) =>
+      name.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
+    const seen = new Set<string>();
+    const result: Customer[] = [];
+    for (const sale of salesToScan) {
+      const name = (sale.clientName || '').trim();
+      if (!name) continue;
+      const key = normalizeName(name);
+      if (seen.has(key)) continue;
+      seen.add(key);
+      result.push({
+        id: `c_${Date.now()}_${result.length}`,
+        name,
+        phone: sale.clientPhone || undefined,
+        createdAt: sale.date || new Date().toISOString(),
+      });
+    }
+    return result;
+  }
+
+  // Register a purchase: records the buy and increments stock of the matching
+  // products (creating them when they don't exist yet) and updates cost price.
+  const handleAddPurchase = (purchase: Purchase) => {
+    const normalizeName = (name: string) =>
+      name.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
+    const byName = new Map<string, Product>(products.map(p => [normalizeName(p.name), p] as [string, Product]));
+    let updatedProducts = [...products];
+
+    for (const item of purchase.items) {
+      const qty = Number(item.quantity) || 0;
+      if (qty <= 0) continue;
+      const key = normalizeName(item.productName);
+      const existing = item.productId
+        ? updatedProducts.find(p => p.id === item.productId)
+        : byName.get(key);
+
+      if (existing) {
+        updatedProducts = updatedProducts.map(p => {
+          if (p.id !== existing.id) return p;
+          return {
+            ...p,
+            stock: p.stock + qty,
+            costPrice: item.costPrice || p.costPrice,
+            salePrice: item.salePrice || p.salePrice,
+          };
+        });
+        if (!item.productId) byName.set(key, updatedProducts.find(p => p.id === existing.id)!);
+      } else {
+        const np: Product = {
+          id: `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+          code: `SKU-${Date.now()}`,
+          name: item.productName,
+          category: suggestCategory(item.productName),
+          costPrice: item.costPrice || 0,
+          salePrice: item.salePrice || 0,
+          stock: qty,
+          minStock: 5,
+          status: 'disponivel',
+          createdAt: new Date().toISOString()
+        };
+        updatedProducts = [np, ...updatedProducts];
+        byName.set(key, np);
+      }
+    }
+
+    saveProductsToStorage(updatedProducts, undefined);
+    savePurchasesToStorage([purchase, ...purchases]);
   };
 
   // --- STOCK CLEANUP ---
@@ -697,6 +832,9 @@ export default function App() {
                 { tab: 'cashflow', label: 'Fluxo de Caixa', icon: DollarSign },
                 { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList },
                 { tab: 'debtors', label: 'Devedores', icon: Users },
+                { tab: 'customers', label: 'Clientes', icon: Users },
+                { tab: 'purchases', label: 'Compras', icon: Truck },
+                { tab: 'cashclosing', label: 'Fechamento', icon: Wallet },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
                 const Icon = item.icon;
@@ -818,6 +956,18 @@ export default function App() {
                 <Users className="h-4 w-4" />
                 Devedores
               </button>
+              <button
+                id="nav-customers"
+                onClick={() => setActiveTab('customers')}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer mt-0.5 pl-9 ${
+                  activeTab === 'customers' 
+                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <Users className="h-4 w-4" />
+                Clientes
+              </button>
             </div>
 
             {/* Tab 5: Reports */}
@@ -848,6 +998,20 @@ export default function App() {
               Fluxo de Caixa
             </button>
 
+            {/* Tab: Fechamento de Caixa */}
+            <button
+              id="nav-cashclosing"
+              onClick={() => setActiveTab('cashclosing')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'cashclosing' 
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Wallet className="h-4 w-4" />
+              Fechamento de Caixa
+            </button>
+
             {/* Tab 6: OS & Orçamentos */}
             <button
               id="nav-os"
@@ -860,6 +1024,20 @@ export default function App() {
             >
               <ClipboardList className="h-4 w-4" />
               OS / Orçamento
+            </button>
+
+            {/* Tab: Compras & Fornecedores */}
+            <button
+              id="nav-purchases"
+              onClick={() => setActiveTab('purchases')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'purchases' 
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Truck className="h-4 w-4" />
+              Compras & Fornecedores
             </button>
 
             {/* Tab 7: Devedores */}
@@ -961,6 +1139,7 @@ export default function App() {
             {activeTab === 'pos' && (
               <Sales 
                 products={products} 
+                customers={customers}
                 onRegisterSale={handleRegisterSale}
                 onNavigate={(tab) => {
                   if (tab === 'products') setActiveTab('products');
@@ -1004,6 +1183,32 @@ export default function App() {
                   const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
                   saveSalesToStorage(updatedSales, updatedSale);
                 }}
+              />
+            )}
+
+            {activeTab === 'customers' && (
+              <Customers
+                customers={customers}
+                sales={sales}
+                onSaveCustomers={saveCustomersToStorage}
+              />
+            )}
+
+            {activeTab === 'purchases' && (
+              <Purchases
+                products={products}
+                suppliers={suppliers}
+                purchases={purchases}
+                onSaveSuppliers={saveSuppliersToStorage}
+                onAddPurchase={handleAddPurchase}
+              />
+            )}
+
+            {activeTab === 'cashclosing' && (
+              <CashClosing
+                sales={sales}
+                sessions={cashSessions}
+                onSaveSessions={saveCashSessionsToStorage}
               />
             )}
 
