@@ -1,18 +1,24 @@
 import { useState, useMemo } from 'react';
 import { Sale, Expense } from '../types';
-import { TrendingUp, TrendingDown, DollarSign, PieChart, Calendar, Plus, Trash2 } from 'lucide-react';
+import { TrendingUp, TrendingDown, DollarSign, PieChart, Calendar, Plus, Trash2, Edit2 } from 'lucide-react';
 
 interface CashFlowProps {
   sales: Sale[];
   expenses: Expense[];
   onAddExpense?: (expense: Expense) => void;
   onDeleteExpense?: (id: string) => void;
+  onUpdateExpense?: (expense: Expense) => void;
 }
 
 const MONTHS = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
-export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpense }: CashFlowProps) {
+export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpense, onUpdateExpense }: CashFlowProps) {
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [newExpense, setNewExpense] = useState({
+    description: '', amount: 0, category: '', date: new Date().toISOString().substring(0, 10)
+  });
+  const [editingExpense, setEditingExpense] = useState<Expense | null>(null);
 
   const availableYears = useMemo(() => {
     const years = new Set<number>();
@@ -62,11 +68,6 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
     return { totalRevenue, totalCost, totalExpenses, totalProfit, totalSalesCount };
   }, [monthlyData, sales, selectedYear]);
 
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [newExpense, setNewExpense] = useState({
-    description: '', amount: 0, category: '', date: new Date().toISOString().substring(0, 10)
-  });
-
   const handleAddExpense = () => {
     if (!newExpense.description.trim() || !newExpense.amount || !newExpense.category.trim()) return;
     const expense: Expense = {
@@ -79,6 +80,32 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
     };
     onAddExpense?.(expense);
     setNewExpense({ description: '', amount: 0, category: '', date: new Date().toISOString().substring(0, 10) });
+    setShowAddForm(false);
+  };
+
+  const handleEditExpense = (expense: Expense) => {
+    setEditingExpense(expense);
+    setShowAddForm(true);
+    setNewExpense({
+      description: expense.description,
+      amount: expense.amount,
+      category: expense.category,
+      date: expense.date.substring(0, 10)
+    });
+  };
+
+  const handleUpdateExpense = () => {
+    if (!editingExpense || !newExpense.description.trim() || !newExpense.amount || !newExpense.category.trim()) return;
+    const updatedExpense: Expense = {
+      ...editingExpense,
+      date: new Date(newExpense.date).toISOString(),
+      category: newExpense.category.trim(),
+      description: newExpense.description.trim(),
+      amount: newExpense.amount,
+    };
+    onUpdateExpense?.(updatedExpense);
+    setNewExpense({ description: '', amount: 0, category: '', date: new Date().toISOString().substring(0, 10) });
+    setEditingExpense(null);
     setShowAddForm(false);
   };
 
@@ -202,10 +229,12 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
                 className="px-2 py-1.5 text-xs border border-indigo-200 rounded-lg focus:outline-none focus:border-indigo-400" />
             </div>
             <div className="flex justify-end gap-2">
-              <button onClick={() => setShowAddForm(false)}
+              <button onClick={() => { setShowAddForm(false); setEditingExpense(null); setNewExpense({ description: '', amount: 0, category: '', date: new Date().toISOString().substring(0, 10) }); }}
                 className="px-3 py-1.5 text-[10px] font-semibold text-slate-500 hover:text-slate-700">Cancelar</button>
-              <button onClick={handleAddExpense}
-                className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-[10px] font-semibold hover:bg-indigo-700">Adicionar</button>
+              <button onClick={editingExpense ? handleUpdateExpense : handleAddExpense}
+                className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-[10px] font-semibold hover:bg-indigo-700">
+                {editingExpense ? 'Salvar' : 'Adicionar'}
+              </button>
             </div>
           </div>
         )}
@@ -241,6 +270,10 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold font-mono text-rose-600">R$ {exp.amount.toFixed(2)}</span>
+                <button onClick={() => { setEditingExpense(exp); setNewExpense({...exp}); setShowAddForm(true); }}
+                  className="p-1 text-slate-300 hover:text-indigo-500" title="Editar">
+                  <Edit2 size={12} />
+                </button>
                 <button onClick={() => onDeleteExpense?.(exp.id)}
                   className="p-1 text-slate-300 hover:text-red-500">
                   <Trash2 size={12} />

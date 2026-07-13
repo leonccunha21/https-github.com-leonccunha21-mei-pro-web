@@ -506,7 +506,6 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                   <th className="py-2 px-4">Produto</th>
                   <th className="py-2 px-4 text-center">Qtd Vendida</th>
                   <th className="py-2 px-4 text-right">Faturamento</th>
-                  <th className="py-2 px-4 text-right">Custo</th>
                   <th className="py-2 px-4 text-right">Lucro</th>
                 </tr>
               </thead>
@@ -517,7 +516,6 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                     <td className="py-1.5 px-4 font-semibold text-slate-900">{item.name}</td>
                     <td className="py-1.5 px-4 text-center font-mono">{item.qty}</td>
                     <td className="py-1.5 px-4 text-right font-mono">{formatCurrency(item.revenue)}</td>
-                    <td className="py-1.5 px-4 text-right font-mono text-slate-500">{formatCurrency(item.cost)}</td>
                     <td className="py-1.5 px-4 text-right font-mono text-emerald-600 font-bold">{formatCurrency(item.revenue - item.cost)}</td>
                   </tr>
                 ))}

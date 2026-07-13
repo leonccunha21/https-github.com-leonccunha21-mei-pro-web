@@ -28,7 +28,7 @@ export default function Debtors({ sales, onUpdateSale }: DebtorsProps) {
     return sales.filter(s => {
       if (filterStatus === 'pending') return s.status === 'pending';
       if (filterStatus === 'completed') return s.status === 'completed' && s.clientName;
-      return (s.status === 'pending' || (s.status === 'completed' && s.clientName)) && s.clientName;
+      return s.status === 'pending' || (s.status === 'completed' && s.clientName);
     }).filter(s => {
       if (!searchQuery) return true;
       const q = searchQuery.toLowerCase();
