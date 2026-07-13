@@ -70,7 +70,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_2",
@@ -82,7 +82,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_3",
@@ -94,7 +94,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_4",
@@ -106,7 +106,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_5",
@@ -118,7 +118,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_6",
@@ -130,7 +130,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_7",
@@ -142,7 +142,7 @@ export const initialProducts: Product[] = [
     "stock": 2,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_8",
@@ -154,7 +154,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_9",
@@ -166,7 +166,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_10",
@@ -178,7 +178,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_11",
@@ -190,7 +190,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_12",
@@ -202,7 +202,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_13",
@@ -214,7 +214,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_14",
@@ -226,7 +226,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_15",
@@ -238,7 +238,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_16",
@@ -250,7 +250,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_17",
@@ -262,7 +262,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_18",
@@ -274,7 +274,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_19",
@@ -286,7 +286,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_20",
@@ -298,7 +298,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_21",
@@ -310,7 +310,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_22",
@@ -322,7 +322,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_23",
@@ -334,7 +334,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_24",
@@ -346,7 +346,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_25",
@@ -358,7 +358,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_26",
@@ -370,7 +370,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_27",
@@ -382,7 +382,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_28",
@@ -394,7 +394,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_29",
@@ -406,7 +406,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_30",
@@ -418,7 +418,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_31",
@@ -430,7 +430,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_32",
@@ -442,7 +442,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_33",
@@ -454,7 +454,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_34",
@@ -466,7 +466,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_35",
@@ -478,7 +478,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_36",
@@ -490,7 +490,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_37",
@@ -502,7 +502,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_38",
@@ -514,7 +514,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_39",
@@ -526,7 +526,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_40",
@@ -538,7 +538,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_41",
@@ -550,7 +550,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_42",
@@ -562,7 +562,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_43",
@@ -574,7 +574,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_44",
@@ -586,7 +586,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_45",
@@ -598,7 +598,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_46",
@@ -610,7 +610,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_47",
@@ -622,7 +622,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_48",
@@ -634,7 +634,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_49",
@@ -646,7 +646,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_50",
@@ -658,7 +658,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_51",
@@ -670,7 +670,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_52",
@@ -682,7 +682,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_53",
@@ -694,7 +694,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_54",
@@ -706,7 +706,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.209Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_55",
@@ -718,7 +718,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_56",
@@ -730,7 +730,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_57",
@@ -742,7 +742,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_58",
@@ -754,7 +754,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_59",
@@ -766,7 +766,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_60",
@@ -778,7 +778,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_61",
@@ -790,7 +790,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_62",
@@ -802,7 +802,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_63",
@@ -814,7 +814,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_64",
@@ -826,7 +826,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_65",
@@ -838,7 +838,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_66",
@@ -850,7 +850,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_67",
@@ -862,7 +862,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_68",
@@ -874,7 +874,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_69",
@@ -886,7 +886,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_70",
@@ -898,7 +898,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_71",
@@ -910,7 +910,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_72",
@@ -922,7 +922,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_73",
@@ -934,7 +934,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_74",
@@ -946,7 +946,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_75",
@@ -958,7 +958,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_76",
@@ -970,7 +970,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_77",
@@ -982,7 +982,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_78",
@@ -994,7 +994,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_79",
@@ -1006,7 +1006,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_80",
@@ -1018,7 +1018,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_81",
@@ -1030,7 +1030,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_82",
@@ -1042,7 +1042,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_83",
@@ -1054,7 +1054,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_84",
@@ -1066,7 +1066,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_85",
@@ -1078,7 +1078,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_86",
@@ -1090,7 +1090,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_87",
@@ -1102,7 +1102,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_88",
@@ -1114,7 +1114,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_89",
@@ -1126,7 +1126,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_90",
@@ -1138,7 +1138,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_91",
@@ -1150,7 +1150,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_92",
@@ -1162,7 +1162,7 @@ export const initialProducts: Product[] = [
     "stock": 1080,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_93",
@@ -1174,7 +1174,7 @@ export const initialProducts: Product[] = [
     "stock": 1028,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_94",
@@ -1186,7 +1186,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_95",
@@ -1198,7 +1198,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_96",
@@ -1210,7 +1210,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_97",
@@ -1222,7 +1222,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_98",
@@ -1234,7 +1234,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_99",
@@ -1246,7 +1246,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_100",
@@ -1258,7 +1258,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_101",
@@ -1270,7 +1270,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_102",
@@ -1282,7 +1282,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_103",
@@ -1294,7 +1294,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_104",
@@ -1306,7 +1306,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_105",
@@ -1318,7 +1318,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_106",
@@ -1330,7 +1330,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_107",
@@ -1342,7 +1342,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_108",
@@ -1354,7 +1354,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_109",
@@ -1366,7 +1366,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_110",
@@ -1378,7 +1378,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_111",
@@ -1390,7 +1390,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_112",
@@ -1402,7 +1402,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_113",
@@ -1414,7 +1414,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_114",
@@ -1426,7 +1426,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_115",
@@ -1438,7 +1438,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_116",
@@ -1450,7 +1450,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_117",
@@ -1462,7 +1462,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_118",
@@ -1474,7 +1474,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_119",
@@ -1486,7 +1486,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_120",
@@ -1498,7 +1498,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_121",
@@ -1510,7 +1510,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_122",
@@ -1522,7 +1522,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_123",
@@ -1534,7 +1534,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_124",
@@ -1546,7 +1546,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_125",
@@ -1558,7 +1558,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_126",
@@ -1570,7 +1570,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_127",
@@ -1582,7 +1582,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_128",
@@ -1594,7 +1594,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_129",
@@ -1606,7 +1606,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_130",
@@ -1618,7 +1618,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_131",
@@ -1630,7 +1630,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_132",
@@ -1642,7 +1642,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_133",
@@ -1654,7 +1654,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_134",
@@ -1666,7 +1666,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_135",
@@ -1678,7 +1678,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_136",
@@ -1690,7 +1690,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_137",
@@ -1702,7 +1702,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_138",
@@ -1714,7 +1714,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_139",
@@ -1726,7 +1726,7 @@ export const initialProducts: Product[] = [
     "stock": 192,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_140",
@@ -1738,7 +1738,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_141",
@@ -1750,7 +1750,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_142",
@@ -1762,7 +1762,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_143",
@@ -1774,7 +1774,7 @@ export const initialProducts: Product[] = [
     "stock": 2,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_144",
@@ -1786,7 +1786,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_145",
@@ -1798,7 +1798,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_146",
@@ -1810,7 +1810,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_147",
@@ -1822,7 +1822,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_148",
@@ -1834,7 +1834,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_149",
@@ -1846,7 +1846,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_150",
@@ -1858,7 +1858,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_151",
@@ -1870,7 +1870,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_152",
@@ -1882,7 +1882,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_153",
@@ -1894,7 +1894,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_154",
@@ -1906,7 +1906,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_155",
@@ -1918,7 +1918,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_156",
@@ -1930,7 +1930,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_157",
@@ -1942,7 +1942,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_158",
@@ -1954,7 +1954,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_159",
@@ -1966,7 +1966,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_160",
@@ -1978,7 +1978,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_161",
@@ -1990,7 +1990,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_162",
@@ -2002,7 +2002,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_163",
@@ -2014,7 +2014,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_164",
@@ -2026,7 +2026,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_165",
@@ -2038,7 +2038,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_166",
@@ -2050,7 +2050,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_167",
@@ -2062,7 +2062,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_168",
@@ -2074,7 +2074,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_169",
@@ -2086,7 +2086,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_170",
@@ -2098,7 +2098,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_171",
@@ -2110,7 +2110,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_172",
@@ -2122,7 +2122,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_173",
@@ -2134,7 +2134,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.571Z"
   },
   {
     "id": "p_174",
@@ -2146,7 +2146,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_175",
@@ -2158,7 +2158,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_176",
@@ -2170,7 +2170,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_177",
@@ -2182,7 +2182,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_178",
@@ -2194,7 +2194,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_179",
@@ -2206,7 +2206,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_180",
@@ -2218,7 +2218,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_181",
@@ -2230,7 +2230,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_182",
@@ -2242,7 +2242,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_183",
@@ -2254,7 +2254,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_184",
@@ -2266,7 +2266,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_185",
@@ -2278,7 +2278,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_186",
@@ -2290,7 +2290,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_187",
@@ -2302,7 +2302,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_188",
@@ -2314,7 +2314,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_189",
@@ -2326,7 +2326,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_190",
@@ -2338,7 +2338,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_191",
@@ -2350,7 +2350,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_192",
@@ -2362,7 +2362,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_193",
@@ -2374,7 +2374,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_194",
@@ -2386,7 +2386,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_195",
@@ -2398,7 +2398,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_196",
@@ -2410,7 +2410,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_197",
@@ -2422,7 +2422,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_198",
@@ -2434,7 +2434,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_199",
@@ -2446,7 +2446,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_200",
@@ -2458,7 +2458,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_201",
@@ -2470,7 +2470,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_202",
@@ -2482,7 +2482,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_203",
@@ -2494,7 +2494,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_204",
@@ -2506,7 +2506,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_205",
@@ -2518,7 +2518,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_206",
@@ -2530,7 +2530,7 @@ export const initialProducts: Product[] = [
     "stock": 95,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_207",
@@ -2542,7 +2542,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_208",
@@ -2554,7 +2554,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_209",
@@ -2566,7 +2566,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_210",
@@ -2578,7 +2578,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_211",
@@ -2590,7 +2590,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_212",
@@ -2602,7 +2602,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_213",
@@ -2614,7 +2614,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_214",
@@ -2626,7 +2626,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.572Z"
   },
   {
     "id": "p_215",
@@ -2638,7 +2638,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_216",
@@ -2650,7 +2650,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_217",
@@ -2662,7 +2662,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_218",
@@ -2674,7 +2674,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_219",
@@ -2686,7 +2686,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_220",
@@ -2698,7 +2698,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_221",
@@ -2710,7 +2710,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_222",
@@ -2722,7 +2722,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_223",
@@ -2734,7 +2734,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_224",
@@ -2746,7 +2746,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_225",
@@ -2758,7 +2758,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_226",
@@ -2770,7 +2770,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_227",
@@ -2782,7 +2782,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_228",
@@ -2794,7 +2794,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_229",
@@ -2806,7 +2806,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_230",
@@ -2818,7 +2818,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_231",
@@ -2830,7 +2830,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.210Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_232",
@@ -2842,7 +2842,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_233",
@@ -2854,7 +2854,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_234",
@@ -2866,7 +2866,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_235",
@@ -2878,7 +2878,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_236",
@@ -2890,7 +2890,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_237",
@@ -2902,7 +2902,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_238",
@@ -2914,7 +2914,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_239",
@@ -2926,7 +2926,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_240",
@@ -2938,7 +2938,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_241",
@@ -2950,7 +2950,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_242",
@@ -2962,7 +2962,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_243",
@@ -2974,7 +2974,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_244",
@@ -2986,7 +2986,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_245",
@@ -2998,7 +2998,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_246",
@@ -3010,7 +3010,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_247",
@@ -3022,7 +3022,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_248",
@@ -3034,7 +3034,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_249",
@@ -3046,7 +3046,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_250",
@@ -3058,7 +3058,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_251",
@@ -3070,7 +3070,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_252",
@@ -3082,7 +3082,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_253",
@@ -3094,7 +3094,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_254",
@@ -3106,7 +3106,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_255",
@@ -3118,7 +3118,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_256",
@@ -3130,7 +3130,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_257",
@@ -3142,7 +3142,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_258",
@@ -3154,7 +3154,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_259",
@@ -3166,7 +3166,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_260",
@@ -3178,7 +3178,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_261",
@@ -3190,7 +3190,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_262",
@@ -3202,7 +3202,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_263",
@@ -3214,7 +3214,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_264",
@@ -3226,7 +3226,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_265",
@@ -3238,7 +3238,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_266",
@@ -3250,7 +3250,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_267",
@@ -3262,7 +3262,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_268",
@@ -3274,7 +3274,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_269",
@@ -3286,7 +3286,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_270",
@@ -3298,7 +3298,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_271",
@@ -3310,7 +3310,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_272",
@@ -3322,7 +3322,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_273",
@@ -3334,7 +3334,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_274",
@@ -3346,7 +3346,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_275",
@@ -3358,7 +3358,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_276",
@@ -3370,7 +3370,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_277",
@@ -3382,7 +3382,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_278",
@@ -3394,7 +3394,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_279",
@@ -3406,7 +3406,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_280",
@@ -3418,7 +3418,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_281",
@@ -3430,7 +3430,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_282",
@@ -3442,7 +3442,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_283",
@@ -3454,7 +3454,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_284",
@@ -3466,7 +3466,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_285",
@@ -3478,7 +3478,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_286",
@@ -3490,7 +3490,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_287",
@@ -3502,7 +3502,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_288",
@@ -3514,7 +3514,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_289",
@@ -3526,7 +3526,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_290",
@@ -3538,7 +3538,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_291",
@@ -3550,7 +3550,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_292",
@@ -3562,7 +3562,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_293",
@@ -3574,7 +3574,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_294",
@@ -3586,7 +3586,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_295",
@@ -3598,7 +3598,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_296",
@@ -3610,7 +3610,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_297",
@@ -3622,7 +3622,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_298",
@@ -3634,7 +3634,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_299",
@@ -3646,7 +3646,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_300",
@@ -3658,7 +3658,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_301",
@@ -3670,7 +3670,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_302",
@@ -3682,7 +3682,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_303",
@@ -3694,7 +3694,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_304",
@@ -3706,7 +3706,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_305",
@@ -3718,7 +3718,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_306",
@@ -3730,7 +3730,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_307",
@@ -3742,7 +3742,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_308",
@@ -3754,7 +3754,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_309",
@@ -3766,7 +3766,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_310",
@@ -3778,7 +3778,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_311",
@@ -3790,7 +3790,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_312",
@@ -3802,7 +3802,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_313",
@@ -3814,7 +3814,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_314",
@@ -3826,7 +3826,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_315",
@@ -3838,7 +3838,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_316",
@@ -3850,7 +3850,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_317",
@@ -3862,7 +3862,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_318",
@@ -3874,7 +3874,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_319",
@@ -3886,7 +3886,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_320",
@@ -3898,7 +3898,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_321",
@@ -3910,7 +3910,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_322",
@@ -3922,7 +3922,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_323",
@@ -3934,7 +3934,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_324",
@@ -3946,7 +3946,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_325",
@@ -3958,7 +3958,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.573Z"
   },
   {
     "id": "p_326",
@@ -3970,7 +3970,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_327",
@@ -3982,7 +3982,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_328",
@@ -3994,7 +3994,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_329",
@@ -4006,7 +4006,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_330",
@@ -4018,7 +4018,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_331",
@@ -4030,7 +4030,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_332",
@@ -4042,7 +4042,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_333",
@@ -4054,7 +4054,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_334",
@@ -4066,7 +4066,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_335",
@@ -4078,7 +4078,7 @@ export const initialProducts: Product[] = [
     "stock": 7,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_336",
@@ -4090,7 +4090,7 @@ export const initialProducts: Product[] = [
     "stock": 58,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_337",
@@ -4102,7 +4102,7 @@ export const initialProducts: Product[] = [
     "stock": 5,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_338",
@@ -4114,7 +4114,7 @@ export const initialProducts: Product[] = [
     "stock": 68,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_339",
@@ -4126,7 +4126,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_340",
@@ -4138,7 +4138,7 @@ export const initialProducts: Product[] = [
     "stock": 95,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_341",
@@ -4150,7 +4150,7 @@ export const initialProducts: Product[] = [
     "stock": 997,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_342",
@@ -4162,7 +4162,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_343",
@@ -4174,7 +4174,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_344",
@@ -4186,7 +4186,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_345",
@@ -4198,7 +4198,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_346",
@@ -4210,7 +4210,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_347",
@@ -4222,7 +4222,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_348",
@@ -4234,7 +4234,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_349",
@@ -4246,7 +4246,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_350",
@@ -4258,7 +4258,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_351",
@@ -4270,7 +4270,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_352",
@@ -4282,7 +4282,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_353",
@@ -4294,7 +4294,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_354",
@@ -4306,7 +4306,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_355",
@@ -4318,7 +4318,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_356",
@@ -4330,7 +4330,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_357",
@@ -4342,7 +4342,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_358",
@@ -4354,7 +4354,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_359",
@@ -4366,7 +4366,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_360",
@@ -4378,7 +4378,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_361",
@@ -4390,7 +4390,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_362",
@@ -4402,7 +4402,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_363",
@@ -4414,7 +4414,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_364",
@@ -4426,7 +4426,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_365",
@@ -4438,7 +4438,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_366",
@@ -4450,7 +4450,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_367",
@@ -4462,7 +4462,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_368",
@@ -4474,7 +4474,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_369",
@@ -4486,7 +4486,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_370",
@@ -4498,7 +4498,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_371",
@@ -4510,7 +4510,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_372",
@@ -4522,7 +4522,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_373",
@@ -4534,7 +4534,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_374",
@@ -4546,7 +4546,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_375",
@@ -4558,7 +4558,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_376",
@@ -4570,7 +4570,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_377",
@@ -4582,7 +4582,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_378",
@@ -4594,7 +4594,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_379",
@@ -4606,7 +4606,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_380",
@@ -4618,7 +4618,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_381",
@@ -4630,7 +4630,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_382",
@@ -4642,7 +4642,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_383",
@@ -4654,7 +4654,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_384",
@@ -4666,7 +4666,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_385",
@@ -4678,7 +4678,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_386",
@@ -4690,7 +4690,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_387",
@@ -4702,7 +4702,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_388",
@@ -4714,7 +4714,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_389",
@@ -4726,7 +4726,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_390",
@@ -4738,7 +4738,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_391",
@@ -4750,7 +4750,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_392",
@@ -4762,7 +4762,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_393",
@@ -4774,7 +4774,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_394",
@@ -4786,7 +4786,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_395",
@@ -4798,7 +4798,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_396",
@@ -4810,7 +4810,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_397",
@@ -4822,7 +4822,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_398",
@@ -4834,7 +4834,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_399",
@@ -4846,7 +4846,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_400",
@@ -4858,7 +4858,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_401",
@@ -4870,7 +4870,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_402",
@@ -4882,7 +4882,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_403",
@@ -4894,7 +4894,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_404",
@@ -4906,7 +4906,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_405",
@@ -4918,7 +4918,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_406",
@@ -4930,7 +4930,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_407",
@@ -4942,7 +4942,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_408",
@@ -4954,7 +4954,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_409",
@@ -4966,7 +4966,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_410",
@@ -4978,7 +4978,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_411",
@@ -4990,7 +4990,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_412",
@@ -5002,7 +5002,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_413",
@@ -5014,7 +5014,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_414",
@@ -5026,7 +5026,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_415",
@@ -5038,7 +5038,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_416",
@@ -5050,7 +5050,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_417",
@@ -5062,7 +5062,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_418",
@@ -5074,7 +5074,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_419",
@@ -5086,7 +5086,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_420",
@@ -5098,7 +5098,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_421",
@@ -5110,7 +5110,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_422",
@@ -5122,7 +5122,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_423",
@@ -5134,7 +5134,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_424",
@@ -5146,7 +5146,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.575Z"
   },
   {
     "id": "p_425",
@@ -5158,7 +5158,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_426",
@@ -5170,7 +5170,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_427",
@@ -5182,7 +5182,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_428",
@@ -5194,7 +5194,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_429",
@@ -5206,7 +5206,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_430",
@@ -5218,7 +5218,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_431",
@@ -5230,7 +5230,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_432",
@@ -5242,7 +5242,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_433",
@@ -5254,7 +5254,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_434",
@@ -5266,7 +5266,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_435",
@@ -5278,7 +5278,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_436",
@@ -5290,7 +5290,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_437",
@@ -5302,7 +5302,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_438",
@@ -5314,7 +5314,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_439",
@@ -5326,7 +5326,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_440",
@@ -5338,7 +5338,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_441",
@@ -5350,7 +5350,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_442",
@@ -5362,7 +5362,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_443",
@@ -5374,7 +5374,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_444",
@@ -5386,7 +5386,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_445",
@@ -5398,7 +5398,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_446",
@@ -5410,7 +5410,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_447",
@@ -5422,7 +5422,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_448",
@@ -5434,7 +5434,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_449",
@@ -5446,7 +5446,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_450",
@@ -5458,7 +5458,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_451",
@@ -5470,7 +5470,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_452",
@@ -5482,7 +5482,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_453",
@@ -5494,7 +5494,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_454",
@@ -5506,7 +5506,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_455",
@@ -5518,7 +5518,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_456",
@@ -5530,7 +5530,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.211Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_457",
@@ -5542,7 +5542,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_458",
@@ -5554,7 +5554,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_459",
@@ -5566,7 +5566,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_460",
@@ -5578,7 +5578,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_461",
@@ -5590,7 +5590,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_462",
@@ -5602,7 +5602,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_463",
@@ -5614,7 +5614,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_464",
@@ -5626,7 +5626,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_465",
@@ -5638,7 +5638,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_466",
@@ -5650,7 +5650,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_467",
@@ -5662,7 +5662,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_468",
@@ -5674,7 +5674,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_469",
@@ -5686,7 +5686,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_470",
@@ -5698,7 +5698,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_471",
@@ -5710,7 +5710,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_472",
@@ -5722,7 +5722,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_473",
@@ -5734,7 +5734,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_474",
@@ -5746,7 +5746,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_475",
@@ -5758,7 +5758,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_476",
@@ -5770,7 +5770,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_477",
@@ -5782,7 +5782,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_478",
@@ -5794,7 +5794,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_479",
@@ -5806,7 +5806,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_480",
@@ -5818,7 +5818,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_481",
@@ -5830,7 +5830,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_482",
@@ -5842,7 +5842,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_483",
@@ -5854,7 +5854,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_484",
@@ -5866,7 +5866,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_485",
@@ -5878,7 +5878,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_486",
@@ -5890,7 +5890,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_487",
@@ -5902,7 +5902,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_488",
@@ -5914,7 +5914,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_489",
@@ -5926,7 +5926,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_490",
@@ -5938,7 +5938,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_491",
@@ -5950,7 +5950,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_492",
@@ -5962,7 +5962,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_493",
@@ -5974,7 +5974,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_494",
@@ -5986,7 +5986,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_495",
@@ -5998,7 +5998,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_496",
@@ -6010,7 +6010,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_497",
@@ -6022,7 +6022,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_498",
@@ -6034,7 +6034,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_499",
@@ -6046,7 +6046,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_500",
@@ -6058,7 +6058,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_501",
@@ -6070,7 +6070,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_502",
@@ -6082,7 +6082,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_503",
@@ -6094,7 +6094,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_504",
@@ -6106,7 +6106,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_505",
@@ -6118,7 +6118,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_506",
@@ -6130,7 +6130,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_507",
@@ -6142,7 +6142,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_508",
@@ -6154,7 +6154,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_509",
@@ -6166,7 +6166,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_510",
@@ -6178,7 +6178,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_511",
@@ -6190,7 +6190,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_512",
@@ -6202,7 +6202,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_513",
@@ -6214,7 +6214,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_514",
@@ -6226,7 +6226,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_515",
@@ -6238,7 +6238,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_516",
@@ -6250,7 +6250,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_517",
@@ -6262,7 +6262,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_518",
@@ -6274,7 +6274,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_519",
@@ -6286,7 +6286,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_520",
@@ -6298,7 +6298,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_521",
@@ -6310,7 +6310,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_522",
@@ -6322,7 +6322,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_523",
@@ -6334,7 +6334,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_524",
@@ -6346,7 +6346,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_525",
@@ -6358,7 +6358,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_526",
@@ -6370,7 +6370,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_527",
@@ -6382,7 +6382,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_528",
@@ -6394,7 +6394,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_529",
@@ -6406,7 +6406,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_530",
@@ -6418,7 +6418,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_531",
@@ -6430,7 +6430,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_532",
@@ -6442,7 +6442,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_533",
@@ -6454,7 +6454,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_534",
@@ -6466,7 +6466,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_535",
@@ -6478,7 +6478,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_536",
@@ -6490,7 +6490,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_537",
@@ -6502,7 +6502,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_538",
@@ -6514,7 +6514,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_539",
@@ -6526,7 +6526,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_540",
@@ -6538,7 +6538,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_541",
@@ -6550,7 +6550,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_542",
@@ -6562,7 +6562,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_543",
@@ -6574,7 +6574,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_544",
@@ -6586,7 +6586,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_545",
@@ -6598,7 +6598,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_546",
@@ -6610,7 +6610,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_547",
@@ -6622,7 +6622,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_548",
@@ -6634,7 +6634,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_549",
@@ -6646,7 +6646,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_550",
@@ -6658,7 +6658,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_551",
@@ -6670,7 +6670,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_552",
@@ -6682,7 +6682,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_553",
@@ -6694,7 +6694,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_554",
@@ -6706,7 +6706,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_555",
@@ -6718,7 +6718,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_556",
@@ -6730,7 +6730,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_557",
@@ -6742,7 +6742,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_558",
@@ -6754,7 +6754,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_559",
@@ -6766,7 +6766,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_560",
@@ -6778,7 +6778,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_561",
@@ -6790,7 +6790,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_562",
@@ -6802,7 +6802,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_563",
@@ -6814,7 +6814,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_564",
@@ -6826,7 +6826,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_565",
@@ -6838,7 +6838,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_566",
@@ -6850,7 +6850,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_567",
@@ -6862,7 +6862,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_568",
@@ -6874,7 +6874,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_569",
@@ -6886,7 +6886,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_570",
@@ -6898,7 +6898,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_571",
@@ -6910,7 +6910,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_572",
@@ -6922,7 +6922,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_573",
@@ -6934,7 +6934,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.576Z"
   },
   {
     "id": "p_574",
@@ -6946,7 +6946,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_575",
@@ -6958,7 +6958,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_576",
@@ -6970,7 +6970,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_577",
@@ -6982,7 +6982,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_578",
@@ -6994,7 +6994,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_579",
@@ -7006,7 +7006,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_580",
@@ -7018,7 +7018,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_581",
@@ -7030,7 +7030,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_582",
@@ -7042,7 +7042,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_583",
@@ -7054,7 +7054,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_584",
@@ -7066,7 +7066,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_585",
@@ -7078,7 +7078,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_586",
@@ -7090,7 +7090,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_587",
@@ -7102,7 +7102,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_588",
@@ -7114,7 +7114,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_589",
@@ -7126,7 +7126,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_590",
@@ -7138,7 +7138,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_591",
@@ -7150,7 +7150,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_592",
@@ -7162,7 +7162,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_593",
@@ -7174,7 +7174,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_594",
@@ -7186,7 +7186,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_595",
@@ -7198,7 +7198,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_596",
@@ -7210,7 +7210,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_597",
@@ -7222,7 +7222,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_598",
@@ -7234,7 +7234,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_599",
@@ -7246,7 +7246,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_600",
@@ -7258,7 +7258,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_601",
@@ -7270,7 +7270,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_602",
@@ -7282,7 +7282,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_603",
@@ -7294,7 +7294,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_604",
@@ -7306,7 +7306,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_605",
@@ -7318,7 +7318,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_606",
@@ -7330,7 +7330,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_607",
@@ -7342,7 +7342,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_608",
@@ -7354,7 +7354,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_609",
@@ -7366,7 +7366,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_610",
@@ -7378,7 +7378,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_611",
@@ -7390,7 +7390,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_612",
@@ -7402,7 +7402,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_613",
@@ -7414,7 +7414,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_614",
@@ -7426,7 +7426,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_615",
@@ -7438,7 +7438,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_616",
@@ -7450,7 +7450,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_617",
@@ -7462,7 +7462,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_618",
@@ -7474,7 +7474,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_619",
@@ -7486,7 +7486,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_620",
@@ -7498,7 +7498,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_621",
@@ -7510,7 +7510,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_622",
@@ -7522,7 +7522,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_623",
@@ -7534,7 +7534,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_624",
@@ -7546,7 +7546,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_625",
@@ -7558,7 +7558,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_626",
@@ -7570,7 +7570,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_627",
@@ -7582,7 +7582,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_628",
@@ -7594,7 +7594,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_629",
@@ -7606,7 +7606,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_630",
@@ -7618,7 +7618,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_631",
@@ -7630,7 +7630,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_632",
@@ -7642,7 +7642,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_633",
@@ -7654,7 +7654,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_634",
@@ -7666,7 +7666,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_635",
@@ -7678,7 +7678,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_636",
@@ -7690,7 +7690,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_637",
@@ -7702,7 +7702,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_638",
@@ -7714,7 +7714,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_639",
@@ -7726,7 +7726,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_640",
@@ -7738,7 +7738,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_641",
@@ -7750,7 +7750,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_642",
@@ -7762,7 +7762,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_643",
@@ -7774,7 +7774,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_644",
@@ -7786,7 +7786,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_645",
@@ -7798,7 +7798,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_646",
@@ -7810,7 +7810,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_647",
@@ -7822,7 +7822,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_648",
@@ -7834,7 +7834,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_649",
@@ -7846,7 +7846,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_650",
@@ -7858,7 +7858,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_651",
@@ -7870,7 +7870,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_652",
@@ -7882,7 +7882,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_653",
@@ -7894,7 +7894,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_654",
@@ -7906,7 +7906,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_655",
@@ -7918,7 +7918,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_656",
@@ -7930,7 +7930,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_657",
@@ -7942,7 +7942,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_658",
@@ -7954,7 +7954,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_659",
@@ -7966,7 +7966,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_660",
@@ -7978,7 +7978,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_661",
@@ -7990,7 +7990,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_662",
@@ -8002,7 +8002,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_663",
@@ -8014,7 +8014,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_664",
@@ -8026,7 +8026,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_665",
@@ -8038,7 +8038,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_666",
@@ -8050,7 +8050,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_667",
@@ -8062,7 +8062,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_668",
@@ -8074,7 +8074,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_669",
@@ -8086,7 +8086,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_670",
@@ -8098,7 +8098,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_671",
@@ -8110,7 +8110,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_672",
@@ -8122,7 +8122,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_673",
@@ -8134,7 +8134,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_674",
@@ -8146,7 +8146,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_675",
@@ -8158,7 +8158,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_676",
@@ -8170,7 +8170,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_677",
@@ -8182,7 +8182,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_678",
@@ -8194,7 +8194,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_679",
@@ -8206,7 +8206,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_680",
@@ -8218,7 +8218,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_681",
@@ -8230,7 +8230,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_682",
@@ -8242,7 +8242,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_683",
@@ -8254,7 +8254,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_684",
@@ -8266,7 +8266,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_685",
@@ -8278,7 +8278,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_686",
@@ -8290,7 +8290,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_687",
@@ -8302,7 +8302,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_688",
@@ -8314,7 +8314,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_689",
@@ -8326,7 +8326,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_690",
@@ -8338,7 +8338,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_691",
@@ -8350,7 +8350,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_692",
@@ -8362,7 +8362,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_693",
@@ -8374,7 +8374,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_694",
@@ -8386,7 +8386,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_695",
@@ -8398,7 +8398,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_696",
@@ -8410,7 +8410,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_697",
@@ -8422,7 +8422,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_698",
@@ -8434,7 +8434,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_699",
@@ -8446,7 +8446,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_700",
@@ -8458,7 +8458,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_701",
@@ -8470,7 +8470,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_702",
@@ -8482,7 +8482,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_703",
@@ -8494,7 +8494,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_704",
@@ -8506,7 +8506,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.577Z"
   },
   {
     "id": "p_705",
@@ -8518,7 +8518,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_706",
@@ -8530,7 +8530,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_707",
@@ -8542,7 +8542,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_708",
@@ -8554,7 +8554,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_709",
@@ -8566,7 +8566,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_710",
@@ -8578,7 +8578,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_711",
@@ -8590,7 +8590,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_712",
@@ -8602,7 +8602,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_713",
@@ -8614,7 +8614,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_714",
@@ -8626,7 +8626,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_715",
@@ -8638,7 +8638,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.212Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_716",
@@ -8650,7 +8650,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_717",
@@ -8662,7 +8662,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_718",
@@ -8674,7 +8674,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_719",
@@ -8686,7 +8686,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_720",
@@ -8698,7 +8698,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_721",
@@ -8710,7 +8710,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_722",
@@ -8722,7 +8722,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_723",
@@ -8734,7 +8734,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_724",
@@ -8746,7 +8746,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_725",
@@ -8758,7 +8758,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_726",
@@ -8770,7 +8770,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_727",
@@ -8782,7 +8782,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_728",
@@ -8794,7 +8794,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_729",
@@ -8806,7 +8806,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_730",
@@ -8818,7 +8818,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_731",
@@ -8830,7 +8830,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_732",
@@ -8842,7 +8842,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_733",
@@ -8854,7 +8854,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_734",
@@ -8866,7 +8866,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_735",
@@ -8878,7 +8878,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_736",
@@ -8890,7 +8890,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_737",
@@ -8902,7 +8902,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_738",
@@ -8914,7 +8914,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_739",
@@ -8926,7 +8926,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_740",
@@ -8938,7 +8938,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_741",
@@ -8950,7 +8950,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_742",
@@ -8962,7 +8962,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_743",
@@ -8974,7 +8974,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_744",
@@ -8986,7 +8986,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_745",
@@ -8998,7 +8998,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_746",
@@ -9010,7 +9010,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_747",
@@ -9022,7 +9022,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_748",
@@ -9034,7 +9034,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_749",
@@ -9046,7 +9046,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_750",
@@ -9058,7 +9058,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_751",
@@ -9070,7 +9070,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_752",
@@ -9082,7 +9082,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_753",
@@ -9094,7 +9094,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_754",
@@ -9106,7 +9106,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_755",
@@ -9118,7 +9118,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_756",
@@ -9130,7 +9130,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_757",
@@ -9142,7 +9142,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_758",
@@ -9154,7 +9154,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_759",
@@ -9166,7 +9166,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_760",
@@ -9178,7 +9178,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_761",
@@ -9190,7 +9190,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_762",
@@ -9202,7 +9202,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_763",
@@ -9214,7 +9214,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_764",
@@ -9226,7 +9226,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_765",
@@ -9238,7 +9238,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_766",
@@ -9250,7 +9250,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_767",
@@ -9262,7 +9262,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_768",
@@ -9274,7 +9274,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_769",
@@ -9286,7 +9286,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_770",
@@ -9298,7 +9298,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_771",
@@ -9310,7 +9310,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_772",
@@ -9322,7 +9322,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_773",
@@ -9334,7 +9334,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_774",
@@ -9346,7 +9346,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_775",
@@ -9358,7 +9358,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_776",
@@ -9370,7 +9370,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_777",
@@ -9382,7 +9382,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_778",
@@ -9394,7 +9394,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_779",
@@ -9406,7 +9406,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_780",
@@ -9418,7 +9418,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_781",
@@ -9430,7 +9430,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_782",
@@ -9442,7 +9442,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_783",
@@ -9454,7 +9454,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_784",
@@ -9466,7 +9466,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_785",
@@ -9478,7 +9478,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_786",
@@ -9490,7 +9490,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_787",
@@ -9502,7 +9502,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_788",
@@ -9514,7 +9514,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_789",
@@ -9526,7 +9526,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_790",
@@ -9538,7 +9538,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_791",
@@ -9550,7 +9550,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_792",
@@ -9562,7 +9562,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_793",
@@ -9574,7 +9574,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_794",
@@ -9586,7 +9586,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_795",
@@ -9598,7 +9598,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_796",
@@ -9610,7 +9610,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_797",
@@ -9622,7 +9622,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_798",
@@ -9634,7 +9634,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_799",
@@ -9646,7 +9646,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_800",
@@ -9658,7 +9658,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_801",
@@ -9670,7 +9670,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_802",
@@ -9682,7 +9682,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_803",
@@ -9694,7 +9694,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_804",
@@ -9706,7 +9706,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_805",
@@ -9718,7 +9718,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_806",
@@ -9730,7 +9730,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_807",
@@ -9742,7 +9742,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_808",
@@ -9754,7 +9754,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_809",
@@ -9766,7 +9766,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_810",
@@ -9778,7 +9778,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_811",
@@ -9790,7 +9790,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_812",
@@ -9802,7 +9802,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_813",
@@ -9814,7 +9814,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_814",
@@ -9826,7 +9826,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_815",
@@ -9838,7 +9838,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_816",
@@ -9850,7 +9850,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_817",
@@ -9862,7 +9862,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_818",
@@ -9874,7 +9874,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_819",
@@ -9886,7 +9886,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_820",
@@ -9898,7 +9898,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_821",
@@ -9910,7 +9910,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_822",
@@ -9922,7 +9922,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_823",
@@ -9934,7 +9934,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_824",
@@ -9946,7 +9946,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_825",
@@ -9958,7 +9958,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_826",
@@ -9970,7 +9970,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_827",
@@ -9982,7 +9982,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.578Z"
   },
   {
     "id": "p_828",
@@ -9994,7 +9994,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_829",
@@ -10006,7 +10006,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_830",
@@ -10018,7 +10018,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_831",
@@ -10030,7 +10030,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_832",
@@ -10042,7 +10042,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_833",
@@ -10054,7 +10054,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_834",
@@ -10066,7 +10066,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_835",
@@ -10078,7 +10078,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_836",
@@ -10090,7 +10090,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_837",
@@ -10102,7 +10102,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_838",
@@ -10114,7 +10114,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_839",
@@ -10126,7 +10126,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_840",
@@ -10138,7 +10138,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_841",
@@ -10150,7 +10150,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_842",
@@ -10162,7 +10162,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_843",
@@ -10174,7 +10174,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_844",
@@ -10186,7 +10186,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_845",
@@ -10198,7 +10198,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_846",
@@ -10210,7 +10210,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_847",
@@ -10222,7 +10222,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_848",
@@ -10234,7 +10234,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_849",
@@ -10246,7 +10246,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_850",
@@ -10258,7 +10258,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_851",
@@ -10270,7 +10270,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_852",
@@ -10282,7 +10282,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_853",
@@ -10294,7 +10294,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_854",
@@ -10306,7 +10306,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_855",
@@ -10318,7 +10318,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_856",
@@ -10330,7 +10330,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_857",
@@ -10342,7 +10342,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_858",
@@ -10354,7 +10354,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_859",
@@ -10366,7 +10366,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_860",
@@ -10378,7 +10378,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_861",
@@ -10390,7 +10390,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_862",
@@ -10402,7 +10402,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_863",
@@ -10414,7 +10414,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_864",
@@ -10426,7 +10426,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_865",
@@ -10438,7 +10438,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_866",
@@ -10450,7 +10450,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_867",
@@ -10462,7 +10462,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_868",
@@ -10474,7 +10474,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_869",
@@ -10486,7 +10486,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_870",
@@ -10498,7 +10498,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_871",
@@ -10510,7 +10510,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_872",
@@ -10522,7 +10522,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_873",
@@ -10534,7 +10534,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_874",
@@ -10546,7 +10546,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_875",
@@ -10558,7 +10558,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_876",
@@ -10570,7 +10570,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_877",
@@ -10582,7 +10582,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_878",
@@ -10594,7 +10594,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_879",
@@ -10606,7 +10606,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_880",
@@ -10618,7 +10618,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_881",
@@ -10630,7 +10630,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_882",
@@ -10642,7 +10642,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_883",
@@ -10654,7 +10654,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.579Z"
   },
   {
     "id": "p_884",
@@ -10666,7 +10666,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_885",
@@ -10678,7 +10678,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_886",
@@ -10690,7 +10690,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_887",
@@ -10702,7 +10702,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_888",
@@ -10714,7 +10714,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_889",
@@ -10726,7 +10726,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_890",
@@ -10738,7 +10738,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_891",
@@ -10750,7 +10750,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_892",
@@ -10762,7 +10762,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_893",
@@ -10774,7 +10774,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_894",
@@ -10786,7 +10786,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_895",
@@ -10798,7 +10798,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_896",
@@ -10810,7 +10810,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_897",
@@ -10822,7 +10822,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_898",
@@ -10834,7 +10834,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_899",
@@ -10846,7 +10846,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_900",
@@ -10858,7 +10858,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_901",
@@ -10870,7 +10870,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_902",
@@ -10882,7 +10882,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_903",
@@ -10894,7 +10894,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_904",
@@ -10906,7 +10906,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_905",
@@ -10918,7 +10918,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_906",
@@ -10930,7 +10930,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_907",
@@ -10942,7 +10942,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_908",
@@ -10954,7 +10954,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_909",
@@ -10966,7 +10966,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_910",
@@ -10978,7 +10978,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_911",
@@ -10990,7 +10990,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_912",
@@ -11002,7 +11002,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_913",
@@ -11014,7 +11014,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_914",
@@ -11026,7 +11026,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_915",
@@ -11038,7 +11038,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_916",
@@ -11050,7 +11050,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_917",
@@ -11062,7 +11062,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_918",
@@ -11074,7 +11074,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_919",
@@ -11086,7 +11086,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_920",
@@ -11098,7 +11098,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_921",
@@ -11110,7 +11110,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_922",
@@ -11122,7 +11122,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_923",
@@ -11134,7 +11134,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_924",
@@ -11146,7 +11146,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_925",
@@ -11158,7 +11158,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_926",
@@ -11170,7 +11170,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_927",
@@ -11182,7 +11182,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_928",
@@ -11194,7 +11194,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_929",
@@ -11206,7 +11206,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_930",
@@ -11218,7 +11218,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_931",
@@ -11230,7 +11230,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_932",
@@ -11242,7 +11242,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_933",
@@ -11254,7 +11254,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_934",
@@ -11266,7 +11266,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_935",
@@ -11278,7 +11278,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_936",
@@ -11290,7 +11290,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_937",
@@ -11302,7 +11302,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_938",
@@ -11314,7 +11314,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_939",
@@ -11326,7 +11326,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_940",
@@ -11338,7 +11338,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_941",
@@ -11350,7 +11350,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_942",
@@ -11362,7 +11362,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_943",
@@ -11374,7 +11374,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_944",
@@ -11386,7 +11386,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_945",
@@ -11398,7 +11398,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_946",
@@ -11410,7 +11410,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_947",
@@ -11422,7 +11422,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_948",
@@ -11434,7 +11434,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_949",
@@ -11446,7 +11446,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_950",
@@ -11458,7 +11458,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_951",
@@ -11470,7 +11470,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_952",
@@ -11482,7 +11482,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_953",
@@ -11494,7 +11494,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_954",
@@ -11506,7 +11506,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_955",
@@ -11518,7 +11518,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_956",
@@ -11530,7 +11530,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_957",
@@ -11542,7 +11542,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_958",
@@ -11554,7 +11554,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_959",
@@ -11566,7 +11566,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_960",
@@ -11578,7 +11578,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_961",
@@ -11590,7 +11590,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_962",
@@ -11602,7 +11602,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_963",
@@ -11614,7 +11614,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_964",
@@ -11626,7 +11626,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_965",
@@ -11638,7 +11638,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_966",
@@ -11650,7 +11650,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.213Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_967",
@@ -11662,7 +11662,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_968",
@@ -11674,7 +11674,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_969",
@@ -11686,7 +11686,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_970",
@@ -11698,7 +11698,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_971",
@@ -11710,7 +11710,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_972",
@@ -11722,7 +11722,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_973",
@@ -11734,7 +11734,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_974",
@@ -11746,7 +11746,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_975",
@@ -11758,7 +11758,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_976",
@@ -11770,7 +11770,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_977",
@@ -11782,7 +11782,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_978",
@@ -11794,7 +11794,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_979",
@@ -11806,7 +11806,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_980",
@@ -11818,7 +11818,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_981",
@@ -11830,7 +11830,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   },
   {
     "id": "p_982",
@@ -11842,7 +11842,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:12:42.214Z"
+    "createdAt": "2026-07-13T16:27:11.581Z"
   }
 ];
 
@@ -11880,11 +11880,11 @@ export const initialSales: Sale[] = [
         "total": 55.5
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 55.5,
     "totalCost": 37,
     "profit": 18.5,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -12820,11 +12820,11 @@ export const initialSales: Sale[] = [
         "total": 10.6
       }
     ],
-    "clientName": "Shopee CPF",
     "paymentMethod": "money",
     "total": 10.6,
     "totalCost": 7.5,
     "profit": 3.1,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -12840,11 +12840,11 @@ export const initialSales: Sale[] = [
         "total": 63.3
       }
     ],
-    "clientName": "Shopee CPF",
     "paymentMethod": "money",
     "total": 63.3,
     "totalCost": 35,
     "profit": 28.3,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -12860,11 +12860,11 @@ export const initialSales: Sale[] = [
         "total": 10.6
       }
     ],
-    "clientName": "Shopee CPF",
     "paymentMethod": "money",
     "total": 10.6,
     "totalCost": 7.5,
     "profit": 3.1,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -12880,11 +12880,11 @@ export const initialSales: Sale[] = [
         "total": 10.6
       }
     ],
-    "clientName": "Shopee CPF",
     "paymentMethod": "money",
     "total": 10.6,
     "totalCost": 7.5,
     "profit": 3.1,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -12900,11 +12900,11 @@ export const initialSales: Sale[] = [
         "total": 16.89
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 16.89,
     "totalCost": 7.5,
     "profit": 9.39,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -12940,11 +12940,11 @@ export const initialSales: Sale[] = [
         "total": 12
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 12,
     "totalCost": 9,
     "profit": 3,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -13680,11 +13680,11 @@ export const initialSales: Sale[] = [
         "total": 14.2
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 14.2,
     "totalCost": 7.5,
     "profit": 6.7,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -13740,11 +13740,11 @@ export const initialSales: Sale[] = [
         "total": 11.41
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 11.41,
     "totalCost": 4,
     "profit": 7.41,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -18240,11 +18240,11 @@ export const initialSales: Sale[] = [
         "total": 12.72
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 12.72,
     "totalCost": 5,
     "profit": 7.72,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -18260,11 +18260,11 @@ export const initialSales: Sale[] = [
         "total": 59.85
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 59.85,
     "totalCost": 37.5,
     "profit": 22.35,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -18280,11 +18280,11 @@ export const initialSales: Sale[] = [
         "total": 5.89
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 5.89,
     "totalCost": 4,
     "profit": 1.89,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -18440,11 +18440,11 @@ export const initialSales: Sale[] = [
         "total": 15.72
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 15.72,
     "totalCost": 7.5,
     "profit": 8.22,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -18460,11 +18460,11 @@ export const initialSales: Sale[] = [
         "total": 12.21
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 12.21,
     "totalCost": 7.5,
     "profit": 4.71,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -18640,11 +18640,11 @@ export const initialSales: Sale[] = [
         "total": 44
       }
     ],
-    "clientName": "shopee",
     "paymentMethod": "money",
     "total": 44,
     "totalCost": 38,
     "profit": 6,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -26300,11 +26300,11 @@ export const initialSales: Sale[] = [
         "total": 135
       }
     ],
-    "clientName": "shopee",
     "paymentMethod": "money",
     "total": 135,
     "totalCost": 0,
     "profit": 135,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -26580,11 +26580,11 @@ export const initialSales: Sale[] = [
         "total": 72
       }
     ],
-    "clientName": "shopee",
     "paymentMethod": "money",
     "total": 72,
     "totalCost": 0,
     "profit": 72,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -26980,11 +26980,11 @@ export const initialSales: Sale[] = [
         "total": 65
       }
     ],
-    "clientName": "shopee",
     "paymentMethod": "money",
     "total": 65,
     "totalCost": 0,
     "profit": 65,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -27620,11 +27620,11 @@ export const initialSales: Sale[] = [
         "total": 123.28
       }
     ],
-    "clientName": "shopee",
     "paymentMethod": "money",
     "total": 123.28,
     "totalCost": 54.9,
     "profit": 68.38,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -41364,6 +41364,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 16,
     "profit": 14,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42239,11 +42240,11 @@ export const initialSales: Sale[] = [
         "total": 386.2
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 386.2,
     "totalCost": 25,
     "profit": 361.2,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42259,11 +42260,11 @@ export const initialSales: Sale[] = [
         "total": 82.5
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 82.5,
     "totalCost": 21,
     "profit": 61.5,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42279,11 +42280,11 @@ export const initialSales: Sale[] = [
         "total": 4.76
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 4.76,
     "totalCost": 2,
     "profit": 2.76,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42299,11 +42300,11 @@ export const initialSales: Sale[] = [
         "total": 386
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 386,
     "totalCost": 295,
     "profit": 91,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42319,11 +42320,11 @@ export const initialSales: Sale[] = [
         "total": 9.26
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 9.26,
     "totalCost": 7,
     "profit": 2.26,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42339,11 +42340,11 @@ export const initialSales: Sale[] = [
         "total": 95
       }
     ],
-    "clientName": "tiktok",
     "paymentMethod": "money",
     "total": 95,
     "totalCost": 55,
     "profit": 40,
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -42359,11 +42360,11 @@ export const initialSales: Sale[] = [
         "total": 334.4
       }
     ],
-    "clientName": "tiktok",
     "paymentMethod": "money",
     "total": 334.4,
     "totalCost": 250,
     "profit": 84.4,
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -42379,11 +42380,11 @@ export const initialSales: Sale[] = [
         "total": 347.6
       }
     ],
-    "clientName": "tiktok",
     "paymentMethod": "money",
     "total": 347.6,
     "totalCost": 250,
     "profit": 97.6,
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -42399,11 +42400,11 @@ export const initialSales: Sale[] = [
         "total": 304
       }
     ],
-    "clientName": "tiktok",
     "paymentMethod": "money",
     "total": 304,
     "totalCost": 250,
     "profit": 54,
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -42419,11 +42420,11 @@ export const initialSales: Sale[] = [
         "total": 21.19
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 21.19,
     "totalCost": 20,
     "profit": 1.19,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42439,11 +42440,11 @@ export const initialSales: Sale[] = [
         "total": 12.46
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 12.46,
     "totalCost": 7.5,
     "profit": 4.96,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42459,11 +42460,11 @@ export const initialSales: Sale[] = [
         "total": 48.7
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 48.7,
     "totalCost": 32.95,
     "profit": 15.75,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42479,11 +42480,11 @@ export const initialSales: Sale[] = [
         "total": 5.87
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 5.87,
     "totalCost": 2,
     "profit": 3.87,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42499,11 +42500,11 @@ export const initialSales: Sale[] = [
         "total": 12.46
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 12.46,
     "totalCost": 7.5,
     "profit": 4.96,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42579,11 +42580,11 @@ export const initialSales: Sale[] = [
         "total": 15.76
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 15.76,
     "totalCost": 12,
     "profit": 3.76,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42599,11 +42600,11 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 30,
     "profit": 8.62,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42619,11 +42620,11 @@ export const initialSales: Sale[] = [
         "total": 112.25
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 112.25,
     "totalCost": 52,
     "profit": 60.25,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42819,11 +42820,11 @@ export const initialSales: Sale[] = [
         "total": 45.87
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 45.87,
     "totalCost": 37.5,
     "profit": 8.37,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42839,11 +42840,11 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 20,
     "profit": 18.62,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42859,11 +42860,11 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 20,
     "profit": 18.62,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42879,11 +42880,11 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 20,
     "profit": 18.62,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42899,11 +42900,11 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "Shopee",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 20,
     "profit": 18.62,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -42919,11 +42920,11 @@ export const initialSales: Sale[] = [
         "total": 33.2
       }
     ],
-    "clientName": "tiktok",
     "paymentMethod": "money",
     "total": 33.2,
     "totalCost": 10,
     "profit": 23.2,
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -43059,11 +43060,12 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "251024UFEQ5C37",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 10,
     "profit": 28.62,
+    "ecommerceOrderId": "251024UFEQ5C37",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43079,11 +43081,12 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "251023SA4CE2K2",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 10,
     "profit": 28.62,
+    "ecommerceOrderId": "251023SA4CE2K2",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43099,11 +43102,12 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "251023S43AH3PT",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 10,
     "profit": 28.62,
+    "ecommerceOrderId": "251023S43AH3PT",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43119,11 +43123,12 @@ export const initialSales: Sale[] = [
         "total": 38.62
       }
     ],
-    "clientName": "2510250T39QW0M",
     "paymentMethod": "money",
     "total": 38.62,
     "totalCost": 10,
     "profit": 28.62,
+    "ecommerceOrderId": "2510250T39QW0M",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43139,11 +43144,12 @@ export const initialSales: Sale[] = [
         "total": 9.17
       }
     ],
-    "clientName": "251022QW8WRWC1",
     "paymentMethod": "money",
     "total": 9.17,
     "totalCost": 7.5,
     "profit": 1.67,
+    "ecommerceOrderId": "251022QW8WRWC1",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43259,11 +43265,11 @@ export const initialSales: Sale[] = [
         "total": 42.5
       }
     ],
-    "clientName": "Aleatorio",
     "paymentMethod": "money",
     "total": 42.5,
     "totalCost": 12,
     "profit": 30.5,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43279,11 +43285,12 @@ export const initialSales: Sale[] = [
         "total": 42.5
       }
     ],
-    "clientName": "2510263XS7F3J5",
     "paymentMethod": "money",
     "total": 42.5,
     "totalCost": 12,
     "profit": 30.5,
+    "ecommerceOrderId": "2510263XS7F3J5",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43299,11 +43306,12 @@ export const initialSales: Sale[] = [
         "total": 42.5
       }
     ],
-    "clientName": "2510265F9DN9NR",
     "paymentMethod": "money",
     "total": 42.5,
     "totalCost": 12,
     "profit": 30.5,
+    "ecommerceOrderId": "2510265F9DN9NR",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43319,11 +43327,12 @@ export const initialSales: Sale[] = [
         "total": 42.5
       }
     ],
-    "clientName": "2510265HBSHQD7",
     "paymentMethod": "money",
     "total": 42.5,
     "totalCost": 12,
     "profit": 30.5,
+    "ecommerceOrderId": "2510265HBSHQD7",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43339,11 +43348,12 @@ export const initialSales: Sale[] = [
         "total": 102.1
       }
     ],
-    "clientName": "2510276H79S327",
     "paymentMethod": "money",
     "total": 102.1,
     "totalCost": 0,
     "profit": 102.1,
+    "ecommerceOrderId": "2510276H79S327",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43379,11 +43389,12 @@ export const initialSales: Sale[] = [
         "total": 42.5
       }
     ],
-    "clientName": "251028AN3589SG",
     "paymentMethod": "money",
     "total": 42.5,
     "totalCost": 20,
     "profit": 22.5,
+    "ecommerceOrderId": "251028AN3589SG",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43399,11 +43410,12 @@ export const initialSales: Sale[] = [
         "total": 42.5
       }
     ],
-    "clientName": "25102890QMSA50",
     "paymentMethod": "money",
     "total": 42.5,
     "totalCost": 20,
     "profit": 22.5,
+    "ecommerceOrderId": "25102890QMSA50",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43439,11 +43451,12 @@ export const initialSales: Sale[] = [
         "total": 41.72
       }
     ],
-    "clientName": "251029D5F5A0CC",
     "paymentMethod": "money",
     "total": 41.72,
     "totalCost": 20,
     "profit": 21.72,
+    "ecommerceOrderId": "251029D5F5A0CC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43459,11 +43472,12 @@ export const initialSales: Sale[] = [
         "total": 44.75
       }
     ],
-    "clientName": "251030D9DEWAE9",
     "paymentMethod": "money",
     "total": 44.75,
     "totalCost": 0,
     "profit": 44.75,
+    "ecommerceOrderId": "251030D9DEWAE9",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43479,11 +43493,12 @@ export const initialSales: Sale[] = [
         "total": 85.16
       }
     ],
-    "clientName": "251030F8S9STWN",
     "paymentMethod": "money",
     "total": 85.16,
     "totalCost": 14,
     "profit": 71.16,
+    "ecommerceOrderId": "251030F8S9STWN",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43499,11 +43514,12 @@ export const initialSales: Sale[] = [
         "total": 41.72
       }
     ],
-    "clientName": "251029D5F5A0CC",
     "paymentMethod": "money",
     "total": 41.72,
     "totalCost": 20,
     "profit": 21.72,
+    "ecommerceOrderId": "251029D5F5A0CC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43539,11 +43555,12 @@ export const initialSales: Sale[] = [
         "total": 5
       }
     ],
-    "clientName": "francisca",
     "paymentMethod": "money",
     "total": 5,
     "totalCost": 2,
     "profit": 3,
+    "ecommerceOrderId": "francisca",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43579,11 +43596,12 @@ export const initialSales: Sale[] = [
         "total": 41.9
       }
     ],
-    "clientName": "251102NJ6SPH85",
     "paymentMethod": "money",
     "total": 41.9,
     "totalCost": 7,
     "profit": 34.9,
+    "ecommerceOrderId": "251102NJ6SPH85",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43599,11 +43617,12 @@ export const initialSales: Sale[] = [
         "total": 40
       }
     ],
-    "clientName": "251102Q652RSH7",
     "paymentMethod": "money",
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "ecommerceOrderId": "251102Q652RSH7",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43619,11 +43638,12 @@ export const initialSales: Sale[] = [
         "total": 53.37
       }
     ],
-    "clientName": "251102MYQY566D",
     "paymentMethod": "money",
     "total": 53.37,
     "totalCost": 20,
     "profit": 33.37,
+    "ecommerceOrderId": "251102MYQY566D",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43639,11 +43659,12 @@ export const initialSales: Sale[] = [
         "total": 5.74
       }
     ],
-    "clientName": "251103SHJAKJES",
     "paymentMethod": "money",
     "total": 5.74,
     "totalCost": 2,
     "profit": 3.74,
+    "ecommerceOrderId": "251103SHJAKJES",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43679,11 +43700,12 @@ export const initialSales: Sale[] = [
         "total": 19.71
       }
     ],
-    "clientName": "evandrodo206",
     "paymentMethod": "money",
     "total": 19.71,
     "totalCost": 18,
     "profit": 1.71,
+    "ecommerceOrderId": "evandrodo206",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43699,11 +43721,12 @@ export const initialSales: Sale[] = [
         "total": 53.37
       }
     ],
-    "clientName": "evandrodo206",
     "paymentMethod": "money",
     "total": 53.37,
     "totalCost": 20,
     "profit": 33.37,
+    "ecommerceOrderId": "evandrodo206",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43719,11 +43742,12 @@ export const initialSales: Sale[] = [
         "total": 41.9
       }
     ],
-    "clientName": "fj5laf_w9t",
     "paymentMethod": "money",
     "total": 41.9,
     "totalCost": 7,
     "profit": 34.9,
+    "ecommerceOrderId": "fj5laf_w9t",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -43759,11 +43783,12 @@ export const initialSales: Sale[] = [
         "total": 32
       }
     ],
-    "clientName": "zelton.novais",
     "paymentMethod": "money",
     "total": 32,
     "totalCost": 0,
     "profit": 32,
+    "ecommerceOrderId": "zelton.novais",
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -43879,11 +43904,11 @@ export const initialSales: Sale[] = [
         "total": 25
       }
     ],
-    "clientName": "Aleatorio",
     "paymentMethod": "money",
     "total": 25,
     "totalCost": 25,
     "profit": 0,
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -43899,11 +43924,11 @@ export const initialSales: Sale[] = [
         "total": 123.12
       }
     ],
-    "clientName": "Aleatorio",
     "paymentMethod": "money",
     "total": 123.12,
     "totalCost": 25,
     "profit": 98.12,
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -44879,11 +44904,12 @@ export const initialSales: Sale[] = [
         "total": 13.8
       }
     ],
-    "clientName": "251125N6D00GHN",
     "paymentMethod": "money",
     "total": 13.8,
     "totalCost": 7.5,
     "profit": 6.3,
+    "ecommerceOrderId": "251125N6D00GHN",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -44899,11 +44925,12 @@ export const initialSales: Sale[] = [
         "total": 13.8
       }
     ],
-    "clientName": "251126QTAS3SAR",
     "paymentMethod": "money",
     "total": 13.8,
     "totalCost": 7.5,
     "profit": 6.3,
+    "ecommerceOrderId": "251126QTAS3SAR",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -44919,11 +44946,12 @@ export const initialSales: Sale[] = [
         "total": 41
       }
     ],
-    "clientName": "2511195SVS58WQ",
     "paymentMethod": "money",
     "total": 41,
     "totalCost": 7,
     "profit": 34,
+    "ecommerceOrderId": "2511195SVS58WQ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45079,11 +45107,12 @@ export const initialSales: Sale[] = [
         "total": 21
       }
     ],
-    "clientName": "251127T0EUU1WM",
     "paymentMethod": "money",
     "total": 21,
     "totalCost": 0,
     "profit": 21,
+    "ecommerceOrderId": "251127T0EUU1WM",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45099,11 +45128,12 @@ export const initialSales: Sale[] = [
         "total": 352.88
       }
     ],
-    "clientName": "7550209518518535943",
     "paymentMethod": "money",
     "total": 352.88,
     "totalCost": 275,
     "profit": 77.88,
+    "ecommerceOrderId": "7550209518518535943",
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -45439,11 +45469,12 @@ export const initialSales: Sale[] = [
         "total": 14
       }
     ],
-    "clientName": "2512016D13CT6U",
     "paymentMethod": "money",
     "total": 14,
     "totalCost": 10,
     "profit": 4,
+    "ecommerceOrderId": "2512016D13CT6U",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45459,11 +45490,12 @@ export const initialSales: Sale[] = [
         "total": 84
       }
     ],
-    "clientName": "251204E2WQ3CR3",
     "paymentMethod": "money",
     "total": 84,
     "totalCost": 0,
     "profit": 84,
+    "ecommerceOrderId": "251204E2WQ3CR3",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45479,11 +45511,12 @@ export const initialSales: Sale[] = [
         "total": 21
       }
     ],
-    "clientName": "25112819EYDS0J",
     "paymentMethod": "money",
     "total": 21,
     "totalCost": 0,
     "profit": 21,
+    "ecommerceOrderId": "25112819EYDS0J",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45499,11 +45532,12 @@ export const initialSales: Sale[] = [
         "total": 37.24
       }
     ],
-    "clientName": "251208S746WPVS",
     "paymentMethod": "money",
     "total": 37.24,
     "totalCost": 7,
     "profit": 30.24,
+    "ecommerceOrderId": "251208S746WPVS",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45519,11 +45553,12 @@ export const initialSales: Sale[] = [
         "total": 9
       }
     ],
-    "clientName": "251208TBTU0JQX",
     "paymentMethod": "money",
     "total": 9,
     "totalCost": 0,
     "profit": 9,
+    "ecommerceOrderId": "251208TBTU0JQX",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45539,11 +45574,12 @@ export const initialSales: Sale[] = [
         "total": 37.24
       }
     ],
-    "clientName": "251208RNR5ABPX",
     "paymentMethod": "money",
     "total": 37.24,
     "totalCost": 7,
     "profit": 30.24,
+    "ecommerceOrderId": "251208RNR5ABPX",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45559,11 +45595,12 @@ export const initialSales: Sale[] = [
         "total": 37.24
       }
     ],
-    "clientName": "251206KWK4SX80",
     "paymentMethod": "money",
     "total": 37.24,
     "totalCost": 7,
     "profit": 30.24,
+    "ecommerceOrderId": "251206KWK4SX80",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45579,11 +45616,12 @@ export const initialSales: Sale[] = [
         "total": 37.24
       }
     ],
-    "clientName": "251205JU4D091G",
     "paymentMethod": "money",
     "total": 37.24,
     "totalCost": 7,
     "profit": 30.24,
+    "ecommerceOrderId": "251205JU4D091G",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45599,11 +45637,12 @@ export const initialSales: Sale[] = [
         "total": 21
       }
     ],
-    "clientName": "251127T0EUU1WM",
     "paymentMethod": "money",
     "total": 21,
     "totalCost": 0,
     "profit": 21,
+    "ecommerceOrderId": "251127T0EUU1WM",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45619,11 +45658,12 @@ export const initialSales: Sale[] = [
         "total": 29.74
       }
     ],
-    "clientName": "25112811QMV818",
     "paymentMethod": "money",
     "total": 29.74,
     "totalCost": 19,
     "profit": 10.74,
+    "ecommerceOrderId": "25112811QMV818",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45639,11 +45679,12 @@ export const initialSales: Sale[] = [
         "total": 22.24
       }
     ],
-    "clientName": "251204E6UDR503",
     "paymentMethod": "money",
     "total": 22.24,
     "totalCost": 18,
     "profit": 4.24,
+    "ecommerceOrderId": "251204E6UDR503",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45659,11 +45700,12 @@ export const initialSales: Sale[] = [
         "total": 29.74
       }
     ],
-    "clientName": "251204EPGA4ETC",
     "paymentMethod": "money",
     "total": 29.74,
     "totalCost": 18,
     "profit": 11.74,
+    "ecommerceOrderId": "251204EPGA4ETC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45679,11 +45721,12 @@ export const initialSales: Sale[] = [
         "total": 13.8
       }
     ],
-    "clientName": "251205GCHYG20G",
     "paymentMethod": "money",
     "total": 13.8,
     "totalCost": 7.5,
     "profit": 6.3,
+    "ecommerceOrderId": "251205GCHYG20G",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45699,11 +45742,12 @@ export const initialSales: Sale[] = [
         "total": 21
       }
     ],
-    "clientName": "251205HE7YTHM6",
     "paymentMethod": "money",
     "total": 21,
     "totalCost": 0,
     "profit": 21,
+    "ecommerceOrderId": "251205HE7YTHM6",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45719,11 +45763,12 @@ export const initialSales: Sale[] = [
         "total": 15.13
       }
     ],
-    "clientName": "251208SMPRG11A",
     "paymentMethod": "money",
     "total": 15.13,
     "totalCost": 7.5,
     "profit": 7.63,
+    "ecommerceOrderId": "251208SMPRG11A",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45739,11 +45784,12 @@ export const initialSales: Sale[] = [
         "total": 13.8
       }
     ],
-    "clientName": "251208R3JYP1TD",
     "paymentMethod": "money",
     "total": 13.8,
     "totalCost": 7.5,
     "profit": 6.3,
+    "ecommerceOrderId": "251208R3JYP1TD",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45759,11 +45805,12 @@ export const initialSales: Sale[] = [
         "total": 4.43
       }
     ],
-    "clientName": "251207QQBN0Q1H",
     "paymentMethod": "money",
     "total": 4.43,
     "totalCost": 3,
     "profit": 1.43,
+    "ecommerceOrderId": "251207QQBN0Q1H",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -45779,11 +45826,11 @@ export const initialSales: Sale[] = [
         "total": 34
       }
     ],
-    "clientName": "Aleatorio",
     "paymentMethod": "money",
     "total": 34,
     "totalCost": 15,
     "profit": 19,
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -46119,11 +46166,11 @@ export const initialSales: Sale[] = [
         "total": 270
       }
     ],
-    "clientName": "Aleatorio",
     "paymentMethod": "money",
     "total": 270,
     "totalCost": 0,
     "profit": 270,
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -46519,11 +46566,12 @@ export const initialSales: Sale[] = [
         "total": 153
       }
     ],
-    "clientName": "251217JA47THQU",
     "paymentMethod": "money",
     "total": 153,
     "totalCost": 0,
     "profit": 153,
+    "ecommerceOrderId": "251217JA47THQU",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -46539,11 +46587,12 @@ export const initialSales: Sale[] = [
         "total": 105
       }
     ],
-    "clientName": "1733237725498345439",
     "paymentMethod": "money",
     "total": 105,
     "totalCost": 0,
     "profit": 105,
+    "ecommerceOrderId": "1733237725498345439",
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -46639,11 +46688,12 @@ export const initialSales: Sale[] = [
         "total": 258
       }
     ],
-    "clientName": "581764922242532626",
     "paymentMethod": "money",
     "total": 258,
     "totalCost": 0,
     "profit": 258,
+    "ecommerceOrderId": "581764922242532626",
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -46959,11 +47009,12 @@ export const initialSales: Sale[] = [
         "total": 37.24
       }
     ],
-    "clientName": "251226BB55U3C7",
     "paymentMethod": "money",
     "total": 37.24,
     "totalCost": 7,
     "profit": 30.24,
+    "ecommerceOrderId": "251226BB55U3C7",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -46979,11 +47030,12 @@ export const initialSales: Sale[] = [
         "total": 37.24
       }
     ],
-    "clientName": "251228GM6DF9FD",
     "paymentMethod": "money",
     "total": 37.24,
     "totalCost": 7,
     "profit": 30.24,
+    "ecommerceOrderId": "251228GM6DF9FD",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -46999,11 +47051,12 @@ export const initialSales: Sale[] = [
         "total": 18.5
       }
     ],
-    "clientName": "251228GQAC35RE",
     "paymentMethod": "money",
     "total": 18.5,
     "totalCost": 10,
     "profit": 8.5,
+    "ecommerceOrderId": "251228GQAC35RE",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -47119,11 +47172,12 @@ export const initialSales: Sale[] = [
         "total": 378.4
       }
     ],
-    "clientName": "581881466757613048",
     "paymentMethod": "money",
     "total": 378.4,
     "totalCost": 280,
     "profit": 98.4,
+    "ecommerceOrderId": "581881466757613048",
+    "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
   {
@@ -47179,11 +47233,12 @@ export const initialSales: Sale[] = [
         "total": 56.2
       }
     ],
-    "clientName": "26010470HA378U",
     "paymentMethod": "pix",
     "total": 56.2,
     "totalCost": 15,
     "profit": 41.2,
+    "ecommerceOrderId": "26010470HA378U",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -47199,11 +47254,12 @@ export const initialSales: Sale[] = [
         "total": 41.6
       }
     ],
-    "clientName": "2601057PDHKMGS",
     "paymentMethod": "pix",
     "total": 41.6,
     "totalCost": 15,
     "profit": 26.6,
+    "ecommerceOrderId": "2601057PDHKMGS",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -47219,11 +47275,12 @@ export const initialSales: Sale[] = [
         "total": 14.99
       }
     ],
-    "clientName": "26010322KX6CM7",
     "paymentMethod": "pix",
     "total": 14.99,
     "totalCost": 12,
     "profit": 2.99,
+    "ecommerceOrderId": "26010322KX6CM7",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -47239,11 +47296,12 @@ export const initialSales: Sale[] = [
         "total": 14.99
       }
     ],
-    "clientName": "26010321EYMMGF",
     "paymentMethod": "pix",
     "total": 14.99,
     "totalCost": 12,
     "profit": 2.99,
+    "ecommerceOrderId": "26010321EYMMGF",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -47259,11 +47317,12 @@ export const initialSales: Sale[] = [
         "total": 34.75
       }
     ],
-    "clientName": "26010330Y0QYCC",
     "paymentMethod": "pix",
     "total": 34.75,
     "totalCost": 19,
     "profit": 15.75,
+    "ecommerceOrderId": "26010330Y0QYCC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -47459,11 +47518,12 @@ export const initialSales: Sale[] = [
         "total": 28.1
       }
     ],
-    "clientName": "260113UN53PDB3",
     "paymentMethod": "pix",
     "total": 28.1,
     "totalCost": 15,
     "profit": 13.1,
+    "ecommerceOrderId": "260113UN53PDB3",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -47479,11 +47539,12 @@ export const initialSales: Sale[] = [
         "total": 100.32
       }
     ],
-    "clientName": "1732942733137053663",
     "paymentMethod": "pix",
     "total": 100.32,
     "totalCost": 0,
     "profit": 100.32,
+    "ecommerceOrderId": "1732942733137053663",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -47539,11 +47600,12 @@ export const initialSales: Sale[] = [
         "total": 4.54
       }
     ],
-    "clientName": "26011533GTJVCC",
     "paymentMethod": "pix",
     "total": 4.54,
     "totalCost": 3,
     "profit": 1.54,
+    "ecommerceOrderId": "26011533GTJVCC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -47559,11 +47621,12 @@ export const initialSales: Sale[] = [
         "total": 52.99
       }
     ],
-    "clientName": "260115363HXRNS",
     "paymentMethod": "pix",
     "total": 52.99,
     "totalCost": 25,
     "profit": 27.99,
+    "ecommerceOrderId": "260115363HXRNS",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48039,11 +48102,12 @@ export const initialSales: Sale[] = [
         "total": 11.2
       }
     ],
-    "clientName": "260120HKJW21F6",
     "paymentMethod": "pix",
     "total": 11.2,
     "totalCost": 7.5,
     "profit": 3.7,
+    "ecommerceOrderId": "260120HKJW21F6",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48059,11 +48123,12 @@ export const initialSales: Sale[] = [
         "total": 45.84
       }
     ],
-    "clientName": "260120HW0K4N7G",
     "paymentMethod": "pix",
     "total": 45.84,
     "totalCost": 0,
     "profit": 45.84,
+    "ecommerceOrderId": "260120HW0K4N7G",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48083,6 +48148,7 @@ export const initialSales: Sale[] = [
     "total": 55.2,
     "totalCost": 7,
     "profit": 48.2,
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -48238,11 +48304,12 @@ export const initialSales: Sale[] = [
         "total": 6.26
       }
     ],
-    "clientName": "26012501R0305B",
     "paymentMethod": "pix",
     "total": 6.26,
     "totalCost": 0.7,
     "profit": 5.56,
+    "ecommerceOrderId": "26012501R0305B",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48258,11 +48325,12 @@ export const initialSales: Sale[] = [
         "total": 6.26
       }
     ],
-    "clientName": "260125W10MYBA6",
     "paymentMethod": "pix",
     "total": 6.26,
     "totalCost": 2.8,
     "profit": 3.46,
+    "ecommerceOrderId": "260125W10MYBA6",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48278,11 +48346,12 @@ export const initialSales: Sale[] = [
         "total": 17.06
       }
     ],
-    "clientName": "260123QKXEPFNT",
     "paymentMethod": "pix",
     "total": 17.06,
     "totalCost": 4.5,
     "profit": 12.56,
+    "ecommerceOrderId": "260123QKXEPFNT",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48298,11 +48367,12 @@ export const initialSales: Sale[] = [
         "total": 45.39
       }
     ],
-    "clientName": "2601262EWM7HSQ",
     "paymentMethod": "pix",
     "total": 45.39,
     "totalCost": 7,
     "profit": 38.39,
+    "ecommerceOrderId": "2601262EWM7HSQ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48318,11 +48388,12 @@ export const initialSales: Sale[] = [
         "total": 8.31
       }
     ],
-    "clientName": "26012643AWWXYN",
     "paymentMethod": "pix",
     "total": 8.31,
     "totalCost": 0.7,
     "profit": 7.61,
+    "ecommerceOrderId": "26012643AWWXYN",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48358,11 +48429,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "26012877ASXSW2",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "26012877ASXSW2",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48378,11 +48450,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "26012879CE069S",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "26012879CE069S",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48398,11 +48471,12 @@ export const initialSales: Sale[] = [
         "total": 14.04
       }
     ],
-    "clientName": "2601287HCSF395",
     "paymentMethod": "pix",
     "total": 14.04,
     "totalCost": 7.5,
     "profit": 6.54,
+    "ecommerceOrderId": "2601287HCSF395",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48418,11 +48492,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "2601288URC8VEF",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "2601288URC8VEF",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48498,11 +48573,12 @@ export const initialSales: Sale[] = [
         "total": 45.39
       }
     ],
-    "clientName": "260131E6UQ7MER",
     "paymentMethod": "pix",
     "total": 45.39,
     "totalCost": 0,
     "profit": 45.39,
+    "ecommerceOrderId": "260131E6UQ7MER",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48538,11 +48614,12 @@ export const initialSales: Sale[] = [
         "total": 55.2
       }
     ],
-    "clientName": "582355031501800714",
     "paymentMethod": "pix",
     "total": 55.2,
     "totalCost": 0,
     "profit": 55.2,
+    "ecommerceOrderId": "582355031501800714",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -48618,11 +48695,12 @@ export const initialSales: Sale[] = [
         "total": 66.06
       }
     ],
-    "clientName": "260202KGB8PW0S",
     "paymentMethod": "pix",
     "total": 66.06,
     "totalCost": 2.1,
     "profit": 63.96,
+    "ecommerceOrderId": "260202KGB8PW0S",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48638,11 +48716,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260202KDJAYA04",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260202KDJAYA04",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48658,11 +48737,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260202KB9XFY1F",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260202KB9XFY1F",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48678,11 +48758,12 @@ export const initialSales: Sale[] = [
         "total": 29.98
       }
     ],
-    "clientName": "260201HUCC9A14",
     "paymentMethod": "pix",
     "total": 29.98,
     "totalCost": 1.4,
     "profit": 28.58,
+    "ecommerceOrderId": "260201HUCC9A14",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48698,11 +48779,12 @@ export const initialSales: Sale[] = [
         "total": 14.04
       }
     ],
-    "clientName": "260130BPA5UXQ0",
     "paymentMethod": "pix",
     "total": 14.04,
     "totalCost": 7.5,
     "profit": 6.54,
+    "ecommerceOrderId": "260130BPA5UXQ0",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48758,11 +48840,12 @@ export const initialSales: Sale[] = [
         "total": 18.79
       }
     ],
-    "clientName": "260203QVC1NHGG",
     "paymentMethod": "pix",
     "total": 18.79,
     "totalCost": 12,
     "profit": 6.79,
+    "ecommerceOrderId": "260203QVC1NHGG",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48778,11 +48861,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260203PK6Y0A25",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260203PK6Y0A25",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48798,11 +48882,12 @@ export const initialSales: Sale[] = [
         "total": 7.2
       }
     ],
-    "clientName": "260203PRHGUC97",
     "paymentMethod": "pix",
     "total": 7.2,
     "totalCost": 0.7,
     "profit": 6.5,
+    "ecommerceOrderId": "260203PRHGUC97",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48818,11 +48903,12 @@ export const initialSales: Sale[] = [
         "total": 14.99
       }
     ],
-    "clientName": "260203Q3C34DNC",
     "paymentMethod": "pix",
     "total": 14.99,
     "totalCost": 7.5,
     "profit": 7.49,
+    "ecommerceOrderId": "260203Q3C34DNC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48838,11 +48924,12 @@ export const initialSales: Sale[] = [
         "total": 14.04
       }
     ],
-    "clientName": "260203QJNTUWSC",
     "paymentMethod": "pix",
     "total": 14.04,
     "totalCost": 7.5,
     "profit": 6.54,
+    "ecommerceOrderId": "260203QJNTUWSC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48878,11 +48965,12 @@ export const initialSales: Sale[] = [
         "total": 18.79
       }
     ],
-    "clientName": "260205TXSABCRN",
     "paymentMethod": "pix",
     "total": 18.79,
     "totalCost": 12.5,
     "profit": 6.29,
+    "ecommerceOrderId": "260205TXSABCRN",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48898,11 +48986,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260205TXVP1P5N",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260205TXVP1P5N",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48978,11 +49067,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260205UK2H546J",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260205UK2H546J",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -48998,11 +49088,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "2602060TRY2SPR",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "2602060TRY2SPR",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49018,11 +49109,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "26020619R29YC5",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "26020619R29YC5",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49038,11 +49130,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "2602061AFHRWQS",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "2602061AFHRWQS",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49138,11 +49231,12 @@ export const initialSales: Sale[] = [
         "total": 7.2
       }
     ],
-    "clientName": "2602087DYXN63P",
     "paymentMethod": "pix",
     "total": 7.2,
     "totalCost": 0.7,
     "profit": 6.5,
+    "ecommerceOrderId": "2602087DYXN63P",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49158,11 +49252,12 @@ export const initialSales: Sale[] = [
         "total": 28.1
       }
     ],
-    "clientName": "26020987RHU086",
     "paymentMethod": "pix",
     "total": 28.1,
     "totalCost": 15,
     "profit": 13.1,
+    "ecommerceOrderId": "26020987RHU086",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49278,11 +49373,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "2602098NVFCAP8",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "2602098NVFCAP8",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49338,11 +49434,12 @@ export const initialSales: Sale[] = [
         "total": 18.79
       }
     ],
-    "clientName": "260211EY108RQH",
     "paymentMethod": "pix",
     "total": 18.79,
     "totalCost": 12.5,
     "profit": 6.29,
+    "ecommerceOrderId": "260211EY108RQH",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49378,11 +49475,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260211EVXGJHUB",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260211EVXGJHUB",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49398,11 +49496,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260212G46PXBNW",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260212G46PXBNW",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49418,11 +49517,12 @@ export const initialSales: Sale[] = [
         "total": 12.14
       }
     ],
-    "clientName": "260212G72M35W6",
     "paymentMethod": "pix",
     "total": 12.14,
     "totalCost": 7.5,
     "profit": 4.64,
+    "ecommerceOrderId": "260212G72M35W6",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49438,11 +49538,12 @@ export const initialSales: Sale[] = [
         "total": 36.44
       }
     ],
-    "clientName": "260212G4R2W2EE",
     "paymentMethod": "pix",
     "total": 36.44,
     "totalCost": 22.5,
     "profit": 13.94,
+    "ecommerceOrderId": "260212G4R2W2EE",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49498,11 +49599,12 @@ export const initialSales: Sale[] = [
         "total": 14.42
       }
     ],
-    "clientName": "260213JQR733AV",
     "paymentMethod": "pix",
     "total": 14.42,
     "totalCost": 1.4,
     "profit": 13.02,
+    "ecommerceOrderId": "260213JQR733AV",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49518,11 +49620,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260213JDRSN8HV",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260213JDRSN8HV",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49538,11 +49641,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "260213HSDSJMQX",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "260213HSDSJMQX",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49598,11 +49702,12 @@ export const initialSales: Sale[] = [
         "total": 186.51999999999998
       }
     ],
-    "clientName": "260214MX09MKJK",
     "paymentMethod": "pix",
     "total": 186.52,
     "totalCost": 0,
     "profit": 186.52,
+    "ecommerceOrderId": "260214MX09MKJK",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49658,11 +49763,12 @@ export const initialSales: Sale[] = [
         "total": 7.2
       }
     ],
-    "clientName": "260214PRACWP1G",
     "paymentMethod": "pix",
     "total": 7.2,
     "totalCost": 0.7,
     "profit": 6.5,
+    "ecommerceOrderId": "260214PRACWP1G",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49678,11 +49784,12 @@ export const initialSales: Sale[] = [
         "total": 7.2
       }
     ],
-    "clientName": "260214NC6AV4AW",
     "paymentMethod": "pix",
     "total": 7.2,
     "totalCost": 0.7,
     "profit": 6.5,
+    "ecommerceOrderId": "260214NC6AV4AW",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49698,11 +49805,12 @@ export const initialSales: Sale[] = [
         "total": 7.2
       }
     ],
-    "clientName": "260215S10WG2NV",
     "paymentMethod": "pix",
     "total": 7.2,
     "totalCost": 0.7,
     "profit": 6.5,
+    "ecommerceOrderId": "260215S10WG2NV",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49718,11 +49826,12 @@ export const initialSales: Sale[] = [
         "total": 7.2
       }
     ],
-    "clientName": "260215QY2AJYYW",
     "paymentMethod": "pix",
     "total": 7.2,
     "totalCost": 0.7,
     "profit": 6.5,
+    "ecommerceOrderId": "260215QY2AJYYW",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49738,11 +49847,12 @@ export const initialSales: Sale[] = [
         "total": 7.2
       }
     ],
-    "clientName": "260215S0NNWVA1",
     "paymentMethod": "pix",
     "total": 7.2,
     "totalCost": 0.7,
     "profit": 6.5,
+    "ecommerceOrderId": "260215S0NNWVA1",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49758,11 +49868,12 @@ export const initialSales: Sale[] = [
         "total": 4.54
       }
     ],
-    "clientName": "260216UC5PEXQS",
     "paymentMethod": "pix",
     "total": 4.54,
     "totalCost": 3,
     "profit": 1.54,
+    "ecommerceOrderId": "260216UC5PEXQS",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49778,11 +49889,12 @@ export const initialSales: Sale[] = [
         "total": 12.14
       }
     ],
-    "clientName": "260216T9YQWBCN",
     "paymentMethod": "pix",
     "total": 12.14,
     "totalCost": 7.5,
     "profit": 4.64,
+    "ecommerceOrderId": "260216T9YQWBCN",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49798,11 +49910,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260216UB0PYHCE",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260216UB0PYHCE",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49838,11 +49951,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2602181G0BWP7K",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2602181G0BWP7K",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49858,11 +49972,12 @@ export const initialSales: Sale[] = [
         "total": 12.14
       }
     ],
-    "clientName": "2602170V61Y572",
     "paymentMethod": "pix",
     "total": 12.14,
     "totalCost": 7.5,
     "profit": 4.64,
+    "ecommerceOrderId": "2602170V61Y572",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49958,11 +50073,12 @@ export const initialSales: Sale[] = [
         "total": 18.8
       }
     ],
-    "clientName": "2602194QD3PDMR",
     "paymentMethod": "pix",
     "total": 18.8,
     "totalCost": 10,
     "profit": 8.8,
+    "ecommerceOrderId": "2602194QD3PDMR",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49978,11 +50094,12 @@ export const initialSales: Sale[] = [
         "total": 14.04
       }
     ],
-    "clientName": "260219506EESHD",
     "paymentMethod": "pix",
     "total": 14.04,
     "totalCost": 7.5,
     "profit": 6.54,
+    "ecommerceOrderId": "260219506EESHD",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -49998,11 +50115,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "26022088CEW7MH",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "26022088CEW7MH",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50018,11 +50136,12 @@ export const initialSales: Sale[] = [
         "total": 8.99
       }
     ],
-    "clientName": "582671832439162687",
     "paymentMethod": "pix",
     "total": 8.99,
     "totalCost": 0.7,
     "profit": 8.29,
+    "ecommerceOrderId": "582671832439162687",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50038,11 +50157,12 @@ export const initialSales: Sale[] = [
         "total": 108.2
       }
     ],
-    "clientName": "582693256409416785",
     "paymentMethod": "pix",
     "total": 108.2,
     "totalCost": 34,
     "profit": 74.2,
+    "ecommerceOrderId": "582693256409416785",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50138,11 +50258,12 @@ export const initialSales: Sale[] = [
         "total": 24.3
       }
     ],
-    "clientName": "260223DWGFD4CB",
     "paymentMethod": "pix",
     "total": 24.3,
     "totalCost": 15,
     "profit": 9.3,
+    "ecommerceOrderId": "260223DWGFD4CB",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50158,11 +50279,12 @@ export const initialSales: Sale[] = [
         "total": 14.54000000000002
       }
     ],
-    "clientName": "260223E5E800MU",
     "paymentMethod": "pix",
     "total": 14.54,
     "totalCost": 0,
     "profit": 14.54,
+    "ecommerceOrderId": "260223E5E800MU",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50218,11 +50340,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "582767102684267825",
     "paymentMethod": "pix",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "582767102684267825",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50238,11 +50361,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260224HATE1P51",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260224HATE1P51",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50278,11 +50402,12 @@ export const initialSales: Sale[] = [
         "total": 20
       }
     ],
-    "clientName": "582832973697222108",
     "paymentMethod": "pix",
     "total": 20,
     "totalCost": 2.8,
     "profit": 17.2,
+    "ecommerceOrderId": "582832973697222108",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50298,11 +50423,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "582802201370330561",
     "paymentMethod": "pix",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "582802201370330561",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50618,11 +50744,11 @@ export const initialSales: Sale[] = [
         "total": 150
       }
     ],
-    "clientName": "olx",
     "paymentMethod": "pix",
     "total": 150,
     "totalCost": 0,
     "profit": 150,
+    "notes": "[client_data]{\"channel\":\"olx\"}",
     "status": "completed"
   },
   {
@@ -50658,11 +50784,12 @@ export const initialSales: Sale[] = [
         "total": 8.99
       }
     ],
-    "clientName": "582949664542655793",
     "paymentMethod": "pix",
     "total": 8.99,
     "totalCost": 0.7,
     "profit": 8.29,
+    "ecommerceOrderId": "582949664542655793",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50678,11 +50805,12 @@ export const initialSales: Sale[] = [
         "total": 17.98
       }
     ],
-    "clientName": "582969363430213371",
     "paymentMethod": "pix",
     "total": 17.98,
     "totalCost": 1.4,
     "profit": 16.58,
+    "ecommerceOrderId": "582969363430213371",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50758,11 +50886,12 @@ export const initialSales: Sale[] = [
         "total": 7.02
       }
     ],
-    "clientName": "2603143RH3G5SJ",
     "paymentMethod": "pix",
     "total": 7.02,
     "totalCost": 0.7,
     "profit": 6.32,
+    "ecommerceOrderId": "2603143RH3G5SJ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50778,11 +50907,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260311SUCVJT5B",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260311SUCVJT5B",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50798,11 +50928,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260312UJJBBAVE",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260312UJJBBAVE",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50818,11 +50949,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260311SA40Y1F8",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260311SA40Y1F8",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50838,11 +50970,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260311SNXJHKSB",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260311SNXJHKSB",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50858,11 +50991,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260313103HV5F6",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260313103HV5F6",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50878,11 +51012,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2603131G6CJM2Y",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2603131G6CJM2Y",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50898,11 +51033,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "26031325T58KDX",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "26031325T58KDX",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50918,11 +51054,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2603143K853WWM",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2603143K853WWM",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50938,11 +51075,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2603145F5U847D",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2603145F5U847D",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -50958,11 +51096,12 @@ export const initialSales: Sale[] = [
         "total": 43.52
       }
     ],
-    "clientName": "583003560395768948",
     "paymentMethod": "pix",
     "total": 43.52,
     "totalCost": 15,
     "profit": 28.52,
+    "ecommerceOrderId": "583003560395768948",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50978,11 +51117,12 @@ export const initialSales: Sale[] = [
         "total": 8.99
       }
     ],
-    "clientName": "583028210992842730",
     "paymentMethod": "pix",
     "total": 8.99,
     "totalCost": 0.7,
     "profit": 8.29,
+    "ecommerceOrderId": "583028210992842730",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -50998,11 +51138,12 @@ export const initialSales: Sale[] = [
         "total": 8.99
       }
     ],
-    "clientName": "583076402794039259",
     "paymentMethod": "pix",
     "total": 8.99,
     "totalCost": 0.7,
     "profit": 8.29,
+    "ecommerceOrderId": "583076402794039259",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51018,11 +51159,12 @@ export const initialSales: Sale[] = [
         "total": 453.69
       }
     ],
-    "clientName": "2603156GA6X2KW",
     "paymentMethod": "pix",
     "total": 453.69,
     "totalCost": 350,
     "profit": 103.69,
+    "ecommerceOrderId": "2603156GA6X2KW",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51038,11 +51180,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2603168MB44W5B",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2603168MB44W5B",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51058,11 +51201,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2603157YRJQ60Y",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2603157YRJQ60Y",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51078,11 +51222,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2603168N84XUJ5",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2603168N84XUJ5",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51098,11 +51243,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2603169878A177",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2603169878A177",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51218,11 +51364,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260320MRH5UP5A",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260320MRH5UP5A",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51238,11 +51385,12 @@ export const initialSales: Sale[] = [
         "total": 14.04
       }
     ],
-    "clientName": "260323UA87XECC",
     "paymentMethod": "pix",
     "total": 14.04,
     "totalCost": 7.5,
     "profit": 6.54,
+    "ecommerceOrderId": "260323UA87XECC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51298,11 +51446,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583086581104871031",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583086581104871031",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51318,11 +51467,12 @@ export const initialSales: Sale[] = [
         "total": 8.99
       }
     ],
-    "clientName": "583098538648110579",
     "paymentMethod": "money",
     "total": 8.99,
     "totalCost": 0.7,
     "profit": 8.29,
+    "ecommerceOrderId": "583098538648110579",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51338,11 +51488,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583114960457861054",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583114960457861054",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51358,11 +51509,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583128761118000431",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583128761118000431",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51378,11 +51530,12 @@ export const initialSales: Sale[] = [
         "total": 8.99
       }
     ],
-    "clientName": "583128912663119443",
     "paymentMethod": "money",
     "total": 8.99,
     "totalCost": 0.7,
     "profit": 8.29,
+    "ecommerceOrderId": "583128912663119443",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51398,11 +51551,12 @@ export const initialSales: Sale[] = [
         "total": 8.99
       }
     ],
-    "clientName": "583155029219772144",
     "paymentMethod": "money",
     "total": 8.99,
     "totalCost": 0.7,
     "profit": 8.29,
+    "ecommerceOrderId": "583155029219772144",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51418,11 +51572,12 @@ export const initialSales: Sale[] = [
         "total": 27.2
       }
     ],
-    "clientName": "583191996668544497",
     "paymentMethod": "money",
     "total": 27.2,
     "totalCost": 1.4,
     "profit": 25.8,
+    "ecommerceOrderId": "583191996668544497",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51658,11 +51813,12 @@ export const initialSales: Sale[] = [
         "total": 30
       }
     ],
-    "clientName": "2604052N4YAKVP",
     "paymentMethod": "pix",
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "ecommerceOrderId": "2604052N4YAKVP",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51678,11 +51834,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260403U0Q395NK",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260403U0Q395NK",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51698,11 +51855,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260403TU7QV6XT",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260403TU7QV6XT",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51718,11 +51876,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260401NR0BA272",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260401NR0BA272",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51738,11 +51897,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260328BWM81AGS",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260328BWM81AGS",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51758,11 +51918,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260409CD2W2XJB",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260409CD2W2XJB",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51778,11 +51939,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260409BFX8SS7A",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260409BFX8SS7A",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51798,11 +51960,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260409BSHH7E0Q",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260409BSHH7E0Q",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51818,11 +51981,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2604089DYV9NFE",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2604089DYV9NFE",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51838,11 +52002,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2604088H2RCBCG",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2604088H2RCBCG",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51858,11 +52023,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2604088EAMB58S",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2604088EAMB58S",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51878,11 +52044,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "26040888X1M69H",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "26040888X1M69H",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51898,11 +52065,12 @@ export const initialSales: Sale[] = [
         "total": 12.14
       }
     ],
-    "clientName": "2604088WQH4MP3",
     "paymentMethod": "pix",
     "total": 12.14,
     "totalCost": 7.5,
     "profit": 4.64,
+    "ecommerceOrderId": "2604088WQH4MP3",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51918,11 +52086,12 @@ export const initialSales: Sale[] = [
         "total": 12.14
       }
     ],
-    "clientName": "2604077VFTMCCS",
     "paymentMethod": "pix",
     "total": 12.14,
     "totalCost": 7.5,
     "profit": 4.64,
+    "ecommerceOrderId": "2604077VFTMCCS",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -51938,11 +52107,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583421944481809850",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583421944481809850",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51958,11 +52128,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583435469169263884",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583435469169263884",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -51978,11 +52149,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583436730013615732",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583436730013615732",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52038,11 +52210,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260410DK38AXXA",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260410DK38AXXA",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52058,11 +52231,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260410DP6H17MK",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260410DP6H17MK",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52078,11 +52252,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260410F789WW11",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260410F789WW11",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52178,11 +52353,12 @@ export const initialSales: Sale[] = [
         "total": 28.3
       }
     ],
-    "clientName": "260413PV0SU306",
     "paymentMethod": "pix",
     "total": 28.3,
     "totalCost": 5,
     "profit": 23.3,
+    "ecommerceOrderId": "260413PV0SU306",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52198,11 +52374,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260411HKY18FYT",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260411HKY18FYT",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52218,11 +52395,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260401NR0BA272",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260401NR0BA272",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52238,11 +52416,12 @@ export const initialSales: Sale[] = [
         "total": 16.9
       }
     ],
-    "clientName": "260413NCR54MQE",
     "paymentMethod": "pix",
     "total": 16.9,
     "totalCost": 2.8,
     "profit": 14.1,
+    "ecommerceOrderId": "260413NCR54MQE",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52258,11 +52437,12 @@ export const initialSales: Sale[] = [
         "total": 414.33
       }
     ],
-    "clientName": "260414R65317J0",
     "paymentMethod": "pix",
     "total": 414.33,
     "totalCost": 350,
     "profit": 64.33,
+    "ecommerceOrderId": "260414R65317J0",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52278,11 +52458,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260411G5FBQ3XV",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260411G5FBQ3XV",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52298,11 +52479,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260411GFJ31RRA",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260411GFJ31RRA",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52318,11 +52500,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260412JPXBAC7T",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260412JPXBAC7T",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52338,11 +52521,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260413MR5QNNP9",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260413MR5QNNP9",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52358,11 +52542,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260412K9E3GT7K",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260412K9E3GT7K",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52378,11 +52563,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260413NHDG2M9S",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260413NHDG2M9S",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52398,11 +52584,12 @@ export const initialSales: Sale[] = [
         "total": 18.22
       }
     ],
-    "clientName": "260412KUNPAFPG",
     "paymentMethod": "pix",
     "total": 18.22,
     "totalCost": 10,
     "profit": 8.22,
+    "ecommerceOrderId": "260412KUNPAFPG",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52418,11 +52605,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260413NQ1NXHYE",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260413NQ1NXHYE",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52438,11 +52626,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260413PVYRRD3C",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260413PVYRRD3C",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52458,11 +52647,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260415SNH97YP2",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260415SNH97YP2",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52478,11 +52668,12 @@ export const initialSales: Sale[] = [
         "total": 15.38
       }
     ],
-    "clientName": "260414Q9STB3DN",
     "paymentMethod": "pix",
     "total": 15.38,
     "totalCost": 7.5,
     "profit": 7.88,
+    "ecommerceOrderId": "260414Q9STB3DN",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52498,11 +52689,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260414QVW70J9K",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260414QVW70J9K",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52518,11 +52710,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2604172JHMVSDW",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2604172JHMVSDW",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52538,11 +52731,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "26041847PHYC32",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "26041847PHYC32",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52558,11 +52752,12 @@ export const initialSales: Sale[] = [
         "total": 15.38
       }
     ],
-    "clientName": "26041619KGDYFH",
     "paymentMethod": "pix",
     "total": 15.38,
     "totalCost": 7.5,
     "profit": 7.88,
+    "ecommerceOrderId": "26041619KGDYFH",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52578,11 +52773,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2604184UTQHWTB",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2604184UTQHWTB",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52638,11 +52834,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583479030878472056",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583479030878472056",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52658,11 +52855,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583479882090972614",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583479882090972614",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52678,11 +52876,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583496655317993267",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583496655317993267",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52698,11 +52897,12 @@ export const initialSales: Sale[] = [
         "total": 27.599999999999998
       }
     ],
-    "clientName": "583507949532579537",
     "paymentMethod": "money",
     "total": 27.6,
     "totalCost": 2.1,
     "profit": 25.5,
+    "ecommerceOrderId": "583507949532579537",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52718,11 +52918,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583508537126847701",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583508537126847701",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52738,11 +52939,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583535071876711979",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583535071876711979",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52758,11 +52960,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583549454049118089",
     "paymentMethod": "pix",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583549454049118089",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52778,11 +52981,12 @@ export const initialSales: Sale[] = [
         "total": 18.4
       }
     ],
-    "clientName": "583551026406720705",
     "paymentMethod": "money",
     "total": 18.4,
     "totalCost": 1.4,
     "profit": 17,
+    "ecommerceOrderId": "583551026406720705",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52798,11 +53002,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583553405403694455",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583553405403694455",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -52898,11 +53103,12 @@ export const initialSales: Sale[] = [
         "total": 646.4
       }
     ],
-    "clientName": "260421C6SSPHA5",
     "paymentMethod": "pix",
     "total": 646.4,
     "totalCost": 600,
     "profit": 46.4,
+    "ecommerceOrderId": "260421C6SSPHA5",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52918,11 +53124,12 @@ export const initialSales: Sale[] = [
         "total": 646.4
       }
     ],
-    "clientName": "260421CMEX7DWT",
     "paymentMethod": "pix",
     "total": 646.4,
     "totalCost": 600,
     "profit": 46.4,
+    "ecommerceOrderId": "260421CMEX7DWT",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52938,11 +53145,12 @@ export const initialSales: Sale[] = [
         "total": 642.29
       }
     ],
-    "clientName": "260421CNENTYWD",
     "paymentMethod": "pix",
     "total": 642.29,
     "totalCost": 600,
     "profit": 42.29,
+    "ecommerceOrderId": "260421CNENTYWD",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52958,11 +53166,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260421C89S5NE6",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260421C89S5NE6",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52978,11 +53187,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "2604209HXS1DJ5",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "2604209HXS1DJ5",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -52998,11 +53208,12 @@ export const initialSales: Sale[] = [
         "total": 5.5
       }
     ],
-    "clientName": "260420BBSM223J",
     "paymentMethod": "pix",
     "total": 5.5,
     "totalCost": 0.7,
     "profit": 4.8,
+    "ecommerceOrderId": "260420BBSM223J",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53218,11 +53429,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "2604280T01SJ8T",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "2604280T01SJ8T",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53238,11 +53450,12 @@ export const initialSales: Sale[] = [
         "total": 638.2
       }
     ],
-    "clientName": "260423K0DD8TQ5",
     "paymentMethod": "pix",
     "total": 638.2,
     "totalCost": 600,
     "profit": 38.2,
+    "ecommerceOrderId": "260423K0DD8TQ5",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53258,11 +53471,12 @@ export const initialSales: Sale[] = [
         "total": 18.49
       }
     ],
-    "clientName": "260425NRMJTJ1W",
     "paymentMethod": "pix",
     "total": 18.49,
     "totalCost": 15,
     "profit": 3.49,
+    "ecommerceOrderId": "260425NRMJTJ1W",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53278,11 +53492,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "260426RJS23MB2",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "260426RJS23MB2",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53298,11 +53513,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "260426S0SH02BJ",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "260426S0SH02BJ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53318,11 +53534,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "2605019WWE8B9Y",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "2605019WWE8B9Y",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53338,11 +53555,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "60502AD1TAKX0",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "60502AD1TAKX0",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53358,11 +53576,12 @@ export const initialSales: Sale[] = [
         "total": 13.8
       }
     ],
-    "clientName": "260502B264YRW1",
     "paymentMethod": "pix",
     "total": 13.8,
     "totalCost": 7.5,
     "profit": 6.3,
+    "ecommerceOrderId": "260502B264YRW1",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53378,11 +53597,12 @@ export const initialSales: Sale[] = [
         "total": 13.8
       }
     ],
-    "clientName": "26042701X1MQWY",
     "paymentMethod": "pix",
     "total": 13.8,
     "totalCost": 7.5,
     "profit": 6.3,
+    "ecommerceOrderId": "26042701X1MQWY",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53398,11 +53618,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "260505JFA3YXQE",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "260505JFA3YXQE",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53418,11 +53639,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "260506MDXPYT4P",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "260506MDXPYT4P",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53438,11 +53660,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "260506MUHE6AAR",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "260506MUHE6AAR",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53478,11 +53701,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583876539229374042",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583876539229374042",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53498,11 +53722,12 @@ export const initialSales: Sale[] = [
         "total": 7.23
       }
     ],
-    "clientName": "583899379960350386",
     "paymentMethod": "money",
     "total": 7.23,
     "totalCost": 4,
     "profit": 3.23,
+    "ecommerceOrderId": "583899379960350386",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53518,11 +53743,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583915753558738499",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583915753558738499",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53538,11 +53764,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583619328241861914",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583619328241861914",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53558,11 +53785,12 @@ export const initialSales: Sale[] = [
         "total": 25.04
       }
     ],
-    "clientName": "583637996265834144",
     "paymentMethod": "money",
     "total": 25.04,
     "totalCost": 0.7,
     "profit": 24.34,
+    "ecommerceOrderId": "583637996265834144",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53578,11 +53806,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583657289674360718",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583657289674360718",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53598,11 +53827,12 @@ export const initialSales: Sale[] = [
         "total": 34.24
       }
     ],
-    "clientName": "583699368798159949",
     "paymentMethod": "money",
     "total": 34.24,
     "totalCost": 0.7,
     "profit": 33.54,
+    "ecommerceOrderId": "583699368798159949",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53618,11 +53848,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583729687816472455",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583729687816472455",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53638,11 +53869,12 @@ export const initialSales: Sale[] = [
         "total": 9.2
       }
     ],
-    "clientName": "583847449511429402",
     "paymentMethod": "money",
     "total": 9.2,
     "totalCost": 0.7,
     "profit": 8.5,
+    "ecommerceOrderId": "583847449511429402",
+    "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
   {
@@ -53658,11 +53890,12 @@ export const initialSales: Sale[] = [
         "total": 8.18
       }
     ],
-    "clientName": "260507QWTJATPX",
     "paymentMethod": "pix",
     "total": 8.18,
     "totalCost": 0.7,
     "profit": 7.48,
+    "ecommerceOrderId": "260507QWTJATPX",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53678,11 +53911,12 @@ export const initialSales: Sale[] = [
         "total": 413.02
       }
     ],
-    "clientName": "260507RR9X6HP4",
     "paymentMethod": "pix",
     "total": 413.02,
     "totalCost": 350,
     "profit": 63.02,
+    "ecommerceOrderId": "260507RR9X6HP4",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53798,11 +54032,12 @@ export const initialSales: Sale[] = [
         "total": 638.2
       }
     ],
-    "clientName": "260513951BNUXD",
     "paymentMethod": "pix",
     "total": 638.2,
     "totalCost": 600,
     "profit": 38.2,
+    "ecommerceOrderId": "260513951BNUXD",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53818,11 +54053,12 @@ export const initialSales: Sale[] = [
         "total": 413.02
       }
     ],
-    "clientName": "2605126P91C4RV",
     "paymentMethod": "pix",
     "total": 413.02,
     "totalCost": 350,
     "profit": 63.02,
+    "ecommerceOrderId": "2605126P91C4RV",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53838,11 +54074,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "26051154M47D2S",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "26051154M47D2S",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -53858,11 +54095,12 @@ export const initialSales: Sale[] = [
         "total": 9.13
       }
     ],
-    "clientName": "26051023Y32UH6",
     "paymentMethod": "pix",
     "total": 9.13,
     "totalCost": 0.7,
     "profit": 8.43,
+    "ecommerceOrderId": "26051023Y32UH6",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54758,11 +54996,12 @@ export const initialSales: Sale[] = [
         "total": 945.51
       }
     ],
-    "clientName": "260520TGBK12TA",
     "paymentMethod": "pix",
     "total": 945.51,
     "totalCost": 650,
     "profit": 295.51,
+    "ecommerceOrderId": "260520TGBK12TA",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54778,11 +55017,12 @@ export const initialSales: Sale[] = [
         "total": 945.51
       }
     ],
-    "clientName": "260520TGBK12TB",
     "paymentMethod": "pix",
     "total": 945.51,
     "totalCost": 650,
     "profit": 295.51,
+    "ecommerceOrderId": "260520TGBK12TB",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54798,11 +55038,12 @@ export const initialSales: Sale[] = [
         "total": 8.64
       }
     ],
-    "clientName": "260515EU5QUHSW",
     "paymentMethod": "pix",
     "total": 8.64,
     "totalCost": 0.7,
     "profit": 7.94,
+    "ecommerceOrderId": "260515EU5QUHSW",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54818,11 +55059,12 @@ export const initialSales: Sale[] = [
         "total": 7.88
       }
     ],
-    "clientName": "260526DTGJEGPQ",
     "paymentMethod": "pix",
     "total": 7.88,
     "totalCost": 0.7,
     "profit": 7.18,
+    "ecommerceOrderId": "260526DTGJEGPQ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54838,11 +55080,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260528HKCF4DH2",
     "paymentMethod": "pix",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260528HKCF4DH2",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54858,11 +55101,12 @@ export const initialSales: Sale[] = [
         "total": 394.71
       }
     ],
-    "clientName": "260531S85XH2CM",
     "paymentMethod": "pix",
     "total": 394.71,
     "totalCost": 350,
     "profit": 44.71,
+    "ecommerceOrderId": "260531S85XH2CM",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54878,11 +55122,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260531U9XWGJNQ",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260531U9XWGJNQ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54898,11 +55143,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260525C758V5PB",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260525C758V5PB",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54918,11 +55164,12 @@ export const initialSales: Sale[] = [
         "total": 7.88
       }
     ],
-    "clientName": "260527FM7VYVW5",
     "paymentMethod": "money",
     "total": 7.88,
     "totalCost": 0.7,
     "profit": 7.18,
+    "ecommerceOrderId": "260527FM7VYVW5",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54938,11 +55185,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260531UBQR4QEB",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260531UBQR4QEB",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54958,11 +55206,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260529MV79AB08",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260529MV79AB08",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54978,11 +55227,12 @@ export const initialSales: Sale[] = [
         "total": 44.25
       }
     ],
-    "clientName": "260526D8R6YTW1",
     "paymentMethod": "money",
     "total": 44.25,
     "totalCost": 7,
     "profit": 37.25,
+    "ecommerceOrderId": "260526D8R6YTW1",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -54998,11 +55248,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "2605248BHY5FNX",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "2605248BHY5FNX",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55018,11 +55269,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260529PCMCB6M5",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260529PCMCB6M5",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55038,11 +55290,12 @@ export const initialSales: Sale[] = [
         "total": 8.37
       }
     ],
-    "clientName": "260528J1MSR1WM",
     "paymentMethod": "money",
     "total": 8.37,
     "totalCost": 0.7,
     "profit": 7.67,
+    "ecommerceOrderId": "260528J1MSR1WM",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55058,11 +55311,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260529MJP3NUNV",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260529MJP3NUNV",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55078,11 +55332,12 @@ export const initialSales: Sale[] = [
         "total": 8.37
       }
     ],
-    "clientName": "260529P78M9G45",
     "paymentMethod": "money",
     "total": 8.37,
     "totalCost": 0.7,
     "profit": 7.67,
+    "ecommerceOrderId": "260529P78M9G45",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55098,11 +55353,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260529NXFECXMX",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260529NXFECXMX",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55118,11 +55374,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260601UG0U18WR",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260601UG0U18WR",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55138,11 +55395,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260601UGBQ39NJ",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260601UGBQ39NJ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55158,11 +55416,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260601UKQAUR2H",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260601UKQAUR2H",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55178,11 +55437,12 @@ export const initialSales: Sale[] = [
         "total": 394.71
       }
     ],
-    "clientName": "260601UXGQ01BJ",
     "paymentMethod": "money",
     "total": 394.71,
     "totalCost": 350,
     "profit": 44.71,
+    "ecommerceOrderId": "260601UXGQ01BJ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55198,11 +55458,12 @@ export const initialSales: Sale[] = [
         "total": 8.37
       }
     ],
-    "clientName": "2606010MJDNVMR",
     "paymentMethod": "money",
     "total": 8.37,
     "totalCost": 0.7,
     "profit": 7.67,
+    "ecommerceOrderId": "2606010MJDNVMR",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55218,11 +55479,12 @@ export const initialSales: Sale[] = [
         "total": 8.37
       }
     ],
-    "clientName": "260529MB8B6BM6",
     "paymentMethod": "money",
     "total": 8.37,
     "totalCost": 0.7,
     "profit": 7.67,
+    "ecommerceOrderId": "260529MB8B6BM6",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55238,11 +55500,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260530PMRMR99A",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260530PMRMR99A",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55258,11 +55521,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260602355XYHPS",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260602355XYHPS",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55278,11 +55542,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "2606021D7H2QCC",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "2606021D7H2QCC",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55298,11 +55563,12 @@ export const initialSales: Sale[] = [
         "total": 8.37
       }
     ],
-    "clientName": "2606020YFPP4MQ",
     "paymentMethod": "money",
     "total": 8.37,
     "totalCost": 0.7,
     "profit": 7.67,
+    "ecommerceOrderId": "2606020YFPP4MQ",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55318,11 +55584,12 @@ export const initialSales: Sale[] = [
         "total": 8.37
       }
     ],
-    "clientName": "2606034202M90X",
     "paymentMethod": "money",
     "total": 8.37,
     "totalCost": 0.7,
     "profit": 7.67,
+    "ecommerceOrderId": "2606034202M90X",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55338,11 +55605,12 @@ export const initialSales: Sale[] = [
         "total": 1185.6
       }
     ],
-    "clientName": "2606035MGQMDYY",
     "paymentMethod": "money",
     "total": 1185.6,
     "totalCost": 900,
     "profit": 285.6,
+    "ecommerceOrderId": "2606035MGQMDYY",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55358,11 +55626,12 @@ export const initialSales: Sale[] = [
         "total": 1185.6
       }
     ],
-    "clientName": "2606045XY8MGF4",
     "paymentMethod": "money",
     "total": 1185.6,
     "totalCost": 1050,
     "profit": 135.6,
+    "ecommerceOrderId": "2606045XY8MGF4",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55378,11 +55647,12 @@ export const initialSales: Sale[] = [
         "total": 751.6
       }
     ],
-    "clientName": "2606045Y090WHW",
     "paymentMethod": "money",
     "total": 751.6,
     "totalCost": 650,
     "profit": 101.6,
+    "ecommerceOrderId": "2606045Y090WHW",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55398,11 +55668,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "2606033UE8PV0V",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "2606033UE8PV0V",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55418,11 +55689,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "2606035KKVFRNU",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "2606035KKVFRNU",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55438,11 +55710,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "2606046MGAH404",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "2606046MGAH404",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55458,11 +55731,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260606B1XKPJYT",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260606B1XKPJYT",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55478,11 +55752,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260606B6MYY3DX",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260606B6MYY3DX",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55498,11 +55773,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "2606046P31KQAH",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "2606046P31KQAH",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55518,11 +55794,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "2606058PUG6HXN",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "2606058PUG6HXN",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55538,11 +55815,12 @@ export const initialSales: Sale[] = [
         "total": 24.75
       }
     ],
-    "clientName": "260606B1FWFNXG",
     "paymentMethod": "money",
     "total": 24.75,
     "totalCost": 1,
     "profit": 23.75,
+    "ecommerceOrderId": "260606B1FWFNXG",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55558,11 +55836,12 @@ export const initialSales: Sale[] = [
         "total": 8.37
       }
     ],
-    "clientName": "26060590G5B9P4",
     "paymentMethod": "money",
     "total": 8.37,
     "totalCost": 0.7,
     "profit": 7.67,
+    "ecommerceOrderId": "26060590G5B9P4",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55578,11 +55857,12 @@ export const initialSales: Sale[] = [
         "total": 11
       }
     ],
-    "clientName": "260606AY2SD1DW",
     "paymentMethod": "money",
     "total": 11,
     "totalCost": 7,
     "profit": 4,
+    "ecommerceOrderId": "260606AY2SD1DW",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55598,11 +55878,12 @@ export const initialSales: Sale[] = [
         "total": 11
       }
     ],
-    "clientName": "26060481Y18VMK",
     "paymentMethod": "money",
     "total": 11,
     "totalCost": 7.5,
     "profit": 3.5,
+    "ecommerceOrderId": "26060481Y18VMK",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {
@@ -55618,11 +55899,12 @@ export const initialSales: Sale[] = [
         "total": 395.2
       }
     ],
-    "clientName": "260606BPCWMEVU",
     "paymentMethod": "money",
     "total": 395.2,
     "totalCost": 350,
     "profit": 45.2,
+    "ecommerceOrderId": "260606BPCWMEVU",
+    "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
   {

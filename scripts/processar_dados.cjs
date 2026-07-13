@@ -118,10 +118,42 @@ function parseSalesSheet(sheetName, year) {
     const unitCost = Number(row[6]) || 0;
     const totalCost = Number(row[7]) || 0;
     const unitPrice = Number(row[8]) || 0;
-    const client = normalizeName(row[4]) || '';
+    const clientRaw = normalizeName(row[4]) || '';
     const seller = normalizeName(row[5]) || '';
     const dateSerial = row[1];
     const date = excelSerialToDate(dateSerial);
+    
+    // Detect e-commerce channel and extract order ID
+    // In 2026, Shopee/TikTok orders have the order ID in the client column
+    // and the seller column indicates the channel.
+    // In 2024/2025, client may contain "Shopee" but no order ID.
+    const sellerLower = seller.toLowerCase();
+    const clientLower = clientRaw.toLowerCase();
+    
+    let saleChannel = 'Loja Física';
+    let ecommerceOrderId = undefined;
+    let client = clientRaw;
+    
+    if (sellerLower === 'shopee' || sellerLower === 'tiktok' || sellerLower === 'olx') {
+      saleChannel = seller;
+      // The client column may contain the order ID or a placeholder
+      const placeholders = ['shopee', 'tiktok', 'olx', 'shopee cpf', 'aleatorio', ''];
+      if (placeholders.includes(clientLower)) {
+        client = '';
+      } else {
+        // Client field contains the order ID
+        ecommerceOrderId = clientRaw;
+        client = '';
+      }
+    } else if (clientLower.includes('shopee')) {
+      // 2024/2025 pattern: seller is Leonardo/Fisica, client says "Shopee" or "jhonatan shopee"
+      saleChannel = 'Shopee';
+      if (clientLower === 'shopee' || clientLower === 'shopee cpf') {
+        client = '';
+      } else {
+        // Keep client name but mark as Shopee sale
+      }
+    }
     
     // Columns differ by year:
     // 2024/2025: [0]Mes [1]Data [2]Produto [3]QT [4]Cliente [5]Vendedor [6]CustoUn [7]ValorGasto [8]ValorUniVenda [9]ValorVenda [10]TipoVenda [11]ValorCNPJ [12]Lucro [13]FormaPagam [14]%Lucro [15]RecebidoLoja
@@ -161,6 +193,8 @@ function parseSalesSheet(sheetName, year) {
       client,
       seller,
       paymentMethod,
+      saleChannel,
+      ecommerceOrderId,
       year
     });
   }
@@ -267,7 +301,8 @@ for (const sale of allSales) {
     total: roundCurrency(sale.totalValue),
     totalCost: roundCurrency(sale.totalCost),
     profit: roundCurrency(sale.profit),
-    ecommerceOrderId: undefined,
+    ecommerceOrderId: sale.ecommerceOrderId || undefined,
+    notes: sale.saleChannel !== 'Loja Física' ? `[client_data]{"channel":"${sale.saleChannel}"}` : undefined,
     status: 'completed'
   });
   vid++;
