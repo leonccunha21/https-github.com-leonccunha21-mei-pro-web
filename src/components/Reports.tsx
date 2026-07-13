@@ -83,10 +83,8 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       );
     }
 
-    result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
-
     return result;
-  }, [completedSales, resumeTimeRange, selectedPayment, selectedCategory, selectedYear, products]);
+  }, [completedSales, resumeTimeRange, selectedPayment, selectedCategory, products]);
 
   const resumeData = useMemo(() => {
     const totalFaturamento = filteredSales.reduce((acc, s) => acc + s.total, 0);

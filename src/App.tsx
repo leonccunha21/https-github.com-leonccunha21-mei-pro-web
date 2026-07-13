@@ -79,9 +79,15 @@ export default function App() {
   const [showVendasEstoque, setShowVendasEstoque] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Memoized store info from localStorage (avoids JSON.parse on every render)
-  const storeInfo = useMemo(() => {
+  const [storeInfo, setStoreInfo] = useState(() => {
     try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
+  });
+  useEffect(() => {
+    const handler = () => {
+      try { setStoreInfo(JSON.parse(localStorage.getItem('zm_store_info') || '{}')); } catch {}
+    };
+    window.addEventListener('storeInfoChanged', handler);
+    return () => window.removeEventListener('storeInfoChanged', handler);
   }, []);
 
   const toggleDarkMode = () => {
@@ -998,6 +1004,10 @@ export default function App() {
                 sales={sales} 
                 products={products}
                 onCancelSale={handleCancelSale}
+                onUpdateSale={(updatedSale) => {
+                  const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
+                  saveSalesToStorage(updatedSales, updatedSale);
+                }}
               />
             )}
 

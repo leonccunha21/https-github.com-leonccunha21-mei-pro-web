@@ -126,13 +126,16 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
 
     let extraClientHtml = '';
     if (lastSaleData.notes) {
-      try {
-        const clientData = JSON.parse(lastSaleData.notes);
-        if (clientData.channel) extraClientHtml += `<div style="font-size:10px">Canal: ${clientData.channel}</div>`;
-        if (clientData.cpf) extraClientHtml += `<div style="font-size:10px">CPF/CNPJ: ${clientData.cpf}</div>`;
-        if (clientData.email) extraClientHtml += `<div style="font-size:10px">Email: ${clientData.email}</div>`;
-        if (clientData.address) extraClientHtml += `<div style="font-size:10px">Endereço: ${clientData.address}</div>`;
-      } catch {}
+      const match = lastSaleData.notes.match(/\[client_data\](.*)/);
+      if (match) {
+        try {
+          const clientData = JSON.parse(match[1]);
+          if (clientData.channel) extraClientHtml += `<div style="font-size:10px">Canal: ${clientData.channel}</div>`;
+          if (clientData.cpf) extraClientHtml += `<div style="font-size:10px">CPF/CNPJ: ${clientData.cpf}</div>`;
+          if (clientData.email) extraClientHtml += `<div style="font-size:10px">Email: ${clientData.email}</div>`;
+          if (clientData.address) extraClientHtml += `<div style="font-size:10px">Endereço: ${clientData.address}</div>`;
+        } catch {}
+      }
     }
 
     const receiptHtml = `

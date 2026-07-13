@@ -6,6 +6,7 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const SPREADSHEET_PATH = path.join(PROJECT_ROOT, 'data', 'excel', 'arquivo princial.xlsx');
 const OUTPUT_EXCEL = path.join(PROJECT_ROOT, 'data', 'excel', 'Backup_Dados_Completos.xlsx');
 const OUTPUT_DATA_TS = path.join(PROJECT_ROOT, 'src', 'data.ts');
+const OUTPUT_DATA_JSON = path.join(PROJECT_ROOT, 'src', 'data.json');
 // Inline categorize logic from src/lib/categorize.ts
 const DEFAULT_CATEGORY = 'Diversos';
 function categorizeProduct(name) {
@@ -368,13 +369,19 @@ console.log(`\nBackup Excel saved: ${OUTPUT_EXCEL}`);
 
 // 8. Generate data.ts
 function writeDataTs(products, sales, categories) {
+  const dataJson = JSON.stringify({ products, sales, categories });
+  fs.writeFileSync(OUTPUT_DATA_JSON, dataJson, 'utf-8');
+  
   let output = `import { Product, Sale, Category } from './types';\n\n`;
-  output += `export const initialCategories: Category[] = ${JSON.stringify(categories, null, 2)};\n\n`;
-  output += `export const initialProducts: Product[] = ${JSON.stringify(products, null, 2)};\n\n`;
-  output += `export const initialSales: Sale[] = ${JSON.stringify(sales, null, 2)};\n`;
+  output += `import raw from './data.json';\n\n`;
+  output += `const d = raw as { categories: Category[]; products: Product[]; sales: Sale[] };\n\n`;
+  output += `export const initialCategories = d.categories;\n`;
+  output += `export const initialProducts = d.products;\n`;
+  output += `export const initialSales = d.sales;\n`;
   
   fs.writeFileSync(OUTPUT_DATA_TS, output, 'utf-8');
   console.log(`data.ts generated: ${OUTPUT_DATA_TS} (${(Buffer.byteLength(output) / 1024 / 1024).toFixed(2)} MB)`);
+  console.log(`data.json generated: ${OUTPUT_DATA_JSON} (${(Buffer.byteLength(dataJson) / 1024 / 1024).toFixed(2)} MB)`);
 }
 
 writeDataTs(finalProducts, finalSales, finalCategories);

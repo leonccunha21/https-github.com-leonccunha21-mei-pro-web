@@ -136,7 +136,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
 
         return matchesSearch && matchesStatus && matchesPayment;
       });
-  }, [sales, searchQuery, statusFilter, paymentFilter, dateRange, customStart, customEnd, showDebtors, paymentFilter]);
+  }, [sales, searchQuery, statusFilter, paymentFilter, dateRange, customStart, customEnd, showDebtors]);
 
   // Debtor summary
   const debtorSummary = useMemo(() => {

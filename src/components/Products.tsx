@@ -23,7 +23,7 @@ interface ProductsProps {
   onAddCategory: (categoryName: string) => void;
 }
 
-export default function Products({ products, categories, sales, onAddProduct, onUpdateProduct, onDeleteProduct, onAddCategory }: ProductsProps) {
+export default function Products({ products, categories, sales, onAddProduct, onUpdateProduct, onDeleteProduct, onClearAllProducts, onAddCategory }: ProductsProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out' | 'ok'>('all');
@@ -274,11 +274,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const handleClearAllStock = () => {
     if (!window.confirm('Tem certeza que deseja REMOVER TODOS os produtos do estoque? Esta ação não pode ser desfeita.\n\nRecomenda-se exportar os dados antes (use o botão Exportar).')) return;
     if (!window.confirm('CONFIRMAÇÃO FINAL: Deseja realmente excluir TODOS os ' + products.length + ' produtos permanentemente?')) return;
-    if (onClearAllProducts) {
-      onClearAllProducts();
-    } else {
-      products.forEach(p => onDeleteProduct(p.id));
-    }
+    onClearAllProducts?.();
   };
 
   const handleExportFiltered = () => {

@@ -379,6 +379,17 @@ function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
       }
     }
 
+    const tipoIdx = findColIndex(['tipo', 'cpf', 'cnpj', 'tipo venda', 'sale type']);
+    const orderIdIdx = findColIndex(['id pedido', 'pedido', 'order id', 'ecommerce', 'shopee', 'tiktok']);
+
+    let saleType = 'CPF';
+    if (tipoIdx !== -1 && tipoIdx < row.length && row[tipoIdx]) {
+      const t = String(row[tipoIdx]).trim().toLowerCase();
+      if (t.includes('cnpj')) saleType = 'CNPJ';
+    }
+
+    const ecommerceOrderId = (orderIdIdx !== -1 && orderIdIdx < row.length && row[orderIdIdx]) ? String(row[orderIdIdx]).trim() : undefined;
+
     sales.push({
       id,
       date: saleDate,
@@ -389,6 +400,8 @@ function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
       totalCost,
       total,
       profit: total - totalCost,
+      saleType: saleType as 'CPF' | 'CNPJ',
+      ecommerceOrderId,
       status
     });
   }
@@ -433,6 +446,7 @@ export default function Settings({
 
   const handleSaveStoreInfo = () => {
     localStorage.setItem('zm_store_info', JSON.stringify(storeInfo));
+    window.dispatchEvent(new Event('storeInfoChanged'));
     setStoreSaved(true);
     setTimeout(() => setStoreSaved(false), 3000);
   };
