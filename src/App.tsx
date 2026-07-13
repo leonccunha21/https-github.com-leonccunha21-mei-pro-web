@@ -74,6 +74,7 @@ export default function App() {
   // Firebase auth & cloud loading states
   const [user, setUser] = useState<any>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [authInitialized, setAuthInitialized] = useState(false);
   const [loadingCloud, setLoadingCloud] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string | null>(null);
   const loadingCloudRef = React.useRef<boolean>(false);
@@ -99,9 +100,9 @@ export default function App() {
     document.documentElement.classList.toggle('dark', darkMode);
   }, []);
 
-  // Initial load: only show data if user is logged in or explicitly opted in.
+  // Auth gate: only load data when user is properly authenticated
   useEffect(() => {
-    const useLocalData = localStorage.getItem('use_local_data') === 'true';
+    if (!authInitialized) return;
     if (!user) {
       setProducts([]);
       setSales([]);
@@ -109,29 +110,12 @@ export default function App() {
       return;
     }
 
-    // For local-only mode, load from localStorage
-    if (useLocalData || !user.uid) {
-      try {
-        const savedProducts = localStorage.getItem('loja_products');
-        const savedSales = localStorage.getItem('loja_sales');
-        const savedCategories = localStorage.getItem('loja_categories');
-        if (savedProducts) setProducts(JSON.parse(savedProducts));
-        if (savedSales) setSales(JSON.parse(savedSales));
-        if (savedCategories) setCategories(JSON.parse(savedCategories));
-      } catch {
-        setProducts([]);
-        setSales([]);
-        setCategories([]);
-      }
-      return;
-    }
-
     // For cloud users, cloud data will be loaded by loadCloudData
-    // But we still load localStorage as fallback while cloud loads
+    // Clear to avoid showing stale data while cloud loads
     setProducts([]);
     setSales([]);
     setCategories([]);
-  }, [user]);
+  }, [user, authInitialized]);
 
   // Stock cleanup: deduplicate and remove empty products (runs once)
   useEffect(() => {
@@ -178,16 +162,16 @@ export default function App() {
     const localSales = localStorage.getItem('loja_sales');
     const localCategories = localStorage.getItem('loja_categories');
 
-    let parsedProducts: Product[] = initialProducts;
-    let parsedSales: Sale[] = initialSales;
-    let parsedCategories: Category[] = initialCategories;
+    let parsedProducts: Product[] = [];
+    let parsedSales: Sale[] = [];
+    let parsedCategories: Category[] = [];
 
     try {
-      parsedProducts = localProducts ? JSON.parse(localProducts) : initialProducts;
-      parsedSales = localSales ? JSON.parse(localSales) : initialSales;
-      parsedCategories = localCategories ? JSON.parse(localCategories) : initialCategories;
+      if (localProducts) parsedProducts = JSON.parse(localProducts);
+      if (localSales) parsedSales = JSON.parse(localSales);
+      if (localCategories) parsedCategories = JSON.parse(localCategories);
     } catch {
-      // Corrupted localStorage, use defaults
+      // Corrupted localStorage, start empty
     }
 
     setProducts(parsedProducts);
@@ -249,18 +233,23 @@ export default function App() {
 
   // Auth Listener setup
   useEffect(() => {
+    let cancelled = false;
     const unsubscribe = initAuth(
       async (loggedInUser, token) => {
+        if (cancelled) return;
         setUser(loggedInUser);
         setAccessToken(token);
+        setAuthInitialized(true);
         await loadCloudData(loggedInUser.uid);
       },
       () => {
+        if (cancelled) return;
         setUser(null);
         setAccessToken(null);
+        setAuthInitialized(true);
       }
     );
-    return () => unsubscribe();
+    return () => { cancelled = true; unsubscribe(); };
   }, []);
 
   // Sync state helpers
@@ -359,20 +348,13 @@ export default function App() {
       setUser(null);
       setAccessToken(null);
       
-      // Reload local values
-      try {
-        const savedProducts = localStorage.getItem('loja_products');
-        const savedSales = localStorage.getItem('loja_sales');
-        const savedCategories = localStorage.getItem('loja_categories');
-
-        setProducts(savedProducts ? JSON.parse(savedProducts) : initialProducts);
-        setSales(savedSales ? JSON.parse(savedSales) : initialSales);
-        setCategories(savedCategories ? JSON.parse(savedCategories) : initialCategories);
-      } catch {
-        setProducts(initialProducts);
-        setSales(initialSales);
-        setCategories(initialCategories);
-      }
+      // Clear data - user needs to login again
+      localStorage.removeItem('loja_products');
+      localStorage.removeItem('loja_sales');
+      localStorage.removeItem('loja_categories');
+      setProducts([]);
+      setSales([]);
+      setCategories([]);
     }
   };
 
@@ -617,9 +599,49 @@ export default function App() {
     XLSX.writeFile(wb, 'controle_vendas_estoque.xlsx');
   };
 
+  // --- AUTH GATE: loading state ---
+  if (!authInitialized) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+          <p className="text-sm text-slate-500 dark:text-slate-400 font-semibold">Verificando sessão...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // --- AUTH GATE: not logged in ---
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-6">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 max-w-sm w-full text-center space-y-6">
+          <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/40 rounded-2xl flex items-center justify-center mx-auto">
+            <Cloud className="h-8 w-8 text-indigo-600" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">GESTÃO.PRO</h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Faça login para acessar o sistema</p>
+          </div>
+
+          {loginError && (
+            <p className="text-xs text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20 p-3 rounded-lg border border-rose-100 dark:border-rose-800 text-left leading-relaxed">{loginError}</p>
+          )}
+
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
+          >
+            Entrar com Google
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
-      
+
       {/* MOBILE TOP HEADER */}
       <header className="md:hidden sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-3 shadow-sm">
         {storeInfo.logoUrl ? (
@@ -901,22 +923,6 @@ export default function App() {
                 className="w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
               >
                 Conectar Conta Google
-              </button>
-              <button 
-                onClick={() => {
-                  localStorage.setItem('use_local_data', 'true');
-                  setUser({} as any);
-                  setProducts(initialProducts);
-                  setSales(initialSales);
-                  setCategories(initialCategories);
-                  localStorage.setItem('loja_products', JSON.stringify(initialProducts));
-                  localStorage.setItem('loja_sales', JSON.stringify(initialSales));
-                  localStorage.setItem('loja_categories', JSON.stringify(initialCategories));
-                  window.location.reload();
-                }}
-                className="w-full py-1.5 px-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-[11px] font-bold transition-all cursor-pointer"
-              >
-                Usar Dados Demonstrativos
               </button>
             </div>
           )}

@@ -74,7 +74,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formName.trim() || !formCategory) return;
-    const data = { code: formCode.trim() || generateSKU(formCategory), name: formName.trim(), category: formCategory, costPrice: Number(formCostPrice), salePrice: Number(formSalePrice), stock: Number(formStock), minStock: Number(formMinStock), description: formDescription.trim() || undefined };
+    const isService = formCategory.toLowerCase() === 'serviço' || formCategory.toLowerCase() === 'servico';
+    const data = { code: formCode.trim() || generateSKU(formCategory), name: formName.trim(), category: formCategory, costPrice: Number(formCostPrice), salePrice: Number(formSalePrice), stock: isService ? 99999 : Number(formStock), minStock: isService ? 0 : Number(formMinStock), description: formDescription.trim() || undefined };
     editingProduct ? onUpdateProduct({ ...editingProduct, ...data }) : onAddProduct(data);
     setIsModalOpen(false);
   };
@@ -628,6 +629,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                   </span>
                 </div>
               )}
+              {formCategory.toLowerCase() !== 'serviço' && formCategory.toLowerCase() !== 'servico' && (
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Estoque</label>
@@ -638,6 +640,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                   <input type="number" min="1" required value={formMinStock} onChange={e => setFormMinStock(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
               </div>
+              )}
               <div>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Descrição (opcional)</label>
                 <textarea rows={2} value={formDescription} onChange={e => setFormDescription(e.target.value)} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 resize-none" />

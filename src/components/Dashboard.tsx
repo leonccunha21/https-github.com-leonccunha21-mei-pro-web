@@ -52,11 +52,14 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   const totalProfit = totalRevenue - totalCost;
   const averageMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
 
+  const isServiceProduct = (p: Product) => p.category.toLowerCase() === 'serviço' || p.category.toLowerCase() === 'servico';
+
   // Stock alerts
-  const lowStockProducts = products.filter(p => p.stock <= p.minStock);
-  const totalInventoryQuantity = products.reduce((acc, p) => acc + p.stock, 0);
-  const totalInventoryCostValue = products.reduce((acc, p) => acc + (p.stock * p.costPrice), 0);
-  const totalInventoryRetailValue = products.reduce((acc, p) => acc + (p.stock * p.salePrice), 0);
+  const physicalProducts = products.filter(p => !isServiceProduct(p));
+  const lowStockProducts = physicalProducts.filter(p => p.stock <= p.minStock);
+  const totalInventoryQuantity = physicalProducts.reduce((acc, p) => acc + p.stock, 0);
+  const totalInventoryCostValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.costPrice), 0);
+  const totalInventoryRetailValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.salePrice), 0);
 
   // Top Selling Products
   const topProducts = useMemo(() => {

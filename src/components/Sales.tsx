@@ -216,8 +216,11 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   }, [products, searchQuery, selectedCategory]);
 
   // Add to cart helper
+  const isServiceProduct = (p: Product) => p.category.toLowerCase() === 'serviço' || p.category.toLowerCase() === 'servico';
+
   const handleAddToCart = (product: Product) => {
-    const isOut = product.stock <= 0;
+    const isService = isServiceProduct(product);
+    const isOut = !isService && product.stock <= 0;
     if (isOut && !allowNegativeStock) {
       setErrorMessage(`O produto "${product.name}" está com estoque esgotado! Ative "Permitir venda sem estoque" no topo para vendê-lo mesmo assim.`);
       setTimeout(() => setErrorMessage(null), 5000);
@@ -226,8 +229,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
 
     const existingItem = cart.find(item => item.product.id === product.id);
     if (existingItem) {
-      // Check stock if strict control is on
-      if (!allowNegativeStock && existingItem.quantity >= product.stock) {
+      if (!isService && !allowNegativeStock && existingItem.quantity >= product.stock) {
         setErrorMessage(`Estoque máximo atingido para "${product.name}" (${product.stock} un disponíveis).`);
         setTimeout(() => setErrorMessage(null), 4000);
         return;
@@ -248,7 +250,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     }
 
     const item = cart.find(i => i.product.id === productId);
-    if (item && !allowNegativeStock && quantity > item.product.stock) {
+    if (item && !isServiceProduct(item.product) && !allowNegativeStock && quantity > item.product.stock) {
       setErrorMessage(`Estoque máximo atingido para "${item.product.name}" (${item.product.stock} un).`);
       setTimeout(() => setErrorMessage(null), 4000);
       quantity = item.product.stock;
@@ -313,6 +315,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     // Double check stock levels if strict mode is active
     if (!allowNegativeStock) {
       for (const item of cart) {
+        if (isServiceProduct(item.product)) continue;
         const realProduct = products.find(p => p.id === item.product.id);
         if (!realProduct) {
           setErrorMessage(`Produto "${item.product.name}" não foi encontrado no estoque.`);
@@ -493,8 +496,9 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
           {/* Catalog grid */}
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 max-h-[600px] overflow-y-auto pr-1">
             {filteredProducts.map(product => {
-              const isOut = product.stock <= 0;
-              const isLow = product.stock <= product.minStock;
+              const isService = isServiceProduct(product);
+              const isOut = !isService && product.stock <= 0;
+              const isLow = !isService && product.stock <= product.minStock;
               
               // Count of this product currently in cart
               const inCartItem = cart.find(item => item.product.id === product.id);
@@ -532,7 +536,11 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
                     </div>
                     
                     <div className="text-right">
-                      {isOut ? (
+                      {isService ? (
+                        <span className="px-2 py-1 bg-sky-100 text-sky-800 text-[10px] font-bold rounded-md block border border-sky-200/50">
+                          Serviço
+                        </span>
+                      ) : isOut ? (
                         <span className="px-2 py-1 bg-rose-100 text-rose-800 text-[10px] font-bold rounded-md block border border-rose-200/50">
                           Esgotado
                         </span>
