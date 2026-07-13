@@ -12,8 +12,16 @@ import {
   Sparkles,
   Barcode,
   X,
-  FileSpreadsheet
+  FileSpreadsheet,
+  ChevronUp,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ArrowUpDown
 } from 'lucide-react';
+
+type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
+type SortDirection = 'asc' | 'desc';
 
 interface ProductsProps {
   products: Product[];
@@ -36,6 +44,14 @@ export default function Products({
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out'>('all');
+
+  // Sort state
+  const [sortField, setSortField] = useState<SortField>('name');
+  const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 20;
 
   // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -131,33 +147,113 @@ export default function Products({
     });
   };
 
+  // Sort handler
+  const handleSort = (field: SortField) => {
+    if (sortField === field) {
+      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortField(field);
+      setSortDirection('asc');
+    }
+    setCurrentPage(1);
+  };
+
+  // Calculate profit margin helper
+  const calculateMargin = (cost: number, sale: number) => {
+    if (sale <= 0) return 0;
+    return ((sale - cost) / sale) * 100;
+  };
+
   // Filter products
   const filteredProducts = useMemo(() => {
     return products.filter(p => {
-      // Search matches name or SKU code
       const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                             p.code.toLowerCase().includes(searchQuery.toLowerCase());
-      
-      // Category match
       const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
-
-      // Stock filter
       let matchesStock = true;
       if (stockFilter === 'low') {
         matchesStock = p.stock <= p.minStock;
       } else if (stockFilter === 'out') {
         matchesStock = p.stock === 0;
       }
-
       return matchesSearch && matchesCategory && matchesStock;
     });
   }, [products, searchQuery, selectedCategory, stockFilter]);
 
-  // Calculate profit margin helper for UI
-  const calculateMargin = (cost: number, sale: number) => {
-    if (sale <= 0) return 0;
-    return ((sale - cost) / sale) * 100;
+  // Sort products
+  const sortedProducts = useMemo(() => {
+    const sorted = [...filteredProducts];
+    sorted.sort((a, b) => {
+      let comparison = 0;
+      switch (sortField) {
+        case 'name':
+          comparison = a.name.localeCompare(b.name, 'pt-BR');
+          break;
+        case 'category':
+          comparison = a.category.localeCompare(b.category, 'pt-BR');
+          break;
+        case 'costPrice':
+          comparison = a.costPrice - b.costPrice;
+          break;
+        case 'salePrice':
+          comparison = a.salePrice - b.salePrice;
+          break;
+        case 'stock':
+          comparison = a.stock - b.stock;
+          break;
+        case 'margin':
+          comparison = calculateMargin(a.costPrice, a.salePrice) - calculateMargin(b.costPrice, b.salePrice);
+          break;
+      }
+      return sortDirection === 'asc' ? comparison : -comparison;
+    });
+    return sorted;
+  }, [filteredProducts, sortField, sortDirection]);
+
+  // Pagination calculations
+  const totalPages = Math.ceil(sortedProducts.length / ITEMS_PER_PAGE);
+  const paginatedProducts = sortedProducts.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  // Reset to page 1 when filters change
+  useMemo(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedCategory, stockFilter]);
+
+  // Summary totals (based on all filtered+sorted products, not just current page)
+  const totalStock = sortedProducts.reduce((sum, p) => sum + p.stock, 0);
+  const totalCostValue = sortedProducts.reduce((sum, p) => sum + (p.costPrice * p.stock), 0);
+  const totalRetailValue = sortedProducts.reduce((sum, p) => sum + (p.salePrice * p.stock), 0);
+
+  // Sort indicator component
+  const SortIndicator = ({ field }: { field: SortField }) => {
+    if (sortField !== field) {
+      return <ArrowUpDown className="h-3 w-3 ml-1 opacity-40" />;
+    }
+    return sortDirection === 'asc' 
+      ? <ChevronUp className="h-3 w-3 ml-1 text-indigo-600" />
+      : <ChevronDown className="h-3 w-3 ml-1 text-indigo-600" />;
   };
+
+  // Pagination range
+  const getPaginationRange = () => {
+    const range: (number | string)[] = [];
+    const maxVisible = 5;
+    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let end = Math.min(totalPages, start + maxVisible - 1);
+    if (end - start < maxVisible - 1) {
+      start = Math.max(1, end - maxVisible + 1);
+    }
+    for (let i = start; i <= end; i++) {
+      range.push(i);
+    }
+    return range;
+  };
+
+  const showingFrom = sortedProducts.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1;
+  const showingTo = Math.min(currentPage * ITEMS_PER_PAGE, sortedProducts.length);
 
   return (
     <div className="space-y-6">
@@ -244,7 +340,7 @@ export default function Products({
 
       {/* Products Table Card */}
       <div id="products-table-card" className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-        {filteredProducts.length === 0 ? (
+        {sortedProducts.length === 0 ? (
           <div className="text-center py-16 px-4">
             <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-400 mb-4 border border-slate-100">
               <Search className="h-6 w-6" />
@@ -255,154 +351,265 @@ export default function Products({
             </p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-500">
-                  <th className="py-3 px-4">Código / Produto</th>
-                  <th className="py-3 px-4">Categoria</th>
-                  <th className="py-3 px-4 text-right">Valor Pago (Custo)</th>
-                  <th className="py-3 px-4 text-right">Preço de Venda</th>
-                  <th className="py-3 px-4 text-center">Estoque</th>
-                  <th className="py-3 px-4 text-right">Margem</th>
-                  <th className="py-3 px-4 text-center">Ações</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-sm">
-                {filteredProducts.map(product => {
-                  const isLow = product.stock <= product.minStock;
-                  const isOut = product.stock === 0;
-                  const margin = calculateMargin(product.costPrice, product.salePrice);
-                  
-                  return (
-                    <tr 
-                      key={product.id} 
-                      className={`hover:bg-slate-50/50 transition-colors ${
-                        isOut ? 'bg-rose-50/10' : isLow ? 'bg-amber-50/10' : ''
-                      }`}
+          <>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-500">
+                    <th 
+                      className="py-3 px-4 cursor-pointer select-none hover:bg-slate-100 transition-colors"
+                      onClick={() => handleSort('name')}
                     >
-                      {/* Product details */}
-                      <td className="py-3 px-4">
-                        <div className="flex items-start gap-2.5">
-                          <div className="mt-1">
-                            {isOut ? (
-                              <span className="inline-block w-2.5 h-2.5 rounded-full bg-rose-500" title="Esgotado!" />
-                            ) : isLow ? (
-                              <span className="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" title="Estoque Baixo!" />
-                            ) : (
-                              <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500" title="Estoque Saudável" />
-                            )}
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <span className="font-mono text-xs text-slate-400 flex items-center gap-0.5">
-                                <Barcode className="h-3 w-3" />
-                                {product.code}
-                              </span>
+                      <div className="flex items-center">
+                        Código / Produto
+                        <SortIndicator field="name" />
+                      </div>
+                    </th>
+                    <th 
+                      className="py-3 px-4 cursor-pointer select-none hover:bg-slate-100 transition-colors"
+                      onClick={() => handleSort('category')}
+                    >
+                      <div className="flex items-center">
+                        Categoria
+                        <SortIndicator field="category" />
+                      </div>
+                    </th>
+                    <th 
+                      className="py-3 px-4 text-right cursor-pointer select-none hover:bg-slate-100 transition-colors"
+                      onClick={() => handleSort('costPrice')}
+                    >
+                      <div className="flex items-center justify-end">
+                        Valor Pago (Custo)
+                        <SortIndicator field="costPrice" />
+                      </div>
+                    </th>
+                    <th 
+                      className="py-3 px-4 text-right cursor-pointer select-none hover:bg-slate-100 transition-colors"
+                      onClick={() => handleSort('salePrice')}
+                    >
+                      <div className="flex items-center justify-end">
+                        Preço de Venda
+                        <SortIndicator field="salePrice" />
+                      </div>
+                    </th>
+                    <th 
+                      className="py-3 px-4 text-center cursor-pointer select-none hover:bg-slate-100 transition-colors"
+                      onClick={() => handleSort('stock')}
+                    >
+                      <div className="flex items-center justify-center">
+                        Estoque
+                        <SortIndicator field="stock" />
+                      </div>
+                    </th>
+                    <th 
+                      className="py-3 px-4 text-right cursor-pointer select-none hover:bg-slate-100 transition-colors"
+                      onClick={() => handleSort('margin')}
+                    >
+                      <div className="flex items-center justify-end">
+                        Margem
+                        <SortIndicator field="margin" />
+                      </div>
+                    </th>
+                    <th className="py-3 px-4 text-center">Ações</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-sm">
+                  {paginatedProducts.map(product => {
+                    const isLow = product.stock <= product.minStock;
+                    const isOut = product.stock === 0;
+                    const margin = calculateMargin(product.costPrice, product.salePrice);
+                    
+                    return (
+                      <tr 
+                        key={product.id} 
+                        className={`hover:bg-slate-50/50 transition-colors ${
+                          isOut ? 'bg-rose-50/10' : isLow ? 'bg-amber-50/10' : ''
+                        }`}
+                      >
+                        {/* Product details */}
+                        <td className="py-3 px-4">
+                          <div className="flex items-start gap-2.5">
+                            <div className="mt-1">
+                              {isOut ? (
+                                <span className="inline-block w-2.5 h-2.5 rounded-full bg-rose-500" title="Esgotado!" />
+                              ) : isLow ? (
+                                <span className="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" title="Estoque Baixo!" />
+                              ) : (
+                                <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500" title="Estoque Saudável" />
+                              )}
                             </div>
-                            <p className="font-semibold text-slate-900 mt-0.5">{product.name}</p>
-                            {product.description && (
-                              <p className="text-xs text-slate-400 truncate max-w-[240px]" title={product.description}>
-                                {product.description}
-                              </p>
-                            )}
+                            <div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="font-mono text-xs text-slate-400 flex items-center gap-0.5">
+                                  <Barcode className="h-3 w-3" />
+                                  {product.code}
+                                </span>
+                              </div>
+                              <p className="font-semibold text-slate-900 mt-0.5">{product.name}</p>
+                              {product.description && (
+                                <p className="text-xs text-slate-400 truncate max-w-[240px]" title={product.description}>
+                                  {product.description}
+                                </p>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </td>
+                        </td>
 
-                      {/* Category */}
-                      <td className="py-3 px-4 text-slate-500">
-                        <span className="px-2 py-0.5 bg-slate-100 text-slate-700 text-xs rounded-sm border border-slate-200/50">
-                          {product.category}
-                        </span>
-                      </td>
+                        {/* Category */}
+                        <td className="py-3 px-4 text-slate-500">
+                          <span className="px-2 py-0.5 bg-slate-100 text-slate-700 text-xs rounded-sm border border-slate-200/50">
+                            {product.category}
+                          </span>
+                        </td>
 
-                      {/* Cost price */}
-                      <td className="py-3 px-4 text-right font-mono text-slate-500">
-                        {product.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                      </td>
+                        {/* Cost price */}
+                        <td className="py-3 px-4 text-right font-mono text-slate-500">
+                          {product.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                        </td>
 
-                      {/* Sale price */}
-                      <td className="py-3 px-4 text-right font-semibold font-mono text-slate-900">
-                        {product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                      </td>
+                        {/* Sale price */}
+                        <td className="py-3 px-4 text-right font-semibold font-mono text-slate-900">
+                          {product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                        </td>
 
-                      {/* Stock Level with Quick Adjust */}
-                      <td className="py-3 px-4 text-center">
-                        <div className="inline-flex items-center gap-2">
-                          <button
-                            id={`quick-minus-${product.id}`}
-                            onClick={() => handleQuickStockAdjust(product, -1)}
-                            disabled={product.stock === 0}
-                            className="p-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border border-slate-200/50"
-                            title="Remover 1 do estoque"
-                          >
-                            <Minus className="h-3 w-3" />
-                          </button>
-                          
-                          <div className="w-16 text-center">
-                            <span className={`font-bold font-mono ${
-                              isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : 'text-slate-800'
-                            }`}>
-                              {product.stock} un
-                            </span>
-                            {isLow && (
-                              <span className="block text-[9px] text-amber-600 font-medium">Mín. {product.minStock}</span>
-                            )}
+                        {/* Stock Level with Quick Adjust */}
+                        <td className="py-3 px-4 text-center">
+                          <div className="inline-flex items-center gap-2">
+                            <button
+                              id={`quick-minus-${product.id}`}
+                              onClick={() => handleQuickStockAdjust(product, -1)}
+                              disabled={product.stock === 0}
+                              className="p-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border border-slate-200/50"
+                              title="Remover 1 do estoque"
+                            >
+                              <Minus className="h-3 w-3" />
+                            </button>
+                            
+                            <div className="w-16 text-center">
+                              <span className={`font-bold font-mono ${
+                                isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : 'text-slate-800'
+                              }`}>
+                                {product.stock} un
+                              </span>
+                              {isLow && (
+                                <span className="block text-[9px] text-amber-600 font-medium">Mín. {product.minStock}</span>
+                              )}
+                            </div>
+
+                            <button
+                              id={`quick-plus-${product.id}`}
+                              onClick={() => handleQuickStockAdjust(product, 1)}
+                              className="p-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors border border-slate-200/50"
+                              title="Adicionar 1 ao estoque"
+                            >
+                              <Plus className="h-3 w-3" />
+                            </button>
                           </div>
+                        </td>
 
-                          <button
-                            id={`quick-plus-${product.id}`}
-                            onClick={() => handleQuickStockAdjust(product, 1)}
-                            className="p-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors border border-slate-200/50"
-                            title="Adicionar 1 ao estoque"
-                          >
-                            <Plus className="h-3 w-3" />
-                          </button>
-                        </div>
-                      </td>
+                        {/* Margin */}
+                        <td className="py-3 px-4 text-right">
+                          <span className={`font-semibold inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full ${
+                            margin >= 50 ? 'bg-emerald-50 text-emerald-700' : margin >= 30 ? 'bg-indigo-50 text-indigo-700' : 'bg-amber-50 text-amber-700'
+                          }`}>
+                            <ArrowUpRight className="h-3 w-3" />
+                            {margin.toFixed(0)}%
+                          </span>
+                        </td>
 
-                      {/* Margin */}
-                      <td className="py-3 px-4 text-right">
-                        <span className={`font-semibold inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full ${
-                          margin >= 50 ? 'bg-emerald-50 text-emerald-700' : margin >= 30 ? 'bg-indigo-50 text-indigo-700' : 'bg-amber-50 text-amber-700'
-                        }`}>
-                          <ArrowUpRight className="h-3 w-3" />
-                          {margin.toFixed(0)}%
-                        </span>
-                      </td>
+                        {/* Edit / Delete Actions */}
+                        <td className="py-3 px-4 text-center">
+                          <div className="flex items-center justify-center gap-1">
+                            <button
+                              id={`edit-prod-${product.id}`}
+                              onClick={() => handleOpenEditModal(product)}
+                              className="p-1.5 hover:bg-indigo-50 text-indigo-600 rounded-lg transition-colors"
+                              title="Editar dados"
+                            >
+                              <Edit2 className="h-4 w-4" />
+                            </button>
+                            <button
+                              id={`delete-prod-${product.id}`}
+                              onClick={() => {
+                                if (window.confirm(`Tem certeza que deseja excluir o produto "${product.name}"?`)) {
+                                  onDeleteProduct(product.id);
+                                }
+                              }}
+                              className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors"
+                              title="Excluir produto"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
 
-                      {/* Edit / Delete Actions */}
-                      <td className="py-3 px-4 text-center">
-                        <div className="flex items-center justify-center gap-1">
-                          <button
-                            id={`edit-prod-${product.id}`}
-                            onClick={() => handleOpenEditModal(product)}
-                            className="p-1.5 hover:bg-indigo-50 text-indigo-600 rounded-lg transition-colors"
-                            title="Editar dados"
-                          >
-                            <Edit2 className="h-4 w-4" />
-                          </button>
-                          <button
-                            id={`delete-prod-${product.id}`}
-                            onClick={() => {
-                              if (window.confirm(`Tem certeza que deseja excluir o produto "${product.name}"?`)) {
-                                onDeleteProduct(product.id);
-                              }
-                            }}
-                            className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors"
-                            title="Excluir produto"
-                          >
-                            <Trash2 className="h-4 w-4" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                {/* Summary Row */}
+                <tfoot>
+                  <tr className="bg-slate-50 border-t-2 border-slate-200 text-sm font-bold">
+                    <td className="py-3 px-4" colSpan={2}>
+                      <span className="text-slate-600 uppercase text-xs tracking-wider">Totais do Estoque</span>
+                    </td>
+                    <td className="py-3 px-4 text-right font-mono text-slate-600">
+                      {totalCostValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    </td>
+                    <td className="py-3 px-4 text-right font-mono text-slate-600">
+                      {totalRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    </td>
+                    <td className="py-3 px-4 text-center">
+                      <span className="font-mono text-slate-800">{totalStock} un</span>
+                    </td>
+                    <td className="py-3 px-4 text-right text-xs text-slate-500">
+                      {totalCostValue > 0 && (
+                        <span>{(((totalRetailValue - totalCostValue) / totalRetailValue) * 100).toFixed(0)}% média</span>
+                      )}
+                    </td>
+                    <td className="py-3 px-4"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+
+            {/* Pagination & Info */}
+            <div className="border-t border-slate-200 px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-50/50">
+              <p className="text-xs text-slate-500">
+                Mostrando <span className="font-semibold text-slate-700">{showingFrom}-{showingTo}</span> de <span className="font-semibold text-slate-700">{sortedProducts.length}</span> produtos
+              </p>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                  className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border border-slate-200/60"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                {getPaginationRange().map((page, idx) => (
+                  <button
+                    key={idx}
+                    typeof="number"
+                    onClick={() => setCurrentPage(page as number)}
+                    className={`min-w-[32px] h-8 rounded-lg text-xs font-semibold transition-colors border ${
+                      currentPage === page
+                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
+                        : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages}
+                  className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border border-slate-200/60"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </>
         )}
       </div>
 

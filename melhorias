@@ -16,7 +16,7 @@
 [ok] atualize o arquivo em execel para eu poder subir os dados de la, pois o jeito que vc tinha feito para subir os dados nao funcionou
 
 [ok] adicione no painel geral o relatorio, 1 dia, 7 dias, 14 dias, 30 dias, 1 ano, e personalizado e verifique se na tela relatorio tem isso tbm, e aprimore a tela, deixe a mais completo possivel const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : timeRange === '30days' ? 30 : 365;
-[   ] Extrair TODAS as vendas de todas as abas (Vendas, Vendas 2025, Vendas 2026)
-[   ] Injetar produtos, categorias e vendas diretamente no data.ts
+[ok] Extrair TODAS as vendas de todas as abas (Vendas, Vendas 2025, Vendas 2026)
+[ok] Injetar produtos, categorias e vendas diretamente no data.ts
 [ok] Criar backup Excel completo com todos os dados atuais
 [ok] configuraçao, perfil de opçao de adicionar a logo da empresa, use isso no lugar do icone do site, e na criaçao de resibos, os e orçamentos

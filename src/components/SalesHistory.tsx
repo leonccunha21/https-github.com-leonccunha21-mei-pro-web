@@ -12,8 +12,11 @@ import {
   CheckCircle,
   XCircle,
   TrendingUp,
-  FileText
+  FileText,
+  FileDown,
+  Printer
 } from 'lucide-react';
+import * as XLSX from 'xlsx';
 
 interface SalesHistoryProps {
   sales: Sale[];
@@ -27,8 +30,44 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
   const [showProductSummary, setShowProductSummary] = useState(false);
   
+  // Date range state
+  const [dateRange, setDateRange] = useState<'today' | '7days' | '30days' | 'all' | 'custom'>('all');
+  const [customStart, setCustomStart] = useState(() => {
+    const d = new Date(); d.setDate(d.getDate() - 30); return d.toISOString().split('T')[0];
+  });
+  const [customEnd, setCustomEnd] = useState(() => new Date().toISOString().split('T')[0]);
+  
   // Selected sale for detail modal
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+
+  // Date range filter helper
+  const isInDateRange = (dateStr: string): boolean => {
+    const saleDate = new Date(dateStr);
+    const now = new Date();
+    if (dateRange === 'all') return true;
+    if (dateRange === 'today') {
+      const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      return saleDate >= todayStart;
+    }
+    if (dateRange === '7days') {
+      const cutoff = new Date(now);
+      cutoff.setDate(now.getDate() - 7);
+      cutoff.setHours(0, 0, 0, 0);
+      return saleDate >= cutoff;
+    }
+    if (dateRange === '30days') {
+      const cutoff = new Date(now);
+      cutoff.setDate(now.getDate() - 30);
+      cutoff.setHours(0, 0, 0, 0);
+      return saleDate >= cutoff;
+    }
+    if (dateRange === 'custom') {
+      const start = new Date(customStart + 'T00:00:00');
+      const end = new Date(customEnd + 'T23:59:59');
+      return saleDate >= start && saleDate <= end;
+    }
+    return true;
+  };
 
   // Product sales summary
   const productSummary = useMemo(() => {
@@ -48,8 +87,11 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
   // Filter sales
   const filteredSales = useMemo(() => {
     return [...sales]
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()) // Newest first
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .filter(s => {
+        // Date range match
+        if (!isInDateRange(s.date)) return false;
+
         // Search by Client Name, Sale ID, or Product Name
         const clientNameMatch = s.clientName?.toLowerCase().includes(searchQuery.toLowerCase()) || false;
         const idMatch = s.id.toLowerCase().includes(searchQuery.toLowerCase());
@@ -66,7 +108,17 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
 
         return matchesSearch && matchesStatus && matchesPayment;
       });
-  }, [sales, searchQuery, statusFilter, paymentFilter]);
+  }, [sales, searchQuery, statusFilter, paymentFilter, dateRange, customStart, customEnd]);
+
+  // Summary totals (only completed)
+  const summaryTotals = useMemo(() => {
+    const completed = filteredSales.filter(s => s.status === 'completed');
+    return {
+      totalRevenue: completed.reduce((acc, s) => acc + s.total, 0),
+      totalProfit: completed.reduce((acc, s) => acc + s.profit, 0),
+      totalCount: completed.length,
+    };
+  }, [filteredSales]);
 
   // Payment method translation helper
   const paymentMethodLabels: Record<string, string> = {
@@ -75,6 +127,14 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
     card_debit: '💳 C. Débito',
     pix: '⚡ PIX',
     transfer: '🏦 Transf.'
+  };
+
+  const paymentMethodLabelsPlain: Record<string, string> = {
+    money: 'Dinheiro',
+    card_credit: 'Cartão Crédito',
+    card_debit: 'Cartão Débito',
+    pix: 'PIX',
+    transfer: 'Transferência'
   };
 
   const formatDate = (isoString: string) => {
@@ -91,10 +151,141 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
   const handleCancelClick = (sale: Sale) => {
     if (window.confirm(`ATENÇÃO: Deseja realmente CANCELAR esta venda?\n\nOs itens vendidos serão devolvidos automaticamente ao estoque.`)) {
       onCancelSale(sale.id);
-      // Close detail modal if open
       setSelectedSale(null);
     }
   };
+
+  // Print receipt for a sale
+  const handlePrintReceipt = (sale: Sale) => {
+    let storeInfo: Record<string, string> = {};
+    try { storeInfo = JSON.parse(localStorage.getItem('zm_store_info') || '{}'); } catch {}
+
+    const itemsHtml = sale.items.map(item => `
+      <tr>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;font-size:12px">${item.productName}</td>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:center;font-size:12px">${item.quantity}x</td>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:right;font-size:12px">R$ ${item.salePrice.toFixed(2)}</td>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:right;font-size:12px;font-weight:bold">R$ ${item.total.toFixed(2)}</td>
+      </tr>
+    `).join('');
+
+    const saleDate = new Date(sale.date);
+
+    const receiptHtml = `
+      <html><head><title>Recibo - #${sale.id.substring(0, 8)}</title>
+      <style>
+        body { font-family: 'Courier New', monospace; padding: 15px; max-width: 350px; margin: 0 auto; font-size: 12px; color: #333; }
+        .center { text-align: center; }
+        .bold { font-weight: bold; }
+        .line { border-top: 1px dashed #333; margin: 8px 0; }
+        .line2 { border-top: 2px solid #333; margin: 8px 0; }
+        table { width: 100%; border-collapse: collapse; }
+        .total-row { font-size: 14px; font-weight: bold; border-top: 2px solid #333; padding-top: 5px; }
+        .footer { text-align: center; margin-top: 15px; font-size: 10px; color: #666; }
+        @media print { body { padding: 5px; max-width: 100%; } }
+      </style></head><body>
+      ${storeInfo.logoUrl ? `<div class="center"><img src="${storeInfo.logoUrl}" alt="Logo" style="max-width:80px;max-height:80px;margin:0 auto 8px;display:block" /></div>` : ''}
+      <div class="center bold" style="font-size:16px">${storeInfo.name || 'ZM Store'}</div>
+      ${storeInfo.cnpj ? `<div class="center" style="font-size:10px">CNPJ: ${storeInfo.cnpj}</div>` : ''}
+      ${storeInfo.phone ? `<div class="center" style="font-size:10px">${storeInfo.phone}</div>` : ''}
+      ${storeInfo.address ? `<div class="center" style="font-size:10px">${storeInfo.address} - ${storeInfo.city || ''}/${storeInfo.state || ''}</div>` : ''}
+      
+      <div class="line2"></div>
+      <div class="center bold">COMPROVANTE DE VENDA</div>
+      <div class="line2"></div>
+      
+      <div style="margin:8px 0">
+        <div style="font-size:10px">Venda: <span class="bold">#${sale.id.substring(0, 8)}</span></div>
+        <div style="font-size:10px">Data: ${saleDate.toLocaleDateString('pt-BR')} ${saleDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+        ${sale.clientName ? `<div style="font-size:10px">Cliente: <span class="bold">${sale.clientName}</span></div>` : ''}
+        ${sale.clientPhone ? `<div style="font-size:10px">Tel: ${sale.clientPhone}</div>` : ''}
+      </div>
+
+      <div class="line"></div>
+      
+      <table>
+        <thead>
+          <tr style="font-size:10px;color:#666">
+            <th style="text-align:left;padding-bottom:3px">Item</th>
+            <th style="text-align:center;padding-bottom:3px">Qtd</th>
+            <th style="text-align:right;padding-bottom:3px">Preço</th>
+            <th style="text-align:right;padding-bottom:3px">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${itemsHtml}
+        </tbody>
+      </table>
+
+      <div class="line"></div>
+      
+      <div style="text-align:right">
+        <div class="total-row" style="font-size:16px;margin-top:5px">TOTAL: R$ ${sale.total.toFixed(2)}</div>
+      </div>
+      
+      <div class="line"></div>
+      
+      <div style="font-size:10px">
+        <div>Pagamento: <span class="bold">${paymentMethodLabelsPlain[sale.paymentMethod] || sale.paymentMethod}</span></div>
+      </div>
+
+      ${sale.notes ? `<div style="font-size:10px;margin-top:5px"><strong>Obs:</strong> ${sale.notes}</div>` : ''}
+      
+      <div class="line2"></div>
+      <div class="footer">
+        <div class="bold">Obrigado pela preferência!</div>
+        ${storeInfo.notes ? `<div>${storeInfo.notes}</div>` : ''}
+        <div style="margin-top:5px">${storeInfo.name || 'ZM Store'} - ${storeInfo.phone || ''}</div>
+      </div>
+      <script>window.onload=function(){window.print();}</script>
+      </body></html>
+    `;
+
+    const receiptWindow = window.open('', '_blank');
+    if (receiptWindow) {
+      receiptWindow.document.write(receiptHtml);
+      receiptWindow.document.close();
+    }
+  };
+
+  // Export to Excel
+  const handleExportExcel = () => {
+    const rows = filteredSales.map(sale => ({
+      'Código': `#${sale.id.substring(0, 8)}`,
+      'Data': formatDate(sale.date),
+      'Cliente': sale.clientName || 'Não informado',
+      'Telefone': sale.clientPhone || '',
+      'Itens': sale.items.reduce((acc, item) => acc + item.quantity, 0),
+      'Produtos': sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', '),
+      'Pagamento': paymentMethodLabelsPlain[sale.paymentMethod] || sale.paymentMethod,
+      'Valor Pago (Custo)': sale.totalCost,
+      'Valor Vendido': sale.total,
+      'Lucro': sale.status === 'cancelled' ? 0 : sale.profit,
+      'Status': sale.status === 'completed' ? 'Concluída' : 'Cancelada',
+    }));
+
+    // Add summary row
+    rows.push({
+      'Código': '',
+      'Data': '',
+      'Cliente': 'TOTAL',
+      'Telefone': '',
+      'Itens': '',
+      'Produtos': '',
+      'Pagamento': '',
+      'Valor Pago (Custo)': summaryTotals.totalRevenue - summaryTotals.totalProfit,
+      'Valor Vendido': summaryTotals.totalRevenue,
+      'Lucro': summaryTotals.totalProfit,
+      'Status': `${summaryTotals.totalCount} vendas`,
+    } as any);
+
+    const ws = XLSX.utils.json_to_sheet(rows);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Histórico de Vendas');
+    XLSX.writeFile(wb, `historico_vendas_${new Date().toISOString().split('T')[0]}.xlsx`);
+  };
+
+  const formatCurrency = (value: number) => value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
   return (
     <div className="space-y-6">
@@ -103,6 +294,47 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
         <h1 id="sales-history-title" className="text-2xl font-bold tracking-tight text-slate-900">Histórico de Vendas</h1>
         <p className="text-sm text-slate-500 mt-1">Consulte todas as vendas efetuadas, veja detalhes de lucro por item ou efetue estornos de mercadoria.</p>
       </div>
+
+      {/* Date Range Filter */}
+      <div className="flex flex-wrap items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200/50 self-start">
+        {[
+          { key: 'today' as const, label: 'Hoje' },
+          { key: '7days' as const, label: '7 Dias' },
+          { key: '30days' as const, label: '30 Dias' },
+          { key: 'all' as const, label: 'Todas' },
+          { key: 'custom' as const, label: 'Personalizado' },
+        ].map(opt => (
+          <button
+            key={opt.key}
+            onClick={() => setDateRange(opt.key)}
+            className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+              dateRange === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            {opt.label}
+          </button>
+        ))}
+      </div>
+
+      {dateRange === 'custom' && (
+        <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+          <Calendar className="h-4 w-4 text-slate-400" />
+          <label className="text-[10px] font-bold text-slate-500 uppercase">De:</label>
+          <input
+            type="date"
+            value={customStart}
+            onChange={e => setCustomStart(e.target.value)}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+          />
+          <label className="text-[10px] font-bold text-slate-500 uppercase">Até:</label>
+          <input
+            type="date"
+            value={customEnd}
+            onChange={e => setCustomEnd(e.target.value)}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+          />
+        </div>
+      )}
 
       {/* Filters section */}
       <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -155,8 +387,8 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
         </div>
       </div>
 
-      {/* Product Summary Toggle */}
-      <div className="flex items-center gap-2">
+      {/* Action buttons row */}
+      <div className="flex items-center gap-2 flex-wrap">
         <button
           onClick={() => setShowProductSummary(!showProductSummary)}
           className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-colors ${
@@ -166,6 +398,14 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
           }`}
         >
           {showProductSummary ? 'Ocultar Resumo' : 'Ver Resumo por Produto'} ({productSummary.length} produtos)
+        </button>
+
+        <button
+          onClick={handleExportExcel}
+          className="px-4 py-2 text-sm font-semibold rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-1.5"
+        >
+          <FileDown className="h-4 w-4" />
+          Exportar para Excel
         </button>
       </div>
 
@@ -194,9 +434,9 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                     <td className="py-1.5 px-4 font-mono text-slate-400">{idx + 1}</td>
                     <td className="py-1.5 px-4 font-semibold text-slate-900">{item.name}</td>
                     <td className="py-1.5 px-4 text-center font-mono">{item.qty}</td>
-                    <td className="py-1.5 px-4 text-right font-mono">{item.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                    <td className="py-1.5 px-4 text-right font-mono text-slate-500">{item.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                    <td className="py-1.5 px-4 text-right font-mono text-emerald-600 font-bold">{(item.revenue - item.cost).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-1.5 px-4 text-right font-mono">{formatCurrency(item.revenue)}</td>
+                    <td className="py-1.5 px-4 text-right font-mono text-slate-500">{formatCurrency(item.cost)}</td>
+                    <td className="py-1.5 px-4 text-right font-mono text-emerald-600 font-bold">{formatCurrency(item.revenue - item.cost)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -278,19 +518,19 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
 
                       {/* Cost price total */}
                       <td className="py-3 px-4 text-right font-mono text-slate-400">
-                        {sale.totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                        {formatCurrency(sale.totalCost)}
                       </td>
 
                       {/* Sold total */}
                       <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
-                        {sale.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                        {formatCurrency(sale.total)}
                       </td>
 
                       {/* Profit */}
                       <td className={`py-3 px-4 text-right font-mono font-extrabold ${
                         isCancelled ? 'text-slate-300' : 'text-emerald-600'
                       }`}>
-                        {isCancelled ? '—' : sale.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                        {isCancelled ? '—' : formatCurrency(sale.profit)}
                       </td>
 
                       {/* Status */}
@@ -334,6 +574,25 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                   );
                 })}
               </tbody>
+              
+              {/* Summary Totals Row */}
+              <tfoot>
+                <tr className="bg-slate-100 border-t-2 border-slate-200 text-sm">
+                  <td colSpan={4} className="py-3 px-4 font-bold text-slate-700 uppercase text-xs tracking-wider">
+                    Totais ({summaryTotals.totalCount} {summaryTotals.totalCount === 1 ? 'venda' : 'vendas'} concluídas)
+                  </td>
+                  <td className="py-3 px-4 text-right font-mono text-slate-600 font-bold">
+                    {formatCurrency(summaryTotals.totalRevenue - summaryTotals.totalProfit)}
+                  </td>
+                  <td className="py-3 px-4 text-right font-mono text-slate-900 font-black text-base">
+                    {formatCurrency(summaryTotals.totalRevenue)}
+                  </td>
+                  <td className="py-3 px-4 text-right font-mono text-emerald-600 font-black text-base">
+                    {formatCurrency(summaryTotals.totalProfit)}
+                  </td>
+                  <td colSpan={2}></td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         )}
@@ -412,18 +671,17 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                         <div className="min-w-0 flex-1 pr-4">
                           <p className="font-bold text-slate-900 truncate">{item.productName}</p>
                           <p className="text-slate-400 font-mono mt-0.5">
-                            {item.quantity} un x {item.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                            {item.quantity} un x {formatCurrency(item.salePrice)}
                           </p>
-                          {/* Financial transparency per item */}
                           <div className="flex items-center gap-2 mt-1 text-[10px]">
-                            <span className="text-slate-400">Custo pago: {item.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                            <span className="text-slate-400">Custo pago: {formatCurrency(item.costPrice)}</span>
                             <span className="text-emerald-700 font-medium font-mono bg-emerald-50 px-1 rounded-sm border border-emerald-100">
                               Margem: {itemMargin.toFixed(0)}%
                             </span>
                           </div>
                         </div>
                         <span className="font-bold font-mono text-slate-900 shrink-0">
-                          {item.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                          {formatCurrency(item.total)}
                         </span>
                       </div>
                     );
@@ -444,14 +702,14 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                 <div className="flex justify-between text-xs text-slate-500">
                   <span>Valor Vendido Bruto (Faturamento):</span>
                   <span className="font-mono text-slate-700 font-bold">
-                    {selectedSale.total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    {formatCurrency(selectedSale.total)}
                   </span>
                 </div>
                 
                 <div className="flex justify-between text-xs text-slate-500">
                   <span>Valor Pago de Custo (Estoque):</span>
                   <span className="font-mono text-slate-700">
-                    {selectedSale.totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    {formatCurrency(selectedSale.totalCost)}
                   </span>
                 </div>
 
@@ -461,7 +719,7 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                     Lucro Líquido desta Venda:
                   </span>
                   <span className={`font-mono text-base ${selectedSale.status === 'cancelled' ? 'text-slate-400 line-through' : 'text-emerald-600'}`}>
-                    {selectedSale.status === 'cancelled' ? '—' : selectedSale.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                    {selectedSale.status === 'cancelled' ? '—' : formatCurrency(selectedSale.profit)}
                   </span>
                 </div>
               </div>
@@ -470,7 +728,7 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
 
             {/* Modal Actions */}
             <div className="p-5 border-t border-slate-200 flex items-center justify-between bg-slate-50">
-              <div>
+              <div className="flex items-center gap-2">
                 {selectedSale.status !== 'cancelled' && (
                   <button
                     id="refund-sale-btn"
@@ -481,6 +739,14 @@ export default function SalesHistory({ sales, products, onCancelSale }: SalesHis
                     Estornar Transação
                   </button>
                 )}
+                <button
+                  id="print-receipt-btn"
+                  onClick={() => handlePrintReceipt(selectedSale)}
+                  className="px-4 py-2 border border-slate-200 text-slate-700 hover:bg-slate-100 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors"
+                >
+                  <Printer className="h-3.5 w-3.5" />
+                  Imprimir Recibo
+                </button>
               </div>
               <button
                 id="close-receipt-btn"

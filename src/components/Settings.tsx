@@ -453,6 +453,7 @@ export default function Settings({
   const [lastBackupUrl, setLastBackupUrl] = useState<string | null>(null);
   const [googleSuccessMsg, setGoogleSuccessMsg] = useState<string | null>(null);
   const [importingExcelData, setImportingExcelData] = useState(false);
+  const excelDataInputRef = useRef<HTMLInputElement>(null);
 
   const [isInIframe, setIsInIframe] = useState(false);
   useEffect(() => {
@@ -873,26 +874,32 @@ export default function Settings({
     }
   };
 
-  const handleImportExcelData = async () => {
+  const handleImportExcelData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
     setImportingExcelData(true);
     setImportError(null);
     setGoogleSuccessMsg(null);
-    try {
-      const response = await fetch('/imported_data.json');
-      if (!response.ok) throw new Error('Arquivo não encontrado. Gere o arquivo imported_data.json primeiro.');
-      const data = await response.json();
-      if (data.products && data.sales && data.categories) {
-        onImportDatabase({ products: data.products, sales: data.sales, categories: data.categories });
-        setImportSuccessMsg(`Dados importados com sucesso! ${data.products.length} produtos, ${data.sales.length} vendas, ${data.categories.length} categorias.`);
-        setTimeout(() => setImportSuccessMsg(null), 10000);
-      } else {
-        setImportError('Formato inválido. O arquivo precisa conter products, sales e categories.');
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target?.result as string);
+        if (data.products && data.sales && data.categories) {
+          onImportDatabase({ products: data.products, sales: data.sales, categories: data.categories });
+          setImportSuccessMsg(`Dados importados com sucesso! ${data.products.length} produtos, ${data.sales.length} vendas, ${data.categories.length} categorias.`);
+          setTimeout(() => setImportSuccessMsg(null), 10000);
+        } else {
+          setImportError('Formato inválido. O arquivo precisa conter products, sales e categories.');
+        }
+      } catch {
+        setImportError('Erro ao processar o arquivo JSON.');
+      } finally {
+        setImportingExcelData(false);
+        if (e.target) e.target.value = '';
       }
-    } catch (err: any) {
-      setImportError(err.message || 'Erro ao importar dados do Excel.');
-    } finally {
-      setImportingExcelData(false);
-    }
+    };
+    reader.readAsText(file);
   };
 
   return (
@@ -1053,7 +1060,8 @@ export default function Settings({
               <div className="space-y-2">
                 <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">Importar Dados do Excel (arquivo principal)</span>
                 <p className="text-[10px] text-slate-400">Importa todos os produtos e vendas das abas Vendas 2024, 2025 e 2026.</p>
-                <button onClick={handleImportExcelData} disabled={importingExcelData} className="w-full py-2.5 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 hover:border-emerald-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer">
+                <input type="file" ref={excelDataInputRef} accept=".json" onChange={handleImportExcelData} className="hidden" />
+                <button onClick={() => excelDataInputRef.current?.click()} disabled={importingExcelData} className="w-full py-2.5 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 hover:border-emerald-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer">
                   {importingExcelData ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileSpreadsheet className="h-4 w-4" />}
                   Importar Dados Excel (2024-2026)
                 </button>
