@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { ServiceOrder, OsItem, Product, StoreInfo } from '../types';
 import {
   FileText,
@@ -11,12 +11,12 @@ import {
   ClipboardList,
   CheckCircle2
 } from 'lucide-react';
-import { loadUserOrders, saveUserOrder, deleteUserOrder } from '../lib/dbSync';
 
 interface OsOrcamentoProps {
   products: Product[];
   storeInfo: StoreInfo;
-  userId?: string | null;
+  orders: ServiceOrder[];
+  onOrdersChange: (orders: ServiceOrder[]) => void;
 }
 
 const generateId = () => `os_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
@@ -34,14 +34,9 @@ const statusLabels: Record<string, { label: string; color: string }> = {
   rejeitada: { label: 'Rejeitada', color: 'bg-rose-100 text-rose-700' }
 };
 
-export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamentoProps) {
-  const [orders, setOrders] = useState<ServiceOrder[]>(() => {
-    try {
-      const saved = localStorage.getItem('zm_service_orders');
-      return saved ? JSON.parse(saved) : [];
-    } catch { return []; }
-  });
-  const loadedFromCloud = useRef(false);
+export default function OsOrcamento({ products, storeInfo, orders: initialOrders, onOrdersChange }: OsOrcamentoProps) {
+  const [orders, setOrders] = useState<ServiceOrder[]>(initialOrders);
+  useEffect(() => { setOrders(initialOrders); }, [initialOrders]);
   const [activeView, setActiveView] = useState<'list' | 'form' | 'detail'>('list');
   const [selectedOrder, setSelectedOrder] = useState<ServiceOrder | null>(null);
   const [filterType, setFilterType] = useState<'all' | 'os' | 'orcamento'>('all');
@@ -65,26 +60,6 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
   const [itemQty, setItemQty] = useState(1);
   const [itemPrice, setItemPrice] = useState(0);
 
-  // Load from cloud on mount
-  useEffect(() => {
-    if (!userId || loadedFromCloud.current) return;
-    loadedFromCloud.current = true;
-    loadUserOrders(userId).then(cloudOrders => {
-      if (cloudOrders.length > 0) {
-        setOrders(cloudOrders);
-        localStorage.setItem('zm_service_orders', JSON.stringify(cloudOrders));
-      } else {
-        // Cloud empty, upload local data
-        const localOrders = orders;
-        if (localOrders.length > 0) {
-          for (const o of localOrders) {
-            saveUserOrder(userId, o).catch(() => {});
-          }
-        }
-      }
-    }).catch(() => {});
-  }, [userId]);
-
   // Warn before leaving form with unsaved data
   useEffect(() => {
     if (activeView !== 'form') return;
@@ -97,14 +72,7 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
 
   const saveOrders = (newOrders: ServiceOrder[]) => {
     setOrders(newOrders);
-    localStorage.setItem('zm_service_orders', JSON.stringify(newOrders));
-    if (userId) {
-      // Sync last changed order to cloud
-      // For full sync we save all in background
-      for (const o of newOrders) {
-        saveUserOrder(userId, o).catch(() => {});
-      }
-    }
+    onOrdersChange(newOrders);
   };
 
   const filteredOrders = useMemo(() => {
@@ -191,7 +159,6 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
   const handleDelete = (orderId: string) => {
     if (window.confirm('Excluir esta ordem/orçamento?')) {
       saveOrders(orders.filter(o => o.id !== orderId));
-      if (userId) deleteUserOrder(userId, orderId).catch(() => {});
       if (selectedOrder?.id === orderId) {
         setSelectedOrder(null);
         setActiveView('list');

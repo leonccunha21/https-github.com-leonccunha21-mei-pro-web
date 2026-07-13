@@ -3,10 +3,11 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const SPREADSHEET_PATH = path.join(PROJECT_ROOT, 'data', 'excel', 'arquivo princial.xlsx');
+const SPREADSHEET_PATH = path.join(PROJECT_ROOT, 'data', 'excel', 'Relatório de Vendas.xlsx');
 const OUTPUT_EXCEL = path.join(PROJECT_ROOT, 'data', 'excel', 'Backup_Dados_Completos.xlsx');
 const OUTPUT_DATA_TS = path.join(PROJECT_ROOT, 'src', 'data.ts');
 const OUTPUT_DATA_JSON = path.join(PROJECT_ROOT, 'src', 'data.json');
+const VENDAS_2023_PATH = path.join(PROJECT_ROOT, 'data', 'excel', 'Vendas 2023.xlsx');
 // Inline categorize logic from src/lib/categorize.ts
 const DEFAULT_CATEGORY = 'Diversos';
 function categorizeProduct(name) {
@@ -235,13 +236,98 @@ const forma = row[13];
   return sales;
 }
 
+// Parse the separate "Vendas 2023.xlsx" (monthly format, no daily date)
+function parseVendas2023Sheet() {
+  if (!fs.existsSync(VENDAS_2023_PATH)) {
+    console.log('Vendas 2023.xlsx nao encontrado - pulando 2023');
+    return [];
+  }
+  const wb23 = XLSX.readFile(VENDAS_2023_PATH);
+  const ws = wb23.Sheets['Vendas'];
+  if (!ws) { console.log('Aba Vendas nao encontrada em Vendas 2023.xlsx'); return []; }
+
+  const raw = XLSX.utils.sheet_to_json(ws, { header: 1 });
+  const sales = [];
+  let totalQty = 0;
+  const monthMap = {
+    'janeiro': 1, 'fevereiro': 2, 'março': 3, 'marco': 3, 'abril': 4, 'maio': 5,
+    'junho': 6, 'julho': 7, 'agosto': 8, 'setembro': 9, 'outubro': 10,
+    'novembro': 11, 'dezembro': 12
+  };
+
+  for (let i = 1; i < raw.length; i++) {
+    const row = raw[i];
+    if (!row || row.length < 6) continue;
+    const productName = normalizeName(row[2]);
+    if (!productName || productName === 'Total') continue;
+
+    const qty = Number(row[3]) || 1;
+    if (qty <= 0) continue;
+    const totalCost = Number(row[4]) || 0;
+    const totalValue = Number(row[5]) || 0;
+    totalQty += qty;
+
+    const mes = String(row[1] || '').toLowerCase().trim();
+    const monthIdx = monthMap[mes] || 1;
+    const date = `2023-${String(monthIdx).padStart(2, '0')}-15T00:00:00.000Z`;
+
+    const situacao = String(row[7] || '').toLowerCase().trim();
+    const plataforma = normalizeName(row[8]) || 'Loja Física';
+    const plataformaLower = plataforma.toLowerCase();
+
+    let saleChannel = 'Loja Física';
+    let ecommerceOrderId = undefined;
+    let client = '';
+    if (plataformaLower.includes('shopee') || plataformaLower.includes('tiktok') || plataformaLower.includes('olx')) {
+      saleChannel = plataforma;
+    }
+    const saleType = saleChannel !== 'Loja Física' ? 'CNPJ' : 'CPF';
+
+    let paymentMethod = 'money';
+    if (situacao === 'transferido' || situacao === 'pix') paymentMethod = 'pix';
+    else if (situacao === 'cartão' || situacao === 'cartao' || situacao === 'crédito' || situacao === 'credito' || situacao === 'débito' || situacao === 'debito') paymentMethod = 'card_credit';
+
+    let paymentStatus = 'completed';
+    if (situacao === 'aguardando' || situacao === 'ainda não' || situacao === 'ainda nao') paymentStatus = 'pending';
+
+    const unitCost = qty > 0 ? roundCurrency(totalCost / qty) : 0;
+    const unitPrice = qty > 0 ? roundCurrency(totalValue / qty) : 0;
+    const finalTotalCost = totalCost || 0;
+    const finalTotalValue = totalValue || 0;
+    const finalProfit = roundCurrency(finalTotalValue - finalTotalCost);
+
+    sales.push({
+      date,
+      productName,
+      qty,
+      unitCost,
+      totalCost: finalTotalCost,
+      unitPrice: unitPrice || roundCurrency(finalTotalValue / qty),
+      totalValue: finalTotalValue,
+      profit: finalProfit,
+      client,
+      seller: '',
+      paymentMethod,
+      saleChannel,
+      ecommerceOrderId,
+      saleType,
+      year: 2023,
+      paymentStatus
+    });
+  }
+
+  console.log(`Vendas 2023: ${sales.length} rows, ${totalQty} itens (qty sum)`);
+  return sales;
+}
+
 const sales2024 = parseSalesSheet('Vendas 2024', 2024);
 const sales2025 = parseSalesSheet('Vendas 2025', 2025);
 const sales2026 = parseSalesSheet('Vendas 2026', 2026);
-const allSales = [...sales2024, ...sales2025, ...sales2026];
+const sales2023 = parseVendas2023Sheet();
+const allSales = [...sales2024, ...sales2025, ...sales2026, ...sales2023];
 
 console.log(`\nTotal sales items: ${allSales.length}`);
-console.log(`2024: ${sales2024.length}, 2025: ${sales2025.length}, 2026: ${sales2026.length}`);
+console.log(`2023: ${sales2023.length}, 2024: ${sales2024.length}, 2025: ${sales2025.length}, 2026: ${sales2026.length}`);
 
 // 3. Cross-reference: Add sale items not in products to product list
 const productNames = new Set(productMap.keys());
@@ -318,6 +404,7 @@ console.log(`Total unique products: ${productMap.size}`);
 const finalProducts = [];
 let pid = 1;
 for (const [name, p] of productMap) {
+  const isService = p.category && (p.category.toLowerCase() === 'serviços' || p.category.toLowerCase() === 'servico' || p.category.toLowerCase() === 'serviço');
   finalProducts.push({
     id: `p_${pid}`,
     code: `PROD-${String(pid).padStart(4, '0')}`,
@@ -325,8 +412,9 @@ for (const [name, p] of productMap) {
     category: p.category,
     costPrice: p.costPrice || 0,
     salePrice: p.salePrice || 0,
-    stock: p.stock || 0,
-    minStock: 0,
+    // Serviços não possuem quantidade em estoque
+    stock: isService ? 0 : (p.stock || 0),
+    minStock: isService ? 0 : 0,
     status: 'disponivel',
     createdAt: new Date().toISOString()
   });
@@ -562,6 +650,7 @@ console.log('\n========== RESUMO ==========');
 console.log(`Produtos: ${finalProducts.length}`);
 console.log(`Categorias: ${finalCategories.length} (${[...categorySet].join(', ')})`);
 console.log(`Vendas: ${finalSales.length}`);
+console.log(`  2023: ${sales2023.length} itens`);
 console.log(`  2024: ${sales2024.length} itens`);
 console.log(`  2025: ${sales2025.length} itens`);
 console.log(`  2026: ${sales2026.length} itens`);
@@ -576,7 +665,7 @@ for (const s of allSales) {
 console.log(`\nVendas únicas (agrupadas por data+cliente): ${saleGroups.size}`);
 
 // Total values by year
-for (const year of [2024, 2025, 2026]) {
+for (const year of [2023, 2024, 2025, 2026]) {
   const yearSales = allSales.filter(s => s.year === year);
   const totalVal = yearSales.reduce((a, s) => a + s.totalValue, 0);
   const totalCost = yearSales.reduce((a, s) => a + s.totalCost, 0);

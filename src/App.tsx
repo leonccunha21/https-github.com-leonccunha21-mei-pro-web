@@ -7,7 +7,8 @@ import {
   Expense,
   ActiveTab, 
   PaymentMethod,
-  StoreInfo
+  StoreInfo,
+  ServiceOrder
 } from './types';
 import { initialProducts, initialSales, initialCategories, initialExpenses } from './data';
 
@@ -29,7 +30,7 @@ import {
   Settings as SettingsIcon,
   ClipboardList,
   Clock,
-  Cloud,
+  HardDrive,
   Loader2,
   Sun,
   Moon,
@@ -40,31 +41,9 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
 
-// Firebase Imports
-import { 
-  initAuth, 
-  googleSignIn, 
-  logoutUser 
-} from './lib/firebase';
 import { categorizeProduct } from './lib/categorize';
 import { roundCurrency } from './lib/currency';
-import { 
-  loadUserProducts, 
-  loadUserCategories, 
-  loadUserSales,
-  loadUserStoreInfo,
-  saveUserProduct, 
-  saveUserCategory, 
-  saveUserSale, 
-  saveUserStoreInfo,
-  deleteUserProduct,
-  clearUserProducts,
-  clearUserCategories,
-  clearUserSales,
-  saveUserProductsBatch,
-  saveUserCategoriesBatch,
-  saveUserSalesBatch
-} from './lib/dbSync';
+import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
 
@@ -77,16 +56,12 @@ export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
   const [currentTime, setCurrentTime] = useState<string>('');
 
-  // Firebase auth & cloud loading states
-  const [user, setUser] = useState<any>(null);
-  const [accessToken, setAccessToken] = useState<string | null>(null);
-  const [authInitialized, setAuthInitialized] = useState(false);
-  const [loadingCloud, setLoadingCloud] = useState<boolean>(false);
-  const [loginError, setLoginError] = useState<string | null>(null);
-  const loadingCloudRef = React.useRef<boolean>(false);
+  // Local mode states
+  const [loading, setLoading] = useState<boolean>(true);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [showVendasEstoque, setShowVendasEstoque] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [orders, setOrders] = useState<ServiceOrder[]>([]);
 
   const [storeInfo, setStoreInfo] = useState(() => {
     try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
@@ -112,308 +87,122 @@ export default function App() {
     document.documentElement.classList.toggle('dark', darkMode);
   }, []);
 
-  // Auth gate: only load data when user is properly authenticated
+  // Load all data from the local backend on startup (100% local, no cloud)
   useEffect(() => {
-    if (!authInitialized) return;
-    if (!user) {
-      loadLocalData();
-    }
-  }, [user, authInitialized]);
-
-  // Load local data helper
-  const loadLocalData = () => {
-    const localProducts = localStorage.getItem('loja_products');
-    const localSales = localStorage.getItem('loja_sales');
-    const localExpenses = localStorage.getItem('loja_expenses');
-    const localCategories = localStorage.getItem('loja_categories');
-    const localStoreInfo = localStorage.getItem('zm_store_info');
-
-    let parsedProducts: Product[] = [];
-    let parsedSales: Sale[] = [];
-    let parsedExpenses: Expense[] = [];
-    let parsedCategories: Category[] = [];
-    let parsedStoreInfo: StoreInfo | null = null;
-
-    try {
-      if (localProducts) {
-        parsedProducts = JSON.parse(localProducts);
+    (async () => {
+      try {
+        const db = await loadDb();
+        const initialized = db.initialized === true;
+        const p = initialized && Array.isArray(db.products) ? db.products : initialProducts;
+        const s = initialized && Array.isArray(db.sales) ? db.sales : initialSales;
+        const e = initialized && Array.isArray(db.expenses) ? db.expenses : initialExpenses;
+        const c = initialized && Array.isArray(db.categories) ? db.categories : initialCategories;
+        const seededProducts = runStockCleanup(p);
+        setProducts(seededProducts);
+        setSales(s);
+        setExpenses(e);
+        setCategories(c);
+        setOrders(initialized && Array.isArray(db.orders) ? db.orders : []);
+        if (db.storeInfo) {
+          setStoreInfo(db.storeInfo);
+        }
+        // First run: persist the seeded initial data and mark the DB as initialized
+        // so a later "reset to empty" is respected (an empty DB is no longer
+        // interpreted as "fresh install, reload defaults").
+        if (!initialized) {
+          persist({
+            products: seededProducts,
+            sales: s,
+            categories: c,
+            expenses: e,
+            orders: [],
+            storeInfo: db.storeInfo || null,
+            initialized: true,
+          });
+        }
+      } catch {
+        setProducts(initialProducts);
+        setSales(initialSales);
+        setExpenses(initialExpenses);
+        setCategories(initialCategories);
+      } finally {
+        setLoading(false);
       }
-      if (!parsedProducts || parsedProducts.length === 0) {
-        parsedProducts = initialProducts;
-      }
-
-      if (localSales) {
-        parsedSales = JSON.parse(localSales);
-      }
-      if (!parsedSales || parsedSales.length === 0) {
-        parsedSales = initialSales;
-      }
-
-      if (localExpenses) {
-        parsedExpenses = JSON.parse(localExpenses);
-      }
-      if (!parsedExpenses || parsedExpenses.length === 0) {
-        parsedExpenses = initialExpenses;
-      }
-
-      if (localCategories) {
-        parsedCategories = JSON.parse(localCategories);
-      }
-      if (!parsedCategories || parsedCategories.length === 0) {
-        parsedCategories = initialCategories;
-      }
-
-      if (localStoreInfo) parsedStoreInfo = JSON.parse(localStoreInfo);
-    } catch {
-      parsedProducts = initialProducts;
-      parsedSales = initialSales;
-      parsedExpenses = initialExpenses;
-      parsedCategories = initialCategories;
-    }
-
-    // Always clean and deduplicate on load
-    parsedProducts = runStockCleanup(parsedProducts);
-
-    // Apply categories correction on load
-    parsedProducts = parsedProducts.map(p => {
-      const correct = categorizeProduct(p.name);
-      return p.category === correct ? p : { ...p, category: correct };
-    });
-
-    setProducts(parsedProducts);
-    setCategories(parsedCategories);
-    setSales(parsedSales);
-    setExpenses(parsedExpenses);
-    if (parsedStoreInfo) setStoreInfo(parsedStoreInfo);
-
-    localStorage.setItem('loja_products', JSON.stringify(parsedProducts));
-    localStorage.setItem('loja_sales', JSON.stringify(parsedSales));
-    localStorage.setItem('loja_categories', JSON.stringify(parsedCategories));
-    localStorage.setItem('loja_expenses', JSON.stringify(parsedExpenses));
-
-    return { parsedProducts, parsedSales, parsedCategories, parsedExpenses, parsedStoreInfo };
-  };
-
-  // Sync Cloud Data
-  const loadCloudData = async (uid: string) => {
-    if (loadingCloudRef.current) return;
-    loadingCloudRef.current = true;
-    setLoadingCloud(true);
-
-    // 1. Always load local data first so the user sees something immediately
-    const { parsedProducts, parsedSales, parsedCategories, parsedExpenses, parsedStoreInfo } = loadLocalData();
-    const deletedProductIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
-
-    // 2. Try to load from cloud (parallelized)
-    try {
-      const [cloudProducts, cloudCategories, cloudSales, cloudStoreInfo] = await Promise.all([
-        loadUserProducts(uid),
-        loadUserCategories(uid),
-        loadUserSales(uid),
-        loadUserStoreInfo(uid),
-      ]);
-
-      // Merge StoreInfo: prefer cloud if it has more data, else local
-      let finalStoreInfo = parsedStoreInfo;
-      if (cloudStoreInfo && (Object.keys(cloudStoreInfo).some(k => cloudStoreInfo[k]) || !parsedStoreInfo)) {
-        finalStoreInfo = { ...parsedStoreInfo, ...cloudStoreInfo };
-        localStorage.setItem('zm_store_info', JSON.stringify(finalStoreInfo));
-        setStoreInfo(finalStoreInfo);
-      } else if (parsedStoreInfo && !cloudStoreInfo) {
-        // Local has data, cloud doesn't - push to cloud
-        await saveUserStoreInfo(uid, parsedStoreInfo);
-      }
-
-      if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
-        // Merge local + cloud: keep everything from both sources, but respect deletions
-        const deletedSet = new Set(deletedProductIds);
-
-        // Merge products: cloud version takes precedence for identical IDs
-        const mergedProductsMap = new Map<string, Product>();
-        for (const lp of parsedProducts) {
-          if (!deletedSet.has(lp.id)) {
-            mergedProductsMap.set(lp.id, lp);
-          }
-        }
-        for (const cp of cloudProducts) {
-          if (!deletedSet.has(cp.id)) {
-            const correct = categorizeProduct(cp.name);
-            const correctedCp = cp.category === correct ? cp : { ...cp, category: correct };
-            mergedProductsMap.set(cp.id, correctedCp);
-          }
-        }
-        const mergedProducts = Array.from(mergedProductsMap.values());
-
-        // Merge categories: cloud version takes precedence
-        const mergedCategoriesMap = new Map<string, Category>();
-        for (const lc of parsedCategories) {
-          mergedCategoriesMap.set(lc.id, lc);
-        }
-        for (const cc of cloudCategories) {
-          mergedCategoriesMap.set(cc.id, cc);
-        }
-        const mergedCategories = Array.from(mergedCategoriesMap.values());
-
-        // Merge sales: cloud version takes precedence
-        const mergedSalesMap = new Map<string, Sale>();
-        for (const ls of parsedSales) {
-          mergedSalesMap.set(ls.id, ls);
-        }
-        for (const cs of cloudSales) {
-          mergedSalesMap.set(cs.id, cs);
-        }
-        const mergedSales = Array.from(mergedSalesMap.values()).sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
-
-        const cleanedMergedProducts = runStockCleanup(mergedProducts);
-
-        console.log(`Sync: local ${parsedProducts.length}p/${parsedCategories.length}c/${parsedSales.length}s | cloud ${cloudProducts.length}p/${cloudCategories.length}c/${cloudSales.length}s | deleted ${deletedProductIds.length} | merged & cleaned ${cleanedMergedProducts.length}p/${mergedCategories.length}c/${mergedSales.length}s`);
-
-        setProducts(cleanedMergedProducts);
-        setCategories(mergedCategories);
-        setSales(mergedSales);
-        localStorage.setItem('loja_products', JSON.stringify(cleanedMergedProducts));
-        localStorage.setItem('loja_sales', JSON.stringify(mergedSales));
-        localStorage.setItem('loja_categories', JSON.stringify(mergedCategories));
-
-        // Push merged result to cloud in efficient batches to minimize network traffic & quota
-        const productsToSave: Product[] = [];
-        const cloudProductMap = new Map(cloudProducts.map(cp => [cp.id, cp]));
-        for (const p of cleanedMergedProducts) {
-          const cp = cloudProductMap.get(p.id);
-          if (!cp || JSON.stringify(cp) !== JSON.stringify(p)) {
-            productsToSave.push(p);
-          }
-        }
-        if (productsToSave.length > 0) {
-          await saveUserProductsBatch(uid, productsToSave);
-        }
-
-        const categoriesToSave: Category[] = [];
-        const cloudCategoryMap = new Map(cloudCategories.map(cc => [cc.id, cc]));
-        for (const c of mergedCategories) {
-          const cc = cloudCategoryMap.get(c.id);
-          if (!cc || JSON.stringify(cc) !== JSON.stringify(c)) {
-            categoriesToSave.push(c);
-          }
-        }
-        if (categoriesToSave.length > 0) {
-          await saveUserCategoriesBatch(uid, categoriesToSave);
-        }
-
-        const salesToSave: Sale[] = [];
-        const cloudSaleMap = new Map(cloudSales.map(cs => [cs.id, cs]));
-        for (const s of mergedSales) {
-          const cs = cloudSaleMap.get(s.id);
-          if (!cs || JSON.stringify(cs) !== JSON.stringify(s)) {
-            salesToSave.push(s);
-          }
-        }
-        if (salesToSave.length > 0) {
-          await saveUserSalesBatch(uid, salesToSave);
-        }
-
-        // Also delete removed products from cloud
-        const finalDeletedProductIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
-        for (const deletedId of finalDeletedProductIds) {
-          try { await deleteUserProduct(uid, deletedId); } catch {}
-        }
-      } else {
-        console.log('Cloud vazia. Enviando dados locais em lote...');
-        await saveUserProductsBatch(uid, parsedProducts);
-        await saveUserCategoriesBatch(uid, parsedCategories);
-        await saveUserSalesBatch(uid, parsedSales);
-        console.log('Upload de dados locais em lote realizado com sucesso!');
-      }
-    } catch (err) {
-      console.error("Erro na nuvem (usando dados locais):", err);
-    } finally {
-      loadingCloudRef.current = false;
-      setLoadingCloud(false);
-    }
-  };
-
-  // Auth Listener setup
-  useEffect(() => {
-    let cancelled = false;
-    const unsubscribe = initAuth(
-      async (loggedInUser, token) => {
-        if (cancelled) return;
-        setUser(loggedInUser);
-        setAccessToken(token);
-        setAuthInitialized(true);
-        await loadCloudData(loggedInUser.uid);
-      },
-      () => {
-        if (cancelled) return;
-        setUser(null);
-        setAccessToken(null);
-        setAuthInitialized(true);
-      }
-    );
-    return () => { cancelled = true; unsubscribe(); };
+    })();
   }, []);
 
+
+
+
+
   // Sync state helpers
-  const saveProductsToStorage = async (updatedProducts: Product[], changedProduct?: Product, isDeletedId?: string) => {
+  // Persist the full local DB to the backend file (debounced merge of partial updates)
+  const stateRef = React.useRef<{
+    products: Product[];
+    sales: Sale[];
+    categories: Category[];
+    expenses: Expense[];
+    orders: ServiceOrder[];
+    storeInfo: StoreInfo | null;
+    initialized?: boolean;
+  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null });
+  stateRef.current = { products, sales, categories, expenses, orders, storeInfo };
+
+  const pendingRef = React.useRef<Partial<LocalDb>>({});
+  const saveTimer = React.useRef<number | null>(null);
+
+  const persist = (partial: Partial<LocalDb>) => {
+    const cur = stateRef.current;
+    const prev = pendingRef.current;
+    const merged: LocalDb = {
+      products: partial.products ?? prev.products ?? cur.products,
+      sales: partial.sales ?? prev.sales ?? cur.sales,
+      categories: partial.categories ?? prev.categories ?? cur.categories,
+      expenses: partial.expenses ?? prev.expenses ?? cur.expenses,
+      orders: partial.orders ?? prev.orders ?? cur.orders,
+      storeInfo: partial.storeInfo !== undefined ? partial.storeInfo : (prev.storeInfo !== undefined ? prev.storeInfo : cur.storeInfo),
+      initialized: partial.initialized !== undefined ? partial.initialized : (prev.initialized !== undefined ? prev.initialized : cur.initialized),
+    };
+    pendingRef.current = merged;
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = window.setTimeout(() => {
+      const db = pendingRef.current as LocalDb;
+      pendingRef.current = {};
+      saveDb(db).catch((e) => console.error('Erro ao salvar banco local:', e));
+    }, 250);
+  };
+
+  const saveProductsToStorage = async (updatedProducts: Product[], _changedProduct?: Product, _isDeletedId?: string) => {
     // Automatically deduplicate on save to guarantee zero duplicate products exist
     const cleaned = runStockCleanup(updatedProducts);
     setProducts(cleaned);
-    localStorage.setItem('loja_products', JSON.stringify(cleaned));
-    
-    if (user) {
-      try {
-        if (isDeletedId) {
-          await deleteUserProduct(user.uid, isDeletedId);
-        } else if (changedProduct) {
-          // Check if changed product was merged
-          const exists = cleaned.some(p => p.id === changedProduct.id);
-          if (exists) {
-            await saveUserProduct(user.uid, changedProduct);
-          } else {
-            // If it was merged, sync the entire cleaned list to reflect the merge
-            await saveUserProductsBatch(user.uid, cleaned);
-          }
-        } else {
-          await saveUserProductsBatch(user.uid, cleaned);
-        }
-
-        // Delete any marked duplicate product IDs from the cloud
-        const deletedIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
-        if (deletedIds.length > 0) {
-          for (const dId of deletedIds) {
-            try { await deleteUserProduct(user.uid, dId); } catch {}
-          }
-          localStorage.removeItem('loja_deleted_products');
-        }
-      } catch (e) {
-        console.error('Erro ao sincronizar produtos com a nuvem:', e);
-      }
-    }
+    persist({ products: cleaned });
   };
 
-  const saveSalesToStorage = async (updatedSales: Sale[], changedSale?: Sale) => {
+  const saveSalesToStorage = async (updatedSales: Sale[], _changedSale?: Sale) => {
     setSales(updatedSales);
-    localStorage.setItem('loja_sales', JSON.stringify(updatedSales));
-    
-    if (user) {
-      try {
-        if (changedSale) {
-          await saveUserSale(user.uid, changedSale);
-        } else {
-          // Overwrite with batch directly (no clear needed, as sales are never deleted)
-          await saveUserSalesBatch(user.uid, updatedSales);
-        }
-      } catch (e) {
-        console.error('Erro ao sincronizar vendas com a nuvem:', e);
-      }
-    }
+    persist({ sales: updatedSales });
   };
 
   const saveExpensesToStorage = (updatedExpenses: Expense[]) => {
     setExpenses(updatedExpenses);
-    localStorage.setItem('loja_expenses', JSON.stringify(updatedExpenses));
+    persist({ expenses: updatedExpenses });
+  };
+
+  const saveCategoriesToStorage = async (updatedCategories: Category[], _changedCategory?: Category) => {
+    setCategories(updatedCategories);
+    persist({ categories: updatedCategories });
+  };
+
+  const saveOrdersToStorage = (updatedOrders: ServiceOrder[]) => {
+    setOrders(updatedOrders);
+    persist({ orders: updatedOrders });
+  };
+
+  const handleStoreInfoChange = (info: StoreInfo) => {
+    setStoreInfo(info);
+    persist({ storeInfo: info });
+    window.dispatchEvent(new Event('storeInfoChanged'));
   };
 
   const handleAddExpense = (expense: Expense) => {
@@ -424,22 +213,8 @@ export default function App() {
     saveExpensesToStorage(expenses.filter(e => e.id !== id));
   };
 
-  const saveCategoriesToStorage = async (updatedCategories: Category[], changedCategory?: Category) => {
-    setCategories(updatedCategories);
-    localStorage.setItem('loja_categories', JSON.stringify(updatedCategories));
-    
-    if (user) {
-      try {
-        if (changedCategory) {
-          await saveUserCategory(user.uid, changedCategory);
-        } else {
-          // Save batch directly to overwrite
-          await saveUserCategoriesBatch(user.uid, updatedCategories);
-        }
-      } catch (e) {
-        console.error('Erro ao sincronizar categorias com a nuvem:', e);
-      }
-    }
+  const handleUpdateExpense = (updatedExpense: Expense) => {
+    saveExpensesToStorage(expenses.map(e => e.id === updatedExpense.id ? updatedExpense : e));
   };
 
   // Clock tick
@@ -452,47 +227,6 @@ export default function App() {
     const interval = setInterval(updateTime, 60000);
     return () => clearInterval(interval);
   }, []);
-
-  // --- GOOGLE AUTH HANDLERS ---
-  const handleGoogleLogin = async () => {
-    setLoginError(null);
-    try {
-      const result = await googleSignIn();
-      if (result) {
-        setUser(result.user);
-        setAccessToken(result.accessToken);
-      }
-    } catch (error: any) {
-      console.error("Erro no login com Google:", error);
-      let msg = 'Erro ao fazer login com Google.';
-      if (error?.code === 'auth/unauthorized-domain') {
-        msg = 'Domínio não autorizado. Adicione este domínio no Firebase Console > Authentication > Settings > Authorized Domains.';
-      } else if (error?.code === 'auth/popup-blocked') {
-        msg = 'Popup bloqueado pelo navegador. Permita popups para este site.';
-      } else if (error?.code === 'auth/popup-closed-by-user') {
-        msg = 'Janela de login fechada antes de concluir.';
-      } else if (error?.message) {
-        msg = 'Erro: ' + error.message;
-      }
-      setLoginError(msg);
-    }
-  };
-
-  const handleGoogleLogout = async () => {
-    if (window.confirm("Deseja realmente desconectar sua conta?")) {
-      await logoutUser();
-      setUser(null);
-      setAccessToken(null);
-      
-      // Clear data - user needs to login again
-      localStorage.removeItem('loja_products');
-      localStorage.removeItem('loja_sales');
-      localStorage.removeItem('loja_categories');
-      setProducts([]);
-      setSales([]);
-      setCategories([]);
-    }
-  };
 
   // --- ACTIONS ---
 
@@ -563,6 +297,7 @@ export default function App() {
     ecommerceOrderId?: string;
     saleType: 'CPF' | 'CNPJ';
     notes?: string;
+    pending?: boolean;
   }) => {
     // 1. Calculate costs and prices with floating point fix
     const subtotal = roundCurrency(saleData.items.reduce((acc, item) => acc + item.total, 0));
@@ -583,7 +318,7 @@ export default function App() {
       total: finalTotal,
       totalCost,
       profit,
-      status: 'completed',
+      status: saleData.pending ? 'pending' : 'completed',
       ecommerceOrderId: saleData.ecommerceOrderId,
       saleType: saleData.saleType,
       notes: saleData.notes
@@ -640,15 +375,80 @@ export default function App() {
     saveSalesToStorage(updatedSales, { ...cancelledSale, status: 'cancelled' });
   };
 
-  // Import whole database from external source
+  // Import whole database from external source (MERGE: preserves existing IDs,
+  // links and data; updates products matched by code/SKU or name instead of
+  // wiping the store and regenerating IDs, which previously corrupted sales).
   const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[] }) => {
-    const cleanedProducts = runStockCleanup(imported.products);
-    saveProductsToStorage(cleanedProducts);
-    saveSalesToStorage(imported.sales);
-    saveCategoriesToStorage(imported.categories);
-    if (imported.expenses) {
-      saveExpensesToStorage(imported.expenses);
+    const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
+
+    // --- Merge products by code (SKU) then by normalized name ---
+    const existingByCode = new Map<string, Product>(products.map(p => [p.code.trim().toLowerCase(), p] as [string, Product]));
+    const existingByName = new Map<string, Product>(products.map(p => [norm(p.name), p] as [string, Product]));
+    const mergedProducts: Product[] = [...products];
+
+    for (const imp of imported.products) {
+      const codeKey = imp.code.trim().toLowerCase();
+      const nameKey = norm(imp.name);
+      const existing = codeKey ? existingByCode.get(codeKey) : existingByName.get(nameKey);
+
+      if (existing) {
+        const idx = mergedProducts.findIndex(p => p.id === existing.id);
+        mergedProducts[idx] = {
+          ...existing,
+          code: imp.code || existing.code,
+          name: imp.name || existing.name,
+          category: imp.category || existing.category,
+          costPrice: imp.costPrice ?? existing.costPrice,
+          salePrice: imp.salePrice ?? existing.salePrice,
+          stock: imp.stock ?? existing.stock,
+          minStock: imp.minStock ?? existing.minStock,
+          description: imp.description ?? existing.description,
+          status: imp.status || existing.status,
+          archived: imp.archived ?? existing.archived
+        };
+      } else {
+        const np: Product = {
+          id: imp.id || `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+          code: imp.code || '',
+          name: imp.name,
+          category: imp.category || 'Geral',
+          costPrice: imp.costPrice || 0,
+          salePrice: imp.salePrice || 0,
+          stock: imp.stock || 0,
+          minStock: imp.minStock || 0,
+          description: imp.description || '',
+          status: imp.status || 'disponivel',
+          archived: imp.archived || false,
+          createdAt: imp.createdAt || new Date().toISOString()
+        };
+        mergedProducts.push(np);
+        if (np.code) existingByCode.set(np.code.trim().toLowerCase(), np);
+        existingByName.set(norm(np.name), np);
+      }
     }
+
+    // --- Merge categories (keep existing, add new by name) ---
+    const catNames = new Set(categories.map(c => c.name.toLowerCase()));
+    const mergedCategories = [...categories];
+    for (const c of imported.categories) {
+      if (!catNames.has(c.name.toLowerCase())) {
+        mergedCategories.push(c);
+        catNames.add(c.name.toLowerCase());
+      }
+    }
+
+    // --- Merge sales by id (update if same id, else append) ---
+    const salesById = new Map<string, Sale>(sales.map(s => [s.id, s] as [string, Sale]));
+    for (const s of imported.sales) {
+      salesById.set(s.id, salesById.has(s.id) ? { ...salesById.get(s.id)!, ...s } : s);
+    }
+    const mergedSales = Array.from(salesById.values());
+
+    saveProductsToStorage(mergedProducts);
+    saveSalesToStorage(mergedSales);
+    saveCategoriesToStorage(mergedCategories);
+    if (imported.expenses) saveExpensesToStorage(imported.expenses);
+    persist({ initialized: true });
   };
 
   // Reset database to empty
@@ -657,6 +457,8 @@ export default function App() {
     saveSalesToStorage([]);
     saveCategoriesToStorage([]);
     saveExpensesToStorage([]);
+    saveOrdersToStorage([]);
+    persist({ initialized: true });
     setActiveTab('dashboard');
   };
 
@@ -685,7 +487,6 @@ export default function App() {
     }
 
     let merged: Product[] = [];
-    const productsToDeleteFromCloud: string[] = [];
 
     for (const group of byNormalizedName.values()) {
       if (group.length === 1) {
@@ -717,17 +518,9 @@ export default function App() {
         if (best.costPrice === 0 && group[i].costPrice > 0) {
           best.costPrice = group[i].costPrice;
         }
-        productsToDeleteFromCloud.push(group[i].id);
       }
 
       merged.push(best);
-    }
-
-    // Save the IDs of duplicate products we are removing so we can delete them from Cloud/Local
-    if (productsToDeleteFromCloud.length > 0) {
-      const deletedIdsFromStorage = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
-      const updatedDeletedIds = Array.from(new Set([...deletedIdsFromStorage, ...productsToDeleteFromCloud]));
-      localStorage.setItem('loja_deleted_products', JSON.stringify(updatedDeletedIds));
     }
 
     // Remove empty/placeholder products if they are completely empty
@@ -814,41 +607,13 @@ export default function App() {
     XLSX.writeFile(wb, 'controle_vendas_estoque.xlsx');
   };
 
-  // --- AUTH GATE: loading state ---
-  if (!authInitialized) {
+  // --- LOADING STATE (local backend) ---
+  if (loading) {
     return (
       <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
-          <p className="text-sm text-slate-500 dark:text-slate-400 font-semibold">Verificando sessão...</p>
-        </div>
-      </div>
-    );
-  }
-
-  // --- AUTH GATE: not logged in ---
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center p-6">
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 max-w-sm w-full text-center space-y-6">
-          <div className="w-16 h-16 bg-indigo-100 dark:bg-indigo-900/40 rounded-2xl flex items-center justify-center mx-auto">
-            <Cloud className="h-8 w-8 text-indigo-600" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-slate-900 dark:text-slate-100">GESTÃO.PRO</h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Faça login para acessar o sistema</p>
-          </div>
-
-          {loginError && (
-            <p className="text-xs text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-900/20 p-3 rounded-lg border border-rose-100 dark:border-rose-800 text-left leading-relaxed">{loginError}</p>
-          )}
-
-          <button
-            onClick={handleGoogleLogin}
-            className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-          >
-            Entrar com Google
-          </button>
+          <p className="text-sm text-slate-500 dark:text-slate-400 font-semibold">Carregando banco de dados local...</p>
         </div>
       </div>
     );
@@ -867,7 +632,7 @@ export default function App() {
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h2 className="font-bold text-sm tracking-tight text-slate-950 dark:text-slate-100 truncate">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
+          <h2 className="font-bold text-sm tracking-tight text-slate-950 dark:text-slate-100 truncate">ZM Store</h2>
           <span className="text-[9px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
         </div>
         <button
@@ -964,7 +729,7 @@ export default function App() {
               </div>
             )}
             <div className="flex-1">
-              <h2 className="font-bold text-base tracking-tight text-slate-950 dark:text-slate-100">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
+              <h2 className="font-bold text-base tracking-tight text-slate-950 dark:text-slate-100">ZM Store</h2>
               <span className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
             </div>
             <button
@@ -1027,19 +792,33 @@ export default function App() {
               Frente de Caixa
             </button>
 
-            {/* Tab 4: Sales History */}
-            <button
-              id="nav-sales"
-              onClick={() => setActiveTab('sales')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'sales' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <History className="h-4 w-4" />
-              Vendas
-            </button>
+            {/* Tab 4: Sales History (com submenu Devedores) */}
+            <div>
+              <button
+                id="nav-sales"
+                onClick={() => setActiveTab('sales')}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                  activeTab === 'sales' 
+                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <History className="h-4 w-4" />
+                Vendas
+              </button>
+              <button
+                id="nav-debtors"
+                onClick={() => setActiveTab('debtors')}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer mt-0.5 pl-9 ${
+                  activeTab === 'debtors' 
+                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                <Users className="h-4 w-4" />
+                Devedores
+              </button>
+            </div>
 
             {/* Tab 5: Reports */}
             <button
@@ -1113,50 +892,20 @@ export default function App() {
           </nav>
         </div>
 
-        {/* Firebase & Google Account Sync Box */}
-        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700 flex flex-col gap-2.5">
-          {loadingCloud ? (
-            <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 flex items-center justify-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
-              <Loader2 className="h-3.5 w-3.5 animate-spin text-indigo-600" />
-              <span>Sincronizando Nuvem...</span>
+        {/* Local mode indicator */}
+        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
+          <div className="bg-emerald-50/60 dark:bg-emerald-900/20 p-3 rounded-xl border border-emerald-100 dark:border-emerald-800 flex items-center gap-3">
+            <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white">
+              <HardDrive className="h-4 w-4" />
             </div>
-          ) : user ? (
-            <div className="bg-indigo-50/50 dark:bg-indigo-900/20 p-3 rounded-xl border border-indigo-100 dark:border-indigo-800 flex items-center gap-3">
-              {user.photoURL ? (
-                <img 
-                  src={user.photoURL} 
-                  alt={user.displayName} 
-                  className="w-8 h-8 rounded-full border border-indigo-200 dark:border-indigo-700" 
-                  referrerPolicy="no-referrer" 
-                />
-              ) : (
-                <div className="w-8 h-8 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                  {user.displayName?.[0] || 'U'}
-                </div>
-              )}
-              <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate leading-snug">{user.displayName || 'Minha Loja'}</p>
-                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                  Nuvem Ativa
-                </span>
-              </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate leading-snug">Modo Local</p>
+              <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
+                Banco de dados no seu PC
+              </span>
             </div>
-          ) : (
-            <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 flex flex-col gap-2">
-              <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Sem Conexão</p>
-              <p className="text-[10px] text-slate-400 dark:text-slate-500 leading-normal">Faça login com sua conta Google para acessar seus dados na nuvem.</p>
-              {loginError && (
-                <p className="text-[10px] text-rose-600 dark:text-rose-400 leading-normal bg-rose-50 dark:bg-rose-900/20 p-2 rounded-lg border border-rose-100 dark:border-rose-800">{loginError}</p>
-              )}
-              <button 
-                onClick={handleGoogleLogin}
-                className="w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
-              >
-                Conectar Conta Google
-              </button>
-            </div>
-          )}
+          </div>
         </div>
 
         {/* Footer info box (time, date and version) */}
@@ -1243,7 +992,8 @@ export default function App() {
               <OsOrcamento 
                 products={products}
                 storeInfo={storeInfo as StoreInfo}
-                userId={user?.uid}
+                orders={orders}
+                onOrdersChange={saveOrdersToStorage}
               />
             )}
 
@@ -1263,6 +1013,7 @@ export default function App() {
                 expenses={expenses}
                 onAddExpense={handleAddExpense}
                 onDeleteExpense={handleDeleteExpense}
+                onUpdateExpense={handleUpdateExpense}
               />
             )}
 
@@ -1272,14 +1023,10 @@ export default function App() {
                 sales={sales}
                 categories={categories}
                 expenses={expenses}
-                user={user}
-                accessToken={accessToken}
-                onGoogleLogin={handleGoogleLogin}
-                onGoogleLogout={handleGoogleLogout}
+                storeInfo={storeInfo as StoreInfo}
+                onStoreInfoChange={handleStoreInfoChange}
                 onImportDatabase={handleImportDatabase}
                 onResetDatabase={handleResetDatabase}
-                onSaveStoreInfo={saveUserStoreInfo}
-                onLoadStoreInfo={() => loadUserStoreInfo(user?.uid || '')}
               />
             )}
           </motion.div>

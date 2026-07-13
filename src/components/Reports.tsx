@@ -32,6 +32,20 @@ const timeRangeLabels: Record<string, string> = {
   '1year': '1 Ano',
 };
 
+// Resolve the catalog product for a sale item. Imported sales have an empty
+// productId, so we fall back to matching by the normalized product name.
+const normalizeName = (name: string) =>
+  name.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+const findProductForItem = (item: { productId?: string; productName: string }, products: Product[]) => {
+  if (item.productId && item.productId.trim() !== '') {
+    const byId = products.find(p => p.id === item.productId);
+    if (byId) return byId;
+  }
+  const key = normalizeName(item.productName);
+  return products.find(p => normalizeName(p.name) === key);
+};
+
 export default function Reports({ products, sales, categories }: ReportsProps) {
   const [viewMode, setViewMode] = useState<'resume' | 'monthly' | 'yearly'>('resume');
   const [selectedYearState, setSelectedYearState] = useState<number | null>(null);
@@ -83,7 +97,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
     if (selectedCategory !== 'all') {
       result = result.filter(s =>
         s.items.some(item => {
-          const origProduct = products.find(p => p.id === item.productId);
+          const origProduct = findProductForItem(item, products);
           return (origProduct ? origProduct.category : 'Outros') === selectedCategory;
         })
       );
@@ -164,7 +178,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
       const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
       sale.items.forEach(item => {
-        const origProduct = products.find(p => p.id === item.productId);
+        const origProduct = findProductForItem(item, products);
         const catName = origProduct ? origProduct.category : 'Outros';
         if (!stats[catName]) stats[catName] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
         const effectiveTotal = item.total * discountRatio;
@@ -188,9 +202,9 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
       const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
       sale.items.forEach(item => {
-        const origProduct = products.find(p => p.id === item.productId);
+        const origProduct = findProductForItem(item, products);
         const catName = origProduct ? origProduct.category : 'Outros';
-        const key = item.productId || item.productName;
+        const key = item.productId || normalizeName(item.productName);
         if (!stats[key]) stats[key] = { productName: item.productName, category: catName, revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
         const effectiveTotal = item.total * discountRatio;
         stats[key].itemsSold += item.quantity;

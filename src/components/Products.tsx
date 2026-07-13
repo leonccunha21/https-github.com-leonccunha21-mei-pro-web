@@ -80,8 +80,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formName.trim() || !formCategory) return;
-    const isService = formCategory.toLowerCase() === 'serviço' || formCategory.toLowerCase() === 'servico';
-    const data = { code: formCode.trim() || generateSKU(formCategory), name: formName.trim(), category: formCategory, costPrice: Number(formCostPrice), salePrice: Number(formSalePrice), stock: isService ? 99999 : Number(formStock), minStock: isService ? 0 : Number(formMinStock), status: formStatus, description: formDescription.trim() || undefined };
+    const isService = /^servi/i.test(formCategory);
+    const data = { code: formCode.trim() || generateSKU(formCategory), name: formName.trim(), category: formCategory, costPrice: Number(formCostPrice), salePrice: Number(formSalePrice), stock: isService ? 0 : Number(formStock), minStock: isService ? 0 : Number(formMinStock), status: formStatus, description: formDescription.trim() || undefined };
     editingProduct ? onUpdateProduct({ ...editingProduct, ...data }) : onAddProduct(data);
     setIsModalOpen(false);
   };
@@ -590,7 +590,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                               <button onClick={() => onUnarchiveProduct(p.id)} className="p-1 hover:bg-emerald-50 text-emerald-600 rounded transition-colors" title="Restaurar"><RotateCcw className="h-3.5 w-3.5" /></button>
                             ) : (
                               <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1 hover:bg-amber-50 text-amber-600 rounded transition-colors" title="Arquivar"><Archive className="h-3.5 w-3.5" /></button>
-                            )}
+              )}
                           </div>
                         </td>
                       </tr>
@@ -673,7 +673,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                   </span>
                 </div>
               )}
-              {formCategory.toLowerCase() !== 'serviço' && formCategory.toLowerCase() !== 'servico' && (
+              {!/^servi/i.test(formCategory) && (
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Estoque</label>
@@ -685,7 +685,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                 </div>
               </div>
               )}
-              {formCategory.toLowerCase() !== 'serviço' && formCategory.toLowerCase() !== 'servico' && (
+              {!/^servi/i.test(formCategory) && (
               <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
                 <div>
                   <span className="text-[10px] font-bold text-slate-500 uppercase">Status do Produto</span>

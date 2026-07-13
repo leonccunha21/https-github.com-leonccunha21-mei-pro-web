@@ -2,35 +2,37 @@
 - Sempre que fizer uma atualizaçao ou correção, atualizar o arquivo atualize o site, mude o nomero da versao.
 - sempre que perminar uma melhoria marque um ok  [ok]
 
------------------------------------------------------------------------------------ nunca remover a parte das regras
-[ok]  Atualização de Vendas (v2.3.0): Dados extraídos da planilha original e gerados no data.ts.
-  -> 2024: 845 vendas / 1.576 itens / R$ 27.775,78
-  -> 2025: 919 vendas / 1.826 itens / R$ 35.020,98
-  -> 2026: 451 vendas / 679 itens / R$ 23.013,06
-  -> Backup Excel: arquivos excel/Backup_Dados_Completos.xlsx
-
-[ok]  Arquivo Excel de Backup (v2.3.0): Gerado em arquivos excel/Backup_Dados_Completos.xlsx com todos produtos e vendas.
-  -> Produtos: 982 (341 do PROD + 641 criados das vendas)
-  -> Categorias: 14 reais (auto-classificadas por nome)
-  -> Vendas: 2.215 linhas de itens
-
-[ok]  Validar dados e categorias: Dados extraídos da planilha original. Produtos auto-classificados em 14 categorias reais. Vendas mescladas, duplicatas por nome removidas.
+--------------------------------------------------------------------------------- nunca remover a parte das regras
 
 ## Funcionalidades do Sistema
 
-[ ]  Gestão de Devedores: Esta aba deve se tornar um sub-menu de "Vendas". O status de devedores deve ser padronizado como "Pendente" (não "Concluído"). Deve ser implementada a opção de cadastrar parcelas, atualizar pagamentos parciais e concluir o débito manualmente.
+[ok]  Gestão de Devedores (v2.5.0): tornou-se sub-menu de "Vendas" na sidebar. Status padronizado como "Pendente". Implementado cadastro de parcelas, registro de pagamentos parciais (atualiza valor restante) e conclusão manual do débito. Tipo Sale ganhou `installments?` e `paidAmount?`.
 
 ## Automação e Persistência
 
-[ ]  Bot de Automação: Criar um bot que inclua scripts de automação, como o sistema de throttling inteligente e retentativas automáticas que você já está desenvolvendo. O bot também deve automatizar o envio de arquivos ao GitHub e o processo de publicação.
+[ok]  Bot de Automação (v2.5.0): `scripts/bot.cjs` com throttle (limitação de taxa) e retentativas automáticas (backoff exponencial + jitter) para Git/deploy. Comandos `git-pull`, `git-push`, `sync` (planilha→pull→commit→push) e `publish` (sync+deploy Vercel).
 
-[ ]  Erro de Salvamento: Foi identificado um erro de migração no banco de dados que impede que as informações da loja e inventário sejam salvas corretamente. Uma correção para esse crash do sistema está sendo desenvolvida.
+[ok]  Banco de dados de vendas/estoque (v2.5.0): serviços (categoria "Serviços") não possuem quantidade — estoque zerado no pipeline e oculto no formulário de produto; corrigida a detecção de serviço (antes só reconhecia "serviço" singular, falhava com "Serviços").
 
-[ ] nao to conseguindo fazer o login no google aqui, nao aparece nada.
+[ok]  Pasta raiz organizada (v2.5.0): removidos arquivos soltos/desnecessários (activate.bat — script de ativação pirata do Windows —, dev.log, backup temporário src/data.json.atual.bak). Manteve-se hub.bat e metadata.json (tooling).
 
-[ ] atualizar banco de dados de vendas e estoque, para serviços, serviços nao possui quantidade.
+[ok]  README.md reescrito (v2.5.0): documentação com funcionalidades, stack, como rodar, pipeline da planilha, bot de automação, estrutura do projeto e regras de versionamento.
 
-[ ] organize a pasta raiz do projeto, muitos dados bagunçados, remova oque nao usamos mais.
+## Melhorias e Correções Concluídas [ok]
 
-[ ] melhore o arquivo readme.md deixe o mais bonito e com informaçoes importantes. 
+[ok]  v2.4.0 — Ano ativo dinâmico no Dashboard e Relatórios: o sistema cai no ano mais recente que possui vendas (e não no ano civil).
+[ok]  v2.4.0 — Filtro de data robusto (parseLocalDate) aceita DD/MM/YYYY, YYYY-MM-DD e variações; corrigido bug de datas que zeravam os filtros.
+[ok]  v2.4.0 — Deduplicação de estoque: normalização de nome de produto + soma de estoque em adição/edição/importação/carregamento/salvamento (App.runStockCleanup). Validação: 987 produtos únicos, 0 duplicados.
+[ok]  v2.4.0 — Correção "Mais Vendidos": itemKey usa productId ou nome normalizado; agregação correta (900 grupos distintos em vez de 1 blob). Top produtos coerentes.
+[ok]  v2.4.0 — Correção "Zerar banco volta tudo": flag `initialized` no localDb; primeiro load semeia + marca initialized; reset/import marcam initialized=true; data.json permanece intacto.
+[ok]  v2.4.0 — Service Worker desativado (sw.js no-op + main.tsx desregistra SW em dev) — elimina loop de recarregamento em desenvolvimento.
+[ok]  v2.4.0 — Planilha-mãe adotada como fonte oficial: `Relatório de Vendas.xlsx` (abas Vendas 2024/2025/2026, PROD, Devedores). `processar_dados.cjs` aponta para ela.
+[ok]  v2.4.0 — Integração de Vendas 2023: `Vendas 2023.xlsx` (aba Vendas, formato mensal) adiciona 518 vendas, 695 itens, R$ 33.931,69 e +207 produtos. Total: 987 produtos / 2733 vendas.
+[ok]  v2.4.0 — Pipeline converte planilha → src/data.json + src/data.ts + Backup Excel (Backup_Dados_Completos.xlsx) + data/local-db.json (initialized:true), preservando storeInfo/orders.
+[ok]  v2.4.0 — Verificação em produção: frontend :3000 e backend :4000 ativos; /api/db serve 987 prod / 2733 vendas; Mais Vendidos e Devedores (8 pendentes) funcionando; lint (tsc) passa.
 
+## Histórico de Versões
+
+- v2.5.0 [ok] — 13/07/2026: Devedores como submenu de Vendas + parcelas + pagamento parcial + concluir débito; Bot de Automação com throttle/retry (sync/publish); serviços sem quantidade (detecção corrigida); pasta raiz organizada; README reescrito.
+- v2.4.0 [ok] — 13/07/2026: ano dinâmico, filtro de data robusto, deduplicação de estoque, correção Mais Vendidos/Zerar banco, SW desativado, planilha-mãe adotada, integração Vendas 2023.
+- v2.3.0 — versão base anterior.

@@ -1,57 +1,8 @@
-const CACHE = 'zmstore-v1';
-const APP_SHELL = ['/', '/index.html', '/manifest.webmanifest', '/icon.svg', '/sw.js'];
-
-self.addEventListener('install', (event) => {
-  event.waitUntil(
-    caches.open(CACHE).then((cache) => cache.addAll(APP_SHELL)).catch(() => {})
-  );
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((keys) =>
-      Promise.all(keys.filter((k) => k !== CACHE).map((k) => caches.delete(k)))
-    )
-  );
-  self.clients.claim();
-});
-
-self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  if (request.method !== 'GET') return;
-
-  const url = new URL(request.url);
-  // Never cache Firebase / external API requests
-  if (!url.origin.includes(self.location.origin)) return;
-
-  // Navigation (SPA): network-first, fall back to cached index
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put('/index.html', copy));
-          return response;
-        })
-        .catch(() => caches.match('/index.html').then((r) => r || caches.match('/')))
-    );
-    return;
-  }
-
-  // Static assets: cache-first, then network (and cache the result)
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      if (cached) return cached;
-      return fetch(request)
-        .then((response) => {
-          if (response && response.status === 200) {
-            const copy = response.clone();
-            caches.open(CACHE).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        })
-        .catch(() => cached);
-    })
-  );
-});
+// Service Worker intencionalmente desativado (no-op).
+// Existia um SW que cacheava os modulos /src/* em desenvolvimento, causando
+// um loop de recarregamentos com o HMR do Vite. Este SW nao intercepta nem
+// cacheia nenhuma requisicao; serve apenas para substituir o SW antigo e
+// permitir que o main.tsx o desregistre de forma limpa.
+self.addEventListener('install', () => self.skipWaiting());
+self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()));
+// Sem handler de 'fetch': o navegador usa a rede diretamente.

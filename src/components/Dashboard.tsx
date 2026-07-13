@@ -134,7 +134,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   const totalProfit = totalRevenue - totalCost;
   const averageMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
 
-  const isServiceProduct = (p: Product) => p.category.toLowerCase() === 'serviço' || p.category.toLowerCase() === 'servico';
+  const isServiceProduct = (p: Product) => /^servi/i.test(p.category);
 
   // Stock alerts
   const physicalProducts = products.filter(p => !isServiceProduct(p) && !p.archived);
@@ -143,6 +143,14 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   const totalInventoryCostValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.costPrice), 0);
   const totalInventoryRetailValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.salePrice), 0);
 
+  // Grouping key for a sale item: prefer productId, but fall back to the
+  // normalized product name. The imported sales have empty productId, so we
+  // must rely on the name to avoid collapsing every item into a single entry.
+  const itemKey = (item: { productId?: string; productName: string }) => {
+    if (item.productId && item.productId.trim() !== '') return item.productId;
+    return item.productName.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  };
+
   // Top Selling Products
   const topProducts = useMemo(() => {
     const productSalesMap: Record<string, { name: string; qty: number; revenue: number; profit: number }> = {};
@@ -150,14 +158,15 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
       const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
       sale.items.forEach(item => {
-        if (!productSalesMap[item.productId]) {
-          productSalesMap[item.productId] = { name: item.productName, qty: 0, revenue: 0, profit: 0 };
+        const key = itemKey(item);
+        if (!productSalesMap[key]) {
+          productSalesMap[key] = { name: item.productName, qty: 0, revenue: 0, profit: 0 };
         }
         const effectiveTotal = item.total * discountRatio;
         const effectiveProfit = effectiveTotal - (item.costPrice * item.quantity);
-        productSalesMap[item.productId].qty += item.quantity;
-        productSalesMap[item.productId].revenue += effectiveTotal;
-        productSalesMap[item.productId].profit += effectiveProfit;
+        productSalesMap[key].qty += item.quantity;
+        productSalesMap[key].revenue += effectiveTotal;
+        productSalesMap[key].profit += effectiveProfit;
       });
     });
     return Object.values(productSalesMap).sort((a, b) => b.qty - a.qty).slice(0, 5);

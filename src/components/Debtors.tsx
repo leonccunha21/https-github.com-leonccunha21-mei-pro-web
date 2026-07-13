@@ -23,6 +23,7 @@ export default function Debtors({ sales, onUpdateSale }: DebtorsProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'completed'>('pending');
+  const [partialAmount, setPartialAmount] = useState<string>('');
 
   const debtSales = useMemo(() => {
     return sales.filter(s => {
@@ -59,6 +60,30 @@ export default function Debtors({ sales, onUpdateSale }: DebtorsProps) {
       onUpdateSale({ ...sale, status: 'completed', paidAt: new Date().toISOString() });
       setSelectedSale(null);
     }
+  };
+
+  const handlePartialPayment = (sale: Sale, amount: number) => {
+    if (!(amount > 0)) return;
+    const paid = (sale.paidAmount || 0) + amount;
+    const concluded = paid >= sale.total;
+    onUpdateSale({
+      ...sale,
+      paidAmount: paid,
+      status: concluded ? 'completed' : 'pending',
+      paidAt: concluded ? new Date().toISOString() : sale.paidAt
+    });
+    setPartialAmount('');
+  };
+
+  const handleConclude = (sale: Sale) => {
+    if (window.confirm(`Concluir débito de ${sale.clientName || 'Cliente'} no valor de R$ ${sale.total.toFixed(2)}?`)) {
+      onUpdateSale({ ...sale, status: 'completed', paidAmount: sale.total, paidAt: new Date().toISOString() });
+      setSelectedSale(null);
+    }
+  };
+
+  const handleSetInstallments = (sale: Sale, value: number) => {
+    onUpdateSale({ ...sale, installments: value > 0 ? value : undefined });
   };
 
   const formatDate = (iso: string) => {
@@ -222,6 +247,11 @@ export default function Debtors({ sales, onUpdateSale }: DebtorsProps) {
                         <span className={`font-mono font-bold text-xs ${isPending ? 'text-rose-600' : 'text-emerald-600'}`}>
                           {formatCurrency(sale.total)}
                         </span>
+                        {isPending && (sale.paidAmount || 0) > 0 && (
+                          <p className="text-[10px] text-slate-400 font-mono mt-0.5">
+                            Restante: {formatCurrency(Math.max(0, sale.total - (sale.paidAmount || 0)))}
+                          </p>
+                        )}
                       </td>
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-1 text-xs text-slate-600">
@@ -353,6 +383,52 @@ export default function Debtors({ sales, onUpdateSale }: DebtorsProps) {
                 </div>
               </div>
 
+              {/* Parcelas e Pagamento */}
+              <div className="grid grid-cols-2 gap-4 text-xs border-b border-slate-200 pb-4">
+                <div>
+                  <h4 className="font-bold text-slate-400 uppercase tracking-wider">Parcelas</h4>
+                  <div className="flex items-center gap-2 mt-1">
+                    <input
+                      type="number" min={1} max={24} value={selectedSale.installments || 1}
+                      onChange={e => handleSetInstallments(selectedSale, Number(e.target.value))}
+                      className="w-16 px-2 py-1 text-sm border border-slate-200 rounded-lg font-mono focus:outline-none focus:border-indigo-400"
+                    />
+                    <span className="text-slate-500">x de {formatCurrency(selectedSale.total / (selectedSale.installments || 1))}</span>
+                  </div>
+                </div>
+                <div className="border-l border-slate-200 pl-4">
+                  <h4 className="font-bold text-slate-400 uppercase tracking-wider">Pagamento</h4>
+                  <p className="text-slate-700 mt-1">
+                    Recebido: <span className="font-semibold text-emerald-600">{formatCurrency(selectedSale.paidAmount || 0)}</span>
+                  </p>
+                  <p className="text-slate-700">
+                    Restante: <span className="font-semibold text-rose-600">{formatCurrency(Math.max(0, selectedSale.total - (selectedSale.paidAmount || 0)))}</span>
+                  </p>
+                </div>
+              </div>
+
+              {/* Pagamento parcial */}
+              {selectedSale.status === 'pending' && (
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-3">
+                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Registrar Pagamento Parcial</h4>
+                  <div className="flex items-center gap-2">
+                    <span className="text-slate-500 font-mono">R$</span>
+                    <input
+                      type="number" min={0} step={0.01} value={partialAmount}
+                      onChange={e => setPartialAmount(e.target.value)}
+                      placeholder="0,00"
+                      className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg font-mono focus:outline-none focus:border-indigo-400"
+                    />
+                    <button
+                      onClick={() => handlePartialPayment(selectedSale, Number(partialAmount))}
+                      className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-colors"
+                    >
+                      Registrar
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {/* Items */}
               <div>
                 <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Itens da Compra</h4>
@@ -383,13 +459,22 @@ export default function Debtors({ sales, onUpdateSale }: DebtorsProps) {
               <div></div>
               <div className="flex items-center gap-2">
                 {selectedSale.status === 'pending' && (
-                  <button
-                    onClick={() => handleConfirmPayment(selectedSale)}
-                    className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors shadow-xs flex items-center gap-1.5"
-                  >
-                    <Check className="h-3.5 w-3.5" />
-                    Confirmar Pagamento
-                  </button>
+                  <>
+                    <button
+                      onClick={() => handleConclude(selectedSale)}
+                      className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold transition-colors shadow-xs flex items-center gap-1.5"
+                    >
+                      <CheckCircle className="h-3.5 w-3.5" />
+                      Concluir Débito
+                    </button>
+                    <button
+                      onClick={() => handleConfirmPayment(selectedSale)}
+                      className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-colors shadow-xs flex items-center gap-1.5"
+                    >
+                      <Check className="h-3.5 w-3.5" />
+                      Confirmar Pagamento
+                    </button>
+                  </>
                 )}
                 <button
                   onClick={() => setSelectedSale(null)}

@@ -4,6 +4,8 @@ dist/
 coverage/
 .DS_Store
 *.log
+vite_log.txt
+Hub.log
 .env*
 !.env.example
 .vercel

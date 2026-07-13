@@ -17,7 +17,8 @@ import {
   Printer,
   FileText,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  Clock
 } from 'lucide-react';
 
 interface SalesProps {
@@ -31,6 +32,7 @@ interface SalesProps {
     ecommerceOrderId?: string;
     saleType: 'CPF' | 'CNPJ';
     notes?: string;
+    pending?: boolean;
   }) => void;
   onNavigate: (tab: 'products') => void;
 }
@@ -39,6 +41,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [allowNegativeStock, setAllowNegativeStock] = useState(true);
+  const [creditSale, setCreditSale] = useState(false);
 
   // Cart state
   const [cart, setCart] = useState<{
@@ -235,7 +238,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   }, [products, searchQuery, selectedCategory]);
 
   // Add to cart helper
-  const isServiceProduct = (p: Product) => p.category.toLowerCase() === 'serviço' || p.category.toLowerCase() === 'servico';
+  const isServiceProduct = (p: Product) => /^servi/i.test(p.category);
 
   const handleAddToCart = (product: Product) => {
     const isService = isServiceProduct(product);
@@ -384,7 +387,8 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       discount: discountPercent,
       ecommerceOrderId: isEcommerceChannel(saleChannel) ? ecommerceOrderId.trim() || undefined : undefined,
       saleType,
-      notes: combinedNotes || undefined
+      notes: combinedNotes || undefined,
+      pending: creditSale
     });
 
     // Save sale data for receipt generation before resetting
@@ -982,6 +986,20 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
               </div>
             </div>
 
+            {/* Sell on credit (pending payment) */}
+            <label className="flex items-center gap-2 text-xs font-semibold text-slate-600 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={creditSale}
+                onChange={(e) => setCreditSale(e.target.checked)}
+                className="w-4 h-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500"
+              />
+              <span className="flex items-center gap-1">
+                <Clock className="h-3.5 w-3.5 text-amber-600" />
+                Venda a prazo (fiado / pendente)
+              </span>
+            </label>
+
             {/* Submit checkout button */}
             <button
               id="confirm-checkout-btn"
@@ -990,7 +1008,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
               className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white text-sm font-bold rounded-lg flex items-center justify-center gap-2 shadow-xs transition-colors"
             >
               <CheckCircle2 className="h-4 w-4" />
-              Finalizar Venda
+              {creditSale ? 'Registrar Venda a Prazo' : 'Finalizar Venda'}
             </button>
 
           </form>

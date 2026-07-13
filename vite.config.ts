@@ -16,7 +16,15 @@ export default defineConfig(() => {
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
-      watch: process.env.DISABLE_HMR === 'true' ? null : {},
+      // Never watch the local data directory (backend JSON + any external Excel files
+      // placed there can be locked/open in Excel and crash the watcher with EBUSY).
+      watch: process.env.DISABLE_HMR === 'true' ? null : { ignored: ['**/data/**'] },
+      proxy: {
+        '/api': {
+          target: 'http://localhost:4000',
+          changeOrigin: true,
+        },
+      },
     },
   };
 });
