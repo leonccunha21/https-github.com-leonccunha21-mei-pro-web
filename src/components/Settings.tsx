@@ -419,8 +419,8 @@ interface SettingsProps {
   onGoogleLogout: () => Promise<void>;
   onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[] }) => void;
   onResetDatabase: () => void;
-  onSaveStoreInfo: (info: StoreInfo) => void;
-  onLoadStoreInfo: () => Promise<StoreInfo | null>;
+  onSaveStoreInfo: (uid: string, info: StoreInfo) => Promise<void>;
+  onLoadStoreInfo: (uid: string) => Promise<StoreInfo | null>;
 }
 
 export default function Settings({
@@ -452,7 +452,7 @@ export default function Settings({
   // Load store info from cloud on mount
   useEffect(() => {
     if (user?.uid) {
-      onLoadStoreInfo().then(cloudInfo => {
+      onLoadStoreInfo(user.uid).then(cloudInfo => {
         if (cloudInfo && (Object.keys(cloudInfo).some(k => cloudInfo[k]) || !localStorage.getItem('zm_store_info'))) {
           const merged = { ...defaultStoreInfo, ...JSON.parse(localStorage.getItem('zm_store_info') || '{}'), ...cloudInfo };
           setStoreInfo(merged);
@@ -473,7 +473,7 @@ export default function Settings({
     if (user?.uid) {
       setSavingToCloud(true);
       try {
-        await onSaveStoreInfo(storeInfo);
+        await onSaveStoreInfo(user.uid, storeInfo);
       } catch (e) {
         console.error('Erro ao salvar info da loja na nuvem:', e);
       } finally {

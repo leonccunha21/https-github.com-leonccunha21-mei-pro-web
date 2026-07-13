@@ -177,15 +177,27 @@ function parseSalesSheet(sheetName, year) {
     if (year === 2026) {
       if (row[13] === 'Transferido') paymentMethod = 'pix';
     } else {
-      const forma = row[13];
-      if (forma === 'Transferido' || forma === 'Pix') paymentMethod = 'pix';
-      else if (forma === 'Cartão' || forma === 'Cartao' || forma === 'Crédito' || forma === 'Débito') paymentMethod = 'card_credit';
+const forma = row[13];
+    if (forma === 'Transferido' || forma === 'Pix') paymentMethod = 'pix';
+    else if (forma === 'Cartão' || forma === 'Cartao' || forma === 'Crédito' || forma === 'Débito') paymentMethod = 'card_credit';
     }
-    
+
+    // Parse payment status from "Recebido Loja" column
+    // 2024/2025: col 15, 2026: col 13
+    const recebidoIdx = year === 2026 ? 13 : 15;
+    const recebidoRaw = row[recebidoIdx];
+    let paymentStatus = 'completed'; // default
+    if (recebidoRaw) {
+      const val = String(recebidoRaw).toLowerCase().trim();
+      if (val === 'aguardando' || val === 'ainda n\u00e3o' || val === 'ainda nao') {
+        paymentStatus = 'pending';
+      }
+    }
+
     const finalTotalCost = totalCost || roundCurrency(unitCost * qty);
     const finalTotalValue = totalValue || roundCurrency(unitPrice * qty);
     const finalProfit = roundCurrency(finalTotalValue - finalTotalCost);
-    
+
     sales.push({
       date,
       productName,
@@ -201,7 +213,8 @@ function parseSalesSheet(sheetName, year) {
       saleChannel,
       ecommerceOrderId,
       saleType,
-      year
+      year,
+      paymentStatus
     });
   }
   
@@ -333,7 +346,7 @@ for (const sale of allSales) {
     saleType: sale.saleType,
     saleChannel: sale.saleChannel,
     notes: sale.saleChannel !== 'Loja Física' ? `[client_data]{"channel":"${sale.saleChannel}"}` : undefined,
-    status: 'completed'
+    status: sale.paymentStatus === 'pending' ? 'pending' : 'completed'
   });
   vid++;
 }

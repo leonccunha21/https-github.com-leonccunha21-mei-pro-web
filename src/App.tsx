@@ -1168,6 +1168,8 @@ export default function App() {
                 onGoogleLogout={handleGoogleLogout}
                 onImportDatabase={handleImportDatabase}
                 onResetDatabase={handleResetDatabase}
+                onSaveStoreInfo={saveUserStoreInfo}
+                onLoadStoreInfo={() => loadUserStoreInfo(user?.uid || '')}
               />
             )}
           </motion.div>
