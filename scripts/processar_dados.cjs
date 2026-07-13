@@ -313,7 +313,7 @@ for (const [name, p] of productMap) {
     costPrice: p.costPrice || 0,
     salePrice: p.salePrice || 0,
     stock: p.stock || 0,
-    minStock: 5,
+    minStock: 0,
     status: 'disponivel',
     createdAt: new Date().toISOString()
   });
