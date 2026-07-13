@@ -5,14 +5,11 @@
 
 ----------------------------------------------------------------------------------- nunca remover a parte das regras 
 
-[ok] em vendas crie um sub menu, para devedores, verifique na planilha as vendas que estao com status pendente e coloque la, e de opçao de eu confirmar pagamento e ja atualiza no banco
-[ok] em vendas na parte de registrar nova venda, coloque uma forma de ja add o cliente no ato da venda, e em cliente coloque os campos que faltam, nome, CPF/CNPJ, Email, Endereço
-[ok] confirme se na venda tem o campo ecommercer  se nao tiver coloque la  -> Canal de Venda (Loja Física, Shopee, Magalu, E-commerce, WhatsApp, Outro)
-[ok] preciso que faça uma limpeza no estoque, muitos dados repetidos remova os repetidos e com zero dados, organize novamente, caso tenha dados exemplo quantidade ou venda mescle eles em 1 so. deixe organizado. 
-[vi que no estoque tem opçao de exportar a planilha, mas para importar ela? deixe tudo isso na aba configuraçoes -> JA EXISTE desde v1.4
-[ok] Novo botão "Verificar Vendas x Estoque" no header
-[ok] Função que compara todos os itens vendidos (vendas concluídas) com o estoque cadastrado
-[ok] Encontra produtos vendidos que não existem no estoque (match por ID ou nome)
-[ok] Modal mostra a lista com: nome, categoria sugerida (inferida pelo nome), quantidade vendida, custo e preço de venda
-[ok] Você pode cadastrar individualmente ou cadastrar todos de uma vez
-[ok] Botão "Exportar Controle" gera planilha Excel com todos os produtos (cadastrados e faltantes) para ajustes finais
+
+Os erros são pré-existentes no data.ts (campo color no tipo Category e um erro de complexidade de tipo), não foram introduzidos pelas minhas alterações.
+
+e vendas estao somente de 2024 nada de 2025 e 2026 atualize a versao do site e publique para eu poder testar
+
+IPHONE, SAMSUNG, MOTOROLA, XIAOMI, nao e categorias mas sim marcas, queria uma categoria mais completa e certa
+
+da uma melhorada no visual do site para mobiles no celular ta bem feio, pc ta otimo. e faça o site virar um PWA para instalaçao no celular.

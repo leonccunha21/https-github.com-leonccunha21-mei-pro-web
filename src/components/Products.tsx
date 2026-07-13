@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Product, Category, Sale } from '../types';
+import { categorizeProduct } from '../lib/categorize';
 import * as XLSX from 'xlsx';
 import { 
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
@@ -174,13 +175,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
 
   const categoryNames = categories.map(c => c.name);
 
-  const inferCategory = (productName: string): string => {
-    const lower = productName.toLowerCase();
-    for (const cat of categoryNames) {
-      if (lower.includes(cat.toLowerCase())) return cat;
-    }
-    return 'Geral';
-  };
+  const inferCategory = (productName: string): string => categorizeProduct(productName);
 
   const handleCheckStock = () => {
     const soldItemsMap: Record<string, { name: string; productId: string; qty: number; costPrice: number; salePrice: number }> = {};

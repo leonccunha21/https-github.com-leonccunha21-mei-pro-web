@@ -29,19 +29,24 @@ export interface Sale {
   clientName?: string;
   clientPhone?: string;
   paymentMethod: PaymentMethod;
+  subtotal?: number;
+  discount?: number;
   total: number; // Valor Total Vendido
   totalCost: number; // Valor Total Pago (Custo)
   profit: number; // Lucro (Total - TotalCost)
   status: 'completed' | 'cancelled' | 'pending';
+  paidAt?: string;
   notes?: string;
 }
 
 export interface Category {
   id: string;
   name: string;
+  color?: string;
+  icon?: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os';
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors';
 
 export interface StoreInfo {
   name: string;

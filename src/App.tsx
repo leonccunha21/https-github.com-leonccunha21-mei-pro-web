@@ -20,6 +20,7 @@ import SalesHistory from './components/SalesHistory';
 import Reports from './components/Reports';
 import Settings from './components/Settings';
 import OsOrcamento from './components/OsOrcamento';
+import Debtors from './components/Debtors';
 import { 
   LayoutDashboard, 
   Package, 
@@ -33,7 +34,8 @@ import {
   Loader2,
   Sun,
   Moon,
-  PackageSearch
+  PackageSearch,
+  Users
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
@@ -44,6 +46,7 @@ import {
   googleSignIn, 
   logoutUser 
 } from './lib/firebase';
+import { categorizeProduct } from './lib/categorize';
 import { 
   loadUserProducts, 
   loadUserCategories, 
@@ -56,6 +59,11 @@ import {
   clearUserCategories,
   clearUserSales
 } from './lib/dbSync';
+
+// Utility to fix floating point issues (e.g., 0.92999 → 0.93)
+const roundCurrency = (value: number): number => {
+  return Math.round((value + Number.EPSILON) * 100) / 100;
+};
 
 export default function App() {
   // State Initialization
@@ -138,6 +146,25 @@ export default function App() {
     localStorage.setItem('stock_cleanup_v2_done', 'true');
   }, []);
 
+  // Category fix: re-categorize products based on their name (runs once on local data)
+  useEffect(() => {
+    if (localStorage.getItem('category_fix_v1_done')) return;
+    setProducts(prev => {
+      if (prev.length === 0) return prev;
+      const fixed = prev.map(p => {
+        const correct = categorizeProduct(p.name);
+        return p.category === correct ? p : { ...p, category: correct };
+      });
+      const changed = fixed.some((p, i) => prev[i]?.id !== p.id || prev[i]?.category !== p.category);
+      if (changed) {
+        localStorage.setItem('loja_products', JSON.stringify(fixed));
+        return fixed;
+      }
+      return prev;
+    });
+    localStorage.setItem('category_fix_v1_done', 'true');
+  }, []);
+
   // Sync Cloud Data
   const loadCloudData = async (uid: string) => {
     if (loadingCloudRef.current) return;
@@ -172,13 +199,26 @@ export default function App() {
       const cloudSales = await loadUserSales(uid);
 
       if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
+        // Re-categorize cloud products based on their name (keeps stock consistent)
+        const fixedProducts = cloudProducts.map(p => {
+          const correct = categorizeProduct(p.name);
+          return p.category === correct ? p : { ...p, category: correct };
+        });
+        const anyCategoryChanged = fixedProducts.some((p, i) => cloudProducts[i]?.category !== p.category);
+
         console.log(`Cloud OK: ${cloudProducts.length} produtos, ${cloudCategories.length} categorias, ${cloudSales.length} vendas`);
-        setProducts(cloudProducts);
+        setProducts(fixedProducts);
         setCategories(cloudCategories);
         setSales(cloudSales);
-        localStorage.setItem('loja_products', JSON.stringify(cloudProducts));
+        localStorage.setItem('loja_products', JSON.stringify(fixedProducts));
         localStorage.setItem('loja_sales', JSON.stringify(cloudSales));
         localStorage.setItem('loja_categories', JSON.stringify(cloudCategories));
+
+        if (anyCategoryChanged) {
+          for (const p of fixedProducts) {
+            try { await saveUserProduct(uid, p); } catch {}
+          }
+        }
       } else {
         console.log('Cloud vazia. Enviando dados locais...');
         let failedProducts = 0;
@@ -376,13 +416,13 @@ export default function App() {
     discount: number;
     notes?: string;
   }) => {
-    // 1. Calculate costs and prices
-    const subtotal = saleData.items.reduce((acc, item) => acc + item.total, 0);
-    const discountAmount = (subtotal * saleData.discount) / 100;
-    const finalTotal = Math.max(0, subtotal - discountAmount);
+    // 1. Calculate costs and prices with floating point fix
+    const subtotal = roundCurrency(saleData.items.reduce((acc, item) => acc + item.total, 0));
+    const discountAmount = roundCurrency((subtotal * saleData.discount) / 100);
+    const finalTotal = Math.max(0, roundCurrency(subtotal - discountAmount));
 
-    const totalCost = saleData.items.reduce((acc, item) => acc + (item.costPrice * item.quantity), 0);
-    const profit = finalTotal - totalCost;
+    const totalCost = roundCurrency(saleData.items.reduce((acc, item) => acc + (item.costPrice * item.quantity), 0));
+    const profit = roundCurrency(finalTotal - totalCost);
 
     // 2. Generate sale object
     const newSale: Sale = {
@@ -524,15 +564,7 @@ export default function App() {
     return Array.from(soldMap.values());
   }, [showVendasEstoque, products, sales]);
 
-  const suggestCategory = (name: string): string => {
-    const lower = name.toLowerCase();
-    if (lower.includes('iphone') || lower.includes('apple') || lower.includes('ipad') || lower.includes('macbook') || lower.includes('airpods') || lower.includes('apple watch') || lower.includes('cabo lightning') || lower.includes('cabo type c') || lower.includes('capa iphone')) return 'IPHONE';
-    if (lower.includes('samsung') || lower.includes('galaxy')) return 'SAMSUNG';
-    if (lower.includes('motorola') || lower.includes('moto')) return 'MOTOROLA';
-    if (lower.includes('xiaomi') || lower.includes('redmi') || lower.includes('poco')) return 'XIAOMI';
-    if (lower.includes('privacidade') || lower.includes('película') || lower.includes('pelicula') || lower.includes('vidro')) return 'Privacidade';
-    return 'Geral';
-  };
+  const suggestCategory = (name: string): string => categorizeProduct(name);
 
   const handleAddSingleMissingProduct = (item: { name: string; quantity: number; salePrice: number; costPrice: number }) => {
     const newProduct: Product = {
@@ -584,8 +616,70 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
       
-      {/* SIDEBAR NAVIGATION */}
-      <aside className="w-full md:w-64 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 shrink-0 border-r border-slate-200 dark:border-slate-700 flex flex-col justify-between z-10 py-2">
+      {/* MOBILE TOP HEADER */}
+      <header className="md:hidden sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-2.5 shadow-sm">
+        {(() => {
+          let storeLogo = '';
+          try { storeLogo = JSON.parse(localStorage.getItem('zm_store_info') || '{}').logoUrl || ''; } catch {}
+          return storeLogo ? (
+            <img src={storeLogo} alt="Logo" className="w-7 h-7 rounded object-contain shrink-0" />
+          ) : (
+            <div className="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center shrink-0">
+              <div className="w-3.5 h-3.5 border-2 border-white"></div>
+            </div>
+          );
+        })()}
+        <div className="flex-1 min-w-0">
+          <h2 className="font-bold text-sm tracking-tight text-slate-950 dark:text-slate-100 truncate">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
+          <span className="text-[9px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
+        </div>
+        <button
+          onClick={() => setShowVendasEstoque(true)}
+          className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors cursor-pointer"
+          title="Verificar Vendas x Estoque"
+        >
+          <PackageSearch className="h-4 w-4" />
+        </button>
+        <button
+          onClick={toggleDarkMode}
+          className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          title={darkMode ? 'Modo claro' : 'Modo escuro'}
+        >
+          {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </button>
+      </header>
+
+      {/* MOBILE BOTTOM NAVIGATION */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700 flex items-stretch justify-between px-1 pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        {([
+          { tab: 'dashboard', label: 'Painel', icon: LayoutDashboard },
+          { tab: 'products', label: 'Estoque', icon: Package },
+          { tab: 'pos', label: 'Caixa', icon: ShoppingCart },
+          { tab: 'sales', label: 'Vendas', icon: History },
+          { tab: 'reports', label: 'Relat.', icon: BarChart3 },
+          { tab: 'os', label: 'OS', icon: ClipboardList },
+          { tab: 'debtors', label: 'Dev.', icon: Users },
+          { tab: 'settings', label: 'Config', icon: SettingsIcon },
+        ] as const).map(item => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.tab;
+          return (
+            <button
+              key={item.tab}
+              onClick={() => setActiveTab(item.tab)}
+              className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2 px-1 transition-colors cursor-pointer ${
+                isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'
+              }`}
+            >
+              <Icon className="h-5 w-5" />
+              <span className="text-[9px] font-bold leading-none">{item.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+      
+       {/* SIDEBAR NAVIGATION (Desktop) */}
+       <aside className="hidden md:flex w-full md:w-64 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 shrink-0 border-r border-slate-200 dark:border-slate-700 flex-col justify-between z-10 py-2">
         <div>
           {/* Brand header */}
           <div className="p-6 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3 mb-6">
@@ -706,7 +800,21 @@ export default function App() {
               OS / Orçamento
             </button>
 
-            {/* Tab 7: Settings */}
+            {/* Tab 7: Devedores */}
+            <button
+              id="nav-debtors"
+              onClick={() => setActiveTab('debtors')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'debtors' 
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Users className="h-4 w-4" />
+              Devedores
+            </button>
+
+            {/* Tab 8: Settings */}
             <button
               id="nav-settings"
               onClick={() => setActiveTab('settings')}
@@ -782,7 +890,7 @@ export default function App() {
       </aside>
 
       {/* MAIN CONTENT DISPLAY */}
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto max-w-7xl mx-auto w-full bg-slate-50 dark:bg-slate-950">
+      <main className="flex-1 p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto max-w-7xl mx-auto w-full bg-slate-50 dark:bg-slate-950">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -846,6 +954,16 @@ export default function App() {
                 products={products}
                 storeInfo={(() => { try { return JSON.parse(localStorage.getItem('zm_store_info') || 'null') as StoreInfo; } catch { return { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '' } as StoreInfo; } })()}
                 userId={user?.uid}
+              />
+            )}
+
+            {activeTab === 'debtors' && (
+              <Debtors 
+                sales={sales}
+                onUpdateSale={(updatedSale) => {
+                  const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
+                  saveSalesToStorage(updatedSales, updatedSale);
+                }}
               />
             )}
 

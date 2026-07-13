@@ -19,6 +19,11 @@ import {
   ChevronRight
 } from 'lucide-react';
 
+// Utility to fix floating point issues (e.g., 0.92999 → 0.93)
+const roundCurrency = (value: number): number => {
+  return Math.round((value + Number.EPSILON) * 100) / 100;
+};
+
 interface SalesProps {
   products: Product[];
   onRegisterSale: (saleData: {
@@ -94,6 +99,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     let storeInfo: Record<string, string> = {};
     try { storeInfo = JSON.parse(localStorage.getItem('zm_store_info') || '{}'); } catch {}
     const saleId = `V${Date.now().toString(36).toUpperCase()}`;
+    const saleDate = new Date();
 
     const itemsHtml = lastSaleData.items.map(item => `
       <tr>
@@ -142,7 +148,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       
       <div style="margin:8px 0">
         <div style="font-size:10px">Venda: <span class="bold">${saleId}</span></div>
-        <div style="font-size:10px">Data: ${new Date().toLocaleDateString('pt-BR')} ${new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
+        <div style="font-size:10px">Data: ${saleDate.toLocaleDateString('pt-BR')} ${saleDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}</div>
         ${lastSaleData.clientName ? `<div style="font-size:10px">Cliente: <span class="bold">${lastSaleData.clientName}</span></div>` : ''}
         ${lastSaleData.clientPhone ? `<div style="font-size:10px">Tel: ${lastSaleData.clientPhone}</div>` : ''}
         ${extraClientHtml}
@@ -304,10 +310,10 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     }
   };
 
-  // Calculations
-  const cartSubtotal = cart.reduce((acc, item) => acc + (item.customSalePrice * item.quantity), 0);
-  const discountAmount = (cartSubtotal * discountPercent) / 100;
-  const cartTotal = Math.max(0, cartSubtotal - discountAmount);
+  // Calculations with floating point fix
+  const cartSubtotal = roundCurrency(cart.reduce((acc, item) => acc + (item.customSalePrice * item.quantity), 0));
+  const discountAmount = roundCurrency((cartSubtotal * discountPercent) / 100);
+  const cartTotal = Math.max(0, roundCurrency(cartSubtotal - discountAmount));
   const totalItemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
 
   // Submit Sale Handler
