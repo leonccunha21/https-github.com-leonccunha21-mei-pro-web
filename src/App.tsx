@@ -1052,20 +1052,6 @@ export default function App() {
               Compras & Fornecedores
             </button>
 
-            {/* Tab 7: Devedores */}
-            <button
-              id="nav-debtors"
-              onClick={() => setActiveTab('debtors')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'debtors' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Users className="h-4 w-4" />
-              Devedores
-            </button>
-
             {/* Tab 8: Settings */}
             <button
               id="nav-settings"

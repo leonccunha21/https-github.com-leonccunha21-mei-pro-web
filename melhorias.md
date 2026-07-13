@@ -40,6 +40,7 @@
 [ok] Empréstimos (agiotagem) na tela Devedores: cadastro de nome, telefone, data que pegou, data para pagar, valor emprestado e valor dos juros; lista com total a receber, atraso em dias, recebimento parcial e quitação.
 [ok] data/local-db.json removido do git (agora ignored): deletar/excluir o banco nao e mais restaurado por git pull ou bot de sync. Para limpar de verdade, usar "Zerar Banco" em Configurações (persiste vazio).
 [ok] Build dist atualizado com o módulo de Empréstimos (toggle "Débitos de Vendas | Empréstimos" no topo da tela Devedores).
+[ok] Removido botão duplicado "Devedores" no menu lateral (ficou apenas o submenu em Vendas).
 [ok] Pipeline (processar_dados.cjs) protegido: ao (re)gerar data/local-db.json, preserva clientes, fornecedores, compras e fechamentos (não apaga os dados dos novos módulos).
 
 ## Pendências / o que não ficou ok (preencher ao validar)
@@ -47,6 +48,7 @@
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.4 [ok] — 13/07/2026: removido botão duplicado "Devedores" do menu lateral.
 - v2.6.3 [ok] — 13/07/2026: local-db.json fora do git (banco nao volta por pull/bot); build dist com Empréstimos; correção de visibilidade do módulo.
 - v2.6.2 [ok] — 13/07/2026: Empréstimos (agiotagem) na tela Devedores: nome, telefone, datas, valor emprestado + juros, recebimento parcial e quitação.
 - v2.6.1 [ok] — 13/07/2026: pipeline processar_dados.cjs protegido (preserva clientes/fornecedores/compras/fechamentos ao regerar local-db.json).
