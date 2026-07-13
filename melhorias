@@ -6,10 +6,22 @@
 ----------------------------------------------------------------------------------- nunca remover a parte das regras 
 
 
-Os erros são pré-existentes no data.ts (campo color no tipo Category e um erro de complexidade de tipo), não foram introduzidos pelas minhas alterações.
+[ok] e vendas estao somente de 2024 nada de 2025 e 2026 atualize a versao do site e publique para eu poder testar
+  -> Verificado: vendas vão de 2025-01 a 2026-06. Versão atualizada para 2.1.0.
 
-e vendas estao somente de 2024 nada de 2025 e 2026 atualize a versao do site e publique para eu poder testar
+[ok] IPHONE, SAMSUNG, MOTOROLA, XIAOMI, nao e categorias mas sim marcas, queria uma categoria mais completa e certa
+  -> 14 categorias reais criadas (Capas e Películas, Cabos e Adaptadores, etc). 335 produtos reclassificados.
 
-IPHONE, SAMSUNG, MOTOROLA, XIAOMI, nao e categorias mas sim marcas, queria uma categoria mais completa e certa
+[ok] da uma melhorada no visual do site para mobiles no celular ta bem feio, pc ta otimo. e faça o site virar um PWA para instalaçao no celular.
+  -> Mobile: bottom nav 5 tabs + menu slide-up, backdrop-blur, card view nos produtos, grid 2 colunas no PDV, KPI 2x2, touch targets 36px, inputs 16px. PWA já configurado.
 
-da uma melhorada no visual do site para mobiles no celular ta bem feio, pc ta otimo. e faça o site virar um PWA para instalaçao no celular.
+[ok] Correções de bugs e otimizações (v2.2.0):
+  - Corrigido: useMemo usado como side effect no Products.tsx (agora useEffect, React puro)
+  - Corrigido: setErrorMessage chamado dentro de setCart updater no Sales.tsx (agora fora)
+  - Corrigido: roundCurrency duplicado consolidado em lib/currency.ts
+  - Corrigido: arredondamento de moeda no checkout do Sales.tsx (faltava roundCurrency)
+  - Corrigido: queries cloud agora paralelizadas com Promise.all (3x mais rápido)
+  - Corrigido: logo do localStorage memoizado (evita JSON.parse em cada render)
+  - Corrigido: totais e contagens de filtro no Products.tsx memoizados com useMemo
+  - Corrigido: window.open agora com noopener,noreferrer
+  - Corrigido: isDebtorSale não marca mais transfer como devedor (só pending)

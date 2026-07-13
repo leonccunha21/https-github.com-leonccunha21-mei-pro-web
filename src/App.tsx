@@ -47,6 +47,7 @@ import {
   logoutUser 
 } from './lib/firebase';
 import { categorizeProduct } from './lib/categorize';
+import { roundCurrency } from './lib/currency';
 import { 
   loadUserProducts, 
   loadUserCategories, 
@@ -61,9 +62,6 @@ import {
 } from './lib/dbSync';
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
-const roundCurrency = (value: number): number => {
-  return Math.round((value + Number.EPSILON) * 100) / 100;
-};
 
 export default function App() {
   // State Initialization
@@ -81,6 +79,12 @@ export default function App() {
   const loadingCloudRef = React.useRef<boolean>(false);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [showVendasEstoque, setShowVendasEstoque] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  // Memoized store info from localStorage (avoids JSON.parse on every render)
+  const storeInfo = useMemo(() => {
+    try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
+  }, []);
 
   const toggleDarkMode = () => {
     setDarkMode(prev => {
@@ -95,40 +99,38 @@ export default function App() {
     document.documentElement.classList.toggle('dark', darkMode);
   }, []);
 
-  // Initial local storage fallback loading
+  // Initial load: only show data if user is logged in or explicitly opted in.
   useEffect(() => {
+    const useLocalData = localStorage.getItem('use_local_data') === 'true';
     if (!user) {
+      setProducts([]);
+      setSales([]);
+      setCategories([]);
+      return;
+    }
+
+    // For local-only mode, load from localStorage
+    if (useLocalData || !user.uid) {
       try {
         const savedProducts = localStorage.getItem('loja_products');
         const savedSales = localStorage.getItem('loja_sales');
         const savedCategories = localStorage.getItem('loja_categories');
-
-        if (savedProducts) {
-          setProducts(JSON.parse(savedProducts));
-        } else {
-          setProducts(initialProducts);
-          localStorage.setItem('loja_products', JSON.stringify(initialProducts));
-        }
-
-        if (savedSales) {
-          setSales(JSON.parse(savedSales));
-        } else {
-          setSales(initialSales);
-          localStorage.setItem('loja_sales', JSON.stringify(initialSales));
-        }
-
-        if (savedCategories) {
-          setCategories(JSON.parse(savedCategories));
-        } else {
-          setCategories(initialCategories);
-          localStorage.setItem('loja_categories', JSON.stringify(initialCategories));
-        }
+        if (savedProducts) setProducts(JSON.parse(savedProducts));
+        if (savedSales) setSales(JSON.parse(savedSales));
+        if (savedCategories) setCategories(JSON.parse(savedCategories));
       } catch {
-        setProducts(initialProducts);
-        setSales(initialSales);
-        setCategories(initialCategories);
+        setProducts([]);
+        setSales([]);
+        setCategories([]);
       }
+      return;
     }
+
+    // For cloud users, cloud data will be loaded by loadCloudData
+    // But we still load localStorage as fallback while cloud loads
+    setProducts([]);
+    setSales([]);
+    setCategories([]);
   }, [user]);
 
   // Stock cleanup: deduplicate and remove empty products (runs once)
@@ -192,11 +194,13 @@ export default function App() {
     setCategories(parsedCategories);
     setSales(parsedSales);
 
-    // 2. Try to load from cloud
+    // 2. Try to load from cloud (parallelized)
     try {
-      const cloudProducts = await loadUserProducts(uid);
-      const cloudCategories = await loadUserCategories(uid);
-      const cloudSales = await loadUserSales(uid);
+      const [cloudProducts, cloudCategories, cloudSales] = await Promise.all([
+        loadUserProducts(uid),
+        loadUserCategories(uid),
+        loadUserSales(uid),
+      ]);
 
       if (cloudProducts.length > 0 || cloudCategories.length > 0 || cloudSales.length > 0) {
         // Re-categorize cloud products based on their name (keeps stock consistent)
@@ -617,83 +621,109 @@ export default function App() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
       
       {/* MOBILE TOP HEADER */}
-      <header className="md:hidden sticky top-0 z-30 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-2.5 shadow-sm">
-        {(() => {
-          let storeLogo = '';
-          try { storeLogo = JSON.parse(localStorage.getItem('zm_store_info') || '{}').logoUrl || ''; } catch {}
-          return storeLogo ? (
-            <img src={storeLogo} alt="Logo" className="w-7 h-7 rounded object-contain shrink-0" />
-          ) : (
-            <div className="w-7 h-7 bg-indigo-600 rounded flex items-center justify-center shrink-0">
-              <div className="w-3.5 h-3.5 border-2 border-white"></div>
-            </div>
-          );
-        })()}
+      <header className="md:hidden sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-3 shadow-sm">
+        {storeInfo.logoUrl ? (
+          <img src={storeInfo.logoUrl} alt="Logo" className="w-8 h-8 rounded-lg object-contain shrink-0" />
+        ) : (
+          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+            <div className="w-4 h-4 border-2 border-white"></div>
+          </div>
+        )}
         <div className="flex-1 min-w-0">
           <h2 className="font-bold text-sm tracking-tight text-slate-950 dark:text-slate-100 truncate">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
           <span className="text-[9px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
         </div>
         <button
           onClick={() => setShowVendasEstoque(true)}
-          className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors cursor-pointer"
+          className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors cursor-pointer"
           title="Verificar Vendas x Estoque"
         >
-          <PackageSearch className="h-4 w-4" />
+          <PackageSearch className="h-5 w-5" />
         </button>
         <button
           onClick={toggleDarkMode}
-          className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
           title={darkMode ? 'Modo claro' : 'Modo escuro'}
         >
-          {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </button>
+        <span className="text-[8px] text-slate-300 font-mono">v{appVersion.version}</span>
       </header>
 
       {/* MOBILE BOTTOM NAVIGATION */}
-      <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-700 flex items-stretch justify-between px-1 pb-[env(safe-area-inset-bottom)] shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-700 flex items-stretch justify-between px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
         {([
-          { tab: 'dashboard', label: 'Painel', icon: LayoutDashboard },
+          { tab: 'dashboard', label: 'Inicio', icon: LayoutDashboard },
           { tab: 'products', label: 'Estoque', icon: Package },
           { tab: 'pos', label: 'Caixa', icon: ShoppingCart },
           { tab: 'sales', label: 'Vendas', icon: History },
-          { tab: 'reports', label: 'Relat.', icon: BarChart3 },
-          { tab: 'os', label: 'OS', icon: ClipboardList },
-          { tab: 'debtors', label: 'Dev.', icon: Users },
-          { tab: 'settings', label: 'Config', icon: SettingsIcon },
+          { tab: 'settings', label: 'Menu', icon: SettingsIcon },
         ] as const).map(item => {
           const Icon = item.icon;
-          const isActive = activeTab === item.tab;
+          const isActive = activeTab === item.tab && !mobileMenuOpen;
+          const isMenu = item.tab === 'settings';
           return (
             <button
               key={item.tab}
-              onClick={() => setActiveTab(item.tab)}
-              className={`flex-1 flex flex-col items-center justify-center gap-0.5 py-2 px-1 transition-colors cursor-pointer ${
-                isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'
+              onClick={() => isMenu ? setMobileMenuOpen(!mobileMenuOpen) : setActiveTab(item.tab)}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 py-2.5 px-1 transition-all cursor-pointer relative ${
+                isActive
+                  ? 'text-indigo-600 dark:text-indigo-400'
+                  : 'text-slate-400 dark:text-slate-500 active:text-slate-600'
               }`}
             >
-              <Icon className="h-5 w-5" />
-              <span className="text-[9px] font-bold leading-none">{item.label}</span>
+              {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-indigo-600 dark:bg-indigo-400 rounded-full" />}
+              <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 2} />
+              <span className="text-[10px] font-bold leading-none">{item.label}</span>
             </button>
           );
         })}
       </nav>
+
+      {/* MOBILE SLIDE-UP MENU for extra tabs */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)}>
+          <div className="absolute inset-0 bg-black/40" />
+          <div
+            className="absolute bottom-0 inset-x-0 bg-white dark:bg-slate-900 rounded-t-2xl shadow-2xl p-4 pb-[env(safe-area-inset-bottom)] animate-[slideUp_0.2s_ease-out]"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="w-10 h-1 bg-slate-300 dark:bg-slate-600 rounded-full mx-auto mb-4" />
+            <div className="grid grid-cols-3 gap-3">
+              {([
+                { tab: 'reports', label: 'Relatórios', icon: BarChart3 },
+                { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList },
+                { tab: 'debtors', label: 'Devedores', icon: Users },
+              ] as const).map(item => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.tab}
+                    onClick={() => { setActiveTab(item.tab); setMobileMenuOpen(false); }}
+                    className="flex flex-col items-center gap-2 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                  >
+                    <Icon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+                    <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
       
        {/* SIDEBAR NAVIGATION (Desktop) */}
        <aside className="hidden md:flex w-full md:w-64 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 shrink-0 border-r border-slate-200 dark:border-slate-700 flex-col justify-between z-10 py-2">
         <div>
           {/* Brand header */}
           <div className="p-6 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3 mb-6">
-            {(() => {
-              let storeLogo = '';
-              try { storeLogo = JSON.parse(localStorage.getItem('zm_store_info') || '{}').logoUrl || ''; } catch {}
-              return storeLogo ? (
-                <img src={storeLogo} alt="Logo" className="w-8 h-8 rounded object-contain shrink-0" />
-              ) : (
-                <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center shrink-0">
-                  <div className="w-4 h-4 border-2 border-white"></div>
-                </div>
-              );
-            })()}
+            {storeInfo.logoUrl ? (
+              <img src={storeInfo.logoUrl} alt="Logo" className="w-8 h-8 rounded object-contain shrink-0" />
+            ) : (
+              <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center shrink-0">
+                <div className="w-4 h-4 border-2 border-white"></div>
+              </div>
+            )}
             <div className="flex-1">
               <h2 className="font-bold text-base tracking-tight text-slate-950 dark:text-slate-100">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
               <span className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
@@ -861,8 +891,8 @@ export default function App() {
             </div>
           ) : (
             <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 flex flex-col gap-2">
-              <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Modo Offline</p>
-              <p className="text-[10px] text-slate-400 dark:text-slate-500 leading-normal">Dados salvos localmente. Conecte sua conta para salvar na nuvem e usar planilhas.</p>
+              <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Sem Conexão</p>
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 leading-normal">Faça login com sua conta Google para acessar seus dados na nuvem.</p>
               {loginError && (
                 <p className="text-[10px] text-rose-600 dark:text-rose-400 leading-normal bg-rose-50 dark:bg-rose-900/20 p-2 rounded-lg border border-rose-100 dark:border-rose-800">{loginError}</p>
               )}
@@ -871,6 +901,22 @@ export default function App() {
                 className="w-full py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
               >
                 Conectar Conta Google
+              </button>
+              <button 
+                onClick={() => {
+                  localStorage.setItem('use_local_data', 'true');
+                  setUser({} as any);
+                  setProducts(initialProducts);
+                  setSales(initialSales);
+                  setCategories(initialCategories);
+                  localStorage.setItem('loja_products', JSON.stringify(initialProducts));
+                  localStorage.setItem('loja_sales', JSON.stringify(initialSales));
+                  localStorage.setItem('loja_categories', JSON.stringify(initialCategories));
+                  window.location.reload();
+                }}
+                className="w-full py-1.5 px-3 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-lg text-[11px] font-bold transition-all cursor-pointer"
+              >
+                Usar Dados Demonstrativos
               </button>
             </div>
           )}
@@ -890,7 +936,7 @@ export default function App() {
       </aside>
 
       {/* MAIN CONTENT DISPLAY */}
-      <main className="flex-1 p-4 md:p-8 pb-24 md:pb-8 overflow-y-auto max-w-7xl mx-auto w-full bg-slate-50 dark:bg-slate-950">
+      <main className="flex-1 p-3 md:p-8 pb-28 md:pb-8 overflow-y-auto max-w-7xl mx-auto w-full bg-slate-50 dark:bg-slate-950">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
@@ -952,7 +998,7 @@ export default function App() {
             {activeTab === 'os' && (
               <OsOrcamento 
                 products={products}
-                storeInfo={(() => { try { return JSON.parse(localStorage.getItem('zm_store_info') || 'null') as StoreInfo; } catch { return { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '' } as StoreInfo; } })()}
+                storeInfo={storeInfo as StoreInfo}
                 userId={user?.uid}
               />
             )}

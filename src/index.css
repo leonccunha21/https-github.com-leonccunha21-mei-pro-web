@@ -1,2 +1,35 @@
 @import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+/* Better mobile touch targets */
+@media (max-width: 768px) {
+  button, a, input, select, textarea {
+    min-height: 36px;
+  }
+  input[type="text"], input[type="number"], input[type="email"], input[type="tel"], input[type="search"], select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Hide scrollbar on mobile for cleaner look */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar { width: 3px; height: 3px; }
+  ::-webkit-scrollbar-thumb { background: transparent; }
+}
+
+/* No scrollbar utility */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Smooth scroll on mobile */
+html { scroll-behavior: smooth; }
+
+/* Prevent horizontal overflow on mobile */
+@media (max-width: 768px) {
+  body { overflow-x: hidden; }
+}

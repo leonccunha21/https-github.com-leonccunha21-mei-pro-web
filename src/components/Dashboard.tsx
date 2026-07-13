@@ -258,44 +258,44 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   return (
     <div className="space-y-6">
       {/* Welcome & Time Range selector */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-5">
-        <div>
-          <h1 id="dashboard-title" className="text-2xl font-bold tracking-tight text-slate-900">Painel de Controle</h1>
-          <p className="text-sm text-slate-500 mt-1">Visão geral do desempenho de vendas, estoque e rentabilidade da sua loja.</p>
-        </div>
-        
-        <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+      <div className="flex flex-col gap-4 border-b border-slate-200 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div>
+            <h1 id="dashboard-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">Painel de Controle</h1>
+            <p className="text-xs md:text-sm text-slate-500 mt-1">Visão geral do desempenho da sua loja.</p>
+          </div>
+          
           <button
             id="quick-start-sale-btn"
             onClick={() => onNavigate('pos')}
-            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 shadow-xs transition-colors cursor-pointer"
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 shadow-xs transition-colors cursor-pointer self-start sm:self-auto"
           >
             <ShoppingBag className="h-4 w-4" />
             Nova Venda
           </button>
+        </div>
 
-          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/50 flex-wrap">
-            {([
-              { key: 'all' as const, label: 'Todos' },
-              { key: '1day' as const, label: '1 Dia' },
-              { key: '7days' as const, label: '7 Dias' },
-              { key: '14days' as const, label: '14 Dias' },
-              { key: '30days' as const, label: '30 Dias' },
-              { key: '1year' as const, label: '1 Ano' },
-              { key: 'custom' as const, label: 'Personalizado' },
-            ]).map(opt => (
-              <button
-                key={opt.key}
-                id={`range-${opt.key}`}
-                onClick={() => setTimeRange(opt.key)}
-                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-                  timeRange === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
-                }`}
-              >
-                {opt.label}
-              </button>
-            ))}
-          </div>
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/50 overflow-x-auto no-scrollbar">
+          {([
+            { key: 'all' as const, label: 'Todos' },
+            { key: '1day' as const, label: '1 Dia' },
+            { key: '7days' as const, label: '7 Dias' },
+            { key: '14days' as const, label: '14 Dias' },
+            { key: '30days' as const, label: '30 Dias' },
+            { key: '1year' as const, label: '1 Ano' },
+            { key: 'custom' as const, label: 'Personalizado' },
+          ]).map(opt => (
+            <button
+              key={opt.key}
+              id={`range-${opt.key}`}
+              onClick={() => setTimeRange(opt.key)}
+              className={`px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
+                timeRange === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -324,63 +324,64 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       )}
 
       {/* Main KPI Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div id="kpi-faturamento" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+        <div id="kpi-faturamento" className="bg-white p-3 md:p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Faturamento</span>
-            <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600"><DollarSign className="h-5 w-5" /></div>
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-slate-400">Faturamento</span>
+            <div className="p-1.5 md:p-2 bg-emerald-50 rounded-lg text-emerald-600"><DollarSign className="h-4 w-4 md:h-5 md:w-5" /></div>
           </div>
-          <div className="mt-4">
-            <span className="text-2xl font-bold text-slate-900">{totalRevenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-            <div className="flex items-center gap-1 mt-1 text-xs text-emerald-600">
+          <div className="mt-3 md:mt-4">
+            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{totalRevenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs text-emerald-600">
               <TrendingUp className="h-3 w-3" />
               <span>{completedSales.length} vendas</span>
             </div>
           </div>
         </div>
 
-        <div id="kpi-custo" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+        <div id="kpi-custo" className="bg-white p-3 md:p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Custo</span>
-            <div className="p-2 bg-amber-50 rounded-lg text-amber-600"><ArrowDownRight className="h-5 w-5" /></div>
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-slate-400">Custo</span>
+            <div className="p-1.5 md:p-2 bg-amber-50 rounded-lg text-amber-600"><ArrowDownRight className="h-4 w-4 md:h-5 md:w-5" /></div>
           </div>
-          <div className="mt-4">
-            <span className="text-2xl font-bold text-slate-900">{totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-            <div className="flex items-center gap-1 mt-1 text-xs text-slate-500">
+          <div className="mt-3 md:mt-4">
+            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{totalCost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs text-slate-500">
               <Layers className="h-3 w-3 text-slate-400" />
-              <span>Custo das mercadorias</span>
+              <span className="hidden sm:inline">Custo das mercadorias</span>
+              <span className="sm:hidden">CMV</span>
             </div>
           </div>
         </div>
 
-        <div id="kpi-lucro" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+        <div id="kpi-lucro" className="bg-white p-3 md:p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Lucro</span>
-            <div className="p-2 bg-indigo-50 rounded-lg text-indigo-600"><TrendingUp className="h-5 w-5" /></div>
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-slate-400">Lucro</span>
+            <div className="p-1.5 md:p-2 bg-indigo-50 rounded-lg text-indigo-600"><TrendingUp className="h-4 w-4 md:h-5 md:w-5" /></div>
           </div>
-          <div className="mt-4">
-            <span className="text-2xl font-bold text-slate-900">{totalProfit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-            <div className="flex items-center gap-1 mt-1 text-xs text-indigo-600">
+          <div className="mt-3 md:mt-4">
+            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{totalProfit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs text-indigo-600">
               <Percent className="h-3 w-3" />
               <span>Margem {averageMargin.toFixed(1)}%</span>
             </div>
           </div>
         </div>
 
-        <div id="kpi-estoque" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+        <div id="kpi-estoque" className="bg-white p-3 md:p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Estoque Baixo</span>
-            <div className={`p-2 rounded-lg ${lowStockProducts.length > 0 ? 'bg-rose-50 text-rose-600 animate-pulse' : 'bg-slate-50 text-slate-500'}`}>
-              <AlertTriangle className="h-5 w-5" />
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-slate-400">Estoque Baixo</span>
+            <div className={`p-1.5 md:p-2 rounded-lg ${lowStockProducts.length > 0 ? 'bg-rose-50 text-rose-600 animate-pulse' : 'bg-slate-50 text-slate-500'}`}>
+              <AlertTriangle className="h-4 w-4 md:h-5 md:w-5" />
             </div>
           </div>
-          <div className="mt-4">
-            <span className="text-2xl font-bold text-slate-900">{lowStockProducts.length}</span>
-            <div className="flex items-center gap-1 mt-1 text-xs">
+          <div className="mt-3 md:mt-4">
+            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{lowStockProducts.length}</span>
+            <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs">
               {lowStockProducts.length > 0 ? (
-                <span className="text-rose-600 font-medium">Produtos abaixo do mínimo!</span>
+                <span className="text-rose-600 font-medium">Abaixo do mínimo!</span>
               ) : (
-                <span className="text-slate-500">Estoque saudável</span>
+                <span className="text-slate-500">Saudável</span>
               )}
             </div>
           </div>

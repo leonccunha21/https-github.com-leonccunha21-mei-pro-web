@@ -73,7 +73,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
   };
 
   const isDebtorSale = (sale: Sale): boolean => {
-    return sale.status === 'pending' || sale.totalCost === 0 || sale.paymentMethod === 'transfer';
+    return sale.status === 'pending';
   };
 
   // Product sales summary
@@ -282,7 +282,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
       </body></html>
     `;
 
-    const receiptWindow = window.open('', '_blank');
+    const receiptWindow = window.open('', '_blank', 'noopener,noreferrer');
     if (receiptWindow) {
       receiptWindow.document.write(receiptHtml);
       receiptWindow.document.close();
@@ -332,7 +332,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
     <div className="space-y-6">
       {/* Header */}
       <div className="border-b border-slate-200 pb-5">
-        <h1 id="sales-history-title" className="text-2xl font-bold tracking-tight text-slate-900">Histórico de Vendas</h1>
+        <h1 id="sales-history-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">Histórico de Vendas</h1>
         <p className="text-sm text-slate-500 mt-1">Consulte todas as vendas efetuadas, veja detalhes de lucro por item ou efetue estornos de mercadoria.</p>
       </div>
 

@@ -200,7 +200,7 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
   };
 
   const handlePrint = (order: ServiceOrder) => {
-    const printWindow = window.open('', '_blank');
+    const printWindow = window.open('', '_blank', 'noopener,noreferrer');
     if (!printWindow) return;
 
     const store: StoreInfo = storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' };
@@ -281,8 +281,8 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
       <div className="space-y-6">
         <div className="border-b border-slate-200 pb-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-              <ClipboardList className="h-6 w-6 text-slate-500" />
+            <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+              <ClipboardList className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
               OS & Orçamentos
             </h1>
             <p className="text-sm text-slate-500 mt-1">Ordens de serviço e orçamentos para clientes.</p>
@@ -384,7 +384,7 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
       <div className="space-y-6">
         <div className="border-b border-slate-200 pb-5 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h1 className="text-lg md:text-2xl font-bold tracking-tight text-slate-900">
               Nova {formType === 'os' ? 'Ordem de Serviço' : 'Orçamento'}
             </h1>
             <p className="text-sm text-slate-500 mt-1">Preencha os dados do cliente e adicione itens.</p>
@@ -538,7 +538,7 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
         <div className="border-b border-slate-200 pb-5 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+              <h1 className="text-lg md:text-2xl font-bold tracking-tight text-slate-900">
                 {order.type === 'os' ? 'OS' : 'Orçamento'} Nº {order.number}
               </h1>
               <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${st.color}`}>{st.label}</span>

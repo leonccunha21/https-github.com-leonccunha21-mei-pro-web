@@ -799,6 +799,125 @@ export default function Settings({
     }
   };
 
+  const handleExportFullDatabase = () => {
+    try {
+      const dateStr = new Date().toISOString().substring(0, 10);
+      const wb = XLSX.utils.book_new();
+
+      // Sheet 1: Produtos (Estoque)
+      const prodHeaders = ['SKU', 'Nome', 'Categoria', 'Preço Custo', 'Preço Venda', 'Estoque', 'Estoque Mínimo', 'Margem %'];
+      const prodRows = products.map(p => {
+        const margin = p.salePrice > 0 ? ((p.salePrice - p.costPrice) / p.salePrice * 100).toFixed(1) : '0.0';
+        return [p.code, p.name, p.category, p.costPrice, p.salePrice, p.stock, p.minStock, margin];
+      });
+      const prodWs = XLSX.utils.aoa_to_sheet([prodHeaders, ...prodRows]);
+      prodWs['!cols'] = prodHeaders.map(() => ({ wch: 22 }));
+      XLSX.utils.book_append_sheet(wb, prodWs, 'Produtos');
+
+      // Sheet 2: Vendas
+      const saleHeaders = ['ID', 'Data', 'Cliente', 'Telefone', 'Pagamento', 'Itens', 'Custo Total', 'Faturamento', 'Lucro', 'Status'];
+      const saleRows = sales.map(s => ({
+        id: s.id,
+        date: new Date(s.date).toLocaleString('pt-BR'),
+        client: s.clientName || 'Cliente Geral',
+        phone: s.clientPhone || '-',
+        payment: s.paymentMethod,
+        items: s.items.map(i => `${i.productName} (${i.quantity}x R$ ${i.salePrice.toFixed(2)})`).join('; '),
+        cost: s.totalCost,
+        revenue: s.total,
+        profit: s.profit,
+        status: s.status === 'completed' ? 'Concluída' : s.status === 'cancelled' ? 'Cancelada' : 'Pendente',
+      }));
+      const saleRowsArray = saleRows.map(r => [r.id, r.date, r.client, r.phone, r.payment, r.items, r.cost, r.revenue, r.profit, r.status]);
+      const saleWs = XLSX.utils.aoa_to_sheet([saleHeaders, ...saleRowsArray]);
+      saleWs['!cols'] = [{ wch: 15 }, { wch: 20 }, { wch: 22 }, { wch: 18 }, { wch: 15 }, { wch: 55 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 12 }];
+      XLSX.utils.book_append_sheet(wb, saleWs, 'Vendas');
+
+      // Sheet 3: Itens de Venda (detalhado)
+      const itemHeaders = ['Venda ID', 'Data', 'Produto', 'Quantidade', 'Preço Unitário', 'Total do Item', 'Custo Unitário', 'Lucro do Item'];
+      const itemRows: any[] = [];
+      sales.forEach(s => {
+        if (s.status !== 'completed') return;
+        s.items.forEach(i => {
+          const itemProfit = (i.salePrice - i.costPrice) * i.quantity;
+          itemRows.push([s.id, new Date(s.date).toLocaleString('pt-BR'), i.productName, i.quantity, i.salePrice, i.total, i.costPrice, itemProfit]);
+        });
+      });
+      const itemWs = XLSX.utils.aoa_to_sheet([itemHeaders, ...itemRows]);
+      itemWs['!cols'] = [{ wch: 15 }, { wch: 20 }, { wch: 30 }, { wch: 10 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 14 }];
+      XLSX.utils.book_append_sheet(wb, itemWs, 'Itens Vendidos');
+
+      // Sheet 4: Resumo por Categoria
+      const catHeaders = ['Categoria', 'Qtd Produtos', 'Valor Estoque (Custo)', 'Valor Estoque (Venda)', 'Qtd Vendida', 'Faturamento Total', 'Lucro Total'];
+      const catMap = new Map<string, { prods: number; costVal: number; retailVal: number; qtdVend: number; fat: number; lucro: number }>();
+      products.forEach(p => {
+        if (!catMap.has(p.category)) catMap.set(p.category, { prods: 0, costVal: 0, retailVal: 0, qtdVend: 0, fat: 0, lucro: 0 });
+        const c = catMap.get(p.category)!;
+        c.prods++;
+        c.costVal += p.costPrice * p.stock;
+        c.retailVal += p.salePrice * p.stock;
+      });
+      sales.forEach(s => {
+        if (s.status !== 'completed') return;
+        s.items.forEach(i => {
+          const p = products.find(pp => pp.id === i.productId);
+          const cat = p?.category || 'Sem Categoria';
+          if (!catMap.has(cat)) catMap.set(cat, { prods: 0, costVal: 0, retailVal: 0, qtdVend: 0, fat: 0, lucro: 0 });
+          const c = catMap.get(cat)!;
+          c.qtdVend += i.quantity;
+          c.fat += i.total;
+          c.lucro += (i.salePrice - i.costPrice) * i.quantity;
+        });
+      });
+      const catRows = Array.from(catMap.entries()).map(([cat, data]) => [cat, data.prods, data.costVal, data.retailVal, data.qtdVend, data.fat, data.lucro]);
+      const catWs = XLSX.utils.aoa_to_sheet([catHeaders, ...catRows]);
+      catWs['!cols'] = [{ wch: 25 }, { wch: 12 }, { wch: 18 }, { wch: 18 }, { wch: 12 }, { wch: 16 }, { wch: 16 }];
+      XLSX.utils.book_append_sheet(wb, catWs, 'Resumo por Categoria');
+
+      // Sheet 5: Métodos de Pagamento
+      const payHeaders = ['Forma de Pagamento', 'Qtd Vendas', 'Faturamento Total'];
+      const payMap = new Map<string, { qtd: number; total: number }>();
+      sales.filter(s => s.status === 'completed').forEach(s => {
+        if (!payMap.has(s.paymentMethod)) payMap.set(s.paymentMethod, { qtd: 0, total: 0 });
+        const p = payMap.get(s.paymentMethod)!;
+        p.qtd++;
+        p.total += s.total;
+      });
+      const payRows = Array.from(payMap.entries()).map(([method, data]) => {
+        const labels: Record<string, string> = { money: 'Dinheiro', card_credit: 'Cartão Crédito', card_debit: 'Cartão Débito', pix: 'PIX', transfer: 'Transferência' };
+        return [labels[method] || method, data.qtd, data.total];
+      });
+      const payWs = XLSX.utils.aoa_to_sheet([payHeaders, ...payRows]);
+      XLSX.utils.book_append_sheet(wb, payWs, 'Pagamentos');
+
+      // Sheet 6: Dashboard (totais consolidados)
+      const totalRevenue = sales.filter(s => s.status === 'completed').reduce((a, s) => a + s.total, 0);
+      const totalCost = sales.filter(s => s.status === 'completed').reduce((a, s) => a + s.totalCost, 0);
+      const totalProfit = totalRevenue - totalCost;
+      const dashHeaders = ['Métrica', 'Valor'];
+      const dashRows = [
+        ['Qtd Produtos', products.length],
+        ['Qtd Vendas (concluídas)', sales.filter(s => s.status === 'completed').length],
+        ['Faturamento Total', totalRevenue],
+        ['Custo Total', totalCost],
+        ['Lucro Líquido', totalProfit],
+        ['Margem Média %', totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100).toFixed(1) : '0.0'],
+        ['Valor Estoque (custo)', products.reduce((a, p) => a + p.costPrice * p.stock, 0)],
+        ['Valor Estoque (venda)', products.reduce((a, p) => a + p.salePrice * p.stock, 0)],
+        ['Data Exportação', new Date().toLocaleString('pt-BR')],
+      ];
+      const dashWs = XLSX.utils.aoa_to_sheet([dashHeaders, ...dashRows]);
+      dashWs['!cols'] = [{ wch: 25 }, { wch: 20 }];
+      XLSX.utils.book_append_sheet(wb, dashWs, 'Dashboard');
+
+      XLSX.writeFile(wb, `BaseCompleta_${dateStr}.xlsx`);
+      setImportSuccessMsg('Base completa exportada com sucesso!');
+      setTimeout(() => setImportSuccessMsg(null), 5000);
+    } catch (err: any) {
+      setImportError('Erro ao exportar base: ' + err.message);
+    }
+  };
+
   const handleDownloadTemplate = () => {
     try {
       const wb = XLSX.utils.book_new();
@@ -905,8 +1024,8 @@ export default function Settings({
   return (
     <div className="space-y-6">
       <div className="border-b border-slate-200 pb-5">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-          <SettingsIcon className="h-6 w-6 text-slate-500" />
+        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+          <SettingsIcon className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
           Configurações
         </h1>
         <p className="text-sm text-slate-500 mt-1">Importe, exporte, faça backup e gerencie sua conta.</p>
@@ -1079,6 +1198,10 @@ export default function Settings({
                     Vendas
                   </button>
                 </div>
+                <button onClick={handleExportFullDatabase} className="w-full py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm">
+                  <Download className="h-3.5 w-3.5" />
+                  Exportar Base Completa (Tudo)
+                </button>
               </div>
             </div>
           </div>

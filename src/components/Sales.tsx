@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Product, SaleItem, PaymentMethod } from '../types';
+import { roundCurrency } from '../lib/currency';
 import { 
   Search, 
   ShoppingCart, 
@@ -18,11 +19,6 @@ import {
   ChevronDown,
   ChevronRight
 } from 'lucide-react';
-
-// Utility to fix floating point issues (e.g., 0.92999 → 0.93)
-const roundCurrency = (value: number): number => {
-  return Math.round((value + Number.EPSILON) * 100) / 100;
-};
 
 interface SalesProps {
   products: Product[];
@@ -196,7 +192,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       </body></html>
     `;
 
-    const receiptWindow = window.open('', '_blank');
+    const receiptWindow = window.open('', '_blank', 'noopener,noreferrer');
     if (receiptWindow) {
       receiptWindow.document.write(receiptHtml);
       receiptWindow.document.close();
@@ -228,26 +224,20 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       return;
     }
 
-    setCart(prev => {
-      const existingIndex = prev.findIndex(item => item.product.id === product.id);
-      if (existingIndex > -1) {
-        const item = prev[existingIndex];
-        // Check stock if strict control is on
-        if (!allowNegativeStock && item.quantity >= product.stock) {
-          setErrorMessage(`Estoque máximo atingido para "${product.name}" (${product.stock} un disponíveis).`);
-          setTimeout(() => setErrorMessage(null), 4000);
-          return prev;
-        }
-        const updated = [...prev];
-        updated[existingIndex] = {
-          ...item,
-          quantity: item.quantity + 1
-        };
-        return updated;
-      } else {
-        return [...prev, { product, quantity: 1, customSalePrice: product.salePrice }];
+    const existingItem = cart.find(item => item.product.id === product.id);
+    if (existingItem) {
+      // Check stock if strict control is on
+      if (!allowNegativeStock && existingItem.quantity >= product.stock) {
+        setErrorMessage(`Estoque máximo atingido para "${product.name}" (${product.stock} un disponíveis).`);
+        setTimeout(() => setErrorMessage(null), 4000);
+        return;
       }
-    });
+      setCart(prev => prev.map(item =>
+        item.product.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+      ));
+    } else {
+      setCart(prev => [...prev, { product, quantity: 1, customSalePrice: product.salePrice }]);
+    }
   };
 
   // Adjust cart item quantity
@@ -257,20 +247,16 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       return;
     }
 
-    setCart(prev => {
-      return prev.map(item => {
-        if (item.product.id === productId) {
-          const maxStock = item.product.stock;
-          if (!allowNegativeStock && quantity > maxStock) {
-            setErrorMessage(`Estoque máximo atingido para "${item.product.name}" (${maxStock} un).`);
-            setTimeout(() => setErrorMessage(null), 4000);
-            return { ...item, quantity: maxStock };
-          }
-          return { ...item, quantity };
-        }
-        return item;
-      });
-    });
+    const item = cart.find(i => i.product.id === productId);
+    if (item && !allowNegativeStock && quantity > item.product.stock) {
+      setErrorMessage(`Estoque máximo atingido para "${item.product.name}" (${item.product.stock} un).`);
+      setTimeout(() => setErrorMessage(null), 4000);
+      quantity = item.product.stock;
+    }
+
+    setCart(prev => prev.map(i =>
+      i.product.id === productId ? { ...i, quantity } : i
+    ));
   };
 
   // Adjust custom item price (for temporary discounts or adjustments)
@@ -350,9 +336,9 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     }));
 
     // Perform sale
-    const subtotal = saleItems.reduce((acc, item) => acc + item.total, 0);
-    const discountAmount = (subtotal * discountPercent) / 100;
-    const finalTotal = Math.max(0, subtotal - discountAmount);
+    const subtotal = roundCurrency(saleItems.reduce((acc, item) => acc + item.total, 0));
+    const discountAmount = roundCurrency((subtotal * discountPercent) / 100);
+    const finalTotal = Math.max(0, roundCurrency(subtotal - discountAmount));
 
     // Build notes with client data and existing notes
     const clientData: Record<string, string> = {};
@@ -414,16 +400,16 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="border-b border-slate-200 pb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
-          <h1 id="pos-title" className="text-2xl font-bold tracking-tight text-slate-900">Frente de Caixa (PDV)</h1>
-          <p className="text-sm text-slate-500 mt-1">Registre as vendas rápidas de balcão da sua loja com baixa automática no estoque.</p>
+          <h1 id="pos-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">Frente de Caixa (PDV)</h1>
+          <p className="text-xs md:text-sm text-slate-500 mt-1">Registre vendas rápidas com baixa automática no estoque.</p>
         </div>
         
         {/* Toggle option for selling without stock constraint */}
-        <div className="flex items-center gap-2.5 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 self-start sm:self-auto shadow-xs">
-          <label className="text-xs font-bold text-slate-600 cursor-pointer select-none" htmlFor="allow-negative-stock-toggle">
-            Permitir venda sem estoque
+        <div className="flex items-center gap-2.5 bg-slate-100 px-3 py-2 rounded-lg border border-slate-200 self-start sm:self-auto shadow-xs">
+          <label className="text-[11px] md:text-xs font-bold text-slate-600 cursor-pointer select-none" htmlFor="allow-negative-stock-toggle">
+            Vender sem estoque
           </label>
           <input
             id="allow-negative-stock-toggle"
@@ -474,7 +460,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
         
         {/* LEFT COLUMN: Product Catalog (7 cols) */}
         <div className="lg:col-span-7 space-y-4">
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row gap-3">
+          <div className="bg-white p-3 sm:p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col gap-3">
             {/* Quick Search */}
             <div className="relative flex-1">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
@@ -483,10 +469,10 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
               <input
                 id="catalog-search"
                 type="text"
-                placeholder="Pesquisar produto pelo nome ou SKU..."
+                placeholder="Pesquisar produto..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 hover:bg-slate-100/50 focus:bg-white text-slate-900 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                className="w-full pl-9 pr-4 py-2.5 sm:py-2 text-sm bg-slate-50 hover:bg-slate-100/50 focus:bg-white text-slate-900 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
               />
             </div>
             
@@ -495,7 +481,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
               id="catalog-category-filter"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="py-2 px-3 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-slate-700 cursor-pointer"
+              className="py-2.5 sm:py-2 px-3 text-sm bg-slate-50 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-slate-700 cursor-pointer"
             >
               <option value="all">Todas Categorias</option>
               {categories.map((cat, i) => (
@@ -505,7 +491,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
           </div>
 
           {/* Catalog grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-[600px] overflow-y-auto pr-1">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 max-h-[600px] overflow-y-auto pr-1">
             {filteredProducts.map(product => {
               const isOut = product.stock <= 0;
               const isLow = product.stock <= product.minStock;
@@ -518,29 +504,29 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
                 <div 
                   key={product.id}
                   onClick={() => handleAddToCart(product)}
-                  className={`bg-white p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between relative group select-none ${
+                  className={`bg-white p-2.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between relative group select-none ${
                     isOut && !allowNegativeStock ? 'opacity-75 border-rose-250 bg-rose-50/10' : 'hover:border-indigo-500'
                   }`}
                 >
                   {/* Cart count badge */}
                   {inCartQty > 0 && (
-                    <span className="absolute top-2 right-2 px-2 py-0.5 bg-indigo-600 text-white font-mono font-bold text-[10px] rounded-full shadow-xs">
-                      {inCartQty} no carrinho
+                    <span className="absolute top-1.5 right-1.5 px-1.5 py-0.5 bg-indigo-600 text-white font-mono font-bold text-[9px] rounded-full shadow-xs">
+                      {inCartQty}x
                     </span>
                   )}
 
                   <div>
-                    <span className="text-[10px] font-mono font-semibold text-slate-400 block uppercase">{product.category}</span>
-                    <h3 className="font-bold text-slate-900 mt-1 line-clamp-1 group-hover:text-indigo-600 transition-colors" title={product.name}>
+                    <span className="text-[9px] sm:text-[10px] font-mono font-semibold text-slate-400 block uppercase truncate">{product.category}</span>
+                    <h3 className="font-bold text-slate-900 mt-0.5 line-clamp-2 group-hover:text-indigo-600 transition-colors text-xs sm:text-sm leading-tight" title={product.name}>
                       {product.name}
                     </h3>
-                    <p className="text-[10px] font-mono text-slate-400 mt-0.5">SKU: {product.code}</p>
+                    <p className="text-[9px] font-mono text-slate-400 mt-0.5 hidden sm:block">SKU: {product.code}</p>
                   </div>
 
-                  <div className="mt-4 flex items-end justify-between">
+                  <div className="mt-2 sm:mt-4 flex items-end justify-between">
                     <div>
-                      <span className="text-[10px] text-slate-400 block">Preço</span>
-                      <span className="text-base font-extrabold text-slate-950 font-mono">
+                      <span className="text-[9px] sm:text-[10px] text-slate-400 block">Preço</span>
+                      <span className="text-sm sm:text-base font-extrabold text-slate-950 font-mono">
                         {product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
                       </span>
                     </div>
@@ -580,27 +566,27 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
         {/* RIGHT COLUMN: Interactive Cart & Checkout form (5 cols) */}
         <div className="lg:col-span-5 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
           {/* Cart Header */}
-          <div className="bg-indigo-950 p-4 text-white flex items-center justify-between">
+          <div className="bg-indigo-950 p-3 sm:p-4 text-white flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <ShoppingCart className="h-5 w-5 text-emerald-400" />
-              <h2 className="font-bold text-xs uppercase tracking-wider">Carrinho de Compras</h2>
+              <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5 text-emerald-400" />
+              <h2 className="font-bold text-[11px] sm:text-xs uppercase tracking-wider">Carrinho</h2>
             </div>
-            <span className="px-2.5 py-1 bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold rounded-full border border-emerald-500/30">
+            <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold rounded-full border border-emerald-500/30">
               {totalItemsCount} item(ns)
             </span>
           </div>
 
           {/* Cart Lines list */}
-          <div className="p-4 border-b border-slate-200 max-h-[280px] overflow-y-auto space-y-3 flex-1">
+          <div className="p-3 sm:p-4 border-b border-slate-200 max-h-[280px] overflow-y-auto space-y-2 sm:space-y-3 flex-1">
             {cart.length === 0 ? (
-              <div className="text-center py-12 text-slate-400">
-                <ShoppingCart className="h-8 w-8 mx-auto stroke-1 mb-2 text-slate-300" />
-                <p className="text-sm font-medium">O carrinho está vazio.</p>
-                <p className="text-xs mt-1">Selecione produtos no catálogo à esquerda para iniciar.</p>
+              <div className="text-center py-8 sm:py-12 text-slate-400">
+                <ShoppingCart className="h-6 w-6 sm:h-8 sm:w-8 mx-auto stroke-1 mb-2 text-slate-300" />
+                <p className="text-xs sm:text-sm font-medium">O carrinho está vazio.</p>
+                <p className="text-[10px] sm:text-xs mt-1">Selecione produtos no catálogo.</p>
               </div>
             ) : (
               cart.map((item, idx) => (
-                <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-slate-50 rounded-lg border border-slate-200/60">
+                <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-3 p-2.5 sm:p-3 bg-slate-50 rounded-lg border border-slate-200/60">
                   {/* Name & price info */}
                   <div className="min-w-0 flex-1">
                     <p className="text-xs font-semibold text-slate-900 truncate" title={item.product.name}>

@@ -83,7 +83,7 @@ export default function Debtors({ sales, onUpdateSale }: DebtorsProps) {
     <div className="space-y-6">
       {/* Header */}
       <div className="border-b border-slate-200 pb-5">
-        <h1 id="debtors-title" className="text-2xl font-bold tracking-tight text-slate-900">Devedores</h1>
+        <h1 id="debtors-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">Devedores</h1>
         <p className="text-sm text-slate-500 mt-1">Controle de clientes com pendências de pagamento.</p>
       </div>
 
