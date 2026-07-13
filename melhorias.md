@@ -49,12 +49,14 @@
 [ok] Persistência local via IndexedDB: o banco (vendas, empréstimos, flags de marketplace, etc.) agora é salvo no navegador e sobrevive a recarregamentos mesmo no site publicado (sem backend). Antes, a cada reload o app resetava para o seed e perdia empréstimos/exclusões. `/api/db` continua como sincronização opcional quando há servidor local.
 [ok] Dashboard: botão de olho (Eye/EyeOff) no cabeçalho para ocultar/exibir todos os valores monetários (KPIs, avaliação de estoque, Mais Vendidos e pagamentos).
 [ok] Filtro de Marketplace (Devedores) normalizado: ignora variantes de "Loja Física" (LOJA FISICA, Loja Fisica, etc.) e usa saleChannel + ecommerceOrderId corretamente.
+[ok] Backup portátil (troca de PC): botões Exportar/Restaurar Backup Completo (.json) em Configurações que salvam e restauam TODOS os dados (vendas, empréstimos, clientes, fornecedores, compras, fechamentos, marketplace, perfil). Antes o backup só cobria produtos/vendas/categorias/despesas e perdia os demais.
 
 ## Pendências / o que não ficou ok (preencher ao validar)
 [ ] __________________________________________________
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.8 [ok] — 13/07/2026: backup portátil completo (Exportar/Restaurar Backup .json em Configurações) com todos os dados para troca de PC.
 - v2.6.7 [ok] — 13/07/2026: persistência local em IndexedDB (fim do reset do banco no site publicado); botão ocultar valores no Dashboard; filtro de Marketplace normalizado.
 - v2.6.6 [ok] — 13/07/2026: botão WhatsApp de cobrança nos empréstimos; Alertas de Reposição só com mínimo > 0; Mais Vendidos ordenado por volume e reativo ao filtro.
 - v2.6.5 [ok] — 13/07/2026: controle de recebimento de Marketplace (Shopee/TikTok/OLX) em Devedores: canal + ID do pedido, KPIs e botão "Recebido".

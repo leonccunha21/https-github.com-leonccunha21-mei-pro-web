@@ -553,6 +553,69 @@ export default function App() {
     setActiveTab('dashboard');
   };
 
+  // Full backup: serialize the entire operational database (loans, customers,
+  // marketplace flags, etc.) to a JSON file so it can be carried to another PC.
+  const handleExportBackup = useCallback(() => {
+    const db: LocalDb = {
+      products, sales, categories, expenses, orders,
+      storeInfo, customers, suppliers, purchases, cashSessions, loans,
+      initialized: true,
+    };
+    const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `zmstore-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }, [products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans]);
+
+  const handleImportBackup = useCallback((file: File) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(String(reader.result)) as Partial<LocalDb>;
+        if (!Array.isArray(parsed.products) || !Array.isArray(parsed.sales)) {
+          throw new Error('invalid');
+        }
+        if (!window.confirm('Importar este backup? Isso substituirá TODOS os dados atuais deste navegador (empréstimos, vendas, clientes, marketplace, fechamentos, etc.).')) {
+          return;
+        }
+        const db: LocalDb = {
+          products: parsed.products || [],
+          sales: parsed.sales || [],
+          categories: parsed.categories || [],
+          expenses: parsed.expenses || [],
+          orders: parsed.orders || [],
+          storeInfo: parsed.storeInfo ?? null,
+          customers: parsed.customers || [],
+          suppliers: parsed.suppliers || [],
+          purchases: parsed.purchases || [],
+          cashSessions: parsed.cashSessions || [],
+          loans: parsed.loans || [],
+          initialized: true,
+        };
+        setProducts(db.products);
+        setSales(db.sales);
+        setCategories(db.categories);
+        setExpenses(db.expenses);
+        setOrders(db.orders);
+        setStoreInfo(db.storeInfo);
+        setCustomers(db.customers);
+        setSuppliers(db.suppliers);
+        setPurchases(db.purchases);
+        setCashSessions(db.cashSessions);
+        setLoans(db.loans);
+        persist(db);
+      } catch {
+        alert('Arquivo de backup inválido.');
+      }
+    };
+    reader.readAsText(file);
+  }, []);
+
   // Derive customers from the distinct clientName present in sales (used to
   // seed the CRM on existing databases that predate the Customer module).
   function seedCustomersFromSales(salesToScan: Sale[]): Customer[] {
@@ -1247,6 +1310,8 @@ export default function App() {
                 storeInfo={storeInfo as StoreInfo}
                 onStoreInfoChange={handleStoreInfoChange}
                 onImportDatabase={handleImportDatabase}
+                onExportBackup={handleExportBackup}
+                onImportBackup={handleImportBackup}
                 onResetDatabase={handleResetDatabase}
               />
             )}

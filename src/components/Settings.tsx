@@ -407,6 +407,8 @@ interface SettingsProps {
   storeInfo: StoreInfo;
   onStoreInfoChange: (info: StoreInfo) => void;
   onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[]; expenses: Expense[] }) => void;
+  onExportBackup: () => void;
+  onImportBackup: (file: File) => void;
   onResetDatabase: () => void;
 }
 
@@ -418,6 +420,8 @@ export default function Settings({
   storeInfo: initialStoreInfo,
   onStoreInfoChange,
   onImportDatabase,
+  onExportBackup,
+  onImportBackup,
   onResetDatabase
 }: SettingsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -439,42 +443,10 @@ export default function Settings({
   const [importError, setImportError] = useState<string | null>(null);
   const [importingExcel, setImportingExcel] = useState(false);
 
-  const [importingExcelData, setImportingExcelData] = useState(false);
-  const excelDataInputRef = useRef<HTMLInputElement>(null);
-
-
-  const handleExportDatabase = () => {
-    const backupData = { version: '1.0', exportedAt: new Date().toISOString(), categories, products, sales };
-    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData, null, 2));
-    const downloadAnchor = document.createElement('a');
-    downloadAnchor.setAttribute("href", dataStr);
-    downloadAnchor.setAttribute("download", `Backup_GestaoPro_${new Date().toISOString().substring(0, 10)}.json`);
-    document.body.appendChild(downloadAnchor);
-    downloadAnchor.click();
-    downloadAnchor.remove();
-  };
-
   const handleImportDatabase = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-    const file = files[0];
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const parsed = JSON.parse(event.target?.result as string);
-        if (parsed.products && parsed.sales && parsed.categories) {
-          onImportDatabase({ products: parsed.products, sales: parsed.sales, categories: parsed.categories, expenses: parsed.expenses || expenses });
-          setImportSuccessMsg('Backup restaurado com sucesso!');
-          setImportError(null);
-          setTimeout(() => setImportSuccessMsg(null), 6000);
-        } else {
-          setImportError('Arquivo inválido. O backup precisa conter categorias, produtos e vendas.');
-        }
-      } catch {
-        setImportError('Erro ao processar arquivo JSON.');
-      }
-    };
-    reader.readAsText(file);
+    const file = e.target.files?.[0];
+    if (file) onImportBackup(file);
+    e.target.value = '';
   };
 
   const handleImportExcelOrCsv = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -827,33 +799,6 @@ export default function Settings({
     }
   };
 
-  const handleImportExcelData = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-    const file = files[0];
-    setImportingExcelData(true);
-    setImportError(null);
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const data = JSON.parse(event.target?.result as string);
-        if (data.products && data.sales && data.categories) {
-          onImportDatabase({ products: data.products, sales: data.sales, categories: data.categories, expenses: data.expenses || expenses });
-          setImportSuccessMsg(`Dados importados com sucesso! ${data.products.length} produtos, ${data.sales.length} vendas, ${data.categories.length} categorias.`);
-          setTimeout(() => setImportSuccessMsg(null), 10000);
-        } else {
-          setImportError('Formato inválido. O arquivo precisa conter products, sales e categories.');
-        }
-      } catch {
-        setImportError('Erro ao processar o arquivo JSON.');
-      } finally {
-        setImportingExcelData(false);
-        if (e.target) e.target.value = '';
-      }
-    };
-    reader.readAsText(file);
-  };
-
   return (
     <div className="space-y-6">
       <div className="border-b border-slate-200 pb-5">
@@ -1009,16 +954,6 @@ export default function Settings({
                 </button>
               </div>
 
-              <div className="space-y-2">
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">Importar Backup Completo (.json)</span>
-                <p className="text-[10px] text-slate-400">Restaura produtos, vendas, categorias e despesas a partir de um arquivo de backup gerado pelo próprio sistema.</p>
-                <input type="file" ref={excelDataInputRef} accept=".json" onChange={handleImportExcelData} className="hidden" />
-                <button onClick={() => excelDataInputRef.current?.click()} disabled={importingExcelData} className="w-full py-2.5 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 hover:border-emerald-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer">
-                  {importingExcelData ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileSpreadsheet className="h-4 w-4" />}
-                  Importar Backup (.json)
-                </button>
-              </div>
-
               <div className="pt-3 border-t border-slate-100 space-y-2">
                 <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">Exportar para Excel</span>
                 <div className="grid grid-cols-2 gap-2">
@@ -1044,17 +979,17 @@ export default function Settings({
             <div className="border-b border-slate-200 pb-3">
               <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <HardDrive className="h-5 w-5 text-slate-500" />
-                Backup Local
+                Backup Local (Troca de PC)
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">Exporte e restaure backups em JSON.</p>
+              <p className="text-xs text-slate-400 mt-0.5">Baixe um arquivo .json com TODOS os dados (vendas, empréstimos, clientes, marketplace, fechamentos) e restaure em outro navegador/PC.</p>
             </div>
 
             <div className="space-y-3">
               <div>
                 <p className="text-xs font-bold text-slate-500 uppercase mb-1.5">Exportar Backup</p>
-                <button onClick={handleExportDatabase} className="w-full py-2 px-3 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer">
+                <button onClick={onExportBackup} className="w-full py-2 px-3 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer">
                   <Download className="h-3.5 w-3.5 text-slate-400" />
-                  Baixar Backup JSON
+                  Baixar Backup Completo (.json)
                 </button>
               </div>
               <div>
@@ -1062,7 +997,7 @@ export default function Settings({
                 <input type="file" ref={fileInputRef} accept=".json" onChange={handleImportDatabase} className="hidden" />
                 <button onClick={() => fileInputRef.current?.click()} className="w-full py-2 px-3 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer">
                   <Upload className="h-3.5 w-3.5 text-slate-400" />
-                  Carregar Backup JSON
+                  Carregar Backup (.json)
                 </button>
               </div>
             </div>
