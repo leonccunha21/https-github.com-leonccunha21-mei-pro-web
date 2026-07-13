@@ -14,7 +14,8 @@ import {
   AlertTriangle,
   HandCoins,
   Plus,
-  Trash2
+  Trash2,
+  ShoppingBag
 } from 'lucide-react';
 
 interface DebtorsProps {
@@ -25,10 +26,11 @@ interface DebtorsProps {
 }
 
 export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: DebtorsProps) {
-  const [view, setView] = useState<'debits' | 'loans'>('debits');
+  const [view, setView] = useState<'debits' | 'loans' | 'marketplace'>('debits');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'completed'>('pending');
+  const [marketplaceFilter, setMarketplaceFilter] = useState<'pending' | 'received' | 'all'>('pending');
   const [partialAmount, setPartialAmount] = useState<string>('');
 
   // Loans (empréstimos)
@@ -67,10 +69,33 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
     return sales.filter(s => s.status === 'pending').length;
   }, [sales]);
 
+  const isMarketplace = (s: Sale) => (s.saleChannel && s.saleChannel !== 'Loja Física') || !!s.ecommerceOrderId;
+
+  const marketplaceSales = useMemo(() => {
+    const filtered = sales.filter(isMarketplace).filter(s => {
+      if (marketplaceFilter === 'pending') return s.status !== 'completed';
+      if (marketplaceFilter === 'received') return s.status === 'completed';
+      return true;
+    });
+    return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }, [sales, marketplaceFilter]);
+
+  const marketplacePendingTotal = useMemo(() =>
+    sales.filter(s => isMarketplace(s) && s.status !== 'completed').reduce((a, s) => a + s.total, 0), [sales]);
+  const marketplaceReceivedTotal = useMemo(() =>
+    sales.filter(s => isMarketplace(s) && s.status === 'completed').reduce((a, s) => a + s.total, 0), [sales]);
+
   const handleConfirmPayment = (sale: Sale) => {
     if (window.confirm(`Confirmar pagamento de ${sale.clientName || 'Cliente'} no valor de R$ ${sale.total.toFixed(2)}?`)) {
       onUpdateSale({ ...sale, status: 'completed', paidAt: new Date().toISOString() });
       setSelectedSale(null);
+    }
+  };
+
+  const handleMarkReceived = (sale: Sale) => {
+    const label = sale.ecommerceOrderId ? `pedido ${sale.ecommerceOrderId}` : `venda ${sale.id}`;
+    if (window.confirm(`Marcar como RECEBIDO (já caiu na conta) o ${label} no valor de R$ ${sale.total.toFixed(2)}?`)) {
+      onUpdateSale({ ...sale, status: 'completed', paidAt: new Date().toISOString() });
     }
   };
 
@@ -196,6 +221,14 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
           }`}
         >
           <HandCoins className="h-3.5 w-3.5" /> Empréstimos
+        </button>
+        <button
+          onClick={() => setView('marketplace')}
+          className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors whitespace-nowrap ${
+            view === 'marketplace' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+          }`}
+        >
+          <ShoppingBag className="h-3.5 w-3.5" /> Marketplace
         </button>
       </div>
 
@@ -666,6 +699,141 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
               })}
             </div>
           )}
+        </div>
+      )}
+
+      {view === 'marketplace' && (
+        <div className="space-y-4">
+          {/* KPIs Marketplace */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">A Receber</span>
+                <div className="p-2 bg-amber-50 rounded-lg text-amber-600"><Clock className="h-5 w-5" /></div>
+              </div>
+              <div className="mt-4"><span className="text-2xl font-bold text-amber-600">{formatCurrency(marketplacePendingTotal)}</span>
+                <p className="text-xs text-slate-500 mt-1">aguardando cair na conta</p></div>
+            </div>
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Recebidos</span>
+                <div className="p-2 bg-emerald-50 rounded-lg text-emerald-600"><CheckCircle className="h-5 w-5" /></div>
+              </div>
+              <div className="mt-4"><span className="text-2xl font-bold text-emerald-600">{formatCurrency(marketplaceReceivedTotal)}</span>
+                <p className="text-xs text-slate-500 mt-1">ja caíram</p></div>
+            </div>
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Pedidos</span>
+                <div className="p-2 bg-blue-50 rounded-lg text-blue-600"><ShoppingBag className="h-5 w-5" /></div>
+              </div>
+              <div className="mt-4"><span className="text-2xl font-bold text-slate-900">{marketplaceSales.length}</span>
+                <p className="text-xs text-slate-500 mt-1">no filtro atual</p></div>
+            </div>
+          </div>
+
+          {/* Filtro Marketplace */}
+          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-200/40">
+              {([
+                { key: 'pending' as const, label: 'Pendentes' },
+                { key: 'received' as const, label: 'Recebidos' },
+                { key: 'all' as const, label: 'Todos' },
+              ]).map(opt => (
+                <button
+                  key={opt.key}
+                  onClick={() => setMarketplaceFilter(opt.key)}
+                  className={`px-3 py-1.5 text-xs font-semibold rounded-md transition-colors whitespace-nowrap ${
+                    marketplaceFilter === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-slate-400">Vendas Shopee / TikTok / OLX — marque como recebido quando o valor cair na conta (≈ 1 mês).</p>
+          </div>
+
+          {/* Lista Marketplace */}
+          <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+            {marketplaceSales.length === 0 ? (
+              <div className="text-center py-16">
+                <ShoppingBag className="h-8 w-8 text-slate-300 mx-auto mb-3" />
+                <h3 className="text-sm font-bold text-slate-900">Nenhum pedido encontrado</h3>
+                <p className="text-xs text-slate-400 mt-1">Sem vendas de marketplace neste filtro.</p>
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-sm">
+                  <thead>
+                    <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                      <th className="py-3 px-4">Canal / ID do Pedido</th>
+                      <th className="py-3 px-4">Produto</th>
+                      <th className="py-3 px-4">Data</th>
+                      <th className="py-3 px-4 text-right">Valor</th>
+                      <th className="py-3 px-4 text-center">Status</th>
+                      <th className="py-3 px-4 text-center">Acoes</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100">
+                    {marketplaceSales.map(s => {
+                      const isPending = s.status !== 'completed';
+                      const channel = s.saleChannel || 'Marketplace';
+                      const orderId = s.ecommerceOrderId || 'Sem ID da loja';
+                      const product = s.items[0]?.productName || '—';
+                      const qty = s.items[0]?.quantity || 1;
+                      return (
+                        <tr key={s.id} className={`transition-colors ${isPending ? 'bg-amber-50/30 hover:bg-amber-50/60' : 'hover:bg-slate-50/50'}`}>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-2">
+                              <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold uppercase">{channel}</span>
+                            </div>
+                            <p className="text-[11px] text-slate-500 font-mono mt-1">{orderId}</p>
+                            <p className="text-[10px] text-slate-400 font-mono">#{s.id}</p>
+                          </td>
+                          <td className="py-3 px-4">
+                            <p className="font-semibold text-slate-900 text-xs truncate max-w-[200px]">{product}{qty > 1 ? ` x${qty}` : ''}</p>
+                          </td>
+                          <td className="py-3 px-4">
+                            <div className="flex items-center gap-1 text-xs text-slate-600">
+                              <Calendar className="h-3 w-3 text-slate-400" />
+                              {formatDate(s.date)}
+                            </div>
+                            {s.paidAt && <p className="text-[10px] text-emerald-600 mt-0.5">Recebido: {formatDate(s.paidAt)}</p>}
+                          </td>
+                          <td className="py-3 px-4 text-right">
+                            <span className={`font-mono font-bold text-xs ${isPending ? 'text-rose-600' : 'text-emerald-600'}`}>{formatCurrency(s.total)}</span>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            {isPending ? (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-50 text-amber-700 text-[10px] font-bold rounded-sm border border-amber-100">
+                                <Clock className="h-3 w-3 shrink-0" /> Aguardando
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-sm border border-emerald-100">
+                                <CheckCircle className="h-3 w-3 shrink-0" /> Recebido
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            {isPending && (
+                              <button
+                                onClick={() => handleMarkReceived(s)}
+                                className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold cursor-pointer flex items-center gap-1"
+                                title="Marcar como recebido"
+                              >
+                                <Check className="h-3.5 w-3.5" /> Recebido
+                              </button>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
         </div>
       )}
 

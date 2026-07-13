@@ -42,12 +42,14 @@
 [ok] Build dist atualizado com o módulo de Empréstimos (toggle "Débitos de Vendas | Empréstimos" no topo da tela Devedores).
 [ok] Removido botão duplicado "Devedores" no menu lateral (ficou apenas o submenu em Vendas).
 [ok] Pipeline (processar_dados.cjs) protegido: ao (re)gerar data/local-db.json, preserva clientes, fornecedores, compras e fechamentos (não apaga os dados dos novos módulos).
+[ok] Controle de recebimento de Marketplace (Shopee/TikTok/OLX) na tela Devedores: toggle "Marketplace", lista de pedidos com canal e ID do pedido (ecommerceOrderId), KPIs de A Receber/Recebidos e botão "Recebido" (marca quando o valor caiu na conta, ~1 mês). Tipo Sale ganha campo saleChannel.
 
 ## Pendências / o que não ficou ok (preencher ao validar)
 [ ] __________________________________________________
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.5 [ok] — 13/07/2026: controle de recebimento de Marketplace (Shopee/TikTok/OLX) em Devedores: canal + ID do pedido, KPIs e botão "Recebido".
 - v2.6.4 [ok] — 13/07/2026: removido botão duplicado "Devedores" do menu lateral.
 - v2.6.3 [ok] — 13/07/2026: local-db.json fora do git (banco nao volta por pull/bot); build dist com Empréstimos; correção de visibilidade do módulo.
 - v2.6.2 [ok] — 13/07/2026: Empréstimos (agiotagem) na tela Devedores: nome, telefone, datas, valor emprestado + juros, recebimento parcial e quitação.

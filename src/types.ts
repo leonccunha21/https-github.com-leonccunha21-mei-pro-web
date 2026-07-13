@@ -42,6 +42,7 @@ export interface Sale {
   installments?: number;
   paidAmount?: number;
   ecommerceOrderId?: string; // ID do pedido Shopee/TikTok/etc
+  saleChannel?: string; // Canal de venda (Loja Física, Shopee, TikTok, OLX, ...)
   saleType: 'CPF' | 'CNPJ';
   notes?: string;
 }
