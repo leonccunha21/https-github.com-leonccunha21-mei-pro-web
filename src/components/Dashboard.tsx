@@ -19,13 +19,73 @@ interface DashboardProps {
   onNavigate: (tab: 'products' | 'pos' | 'sales') => void;
 }
 
+function parseLocalDate(dateStr: string, defaultTime: string = '00:00:00'): Date {
+  if (!dateStr) return new Date();
+  
+  // Clean whitespace
+  const cleaned = dateStr.trim();
+  
+  // Check if it's in DD/MM/YYYY format
+  const slashParts = cleaned.split('/');
+  if (slashParts.length === 3) {
+    let day = parseInt(slashParts[0], 10);
+    let month = parseInt(slashParts[1], 10);
+    let year = parseInt(slashParts[2], 10);
+    
+    // Correct potential typos (e.g., 013 -> 13)
+    if (day > 100) { // If year is first, e.g. 2025/07/13
+      year = parseInt(slashParts[0], 10);
+      day = parseInt(slashParts[2], 10);
+    }
+    
+    if (month > 12) { // Swap month and day if they got swapped
+      const tmp = day;
+      day = month;
+      month = tmp;
+    }
+    
+    // Form standard string: YYYY-MM-DD
+    const yyyy = year.toString().padStart(4, '0');
+    const mm = month.toString().padStart(2, '0');
+    const dd = day.toString().padStart(2, '0');
+    
+    const parsed = new Date(`${yyyy}-${mm}-${dd}T${defaultTime}`);
+    if (!isNaN(parsed.getTime())) return parsed;
+  }
+  
+  // Check if it's in YYYY-MM-DD format
+  const hyphenParts = cleaned.split('-');
+  if (hyphenParts.length === 3) {
+    let year = parseInt(hyphenParts[0], 10);
+    let month = parseInt(hyphenParts[1], 10);
+    let day = parseInt(hyphenParts[2], 10);
+    
+    if (year < 100) { // e.g. DD-MM-YYYY
+      day = parseInt(hyphenParts[0], 10);
+      year = parseInt(hyphenParts[2], 10);
+    }
+    
+    const yyyy = year.toString().padStart(4, '0');
+    const mm = month.toString().padStart(2, '0');
+    const dd = day.toString().padStart(2, '0');
+    
+    const parsed = new Date(`${yyyy}-${mm}-${dd}T${defaultTime}`);
+    if (!isNaN(parsed.getTime())) return parsed;
+  }
+  
+  // Fallback to standard parser
+  const fallback = new Date(cleaned + (cleaned.includes('T') ? '' : `T${defaultTime}`));
+  if (!isNaN(fallback.getTime())) return fallback;
+  return new Date();
+}
+
 export default function Dashboard({ products, sales, onNavigate }: DashboardProps) {
   const [timeRange, setTimeRange] = useState<'all' | '1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('all');
   const [customStart, setCustomStart] = useState(() => {
     const d = new Date(); d.setMonth(d.getMonth() - 1); return d.toISOString().split('T')[0];
   });
   const [customEnd, setCustomEnd] = useState(() => new Date().toISOString().split('T')[0]);
-  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [selectedYearState, setSelectedYearState] = useState<number | null>(null);
   const [selectedMonth, setSelectedMonth] = useState<'all' | number>('all');
 
   const availableYears = useMemo(() => {
@@ -34,6 +94,12 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
     return Array.from(years).sort((a, b) => b - a);
   }, [sales]);
 
+  const activeYear = useMemo(() => {
+    if (selectedYearState !== null) return selectedYearState;
+    if (availableYears.length > 0) return availableYears[0];
+    return new Date().getFullYear();
+  }, [selectedYearState, availableYears]);
+
   // Filter completed sales by time range and year
   const completedSales = useMemo(() => {
     let result = sales.filter(s => {
@@ -41,8 +107,8 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       if (timeRange === 'all') return true;
       const saleDate = new Date(s.date);
       if (timeRange === 'custom') {
-        const start = new Date(customStart + 'T00:00:00');
-        const end = new Date(customEnd + 'T23:59:59');
+        const start = parseLocalDate(customStart, '00:00:00');
+        const end = parseLocalDate(customEnd, '23:59:59');
         return saleDate >= start && saleDate <= end;
       }
       const now = new Date();
@@ -54,13 +120,13 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
     });
     // Only apply dropdown year/month filters if we are NOT in custom date range mode
     if (timeRange !== 'custom') {
-      result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
+      result = result.filter(s => new Date(s.date).getFullYear() === activeYear);
       if (selectedMonth !== 'all') {
         result = result.filter(s => new Date(s.date).getMonth() + 1 === selectedMonth);
       }
     }
     return result;
-  }, [sales, timeRange, customStart, customEnd, selectedYear, selectedMonth]);
+  }, [sales, timeRange, customStart, customEnd, activeYear, selectedMonth]);
 
   // Calculate metrics
   const totalRevenue = completedSales.reduce((acc, s) => acc + s.total, 0);
@@ -103,8 +169,8 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
     
     if (timeRange === 'custom') {
       // Custom range: group by day
-      const start = new Date(customStart + 'T00:00:00');
-      const end = new Date(customEnd + 'T23:59:59');
+      const start = parseLocalDate(customStart, '00:00:00');
+      const end = parseLocalDate(customEnd, '23:59:59');
       const diffTime = end.getTime() - start.getTime();
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       
@@ -323,8 +389,8 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
             <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
               <Calendar className="h-3.5 w-3.5 text-slate-400 ml-1.5" />
               <select
-                value={selectedYear}
-                onChange={e => setSelectedYear(parseInt(e.target.value))}
+                value={activeYear}
+                onChange={e => setSelectedYearState(parseInt(e.target.value))}
                 className="bg-transparent text-[11px] sm:text-xs font-medium text-slate-900 border-none outline-none focus:outline-none cursor-pointer py-1 pr-2"
               >
                 {availableYears.map(y => (

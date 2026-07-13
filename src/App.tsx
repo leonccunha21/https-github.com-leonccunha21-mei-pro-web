@@ -60,7 +60,10 @@ import {
   deleteUserProduct,
   clearUserProducts,
   clearUserCategories,
-  clearUserSales
+  clearUserSales,
+  saveUserProductsBatch,
+  saveUserCategoriesBatch,
+  saveUserSalesBatch
 } from './lib/dbSync';
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
@@ -113,59 +116,17 @@ export default function App() {
   useEffect(() => {
     if (!authInitialized) return;
     if (!user) {
-      setProducts([]);
-      setSales([]);
-      setCategories([]);
+      loadLocalData();
     }
   }, [user, authInitialized]);
 
-  // Stock cleanup: deduplicate and remove empty products (runs once)
-  useEffect(() => {
-    if (localStorage.getItem('stock_cleanup_v2_done')) return;
-    setProducts(prev => {
-      if (prev.length === 0) return prev;
-      const cleaned = runStockCleanup(prev);
-      if (cleaned.length !== prev.length || cleaned.some((p, i) => prev[i]?.id !== p.id || prev[i]?.stock !== p.stock)) {
-        localStorage.setItem('loja_products', JSON.stringify(cleaned));
-        return cleaned;
-      }
-      return prev;
-    });
-    localStorage.setItem('stock_cleanup_v2_done', 'true');
-  }, []);
-
-  // Category fix: re-categorize products based on their name (runs once on local data)
-  useEffect(() => {
-    if (localStorage.getItem('category_fix_v1_done')) return;
-    setProducts(prev => {
-      if (prev.length === 0) return prev;
-      const fixed = prev.map(p => {
-        const correct = categorizeProduct(p.name);
-        return p.category === correct ? p : { ...p, category: correct };
-      });
-      const changed = fixed.some((p, i) => prev[i]?.id !== p.id || prev[i]?.category !== p.category);
-      if (changed) {
-        localStorage.setItem('loja_products', JSON.stringify(fixed));
-        return fixed;
-      }
-      return prev;
-    });
-    localStorage.setItem('category_fix_v1_done', 'true');
-  }, []);
-
-  // Sync Cloud Data
-  const loadCloudData = async (uid: string) => {
-    if (loadingCloudRef.current) return;
-    loadingCloudRef.current = true;
-    setLoadingCloud(true);
-
-    // 1. Always load local data first so the user sees something immediately
+  // Load local data helper
+  const loadLocalData = () => {
     const localProducts = localStorage.getItem('loja_products');
     const localSales = localStorage.getItem('loja_sales');
     const localExpenses = localStorage.getItem('loja_expenses');
     const localCategories = localStorage.getItem('loja_categories');
     const localStoreInfo = localStorage.getItem('zm_store_info');
-    const deletedProductIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
 
     let parsedProducts: Product[] = [];
     let parsedSales: Sale[] = [];
@@ -175,10 +136,10 @@ export default function App() {
 
     try {
       if (localProducts) {
-        parsedProducts = runStockCleanup(JSON.parse(localProducts));
+        parsedProducts = JSON.parse(localProducts);
       }
       if (!parsedProducts || parsedProducts.length === 0) {
-        parsedProducts = runStockCleanup(initialProducts);
+        parsedProducts = initialProducts;
       }
 
       if (localSales) {
@@ -204,18 +165,44 @@ export default function App() {
 
       if (localStoreInfo) parsedStoreInfo = JSON.parse(localStoreInfo);
     } catch {
-      // Corrupted localStorage, use seed data
-      parsedProducts = runStockCleanup(initialProducts);
+      parsedProducts = initialProducts;
       parsedSales = initialSales;
       parsedExpenses = initialExpenses;
       parsedCategories = initialCategories;
     }
+
+    // Always clean and deduplicate on load
+    parsedProducts = runStockCleanup(parsedProducts);
+
+    // Apply categories correction on load
+    parsedProducts = parsedProducts.map(p => {
+      const correct = categorizeProduct(p.name);
+      return p.category === correct ? p : { ...p, category: correct };
+    });
 
     setProducts(parsedProducts);
     setCategories(parsedCategories);
     setSales(parsedSales);
     setExpenses(parsedExpenses);
     if (parsedStoreInfo) setStoreInfo(parsedStoreInfo);
+
+    localStorage.setItem('loja_products', JSON.stringify(parsedProducts));
+    localStorage.setItem('loja_sales', JSON.stringify(parsedSales));
+    localStorage.setItem('loja_categories', JSON.stringify(parsedCategories));
+    localStorage.setItem('loja_expenses', JSON.stringify(parsedExpenses));
+
+    return { parsedProducts, parsedSales, parsedCategories, parsedExpenses, parsedStoreInfo };
+  };
+
+  // Sync Cloud Data
+  const loadCloudData = async (uid: string) => {
+    if (loadingCloudRef.current) return;
+    loadingCloudRef.current = true;
+    setLoadingCloud(true);
+
+    // 1. Always load local data first so the user sees something immediately
+    const { parsedProducts, parsedSales, parsedCategories, parsedExpenses, parsedStoreInfo } = loadLocalData();
+    const deletedProductIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
 
     // 2. Try to load from cloud (parallelized)
     try {
@@ -290,29 +277,41 @@ export default function App() {
         localStorage.setItem('loja_sales', JSON.stringify(mergedSales));
         localStorage.setItem('loja_categories', JSON.stringify(mergedCategories));
 
-        // Push merged result to cloud (sync both directions - ONLY if they differ or are missing to minimize writes/quota)
+        // Push merged result to cloud in efficient batches to minimize network traffic & quota
+        const productsToSave: Product[] = [];
         const cloudProductMap = new Map(cloudProducts.map(cp => [cp.id, cp]));
         for (const p of cleanedMergedProducts) {
           const cp = cloudProductMap.get(p.id);
           if (!cp || JSON.stringify(cp) !== JSON.stringify(p)) {
-            try { await saveUserProduct(uid, p); } catch {}
+            productsToSave.push(p);
           }
         }
+        if (productsToSave.length > 0) {
+          await saveUserProductsBatch(uid, productsToSave);
+        }
 
+        const categoriesToSave: Category[] = [];
         const cloudCategoryMap = new Map(cloudCategories.map(cc => [cc.id, cc]));
         for (const c of mergedCategories) {
           const cc = cloudCategoryMap.get(c.id);
           if (!cc || JSON.stringify(cc) !== JSON.stringify(c)) {
-            try { await saveUserCategory(uid, c); } catch {}
+            categoriesToSave.push(c);
           }
         }
+        if (categoriesToSave.length > 0) {
+          await saveUserCategoriesBatch(uid, categoriesToSave);
+        }
 
+        const salesToSave: Sale[] = [];
         const cloudSaleMap = new Map(cloudSales.map(cs => [cs.id, cs]));
         for (const s of mergedSales) {
           const cs = cloudSaleMap.get(s.id);
           if (!cs || JSON.stringify(cs) !== JSON.stringify(s)) {
-            try { await saveUserSale(uid, s); } catch {}
+            salesToSave.push(s);
           }
+        }
+        if (salesToSave.length > 0) {
+          await saveUserSalesBatch(uid, salesToSave);
         }
 
         // Also delete removed products from cloud
@@ -321,39 +320,11 @@ export default function App() {
           try { await deleteUserProduct(uid, deletedId); } catch {}
         }
       } else {
-        console.log('Cloud vazia. Enviando dados locais...');
-        
-        // If they had no local products (parsedProducts is empty) and cloud is empty, seed them with initialProducts
-        if (!localProducts) {
-          parsedProducts = initialProducts;
-          parsedCategories = initialCategories;
-          parsedSales = initialSales;
-          parsedExpenses = initialExpenses;
-          
-          setProducts(parsedProducts);
-          setCategories(parsedCategories);
-          setSales(parsedSales);
-          setExpenses(parsedExpenses);
-          
-          localStorage.setItem('loja_products', JSON.stringify(parsedProducts));
-          localStorage.setItem('loja_categories', JSON.stringify(parsedCategories));
-          localStorage.setItem('loja_sales', JSON.stringify(parsedSales));
-          localStorage.setItem('loja_expenses', JSON.stringify(parsedExpenses));
-        }
-
-        let failedProducts = 0;
-        for (const p of parsedProducts) {
-          try { await saveUserProduct(uid, p); } catch (e) { failedProducts++; }
-        }
-        let failedCategories = 0;
-        for (const c of parsedCategories) {
-          try { await saveUserCategory(uid, c); } catch (e) { failedCategories++; }
-        }
-        let failedSales = 0;
-        for (const s of parsedSales) {
-          try { await saveUserSale(uid, s); } catch (e) { failedSales++; }
-        }
-        console.log(`Upload OK. Falhas: ${failedProducts}/${parsedProducts.length} produtos, ${failedCategories}/${parsedCategories.length} cats, ${failedSales}/${parsedSales.length} vendas`);
+        console.log('Cloud vazia. Enviando dados locais em lote...');
+        await saveUserProductsBatch(uid, parsedProducts);
+        await saveUserCategoriesBatch(uid, parsedCategories);
+        await saveUserSalesBatch(uid, parsedSales);
+        console.log('Upload de dados locais em lote realizado com sucesso!');
       }
     } catch (err) {
       console.error("Erro na nuvem (usando dados locais):", err);
@@ -386,19 +357,35 @@ export default function App() {
 
   // Sync state helpers
   const saveProductsToStorage = async (updatedProducts: Product[], changedProduct?: Product, isDeletedId?: string) => {
-    setProducts(updatedProducts);
-    localStorage.setItem('loja_products', JSON.stringify(updatedProducts));
+    // Automatically deduplicate on save to guarantee zero duplicate products exist
+    const cleaned = runStockCleanup(updatedProducts);
+    setProducts(cleaned);
+    localStorage.setItem('loja_products', JSON.stringify(cleaned));
     
     if (user) {
       try {
         if (isDeletedId) {
           await deleteUserProduct(user.uid, isDeletedId);
         } else if (changedProduct) {
-          await saveUserProduct(user.uid, changedProduct);
-        } else {
-          for (const p of updatedProducts) {
-            try { await saveUserProduct(user.uid, p); } catch {}
+          // Check if changed product was merged
+          const exists = cleaned.some(p => p.id === changedProduct.id);
+          if (exists) {
+            await saveUserProduct(user.uid, changedProduct);
+          } else {
+            // If it was merged, sync the entire cleaned list to reflect the merge
+            await saveUserProductsBatch(user.uid, cleaned);
           }
+        } else {
+          await saveUserProductsBatch(user.uid, cleaned);
+        }
+
+        // Delete any marked duplicate product IDs from the cloud
+        const deletedIds = JSON.parse(localStorage.getItem('loja_deleted_products') || '[]');
+        if (deletedIds.length > 0) {
+          for (const dId of deletedIds) {
+            try { await deleteUserProduct(user.uid, dId); } catch {}
+          }
+          localStorage.removeItem('loja_deleted_products');
         }
       } catch (e) {
         console.error('Erro ao sincronizar produtos com a nuvem:', e);
@@ -411,14 +398,15 @@ export default function App() {
     localStorage.setItem('loja_sales', JSON.stringify(updatedSales));
     
     if (user) {
-      if (changedSale) {
-        await saveUserSale(user.uid, changedSale);
-      } else {
-        // Full list overwrite - clear the collection and save new ones
-        await clearUserSales(user.uid);
-        for (const s of updatedSales) {
-          await saveUserSale(user.uid, s);
+      try {
+        if (changedSale) {
+          await saveUserSale(user.uid, changedSale);
+        } else {
+          // Overwrite with batch directly (no clear needed, as sales are never deleted)
+          await saveUserSalesBatch(user.uid, updatedSales);
         }
+      } catch (e) {
+        console.error('Erro ao sincronizar vendas com a nuvem:', e);
       }
     }
   };
@@ -441,14 +429,15 @@ export default function App() {
     localStorage.setItem('loja_categories', JSON.stringify(updatedCategories));
     
     if (user) {
-      if (changedCategory) {
-        await saveUserCategory(user.uid, changedCategory);
-      } else {
-        // Full list overwrite - clear the collection and save new ones
-        await clearUserCategories(user.uid);
-        for (const c of updatedCategories) {
-          await saveUserCategory(user.uid, c);
+      try {
+        if (changedCategory) {
+          await saveUserCategory(user.uid, changedCategory);
+        } else {
+          // Save batch directly to overwrite
+          await saveUserCategoriesBatch(user.uid, updatedCategories);
         }
+      } catch (e) {
+        console.error('Erro ao sincronizar categorias com a nuvem:', e);
       }
     }
   };

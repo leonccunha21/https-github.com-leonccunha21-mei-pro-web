@@ -34,7 +34,7 @@ const timeRangeLabels: Record<string, string> = {
 
 export default function Reports({ products, sales, categories }: ReportsProps) {
   const [viewMode, setViewMode] = useState<'resume' | 'monthly' | 'yearly'>('resume');
-  const [selectedYear, setSelectedYear] = useState<number>(() => new Date().getFullYear());
+  const [selectedYearState, setSelectedYearState] = useState<number | null>(null);
   const [resumeTimeRange, setResumeTimeRange] = useState<'all' | '7days' | '30days' | '1year'>('all');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedPayment, setSelectedPayment] = useState<string>('all');
@@ -46,6 +46,12 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
     completedSales.forEach(s => years.add(new Date(s.date).getFullYear()));
     return Array.from(years).sort((a, b) => b - a);
   }, [completedSales]);
+
+  const activeYear = useMemo(() => {
+    if (selectedYearState !== null) return selectedYearState;
+    if (availableYears.length > 0) return availableYears[0];
+    return new Date().getFullYear();
+  }, [selectedYearState, availableYears]);
 
   const allCategoryNames = useMemo(() => {
     const names = new Set<string>();
@@ -97,7 +103,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
   }, [filteredSales]);
 
   const monthlyData = useMemo(() => {
-    const yearSales = filteredSales.filter(s => new Date(s.date).getFullYear() === selectedYear);
+    const yearSales = filteredSales.filter(s => new Date(s.date).getFullYear() === activeYear);
     const months: Record<number, { revenue: number; cost: number; profit: number; count: number }> = {};
     
     for (let m = 1; m <= 12; m++) {
@@ -128,7 +134,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
     }), { revenue: 0, cost: 0, profit: 0, count: 0 });
     
     return { months: result, yearTotal };
-  }, [filteredSales, selectedYear]);
+  }, [filteredSales, activeYear]);
 
   const yearlyData = useMemo(() => {
     const years: Record<number, { revenue: number; cost: number; profit: number; count: number }> = {};
@@ -248,8 +254,8 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
           <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
         </div>
         <select
-          value={selectedYear}
-          onChange={e => setSelectedYear(parseInt(e.target.value))}
+          value={activeYear}
+          onChange={e => setSelectedYearState(parseInt(e.target.value))}
           className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
         >
           {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
@@ -325,15 +331,15 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                 <Calendar className="h-4 w-4 text-slate-400" />
                 <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
                 <select
-                  value={selectedYear}
-                  onChange={e => setSelectedYear(parseInt(e.target.value))}
+                  value={activeYear}
+                  onChange={e => setSelectedYearState(parseInt(e.target.value))}
                   className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium"
                 >
                   {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
                 </select>
               </div>
               {(() => {
-                const yearSales = completedSales.filter(s => new Date(s.date).getFullYear() === selectedYear);
+                const yearSales = completedSales.filter(s => new Date(s.date).getFullYear() === activeYear);
                 const cpfSales = yearSales.filter(s => s.saleType === 'CPF');
                 const cnpjSales = yearSales.filter(s => s.saleType === 'CNPJ');
                 const cpfTotal = cpfSales.reduce((a, s) => a + s.total, 0);
@@ -352,7 +358,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                       <span className="text-xs text-indigo-600 mt-1 block">{cnpjSales.length} venda{cnpjSales.length !== 1 ? 's' : ''}</span>
                     </div>
                     <div className="p-4 bg-slate-800 rounded-xl border border-slate-700 text-white">
-                      <span className="text-[10px] font-bold text-slate-300 uppercase">Total {selectedYear}</span>
+                      <span className="text-[10px] font-bold text-slate-300 uppercase">Total {activeYear}</span>
                       <span className="text-xl font-bold font-mono block mt-2">{overallTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
                       <span className="text-xs text-slate-300 mt-1 block">{yearSales.length} venda{yearSales.length !== 1 ? 's' : ''}</span>
                     </div>
@@ -405,7 +411,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
           <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
             <Calendar className="h-4 w-4 text-slate-400" />
             <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
-            <select value={selectedYear} onChange={e => setSelectedYear(parseInt(e.target.value))} className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium">
+            <select value={activeYear} onChange={e => setSelectedYearState(parseInt(e.target.value))} className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium">
               {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
             </select>
             <span className="text-[10px] text-slate-400 font-medium ml-2">
@@ -415,25 +421,25 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase">Faturamento {selectedYear}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Faturamento {activeYear}</span>
               <span className="text-xl font-bold font-mono text-slate-900 block mt-2">{monthlyData.yearTotal.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
             </div>
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase">Custo {selectedYear}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Custo {activeYear}</span>
               <span className="text-xl font-bold font-mono text-amber-600 block mt-2">{monthlyData.yearTotal.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
             </div>
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase">Lucro {selectedYear}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Lucro {activeYear}</span>
               <span className="text-xl font-bold font-mono text-emerald-600 block mt-2">{monthlyData.yearTotal.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
             </div>
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase">Nº Vendas {selectedYear}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Nº Vendas {activeYear}</span>
               <span className="text-xl font-bold font-mono text-indigo-600 block mt-2">{monthlyData.yearTotal.count}</span>
             </div>
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-            <h2 className="text-base font-bold text-slate-900 mb-4">Faturamento Mensal - {selectedYear}</h2>
+            <h2 className="text-base font-bold text-slate-900 mb-4">Faturamento Mensal - {activeYear}</h2>
             
             <div className="relative h-48 w-full mb-6">
               <svg className="w-full h-full" viewBox="0 0 700 180" preserveAspectRatio="xMidYMid meet">
@@ -492,7 +498,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                     </tr>
                   ))}
                   <tr className="border-t-2 border-slate-300 font-bold">
-                    <td className="py-2 text-slate-900">TOTAL {selectedYear}</td>
+                    <td className="py-2 text-slate-900">TOTAL {activeYear}</td>
                     <td className="py-2 text-center font-mono text-slate-900">{monthlyData.yearTotal.count}</td>
                     <td className="py-2 text-right font-mono text-slate-900">{monthlyData.yearTotal.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                     <td className="py-2 text-right font-mono text-slate-900">{monthlyData.yearTotal.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>

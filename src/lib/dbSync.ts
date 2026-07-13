@@ -4,7 +4,8 @@ import {
   getDocs, 
   getDoc,
   setDoc, 
-  deleteDoc 
+  deleteDoc,
+  writeBatch
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from './firebase';
 import { Product, Sale, Category, StoreInfo, ServiceOrder } from '../types';
@@ -214,4 +215,62 @@ export async function clearUserOrders(userId: string): Promise<void> {
     handleFirestoreError(error, OperationType.DELETE, path);
   }
 }
+
+/**
+ * Batched Cloud Sync Operations (to support fast massive uploads/updates)
+ */
+export async function saveUserProductsBatch(userId: string, products: Product[]): Promise<void> {
+  const path = `users/${userId}/products`;
+  try {
+    const chunkSize = 500;
+    for (let i = 0; i < products.length; i += chunkSize) {
+      const chunk = products.slice(i, i + chunkSize);
+      const batch = writeBatch(db);
+      for (const p of chunk) {
+        const docRef = doc(db, path, p.id);
+        batch.set(docRef, p);
+      }
+      await batch.commit();
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+}
+
+export async function saveUserCategoriesBatch(userId: string, categories: Category[]): Promise<void> {
+  const path = `users/${userId}/categories`;
+  try {
+    const chunkSize = 500;
+    for (let i = 0; i < categories.length; i += chunkSize) {
+      const chunk = categories.slice(i, i + chunkSize);
+      const batch = writeBatch(db);
+      for (const c of chunk) {
+        const docRef = doc(db, path, c.id);
+        batch.set(docRef, c);
+      }
+      await batch.commit();
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+}
+
+export async function saveUserSalesBatch(userId: string, sales: Sale[]): Promise<void> {
+  const path = `users/${userId}/sales`;
+  try {
+    const chunkSize = 500;
+    for (let i = 0; i < sales.length; i += chunkSize) {
+      const chunk = sales.slice(i, i + chunkSize);
+      const batch = writeBatch(db);
+      for (const s of chunk) {
+        const docRef = doc(db, path, s.id);
+        batch.set(docRef, s);
+      }
+      await batch.commit();
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+}
+
 
