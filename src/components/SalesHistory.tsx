@@ -550,10 +550,10 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-400">
                   <th className="py-3 px-4">Cód / Data</th>
+                  <th className="py-3 px-4">Produto</th>
                   <th className="py-3 px-4">Cliente</th>
                   <th className="py-3 px-4 text-center">Itens</th>
                   <th className="py-3 px-4">Pagamento</th>
-                  <th className="py-3 px-4 text-right">Valor Pago (Custo)</th>
                   <th className="py-3 px-4 text-right">Valor Vendido</th>
                   <th className="py-3 px-4 text-right">Lucro</th>
                   <th className="py-3 px-4 text-center">Status</th>
@@ -601,14 +601,15 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                         </span>
                       </td>
 
+                      {/* Product names (first 2 products) */}
+                      <td className="py-3 px-4 text-xs text-slate-600 max-w-[200px] truncate">
+                        {sale.items.slice(0, 2).map(i => i.productName).join(', ')}
+                        {sale.items.length > 2 && ' ...'}
+                      </td>
+
                       {/* Payment method */}
                       <td className="py-3 px-4 text-xs font-medium text-slate-600">
                         {paymentMethodLabels[sale.paymentMethod] || sale.paymentMethod}
-                      </td>
-
-                      {/* Cost price total */}
-                      <td className="py-3 px-4 text-right font-mono text-slate-400">
-                        {formatCurrency(sale.totalCost)}
                       </td>
 
                       {/* Sold total */}
