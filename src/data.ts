@@ -65,66 +65,72 @@ export const initialProducts: Product[] = [
     "code": "PROD-0001",
     "name": "Adaptador Bluetooth",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_2",
     "code": "PROD-0002",
     "name": "Adaptador Ios P2",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5.9,
+    "costPrice": 5.9,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_3",
     "code": "PROD-0003",
     "name": "Adaptador Micro Sd",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_4",
     "code": "PROD-0004",
     "name": "Adaptador P2 - P10",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_5",
     "code": "PROD-0005",
     "name": "Adaptador P2 Tipo C",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 8,
+    "costPrice": 8,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_6",
     "code": "PROD-0006",
     "name": "Adaptador P3X2 - P2",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_7",
@@ -135,128 +141,140 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 2,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_8",
     "code": "PROD-0008",
     "name": "Adaptador T",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 1.5,
+    "costPrice": 1.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_9",
     "code": "PROD-0009",
     "name": "Adaptador Tipo C Para Usb",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_10",
     "code": "PROD-0010",
     "name": "Adaptador Tomada 2 Entrada",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 9.9,
+    "costPrice": 9.9,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_11",
     "code": "PROD-0011",
     "name": "Adaptador V8 - Iphone",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_12",
     "code": "PROD-0012",
     "name": "Adaptador Vga Para Hdmi",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_13",
     "code": "PROD-0013",
     "name": "Adaptador Wifi 2.5G",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 11,
+    "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_14",
     "code": "PROD-0014",
     "name": "Adaptador Wifi 2.5G Antena",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 12,
+    "costPrice": 12,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_15",
     "code": "PROD-0015",
     "name": "Adaptador Wifi 2.5G Antena Ms",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 9,
+    "costPrice": 9,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_16",
     "code": "PROD-0016",
     "name": "Adaptador Wifi 6",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 17.18,
+    "costPrice": 17.18,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_17",
     "code": "PROD-0017",
     "name": "Alicate Universal 8 Id-4762A",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 11,
+    "costPrice": 11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_18",
     "code": "PROD-0018",
     "name": "Arma De Hidrogel Ar15",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 35,
+    "costPrice": 35,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_19",
@@ -267,62 +285,68 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_20",
     "code": "PROD-0020",
     "name": "Balança 10Kg",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 14,
+    "costPrice": 14,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_21",
     "code": "PROD-0021",
     "name": "Balança De Precisão Xm-50522",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 16,
+    "costPrice": 16,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_22",
     "code": "PROD-0022",
     "name": "Baralho C 2 Jogos Bar-69087",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
+    "costPrice": 1,
     "salePrice": 12,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_23",
     "code": "PROD-0023",
     "name": "Bateria 23A",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 1.5,
+    "costPrice": 1.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_24",
     "code": "PROD-0024",
     "name": "Bateria 9V",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_25",
@@ -333,29 +357,32 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_26",
     "code": "PROD-0026",
     "name": "Bobbie Goods Caderno",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 13,
+    "costPrice": 13,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_27",
     "code": "PROD-0027",
     "name": "Bobbie Goods Card",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 2.5,
+    "costPrice": 2.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_28",
@@ -366,18 +393,20 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_29",
     "code": "PROD-0029",
     "name": "Boneco Lego",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 15,
+    "salePrice": 13.13,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_30",
@@ -385,10 +414,11 @@ export const initialProducts: Product[] = [
     "name": "Boneco Lego Kit",
     "category": "Brinquedos e Jogos",
     "costPrice": 0,
-    "salePrice": 20,
+    "salePrice": 15,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_31",
@@ -399,51 +429,56 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_32",
     "code": "PROD-0032",
     "name": "Cabeça Carregador 3.1A Ka-5601",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 6,
+    "costPrice": 6,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_33",
     "code": "PROD-0033",
     "name": "Cabo Auxiliar P2 H'Maston",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_34",
     "code": "PROD-0034",
     "name": "Cabo Auxiliar P2 Kingo",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 7,
+    "salePrice": 11.67,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_35",
     "code": "PROD-0035",
     "name": "Cabo Auxiliar P2 Le-804",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 2.5,
+    "costPrice": 2.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_36",
@@ -454,29 +489,32 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_37",
     "code": "PROD-0037",
     "name": "Cabo De Dados Tc Kapbom Kap 1Mtc",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_38",
     "code": "PROD-0038",
     "name": "Cabo De Dados V8 Kapbom Kap 1Mv8",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_39",
@@ -487,29 +525,32 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_40",
     "code": "PROD-0040",
     "name": "Cabo De Força - 3 Pinos",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
+    "costPrice": 6,
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_41",
     "code": "PROD-0041",
     "name": "Cabo De Força - Pc",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 6,
+    "costPrice": 6,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_42",
@@ -520,40 +561,44 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_43",
     "code": "PROD-0043",
     "name": "Cabo Displayport",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_44",
     "code": "PROD-0044",
     "name": "Cabo Hdmi 1,8/2M",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 6,
+    "costPrice": 6,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_45",
     "code": "PROD-0045",
     "name": "Cabo Hdmi 2M",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 6,
+    "salePrice": 12.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_46",
@@ -564,282 +609,308 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_47",
     "code": "PROD-0047",
     "name": "Cabo Hdmi 4M",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
+    "costPrice": 15,
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_48",
     "code": "PROD-0048",
     "name": "Cabo Hmaster Tpc 4.8A",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
+    "costPrice": 4,
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_49",
     "code": "PROD-0049",
     "name": "Cabo H'Maston Hb01-1",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 4.5,
+    "costPrice": 4.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_50",
     "code": "PROD-0050",
     "name": "Cabo Inova Tc Cbo-12223",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 25,
+    "costPrice": 6,
+    "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_51",
     "code": "PROD-0051",
     "name": "Cabo Iphone 20W",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 6,
+    "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_52",
     "code": "PROD-0052",
     "name": "Cabo Iphone Caixa Branca",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_53",
     "code": "PROD-0053",
     "name": "Cabo Iphone Hb10-2 Iphone",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_54",
     "code": "PROD-0054",
     "name": "Cabo Iphone Hb10-3 Tipo C",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.209Z"
   },
   {
     "id": "p_55",
     "code": "PROD-0055",
     "name": "Cabo Iphone Kap",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_56",
     "code": "PROD-0056",
     "name": "Cabo Kingo Iphone 1M",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 7,
+    "salePrice": 17.22,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_57",
     "code": "PROD-0057",
     "name": "Cabo Kingo Iphone 2M Leo",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
+    "costPrice": 10,
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_58",
     "code": "PROD-0058",
     "name": "Cabo Kingo Tc 1M",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 7,
+    "salePrice": 17.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_59",
     "code": "PROD-0059",
     "name": "Cabo P2/P10",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_60",
     "code": "PROD-0060",
     "name": "Cabo Pmcell Tc Laranja",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_61",
     "code": "PROD-0061",
     "name": "Cabo Rca Para Rca",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_62",
     "code": "PROD-0062",
     "name": "Cabo Spartan V8",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
+    "costPrice": 4.5,
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_63",
     "code": "PROD-0063",
     "name": "Cabo Spartan V8 Leo",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_64",
     "code": "PROD-0064",
     "name": "Cabo Tipo C - Digital",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_65",
     "code": "PROD-0065",
     "name": "Cabo Usb Extensor",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_66",
     "code": "PROD-0066",
     "name": "Cabo Usb X Usb",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_67",
     "code": "PROD-0067",
     "name": "Cabo V8 4.8 Max H72-1",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 4.5,
+    "costPrice": 4.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_68",
     "code": "PROD-0068",
     "name": "Cabo Verde",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_69",
     "code": "PROD-0069",
     "name": "Cabo Vga",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
+    "costPrice": 9,
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_70",
     "code": "PROD-0070",
     "name": "Cabo Y P2/P3",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_71",
     "code": "PROD-0071",
     "name": "Cabos Variados Saco Branco",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_72",
@@ -850,106 +921,116 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_73",
     "code": "PROD-0073",
     "name": "Calculadora 12 Dígitos Crs8585",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 23,
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_74",
     "code": "PROD-0074",
     "name": "Calculadora Pequena",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 2.7,
+    "costPrice": 2.7,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_75",
     "code": "PROD-0075",
     "name": "Camera Ip Dupla",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 210,
+    "costPrice": 105.175,
+    "salePrice": 205,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_76",
     "code": "PROD-0076",
     "name": "Caneta Depiladora",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 12.5,
+    "costPrice": 12.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_77",
     "code": "PROD-0077",
     "name": "Canivete Automático Knife",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 9,
+    "costPrice": 9,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_78",
     "code": "PROD-0078",
     "name": "Capa A Prova D'Água",
     "category": "Capas e Películas",
-    "costPrice": 0,
+    "costPrice": 3.5,
     "salePrice": 8,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_79",
     "code": "PROD-0079",
     "name": "Capa Celular Simples",
     "category": "Capas e Películas",
-    "costPrice": 0,
-    "salePrice": 2,
+    "costPrice": 2,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_80",
     "code": "PROD-0080",
     "name": "Capa De Chuva",
     "category": "Capas e Películas",
-    "costPrice": 0,
-    "salePrice": 7,
+    "costPrice": 7,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_81",
     "code": "PROD-0081",
     "name": "Capinha",
     "category": "Capas e Películas",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 3,
+    "salePrice": 16.07,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_82",
@@ -960,7 +1041,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_83",
@@ -971,271 +1053,296 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_84",
     "code": "PROD-0084",
     "name": "Card",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 0.4,
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_85",
     "code": "PROD-0085",
     "name": "Card Caixa 50",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_86",
     "code": "PROD-0086",
     "name": "Carregador Cabeça Spartan - Cw-178",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 35,
+    "costPrice": 12,
+    "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_87",
     "code": "PROD-0087",
     "name": "Carregador Cabeça 20W",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 11,
+    "costPrice": 11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_88",
     "code": "PROD-0088",
     "name": "Carregador Completo Iphone 20W",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 50,
+    "costPrice": 15,
+    "salePrice": 43.33,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_89",
     "code": "PROD-0089",
     "name": "Carregador Completo Lehmox Tipo C",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 11,
+    "costPrice": 11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_90",
     "code": "PROD-0090",
     "name": "Carregador Completo Lehmox v8",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 11,
+    "costPrice": 11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_91",
     "code": "PROD-0091",
     "name": "Carregador Completo Lehmox iphone",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 11,
+    "costPrice": 11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_92",
     "code": "PROD-0092",
     "name": "Jogos De Ps2",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
+    "costPrice": 0.7,
     "salePrice": 5,
     "stock": 1080,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_93",
     "code": "PROD-0093",
     "name": "Jogo Ps2 tiktok",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 34.24,
+    "costPrice": 0.7,
+    "salePrice": 9.92,
     "stock": 1028,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_94",
     "code": "PROD-0094",
     "name": "Carregador Lehmox 5.1 Le-82",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_95",
     "code": "PROD-0095",
     "name": "Carregador Spartan V8 Leo",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 10,
+    "salePrice": 13.33,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_96",
     "code": "PROD-0096",
     "name": "Carregador Tipo C 4.1 Le-497",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_97",
     "code": "PROD-0097",
     "name": "Carregador Tipo C 50W",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 19,
+    "costPrice": 19,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_98",
     "code": "PROD-0098",
     "name": "Carregador Tipo C 67 W",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 20,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_99",
     "code": "PROD-0099",
     "name": "Carregador Tipo C Le-484",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_100",
     "code": "PROD-0100",
     "name": "Carregador Veicular Inova Tc",
     "category": "Carregadores",
-    "costPrice": 0,
+    "costPrice": 11,
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_101",
     "code": "PROD-0101",
     "name": "Carregador Veicular Kingo",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 14,
+    "costPrice": 14,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_102",
     "code": "PROD-0102",
     "name": "Carregador Veicular L01-3",
     "category": "Carregadores",
-    "costPrice": 0,
+    "costPrice": 15,
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_103",
     "code": "PROD-0103",
     "name": "Carregador Veicular Simples",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_104",
     "code": "PROD-0104",
     "name": "Carregador Veicular Spartan",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 7,
+    "costPrice": 7,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_105",
     "code": "PROD-0105",
     "name": "Carregador Veicular Tipo C Le-535",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_106",
     "code": "PROD-0106",
     "name": "Cartão De Memoria 16Gb",
     "category": "Memória e Armazenamento",
-    "costPrice": 0,
+    "costPrice": 18.8,
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_107",
     "code": "PROD-0107",
     "name": "Cartão De Memoria 32Gb",
     "category": "Memória e Armazenamento",
-    "costPrice": 0,
+    "costPrice": 23.5,
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_108",
@@ -1243,43 +1350,47 @@ export const initialProducts: Product[] = [
     "name": "Cartao Micro Sd 16Gb",
     "category": "Memória e Armazenamento",
     "costPrice": 0,
-    "salePrice": 40,
+    "salePrice": 35,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_109",
     "code": "PROD-0109",
     "name": "Carteira Pequena",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 2.5,
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_110",
     "code": "PROD-0110",
     "name": "Cartinha",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 1,
     "salePrice": 2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_111",
     "code": "PROD-0111",
     "name": "Cascata Led - Fios De Fada",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 12.88,
+    "costPrice": 12.88,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_112",
@@ -1290,40 +1401,44 @@ export const initialProducts: Product[] = [
     "salePrice": 34.75,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_113",
     "code": "PROD-0113",
     "name": "Chave Allen - Canivete Ls-A08",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 13,
+    "costPrice": 13,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_114",
     "code": "PROD-0114",
     "name": "Chave Para Bicicleta",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_115",
     "code": "PROD-0115",
     "name": "Chave Tork 8Pçs Lst08",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 11.5,
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_116",
@@ -1334,7 +1449,8 @@ export const initialProducts: Product[] = [
     "salePrice": 3,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_117",
@@ -1345,40 +1461,44 @@ export const initialProducts: Product[] = [
     "salePrice": 28.1,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_118",
     "code": "PROD-0118",
     "name": "Cheirinho Para Carro",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 14.99,
+    "costPrice": 7.5,
+    "salePrice": 12.83,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_119",
     "code": "PROD-0119",
     "name": "Chip Normal",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_120",
     "code": "PROD-0120",
     "name": "Chip Recarregado",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 17,
+    "costPrice": 17,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_121",
@@ -1389,7 +1509,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_122",
@@ -1400,7 +1521,8 @@ export const initialProducts: Product[] = [
     "salePrice": 6.26,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_123",
@@ -1408,98 +1530,107 @@ export const initialProducts: Product[] = [
     "name": "Computadores",
     "category": "Computador e Periféricos",
     "costPrice": 0,
-    "salePrice": 600,
+    "salePrice": 223.33,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_124",
     "code": "PROD-0124",
     "name": "Conjunto De Chaves Allen 9Pçs Ls-4113",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_125",
     "code": "PROD-0125",
     "name": "Controle Gamepad Com-7436",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 17,
+    "costPrice": 17,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_126",
     "code": "PROD-0126",
     "name": "Controle Gamer Celular Ly84358",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 15,
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_127",
     "code": "PROD-0127",
     "name": "Controle Gatilho",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 17,
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_128",
     "code": "PROD-0128",
     "name": "Controle Pc",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 20,
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_129",
     "code": "PROD-0129",
     "name": "Controle Ps2",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 20,
+    "salePrice": 0,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_130",
     "code": "PROD-0130",
     "name": "Controle Tv Box Le-7490-1",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 5,
+    "salePrice": 16.67,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_131",
     "code": "PROD-0131",
     "name": "Controle Tv Universal",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 8.5,
+    "costPrice": 8.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_132",
@@ -1510,73 +1641,80 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_133",
     "code": "PROD-0133",
     "name": "Cooler Fan G-Vr332",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 20,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_134",
     "code": "PROD-0134",
     "name": "Cooler Table - Suporte Notbook",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 25,
+    "costPrice": 25,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_135",
     "code": "PROD-0135",
     "name": "Cordao Simples Cracha",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 2,
+    "costPrice": 2,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_136",
     "code": "PROD-0136",
     "name": "Cordão Vasco",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 2.5,
+    "costPrice": 2.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_137",
     "code": "PROD-0137",
     "name": "Cortador De Legumes Verde Grande",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 44,
+    "costPrice": 44,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_138",
     "code": "PROD-0138",
     "name": "Depilador Removedor Pelos Corporal Yes Finishing Touch Light",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 21.99,
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_139",
@@ -1584,10 +1722,11 @@ export const initialProducts: Product[] = [
     "name": "Desentupidor",
     "category": "Casa e Utensílios",
     "costPrice": 0,
-    "salePrice": 18.79,
+    "salePrice": 17.47,
     "stock": 192,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_140",
@@ -1598,18 +1737,20 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_141",
     "code": "PROD-0141",
     "name": "Detector De Metal",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 48,
+    "costPrice": 48,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_142",
@@ -1620,51 +1761,56 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_143",
     "code": "PROD-0143",
     "name": "Durex",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 2.5,
     "salePrice": 7,
     "stock": 2,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_144",
     "code": "PROD-0144",
     "name": "Envelope A4",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 2,
+    "costPrice": 0.39549999999999996,
+    "salePrice": 1.67,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_145",
     "code": "PROD-0145",
     "name": "Escova De Dente Eletrica",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 15.11,
+    "costPrice": 15.11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_146",
     "code": "PROD-0146",
     "name": "Extensor P2",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 2.5,
+    "costPrice": 2.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_147",
@@ -1675,128 +1821,140 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_148",
     "code": "PROD-0148",
     "name": "Fone De Ouvido Gamr Q0008",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 20,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_149",
     "code": "PROD-0149",
     "name": "Fone De Ouvido Inova Fon-30063",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 8,
+    "costPrice": 8,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_150",
     "code": "PROD-0150",
     "name": "Fone De Ouvido Lelong Le-02",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
+    "costPrice": 9,
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_151",
     "code": "PROD-0151",
     "name": "Fone De Ouvido M10",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 17,
+    "costPrice": 17,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_152",
     "code": "PROD-0152",
     "name": "Fone De Ouvido P3 Fon8619",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 55,
+    "costPrice": 18,
+    "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_153",
     "code": "PROD-0153",
     "name": "Fone Fon30024 Inova",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 8,
+    "salePrice": 22.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_154",
     "code": "PROD-0154",
     "name": "Fone I7",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 18,
+    "costPrice": 18,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_155",
     "code": "PROD-0155",
     "name": "Fone Iphone Hmaster Ej-56",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
+    "costPrice": 12,
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_156",
     "code": "PROD-0156",
     "name": "Fone Jbl 950",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 35,
+    "costPrice": 35,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_157",
     "code": "PROD-0157",
     "name": "Fone M10",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 18,
+    "costPrice": 18,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_158",
     "code": "PROD-0158",
     "name": "Fone M20",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 25,
+    "costPrice": 25,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_159",
@@ -1807,194 +1965,212 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_160",
     "code": "PROD-0160",
     "name": "Fone Pmcell Fo-11",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 45,
+    "costPrice": 3.5,
+    "salePrice": 17.14,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_161",
     "code": "PROD-0161",
     "name": "Fone Pmcell Fo-15",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
+    "costPrice": 9,
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_162",
     "code": "PROD-0162",
     "name": "Fone Pmcell Leo",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_163",
     "code": "PROD-0163",
     "name": "Fone Pmcell Tc",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 9,
+    "costPrice": 9,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_164",
     "code": "PROD-0164",
     "name": "Fone Redmi Branco",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 35,
+    "costPrice": 35,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_165",
     "code": "PROD-0165",
     "name": "Fone Redmi Vermelho",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_166",
     "code": "PROD-0166",
     "name": "Fone Simples Ka-833 Leo",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_167",
     "code": "PROD-0167",
     "name": "Fone Simples Lef-1055 Leo",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_168",
     "code": "PROD-0168",
     "name": "Fone Simples Ms-5V 1 Leo",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_169",
     "code": "PROD-0169",
     "name": "Fone Tipo C Apple",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_170",
     "code": "PROD-0170",
     "name": "Fonte 12V",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_171",
     "code": "PROD-0171",
     "name": "Fonte Notebook Grasep",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 32,
+    "costPrice": 32,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_172",
     "code": "PROD-0172",
     "name": "Fonte Pc 200W",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 60,
+    "costPrice": 60,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_173",
     "code": "PROD-0173",
     "name": "Fonte Tv Box 5V",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 7,
+    "costPrice": 7,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_174",
     "code": "PROD-0174",
     "name": "Fonte Usb Sparta 5.8W",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 8.8,
+    "costPrice": 8.8,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_175",
     "code": "PROD-0175",
     "name": "Fonte Usb Spartan",
     "category": "Carregadores",
-    "costPrice": 0,
+    "costPrice": 5.5,
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_176",
     "code": "PROD-0176",
     "name": "Fonte Veicular Usb-C Spartan",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 18,
+    "costPrice": 18,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_177",
@@ -2002,142 +2178,155 @@ export const initialProducts: Product[] = [
     "name": "Formatação",
     "category": "Serviços",
     "costPrice": 0,
-    "salePrice": 70,
+    "salePrice": 52.65,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_178",
     "code": "PROD-0178",
     "name": "Game Boy + Controle",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
+    "costPrice": 50,
     "salePrice": 75,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_179",
     "code": "PROD-0179",
     "name": "Game Pop It",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
+    "costPrice": 27,
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_180",
     "code": "PROD-0180",
     "name": "Game Pop It 15 Reais",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_181",
     "code": "PROD-0181",
     "name": "Garrafa 3 In 1 Colorida",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 40,
+    "costPrice": 22,
+    "salePrice": 37.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_182",
     "code": "PROD-0182",
     "name": "Garrafa 3 In 1 Colorida Leo",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 22,
+    "costPrice": 22,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_183",
     "code": "PROD-0183",
     "name": "Garrafa Colorida Motivacional",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 13.5,
+    "costPrice": 13.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_184",
     "code": "PROD-0184",
     "name": "Garrafa Stanley 1L",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 100,
+    "costPrice": 50,
+    "salePrice": 85,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_185",
     "code": "PROD-0185",
     "name": "Garrafa Stanley 600Lm",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 70,
+    "costPrice": 35,
+    "salePrice": 63.33,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_186",
     "code": "PROD-0186",
     "name": "Gatilhos Simples",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_187",
     "code": "PROD-0187",
     "name": "Gatilhos Simples Leo",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 4,
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_188",
     "code": "PROD-0188",
     "name": "Globo De Luz Com Controle",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 35,
+    "costPrice": 35,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_189",
     "code": "PROD-0189",
     "name": "Globo De Luz Sem Controle",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 30,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_190",
@@ -2145,32 +2334,35 @@ export const initialProducts: Product[] = [
     "name": "Gravação De Musica",
     "category": "Serviços",
     "costPrice": 0,
-    "salePrice": 15,
+    "salePrice": 13.33,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_191",
     "code": "PROD-0191",
     "name": "Guarda Chuva Automático Transparente Cabo Curvo 8 Varetas",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 16.75,
+    "costPrice": 16.75,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_192",
     "code": "PROD-0192",
     "name": "Guirlanda Verde/Branca",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 3,
+    "costPrice": 3,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_193",
@@ -2181,139 +2373,152 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_194",
     "code": "PROD-0194",
     "name": "Hub 7 Portas 2.0",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 10.99,
+    "costPrice": 10.99,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_195",
     "code": "PROD-0195",
     "name": "Hub Usb 2",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 8,
+    "costPrice": 8,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_196",
     "code": "PROD-0196",
     "name": "Impressao Colorida",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
-    "salePrice": 0.05,
+    "costPrice": 0.05,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_197",
     "code": "PROD-0197",
     "name": "Impressao Preta",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
-    "salePrice": 1,
+    "costPrice": 0.07,
+    "salePrice": 0.95,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_198",
     "code": "PROD-0198",
     "name": "Isqueiro Auto",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 0.8,
+    "costPrice": 0.8,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_199",
     "code": "PROD-0199",
     "name": "Joelheira Ec3360 Leo",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 40,
+    "costPrice": 19,
+    "salePrice": 38.33,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_200",
     "code": "PROD-0200",
     "name": "Jogo C 2 Canecas Vidro Chopp 480Ml",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 19,
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_201",
     "code": "PROD-0201",
     "name": "Jogo De Chaves Peq.",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 3.5,
+    "costPrice": 3.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_202",
     "code": "PROD-0202",
     "name": "Jogo De Xbox",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_203",
     "code": "PROD-0203",
     "name": "Jogo Ps2 Shopee",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 22.02,
+    "costPrice": 0.7,
+    "salePrice": 6.89,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_204",
     "code": "PROD-0204",
     "name": "Jogos De Xbox",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 7.5,
+    "costPrice": 7.5,
+    "salePrice": 0,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_205",
     "code": "PROD-0205",
     "name": "Kemei Maquina De Barbear 4 In 1",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 32.95,
+    "costPrice": 32.95,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_206",
@@ -2321,65 +2526,71 @@ export const initialProducts: Product[] = [
     "name": "Kit 10 Jogos Ps2",
     "category": "Brinquedos e Jogos",
     "costPrice": 0,
-    "salePrice": 55.2,
+    "salePrice": 50.3,
     "stock": 95,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_207",
     "code": "PROD-0207",
     "name": "Kit 6 Formas Silicone Para Air Fryer Reutilizável Com Alça",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 10,
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_208",
     "code": "PROD-0208",
     "name": "Kit Caneca Café Stanley",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 26,
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_209",
     "code": "PROD-0209",
     "name": "Kit Chave Com 6Pçs Lsc-Ppcs",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 3.8,
+    "costPrice": 3.8,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_210",
     "code": "PROD-0210",
     "name": "Kit Chaves 6024A",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_211",
     "code": "PROD-0211",
     "name": "Kit Colheres Colorida",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 50,
+    "costPrice": 50,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_212",
@@ -2390,84 +2601,92 @@ export const initialProducts: Product[] = [
     "salePrice": 17.06,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_213",
     "code": "PROD-0213",
     "name": "Kit Completo Carregador 20W",
     "category": "Carregadores",
-    "costPrice": 0,
-    "salePrice": 17,
+    "costPrice": 17,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_214",
     "code": "PROD-0214",
     "name": "Kit Costura Crs 1184",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_215",
     "code": "PROD-0215",
     "name": "Kit De Ferramentas 41Pçs Id-2226K",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 36.9,
+    "costPrice": 36.9,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_216",
     "code": "PROD-0216",
     "name": "Kit Facas",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 23,
+    "costPrice": 23,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_217",
     "code": "PROD-0217",
     "name": "Kit Ferramentas 41 Pçs Maleta",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 30,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_218",
     "code": "PROD-0218",
     "name": "Kit Fusível Grande Leo",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_219",
     "code": "PROD-0219",
     "name": "Kit Jogo De Facas",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 20,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_220",
@@ -2478,29 +2697,32 @@ export const initialProducts: Product[] = [
     "salePrice": 52.99,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_221",
     "code": "PROD-0221",
     "name": "Kit Mouse E Teclado Sem Fio K4",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 60,
+    "costPrice": 60,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_222",
     "code": "PROD-0222",
     "name": "Kit Porta Detergente Dispense Com Bucha Louça",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 8.99,
     "salePrice": 15,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_223",
@@ -2511,51 +2733,56 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_224",
     "code": "PROD-0224",
     "name": "Kit Taboa Idea",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 7,
+    "costPrice": 7,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_225",
     "code": "PROD-0225",
     "name": "Kit Talheres",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 38,
+    "costPrice": 38,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_226",
     "code": "PROD-0226",
     "name": "Kit Teclado E Mouse Sem Fio Mb54264",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 55,
+    "costPrice": 55,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_227",
     "code": "PROD-0227",
     "name": "Kit Tesoura Cabelo",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_228",
@@ -2566,84 +2793,92 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_229",
     "code": "PROD-0229",
     "name": "Lapela Tipoc",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 25,
+    "costPrice": 25,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_230",
     "code": "PROD-0230",
     "name": "Laxasfit 2024 Relógio Inteligente",
     "category": "Relógios e Wearables",
-    "costPrice": 0,
-    "salePrice": 34.19,
+    "costPrice": 34.19,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.479Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_231",
     "code": "PROD-0231",
     "name": "Lego Ali",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 2.5,
+    "costPrice": 2.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.210Z"
   },
   {
     "id": "p_232",
     "code": "PROD-0232",
     "name": "Lego Grande",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_233",
     "code": "PROD-0233",
     "name": "Lego Pequeno",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 2,
+    "costPrice": 2,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_234",
     "code": "PROD-0234",
     "name": "Leitor De Cartao De Memoria Dkq02",
     "category": "Memória e Armazenamento",
-    "costPrice": 0,
-    "salePrice": 2,
+    "costPrice": 2,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_235",
     "code": "PROD-0235",
     "name": "Leitor De Cartao De Memoria Uf0013",
     "category": "Memória e Armazenamento",
-    "costPrice": 0,
-    "salePrice": 2,
+    "costPrice": 2,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_236",
@@ -2654,161 +2889,176 @@ export const initialProducts: Product[] = [
     "salePrice": 0.5,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_237",
     "code": "PROD-0237",
     "name": "Lousa Magica 10Pol",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
+    "costPrice": 15,
     "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_238",
     "code": "PROD-0238",
     "name": "Lousa Magica 12Pol",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 20,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_239",
     "code": "PROD-0239",
     "name": "Lousa Magica 12Pol Novo",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
-    "salePrice": 13,
+    "costPrice": 13,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_240",
     "code": "PROD-0240",
     "name": "Lousa Magica 16Pol",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
-    "salePrice": 28,
+    "costPrice": 28,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_241",
     "code": "PROD-0241",
     "name": "Lousa Magica 8Pol",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_242",
     "code": "PROD-0242",
     "name": "Luminária Astronauta",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 75,
+    "costPrice": 75,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_243",
     "code": "PROD-0243",
     "name": "Luminaria Solar Led Refletor",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 30,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_244",
     "code": "PROD-0244",
     "name": "Luvinha De Dedo",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 1,
+    "costPrice": 1,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_245",
     "code": "PROD-0245",
     "name": "Luvinhas Dedo N",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 0.29425,
+    "costPrice": 0.29425,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_246",
     "code": "PROD-0246",
     "name": "Maquina De Cabelo Dragao Ml",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 16,
+    "costPrice": 16,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_247",
     "code": "PROD-0247",
     "name": "Maquina Dourada Dragao",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_248",
     "code": "PROD-0248",
     "name": "Maquinha De Bolhas Automático",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 32.33,
+    "costPrice": 32.33,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_249",
     "code": "PROD-0249",
     "name": "Massageador Pistola",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 55,
+    "costPrice": 55,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_250",
     "code": "PROD-0250",
     "name": "Mata Mosquito Eletric Mw-555",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 28,
+    "costPrice": 28,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_251",
@@ -2816,241 +3066,263 @@ export const initialProducts: Product[] = [
     "name": "Memoria",
     "category": "Memória e Armazenamento",
     "costPrice": 0,
-    "salePrice": 150,
+    "salePrice": 100,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_252",
     "code": "PROD-0252",
     "name": "Memory Card 15Mb",
     "category": "Memória e Armazenamento",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_253",
     "code": "PROD-0253",
     "name": "Memory Card 16Mb",
     "category": "Memória e Armazenamento",
-    "costPrice": 0,
-    "salePrice": 18,
+    "costPrice": 18,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_254",
     "code": "PROD-0254",
     "name": "Micro Sd Kodak 64Gb",
     "category": "Memória e Armazenamento",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_255",
     "code": "PROD-0255",
     "name": "Microscopio 1000X",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 75,
+    "costPrice": 75,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_256",
     "code": "PROD-0256",
     "name": "Mini Antena Digital",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 13,
+    "costPrice": 13,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_257",
     "code": "PROD-0257",
     "name": "Mini Caixa De Som Cs2C",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
+    "costPrice": 23,
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_258",
     "code": "PROD-0258",
     "name": "Mini Fatiador",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 1.7,
     "salePrice": 70,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_259",
     "code": "PROD-0259",
     "name": "Mini Jogo De Luz C/C",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 37,
+    "costPrice": 37,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_260",
     "code": "PROD-0260",
     "name": "Mini Lanterna Kal1114",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
+    "costPrice": 20,
     "salePrice": 40,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_261",
     "code": "PROD-0261",
     "name": "Mini Liquidificado",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 25,
+    "costPrice": 25,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_262",
     "code": "PROD-0262",
     "name": "Mini Liquidificado Max",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 77,
+    "costPrice": 77,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_263",
     "code": "PROD-0263",
     "name": "Mini Máquina De Costura",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 15.38,
+    "costPrice": 7.5,
+    "salePrice": 14.32,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_264",
     "code": "PROD-0264",
     "name": "Mini Massageador",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 8,
+    "salePrice": 16.67,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_265",
     "code": "PROD-0265",
     "name": "Mini Pau De Self Leo",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 5.5,
+    "costPrice": 5.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_266",
     "code": "PROD-0266",
     "name": "Mini Router Wifi",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
-    "salePrice": 99,
+    "costPrice": 99,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_267",
     "code": "PROD-0267",
     "name": "Miniteclado Tv Box",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 19,
+    "salePrice": 25,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_268",
     "code": "PROD-0268",
     "name": "Misturador De Bebidas Ovos Portátil Mixer Elétrico 2 Peças Whisk",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 30,
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_269",
     "code": "PROD-0269",
     "name": "Mochila Dobrável À Prova D'Água Design Exclusivo Escolar Unissex Preto",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 16.9,
+    "costPrice": 16.9,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_270",
     "code": "PROD-0270",
     "name": "Mochila Escolar Unissex Impermeável Com Entrada Usb Preto",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
+    "costPrice": 31.99,
     "salePrice": 55,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_271",
     "code": "PROD-0271",
     "name": "Mochila Escolar Universitária Unissex",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 45,
+    "costPrice": 45,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_272",
     "code": "PROD-0272",
     "name": "Mochila Escolar Universitária Unissex Com Estojo",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
+    "costPrice": 31.99,
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_273",
@@ -3061,7 +3333,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_274",
@@ -3072,73 +3345,80 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_275",
     "code": "PROD-0275",
     "name": "Mouse B-Max",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 5.5,
+    "costPrice": 5.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_276",
     "code": "PROD-0276",
     "name": "Mouse Com Fio Exbom Md-9",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 5.5,
+    "costPrice": 5.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_277",
     "code": "PROD-0277",
     "name": "Mouse Com Fio In-20055",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 7,
+    "costPrice": 7,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_278",
     "code": "PROD-0278",
     "name": "Mouse Gamer 01",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_279",
     "code": "PROD-0279",
     "name": "Mouse Pad Com Gel",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_280",
     "code": "PROD-0280",
     "name": "Mouse Pad Simples",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_281",
@@ -3146,10 +3426,11 @@ export const initialProducts: Product[] = [
     "name": "Mouse Sem Fio",
     "category": "Computador e Periféricos",
     "costPrice": 0,
-    "salePrice": 35,
+    "salePrice": 31.67,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_282",
@@ -3160,62 +3441,68 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_283",
     "code": "PROD-0283",
     "name": "Par Alto Falante Evok 6X9 280Rms",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
-    "salePrice": 350,
+    "costPrice": 350,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_284",
     "code": "PROD-0284",
     "name": "Pd Usb Adaptador De Carregamento Leo",
     "category": "Cabos e Adaptadores",
-    "costPrice": 0,
-    "salePrice": 20.5,
+    "costPrice": 20.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_285",
     "code": "PROD-0285",
     "name": "Pelicula 3D",
     "category": "Capas e Películas",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 3,
+    "salePrice": 12.58,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_286",
     "code": "PROD-0286",
     "name": "Pelicula Privacidade",
     "category": "Capas e Películas",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 6,
+    "salePrice": 16,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_287",
     "code": "PROD-0287",
     "name": "Pelicularelogio 49Mm",
     "category": "Capas e Películas",
-    "costPrice": 0,
-    "salePrice": 6,
+    "costPrice": 6,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_288",
@@ -3226,84 +3513,92 @@ export const initialProducts: Product[] = [
     "salePrice": 100.32,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_289",
     "code": "PROD-0289",
     "name": "Pente De Cabelo Redondo",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 2.5,
+    "costPrice": 2.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_290",
     "code": "PROD-0290",
     "name": "Placa De Som Usb",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 9,
+    "costPrice": 9,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_291",
     "code": "PROD-0291",
     "name": "Porta Cracha Completo",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 4,
+    "costPrice": 4,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_292",
     "code": "PROD-0292",
     "name": "Porta Crachá Esticado Leo",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
+    "costPrice": 1,
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_293",
     "code": "PROD-0293",
     "name": "Porta Retrato Duplo Te Amo De Plástico 10X15 Cm Colors",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 12,
+    "costPrice": 12,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_294",
     "code": "PROD-0294",
     "name": "Processador De Alimentos 1352",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 11,
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_295",
     "code": "PROD-0295",
     "name": "Processador De Alimentos Pequeno Leo",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 12,
+    "costPrice": 12,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_296",
@@ -3314,62 +3609,68 @@ export const initialProducts: Product[] = [
     "salePrice": 4.54,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_297",
     "code": "PROD-0297",
     "name": "Ralador 4 Faces",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 9,
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_298",
     "code": "PROD-0298",
     "name": "Ralador 6 In 1 Mandolina Multilaminas Leo",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 37,
     "salePrice": 60,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_299",
     "code": "PROD-0299",
     "name": "Ralador De Legumes Diagonal",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 43,
+    "costPrice": 43,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_300",
     "code": "PROD-0300",
     "name": "Ralador Panela Leo",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
+    "costPrice": 25,
     "salePrice": 30,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_301",
     "code": "PROD-0301",
     "name": "Relógio Pulseira M7 Inteligente Smatband Monitora Pressão",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 25.99,
+    "costPrice": 25.99,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_302",
@@ -3380,7 +3681,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_303",
@@ -3388,164 +3690,179 @@ export const initialProducts: Product[] = [
     "name": "Serviço Aleatorio",
     "category": "Serviços",
     "costPrice": 0,
-    "salePrice": 306,
+    "salePrice": 41.74,
     "stock": 96,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_304",
     "code": "PROD-0304",
     "name": "Super. Cola 3G Leo",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 2.5,
+    "costPrice": 0.5,
+    "salePrice": 2.2,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_305",
     "code": "PROD-0305",
     "name": "Suporte Articulado",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 8,
+    "costPrice": 8,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_306",
     "code": "PROD-0306",
     "name": "Suporte Celular Braço Leo",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 5,
+    "costPrice": 5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_307",
     "code": "PROD-0307",
     "name": "Suporte Celular Veicular Ventosa Bmg02",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
+    "costPrice": 10,
     "salePrice": 20,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_308",
     "code": "PROD-0308",
     "name": "Suporte De Celular Ima Leo",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 12,
+    "costPrice": 12,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_309",
     "code": "PROD-0309",
     "name": "Suporte De Mesa Ecooda Ec9085",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 6,
+    "costPrice": 6,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_310",
     "code": "PROD-0310",
     "name": "Suporte De Tv Pequeno",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 11,
+    "costPrice": 11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_311",
     "code": "PROD-0311",
     "name": "Suporte De Tv Simples",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 12,
+    "costPrice": 12,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_312",
     "code": "PROD-0312",
     "name": "Suporte Fone Leo",
     "category": "Fones de Ouvido",
-    "costPrice": 0,
-    "salePrice": 1,
+    "costPrice": 1,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_313",
     "code": "PROD-0313",
     "name": "Suporte Gancho Adesivo",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 4.6,
+    "costPrice": 4.6,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_314",
     "code": "PROD-0314",
     "name": "Suporte Magnetico 360 Kac305",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 15,
+    "costPrice": 15,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_315",
     "code": "PROD-0315",
     "name": "Suporte Magnético Veicular Barra",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 20,
+    "costPrice": 6,
+    "salePrice": 12.5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_316",
     "code": "PROD-0316",
     "name": "Suporte Moto Le-030D",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
+    "costPrice": 16,
     "salePrice": 35,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_317",
     "code": "PROD-0317",
     "name": "Suporte Triplo Jb-K5556",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 13,
+    "costPrice": 13,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_318",
@@ -3553,131 +3870,143 @@ export const initialProducts: Product[] = [
     "name": "Suporte Veicular",
     "category": "Acessórios para Celular",
     "costPrice": 0,
-    "salePrice": 25,
+    "salePrice": 22.5,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_319",
     "code": "PROD-0319",
     "name": "Suporte Veicular B-Max Bmg-07",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 10,
+    "costPrice": 10,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_320",
     "code": "PROD-0320",
     "name": "Suporte Veicular Le-010",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
+    "costPrice": 6,
     "salePrice": 10,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_321",
     "code": "PROD-0321",
     "name": "Suporte Veicular Retrovisor B-Max",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 30,
+    "costPrice": 11,
+    "salePrice": 28.33,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_322",
     "code": "PROD-0322",
     "name": "Suporte Veicular Ventosa It-Blue",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 11,
+    "costPrice": 11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_323",
     "code": "PROD-0323",
     "name": "T 3 Pontas",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 1.5,
     "salePrice": 5,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_324",
     "code": "PROD-0324",
     "name": "Tapete Massageador",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 17,
+    "costPrice": 17,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_325",
     "code": "PROD-0325",
     "name": "Teclado Bright 0014",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 14,
+    "costPrice": 14,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_326",
     "code": "PROD-0326",
     "name": "Teclado Bring Usb Preto",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
-    "salePrice": 15.5,
+    "costPrice": 15.5,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_327",
     "code": "PROD-0327",
     "name": "Teclado Semigamer",
     "category": "Computador e Periféricos",
-    "costPrice": 0,
+    "costPrice": 25,
     "salePrice": 50,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_328",
     "code": "PROD-0328",
     "name": "Tripe Pequeno",
     "category": "Acessórios para Celular",
-    "costPrice": 0,
-    "salePrice": 4.99,
+    "costPrice": 4.99,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_329",
     "code": "PROD-0329",
     "name": "Triturador De Alimentos Manual Grande",
     "category": "Casa e Utensílios",
-    "costPrice": 0,
-    "salePrice": 11,
+    "costPrice": 11,
+    "salePrice": 0,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_330",
@@ -3688,29 +4017,32 @@ export const initialProducts: Product[] = [
     "salePrice": 45.84,
     "stock": 98,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_331",
     "code": "PROD-0331",
     "name": "Unitv V10",
     "category": "Eletrônicos Diversos",
-    "costPrice": 0,
+    "costPrice": 305,
     "salePrice": 360,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_332",
     "code": "PROD-0332",
     "name": "Uno",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 6,
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_333",
@@ -3718,98 +4050,107 @@ export const initialProducts: Product[] = [
     "name": "Xerox Preta",
     "category": "Áudio e Vídeo",
     "costPrice": 0,
-    "salePrice": 1,
+    "salePrice": 0.92,
     "stock": 1,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_334",
     "code": "PROD-0334",
     "name": "kit opl + 32gb",
     "category": "Diversos",
-    "costPrice": 0,
-    "salePrice": 110,
+    "costPrice": 34,
+    "salePrice": 109.1,
     "stock": 97,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_335",
     "code": "PROD-0335",
     "name": "Figurinhas copa ifood",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
+    "costPrice": 4.5,
     "salePrice": 7,
     "stock": 7,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_336",
     "code": "PROD-0336",
     "name": "figurinha separada ifood",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
+    "costPrice": 0.7619047619047619,
     "salePrice": 1,
     "stock": 58,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_337",
     "code": "PROD-0337",
     "name": "Figurinhas copa brasil",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 6,
+    "costPrice": 6,
+    "salePrice": 0,
     "stock": 5,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_338",
     "code": "PROD-0338",
     "name": "figurinhas",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
+    "costPrice": 0.71,
     "salePrice": 1,
     "stock": 68,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_339",
     "code": "PROD-0339",
     "name": "Arquivo pdf Shopee",
     "category": "Diversos",
-    "costPrice": 0,
+    "costPrice": 1,
     "salePrice": 24.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_340",
     "code": "PROD-0340",
     "name": "Evok 6'' 6mb300 300w Rms Mid Bass",
     "category": "Áudio e Vídeo",
-    "costPrice": 0,
-    "salePrice": 414.33,
+    "costPrice": 350,
+    "salePrice": 401.18,
     "stock": 95,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_341",
     "code": "PROD-0341",
     "name": "figurinha personalizada",
     "category": "Brinquedos e Jogos",
-    "costPrice": 0,
-    "salePrice": 2,
+    "costPrice": 0.1875,
+    "salePrice": 1.4,
     "stock": 997,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_342",
@@ -3817,10 +4158,11 @@ export const initialProducts: Product[] = [
     "name": "Mini jogo de luz c/c",
     "category": "Diversos",
     "costPrice": 37,
-    "salePrice": 85,
+    "salePrice": 66.83,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_343",
@@ -3828,10 +4170,11 @@ export const initialProducts: Product[] = [
     "name": "Case Iphone Caixa",
     "category": "Diversos",
     "costPrice": 18,
-    "salePrice": 33,
+    "salePrice": 26.6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_344",
@@ -3842,7 +4185,8 @@ export const initialProducts: Product[] = [
     "salePrice": 140,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_345",
@@ -3850,10 +4194,11 @@ export const initialProducts: Product[] = [
     "name": "Raquete mata mosquito",
     "category": "Diversos",
     "costPrice": 14,
-    "salePrice": 30,
+    "salePrice": 28.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_346",
@@ -3864,7 +4209,8 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_347",
@@ -3872,10 +4218,11 @@ export const initialProducts: Product[] = [
     "name": "Cheirinho Hungria",
     "category": "Diversos",
     "costPrice": 7.5,
-    "salePrice": 14.2,
+    "salePrice": 11.79,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_348",
@@ -3883,10 +4230,11 @@ export const initialProducts: Product[] = [
     "name": "Lousa magica 8pol",
     "category": "Áudio e Vídeo",
     "costPrice": 10,
-    "salePrice": 20,
+    "salePrice": 16.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_349",
@@ -3894,10 +4242,11 @@ export const initialProducts: Product[] = [
     "name": "Lousa magica 16pol",
     "category": "Áudio e Vídeo",
     "costPrice": 28,
-    "salePrice": 50,
+    "salePrice": 48.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_350",
@@ -3905,10 +4254,11 @@ export const initialProducts: Product[] = [
     "name": "Garrafa 3 in 1 colorida",
     "category": "Casa e Utensílios",
     "costPrice": 22,
-    "salePrice": 40,
+    "salePrice": 37.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_351",
@@ -3919,7 +4269,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_352",
@@ -3930,7 +4281,8 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_353",
@@ -3941,7 +4293,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_354",
@@ -3952,7 +4305,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_355",
@@ -3963,7 +4317,8 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_356",
@@ -3974,7 +4329,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_357",
@@ -3985,7 +4341,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_358",
@@ -3993,10 +4350,11 @@ export const initialProducts: Product[] = [
     "name": "Robot transforme",
     "category": "Diversos",
     "costPrice": 40,
-    "salePrice": 70,
+    "salePrice": 67.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_359",
@@ -4007,7 +4365,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_360",
@@ -4018,7 +4377,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_361",
@@ -4029,7 +4389,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_362",
@@ -4040,7 +4401,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_363",
@@ -4048,10 +4410,11 @@ export const initialProducts: Product[] = [
     "name": "Mini massageador",
     "category": "Casa e Utensílios",
     "costPrice": 8,
-    "salePrice": 20,
+    "salePrice": 16.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_364",
@@ -4062,7 +4425,8 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_365",
@@ -4070,10 +4434,11 @@ export const initialProducts: Product[] = [
     "name": "Relógio inteligente KL201 Black",
     "category": "Relógios e Wearables",
     "costPrice": 32.45,
-    "salePrice": 100,
+    "salePrice": 92.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_366",
@@ -4084,7 +4449,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_367",
@@ -4092,10 +4458,11 @@ export const initialProducts: Product[] = [
     "name": "Cabo Spartan v8",
     "category": "Cabos e Adaptadores",
     "costPrice": 4.5,
-    "salePrice": 10,
+    "salePrice": 9.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_368",
@@ -4106,7 +4473,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_369",
@@ -4114,10 +4482,11 @@ export const initialProducts: Product[] = [
     "name": "Cabo kingo tc 1m",
     "category": "Cabos e Adaptadores",
     "costPrice": 7,
-    "salePrice": 20,
+    "salePrice": 16,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_370",
@@ -4125,10 +4494,11 @@ export const initialProducts: Product[] = [
     "name": "Powebank kv12047 10k",
     "category": "Diversos",
     "costPrice": 55,
-    "salePrice": 80,
+    "salePrice": 75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_371",
@@ -4139,7 +4509,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_372",
@@ -4150,7 +4521,8 @@ export const initialProducts: Product[] = [
     "salePrice": 63.3,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_373",
@@ -4161,7 +4533,8 @@ export const initialProducts: Product[] = [
     "salePrice": 16.89,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_374",
@@ -4169,10 +4542,11 @@ export const initialProducts: Product[] = [
     "name": "Carregador iphone 20w",
     "category": "Carregadores",
     "costPrice": 0,
-    "salePrice": 50,
+    "salePrice": 46.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_375",
@@ -4183,7 +4557,8 @@ export const initialProducts: Product[] = [
     "salePrice": 12,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_376",
@@ -4194,7 +4569,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_377",
@@ -4205,7 +4581,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_378",
@@ -4216,7 +4593,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_379",
@@ -4227,7 +4605,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_380",
@@ -4235,10 +4614,11 @@ export const initialProducts: Product[] = [
     "name": "Suporte magnético veicular barra",
     "category": "Acessórios para Celular",
     "costPrice": 6,
-    "salePrice": 10,
+    "salePrice": 9,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_381",
@@ -4249,7 +4629,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_382",
@@ -4260,7 +4641,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_383",
@@ -4271,7 +4653,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_384",
@@ -4282,7 +4665,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_385",
@@ -4293,7 +4677,8 @@ export const initialProducts: Product[] = [
     "salePrice": 115,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_386",
@@ -4304,7 +4689,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_387",
@@ -4315,7 +4701,8 @@ export const initialProducts: Product[] = [
     "salePrice": 12.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_388",
@@ -4326,7 +4713,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_389",
@@ -4337,7 +4725,8 @@ export const initialProducts: Product[] = [
     "salePrice": 44,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_390",
@@ -4348,7 +4737,8 @@ export const initialProducts: Product[] = [
     "salePrice": 140,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_391",
@@ -4359,7 +4749,8 @@ export const initialProducts: Product[] = [
     "salePrice": 7.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_392",
@@ -4370,7 +4761,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_393",
@@ -4381,7 +4773,8 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_394",
@@ -4392,7 +4785,8 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_395",
@@ -4400,10 +4794,11 @@ export const initialProducts: Product[] = [
     "name": "Kit colheres colorida",
     "category": "Casa e Utensílios",
     "costPrice": 50,
-    "salePrice": 80,
+    "salePrice": 66.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_396",
@@ -4414,7 +4809,8 @@ export const initialProducts: Product[] = [
     "salePrice": 28,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_397",
@@ -4422,10 +4818,11 @@ export const initialProducts: Product[] = [
     "name": "Kit tesoura cabelo",
     "category": "Diversos",
     "costPrice": 4,
-    "salePrice": 11.41,
+    "salePrice": 10.71,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_398",
@@ -4436,7 +4833,8 @@ export const initialProducts: Product[] = [
     "salePrice": 27.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_399",
@@ -4447,7 +4845,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_400",
@@ -4458,7 +4857,8 @@ export const initialProducts: Product[] = [
     "salePrice": 165,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_401",
@@ -4469,7 +4869,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_402",
@@ -4477,10 +4878,11 @@ export const initialProducts: Product[] = [
     "name": "Copo Stanley com som",
     "category": "Áudio e Vídeo",
     "costPrice": 65,
-    "salePrice": 98,
+    "salePrice": 97.18,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_403",
@@ -4491,7 +4893,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_404",
@@ -4502,7 +4905,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_405",
@@ -4513,7 +4917,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_406",
@@ -4524,7 +4929,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_407",
@@ -4535,7 +4941,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_408",
@@ -4546,7 +4953,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_409",
@@ -4557,7 +4965,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_410",
@@ -4568,7 +4977,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_411",
@@ -4579,7 +4989,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_412",
@@ -4590,7 +5001,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_413",
@@ -4601,7 +5013,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_414",
@@ -4612,7 +5025,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_415",
@@ -4620,10 +5034,11 @@ export const initialProducts: Product[] = [
     "name": "Fone Bluetooth Sem Fios P9",
     "category": "Fones de Ouvido",
     "costPrice": 18.74,
-    "salePrice": 60,
+    "salePrice": 53.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_416",
@@ -4631,10 +5046,11 @@ export const initialProducts: Product[] = [
     "name": "Mini liquidificado",
     "category": "Casa e Utensílios",
     "costPrice": 25,
-    "salePrice": 50,
+    "salePrice": 49.66,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_417",
@@ -4645,7 +5061,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_418",
@@ -4656,7 +5073,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_419",
@@ -4667,7 +5085,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_420",
@@ -4675,10 +5094,11 @@ export const initialProducts: Product[] = [
     "name": "Lanterna T9",
     "category": "Eletrônicos Diversos",
     "costPrice": 37,
-    "salePrice": 80,
+    "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_421",
@@ -4689,7 +5109,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_422",
@@ -4700,7 +5121,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_423",
@@ -4711,7 +5133,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_424",
@@ -4719,10 +5142,11 @@ export const initialProducts: Product[] = [
     "name": "Pilha Aaa Cartela",
     "category": "Eletrônicos Diversos",
     "costPrice": 1.2,
-    "salePrice": 5,
+    "salePrice": 4.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_425",
@@ -4730,10 +5154,11 @@ export const initialProducts: Product[] = [
     "name": "Esfregão Mop De Limpeza Triangular Giratório De 360°",
     "category": "Diversos",
     "costPrice": 27.5,
-    "salePrice": 60,
+    "salePrice": 55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_426",
@@ -4744,7 +5169,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_427",
@@ -4755,7 +5181,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_428",
@@ -4766,7 +5193,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_429",
@@ -4777,7 +5205,8 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_430",
@@ -4788,7 +5217,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_431",
@@ -4799,7 +5229,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_432",
@@ -4810,7 +5241,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_433",
@@ -4821,7 +5253,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_434",
@@ -4832,7 +5265,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_435",
@@ -4843,7 +5277,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_436",
@@ -4854,7 +5289,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_437",
@@ -4865,7 +5301,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_438",
@@ -4873,10 +5310,11 @@ export const initialProducts: Product[] = [
     "name": "Ssd 240Gb",
     "category": "Memória e Armazenamento",
     "costPrice": 99.9,
-    "salePrice": 290,
+    "salePrice": 245,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_439",
@@ -4884,10 +5322,11 @@ export const initialProducts: Product[] = [
     "name": "formatação",
     "category": "Serviços",
     "costPrice": 0,
-    "salePrice": 50,
+    "salePrice": 46,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_440",
@@ -4898,7 +5337,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_441",
@@ -4906,10 +5346,11 @@ export const initialProducts: Product[] = [
     "name": "Lanterna Chaveiro Recarregável",
     "category": "Carregadores",
     "costPrice": 10,
-    "salePrice": 25,
+    "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_442",
@@ -4920,7 +5361,8 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_443",
@@ -4931,7 +5373,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_444",
@@ -4942,7 +5385,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_445",
@@ -4950,10 +5394,11 @@ export const initialProducts: Product[] = [
     "name": "Carregador Iphone 20W",
     "category": "Carregadores",
     "costPrice": 0,
-    "salePrice": 50,
+    "salePrice": 38.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_446",
@@ -4961,10 +5406,11 @@ export const initialProducts: Product[] = [
     "name": "Caixa de som id-7224u",
     "category": "Áudio e Vídeo",
     "costPrice": 30,
-    "salePrice": 80,
+    "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_447",
@@ -4975,7 +5421,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_448",
@@ -4983,10 +5430,11 @@ export const initialProducts: Product[] = [
     "name": "Game Pop It 15 reais",
     "category": "Brinquedos e Jogos",
     "costPrice": 15,
-    "salePrice": 35,
+    "salePrice": 30.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_449",
@@ -4994,10 +5442,11 @@ export const initialProducts: Product[] = [
     "name": "Cabo Colorido 2 Metros Tipo C",
     "category": "Cabos e Adaptadores",
     "costPrice": 5.5,
-    "salePrice": 15,
+    "salePrice": 11.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_450",
@@ -5008,7 +5457,8 @@ export const initialProducts: Product[] = [
     "salePrice": 202,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_451",
@@ -5016,10 +5466,11 @@ export const initialProducts: Product[] = [
     "name": "Caixa De Som Inova Kv-88631",
     "category": "Áudio e Vídeo",
     "costPrice": 27.5,
-    "salePrice": 50,
+    "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_452",
@@ -5027,10 +5478,11 @@ export const initialProducts: Product[] = [
     "name": "Climatizador Utra Air Cooler",
     "category": "Computador e Periféricos",
     "costPrice": 50,
-    "salePrice": 75,
+    "salePrice": 71.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_453",
@@ -5038,10 +5490,11 @@ export const initialProducts: Product[] = [
     "name": "Amolador de faca",
     "category": "Diversos",
     "costPrice": 8,
-    "salePrice": 20,
+    "salePrice": 17.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_454",
@@ -5052,7 +5505,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_455",
@@ -5063,7 +5517,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_456",
@@ -5071,10 +5526,11 @@ export const initialProducts: Product[] = [
     "name": "Rosa lampada",
     "category": "Eletrônicos Diversos",
     "costPrice": 0,
-    "salePrice": 25,
+    "salePrice": 17.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.211Z"
   },
   {
     "id": "p_457",
@@ -5085,7 +5541,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_458",
@@ -5093,10 +5550,11 @@ export const initialProducts: Product[] = [
     "name": "Copo Stanley 500Ml",
     "category": "Casa e Utensílios",
     "costPrice": 20,
-    "salePrice": 35,
+    "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_459",
@@ -5104,10 +5562,11 @@ export const initialProducts: Product[] = [
     "name": "Fonte tv box 5v",
     "category": "Carregadores",
     "costPrice": 7,
-    "salePrice": 25,
+    "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_460",
@@ -5118,7 +5577,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_461",
@@ -5129,7 +5589,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_462",
@@ -5137,10 +5598,11 @@ export const initialProducts: Product[] = [
     "name": "Luvinha de dedo",
     "category": "Acessórios para Celular",
     "costPrice": 1,
-    "salePrice": 20,
+    "salePrice": 11.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_463",
@@ -5151,7 +5613,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_464",
@@ -5162,7 +5625,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_465",
@@ -5173,7 +5637,8 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_466",
@@ -5184,7 +5649,8 @@ export const initialProducts: Product[] = [
     "salePrice": 190,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_467",
@@ -5195,7 +5661,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_468",
@@ -5203,10 +5670,11 @@ export const initialProducts: Product[] = [
     "name": "Carregador Completo Spartan Tc - Cw-301",
     "category": "Carregadores",
     "costPrice": 11,
-    "salePrice": 30,
+    "salePrice": 26,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_469",
@@ -5217,7 +5685,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_470",
@@ -5228,7 +5697,8 @@ export const initialProducts: Product[] = [
     "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_471",
@@ -5239,7 +5709,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_472",
@@ -5250,7 +5721,8 @@ export const initialProducts: Product[] = [
     "salePrice": 350,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_473",
@@ -5258,10 +5730,11 @@ export const initialProducts: Product[] = [
     "name": "Mouse Wireless Recarregável Led Rgb 2.4 Ghz Sem Fio",
     "category": "Carregadores",
     "costPrice": 18,
-    "salePrice": 40,
+    "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_474",
@@ -5269,10 +5742,11 @@ export const initialProducts: Product[] = [
     "name": "Lâmpada Led 9W",
     "category": "Eletrônicos Diversos",
     "costPrice": 4.5,
-    "salePrice": 15,
+    "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_475",
@@ -5280,10 +5754,11 @@ export const initialProducts: Product[] = [
     "name": "Lampada 50w",
     "category": "Eletrônicos Diversos",
     "costPrice": 20,
-    "salePrice": 100,
+    "salePrice": 85,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_476",
@@ -5294,7 +5769,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_477",
@@ -5305,7 +5781,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_478",
@@ -5313,10 +5790,11 @@ export const initialProducts: Product[] = [
     "name": "Cabo iphone caixa branca",
     "category": "Cabos e Adaptadores",
     "costPrice": 15,
-    "salePrice": 40,
+    "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_479",
@@ -5324,10 +5802,11 @@ export const initialProducts: Product[] = [
     "name": "Serviços Celular",
     "category": "Serviços",
     "costPrice": 0,
-    "salePrice": 100,
+    "salePrice": 63.83,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_480",
@@ -5335,10 +5814,11 @@ export const initialProducts: Product[] = [
     "name": "Máquina De Cabelo Dragão",
     "category": "Diversos",
     "costPrice": 18,
-    "salePrice": 30,
+    "salePrice": 25.91,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_481",
@@ -5349,7 +5829,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_482",
@@ -5360,7 +5841,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_483",
@@ -5371,7 +5853,8 @@ export const initialProducts: Product[] = [
     "salePrice": 6.36,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_484",
@@ -5382,7 +5865,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5.89,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_485",
@@ -5393,7 +5877,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_486",
@@ -5404,7 +5889,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_487",
@@ -5415,7 +5901,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15.72,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_488",
@@ -5426,7 +5913,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_489",
@@ -5437,7 +5925,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_490",
@@ -5448,7 +5937,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_491",
@@ -5459,7 +5949,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_492",
@@ -5470,7 +5961,8 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_493",
@@ -5481,7 +5973,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_494",
@@ -5492,7 +5985,8 @@ export const initialProducts: Product[] = [
     "salePrice": 44,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_495",
@@ -5503,7 +5997,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_496",
@@ -5514,7 +6009,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_497",
@@ -5525,7 +6021,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_498",
@@ -5536,7 +6033,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_499",
@@ -5544,10 +6042,11 @@ export const initialProducts: Product[] = [
     "name": "impressao Colorida",
     "category": "Áudio e Vídeo",
     "costPrice": 0.05,
-    "salePrice": 5,
+    "salePrice": 2.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_500",
@@ -5555,10 +6054,11 @@ export const initialProducts: Product[] = [
     "name": "pelicula 3d",
     "category": "Capas e Películas",
     "costPrice": 3,
-    "salePrice": 15,
+    "salePrice": 13.49,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_501",
@@ -5566,10 +6066,11 @@ export const initialProducts: Product[] = [
     "name": "impressao preta",
     "category": "Áudio e Vídeo",
     "costPrice": 0.07,
-    "salePrice": 5,
+    "salePrice": 0.95,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_502",
@@ -5580,7 +6081,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_503",
@@ -5591,7 +6093,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_504",
@@ -5602,7 +6105,8 @@ export const initialProducts: Product[] = [
     "salePrice": 4,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_505",
@@ -5613,7 +6117,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_506",
@@ -5621,10 +6126,11 @@ export const initialProducts: Product[] = [
     "name": "xerox preta",
     "category": "Áudio e Vídeo",
     "costPrice": 0.05,
-    "salePrice": 10,
+    "salePrice": 0.68,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_507",
@@ -5635,7 +6141,8 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_508",
@@ -5646,7 +6153,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.480Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_509",
@@ -5657,7 +6165,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_510",
@@ -5665,10 +6174,11 @@ export const initialProducts: Product[] = [
     "name": "Pelicula 3d",
     "category": "Capas e Películas",
     "costPrice": 3,
-    "salePrice": 15,
+    "salePrice": 14.09,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_511",
@@ -5676,10 +6186,11 @@ export const initialProducts: Product[] = [
     "name": "impressao colorida",
     "category": "Áudio e Vídeo",
     "costPrice": 0.05,
-    "salePrice": 5,
+    "salePrice": 1.55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_512",
@@ -5687,10 +6198,11 @@ export const initialProducts: Product[] = [
     "name": "ring light",
     "category": "Diversos",
     "costPrice": 60,
-    "salePrice": 100,
+    "salePrice": 85,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_513",
@@ -5701,7 +6213,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_514",
@@ -5709,10 +6222,11 @@ export const initialProducts: Product[] = [
     "name": "Impressao colorida",
     "category": "Áudio e Vídeo",
     "costPrice": 0.05,
-    "salePrice": 2,
+    "salePrice": 1.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_515",
@@ -5723,7 +6237,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_516",
@@ -5731,10 +6246,11 @@ export const initialProducts: Product[] = [
     "name": "Caixa de som JBL GO3",
     "category": "Áudio e Vídeo",
     "costPrice": 35,
-    "salePrice": 85,
+    "salePrice": 71.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_517",
@@ -5742,10 +6258,11 @@ export const initialProducts: Product[] = [
     "name": "Carregador Completo Spartan 3 V8 Cw-Xg20-V8",
     "category": "Carregadores",
     "costPrice": 10,
-    "salePrice": 30,
+    "salePrice": 26.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_518",
@@ -5756,7 +6273,8 @@ export const initialProducts: Product[] = [
     "salePrice": 450,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_519",
@@ -5764,10 +6282,11 @@ export const initialProducts: Product[] = [
     "name": "Cabo iphone 20w",
     "category": "Cabos e Adaptadores",
     "costPrice": 6,
-    "salePrice": 40,
+    "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_520",
@@ -5775,10 +6294,11 @@ export const initialProducts: Product[] = [
     "name": "Digitalização",
     "category": "Diversos",
     "costPrice": 0,
-    "salePrice": 1,
+    "salePrice": 0.74,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_521",
@@ -5789,7 +6309,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_522",
@@ -5800,7 +6321,8 @@ export const initialProducts: Product[] = [
     "salePrice": 130,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_523",
@@ -5811,7 +6333,8 @@ export const initialProducts: Product[] = [
     "salePrice": 120,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_524",
@@ -5822,7 +6345,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_525",
@@ -5833,7 +6357,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_526",
@@ -5844,7 +6369,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_527",
@@ -5852,10 +6378,11 @@ export const initialProducts: Product[] = [
     "name": "Fone m10",
     "category": "Fones de Ouvido",
     "costPrice": 18,
-    "salePrice": 60,
+    "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_528",
@@ -5863,10 +6390,11 @@ export const initialProducts: Product[] = [
     "name": "Carregador cabeça 20w",
     "category": "Carregadores",
     "costPrice": 11,
-    "salePrice": 30,
+    "salePrice": 26.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_529",
@@ -5877,7 +6405,8 @@ export const initialProducts: Product[] = [
     "salePrice": 22.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_530",
@@ -5888,7 +6417,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_531",
@@ -5896,10 +6426,11 @@ export const initialProducts: Product[] = [
     "name": "chip recarregado",
     "category": "Carregadores",
     "costPrice": 17,
-    "salePrice": 30,
+    "salePrice": 29.32,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_532",
@@ -5910,7 +6441,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_533",
@@ -5918,10 +6450,11 @@ export const initialProducts: Product[] = [
     "name": "Adaptador p2 tipo c",
     "category": "Cabos e Adaptadores",
     "costPrice": 8,
-    "salePrice": 20,
+    "salePrice": 17.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_534",
@@ -5929,10 +6462,11 @@ export const initialProducts: Product[] = [
     "name": "Venda PC",
     "category": "Diversos",
     "costPrice": 0,
-    "salePrice": 150,
+    "salePrice": 125,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_535",
@@ -5943,7 +6477,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_536",
@@ -5954,7 +6489,8 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_537",
@@ -5962,10 +6498,11 @@ export const initialProducts: Product[] = [
     "name": "Chip normal",
     "category": "Eletrônicos Diversos",
     "costPrice": 10,
-    "salePrice": 20,
+    "salePrice": 19.55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_538",
@@ -5976,7 +6513,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_539",
@@ -5987,7 +6525,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_540",
@@ -5998,7 +6537,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_541",
@@ -6006,10 +6546,11 @@ export const initialProducts: Product[] = [
     "name": "Carregador completo tipoc LE-285CC",
     "category": "Carregadores",
     "costPrice": 11,
-    "salePrice": 40,
+    "salePrice": 31.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_542",
@@ -6020,7 +6561,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_543",
@@ -6031,7 +6573,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_544",
@@ -6042,7 +6585,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_545",
@@ -6050,10 +6594,11 @@ export const initialProducts: Product[] = [
     "name": "chip normal",
     "category": "Eletrônicos Diversos",
     "costPrice": 10,
-    "salePrice": 20,
+    "salePrice": 18.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_546",
@@ -6064,7 +6609,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_547",
@@ -6075,7 +6621,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_548",
@@ -6086,7 +6633,8 @@ export const initialProducts: Product[] = [
     "salePrice": 0.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_549",
@@ -6097,7 +6645,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_550",
@@ -6105,10 +6654,11 @@ export const initialProducts: Product[] = [
     "name": "Climatizador Utra Air Cooler novo",
     "category": "Computador e Periféricos",
     "costPrice": 41,
-    "salePrice": 80,
+    "salePrice": 76.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_551",
@@ -6116,10 +6666,11 @@ export const initialProducts: Product[] = [
     "name": "Cabeça carregador 3.1a ka-5601",
     "category": "Carregadores",
     "costPrice": 6,
-    "salePrice": 15,
+    "salePrice": 11.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_552",
@@ -6127,10 +6678,11 @@ export const initialProducts: Product[] = [
     "name": "Kit completo carregador 20w",
     "category": "Carregadores",
     "costPrice": 17,
-    "salePrice": 50,
+    "salePrice": 43.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_553",
@@ -6141,7 +6693,8 @@ export const initialProducts: Product[] = [
     "salePrice": 136.9,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_554",
@@ -6152,7 +6705,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_555",
@@ -6163,7 +6717,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_556",
@@ -6174,7 +6729,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_557",
@@ -6185,7 +6741,8 @@ export const initialProducts: Product[] = [
     "salePrice": 0,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_558",
@@ -6196,7 +6753,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_559",
@@ -6207,7 +6765,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_560",
@@ -6215,10 +6774,11 @@ export const initialProducts: Product[] = [
     "name": "Gravação de musica",
     "category": "Serviços",
     "costPrice": 0,
-    "salePrice": 40,
+    "salePrice": 15.13,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_561",
@@ -6229,7 +6789,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_562",
@@ -6240,7 +6801,8 @@ export const initialProducts: Product[] = [
     "salePrice": 184.82,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_563",
@@ -6251,7 +6813,8 @@ export const initialProducts: Product[] = [
     "salePrice": 0.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_564",
@@ -6262,7 +6825,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_565",
@@ -6273,7 +6837,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_566",
@@ -6284,7 +6849,8 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_567",
@@ -6295,7 +6861,8 @@ export const initialProducts: Product[] = [
     "salePrice": 0.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_568",
@@ -6306,7 +6873,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_569",
@@ -6317,7 +6885,8 @@ export const initialProducts: Product[] = [
     "salePrice": 277,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_570",
@@ -6328,7 +6897,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_571",
@@ -6339,7 +6909,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_572",
@@ -6350,7 +6921,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_573",
@@ -6361,7 +6933,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_574",
@@ -6372,7 +6945,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_575",
@@ -6383,7 +6957,8 @@ export const initialProducts: Product[] = [
     "salePrice": 48.28,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_576",
@@ -6394,7 +6969,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_577",
@@ -6405,7 +6981,8 @@ export const initialProducts: Product[] = [
     "salePrice": 135,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_578",
@@ -6413,10 +6990,11 @@ export const initialProducts: Product[] = [
     "name": "Globo de luz sem controle",
     "category": "Eletrônicos Diversos",
     "costPrice": 30,
-    "salePrice": 70,
+    "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_579",
@@ -6427,7 +7005,8 @@ export const initialProducts: Product[] = [
     "salePrice": 125,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_580",
@@ -6438,7 +7017,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_581",
@@ -6449,7 +7029,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_582",
@@ -6460,7 +7041,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_583",
@@ -6471,7 +7053,8 @@ export const initialProducts: Product[] = [
     "salePrice": 0.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_584",
@@ -6482,7 +7065,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_585",
@@ -6490,10 +7074,11 @@ export const initialProducts: Product[] = [
     "name": "Pisca pisca vermelho 100 leds",
     "category": "Eletrônicos Diversos",
     "costPrice": 8,
-    "salePrice": 20,
+    "salePrice": 17.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_586",
@@ -6501,10 +7086,11 @@ export const initialProducts: Product[] = [
     "name": "Enfeite de natal verde",
     "category": "Diversos",
     "costPrice": 3.5,
-    "salePrice": 7.5,
+    "salePrice": 6.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_587",
@@ -6515,7 +7101,8 @@ export const initialProducts: Product[] = [
     "salePrice": 135,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_588",
@@ -6526,7 +7113,8 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_589",
@@ -6537,7 +7125,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_590",
@@ -6545,10 +7134,11 @@ export const initialProducts: Product[] = [
     "name": "Isqueiro auto",
     "category": "Eletrônicos Diversos",
     "costPrice": 0.8,
-    "salePrice": 5,
+    "salePrice": 4.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_591",
@@ -6559,7 +7149,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_592",
@@ -6567,10 +7158,11 @@ export const initialProducts: Product[] = [
     "name": "luvinhas dedo N",
     "category": "Acessórios para Celular",
     "costPrice": 0.29425,
-    "salePrice": 7.5,
+    "salePrice": 5.23,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_593",
@@ -6581,7 +7173,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_594",
@@ -6592,7 +7185,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_595",
@@ -6603,7 +7197,8 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_596",
@@ -6614,7 +7209,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_597",
@@ -6625,7 +7221,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_598",
@@ -6636,7 +7233,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_599",
@@ -6647,7 +7245,8 @@ export const initialProducts: Product[] = [
     "salePrice": 370,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_600",
@@ -6658,7 +7257,8 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_601",
@@ -6666,10 +7266,11 @@ export const initialProducts: Product[] = [
     "name": "SSD 220gb",
     "category": "Memória e Armazenamento",
     "costPrice": 0,
-    "salePrice": 260,
+    "salePrice": 236.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_602",
@@ -6680,7 +7281,8 @@ export const initialProducts: Product[] = [
     "salePrice": 123.28,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_603",
@@ -6691,7 +7293,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_604",
@@ -6699,10 +7302,11 @@ export const initialProducts: Product[] = [
     "name": "SSD 120gb DF",
     "category": "Memória e Armazenamento",
     "costPrice": 92,
-    "salePrice": 200,
+    "salePrice": 175,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_605",
@@ -6713,7 +7317,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_606",
@@ -6721,10 +7326,11 @@ export const initialProducts: Product[] = [
     "name": "Pendrive 16gb AL-U-16",
     "category": "Memória e Armazenamento",
     "costPrice": 13,
-    "salePrice": 30,
+    "salePrice": 28.13,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_607",
@@ -6735,7 +7341,8 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_608",
@@ -6746,7 +7353,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_609",
@@ -6754,10 +7362,11 @@ export const initialProducts: Product[] = [
     "name": "Pilha Alcalina flex AAA",
     "category": "Eletrônicos Diversos",
     "costPrice": 6.5,
-    "salePrice": 15,
+    "salePrice": 12.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_610",
@@ -6768,7 +7377,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_611",
@@ -6779,7 +7389,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_612",
@@ -6790,7 +7401,8 @@ export const initialProducts: Product[] = [
     "salePrice": 120,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_613",
@@ -6801,7 +7413,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_614",
@@ -6812,7 +7425,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_615",
@@ -6820,10 +7434,11 @@ export const initialProducts: Product[] = [
     "name": "Internet",
     "category": "Diversos",
     "costPrice": 0,
-    "salePrice": 30,
+    "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_616",
@@ -6834,7 +7449,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_617",
@@ -6845,7 +7461,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_618",
@@ -6856,7 +7473,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_619",
@@ -6867,7 +7485,8 @@ export const initialProducts: Product[] = [
     "salePrice": 170,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_620",
@@ -6878,7 +7497,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_621",
@@ -6889,7 +7509,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_622",
@@ -6900,7 +7521,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_623",
@@ -6911,7 +7533,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_624",
@@ -6922,7 +7545,8 @@ export const initialProducts: Product[] = [
     "salePrice": 110,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_625",
@@ -6930,10 +7554,11 @@ export const initialProducts: Product[] = [
     "name": "luvinha de dedo",
     "category": "Acessórios para Celular",
     "costPrice": 0,
-    "salePrice": 10,
+    "salePrice": 5.26,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_626",
@@ -6941,10 +7566,11 @@ export const initialProducts: Product[] = [
     "name": "chip com recarga",
     "category": "Eletrônicos Diversos",
     "costPrice": 0,
-    "salePrice": 30,
+    "salePrice": 29.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_627",
@@ -6952,10 +7578,11 @@ export const initialProducts: Product[] = [
     "name": "manutençao",
     "category": "Diversos",
     "costPrice": 0,
-    "salePrice": 2020,
+    "salePrice": 251.55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_628",
@@ -6966,7 +7593,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_629",
@@ -6977,7 +7605,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_630",
@@ -6988,7 +7617,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_631",
@@ -6996,10 +7626,11 @@ export const initialProducts: Product[] = [
     "name": "Fonte notebook grasep",
     "category": "Carregadores",
     "costPrice": 32,
-    "salePrice": 80,
+    "salePrice": 67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_632",
@@ -7010,7 +7641,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_633",
@@ -7021,7 +7653,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_634",
@@ -7032,7 +7665,8 @@ export const initialProducts: Product[] = [
     "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_635",
@@ -7043,7 +7677,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_636",
@@ -7054,7 +7689,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_637",
@@ -7062,10 +7698,11 @@ export const initialProducts: Product[] = [
     "name": "Manutençao",
     "category": "Diversos",
     "costPrice": 0,
-    "salePrice": 61.75,
+    "salePrice": 43.92,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_638",
@@ -7076,7 +7713,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_639",
@@ -7087,7 +7725,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_640",
@@ -7095,10 +7734,11 @@ export const initialProducts: Product[] = [
     "name": "Fone Simples",
     "category": "Fones de Ouvido",
     "costPrice": 0,
-    "salePrice": 10,
+    "salePrice": 7.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_641",
@@ -7109,7 +7749,8 @@ export const initialProducts: Product[] = [
     "salePrice": 110,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_642",
@@ -7120,7 +7761,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_643",
@@ -7131,7 +7773,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_644",
@@ -7142,7 +7785,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_645",
@@ -7153,7 +7797,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_646",
@@ -7161,10 +7806,11 @@ export const initialProducts: Product[] = [
     "name": "Carregador tipo C LE-484",
     "category": "Carregadores",
     "costPrice": 10,
-    "salePrice": 30,
+    "salePrice": 28.57,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_647",
@@ -7175,7 +7821,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_648",
@@ -7186,7 +7833,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_649",
@@ -7197,7 +7845,8 @@ export const initialProducts: Product[] = [
     "salePrice": 165,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_650",
@@ -7208,7 +7857,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_651",
@@ -7216,10 +7866,11 @@ export const initialProducts: Product[] = [
     "name": "jogo ps2",
     "category": "Brinquedos e Jogos",
     "costPrice": 0,
-    "salePrice": 5,
+    "salePrice": 4.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_652",
@@ -7230,7 +7881,8 @@ export const initialProducts: Product[] = [
     "salePrice": 165,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_653",
@@ -7241,7 +7893,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_654",
@@ -7252,7 +7905,8 @@ export const initialProducts: Product[] = [
     "salePrice": 85,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_655",
@@ -7260,10 +7914,11 @@ export const initialProducts: Product[] = [
     "name": "cabo de dados v8 kapbom kap 1mV8",
     "category": "Cabos e Adaptadores",
     "costPrice": 3.5,
-    "salePrice": 10,
+    "salePrice": 8.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_656",
@@ -7274,7 +7929,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_657",
@@ -7285,7 +7941,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_658",
@@ -7296,7 +7953,8 @@ export const initialProducts: Product[] = [
     "salePrice": 315,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_659",
@@ -7307,7 +7965,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_660",
@@ -7318,7 +7977,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_661",
@@ -7329,7 +7989,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_662",
@@ -7340,7 +8001,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_663",
@@ -7351,7 +8013,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_664",
@@ -7362,7 +8025,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_665",
@@ -7373,7 +8037,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_666",
@@ -7384,7 +8049,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_667",
@@ -7395,7 +8061,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_668",
@@ -7406,7 +8073,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_669",
@@ -7417,7 +8085,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_670",
@@ -7428,7 +8097,8 @@ export const initialProducts: Product[] = [
     "salePrice": 26,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_671",
@@ -7439,7 +8109,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_672",
@@ -7447,10 +8118,11 @@ export const initialProducts: Product[] = [
     "name": "lego pequeno",
     "category": "Brinquedos e Jogos",
     "costPrice": 2,
-    "salePrice": 7,
+    "salePrice": 5.05,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_673",
@@ -7461,7 +8133,8 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_674",
@@ -7472,7 +8145,8 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_675",
@@ -7483,7 +8157,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_676",
@@ -7491,10 +8166,11 @@ export const initialProducts: Product[] = [
     "name": "Fone de ouvido inova FON-30063",
     "category": "Fones de Ouvido",
     "costPrice": 8,
-    "salePrice": 25,
+    "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_677",
@@ -7505,7 +8181,8 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_678",
@@ -7516,7 +8193,8 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_679",
@@ -7524,10 +8202,11 @@ export const initialProducts: Product[] = [
     "name": "Carregador lehmox 5.1 LE-82",
     "category": "Carregadores",
     "costPrice": 10,
-    "salePrice": 30,
+    "salePrice": 28.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_680",
@@ -7535,10 +8214,11 @@ export const initialProducts: Product[] = [
     "name": "lego pequeno Grande",
     "category": "Brinquedos e Jogos",
     "costPrice": 0,
-    "salePrice": 15,
+    "salePrice": 12.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_681",
@@ -7549,7 +8229,8 @@ export const initialProducts: Product[] = [
     "salePrice": 65,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_682",
@@ -7560,7 +8241,8 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_683",
@@ -7568,10 +8250,11 @@ export const initialProducts: Product[] = [
     "name": "biscoito mae Grande",
     "category": "Diversos",
     "costPrice": 10,
-    "salePrice": 10,
+    "salePrice": 9.71,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_684",
@@ -7582,7 +8265,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_685",
@@ -7593,7 +8277,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_686",
@@ -7604,7 +8289,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_687",
@@ -7612,10 +8298,11 @@ export const initialProducts: Product[] = [
     "name": "Amendoin doce",
     "category": "Diversos",
     "costPrice": 5,
-    "salePrice": 5,
+    "salePrice": 4.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_688",
@@ -7623,10 +8310,11 @@ export const initialProducts: Product[] = [
     "name": "unitv v10",
     "category": "Eletrônicos Diversos",
     "costPrice": 270,
-    "salePrice": 400,
+    "salePrice": 348.41,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_689",
@@ -7637,7 +8325,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_690",
@@ -7645,10 +8334,11 @@ export const initialProducts: Product[] = [
     "name": "cabo tipo c",
     "category": "Cabos e Adaptadores",
     "costPrice": 0,
-    "salePrice": 15,
+    "salePrice": 12.73,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_691",
@@ -7659,7 +8349,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_692",
@@ -7670,7 +8361,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_693",
@@ -7678,10 +8370,11 @@ export const initialProducts: Product[] = [
     "name": "bolinhos da mamae",
     "category": "Diversos",
     "costPrice": 3.5,
-    "salePrice": 7.5,
+    "salePrice": 5.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_694",
@@ -7692,7 +8385,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_695",
@@ -7703,7 +8397,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_696",
@@ -7714,7 +8409,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_697",
@@ -7725,7 +8421,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_698",
@@ -7736,7 +8433,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_699",
@@ -7747,7 +8445,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_700",
@@ -7758,7 +8457,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_701",
@@ -7769,7 +8469,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_702",
@@ -7777,10 +8478,11 @@ export const initialProducts: Product[] = [
     "name": "camera bocal",
     "category": "Eletrônicos Diversos",
     "costPrice": 0,
-    "salePrice": 120,
+    "salePrice": 105,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_703",
@@ -7791,7 +8493,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_704",
@@ -7799,10 +8502,11 @@ export const initialProducts: Product[] = [
     "name": "pelicula de privacidade",
     "category": "Capas e Películas",
     "costPrice": 0,
-    "salePrice": 25,
+    "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_705",
@@ -7813,7 +8517,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_706",
@@ -7824,7 +8529,8 @@ export const initialProducts: Product[] = [
     "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_707",
@@ -7835,7 +8541,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_708",
@@ -7846,7 +8553,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_709",
@@ -7854,10 +8562,11 @@ export const initialProducts: Product[] = [
     "name": "carregador 20w completo",
     "category": "Carregadores",
     "costPrice": 0,
-    "salePrice": 50,
+    "salePrice": 45.83,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_710",
@@ -7868,7 +8577,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_711",
@@ -7879,7 +8589,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_712",
@@ -7890,7 +8601,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_713",
@@ -7898,10 +8610,11 @@ export const initialProducts: Product[] = [
     "name": "cartao de memoria tfmicrosd 64gb",
     "category": "Memória e Armazenamento",
     "costPrice": 17,
-    "salePrice": 50,
+    "salePrice": 43.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_714",
@@ -7909,10 +8622,11 @@ export const initialProducts: Product[] = [
     "name": "cartao de memoria tfmicrosd 32gb",
     "category": "Memória e Armazenamento",
     "costPrice": 16,
-    "salePrice": 45,
+    "salePrice": 36,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_715",
@@ -7923,7 +8637,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.212Z"
   },
   {
     "id": "p_716",
@@ -7934,7 +8649,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_717",
@@ -7945,7 +8661,8 @@ export const initialProducts: Product[] = [
     "salePrice": 1100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_718",
@@ -7956,7 +8673,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_719",
@@ -7967,7 +8685,8 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_720",
@@ -7978,7 +8697,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_721",
@@ -7989,7 +8709,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_722",
@@ -8000,7 +8721,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_723",
@@ -8011,7 +8733,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_724",
@@ -8022,7 +8745,8 @@ export const initialProducts: Product[] = [
     "salePrice": 85,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_725",
@@ -8033,7 +8757,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_726",
@@ -8041,10 +8766,11 @@ export const initialProducts: Product[] = [
     "name": "jogo de xbox",
     "category": "Brinquedos e Jogos",
     "costPrice": 5,
-    "salePrice": 20,
+    "salePrice": 11.51,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_727",
@@ -8055,7 +8781,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_728",
@@ -8066,7 +8793,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_729",
@@ -8077,7 +8805,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_730",
@@ -8088,7 +8817,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_731",
@@ -8099,7 +8829,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_732",
@@ -8110,7 +8841,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_733",
@@ -8118,10 +8850,11 @@ export const initialProducts: Product[] = [
     "name": "LAXASFIT 2024 Relógio inteligente",
     "category": "Relógios e Wearables",
     "costPrice": 0,
-    "salePrice": 100,
+    "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_734",
@@ -8129,10 +8862,11 @@ export const initialProducts: Product[] = [
     "name": "boneco agua",
     "category": "Brinquedos e Jogos",
     "costPrice": 0,
-    "salePrice": 5,
+    "salePrice": 4.71,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_735",
@@ -8140,10 +8874,11 @@ export const initialProducts: Product[] = [
     "name": "lanterna de cabeça",
     "category": "Eletrônicos Diversos",
     "costPrice": 0,
-    "salePrice": 35,
+    "salePrice": 32.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_736",
@@ -8154,7 +8889,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_737",
@@ -8162,10 +8898,11 @@ export const initialProducts: Product[] = [
     "name": "card",
     "category": "Diversos",
     "costPrice": 0.4,
-    "salePrice": 6,
+    "salePrice": 3.36,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_738",
@@ -8176,7 +8913,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_739",
@@ -8187,7 +8925,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_740",
@@ -8195,10 +8934,11 @@ export const initialProducts: Product[] = [
     "name": "bobbie goods caderno",
     "category": "Brinquedos e Jogos",
     "costPrice": 13,
-    "salePrice": 25,
+    "salePrice": 21.67,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_741",
@@ -8206,10 +8946,11 @@ export const initialProducts: Product[] = [
     "name": "card caixa 50",
     "category": "Diversos",
     "costPrice": 5,
-    "salePrice": 20,
+    "salePrice": 17.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_742",
@@ -8220,7 +8961,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_743",
@@ -8231,7 +8973,8 @@ export const initialProducts: Product[] = [
     "salePrice": 255,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_744",
@@ -8242,7 +8985,8 @@ export const initialProducts: Product[] = [
     "salePrice": 220,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_745",
@@ -8253,7 +8997,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_746",
@@ -8264,7 +9009,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_747",
@@ -8275,7 +9021,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_748",
@@ -8283,10 +9030,11 @@ export const initialProducts: Product[] = [
     "name": "Adaptador Wifi 5G",
     "category": "Cabos e Adaptadores",
     "costPrice": 28,
-    "salePrice": 50,
+    "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_749",
@@ -8297,7 +9045,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_750",
@@ -8308,7 +9057,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_751",
@@ -8316,10 +9066,11 @@ export const initialProducts: Product[] = [
     "name": "capinha simples",
     "category": "Capas e Películas",
     "costPrice": 4,
-    "salePrice": 15,
+    "salePrice": 13.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_752",
@@ -8330,7 +9081,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_753",
@@ -8341,7 +9093,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_754",
@@ -8349,10 +9102,11 @@ export const initialProducts: Product[] = [
     "name": "Chaveiros lili",
     "category": "Casa e Utensílios",
     "costPrice": 2.4166666666666665,
-    "salePrice": 7,
+    "salePrice": 5.15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_755",
@@ -8363,7 +9117,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_756",
@@ -8374,7 +9129,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_757",
@@ -8385,7 +9141,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_758",
@@ -8396,7 +9153,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_759",
@@ -8404,10 +9162,11 @@ export const initialProducts: Product[] = [
     "name": "ssd 240gb",
     "category": "Memória e Armazenamento",
     "costPrice": 69.63,
-    "salePrice": 300,
+    "salePrice": 261.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_760",
@@ -8418,7 +9177,8 @@ export const initialProducts: Product[] = [
     "salePrice": 600,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_761",
@@ -8429,7 +9189,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_762",
@@ -8440,7 +9201,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_763",
@@ -8451,7 +9213,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_764",
@@ -8462,7 +9225,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_765",
@@ -8473,7 +9237,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_766",
@@ -8484,7 +9249,8 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_767",
@@ -8495,7 +9261,8 @@ export const initialProducts: Product[] = [
     "salePrice": 70,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_768",
@@ -8503,10 +9270,11 @@ export const initialProducts: Product[] = [
     "name": "SSD 120gb",
     "category": "Memória e Armazenamento",
     "costPrice": 104,
-    "salePrice": 200,
+    "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_769",
@@ -8517,7 +9285,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_770",
@@ -8528,7 +9297,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_771",
@@ -8539,7 +9309,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_772",
@@ -8550,7 +9321,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_773",
@@ -8561,7 +9333,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_774",
@@ -8572,7 +9345,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_775",
@@ -8583,7 +9357,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_776",
@@ -8594,7 +9369,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.481Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_777",
@@ -8605,7 +9381,8 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_778",
@@ -8616,7 +9393,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_779",
@@ -8627,7 +9405,8 @@ export const initialProducts: Product[] = [
     "salePrice": 75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_780",
@@ -8638,7 +9417,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_781",
@@ -8649,7 +9429,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_782",
@@ -8660,7 +9441,8 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_783",
@@ -8671,7 +9453,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_784",
@@ -8682,7 +9465,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_785",
@@ -8693,7 +9477,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_786",
@@ -8704,7 +9489,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_787",
@@ -8715,7 +9501,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_788",
@@ -8726,7 +9513,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_789",
@@ -8734,10 +9522,11 @@ export const initialProducts: Product[] = [
     "name": "cabo iphone",
     "category": "Cabos e Adaptadores",
     "costPrice": 5,
-    "salePrice": 28.3,
+    "salePrice": 15.83,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_790",
@@ -8745,10 +9534,11 @@ export const initialProducts: Product[] = [
     "name": "Pendrive 32gb",
     "category": "Memória e Armazenamento",
     "costPrice": 20,
-    "salePrice": 35,
+    "salePrice": 32.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_791",
@@ -8759,7 +9549,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_792",
@@ -8770,7 +9561,8 @@ export const initialProducts: Product[] = [
     "salePrice": 6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_793",
@@ -8781,7 +9573,8 @@ export const initialProducts: Product[] = [
     "salePrice": 110,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_794",
@@ -8789,10 +9582,11 @@ export const initialProducts: Product[] = [
     "name": "kit 10 jogos ps2",
     "category": "Brinquedos e Jogos",
     "costPrice": 2.5,
-    "salePrice": 42.5,
+    "salePrice": 39.43,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_795",
@@ -8800,10 +9594,11 @@ export const initialProducts: Product[] = [
     "name": "Cheirinho para Carro Harts by Hungria",
     "category": "Diversos",
     "costPrice": 7,
-    "salePrice": 27.5,
+    "salePrice": 14.22,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_796",
@@ -8814,7 +9609,8 @@ export const initialProducts: Product[] = [
     "salePrice": 4.76,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_797",
@@ -8825,7 +9621,8 @@ export const initialProducts: Product[] = [
     "salePrice": 386,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_798",
@@ -8836,7 +9633,8 @@ export const initialProducts: Product[] = [
     "salePrice": 95,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_799",
@@ -8847,7 +9645,8 @@ export const initialProducts: Product[] = [
     "salePrice": 21.19,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_800",
@@ -8858,7 +9657,8 @@ export const initialProducts: Product[] = [
     "salePrice": 48.7,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_801",
@@ -8866,10 +9666,11 @@ export const initialProducts: Product[] = [
     "name": "Estilingue Luz de Led",
     "category": "Eletrônicos Diversos",
     "costPrice": 2,
-    "salePrice": 5.87,
+    "salePrice": 5.81,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_802",
@@ -8880,7 +9681,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15.76,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_803",
@@ -8888,10 +9690,11 @@ export const initialProducts: Product[] = [
     "name": "Kit 10 Jogos PS2",
     "category": "Brinquedos e Jogos",
     "costPrice": 30,
-    "salePrice": 41.9,
+    "salePrice": 39.2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_804",
@@ -8902,7 +9705,8 @@ export const initialProducts: Product[] = [
     "salePrice": 112.25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_805",
@@ -8913,7 +9717,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_806",
@@ -8924,7 +9729,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_807",
@@ -8932,10 +9738,11 @@ export const initialProducts: Product[] = [
     "name": "Cabo de iphone",
     "category": "Cabos e Adaptadores",
     "costPrice": 5,
-    "salePrice": 15,
+    "salePrice": 12.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_808",
@@ -8946,7 +9753,8 @@ export const initialProducts: Product[] = [
     "salePrice": 33.2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_809",
@@ -8957,7 +9765,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_810",
@@ -8965,10 +9774,11 @@ export const initialProducts: Product[] = [
     "name": "1 Par Alto 1 Par Alto Falante Evok 6x9 280rms",
     "category": "Áudio e Vídeo",
     "costPrice": 0,
-    "salePrice": 153,
+    "salePrice": 55.73,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_811",
@@ -8976,10 +9786,11 @@ export const initialProducts: Product[] = [
     "name": "suporte de celular articulado",
     "category": "Acessórios para Celular",
     "costPrice": 7.5,
-    "salePrice": 30,
+    "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_812",
@@ -8990,7 +9801,8 @@ export const initialProducts: Product[] = [
     "salePrice": 44.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_813",
@@ -9001,7 +9813,8 @@ export const initialProducts: Product[] = [
     "salePrice": 85.16,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_814",
@@ -9012,7 +9825,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_815",
@@ -9023,7 +9837,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_816",
@@ -9034,7 +9849,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_817",
@@ -9042,10 +9858,11 @@ export const initialProducts: Product[] = [
     "name": "1 Par Alto Falante Evok 6x9 280rms",
     "category": "Áudio e Vídeo",
     "costPrice": 0,
-    "salePrice": 42,
+    "salePrice": 34.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_818",
@@ -9053,10 +9870,11 @@ export const initialProducts: Product[] = [
     "name": "Pen Drive Jogos Para PS2",
     "category": "Memória e Armazenamento",
     "costPrice": 20,
-    "salePrice": 123.12,
+    "salePrice": 76.62,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_819",
@@ -9067,7 +9885,8 @@ export const initialProducts: Product[] = [
     "salePrice": 19.71,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_820",
@@ -9078,7 +9897,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_821",
@@ -9089,7 +9909,8 @@ export const initialProducts: Product[] = [
     "salePrice": 32,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_822",
@@ -9100,7 +9921,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_823",
@@ -9111,7 +9933,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_824",
@@ -9122,7 +9945,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_825",
@@ -9133,7 +9957,8 @@ export const initialProducts: Product[] = [
     "salePrice": 90,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_826",
@@ -9144,7 +9969,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_827",
@@ -9155,7 +9981,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_828",
@@ -9166,7 +9993,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_829",
@@ -9177,7 +10005,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_830",
@@ -9188,7 +10017,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_831",
@@ -9199,7 +10029,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_832",
@@ -9210,7 +10041,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_833",
@@ -9221,7 +10053,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_834",
@@ -9232,7 +10065,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_835",
@@ -9243,7 +10077,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_836",
@@ -9254,7 +10089,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_837",
@@ -9265,7 +10101,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_838",
@@ -9276,7 +10113,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_839",
@@ -9287,7 +10125,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_840",
@@ -9295,10 +10134,11 @@ export const initialProducts: Product[] = [
     "name": "guirlanda verde/branca",
     "category": "Diversos",
     "costPrice": 3,
-    "salePrice": 6,
+    "salePrice": 5.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_841",
@@ -9309,7 +10149,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_842",
@@ -9320,7 +10161,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_843",
@@ -9331,7 +10173,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_844",
@@ -9342,7 +10185,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_845",
@@ -9353,7 +10197,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_846",
@@ -9364,7 +10209,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_847",
@@ -9375,7 +10221,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_848",
@@ -9386,7 +10233,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_849",
@@ -9397,7 +10245,8 @@ export const initialProducts: Product[] = [
     "salePrice": 14,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_850",
@@ -9408,7 +10257,8 @@ export const initialProducts: Product[] = [
     "salePrice": 29.74,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_851",
@@ -9416,10 +10266,11 @@ export const initialProducts: Product[] = [
     "name": "Memory Card Opl",
     "category": "Memória e Armazenamento",
     "costPrice": 18,
-    "salePrice": 29.74,
+    "salePrice": 25.99,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_852",
@@ -9430,7 +10281,8 @@ export const initialProducts: Product[] = [
     "salePrice": 21,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_853",
@@ -9441,7 +10293,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15.13,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_854",
@@ -9449,10 +10302,11 @@ export const initialProducts: Product[] = [
     "name": "Protetor De Rg",
     "category": "Diversos",
     "costPrice": 3,
-    "salePrice": 4.54,
+    "salePrice": 4.48,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_855",
@@ -9463,7 +10317,8 @@ export const initialProducts: Product[] = [
     "salePrice": 34,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_856",
@@ -9474,7 +10329,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_857",
@@ -9485,7 +10341,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_858",
@@ -9496,7 +10353,8 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_859",
@@ -9507,7 +10365,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_860",
@@ -9518,7 +10377,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15.09,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_861",
@@ -9529,7 +10389,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_862",
@@ -9540,7 +10401,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_863",
@@ -9551,7 +10413,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_864",
@@ -9562,7 +10425,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_865",
@@ -9573,7 +10437,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_866",
@@ -9584,7 +10449,8 @@ export const initialProducts: Product[] = [
     "salePrice": 270,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_867",
@@ -9595,7 +10461,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_868",
@@ -9606,7 +10473,8 @@ export const initialProducts: Product[] = [
     "salePrice": 185,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_869",
@@ -9614,10 +10482,11 @@ export const initialProducts: Product[] = [
     "name": "cabo de iphone",
     "category": "Cabos e Adaptadores",
     "costPrice": 4,
-    "salePrice": 15,
+    "salePrice": 12.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_870",
@@ -9628,7 +10497,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_871",
@@ -9636,10 +10506,11 @@ export const initialProducts: Product[] = [
     "name": "pc dell",
     "category": "Computador e Periféricos",
     "costPrice": 0,
-    "salePrice": 325,
+    "salePrice": 262.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_872",
@@ -9650,7 +10521,8 @@ export const initialProducts: Product[] = [
     "salePrice": 140,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_873",
@@ -9661,7 +10533,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_874",
@@ -9672,7 +10545,8 @@ export const initialProducts: Product[] = [
     "salePrice": 105,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_875",
@@ -9683,7 +10557,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_876",
@@ -9694,7 +10569,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_877",
@@ -9702,10 +10578,11 @@ export const initialProducts: Product[] = [
     "name": "UniTV V10",
     "category": "Eletrônicos Diversos",
     "costPrice": 0,
-    "salePrice": 350,
+    "salePrice": 304,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_878",
@@ -9716,7 +10593,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_879",
@@ -9727,7 +10605,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_880",
@@ -9738,7 +10617,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_881",
@@ -9749,7 +10629,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_882",
@@ -9760,7 +10641,8 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_883",
@@ -9771,7 +10653,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_884",
@@ -9782,7 +10665,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_885",
@@ -9793,7 +10677,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_886",
@@ -9804,7 +10689,8 @@ export const initialProducts: Product[] = [
     "salePrice": 400,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_887",
@@ -9815,7 +10701,8 @@ export const initialProducts: Product[] = [
     "salePrice": 18.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_888",
@@ -9826,7 +10713,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_889",
@@ -9837,7 +10725,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_890",
@@ -9848,7 +10737,8 @@ export const initialProducts: Product[] = [
     "salePrice": 378.4,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_891",
@@ -9859,7 +10749,8 @@ export const initialProducts: Product[] = [
     "salePrice": 41.6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_892",
@@ -9870,7 +10761,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_893",
@@ -9881,7 +10773,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_894",
@@ -9892,7 +10785,8 @@ export const initialProducts: Product[] = [
     "salePrice": 45,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_895",
@@ -9900,10 +10794,11 @@ export const initialProducts: Product[] = [
     "name": "controle ps2",
     "category": "Brinquedos e Jogos",
     "costPrice": 10,
-    "salePrice": 20,
+    "salePrice": 17.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_896",
@@ -9911,10 +10806,11 @@ export const initialProducts: Product[] = [
     "name": "Cheirinho para Carro",
     "category": "Diversos",
     "costPrice": 7.5,
-    "salePrice": 15,
+    "salePrice": 13.48,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_897",
@@ -9925,7 +10821,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_898",
@@ -9936,7 +10833,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_899",
@@ -9947,7 +10845,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_900",
@@ -9958,7 +10857,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_901",
@@ -9969,7 +10869,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_902",
@@ -9977,10 +10878,11 @@ export const initialProducts: Product[] = [
     "name": "Power Vox 12 Polegadas 800w",
     "category": "Diversos",
     "costPrice": 0,
-    "salePrice": 646.4,
+    "salePrice": 566.33,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_903",
@@ -9988,10 +10890,11 @@ export const initialProducts: Product[] = [
     "name": "gatilho simples",
     "category": "Diversos",
     "costPrice": 4,
-    "salePrice": 10,
+    "salePrice": 9.08,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_904",
@@ -10002,7 +10905,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_905",
@@ -10013,7 +10917,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_906",
@@ -10024,7 +10929,8 @@ export const initialProducts: Product[] = [
     "salePrice": 18.8,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_907",
@@ -10035,7 +10941,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_908",
@@ -10046,7 +10953,8 @@ export const initialProducts: Product[] = [
     "salePrice": 300,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_909",
@@ -10057,7 +10965,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_910",
@@ -10065,10 +10974,11 @@ export const initialProducts: Product[] = [
     "name": "Par Alto Falante Snake Pro ESV320",
     "category": "Áudio e Vídeo",
     "costPrice": 0,
-    "salePrice": 14.54000000000002,
+    "salePrice": 14.54,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_911",
@@ -10079,7 +10989,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_912",
@@ -10090,7 +11001,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.482Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_913",
@@ -10101,7 +11013,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_914",
@@ -10112,7 +11025,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_915",
@@ -10123,7 +11037,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_916",
@@ -10134,7 +11049,8 @@ export const initialProducts: Product[] = [
     "salePrice": 600,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_917",
@@ -10145,7 +11061,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_918",
@@ -10156,7 +11073,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_919",
@@ -10167,7 +11085,8 @@ export const initialProducts: Product[] = [
     "salePrice": 200,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_920",
@@ -10178,7 +11097,8 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_921",
@@ -10189,7 +11109,8 @@ export const initialProducts: Product[] = [
     "salePrice": 55,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_922",
@@ -10200,7 +11121,8 @@ export const initialProducts: Product[] = [
     "salePrice": 8,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_923",
@@ -10211,7 +11133,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_924",
@@ -10222,7 +11145,8 @@ export const initialProducts: Product[] = [
     "salePrice": 150,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_925",
@@ -10233,7 +11157,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_926",
@@ -10244,7 +11169,8 @@ export const initialProducts: Product[] = [
     "salePrice": 43.52,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_927",
@@ -10255,7 +11181,8 @@ export const initialProducts: Product[] = [
     "salePrice": 453.69,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_928",
@@ -10266,7 +11193,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_929",
@@ -10277,7 +11205,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_930",
@@ -10288,7 +11217,8 @@ export const initialProducts: Product[] = [
     "salePrice": 100,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_931",
@@ -10299,7 +11229,8 @@ export const initialProducts: Product[] = [
     "salePrice": 80,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_932",
@@ -10310,7 +11241,8 @@ export const initialProducts: Product[] = [
     "salePrice": 50,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_933",
@@ -10321,7 +11253,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_934",
@@ -10329,10 +11262,11 @@ export const initialProducts: Product[] = [
     "name": "formataçao",
     "category": "Diversos",
     "costPrice": 0,
-    "salePrice": 100,
+    "salePrice": 67.14,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_935",
@@ -10343,7 +11277,8 @@ export const initialProducts: Product[] = [
     "salePrice": 1,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_936",
@@ -10354,7 +11289,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_937",
@@ -10365,7 +11301,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_938",
@@ -10376,7 +11313,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_939",
@@ -10387,7 +11325,8 @@ export const initialProducts: Product[] = [
     "salePrice": 18.22,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_940",
@@ -10398,7 +11337,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_941",
@@ -10406,10 +11346,11 @@ export const initialProducts: Product[] = [
     "name": "adaptador wifi",
     "category": "Cabos e Adaptadores",
     "costPrice": 50,
-    "salePrice": 70,
+    "salePrice": 47.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_942",
@@ -10420,7 +11361,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_943",
@@ -10428,10 +11370,11 @@ export const initialProducts: Product[] = [
     "name": "teclado simples",
     "category": "Computador e Periféricos",
     "costPrice": 19,
-    "salePrice": 50,
+    "salePrice": 42.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_944",
@@ -10442,7 +11385,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_945",
@@ -10453,7 +11397,8 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_946",
@@ -10464,7 +11409,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_947",
@@ -10475,7 +11421,8 @@ export const initialProducts: Product[] = [
     "salePrice": 235,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_948",
@@ -10483,10 +11430,11 @@ export const initialProducts: Product[] = [
     "name": "balança digital",
     "category": "Casa e Utensílios",
     "costPrice": 20,
-    "salePrice": 40,
+    "salePrice": 37.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_949",
@@ -10497,7 +11445,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_950",
@@ -10508,7 +11457,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_951",
@@ -10519,7 +11469,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_952",
@@ -10530,7 +11481,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_953",
@@ -10541,7 +11493,8 @@ export const initialProducts: Product[] = [
     "salePrice": 30,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_954",
@@ -10552,7 +11505,8 @@ export const initialProducts: Product[] = [
     "salePrice": 35,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_955",
@@ -10563,7 +11517,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_956",
@@ -10574,7 +11529,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_957",
@@ -10585,7 +11541,8 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_958",
@@ -10596,7 +11553,8 @@ export const initialProducts: Product[] = [
     "salePrice": 60,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_959",
@@ -10607,7 +11565,8 @@ export const initialProducts: Product[] = [
     "salePrice": 18,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_960",
@@ -10618,7 +11577,8 @@ export const initialProducts: Product[] = [
     "salePrice": 250,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_961",
@@ -10629,7 +11589,8 @@ export const initialProducts: Product[] = [
     "salePrice": 130,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_962",
@@ -10640,7 +11601,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_963",
@@ -10651,7 +11613,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_964",
@@ -10662,7 +11625,8 @@ export const initialProducts: Product[] = [
     "salePrice": 2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_965",
@@ -10673,7 +11637,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_966",
@@ -10684,7 +11649,8 @@ export const initialProducts: Product[] = [
     "salePrice": 945.51,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.213Z"
   },
   {
     "id": "p_967",
@@ -10695,7 +11661,8 @@ export const initialProducts: Product[] = [
     "salePrice": 395.2,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_968",
@@ -10706,7 +11673,8 @@ export const initialProducts: Product[] = [
     "salePrice": 751.6,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_969",
@@ -10717,7 +11685,8 @@ export const initialProducts: Product[] = [
     "salePrice": 40,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_970",
@@ -10728,7 +11697,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_971",
@@ -10739,7 +11709,8 @@ export const initialProducts: Product[] = [
     "salePrice": 25,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_972",
@@ -10750,7 +11721,8 @@ export const initialProducts: Product[] = [
     "salePrice": 7,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_973",
@@ -10758,10 +11730,11 @@ export const initialProducts: Product[] = [
     "name": "vuvulzela",
     "category": "Diversos",
     "costPrice": 45,
-    "salePrice": 80,
+    "salePrice": 72.5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_974",
@@ -10772,7 +11745,8 @@ export const initialProducts: Product[] = [
     "salePrice": 15,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_975",
@@ -10780,10 +11754,11 @@ export const initialProducts: Product[] = [
     "name": "chaveiro copa",
     "category": "Casa e Utensílios",
     "costPrice": 5,
-    "salePrice": 10,
+    "salePrice": 7.75,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_976",
@@ -10791,10 +11766,11 @@ export const initialProducts: Product[] = [
     "name": "bandeira carro",
     "category": "Diversos",
     "costPrice": 4.5,
-    "salePrice": 10,
+    "salePrice": 8,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_977",
@@ -10805,7 +11781,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_978",
@@ -10816,7 +11793,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_979",
@@ -10827,7 +11805,8 @@ export const initialProducts: Product[] = [
     "salePrice": 20,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_980",
@@ -10838,7 +11817,8 @@ export const initialProducts: Product[] = [
     "salePrice": 5,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_981",
@@ -10849,7 +11829,8 @@ export const initialProducts: Product[] = [
     "salePrice": 10,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   },
   {
     "id": "p_982",
@@ -10860,7 +11841,8 @@ export const initialProducts: Product[] = [
     "salePrice": 350,
     "stock": 0,
     "minStock": 5,
-    "createdAt": "2026-07-13T16:07:50.483Z"
+    "status": "disponivel",
+    "createdAt": "2026-07-13T16:12:42.214Z"
   }
 ];
 

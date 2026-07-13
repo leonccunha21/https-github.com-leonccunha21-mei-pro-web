@@ -56,7 +56,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
 
   // Stock alerts
   const physicalProducts = products.filter(p => !isServiceProduct(p));
-  const lowStockProducts = physicalProducts.filter(p => p.stock <= p.minStock);
+  const lowStockProducts = physicalProducts.filter(p => p.status !== 'indisponivel' && p.stock <= p.minStock);
   const totalInventoryQuantity = physicalProducts.reduce((acc, p) => acc + p.stock, 0);
   const totalInventoryCostValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.costPrice), 0);
   const totalInventoryRetailValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.salePrice), 0);

@@ -7,6 +7,7 @@ export interface Product {
   salePrice: number; // Valor de Venda
   stock: number; // Quantidade em Estoque
   minStock: number; // Estoque Mínimo para Alerta
+  status: 'disponivel' | 'indisponivel';
   description?: string;
   createdAt: string;
 }

@@ -183,6 +183,7 @@ function parseProductsSheet(rows: any[][]): { importedProducts: Product[]; categ
       salePrice: Math.max(0, getFloatVal(row, salePriceIdx)),
       stock: Math.max(0, getIntVal(row, stockIdx)),
       minStock: Math.max(0, getIntVal(row, minStockIdx)),
+      status: 'disponivel',
       createdAt: new Date().toISOString()
     });
   }

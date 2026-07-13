@@ -75,8 +75,8 @@ for (let i = 1; i < prodRaw.length; i++) {
     purchases,
     stock: Math.max(0, stock),
     sales,
-    costPrice: 0,
-    salePrice: price,
+    costPrice: price,
+    salePrice: 0,
     owner,
     brand: normalizeName(brand),
     model: normalizeName(model),
@@ -182,8 +182,19 @@ console.log(`2024: ${sales2024.length}, 2025: ${sales2025.length}, 2026: ${sales
 const productNames = new Set(productMap.keys());
 let addedFromSales = 0;
 
+// Also collect sale prices per product for calculating average
+const salePriceMap = new Map(); // name -> { sum: totalValue, qty: totalQty }
+
 for (const sale of allSales) {
   const name = sale.productName;
+  // Track sale prices for average calculation
+  if (!salePriceMap.has(name)) {
+    salePriceMap.set(name, { sum: 0, qty: 0 });
+  }
+  const sp = salePriceMap.get(name);
+  sp.sum += sale.totalValue;
+  sp.qty += sale.qty;
+
   if (!productNames.has(name)) {
     productMap.set(name, {
       name,
@@ -191,7 +202,7 @@ for (const sale of allSales) {
       stock: 0,
       sales: sale.qty,
       costPrice: sale.unitCost,
-      salePrice: sale.unitPrice,
+      salePrice: 0,
       brand: '',
       model: '',
       category: categorizeProduct(name)
@@ -199,10 +210,16 @@ for (const sale of allSales) {
     productNames.add(name);
     addedFromSales++;
   } else {
-    // Track sales count
     const existing = productMap.get(name);
     existing.sales = (existing.sales || 0) + sale.qty;
-    if (sale.unitPrice > existing.salePrice) existing.salePrice = sale.unitPrice;
+  }
+}
+
+// Calculate average sale price for each product from actual sales
+for (const [name, sp] of salePriceMap) {
+  const avgPrice = sp.qty > 0 ? Math.round((sp.sum / sp.qty) * 100) / 100 : 0;
+  if (productMap.has(name)) {
+    productMap.get(name).salePrice = avgPrice;
   }
 }
 
@@ -222,6 +239,7 @@ for (const [name, p] of productMap) {
     salePrice: p.salePrice || 0,
     stock: p.stock || 0,
     minStock: 5,
+    status: 'disponivel',
     createdAt: new Date().toISOString()
   });
   pid++;
@@ -280,7 +298,8 @@ const prodExport = finalProducts.map(p => ({
   'Preço Custo': p.costPrice,
   'Preço Venda': p.salePrice,
   'Estoque': p.stock,
-  'Estoque Mínimo': p.minStock
+  'Estoque Mínimo': p.minStock,
+  'Status': p.status === 'disponivel' ? 'Disponível' : 'Indisponível'
 }));
 const prodSheet = XLSX.utils.json_to_sheet(prodExport);
 XLSX.utils.book_append_sheet(backupWb, prodSheet, 'Produtos');

@@ -559,6 +559,7 @@ export default function App() {
       salePrice: item.salePrice,
       stock: 0,
       minStock: 5,
+      status: 'disponivel',
       createdAt: new Date().toISOString()
     };
     const updated = [newProduct, ...products];
@@ -575,6 +576,7 @@ export default function App() {
       salePrice: item.salePrice,
       stock: 0,
       minStock: 5,
+      status: 'disponivel',
       createdAt: new Date().toISOString()
     }));
     const updated = [...newProducts, ...products];

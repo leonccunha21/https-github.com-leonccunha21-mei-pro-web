@@ -51,6 +51,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const [formSalePrice, setFormSalePrice] = useState<number>(0);
   const [formStock, setFormStock] = useState<number>(0);
   const [formMinStock, setFormMinStock] = useState<number>(1);
+  const [formStatus, setFormStatus] = useState<'disponivel' | 'indisponivel'>('disponivel');
   const [formDescription, setFormDescription] = useState('');
 
   const generateSKU = (cat: string) => `${cat ? cat.substring(0, 3).toUpperCase() : 'PRO'}-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -59,7 +60,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
     setEditingProduct(null);
     setFormCode(generateSKU(categories[0]?.name || ''));
     setFormName(''); setFormCategory(categories[0]?.name || '');
-    setFormCostPrice(0); setFormSalePrice(0); setFormStock(0); setFormMinStock(3); setFormDescription('');
+    setFormCostPrice(0); setFormSalePrice(0); setFormStock(0); setFormMinStock(3); setFormStatus('disponivel'); setFormDescription('');
     setIsModalOpen(true);
   };
 
@@ -67,7 +68,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
     setEditingProduct(p);
     setFormCode(p.code); setFormName(p.name); setFormCategory(p.category);
     setFormCostPrice(p.costPrice); setFormSalePrice(p.salePrice);
-    setFormStock(p.stock); setFormMinStock(p.minStock); setFormDescription(p.description || '');
+    setFormStock(p.stock); setFormMinStock(p.minStock); setFormStatus(p.status); setFormDescription(p.description || '');
     setIsModalOpen(true);
   };
 
@@ -75,7 +76,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
     e.preventDefault();
     if (!formName.trim() || !formCategory) return;
     const isService = formCategory.toLowerCase() === 'serviço' || formCategory.toLowerCase() === 'servico';
-    const data = { code: formCode.trim() || generateSKU(formCategory), name: formName.trim(), category: formCategory, costPrice: Number(formCostPrice), salePrice: Number(formSalePrice), stock: isService ? 99999 : Number(formStock), minStock: isService ? 0 : Number(formMinStock), description: formDescription.trim() || undefined };
+    const data = { code: formCode.trim() || generateSKU(formCategory), name: formName.trim(), category: formCategory, costPrice: Number(formCostPrice), salePrice: Number(formSalePrice), stock: isService ? 99999 : Number(formStock), minStock: isService ? 0 : Number(formMinStock), status: formStatus, description: formDescription.trim() || undefined };
     editingProduct ? onUpdateProduct({ ...editingProduct, ...data }) : onAddProduct(data);
     setIsModalOpen(false);
   };
@@ -104,9 +105,9 @@ export default function Products({ products, categories, sales, onAddProduct, on
       const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.code.toLowerCase().includes(searchQuery.toLowerCase());
       const matchCat = selectedCategory === 'all' || p.category === selectedCategory;
       let matchStock = true;
-      if (stockFilter === 'low') matchStock = p.stock > 0 && p.stock <= p.minStock;
-      else if (stockFilter === 'out') matchStock = p.stock === 0;
-      else if (stockFilter === 'ok') matchStock = p.stock > p.minStock;
+      if (stockFilter === 'low') matchStock = p.status !== 'indisponivel' && p.stock > 0 && p.stock <= p.minStock;
+      else if (stockFilter === 'out') matchStock = p.status !== 'indisponivel' && p.stock === 0;
+      else if (stockFilter === 'ok') matchStock = p.status !== 'indisponivel' && p.stock > p.minStock;
       const price = p.salePrice;
       const matchMin = !priceMin || price >= Number(priceMin);
       const matchMax = !priceMax || price <= Number(priceMax);
@@ -145,9 +146,9 @@ export default function Products({ products, categories, sales, onAddProduct, on
   // Memoize stock filter counts
   const stockCounts = React.useMemo(() => ({
     all: products.length,
-    low: products.filter(p => p.stock > 0 && p.stock <= p.minStock).length,
-    out: products.filter(p => p.stock === 0).length,
-    ok: products.filter(p => p.stock > p.minStock).length,
+    low: products.filter(p => p.status !== 'indisponivel' && p.stock > 0 && p.stock <= p.minStock).length,
+    out: products.filter(p => p.status !== 'indisponivel' && p.stock === 0).length,
+    ok: products.filter(p => p.status !== 'indisponivel' && p.stock > p.minStock).length,
   }), [products]);
 
   const toggleSelectAll = () => {
@@ -234,6 +235,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
       salePrice: item.salePrice,
       stock: 0,
       minStock: 3,
+      status: 'disponivel',
       description: `Auto-cadastrado a partir de vendas (${item.qty} un. vendidas)`
     });
     setMissingProducts(prev => prev.filter(m => m.name !== item.name || m.productId !== item.productId));
@@ -250,6 +252,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
         salePrice: item.salePrice,
         stock: 0,
         minStock: 3,
+        status: 'disponivel',
         description: `Auto-cadastrado a partir de vendas (${item.qty} un. vendidas)`
       });
     });
@@ -418,12 +421,13 @@ export default function Products({ products, categories, sales, onAddProduct, on
         ) : (
           <>
             {paginatedProducts.map(p => {
-              const isLow = p.stock > 0 && p.stock <= p.minStock;
-              const isOut = p.stock === 0;
+              const isIndisponivel = p.status === 'indisponivel';
+              const isLow = !isIndisponivel && p.stock > 0 && p.stock <= p.minStock;
+              const isOut = !isIndisponivel && p.stock === 0;
               const margin = calcMargin(p.costPrice, p.salePrice);
               return (
                 <div key={p.id} className={`bg-white p-3 rounded-xl border shadow-sm ${
-                  isOut ? 'border-rose-200 bg-rose-50/30' : isLow ? 'border-amber-200 bg-amber-50/30' : 'border-slate-200'
+                  isOut ? 'border-rose-200 bg-rose-50/30' : isLow ? 'border-amber-200 bg-amber-50/30' : isIndisponivel ? 'border-slate-200 bg-slate-50/50 opacity-70' : 'border-slate-200'
                 } ${selectedIds.has(p.id) ? 'ring-2 ring-indigo-500/30 border-indigo-300' : ''}`}>
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0 flex-1">
@@ -432,8 +436,9 @@ export default function Products({ products, categories, sales, onAddProduct, on
                       </button>
                       <div className="min-w-0">
                         <div className="flex items-center gap-1.5">
-                          <span className={`w-2 h-2 rounded-full shrink-0 ${isOut ? 'bg-rose-500' : isLow ? 'bg-amber-500' : 'bg-emerald-500'}`} />
+                          <span className={`w-2 h-2 rounded-full shrink-0 ${isOut ? 'bg-rose-500' : isLow ? 'bg-amber-500' : isIndisponivel ? 'bg-slate-400' : 'bg-emerald-500'}`} />
                           <span className="text-[10px] font-mono text-slate-400">{p.code}</span>
+                          {isIndisponivel && <span className="text-[9px] font-bold px-1.5 py-0.5 bg-slate-200 text-slate-500 rounded-full">Indisponível</span>}
                         </div>
                         <p className="text-sm font-semibold text-slate-900 truncate mt-0.5">{p.name}</p>
                         <span className="text-[10px] px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded font-medium inline-block mt-1">{p.category}</span>
@@ -459,8 +464,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
                       </span>
                     </div>
                     <div className="flex items-center gap-1.5">
-                      <button onClick={() => handleQuickStockAdjust(p, -1)} disabled={p.stock === 0} className="w-7 h-7 rounded-md bg-slate-100 hover:bg-slate-200 disabled:opacity-30 border border-slate-200 flex items-center justify-center"><Minus className="h-3 w-3" /></button>
-                      <span className={`font-bold font-mono text-sm w-8 text-center ${isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : 'text-slate-800'}`}>{p.stock}</span>
+                      <button onClick={() => handleQuickStockAdjust(p, -1)} disabled={p.stock === 0 || isIndisponivel} className="w-7 h-7 rounded-md bg-slate-100 hover:bg-slate-200 disabled:opacity-30 border border-slate-200 flex items-center justify-center"><Minus className="h-3 w-3" /></button>
+                      <span className={`font-bold font-mono text-sm w-8 text-center ${isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : isIndisponivel ? 'text-slate-400' : 'text-slate-800'}`}>{p.stock}</span>
                       <button onClick={() => handleQuickStockAdjust(p, 1)} className="w-7 h-7 rounded-md bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center"><Plus className="h-3 w-3" /></button>
                     </div>
                   </div>
@@ -509,11 +514,12 @@ export default function Products({ products, categories, sales, onAddProduct, on
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                   {paginatedProducts.map(p => {
-                    const isLow = p.stock > 0 && p.stock <= p.minStock;
-                    const isOut = p.stock === 0;
+                    const isIndisponivel = p.status === 'indisponivel';
+                    const isLow = !isIndisponivel && p.stock > 0 && p.stock <= p.minStock;
+                    const isOut = !isIndisponivel && p.stock === 0;
                     const margin = calcMargin(p.costPrice, p.salePrice);
                     return (
-                      <tr key={p.id} className={`hover:bg-slate-50/50 transition-colors ${isOut ? 'bg-rose-50/20' : isLow ? 'bg-amber-50/20' : ''} ${selectedIds.has(p.id) ? 'bg-indigo-50/30' : ''}`}>
+                      <tr key={p.id} className={`hover:bg-slate-50/50 transition-colors ${isOut ? 'bg-rose-50/20' : isLow ? 'bg-amber-50/20' : isIndisponivel ? 'bg-slate-50/50 opacity-60' : ''} ${selectedIds.has(p.id) ? 'bg-indigo-50/30' : ''}`}>
                         <td className="py-2.5 px-3">
                           <button onClick={() => toggleSelect(p.id)} className="text-slate-400 hover:text-indigo-600">
                             {selectedIds.has(p.id) ? <CheckSquare className="h-4 w-4 text-indigo-600" /> : <Square className="h-4 w-4" />}
@@ -521,20 +527,23 @@ export default function Products({ products, categories, sales, onAddProduct, on
                         </td>
                         <td className="py-2.5 px-3">
                           <div className="flex items-center gap-2">
-                            <span className={`w-2 h-2 rounded-full shrink-0 ${isOut ? 'bg-rose-500' : isLow ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500'}`} />
+                            <span className={`w-2 h-2 rounded-full shrink-0 ${isOut ? 'bg-rose-500' : isLow ? 'bg-amber-500 animate-pulse' : isIndisponivel ? 'bg-slate-400' : 'bg-emerald-500'}`} />
                             <div>
                               <span className="font-mono text-[10px] text-slate-400 flex items-center gap-0.5"><Barcode className="h-2.5 w-2.5" />{p.code}</span>
                               <p className="font-semibold text-slate-900 text-xs truncate max-w-[200px]">{p.name}</p>
                             </div>
                           </div>
                         </td>
-                        <td className="py-2.5 px-3"><span className="px-1.5 py-0.5 bg-slate-100 text-slate-600 text-[10px] rounded font-medium">{p.category}</span></td>
+                        <td className="py-2.5 px-3">
+                          <span className="px-1.5 py-0.5 bg-slate-100 text-slate-600 text-[10px] rounded font-medium">{p.category}</span>
+                          {isIndisponivel && <span className="ml-1 px-1.5 py-0.5 bg-slate-200 text-slate-500 text-[9px] rounded font-bold">Indisp.</span>}
+                        </td>
                         <td className="py-2.5 px-3 text-right font-mono text-xs text-slate-500">{p.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                         <td className="py-2.5 px-3 text-right font-mono text-xs font-semibold text-slate-900">{p.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
                         <td className="py-2.5 px-3 text-center">
                           <div className="inline-flex items-center gap-1">
-                            <button onClick={() => handleQuickStockAdjust(p, -1)} disabled={p.stock === 0} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-30 border border-slate-200/50"><Minus className="h-3 w-3" /></button>
-                            <span className={`font-bold font-mono text-xs w-10 text-center ${isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : 'text-slate-800'}`}>{p.stock}</span>
+                            <button onClick={() => handleQuickStockAdjust(p, -1)} disabled={p.stock === 0 || isIndisponivel} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-30 border border-slate-200/50"><Minus className="h-3 w-3" /></button>
+                            <span className={`font-bold font-mono text-xs w-10 text-center ${isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : isIndisponivel ? 'text-slate-400' : 'text-slate-800'}`}>{p.stock}</span>
                             <button onClick={() => handleQuickStockAdjust(p, 1)} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 border border-slate-200/50"><Plus className="h-3 w-3" /></button>
                           </div>
                         </td>
@@ -639,6 +648,18 @@ export default function Products({ products, categories, sales, onAddProduct, on
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Estoque Mínimo</label>
                   <input type="number" min="1" required value={formMinStock} onChange={e => setFormMinStock(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
+              </div>
+              )}
+              {formCategory.toLowerCase() !== 'serviço' && formCategory.toLowerCase() !== 'servico' && (
+              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+                <div>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase">Status do Produto</span>
+                  <p className="text-[11px] text-slate-400 mt-0.5">Indisponível não gera alerta de estoque baixo</p>
+                </div>
+                <button type="button" onClick={() => setFormStatus(s => s === 'disponivel' ? 'indisponivel' : 'disponivel')}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${formStatus === 'disponivel' ? 'bg-emerald-500' : 'bg-slate-300'}`}>
+                  <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-xs transition-transform ${formStatus === 'disponivel' ? 'translate-x-6' : 'translate-x-1'}`} />
+                </button>
               </div>
               )}
               <div>
