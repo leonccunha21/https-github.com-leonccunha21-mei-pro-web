@@ -500,7 +500,9 @@ const saleExport = finalSales.map(s => ({
   'Cliente': s.clientName || '',
   'Pagamento': s.paymentMethod,
   'Tipo': s.saleType === 'CNPJ' ? 'CNPJ' : 'CPF',
-  'ID Pedido': s.ecommerceOrderId || ''
+  'ID Pedido': s.ecommerceOrderId || '',
+  'Status': s.status === 'completed' ? 'Pago' : 'Pendente',
+  'Canal': s.saleChannel || 'Loja Física'
 }));
 const saleSheet = XLSX.utils.json_to_sheet(saleExport);
 XLSX.utils.book_append_sheet(backupWb, saleSheet, 'Vendas');
