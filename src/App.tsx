@@ -380,6 +380,10 @@ export default function App() {
     saveProductsToStorage(updated, undefined, id);
   };
 
+  const handleClearAllProducts = () => {
+    saveProductsToStorage([]);
+  };
+
   // Add Category
   const handleAddCategory = (categoryName: string) => {
     const newCategory: Category = {
@@ -974,6 +978,7 @@ export default function App() {
                 onAddProduct={handleAddProduct}
                 onUpdateProduct={handleUpdateProduct}
                 onDeleteProduct={handleDeleteProduct}
+                onClearAllProducts={handleClearAllProducts}
                 onAddCategory={handleAddCategory}
               />
             )}

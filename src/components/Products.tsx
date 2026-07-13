@@ -19,6 +19,7 @@ interface ProductsProps {
   onAddProduct: (product: Omit<Product, 'id' | 'createdAt'>) => void;
   onUpdateProduct: (product: Product) => void;
   onDeleteProduct: (id: string) => void;
+  onClearAllProducts?: () => void;
   onAddCategory: (categoryName: string) => void;
 }
 
@@ -273,7 +274,11 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const handleClearAllStock = () => {
     if (!window.confirm('Tem certeza que deseja REMOVER TODOS os produtos do estoque? Esta ação não pode ser desfeita.\n\nRecomenda-se exportar os dados antes (use o botão Exportar).')) return;
     if (!window.confirm('CONFIRMAÇÃO FINAL: Deseja realmente excluir TODOS os ' + products.length + ' produtos permanentemente?')) return;
-    products.forEach(p => onDeleteProduct(p.id));
+    if (onClearAllProducts) {
+      onClearAllProducts();
+    } else {
+      products.forEach(p => onDeleteProduct(p.id));
+    }
   };
 
   const handleExportFiltered = () => {
