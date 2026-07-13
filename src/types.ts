@@ -49,7 +49,18 @@ export interface Category {
   icon?: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors';
+export interface Expense {
+  id: string;
+  date: string;
+  category: string;
+  description: string;
+  amount: number;
+  status: 'pending' | 'paid';
+  paymentMethod?: string;
+  notes?: string;
+}
+
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors' | 'cashflow';
 
 export interface StoreInfo {
   name: string;

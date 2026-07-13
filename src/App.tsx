@@ -1,14 +1,15 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import * as XLSX from 'xlsx';
-import { 
+import {
   Product, 
   Sale, 
   Category, 
+  Expense,
   ActiveTab, 
   PaymentMethod,
   StoreInfo
 } from './types';
-import { initialProducts, initialSales, initialCategories } from './data';
+import { initialProducts, initialSales, initialCategories, initialExpenses } from './data';
 
 import Dashboard from './components/Dashboard';
 import Products from './components/Products';
@@ -18,6 +19,7 @@ import Reports from './components/Reports';
 import Settings from './components/Settings';
 import OsOrcamento from './components/OsOrcamento';
 import Debtors from './components/Debtors';
+import CashFlow from './components/CashFlow';
 import { 
   LayoutDashboard, 
   Package, 
@@ -32,7 +34,8 @@ import {
   Sun,
   Moon,
   PackageSearch,
-  Users
+  Users,
+  DollarSign
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
@@ -64,6 +67,7 @@ export default function App() {
   // State Initialization
   const [products, setProducts] = useState<Product[]>([]);
   const [sales, setSales] = useState<Sale[]>([]);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
   const [currentTime, setCurrentTime] = useState<string>('');
@@ -163,15 +167,18 @@ export default function App() {
     // 1. Always load local data first so the user sees something immediately
     const localProducts = localStorage.getItem('loja_products');
     const localSales = localStorage.getItem('loja_sales');
+    const localExpenses = localStorage.getItem('loja_expenses');
     const localCategories = localStorage.getItem('loja_categories');
 
     let parsedProducts: Product[] = initialProducts;
     let parsedSales: Sale[] = initialSales;
+    let parsedExpenses: Expense[] = initialExpenses;
     let parsedCategories: Category[] = initialCategories;
 
     try {
       if (localProducts) parsedProducts = JSON.parse(localProducts);
       if (localSales) parsedSales = JSON.parse(localSales);
+      if (localExpenses) parsedExpenses = JSON.parse(localExpenses);
       if (localCategories) parsedCategories = JSON.parse(localCategories);
     } catch {
       // Corrupted localStorage, use seed data
@@ -180,6 +187,7 @@ export default function App() {
     setProducts(parsedProducts);
     setCategories(parsedCategories);
     setSales(parsedSales);
+    setExpenses(parsedExpenses);
 
     // 2. Try to load from cloud (parallelized)
     try {
@@ -290,6 +298,19 @@ export default function App() {
         }
       }
     }
+  };
+
+  const saveExpensesToStorage = (updatedExpenses: Expense[]) => {
+    setExpenses(updatedExpenses);
+    localStorage.setItem('loja_expenses', JSON.stringify(updatedExpenses));
+  };
+
+  const handleAddExpense = (expense: Expense) => {
+    saveExpensesToStorage([expense, ...expenses]);
+  };
+
+  const handleDeleteExpense = (id: string) => {
+    saveExpensesToStorage(expenses.filter(e => e.id !== id));
   };
 
   const saveCategoriesToStorage = async (updatedCategories: Category[], changedCategory?: Category) => {
@@ -727,6 +748,7 @@ export default function App() {
             <div className="grid grid-cols-3 gap-3">
               {([
                 { tab: 'reports', label: 'Relatórios', icon: BarChart3 },
+                { tab: 'cashflow', label: 'Fluxo de Caixa', icon: DollarSign },
                 { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList },
                 { tab: 'debtors', label: 'Devedores', icon: Users },
               ] as const).map(item => {
@@ -849,6 +871,20 @@ export default function App() {
             >
               <BarChart3 className="h-4 w-4" />
               Relatórios
+            </button>
+
+            {/* Tab: Fluxo de Caixa */}
+            <button
+              id="nav-cashflow"
+              onClick={() => setActiveTab('cashflow')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'cashflow' 
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <DollarSign className="h-4 w-4" />
+              Fluxo de Caixa
             </button>
 
             {/* Tab 6: OS & Orçamentos */}
@@ -1034,6 +1070,15 @@ export default function App() {
                   const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
                   saveSalesToStorage(updatedSales, updatedSale);
                 }}
+              />
+            )}
+
+            {activeTab === 'cashflow' && (
+              <CashFlow
+                sales={sales}
+                expenses={expenses}
+                onAddExpense={handleAddExpense}
+                onDeleteExpense={handleDeleteExpense}
               />
             )}
 

@@ -224,6 +224,8 @@ let addedFromSales = 0;
 
 // Also collect sale prices per product for calculating average
 const salePriceMap = new Map(); // name -> { sum: totalValue, qty: totalQty }
+// Track cost data from sales for products with missing costPrice
+const costFromSalesMap = new Map(); // name -> { sum: totalCost, qty: totalQty }
 
 for (const sale of allSales) {
   const name = sale.productName;
@@ -234,6 +236,16 @@ for (const sale of allSales) {
   const sp = salePriceMap.get(name);
   sp.sum += sale.totalValue;
   sp.qty += sale.qty;
+
+  // Track cost data from sales for backup cost prices
+  if (sale.totalCost > 0) {
+    if (!costFromSalesMap.has(name)) {
+      costFromSalesMap.set(name, { sum: 0, qty: 0 });
+    }
+    const c = costFromSalesMap.get(name);
+    c.sum += sale.totalCost;
+    c.qty += sale.qty;
+  }
 
   if (!productNames.has(name)) {
     productMap.set(name, {
@@ -260,6 +272,16 @@ for (const [name, sp] of salePriceMap) {
   const avgPrice = sp.qty > 0 ? Math.round((sp.sum / sp.qty) * 100) / 100 : 0;
   if (productMap.has(name)) {
     productMap.get(name).salePrice = avgPrice;
+  }
+}
+
+// Fill missing costPrice from sales data
+for (const [name, c] of costFromSalesMap) {
+  if (productMap.has(name)) {
+    const p = productMap.get(name);
+    if (p.costPrice === 0 && c.qty > 0) {
+      p.costPrice = Math.round((c.sum / c.qty) * 100) / 100;
+    }
   }
 }
 
@@ -317,6 +339,59 @@ for (const sale of allSales) {
 
 console.log(`Final sales for data.ts: ${finalSales.length}`);
 
+// 6. Parse expenses from Devedores sheet
+const expenses2024 = [];
+try {
+  const devWb = XLSX.readFile(SPREADSHEET_PATH);
+  const devSheet = devWb.Sheets['Devedores'];
+  if (devSheet) {
+    const devRows = XLSX.utils.sheet_to_json(devSheet, { header: 1 });
+    // Deviadores sheet structure:
+    // Row 0: headers - "Contas a pagar 03" at col 8
+    // Rows 2-13: monthly data with expense name at col 8, amount at col 9
+    // Credit card info: bank at col 18, value at col 20
+    const monthNames = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    for (let i = 2; i <= 13; i++) {
+      const row = devRows[i];
+      if (!row) continue;
+      const month = typeof row[0] === 'number' ? row[0] : 0;
+      const monthName = row[1] || '';
+      const monthIdx = month > 0 && month <= 12 ? month : monthNames.indexOf(monthName) + 1;
+      
+      // Expense at col 8-9
+      const expenseName = row[8];
+      const expenseAmount = Number(row[9]) || 0;
+      if (expenseName && expenseAmount > 0) {
+        expenses2024.push({
+          id: `exp_2024_${monthIdx}_${i}`,
+          date: `2024-${String(monthIdx).padStart(2, '0')}-01T00:00:00.000Z`,
+          category: String(expenseName).trim(),
+          description: `Despesa fixa ${monthName} 2024`,
+          amount: expenseAmount,
+          status: 'paid'
+        });
+      }
+
+      // Credit card at col 18-20
+      const cardBank = row[18];
+      const cardValue = Number(row[20]) || Number(row[19]) || 0;
+      if (cardBank && cardValue > 0) {
+        expenses2024.push({
+          id: `exp_card_2024_${monthIdx}_${i}`,
+          date: `2024-${String(monthIdx).padStart(2, '0')}-01T00:00:00.000Z`,
+          category: 'Cartão de Crédito',
+          description: `Fatura ${cardBank} - ${monthName} 2024`,
+          amount: cardValue,
+          status: 'paid'
+        });
+      }
+    }
+  }
+} catch (e) {
+  console.log('Expense parsing skipped:', e.message);
+}
+console.log(`Expenses extracted: ${expenses2024.length}`);
+
 // 6. Generate categories list
 const categorySet = new Set(finalProducts.map(p => p.category));
 const finalCategories = [];
@@ -331,6 +406,36 @@ for (const cat of categorySet) {
 
 // 7. Generate Backup Excel
 const backupWb = XLSX.utils.book_new();
+
+// Identification sheet
+const identData = [
+  ['INFORMAÇÕES DA LOJA'],
+  ['Nome', ''],
+  ['CNPJ', ''],
+  ['Telefone', ''],
+  ['Email', ''],
+  ['Endereço', ''],
+  ['Cidade', ''],
+  ['Estado', ''],
+  ['Proprietário', ''],
+  ['Observações', ''],
+  [],
+  ['RESUMO DO ESTOQUE'],
+  ['Total de Produtos', finalProducts.length],
+  ['Produtos com Estoque', finalProducts.filter(p => p.stock > 0).length],
+  ['Produtos sem Estoque', finalProducts.filter(p => p.stock === 0).length],
+  ['Valor Total em Estoque (Custo)', 'R$ ' + roundCurrency(finalProducts.reduce((a, p) => a + (p.costPrice * p.stock), 0)).toFixed(2)],
+  [],
+  ['RESUMO DAS VENDAS'],
+  ['Total de Itens Vendidos', finalSales.reduce((a, s) => a + s.items.reduce((iacc, item) => iacc + item.quantity, 0), 0)],
+  ['Total de Vendas', finalSales.length],
+  ['Faturamento Total', 'R$ ' + roundCurrency(finalSales.reduce((a, s) => a + s.total, 0)).toFixed(2)],
+  ['Custo Total', 'R$ ' + roundCurrency(finalSales.reduce((a, s) => a + s.totalCost, 0)).toFixed(2)],
+  ['Lucro Total', 'R$ ' + roundCurrency(finalSales.reduce((a, s) => a + s.profit, 0)).toFixed(2)]
+];
+const identSheet = XLSX.utils.aoa_to_sheet(identData);
+identSheet['!cols'] = [{ wch: 30 }, { wch: 20 }];
+XLSX.utils.book_append_sheet(backupWb, identSheet, 'Identificação');
 
 // Products sheet
 const prodExport = finalProducts.map(p => ({
@@ -368,23 +473,24 @@ XLSX.writeFile(backupWb, OUTPUT_EXCEL);
 console.log(`\nBackup Excel saved: ${OUTPUT_EXCEL}`);
 
 // 8. Generate data.ts
-function writeDataTs(products, sales, categories) {
-  const dataJson = JSON.stringify({ products, sales, categories });
+function writeDataTs(products, sales, categories, expenses) {
+  const dataJson = JSON.stringify({ products, sales, categories, expenses });
   fs.writeFileSync(OUTPUT_DATA_JSON, dataJson, 'utf-8');
   
-  let output = `import { Product, Sale, Category } from './types';\n\n`;
+  let output = `import { Product, Sale, Category, Expense } from './types';\n\n`;
   output += `import raw from './data.json';\n\n`;
-  output += `const d = raw as { categories: Category[]; products: Product[]; sales: Sale[] };\n\n`;
+  output += `const d = raw as { categories: Category[]; products: Product[]; sales: Sale[]; expenses: Expense[] };\n\n`;
   output += `export const initialCategories = d.categories;\n`;
   output += `export const initialProducts = d.products;\n`;
   output += `export const initialSales = d.sales;\n`;
+  output += `export const initialExpenses = d.expenses;\n`;
   
   fs.writeFileSync(OUTPUT_DATA_TS, output, 'utf-8');
   console.log(`data.ts generated: ${OUTPUT_DATA_TS} (${(Buffer.byteLength(output) / 1024 / 1024).toFixed(2)} MB)`);
   console.log(`data.json generated: ${OUTPUT_DATA_JSON} (${(Buffer.byteLength(dataJson) / 1024 / 1024).toFixed(2)} MB)`);
 }
 
-writeDataTs(finalProducts, finalSales, finalCategories);
+writeDataTs(finalProducts, finalSales, finalCategories, expenses2024);
 
 // 9. Summary
 console.log('\n========== RESUMO ==========');

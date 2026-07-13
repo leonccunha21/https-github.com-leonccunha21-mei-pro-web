@@ -25,7 +25,8 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
     const d = new Date(); d.setMonth(d.getMonth() - 1); return d.toISOString().split('T')[0];
   });
   const [customEnd, setCustomEnd] = useState(() => new Date().toISOString().split('T')[0]);
-  const [selectedYear, setSelectedYear] = useState<'all' | number>('all');
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState<'all' | number>('all');
 
   const availableYears = useMemo(() => {
     const years = new Set<number>();
@@ -51,11 +52,12 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       cutoff.setHours(0, 0, 0, 0);
       return saleDate >= cutoff;
     });
-    if (selectedYear !== 'all') {
-      result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
+    result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
+    if (selectedMonth !== 'all') {
+      result = result.filter(s => new Date(s.date).getMonth() + 1 === selectedMonth);
     }
     return result;
-  }, [sales, timeRange, customStart, customEnd, selectedYear]);
+  }, [sales, timeRange, customStart, customEnd, selectedYear, selectedMonth]);
 
   // Calculate metrics
   const totalRevenue = completedSales.reduce((acc, s) => acc + s.total, 0);
@@ -313,26 +315,34 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
           ))}
         </div>
 
-        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/50 overflow-x-auto no-scrollbar">
-          <button
-            onClick={() => setSelectedYear('all')}
-            className={`px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
-              selectedYear === 'all' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
-            }`}
-          >
-            Todos os Anos
-          </button>
-          {availableYears.map(y => (
-            <button
-              key={y}
-              onClick={() => setSelectedYear(y)}
-              className={`px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
-                selectedYear === y ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
-              }`}
+        <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
+            <Calendar className="h-3.5 w-3.5 text-slate-400 ml-1.5" />
+            <select
+              value={selectedYear}
+              onChange={e => setSelectedYear(parseInt(e.target.value))}
+              className="bg-transparent text-[11px] sm:text-xs font-medium text-slate-900 border-none outline-none focus:outline-none cursor-pointer py-1 pr-2"
             >
-              {y}
-            </button>
-          ))}
+              {availableYears.map(y => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
+            <span className="text-[11px] sm:text-xs font-medium text-slate-400 ml-1.5">Mês:</span>
+            <select
+              value={selectedMonth}
+              onChange={e => setSelectedMonth(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
+              className="bg-transparent text-[11px] sm:text-xs font-medium text-slate-900 border-none outline-none focus:outline-none cursor-pointer py-1 pr-2"
+            >
+              <option value="all">Todos os Meses</option>
+              {Array.from({ length: 12 }, (_, i) => i + 1).map(m => (
+                <option key={m} value={m}>
+                  {new Date(2000, m - 1, 1).toLocaleDateString('pt-BR', { month: 'long' })}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         </div>
       </div>
