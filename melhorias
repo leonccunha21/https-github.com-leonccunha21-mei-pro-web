@@ -1,14 +1,22 @@
+### Regras ###
+- Sempre que fizer uma atualizaçao ou correção, atualizar o arquivo atualize o site, mude o nomero da versao.
+- sempre que perminar uma melhoria marque um ok  [ok]
 
-- adicionar no painel de controle inves de 7 e 14 dias, quedo de 1 dia e 30 dias
-- mude o nome do site para ZM Store quando eu fizer login
-- crie a area de configuraçao e perfil para eu adicionar algumas informaçoes referente a minha loja
-- crie area de OS, orçamento
-- ao final da vende crie um resivo e mande em pdf ou imagem
-- site nao subiu ainda, suba novamente ao github para ve se assim vai
 
-- confirme se os dados estao salvando corretamente e que eu consiga acessar de outros lugares e tudo esteja 100% sicronizado 
-- atualize o arquivo em execel para eu poder subir os dados de la, pois o jeito que vc tinha feito para subir os dados nao funcionou
-- 
-- 
-- 
-- 
+----------------------------------------------------------------------------------- nunca remover a parte das regras 
+
+[ok] adicionar no painel de controle inves de 7 e 14 dias, quedo de 1 dia e 30 dias
+[ok] mude o nome do site para ZM Store quando eu fizer login
+[ok] crie a area de configuraçao e perfil para eu adicionar algumas informaçoes referente a minha loja
+[ok] crie area de OS, orçamento
+[ok] ao final da vende crie um resivo e mande em pdf ou imagem
+[ok] site nao subiu ainda, suba novamente ao github para ve se assim vai
+
+[ok] confirme se os dados estao salvando corretamente e que eu consiga acessar de outros lugares e tudo esteja 100% sicronizado 
+[ok] atualize o arquivo em execel para eu poder subir os dados de la, pois o jeito que vc tinha feito para subir os dados nao funcionou
+
+[ok] adicione no painel geral o relatorio, 1 dia, 7 dias, 14 dias, 30 dias, 1 ano, e personalizado e verifique se na tela relatorio tem isso tbm, e aprimore a tela, deixe a mais completo possivel const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : timeRange === '30days' ? 30 : 365;
+[   ] Extrair TODAS as vendas de todas as abas (Vendas, Vendas 2025, Vendas 2026)
+[   ] Injetar produtos, categorias e vendas diretamente no data.ts
+[ok] Criar backup Excel completo com todos os dados atuais
+[ok] configuraçao, perfil de opçao de adicionar a logo da empresa, use isso no lugar do icone do site, e na criaçao de resibos, os e orçamentos

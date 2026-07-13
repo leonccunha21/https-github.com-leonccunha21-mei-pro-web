@@ -39,7 +39,8 @@ const defaultStoreInfo: StoreInfo = {
   city: '',
   state: '',
   ownerName: '',
-  notes: ''
+  notes: '',
+  logoUrl: ''
 };
 
 function parseProductsSheet(rows: any[][]): { importedProducts: Product[]; categoriesFromProducts: string[] } {
@@ -451,6 +452,7 @@ export default function Settings({
   const [lastExportedSheetUrl, setLastExportedSheetUrl] = useState<string | null>(null);
   const [lastBackupUrl, setLastBackupUrl] = useState<string | null>(null);
   const [googleSuccessMsg, setGoogleSuccessMsg] = useState<string | null>(null);
+  const [importingExcelData, setImportingExcelData] = useState(false);
 
   const [isInIframe, setIsInIframe] = useState(false);
   useEffect(() => {
@@ -871,6 +873,28 @@ export default function Settings({
     }
   };
 
+  const handleImportExcelData = async () => {
+    setImportingExcelData(true);
+    setImportError(null);
+    setGoogleSuccessMsg(null);
+    try {
+      const response = await fetch('/imported_data.json');
+      if (!response.ok) throw new Error('Arquivo não encontrado. Gere o arquivo imported_data.json primeiro.');
+      const data = await response.json();
+      if (data.products && data.sales && data.categories) {
+        onImportDatabase({ products: data.products, sales: data.sales, categories: data.categories });
+        setImportSuccessMsg(`Dados importados com sucesso! ${data.products.length} produtos, ${data.sales.length} vendas, ${data.categories.length} categorias.`);
+        setTimeout(() => setImportSuccessMsg(null), 10000);
+      } else {
+        setImportError('Formato inválido. O arquivo precisa conter products, sales e categories.');
+      }
+    } catch (err: any) {
+      setImportError(err.message || 'Erro ao importar dados do Excel.');
+    } finally {
+      setImportingExcelData(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="border-b border-slate-200 pb-5">
@@ -927,6 +951,40 @@ export default function Settings({
           <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Observações (aparece no recibo)</label>
             <textarea value={storeInfo.notes} onChange={e => setStoreInfo({ ...storeInfo, notes: e.target.value })} rows={2} placeholder="Obrigado pela preferência!" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 resize-none" />
+          </div>
+          <div className="md:col-span-2">
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Logo da Loja (aparece no site, recibos e OS)</label>
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={e => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    const reader = new FileReader();
+                    reader.onload = (ev) => {
+                      setStoreInfo({ ...storeInfo, logoUrl: ev.target?.result as string });
+                    };
+                    reader.readAsDataURL(file);
+                  }}
+                  className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 file:mr-3 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+                />
+              </div>
+              {storeInfo.logoUrl && (
+                <div className="flex items-center gap-2">
+                  <img src={storeInfo.logoUrl} alt="Logo" className="w-12 h-12 rounded-lg object-contain border border-slate-200" />
+                  <button
+                    type="button"
+                    onClick={() => setStoreInfo({ ...storeInfo, logoUrl: '' })}
+                    className="text-rose-500 hover:text-rose-700 text-[10px] font-bold"
+                  >
+                    Remover
+                  </button>
+                </div>
+              )}
+            </div>
+            <p className="text-[10px] text-slate-400 mt-1">Formatos aceitos: JPG, PNG, SVG. Tamanho recomendado: 200x200px.</p>
           </div>
         </div>
 
@@ -989,6 +1047,15 @@ export default function Settings({
                 <button onClick={() => excelInputRef.current?.click()} disabled={importingExcel} className="w-full py-2.5 px-4 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 hover:border-indigo-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer">
                   {importingExcel ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
                   Carregar Planilha (.xlsx, .csv)
+                </button>
+              </div>
+
+              <div className="space-y-2">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">Importar Dados do Excel (arquivo principal)</span>
+                <p className="text-[10px] text-slate-400">Importa todos os produtos e vendas das abas Vendas 2024, 2025 e 2026.</p>
+                <button onClick={handleImportExcelData} disabled={importingExcelData} className="w-full py-2.5 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 hover:border-emerald-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer">
+                  {importingExcelData ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileSpreadsheet className="h-4 w-4" />}
+                  Importar Dados Excel (2024-2026)
                 </button>
               </div>
 

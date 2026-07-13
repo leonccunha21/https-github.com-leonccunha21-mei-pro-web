@@ -21,15 +21,24 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ products, sales, onNavigate }: DashboardProps) {
-  const [timeRange, setTimeRange] = useState<'1day' | '7days' | '30days'>('1day');
+  const [timeRange, setTimeRange] = useState<'1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('1day');
+  const [customStart, setCustomStart] = useState(() => {
+    const d = new Date(); d.setDate(d.getDate() - 30); return d.toISOString().split('T')[0];
+  });
+  const [customEnd, setCustomEnd] = useState(() => new Date().toISOString().split('T')[0]);
 
   // Filter completed sales by time range
   const completedSales = sales.filter(s => {
     if (s.status !== 'completed') return false;
     const saleDate = new Date(s.date);
     const now = new Date();
-    const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : 30;
-    const cutoff = new Date();
+    let cutoff = new Date();
+    if (timeRange === 'custom') {
+      cutoff = new Date(customStart + 'T00:00:00');
+      const endDt = new Date(customEnd + 'T23:59:59');
+      return saleDate >= cutoff && saleDate <= endDt;
+    }
+    const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : timeRange === '14days' ? 14 : timeRange === '30days' ? 30 : 365;
     cutoff.setDate(now.getDate() - daysToCount);
     cutoff.setHours(0, 0, 0, 0);
     return saleDate >= cutoff;
@@ -81,7 +90,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
 
   // Prepare dynamic chart data for last 7 days
   const getChartData = () => {
-    const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : 30;
+    const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : timeRange === '14days' ? 14 : timeRange === '30days' ? 30 : timeRange === '1year' ? 365 : 30;
     const data: { dateLabel: string; revenue: number; profit: number; rawDate: Date }[] = [];
     
     for (let i = daysToCount - 1; i >= 0; i--) {
@@ -177,7 +186,16 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
                 timeRange === '7days' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
               }`}
             >
-              Últimos 7 Dias
+              7 Dias
+            </button>
+            <button
+              id="range-14days"
+              onClick={() => setTimeRange('14days')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                timeRange === '14days' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              14 Dias
             </button>
             <button
               id="range-30days"
@@ -186,7 +204,25 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
                 timeRange === '30days' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
               }`}
             >
-              Últimos 30 Dias
+              30 Dias
+            </button>
+            <button
+              id="range-1year"
+              onClick={() => setTimeRange('1year')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                timeRange === '1year' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              1 Ano
+            </button>
+            <button
+              id="range-custom"
+              onClick={() => setTimeRange('custom')}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                timeRange === 'custom' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              Personalizado
             </button>
           </div>
         </div>
@@ -478,7 +514,26 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
                           <p className="text-[11px] text-slate-400 font-mono">
                             {value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} ({pct.toFixed(0)}%)
                           </p>
-                        </div>
+          </div>
+          
+          {timeRange === 'custom' && (
+            <div className="flex items-center gap-2 mt-2 bg-white p-2 rounded-lg border border-slate-200">
+              <label className="text-[10px] font-bold text-slate-500 uppercase">De:</label>
+              <input
+                type="date"
+                value={customStart}
+                onChange={e => setCustomStart(e.target.value)}
+                className="px-2 py-1 text-xs border border-slate-200 rounded focus:outline-none focus:border-indigo-400"
+              />
+              <label className="text-[10px] font-bold text-slate-500 uppercase">Até:</label>
+              <input
+                type="date"
+                value={customEnd}
+                onChange={e => setCustomEnd(e.target.value)}
+                className="px-2 py-1 text-xs border border-slate-200 rounded focus:outline-none focus:border-indigo-400"
+              />
+            </div>
+          )}
                       </div>
                     );
                   })}

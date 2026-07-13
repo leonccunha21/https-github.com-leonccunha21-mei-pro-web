@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Product, Sale, Category } from '../types';
 import { 
   TrendingUp, 
   PieChart,
-  ShoppingBag
+  ShoppingBag,
+  Calendar
 } from 'lucide-react';
 
 interface ReportsProps {
@@ -13,7 +14,29 @@ interface ReportsProps {
 }
 
 export default function Reports({ products, sales, categories }: ReportsProps) {
-  const completedSales = sales.filter(s => s.status === 'completed');
+  const [timeRange, setTimeRange] = useState<'all' | '1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('all');
+  const [customStart, setCustomStart] = useState(() => {
+    const d = new Date(); d.setDate(d.getDate() - 30); return d.toISOString().split('T')[0];
+  });
+  const [customEnd, setCustomEnd] = useState(() => new Date().toISOString().split('T')[0]);
+
+  // Filter completed sales by time range
+  const completedSales = sales.filter(s => {
+    if (s.status !== 'completed') return false;
+    if (timeRange === 'all') return true;
+    const saleDate = new Date(s.date);
+    const now = new Date();
+    if (timeRange === 'custom') {
+      const start = new Date(customStart + 'T00:00:00');
+      const end = new Date(customEnd + 'T23:59:59');
+      return saleDate >= start && saleDate <= end;
+    }
+    const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : timeRange === '14days' ? 14 : timeRange === '30days' ? 30 : 365;
+    const cutoff = new Date();
+    cutoff.setDate(now.getDate() - daysToCount);
+    cutoff.setHours(0, 0, 0, 0);
+    return saleDate >= cutoff;
+  });
 
   const totalFaturamento = completedSales.reduce((acc, s) => acc + s.total, 0);
   const totalCustoVendas = completedSales.reduce((acc, s) => acc + s.totalCost, 0);
@@ -79,13 +102,57 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-slate-200 pb-5">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
-          <TrendingUp className="h-6 w-6 text-slate-500" />
-          Relatórios
-        </h1>
-        <p className="text-sm text-slate-500 mt-1">Análise de desempenho por categoria e produto.</p>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-5">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            <TrendingUp className="h-6 w-6 text-slate-500" />
+            Relatórios
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">Análise de desempenho por categoria e produto.</p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
+          {[
+            { key: 'all' as const, label: 'Todas' },
+            { key: '1day' as const, label: '1 Dia' },
+            { key: '7days' as const, label: '7 Dias' },
+            { key: '14days' as const, label: '14 Dias' },
+            { key: '30days' as const, label: '30 Dias' },
+            { key: '1year' as const, label: '1 Ano' },
+            { key: 'custom' as const, label: 'Personalizado' },
+          ].map(opt => (
+            <button
+              key={opt.key}
+              onClick={() => setTimeRange(opt.key)}
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                timeRange === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
+
+      {timeRange === 'custom' && (
+        <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+          <Calendar className="h-4 w-4 text-slate-400" />
+          <label className="text-[10px] font-bold text-slate-500 uppercase">De:</label>
+          <input
+            type="date"
+            value={customStart}
+            onChange={e => setCustomStart(e.target.value)}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+          />
+          <label className="text-[10px] font-bold text-slate-500 uppercase">Até:</label>
+          <input
+            type="date"
+            value={customEnd}
+            onChange={e => setCustomEnd(e.target.value)}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+          />
+        </div>
+      )}
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -126,7 +193,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
 
           {activeCategoryReports.length === 0 ? (
             <div className="text-center py-12 text-slate-400">
-              <p className="text-sm font-medium">Nenhuma categoria registrou vendas ainda.</p>
+              <p className="text-sm font-medium">Nenhuma categoria registrou vendas neste período.</p>
             </div>
           ) : (
             <div className="space-y-5">
@@ -173,7 +240,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
 
           {activeProductReports.length === 0 ? (
             <div className="text-center py-12 text-slate-400">
-              <p className="text-sm font-medium">Nenhum produto registrou vendas ainda.</p>
+              <p className="text-sm font-medium">Nenhum produto registrou vendas neste período.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">

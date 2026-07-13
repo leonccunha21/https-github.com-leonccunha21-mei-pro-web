@@ -53,6 +53,7 @@ export interface StoreInfo {
   state: string;
   ownerName: string;
   notes: string;
+  logoUrl: string;
 }
 
 export interface OsItem {

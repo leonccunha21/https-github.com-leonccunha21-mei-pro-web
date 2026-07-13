@@ -101,6 +101,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
         .footer { text-align: center; margin-top: 15px; font-size: 10px; color: #666; }
         @media print { body { padding: 5px; max-width: 100%; } }
       </style></head><body>
+      ${storeInfo.logoUrl ? `<div class="center"><img src="${storeInfo.logoUrl}" alt="Logo" style="max-width:80px;max-height:80px;margin:0 auto 8px;display:block" /></div>` : ''}
       <div class="center bold" style="font-size:16px">${storeInfo.name || 'ZM Store'}</div>
       ${storeInfo.cnpj ? `<div class="center" style="font-size:10px">CNPJ: ${storeInfo.cnpj}</div>` : ''}
       ${storeInfo.phone ? `<div class="center" style="font-size:10px">${storeInfo.phone}</div>` : ''}

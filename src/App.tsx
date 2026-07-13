@@ -439,9 +439,17 @@ export default function App() {
         <div>
           {/* Brand header */}
           <div className="p-6 border-b border-slate-100 flex items-center gap-3 mb-6">
-            <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center shrink-0">
-              <div className="w-4 h-4 border-2 border-white"></div>
-            </div>
+            {(() => {
+              let storeLogo = '';
+              try { storeLogo = JSON.parse(localStorage.getItem('zm_store_info') || '{}').logoUrl || ''; } catch {}
+              return storeLogo ? (
+                <img src={storeLogo} alt="Logo" className="w-8 h-8 rounded object-contain shrink-0" />
+              ) : (
+                <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center shrink-0">
+                  <div className="w-4 h-4 border-2 border-white"></div>
+                </div>
+              );
+            })()}
             <div>
               <h2 className="font-bold text-base tracking-tight text-slate-950">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
               <span className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>

@@ -203,7 +203,7 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
 
-    const store: StoreInfo = storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '' };
+    const store: StoreInfo = storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' };
     const itemsHtml = order.items.map(item => `
       <tr>
         <td style="padding:6px;border-bottom:1px solid #eee">${item.description}</td>
@@ -234,6 +234,7 @@ export default function OsOrcamento({ products, storeInfo, userId }: OsOrcamento
         @media print { body { padding: 10px; } }
       </style></head><body>
       <div class="header">
+        ${store.logoUrl ? `<div style="margin-bottom:10px"><img src="${store.logoUrl}" alt="Logo" style="max-width:100px;max-height:100px;margin:0 auto;display:block" /></div>` : ''}
         <h1>${store.name || 'ZM Store'}</h1>
         ${store.cnpj ? `<p>CNPJ: ${store.cnpj}</p>` : ''}
         ${store.phone ? `<p>Tel: ${store.phone}</p>` : ''}
