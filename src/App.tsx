@@ -582,10 +582,13 @@ export default function App() {
   };
 
   // Import whole database from external source
-  const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[] }) => {
+  const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[] }) => {
     saveProductsToStorage(imported.products);
     saveSalesToStorage(imported.sales);
     saveCategoriesToStorage(imported.categories);
+    if (imported.expenses) {
+      saveExpensesToStorage(imported.expenses);
+    }
   };
 
   // Reset database to empty
@@ -593,6 +596,7 @@ export default function App() {
     saveProductsToStorage([]);
     saveSalesToStorage([]);
     saveCategoriesToStorage([]);
+    saveExpensesToStorage([]);
     setActiveTab('dashboard');
   };
 

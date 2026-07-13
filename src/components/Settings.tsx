@@ -413,20 +413,20 @@ interface SettingsProps {
   products: Product[];
   sales: Sale[];
   categories: Category[];
+  expenses: Expense[];
   user: any;
   accessToken: string | null;
   onGoogleLogin: () => Promise<void>;
   onGoogleLogout: () => Promise<void>;
-  onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[] }) => void;
+  onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[]; expenses: Expense[] }) => void;
   onResetDatabase: () => void;
-  onSaveStoreInfo: (uid: string, info: StoreInfo) => Promise<void>;
-  onLoadStoreInfo: (uid: string) => Promise<StoreInfo | null>;
 }
 
 export default function Settings({
   products,
   sales,
   categories,
+  expenses,
   user,
   accessToken,
   onGoogleLogin,
@@ -650,7 +650,8 @@ export default function Settings({
       onImportDatabase({
         products: importedProducts.length > 0 ? importedProducts : products,
         categories: importedCategories,
-        sales: importedSales
+        sales: importedSales,
+        expenses: expenses
       });
 
       let successMsg = 'Planilha do Google Drive importada com sucesso! ';
@@ -691,7 +692,7 @@ export default function Settings({
       try {
         const parsed = JSON.parse(event.target?.result as string);
         if (parsed.products && parsed.sales && parsed.categories) {
-          onImportDatabase({ products: parsed.products, sales: parsed.sales, categories: parsed.categories });
+          onImportDatabase({ products: parsed.products, sales: parsed.sales, categories: parsed.categories, expenses: parsed.expenses || expenses });
           setImportSuccessMsg('Backup restaurado com sucesso!');
           setImportError(null);
           setTimeout(() => setImportSuccessMsg(null), 6000);
@@ -777,7 +778,8 @@ export default function Settings({
         onImportDatabase({
           products: importedProducts.length > 0 ? importedProducts : products,
           categories: importedCategories,
-          sales: importedSales
+          sales: importedSales,
+          expenses: expenses
         });
 
         let successMsg = 'Planilha importada com sucesso! ';
@@ -922,7 +924,21 @@ export default function Settings({
       catWs['!cols'] = [{ wch: 25 }, { wch: 12 }, { wch: 18 }, { wch: 18 }, { wch: 12 }, { wch: 16 }, { wch: 16 }];
       XLSX.utils.book_append_sheet(wb, catWs, 'Resumo por Categoria');
 
-      // Sheet 5: Métodos de Pagamento
+      // Sheet 5: Despesas
+      const expHeaders = ['ID', 'Data', 'Categoria', 'Descrição', 'Valor', 'Status'];
+      const expRows = expenses.map(e => [
+        e.id,
+        new Date(e.date).toLocaleDateString('pt-BR'),
+        e.category,
+        e.description,
+        e.amount,
+        e.status === 'paid' ? 'Pago' : 'Pendente'
+      ]);
+      const expWs = XLSX.utils.aoa_to_sheet([expHeaders, ...expRows]);
+      expWs['!cols'] = [{ wch: 20 }, { wch: 12 }, { wch: 25 }, { wch: 30 }, { wch: 14 }, { wch: 12 }];
+      XLSX.utils.book_append_sheet(wb, expWs, 'Despesas');
+
+      // Sheet 6: Métodos de Pagamento
       const payHeaders = ['Forma de Pagamento', 'Qtd Vendas', 'Faturamento Total'];
       const payMap = new Map<string, { qtd: number; total: number }>();
       sales.filter(s => s.status === 'completed').forEach(s => {
@@ -1053,7 +1069,7 @@ export default function Settings({
       try {
         const data = JSON.parse(event.target?.result as string);
         if (data.products && data.sales && data.categories) {
-          onImportDatabase({ products: data.products, sales: data.sales, categories: data.categories });
+          onImportDatabase({ products: data.products, sales: data.sales, categories: data.categories, expenses: data.expenses || expenses });
           setImportSuccessMsg(`Dados importados com sucesso! ${data.products.length} produtos, ${data.sales.length} vendas, ${data.categories.length} categorias.`);
           setTimeout(() => setImportSuccessMsg(null), 10000);
         } else {
