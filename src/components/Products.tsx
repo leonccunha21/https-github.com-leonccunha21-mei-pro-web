@@ -5,7 +5,8 @@ import * as XLSX from 'xlsx';
 import { 
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
-  ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck
+  ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck,
+  Trash
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -269,6 +270,12 @@ export default function Products({ products, categories, sales, onAddProduct, on
     XLSX.writeFile(wb, `controle_estoque_${new Date().toISOString().substring(0, 10)}.xlsx`);
   };
 
+  const handleClearAllStock = () => {
+    if (!window.confirm('Tem certeza que deseja REMOVER TODOS os produtos do estoque? Esta ação não pode ser desfeita.\n\nRecomenda-se exportar os dados antes (use o botão Exportar).')) return;
+    if (!window.confirm('CONFIRMAÇÃO FINAL: Deseja realmente excluir TODOS os ' + products.length + ' produtos permanentemente?')) return;
+    products.forEach(p => onDeleteProduct(p.id));
+  };
+
   const handleExportFiltered = () => {
     const headers = ['SKU', 'Nome', 'Categoria', 'Custo', 'Venda', 'Estoque', 'Mín', 'Margem%'];
     const rows = sortedProducts.map(p => [p.code, p.name, p.category, p.costPrice, p.salePrice, p.stock, p.minStock, calcMargin(p.costPrice, p.salePrice).toFixed(0)]);
@@ -305,6 +312,9 @@ export default function Products({ products, categories, sales, onAddProduct, on
           <div className="flex items-center gap-2">
             <button onClick={handleOpenAddModal} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs transition-colors">
               <Plus className="h-4 w-4" /> Novo
+            </button>
+            <button onClick={handleClearAllStock} className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs transition-colors">
+              <Trash className="h-4 w-4" /> Remover Tudo
             </button>
           </div>
         </div>

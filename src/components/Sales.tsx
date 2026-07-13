@@ -28,6 +28,7 @@ interface SalesProps {
     clientPhone?: string;
     paymentMethod: PaymentMethod;
     discount: number;
+    ecommerceOrderId?: string;
     notes?: string;
   }) => void;
   onNavigate: (tab: 'products') => void;
@@ -58,6 +59,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   const [customDiscountInput, setCustomDiscountInput] = useState<string>('');
   const [showMaxDiscountWarning, setShowMaxDiscountWarning] = useState<boolean>(false);
   const [saleNotes, setSaleNotes] = useState('');
+  const [ecommerceOrderId, setEcommerceOrderId] = useState('');
   
   // Checkout feedback
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -81,10 +83,13 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     transfer: 'Transferência'
   };
 
+  const isEcommerceChannel = (ch: string) => ['Shopee', 'Magalu', 'E-commerce', 'TikTok'].includes(ch);
+
   const saleChannelLabels: Record<string, string> = {
     'Loja Física': '🏪 Loja Física',
     'Shopee': '🛒 Shopee',
     'Magalu': '🛒 Magalu',
+    'TikTok': '🎵 TikTok',
     'E-commerce': '🌐 E-commerce',
     'WhatsApp': '📱 WhatsApp',
     'Outro': '📦 Outro'
@@ -363,6 +368,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       clientPhone: clientPhone.trim() || undefined,
       paymentMethod,
       discount: discountPercent,
+      ecommerceOrderId: isEcommerceChannel(saleChannel) ? ecommerceOrderId.trim() || undefined : undefined,
       notes: combinedNotes || undefined
     });
 
@@ -391,6 +397,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     setCustomDiscountInput('');
     setShowMaxDiscountWarning(false);
     setSaleNotes('');
+    setEcommerceOrderId('');
     setErrorMessage(null);
     setSuccessMessage(true);
     
@@ -786,6 +793,27 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
                 ))}
               </div>
             </div>
+
+            {/* E-commerce Order ID (only for e-commerce channels) */}
+            {isEcommerceChannel(saleChannel) && (
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                <label className="block text-[10px] font-bold text-amber-700 uppercase mb-1">
+                  ID do Pedido <span className="text-rose-500">*</span>
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="ecommerce-order-id"
+                    type="text"
+                    required
+                    placeholder={`ID do pedido ${saleChannel === 'Shopee' ? '(SHOPEE-...)' : saleChannel === 'TikTok' ? '(TIKTOK-...)' : 'Ex: #12345'}`}
+                    value={ecommerceOrderId}
+                    onChange={(e) => setEcommerceOrderId(e.target.value)}
+                    className="flex-1 px-3 py-1.5 text-xs bg-white border border-amber-300 rounded-lg outline-hidden focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-mono"
+                  />
+                </div>
+                <p className="text-[10px] text-amber-600 mt-1">Código de rastreamento do pedido no {saleChannel}.</p>
+              </div>
+            )}
 
             {/* Payment Method & Discount percent */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

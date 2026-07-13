@@ -37,6 +37,7 @@ export interface Sale {
   profit: number; // Lucro (Total - TotalCost)
   status: 'completed' | 'cancelled' | 'pending';
   paidAt?: string;
+  ecommerceOrderId?: string; // ID do pedido Shopee/TikTok/etc
   notes?: string;
 }
 

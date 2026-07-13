@@ -15,7 +15,8 @@ import {
   FileText,
   FileDown,
   Printer,
-  AlertTriangle
+  AlertTriangle,
+  ShoppingCart
 } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
@@ -299,6 +300,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
       'Itens': sale.items.reduce((acc, item) => acc + item.quantity, 0),
       'Produtos': sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', '),
       'Pagamento': paymentMethodLabelsPlain[sale.paymentMethod] || sale.paymentMethod,
+      'ID Pedido': sale.ecommerceOrderId || '',
       'Valor Pago (Custo)': sale.totalCost,
       'Valor Vendido': sale.total,
       'Lucro': sale.status === 'cancelled' ? 0 : sale.profit,
@@ -775,6 +777,12 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                     <CreditCard className="h-3 w-3 text-slate-400" />
                     Meio: <span className="font-semibold">{paymentMethodLabels[selectedSale.paymentMethod] || selectedSale.paymentMethod}</span>
                   </p>
+                  {selectedSale.ecommerceOrderId && (
+                    <p className="text-slate-700 mt-1 flex items-center gap-1">
+                      <ShoppingCart className="h-3 w-3 text-amber-500" />
+                      Pedido: <span className="font-semibold text-amber-700">{selectedSale.ecommerceOrderId}</span>
+                    </p>
+                  )}
                 </div>
               </div>
 

@@ -267,6 +267,7 @@ for (const sale of allSales) {
     total: roundCurrency(sale.totalValue),
     totalCost: roundCurrency(sale.totalCost),
     profit: roundCurrency(sale.profit),
+    ecommerceOrderId: undefined,
     status: 'completed'
   });
   vid++;

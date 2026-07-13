@@ -397,6 +397,7 @@ export default function App() {
     clientPhone?: string;
     paymentMethod: PaymentMethod;
     discount: number;
+    ecommerceOrderId?: string;
     notes?: string;
   }) => {
     // 1. Calculate costs and prices with floating point fix
@@ -419,6 +420,7 @@ export default function App() {
       totalCost,
       profit,
       status: 'completed',
+      ecommerceOrderId: saleData.ecommerceOrderId,
       notes: saleData.notes
     };
 

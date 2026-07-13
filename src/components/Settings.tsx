@@ -816,20 +816,21 @@ export default function Settings({
       XLSX.utils.book_append_sheet(wb, prodWs, 'Produtos');
 
       // Sheet 2: Vendas
-      const saleHeaders = ['ID', 'Data', 'Cliente', 'Telefone', 'Pagamento', 'Itens', 'Custo Total', 'Faturamento', 'Lucro', 'Status'];
+      const saleHeaders = ['ID', 'Data', 'Cliente', 'Telefone', 'Pagamento', 'ID Pedido', 'Itens', 'Custo Total', 'Faturamento', 'Lucro', 'Status'];
       const saleRows = sales.map(s => ({
         id: s.id,
         date: new Date(s.date).toLocaleString('pt-BR'),
         client: s.clientName || 'Cliente Geral',
         phone: s.clientPhone || '-',
         payment: s.paymentMethod,
+        orderId: s.ecommerceOrderId || '',
         items: s.items.map(i => `${i.productName} (${i.quantity}x R$ ${i.salePrice.toFixed(2)})`).join('; '),
         cost: s.totalCost,
         revenue: s.total,
         profit: s.profit,
         status: s.status === 'completed' ? 'Concluída' : s.status === 'cancelled' ? 'Cancelada' : 'Pendente',
       }));
-      const saleRowsArray = saleRows.map(r => [r.id, r.date, r.client, r.phone, r.payment, r.items, r.cost, r.revenue, r.profit, r.status]);
+      const saleRowsArray = saleRows.map(r => [r.id, r.date, r.client, r.phone, r.payment, r.orderId, r.items, r.cost, r.revenue, r.profit, r.status]);
       const saleWs = XLSX.utils.aoa_to_sheet([saleHeaders, ...saleRowsArray]);
       saleWs['!cols'] = [{ wch: 15 }, { wch: 20 }, { wch: 22 }, { wch: 18 }, { wch: 15 }, { wch: 55 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 12 }];
       XLSX.utils.book_append_sheet(wb, saleWs, 'Vendas');
