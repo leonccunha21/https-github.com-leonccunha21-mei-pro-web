@@ -125,7 +125,7 @@ export default function App() {
 
   // Stock cleanup: deduplicate and remove empty products (runs once)
   useEffect(() => {
-    if (localStorage.getItem('stock_cleanup_v1_done')) return;
+    if (localStorage.getItem('stock_cleanup_v2_done')) return;
     setProducts(prev => {
       if (prev.length === 0) return prev;
       const cleaned = runStockCleanup(prev);
@@ -135,7 +135,7 @@ export default function App() {
       }
       return prev;
     });
-    localStorage.setItem('stock_cleanup_v1_done', 'true');
+    localStorage.setItem('stock_cleanup_v2_done', 'true');
   }, []);
 
   // Sync Cloud Data
@@ -480,12 +480,11 @@ export default function App() {
         merged.push(group[0]);
         continue;
       }
-      // Keep the one with highest stock; sum totalStock across duplicates
+      // Keep the one with highest stock; sum stock from duplicates
       group.sort((a, b) => b.stock - a.stock);
       const best = { ...group[0] };
       for (let i = 1; i < group.length; i++) {
-        best.stock = Math.max(best.stock, best.stock + group[i].stock - group[i].stock);
-        best.stock = Math.max(best.stock, group[i].stock);
+        best.stock += group[i].stock;
         if (best.costPrice === 0 && group[i].costPrice > 0) best.costPrice = group[i].costPrice;
         if (best.salePrice === 0 && group[i].salePrice > 0) best.salePrice = group[i].salePrice;
       }
