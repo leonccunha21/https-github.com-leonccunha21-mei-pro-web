@@ -8,11 +8,8 @@ import {
   PaymentMethod,
   StoreInfo
 } from './types';
-import { 
-  initialProducts, 
-  initialSales, 
-  initialCategories 
-} from './data';
+import { initialProducts, initialSales, initialCategories } from './data';
+
 import Dashboard from './components/Dashboard';
 import Products from './components/Products';
 import Sales from './components/Sales';
@@ -162,16 +159,16 @@ export default function App() {
     const localSales = localStorage.getItem('loja_sales');
     const localCategories = localStorage.getItem('loja_categories');
 
-    let parsedProducts: Product[] = [];
-    let parsedSales: Sale[] = [];
-    let parsedCategories: Category[] = [];
+    let parsedProducts: Product[] = initialProducts;
+    let parsedSales: Sale[] = initialSales;
+    let parsedCategories: Category[] = initialCategories;
 
     try {
       if (localProducts) parsedProducts = JSON.parse(localProducts);
       if (localSales) parsedSales = JSON.parse(localSales);
       if (localCategories) parsedCategories = JSON.parse(localCategories);
     } catch {
-      // Corrupted localStorage, start empty
+      // Corrupted localStorage, use seed data
     }
 
     setProducts(parsedProducts);
@@ -483,11 +480,11 @@ export default function App() {
     saveCategoriesToStorage(imported.categories);
   };
 
-  // Reset database to initial mock settings
+  // Reset database to empty
   const handleResetDatabase = () => {
-    saveProductsToStorage(initialProducts);
-    saveSalesToStorage(initialSales);
-    saveCategoriesToStorage(initialCategories);
+    saveProductsToStorage([]);
+    saveSalesToStorage([]);
+    saveCategoriesToStorage([]);
     setActiveTab('dashboard');
   };
 
