@@ -47,6 +47,8 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   const [clientPhone, setClientPhone] = useState('');
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('pix');
   const [discountPercent, setDiscountPercent] = useState<number>(0);
+  const [customDiscountInput, setCustomDiscountInput] = useState<string>('');
+  const [showMaxDiscountWarning, setShowMaxDiscountWarning] = useState<boolean>(false);
   const [saleNotes, setSaleNotes] = useState('');
   
   // Checkout feedback
@@ -253,6 +255,27 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     setCart(prev => prev.filter(item => item.product.id !== productId));
   };
 
+  // Discount handlers
+  const handleQuickDiscount = (value: number) => {
+    setDiscountPercent(value);
+    setCustomDiscountInput('');
+  };
+
+  const handleCustomDiscountChange = (inputValue: string) => {
+    setCustomDiscountInput(inputValue);
+    const numericValue = parseFloat(inputValue);
+    if (!isNaN(numericValue)) {
+      const clampedValue = Math.min(50, Math.max(0, numericValue));
+      if (numericValue > 50) {
+        setShowMaxDiscountWarning(true);
+        setTimeout(() => setShowMaxDiscountWarning(false), 3000);
+      }
+      setDiscountPercent(clampedValue);
+    } else if (inputValue === '') {
+      setDiscountPercent(0);
+    }
+  };
+
   // Calculations
   const cartSubtotal = cart.reduce((acc, item) => acc + (item.customSalePrice * item.quantity), 0);
   const discountAmount = (cartSubtotal * discountPercent) / 100;
@@ -323,6 +346,8 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     setClientName('');
     setClientPhone('');
     setDiscountPercent(0);
+    setCustomDiscountInput('');
+    setShowMaxDiscountWarning(false);
     setSaleNotes('');
     setErrorMessage(null);
     setSuccessMessage(true);
@@ -633,7 +658,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
             </div>
 
             {/* Payment Method & Discount percent */}
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Forma de Pagamento</label>
                 <div className="relative">
@@ -658,23 +683,62 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
 
               <div>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Desconto Aplicado</label>
-                <div className="relative">
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
-                    <Tag className="h-3.5 w-3.5" />
-                  </span>
-                  <select
-                    id="discount-select"
-                    value={discountPercent}
-                    onChange={(e) => setDiscountPercent(Number(e.target.value))}
-                    className="w-full pl-8 pr-2 py-1.5 text-xs bg-white border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-700 font-mono cursor-pointer"
-                  >
-                    <option value="0">Sem Desconto</option>
-                    <option value="5">5% de Desconto</option>
-                    <option value="10">10% de Desconto</option>
-                    <option value="15">15% de Desconto</option>
-                    <option value="20">20% de Desconto</option>
-                    <option value="30">30% de Desconto</option>
-                  </select>
+                <div className="space-y-2">
+                  {/* Quick-select percentage buttons */}
+                  <div className="flex flex-wrap gap-1.5">
+                    {[0, 5, 10, 15, 20, 30].map((pct) => (
+                      <button
+                        key={pct}
+                        type="button"
+                        onClick={() => handleQuickDiscount(pct)}
+                        className={`px-2 py-1 text-[10px] font-bold rounded-md transition-all ${
+                          discountPercent === pct && customDiscountInput === ''
+                            ? 'bg-indigo-600 text-white shadow-sm'
+                            : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200'
+                        }`}
+                      >
+                        {pct}%
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Custom discount input */}
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 flex items-center pl-2.5 text-slate-400">
+                      <Tag className="h-3.5 w-3.5" />
+                    </span>
+                    <input
+                      id="custom-discount-input"
+                      type="number"
+                      min="0"
+                      max="50"
+                      step="0.5"
+                      placeholder="Desconto Personalizado (%)"
+                      value={customDiscountInput}
+                      onChange={(e) => handleCustomDiscountChange(e.target.value)}
+                      className="w-full pl-8 pr-2 py-1.5 text-xs bg-white border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-700 font-mono"
+                    />
+                  </div>
+
+                  {/* Discount amount indicator in R$ */}
+                  {discountPercent > 0 && (
+                    <div className="flex items-center justify-between text-[10px] px-2 py-1 bg-rose-50 rounded-md border border-rose-200/60">
+                      <span className="text-rose-600 font-medium">
+                        Desconto: {discountPercent}%
+                      </span>
+                      <span className="text-rose-700 font-bold font-mono">
+                        -{discountAmount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Max discount warning */}
+                  {showMaxDiscountWarning && (
+                    <div className="flex items-center gap-1.5 text-[10px] text-amber-700 bg-amber-50 border border-amber-200 rounded-md px-2 py-1">
+                      <AlertCircle className="h-3 w-3" />
+                      <span>Desconto máximo permitido: 50%. Valor ajustado.</span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

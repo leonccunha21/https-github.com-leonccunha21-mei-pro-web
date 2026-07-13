@@ -1,77 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Product, Sale, Category } from '../types';
-import {
-  TrendingUp,
-  PieChart as PieChartIcon,
+import { 
+  TrendingUp, 
+  PieChart,
   ShoppingBag,
   Calendar,
   BarChart3,
-  LineChart as LineChartIcon,
-  DollarSign,
-  Target,
-  Percent,
-  Hash,
+  ArrowUpRight,
+  ArrowDownRight
 } from 'lucide-react';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  CartesianGrid,
-  Legend,
-} from 'recharts';
-
-const COLORS = ['#10B981', '#6366F1', '#8B5CF6', '#F59E0B', '#F43F5E', '#3B82F6', '#14B8A6', '#EC4899', '#1E40AF', '#059669'];
-
-const fmtBRL = (v: number) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-
-const CustomPieTooltip = ({ active, payload }: any) => {
-  if (!active || !payload?.length) return null;
-  const d = payload[0];
-  return (
-    <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-3 text-xs">
-      <p className="font-bold text-slate-900">{d.name}</p>
-      <p className="text-slate-600 mt-1">Receita: <span className="font-mono font-bold text-slate-900">{fmtBRL(d.value)}</span></p>
-      <p className="text-slate-600">Lucro: <span className="font-mono font-bold text-emerald-600">{fmtBRL(d.payload.profit)}</span></p>
-      <p className="text-slate-600">Margem: <span className="font-mono font-bold text-indigo-600">{d.payload.revenue > 0 ? ((d.payload.profit / d.payload.revenue) * 100).toFixed(0) : 0}%</span></p>
-    </div>
-  );
-};
-
-const CustomBarTooltip = ({ active, payload, label }: any) => {
-  if (!active || !payload?.length) return null;
-  return (
-    <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-3 text-xs">
-      <p className="font-bold text-slate-900 mb-1" style={{ maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{label}</p>
-      {payload.map((p: any, i: number) => (
-        <p key={i} className="text-slate-600">
-          {p.name}: <span className="font-mono font-bold" style={{ color: p.color }}>{fmtBRL(p.value)}</span>
-        </p>
-      ))}
-    </div>
-  );
-};
-
-const CustomLineTooltip = ({ active, payload, label }: any) => {
-  if (!active || !payload?.length) return null;
-  return (
-    <div className="bg-white border border-slate-200 rounded-lg shadow-lg p-3 text-xs">
-      <p className="font-bold text-slate-900 mb-1">{label}</p>
-      {payload.map((p: any, i: number) => (
-        <p key={i} className="text-slate-600">
-          {p.name}: <span className="font-mono font-bold" style={{ color: p.color }}>{fmtBRL(p.value)}</span>
-        </p>
-      ))}
-    </div>
-  );
-};
 
 interface ReportsProps {
   products: Product[];
@@ -80,490 +17,481 @@ interface ReportsProps {
 }
 
 export default function Reports({ products, sales, categories }: ReportsProps) {
-  const [timeRange, setTimeRange] = useState<'all' | '1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('all');
-  const [customStart, setCustomStart] = useState(() => {
-    const d = new Date(); d.setDate(d.getDate() - 30); return d.toISOString().split('T')[0];
-  });
-  const [customEnd, setCustomEnd] = useState(() => new Date().toISOString().split('T')[0]);
+  const [viewMode, setViewMode] = useState<'resume' | 'monthly' | 'yearly'>('resume');
+  const [selectedYear, setSelectedYear] = useState<number>(() => new Date().getFullYear());
 
-  const completedSales = sales.filter(s => {
-    if (s.status !== 'completed') return false;
-    if (timeRange === 'all') return true;
-    const saleDate = new Date(s.date);
-    const now = new Date();
-    if (timeRange === 'custom') {
-      const start = new Date(customStart + 'T00:00:00');
-      const end = new Date(customEnd + 'T23:59:59');
-      return saleDate >= start && saleDate <= end;
+  const completedSales = useMemo(() => sales.filter(s => s.status === 'completed'), [sales]);
+
+  // Get available years
+  const availableYears = useMemo(() => {
+    const years = new Set<number>();
+    completedSales.forEach(s => years.add(new Date(s.date).getFullYear()));
+    return Array.from(years).sort((a, b) => b - a);
+  }, [completedSales]);
+
+  // ========== RESUME VIEW ==========
+  const resumeData = useMemo(() => {
+    const totalFaturamento = completedSales.reduce((acc, s) => acc + s.total, 0);
+    const totalCusto = completedSales.reduce((acc, s) => acc + s.totalCost, 0);
+    const lucro = totalFaturamento - totalCusto;
+    const avgTicket = completedSales.length > 0 ? totalFaturamento / completedSales.length : 0;
+    const roi = totalCusto > 0 ? (lucro / totalCusto) * 100 : 0;
+    const margin = totalFaturamento > 0 ? (lucro / totalFaturamento) * 100 : 0;
+    return { totalFaturamento, totalCusto, lucro, avgTicket, roi, margin };
+  }, [completedSales]);
+
+  // ========== MONTHLY VIEW ==========
+  const monthlyData = useMemo(() => {
+    const yearSales = completedSales.filter(s => new Date(s.date).getFullYear() === selectedYear);
+    const months: Record<number, { revenue: number; cost: number; profit: number; count: number }> = {};
+    
+    for (let m = 1; m <= 12; m++) {
+      months[m] = { revenue: 0, cost: 0, profit: 0, count: 0 };
     }
-    const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : timeRange === '14days' ? 14 : timeRange === '30days' ? 30 : 365;
-    const cutoff = new Date();
-    cutoff.setDate(now.getDate() - daysToCount);
-    cutoff.setHours(0, 0, 0, 0);
-    return saleDate >= cutoff;
-  });
-
-  const totalFaturamento = completedSales.reduce((acc, s) => acc + s.total, 0);
-  const totalCustoVendas = completedSales.reduce((acc, s) => acc + s.totalCost, 0);
-  const lucroReal = totalFaturamento - totalCustoVendas;
-  const roi = totalCustoVendas > 0 ? (lucroReal / totalCustoVendas) * 100 : 0;
-  const averageTicket = completedSales.length > 0 ? (totalFaturamento / completedSales.length) : 0;
-  const totalVendasCount = completedSales.length;
-
-  const categoryStats: Record<string, { revenue: number; cost: number; profit: number; itemsSold: number }> = {};
-  categories.forEach(cat => {
-    categoryStats[cat.name] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
-  });
-  categoryStats['Outros'] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
-
-  completedSales.forEach(sale => {
-    const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
-    const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
-
-    sale.items.forEach(item => {
-      const origProduct = products.find(p => p.id === item.productId);
-      const catName = origProduct ? origProduct.category : 'Outros';
-      if (!categoryStats[catName]) {
-        categoryStats[catName] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
-      }
-      const effectiveTotal = item.total * discountRatio;
-      const effectiveProfit = effectiveTotal - (item.costPrice * item.quantity);
-      categoryStats[catName].itemsSold += item.quantity;
-      categoryStats[catName].revenue += effectiveTotal;
-      categoryStats[catName].cost += item.costPrice * item.quantity;
-      categoryStats[catName].profit += effectiveProfit;
+    
+    yearSales.forEach(sale => {
+      const m = new Date(sale.date).getMonth() + 1;
+      months[m].revenue += sale.total;
+      months[m].cost += sale.totalCost;
+      months[m].profit += sale.profit;
+      months[m].count++;
     });
-  });
+    
+    const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
+    const result = Object.entries(months).map(([m, data]) => ({
+      month: parseInt(m),
+      name: monthNames[parseInt(m) - 1],
+      ...data,
+      margin: data.revenue > 0 ? (data.profit / data.revenue) * 100 : 0
+    }));
+    
+    const yearTotal = result.reduce((acc, r) => ({
+      revenue: acc.revenue + r.revenue,
+      cost: acc.cost + r.cost,
+      profit: acc.profit + r.profit,
+      count: acc.count + r.count
+    }), { revenue: 0, cost: 0, profit: 0, count: 0 });
+    
+    return { months: result, yearTotal };
+  }, [completedSales, selectedYear]);
 
-  const activeCategoryReports = Object.entries(categoryStats)
-    .map(([categoryName, stats]) => ({ categoryName, ...stats }))
-    .filter(c => c.revenue > 0 || c.itemsSold > 0)
-    .sort((a, b) => b.revenue - a.revenue);
-
-  const pieData = activeCategoryReports.map(c => ({
-    name: c.categoryName,
-    value: Math.round(c.revenue * 100) / 100,
-    revenue: c.revenue,
-    cost: c.cost,
-    profit: c.profit,
-    itemsSold: c.itemsSold,
-  }));
-
-  const productStats: Record<string, { productName: string; category: string; revenue: number; cost: number; profit: number; itemsSold: number }> = {};
-
-  completedSales.forEach(sale => {
-    const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
-    const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
-
-    sale.items.forEach(item => {
-      const origProduct = products.find(p => p.id === item.productId);
-      const catName = origProduct ? origProduct.category : 'Outros';
-      const key = item.productId || item.productName;
-      if (!productStats[key]) {
-        productStats[key] = { productName: item.productName, category: catName, revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
-      }
-      const effectiveTotal = item.total * discountRatio;
-      const effectiveProfit = effectiveTotal - (item.costPrice * item.quantity);
-      productStats[key].itemsSold += item.quantity;
-      productStats[key].revenue += effectiveTotal;
-      productStats[key].cost += item.costPrice * item.quantity;
-      productStats[key].profit += effectiveProfit;
+  // ========== YEARLY VIEW ==========
+  const yearlyData = useMemo(() => {
+    const years: Record<number, { revenue: number; cost: number; profit: number; count: number }> = {};
+    
+    completedSales.forEach(sale => {
+      const y = new Date(sale.date).getFullYear();
+      if (!years[y]) years[y] = { revenue: 0, cost: 0, profit: 0, count: 0 };
+      years[y].revenue += sale.total;
+      years[y].cost += sale.totalCost;
+      years[y].profit += sale.profit;
+      years[y].count++;
     });
-  });
+    
+    return Object.entries(years)
+      .map(([y, data]) => ({ year: parseInt(y), ...data, margin: data.revenue > 0 ? (data.profit / data.revenue) * 100 : 0 }))
+      .sort((a, b) => b.year - a.year);
+  }, [completedSales]);
 
-  const activeProductReports = Object.values(productStats).sort((a, b) => b.revenue - a.revenue);
-  const top10Products = activeProductReports.slice(0, 10);
+  const maxMonthlyRevenue = Math.max(...monthlyData.months.map(m => m.revenue), 1);
 
-  const barData = top10Products.map(p => ({
-    name: p.productName.length > 18 ? p.productName.slice(0, 16) + '...' : p.productName,
-    fullName: p.productName,
-    receita: Math.round(p.revenue * 100) / 100,
-    lucro: Math.round(p.profit * 100) / 100,
-    custo: Math.round(p.cost * 100) / 100,
-  }));
+  // ========== CATEGORY PERFORMANCE ==========
+  const categoryStats = useMemo(() => {
+    const stats: Record<string, { revenue: number; cost: number; profit: number; itemsSold: number }> = {};
+    categories.forEach(cat => { stats[cat.name] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 }; });
+    stats['Outros'] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
+    
+    completedSales.forEach(sale => {
+      const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
+      const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
+      sale.items.forEach(item => {
+        const origProduct = products.find(p => p.id === item.productId);
+        const catName = origProduct ? origProduct.category : 'Outros';
+        if (!stats[catName]) stats[catName] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
+        const effectiveTotal = item.total * discountRatio;
+        stats[catName].itemsSold += item.quantity;
+        stats[catName].revenue += effectiveTotal;
+        stats[catName].cost += item.costPrice * item.quantity;
+        stats[catName].profit += effectiveTotal - (item.costPrice * item.quantity);
+      });
+    });
+    
+    return Object.entries(stats)
+      .map(([categoryName, s]) => ({ categoryName, ...s }))
+      .filter(c => c.revenue > 0 || c.itemsSold > 0)
+      .sort((a, b) => b.revenue - a.revenue);
+  }, [completedSales, products, categories]);
 
-  const dailyRevenue: Record<string, number> = {};
-  completedSales.forEach(sale => {
-    const dateKey = new Date(sale.date).toLocaleDateString('pt-BR');
-    dailyRevenue[dateKey] = (dailyRevenue[dateKey] || 0) + sale.total;
-  });
+  // ========== PRODUCT PERFORMANCE ==========
+  const productStats = useMemo(() => {
+    const stats: Record<string, { productName: string; category: string; revenue: number; cost: number; profit: number; itemsSold: number }> = {};
+    
+    completedSales.forEach(sale => {
+      const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
+      const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
+      sale.items.forEach(item => {
+        const origProduct = products.find(p => p.id === item.productId);
+        const catName = origProduct ? origProduct.category : 'Outros';
+        const key = item.productId || item.productName;
+        if (!stats[key]) stats[key] = { productName: item.productName, category: catName, revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
+        const effectiveTotal = item.total * discountRatio;
+        stats[key].itemsSold += item.quantity;
+        stats[key].revenue += effectiveTotal;
+        stats[key].cost += item.costPrice * item.quantity;
+        stats[key].profit += effectiveTotal - (item.costPrice * item.quantity);
+      });
+    });
+    
+    return Object.values(stats).sort((a, b) => b.revenue - a.revenue);
+  }, [completedSales, products]);
 
-  const sortedDates = Object.keys(dailyRevenue).sort((a, b) => {
-    const [dA, mA, yA] = a.split('/').map(Number);
-    const [dB, mB, yB] = b.split('/').map(Number);
-    const dateA = new Date(yA, mA - 1, dA);
-    const dateB = new Date(yB, mB - 1, dB);
-    return dateA.getTime() - dateB.getTime();
-  });
-
-  const lineData = sortedDates.map(d => ({
-    date: d,
-    receita: Math.round(dailyRevenue[d] * 100) / 100,
-  }));
+  const maxCategoryRevenue = Math.max(...categoryStats.map(c => c.revenue), 100);
 
   return (
     <div className="space-y-6">
-      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
           <h1 className="text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
             <TrendingUp className="h-6 w-6 text-slate-500" />
             Relatórios
           </h1>
-          <p className="text-sm text-slate-500 mt-1">Análise de desempenho por categoria e produto.</p>
+          <p className="text-sm text-slate-500 mt-1">Análise comparativa de desempenho por período, categoria e produto.</p>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
-          {[
-            { key: 'all' as const, label: 'Todas' },
-            { key: '1day' as const, label: '1 Dia' },
-            { key: '7days' as const, label: '7 Dias' },
-            { key: '14days' as const, label: '14 Dias' },
-            { key: '30days' as const, label: '30 Dias' },
-            { key: '1year' as const, label: '1 Ano' },
-            { key: 'custom' as const, label: 'Personalizado' },
-          ].map(opt => (
-            <button
-              key={opt.key}
-              onClick={() => setTimeRange(opt.key)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-                timeRange === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
-              }`}
-            >
-              {opt.label}
-            </button>
-          ))}
+        <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
+          <button onClick={() => setViewMode('resume')} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${viewMode === 'resume' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
+            Resumo Geral
+          </button>
+          <button onClick={() => setViewMode('monthly')} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${viewMode === 'monthly' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
+            Por Mês
+          </button>
+          <button onClick={() => setViewMode('yearly')} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${viewMode === 'yearly' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
+            Por Ano
+          </button>
         </div>
       </div>
 
-      {/* Custom Date Range */}
-      {timeRange === 'custom' && (
-        <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
-          <Calendar className="h-4 w-4 text-slate-400" />
-          <label className="text-[10px] font-bold text-slate-500 uppercase">De:</label>
-          <input
-            type="date"
-            value={customStart}
-            onChange={e => setCustomStart(e.target.value)}
-            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
-          />
-          <label className="text-[10px] font-bold text-slate-500 uppercase">Até:</label>
-          <input
-            type="date"
-            value={customEnd}
-            onChange={e => setCustomEnd(e.target.value)}
-            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
-          />
-        </div>
+      {/* ========== RESUME VIEW ========== */}
+      {viewMode === 'resume' && (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Ticket Médio</span>
+              <span className="text-2xl font-bold font-mono text-slate-900 block mt-3">{resumeData.avgTicket.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+              <p className="text-xs text-slate-400 mt-1.5">Faturamento / nº de vendas.</p>
+            </div>
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">ROI (Retorno)</span>
+              <span className="text-2xl font-bold font-mono text-emerald-600 block mt-3">{resumeData.roi.toFixed(1)}%</span>
+              <p className="text-xs text-slate-400 mt-1.5">Lucro para cada R$ 1,00 investido.</p>
+            </div>
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Margem Líquida</span>
+              <span className="text-2xl font-bold font-mono text-indigo-600 block mt-3">{resumeData.margin.toFixed(1)}%</span>
+              <p className="text-xs text-slate-400 mt-1.5">% de lucro sobre faturamento.</p>
+            </div>
+          </div>
+
+          {/* Yearly comparison */}
+          {yearlyData.length > 0 && (
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+                <BarChart3 className="h-5 w-5 text-slate-500" />
+                <h2 className="text-base font-bold text-slate-900">Comparativo Anual</h2>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <th className="pb-3">Ano</th>
+                      <th className="pb-3 text-center">Vendas</th>
+                      <th className="pb-3 text-right">Faturamento</th>
+                      <th className="pb-3 text-right">Custo</th>
+                      <th className="pb-3 text-right">Lucro</th>
+                      <th className="pb-3 text-right">Margem</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-xs">
+                    {yearlyData.map((yd, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                        <td className="py-2.5 font-bold text-slate-900">{yd.year}</td>
+                        <td className="py-2.5 text-center font-mono text-slate-600">{yd.count}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-900 font-medium">{yd.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-500">{yd.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">{yd.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 text-right font-mono font-bold text-indigo-600">{yd.margin.toFixed(0)}%</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+        </>
       )}
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
-              <DollarSign className="h-4 w-4 text-indigo-600" />
-            </div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Ticket Médio</span>
+      {/* ========== MONTHLY VIEW ========== */}
+      {viewMode === 'monthly' && (
+        <>
+          <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+            <Calendar className="h-4 w-4 text-slate-400" />
+            <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
+            <select value={selectedYear} onChange={e => setSelectedYear(parseInt(e.target.value))} className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium">
+              {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
+            </select>
+            <span className="text-[10px] text-slate-400 font-medium ml-2">
+              {monthlyData.yearTotal.count} vendas | {monthlyData.yearTotal.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+            </span>
           </div>
-          <span className="text-2xl font-bold font-mono text-slate-900 block mt-2">
-            {averageTicket.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-          </span>
-          <p className="text-[10px] text-slate-400 mt-1">Faturamento / N° de vendas</p>
-        </div>
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center">
-              <Target className="h-4 w-4 text-emerald-600" />
-            </div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">ROI</span>
-          </div>
-          <span className="text-2xl font-bold font-mono text-emerald-600 block mt-2">
-            {roi.toFixed(1)}%
-          </span>
-          <p className="text-[10px] text-slate-400 mt-1">Lucro / Custo investido</p>
-        </div>
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 rounded-lg bg-purple-50 flex items-center justify-center">
-              <Percent className="h-4 w-4 text-purple-600" />
-            </div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Markup</span>
-          </div>
-          <span className="text-2xl font-bold font-mono text-purple-600 block mt-2">
-            {totalFaturamento > 0 ? ((lucroReal / totalFaturamento) * 100).toFixed(1) : 0}%
-          </span>
-          <p className="text-[10px] text-slate-400 mt-1">Margem líquida sobre receita</p>
-        </div>
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center">
-              <Hash className="h-4 w-4 text-amber-600" />
-            </div>
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-400">Total de Vendas</span>
-          </div>
-          <span className="text-2xl font-bold font-mono text-slate-900 block mt-2">
-            {totalVendasCount}
-          </span>
-          <p className="text-[10px] text-slate-400 mt-1">Vendas concluídas no período</p>
-        </div>
-      </div>
 
-      {/* Resumo Geral */}
-      <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-        <h2 className="text-base font-bold text-slate-900 mb-4">Resumo Geral</h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Receita Total</span>
-            <span className="text-xl font-bold font-mono text-indigo-600 block mt-2">{fmtBRL(totalFaturamento)}</span>
-          </div>
-          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Custo Total</span>
-            <span className="text-xl font-bold font-mono text-rose-600 block mt-2">{fmtBRL(totalCustoVendas)}</span>
-          </div>
-          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Lucro Total</span>
-            <span className="text-xl font-bold font-mono text-emerald-600 block mt-2">{fmtBRL(lucroReal)}</span>
-          </div>
-          <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">Vendas Concluídas</span>
-            <span className="text-xl font-bold font-mono text-slate-900 block mt-2">{totalVendasCount}</span>
-          </div>
-        </div>
-      </div>
-
-      {/* Charts Row 1: Pie + Bar */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-        {/* Pie Chart - Revenue by Category */}
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
-            <PieChartIcon className="h-5 w-5 text-slate-500" />
-            <div>
-              <h2 className="text-base font-bold text-slate-900">Receita por Categoria</h2>
-              <p className="text-xs text-slate-400 mt-0.5">Distribuição percentual do faturamento.</p>
+          {/* Year summary cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Faturamento {selectedYear}</span>
+              <span className="text-xl font-bold font-mono text-slate-900 block mt-2">{monthlyData.yearTotal.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Custo {selectedYear}</span>
+              <span className="text-xl font-bold font-mono text-amber-600 block mt-2">{monthlyData.yearTotal.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Lucro {selectedYear}</span>
+              <span className="text-xl font-bold font-mono text-emerald-600 block mt-2">{monthlyData.yearTotal.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+            </div>
+            <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Nº Vendas {selectedYear}</span>
+              <span className="text-xl font-bold font-mono text-indigo-600 block mt-2">{monthlyData.yearTotal.count}</span>
             </div>
           </div>
 
-          {pieData.length === 0 ? (
+          {/* Monthly chart + table */}
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <h2 className="text-base font-bold text-slate-900 mb-4">Faturamento Mensal - {selectedYear}</h2>
+            
+            {/* Bar chart */}
+            <div className="relative h-48 w-full mb-6">
+              <svg className="w-full h-full" viewBox="0 0 700 180" preserveAspectRatio="xMidYMid meet">
+                {[0, 0.25, 0.5, 0.75, 1].map((val, idx) => (
+                  <g key={idx}>
+                    <line x1="40" y1={10 + val * 140} x2="680" y2={10 + val * 140} stroke="#F1F5F9" strokeWidth="1" />
+                    <text x="35" y={14 + val * 140} textAnchor="end" className="text-[8px] fill-slate-400 font-mono">
+                      {Math.round(maxMonthlyRevenue - maxMonthlyRevenue * val)}
+                    </text>
+                  </g>
+                ))}
+                {monthlyData.months.map((m, i) => {
+                  const x = 50 + i * 52;
+                  const barH = (m.revenue / maxMonthlyRevenue) * 140;
+                  const profitH = (m.profit / maxMonthlyRevenue) * 140;
+                  return (
+                    <g key={i}>
+                      <rect x={x} y={150 - barH} width="20" height={barH} fill="#4F46E5" rx="2" className="hover:opacity-80 transition-opacity">
+                        <title>{`${m.name}: R$ ${m.revenue.toFixed(2)}`}</title>
+                      </rect>
+                      <rect x={x + 22} y={150 - profitH} width="20" height={profitH} fill="#10B981" rx="2" className="hover:opacity-80 transition-opacity">
+                        <title>{`${m.name} Lucro: R$ ${m.profit.toFixed(2)}`}</title>
+                      </rect>
+                      <text x={x + 21} y={168} textAnchor="middle" className="text-[9px] fill-slate-500 font-medium">{m.name}</text>
+                    </g>
+                  );
+                })}
+                <rect x={590} y={5} width={8} height={8} fill="#4F46E5" rx="1" />
+                <text x={600} y={13} className="text-[9px] fill-slate-500 font-medium">Receita</text>
+                <rect x={640} y={5} width={8} height={8} fill="#10B981" rx="1" />
+                <text x={650} y={13} className="text-[9px] fill-slate-500 font-medium">Lucro</text>
+              </svg>
+            </div>
+
+            {/* Monthly table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <th className="pb-3">Mês</th>
+                    <th className="pb-3 text-center">Vendas</th>
+                    <th className="pb-3 text-right">Faturamento</th>
+                    <th className="pb-3 text-right">Custo</th>
+                    <th className="pb-3 text-right">Lucro</th>
+                    <th className="pb-3 text-right">Margem</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-xs">
+                  {monthlyData.months.map((m, idx) => (
+                    <tr key={idx} className={`hover:bg-slate-50/50 transition-colors ${m.count === 0 ? 'opacity-40' : ''}`}>
+                      <td className="py-2 font-bold text-slate-900">{m.name}</td>
+                      <td className="py-2 text-center font-mono text-slate-600">{m.count}</td>
+                      <td className="py-2 text-right font-mono text-slate-900 font-medium">{m.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                      <td className="py-2 text-right font-mono text-slate-500">{m.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                      <td className="py-2 text-right font-mono text-emerald-600 font-bold">{m.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                      <td className="py-2 text-right font-mono font-bold text-indigo-600">{m.margin.toFixed(0)}%</td>
+                    </tr>
+                  ))}
+                  <tr className="border-t-2 border-slate-300 font-bold">
+                    <td className="py-2 text-slate-900">TOTAL {selectedYear}</td>
+                    <td className="py-2 text-center font-mono text-slate-900">{monthlyData.yearTotal.count}</td>
+                    <td className="py-2 text-right font-mono text-slate-900">{monthlyData.yearTotal.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-2 text-right font-mono text-slate-900">{monthlyData.yearTotal.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-2 text-right font-mono text-emerald-600">{monthlyData.yearTotal.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-2 text-right font-mono text-indigo-600">{monthlyData.yearTotal.revenue > 0 ? ((monthlyData.yearTotal.profit / monthlyData.yearTotal.revenue) * 100).toFixed(0) : 0}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </>
+      )}
+
+      {/* ========== YEARLY VIEW ========== */}
+      {viewMode === 'yearly' && (
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+            <BarChart3 className="h-5 w-5 text-slate-500" />
+            <h2 className="text-base font-bold text-slate-900">Comparativo Anual Detalhado</h2>
+          </div>
+
+          {yearlyData.length === 0 ? (
             <div className="text-center py-12 text-slate-400">
-              <p className="text-sm font-medium">Nenhuma categoria registrou vendas neste período.</p>
+              <p className="text-sm font-medium">Nenhuma venda registrada.</p>
             </div>
           ) : (
-            <div className="flex flex-col items-center">
-              <ResponsiveContainer width="100%" height={280}>
-                <PieChart>
-                  <Pie
-                    data={pieData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={3}
-                    dataKey="value"
-                    nameKey="name"
-                    stroke="none"
-                  >
-                    {pieData.map((_, idx) => (
-                      <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip content={<CustomPieTooltip />} />
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 mt-4">
-                {pieData.map((d, idx) => {
-                  const total = pieData.reduce((s, p) => s + p.value, 0);
-                  const pct = total > 0 ? ((d.value / total) * 100).toFixed(0) : 0;
+            <>
+              {/* Year cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                {yearlyData.map((yd, idx) => {
+                  const prevYear = yearlyData[idx + 1];
+                  const revenueChange = prevYear ? ((yd.revenue - prevYear.revenue) / prevYear.revenue) * 100 : null;
+                  
                   return (
-                    <div key={idx} className="flex items-center gap-1.5 text-xs text-slate-600">
-                      <span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: COLORS[idx % COLORS.length] }} />
-                      <span className="font-medium">{d.name}</span>
-                      <span className="text-slate-400 font-mono">({pct}%)</span>
+                    <div key={idx} className="p-4 bg-slate-50 rounded-xl border border-slate-200 hover:shadow-md transition-shadow">
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-lg font-bold text-slate-900">{yd.year}</span>
+                        {revenueChange !== null && (
+                          <span className={`flex items-center gap-0.5 text-[10px] font-bold ${revenueChange >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                            {revenueChange >= 0 ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
+                            {Math.abs(revenueChange).toFixed(1)}%
+                          </span>
+                        )}
+                      </div>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between"><span className="text-slate-500">Vendas:</span><span className="font-bold text-slate-900">{yd.count}</span></div>
+                        <div className="flex justify-between"><span className="text-slate-500">Receita:</span><span className="font-bold text-slate-900">{yd.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></div>
+                        <div className="flex justify-between"><span className="text-slate-500">Custo:</span><span className="font-medium text-slate-600">{yd.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></div>
+                        <div className="flex justify-between border-t border-slate-200 pt-1.5"><span className="text-slate-500">Lucro:</span><span className="font-bold text-emerald-600">{yd.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></div>
+                        <div className="flex justify-between"><span className="text-slate-500">Margem:</span><span className="font-bold text-indigo-600">{yd.margin.toFixed(1)}%</span></div>
+                      </div>
                     </div>
                   );
                 })}
               </div>
-            </div>
+
+              {/* Detailed table */}
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <th className="pb-3">Ano</th>
+                      <th className="pb-3 text-center">Vendas</th>
+                      <th className="pb-3 text-right">Faturamento</th>
+                      <th className="pb-3 text-right">Custo</th>
+                      <th className="pb-3 text-right">Lucro</th>
+                      <th className="pb-3 text-right">Margem</th>
+                      <th className="pb-3 text-right">Ticket Médio</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-xs">
+                    {yearlyData.map((yd, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                        <td className="py-2.5 font-bold text-slate-900">{yd.year}</td>
+                        <td className="py-2.5 text-center font-mono text-slate-600">{yd.count}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-900 font-medium">{yd.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-500">{yd.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">{yd.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 text-right font-mono font-bold text-indigo-600">{yd.margin.toFixed(0)}%</td>
+                        <td className="py-2.5 text-right font-mono text-slate-900">{yd.count > 0 ? (yd.revenue / yd.count).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-'}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </div>
+      )}
 
-        {/* Bar Chart - Top 10 Products */}
+      {/* ========== CATEGORY & PRODUCT (always shown) ========== */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
-            <BarChart3 className="h-5 w-5 text-slate-500" />
-            <div>
-              <h2 className="text-base font-bold text-slate-900">Top 10 Produtos por Receita</h2>
-              <p className="text-xs text-slate-400 mt-0.5">Produtos mais vendidos no período.</p>
-            </div>
+          <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+            <PieChart className="h-5 w-5 text-slate-500" />
+            <h2 className="text-base font-bold text-slate-900">Por Categoria</h2>
           </div>
-
-          {barData.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <p className="text-sm font-medium">Nenhum produto registrou vendas neste período.</p>
-            </div>
+          {categoryStats.length === 0 ? (
+            <div className="text-center py-8 text-slate-400"><p className="text-sm">Nenhuma categoria registrou vendas.</p></div>
           ) : (
-            <ResponsiveContainer width="100%" height={320}>
-              <BarChart data={barData} layout="vertical" margin={{ left: 10, right: 20, top: 5, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" horizontal={false} />
-                <XAxis type="number" tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} tick={{ fontSize: 10, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
-                <YAxis dataKey="name" type="category" width={130} tick={{ fontSize: 10, fill: '#475569' }} axisLine={false} tickLine={false} />
-                <Tooltip content={<CustomBarTooltip />} />
-                <Legend
-                  wrapperStyle={{ fontSize: 11, paddingTop: 8 }}
-                  formatter={(value: string) => <span className="text-slate-600">{value}</span>}
-                />
-                <Bar dataKey="receita" name="Receita" fill="#6366F1" radius={[0, 4, 4, 0]} barSize={14} />
-                <Bar dataKey="lucro" name="Lucro" fill="#10B981" radius={[0, 4, 4, 0]} barSize={14} />
-              </BarChart>
-            </ResponsiveContainer>
+            <div className="space-y-4 max-h-80 overflow-y-auto pr-1">
+              {categoryStats.map((cat, idx) => {
+                const percentageOfMax = (cat.revenue / maxCategoryRevenue) * 100;
+                const catMargin = cat.revenue > 0 ? (cat.profit / cat.revenue) * 100 : 0;
+                return (
+                  <div key={idx} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-bold text-slate-700">{cat.categoryName}</span>
+                      <span className="font-mono text-slate-500">{cat.itemsSold} un • <strong className="text-slate-900">{cat.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></span>
+                    </div>
+                    <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                      <div style={{ width: `${percentageOfMax}%` }} className="bg-indigo-600 h-full rounded-full transition-all duration-500" />
+                    </div>
+                    <div className="flex items-center justify-between text-[10px] text-slate-400">
+                      <span>Custo: {cat.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                      <span className="text-emerald-600 font-semibold">Lucro: {cat.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} ({catMargin.toFixed(0)}%)</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </div>
-      </div>
 
-      {/* Line Chart - Daily Revenue Trend */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
-          <LineChartIcon className="h-5 w-5 text-slate-500" />
-          <div>
-            <h2 className="text-base font-bold text-slate-900">Tendência de Receita Diária</h2>
-            <p className="text-xs text-slate-400 mt-0.5">Evolução do faturamento ao longo do tempo.</p>
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+            <ShoppingBag className="h-5 w-5 text-slate-500" />
+            <h2 className="text-base font-bold text-slate-900">Top 10 Produtos</h2>
           </div>
+          {productStats.length === 0 ? (
+            <div className="text-center py-8 text-slate-400"><p className="text-sm">Nenhum produto registrou vendas.</p></div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <th className="pb-3 pr-2">Produto</th>
+                    <th className="pb-3 text-center">Un.</th>
+                    <th className="pb-3 text-right">Faturamento</th>
+                    <th className="pb-3 text-right">Lucro</th>
+                    <th className="pb-3 text-right">Margem</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-xs">
+                  {productStats.slice(0, 10).map((prod, idx) => {
+                    const prodMargin = prod.revenue > 0 ? (prod.profit / prod.revenue) * 100 : 0;
+                    return (
+                      <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                        <td className="py-2 pr-2 font-bold text-slate-900">
+                          <p className="line-clamp-1" title={prod.productName}>{prod.productName}</p>
+                          <span className="text-[9px] text-slate-400 font-normal uppercase">{prod.category}</span>
+                        </td>
+                        <td className="py-2 text-center font-mono text-slate-600">{prod.itemsSold}</td>
+                        <td className="py-2 text-right font-mono text-slate-900 font-medium">{prod.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2 text-right font-mono text-emerald-600 font-bold">{prod.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2 text-right font-mono font-bold text-indigo-600">{prodMargin.toFixed(0)}%</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
-
-        {lineData.length === 0 ? (
-          <div className="text-center py-12 text-slate-400">
-            <p className="text-sm font-medium">Nenhuma venda registrada neste período.</p>
-          </div>
-        ) : (
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={lineData} margin={{ left: 10, right: 20, top: 5, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
-              <XAxis dataKey="date" tick={{ fontSize: 10, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
-              <YAxis tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} tick={{ fontSize: 10, fill: '#94A3B8' }} axisLine={false} tickLine={false} />
-              <Tooltip content={<CustomLineTooltip />} />
-              <Line
-                type="monotone"
-                dataKey="receita"
-                name="Receita"
-                stroke="#6366F1"
-                strokeWidth={2.5}
-                dot={{ r: 3, fill: '#6366F1', stroke: '#fff', strokeWidth: 2 }}
-                activeDot={{ r: 5, fill: '#6366F1', stroke: '#fff', strokeWidth: 2 }}
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        )}
-      </div>
-
-      {/* Category Performance Detail Table */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
-          <PieChartIcon className="h-5 w-5 text-slate-500" />
-          <div>
-            <h2 className="text-base font-bold text-slate-900">Desempenho por Categoria</h2>
-            <p className="text-xs text-slate-400 mt-0.5">Faturamento, volume e lucratividade por setor.</p>
-          </div>
-        </div>
-
-        {activeCategoryReports.length === 0 ? (
-          <div className="text-center py-12 text-slate-400">
-            <p className="text-sm font-medium">Nenhuma categoria registrou vendas neste período.</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="pb-3 pr-2">Categoria</th>
-                  <th className="pb-3 text-center">Un.</th>
-                  <th className="pb-3 text-right">Faturamento</th>
-                  <th className="pb-3 text-right">Custo</th>
-                  <th className="pb-3 text-right">Lucro</th>
-                  <th className="pb-3 text-right">Margem</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-xs">
-                {activeCategoryReports.map((cat, idx) => {
-                  const catMargin = cat.revenue > 0 ? (cat.profit / cat.revenue) * 100 : 0;
-                  return (
-                    <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="py-2.5 pr-2 font-bold text-slate-900">{cat.categoryName}</td>
-                      <td className="py-2.5 text-center font-mono text-slate-600">{cat.itemsSold}</td>
-                      <td className="py-2.5 text-right font-mono text-slate-900 font-medium">
-                        {fmtBRL(cat.revenue)}
-                      </td>
-                      <td className="py-2.5 text-right font-mono text-rose-500">
-                        {fmtBRL(cat.cost)}
-                      </td>
-                      <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">
-                        {fmtBRL(cat.profit)}
-                      </td>
-                      <td className="py-2.5 text-right font-mono font-bold text-indigo-600">{catMargin.toFixed(0)}%</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-
-      {/* Product Performance Table */}
-      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-        <div className="flex items-center gap-2 mb-6 border-b border-slate-200 pb-3">
-          <ShoppingBag className="h-5 w-5 text-slate-500" />
-          <div>
-            <h2 className="text-base font-bold text-slate-900">Desempenho por Produto</h2>
-            <p className="text-xs text-slate-400 mt-0.5">Ranking dos produtos mais vendidos.</p>
-          </div>
-        </div>
-
-        {activeProductReports.length === 0 ? (
-          <div className="text-center py-12 text-slate-400">
-            <p className="text-sm font-medium">Nenhum produto registrou vendas neste período.</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                  <th className="pb-3 pr-2">Produto</th>
-                  <th className="pb-3 text-center">Un.</th>
-                  <th className="pb-3 text-right">Faturamento</th>
-                  <th className="pb-3 text-right">Lucro</th>
-                  <th className="pb-3 text-right">Margem</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 text-xs">
-                {top10Products.map((prod, idx) => {
-                  const prodMargin = prod.revenue > 0 ? (prod.profit / prod.revenue) * 100 : 0;
-                  return (
-                    <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
-                      <td className="py-2.5 pr-2 font-bold text-slate-900">
-                        <p className="line-clamp-1" title={prod.productName}>{prod.productName}</p>
-                        <span className="text-[9px] text-slate-400 font-normal uppercase tracking-wider">{prod.category}</span>
-                      </td>
-                      <td className="py-2.5 text-center font-mono text-slate-600">{prod.itemsSold}</td>
-                      <td className="py-2.5 text-right font-mono text-slate-900 font-medium">
-                        {fmtBRL(prod.revenue)}
-                      </td>
-                      <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">
-                        {fmtBRL(prod.profit)}
-                      </td>
-                      <td className="py-2.5 text-right font-mono font-bold text-indigo-600">{prodMargin.toFixed(0)}%</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            {activeProductReports.length > 10 && (
-              <p className="text-[10px] text-slate-400 text-center mt-3 font-semibold">
-                Mostrando os 10 mais vendidos.
-              </p>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

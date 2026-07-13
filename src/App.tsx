@@ -29,7 +29,9 @@ import {
   ClipboardList,
   Clock,
   Cloud,
-  Loader2
+  Loader2,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
@@ -67,6 +69,20 @@ export default function App() {
   const [loadingCloud, setLoadingCloud] = useState<boolean>(false);
   const [loginError, setLoginError] = useState<string | null>(null);
   const loadingCloudRef = React.useRef<boolean>(false);
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+
+  const toggleDarkMode = () => {
+    setDarkMode(prev => {
+      const next = !prev;
+      localStorage.setItem('darkMode', String(next));
+      document.documentElement.classList.toggle('dark', next);
+      return next;
+    });
+  };
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', darkMode);
+  }, []);
 
   // Initial local storage fallback loading
   useEffect(() => {
@@ -432,13 +448,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col md:flex-row text-slate-800 antialiased font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
       
       {/* SIDEBAR NAVIGATION */}
-      <aside className="w-full md:w-64 bg-white text-slate-800 shrink-0 border-r border-slate-200 flex flex-col justify-between z-10 py-2">
+      <aside className="w-full md:w-64 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 shrink-0 border-r border-slate-200 dark:border-slate-700 flex flex-col justify-between z-10 py-2">
         <div>
           {/* Brand header */}
-          <div className="p-6 border-b border-slate-100 flex items-center gap-3 mb-6">
+          <div className="p-6 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3 mb-6">
             {(() => {
               let storeLogo = '';
               try { storeLogo = JSON.parse(localStorage.getItem('zm_store_info') || '{}').logoUrl || ''; } catch {}
@@ -450,10 +466,17 @@ export default function App() {
                 </div>
               );
             })()}
-            <div>
-              <h2 className="font-bold text-base tracking-tight text-slate-950">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
+            <div className="flex-1">
+              <h2 className="font-bold text-base tracking-tight text-slate-950 dark:text-slate-100">{user ? 'ZM Store' : 'GESTÃO.PRO'}</h2>
               <span className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
             </div>
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+              title={darkMode ? 'Modo claro' : 'Modo escuro'}
+            >
+              {darkMode ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
           </div>
 
           {/* Navigation Links */}
@@ -464,8 +487,8 @@ export default function App() {
               onClick={() => setActiveTab('dashboard')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'dashboard' 
-                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
               <LayoutDashboard className="h-4 w-4" />
@@ -478,8 +501,8 @@ export default function App() {
               onClick={() => setActiveTab('products')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'products' 
-                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
               <Package className="h-4 w-4" />
@@ -492,8 +515,8 @@ export default function App() {
               onClick={() => setActiveTab('pos')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'pos' 
-                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
               <ShoppingCart className="h-4 w-4" />
@@ -506,8 +529,8 @@ export default function App() {
               onClick={() => setActiveTab('sales')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'sales' 
-                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
               <History className="h-4 w-4" />
@@ -520,8 +543,8 @@ export default function App() {
               onClick={() => setActiveTab('reports')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'reports' 
-                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
               <BarChart3 className="h-4 w-4" />
@@ -534,8 +557,8 @@ export default function App() {
               onClick={() => setActiveTab('os')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'os' 
-                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
               <ClipboardList className="h-4 w-4" />
@@ -548,8 +571,8 @@ export default function App() {
               onClick={() => setActiveTab('settings')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'settings' 
-                  ? 'bg-indigo-50 text-indigo-700 font-bold' 
-                  : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
               <SettingsIcon className="h-4 w-4" />
@@ -559,19 +582,19 @@ export default function App() {
         </div>
 
         {/* Firebase & Google Account Sync Box */}
-        <div className="px-4 py-2 border-t border-slate-100 flex flex-col gap-2.5">
+        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700 flex flex-col gap-2.5">
           {loadingCloud ? (
-            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex items-center justify-center gap-2 text-[10px] text-slate-500 font-semibold">
+            <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 flex items-center justify-center gap-2 text-[10px] text-slate-500 dark:text-slate-400 font-semibold">
               <Loader2 className="h-3.5 w-3.5 animate-spin text-indigo-600" />
               <span>Sincronizando Nuvem...</span>
             </div>
           ) : user ? (
-            <div className="bg-indigo-50/50 p-3 rounded-xl border border-indigo-100 flex items-center gap-3">
+            <div className="bg-indigo-50/50 dark:bg-indigo-900/20 p-3 rounded-xl border border-indigo-100 dark:border-indigo-800 flex items-center gap-3">
               {user.photoURL ? (
                 <img 
                   src={user.photoURL} 
                   alt={user.displayName} 
-                  className="w-8 h-8 rounded-full border border-indigo-200" 
+                  className="w-8 h-8 rounded-full border border-indigo-200 dark:border-indigo-700" 
                   referrerPolicy="no-referrer" 
                 />
               ) : (
@@ -580,19 +603,19 @@ export default function App() {
                 </div>
               )}
               <div className="min-w-0 flex-1">
-                <p className="text-xs font-bold text-slate-900 truncate leading-snug">{user.displayName || 'Minha Loja'}</p>
-                <span className="text-[10px] text-emerald-600 font-bold flex items-center gap-1">
+                <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate leading-snug">{user.displayName || 'Minha Loja'}</p>
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
                   <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
                   Nuvem Ativa
                 </span>
               </div>
             </div>
           ) : (
-            <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 flex flex-col gap-2">
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Modo Offline</p>
-              <p className="text-[10px] text-slate-400 leading-normal">Dados salvos localmente. Conecte sua conta para salvar na nuvem e usar planilhas.</p>
+            <div className="bg-slate-50 dark:bg-slate-800 p-3 rounded-xl border border-slate-100 dark:border-slate-700 flex flex-col gap-2">
+              <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Modo Offline</p>
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 leading-normal">Dados salvos localmente. Conecte sua conta para salvar na nuvem e usar planilhas.</p>
               {loginError && (
-                <p className="text-[10px] text-rose-600 leading-normal bg-rose-50 p-2 rounded-lg border border-rose-100">{loginError}</p>
+                <p className="text-[10px] text-rose-600 dark:text-rose-400 leading-normal bg-rose-50 dark:bg-rose-900/20 p-2 rounded-lg border border-rose-100 dark:border-rose-800">{loginError}</p>
               )}
               <button 
                 onClick={handleGoogleLogin}
@@ -605,12 +628,12 @@ export default function App() {
         </div>
 
         {/* Footer info box (time, date and version) */}
-        <div className="p-4 border-t border-slate-100 bg-slate-50/50 text-xs text-slate-500 space-y-1.5 hidden md:block m-4 rounded-xl border border-slate-200">
+        <div className="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 text-xs text-slate-500 dark:text-slate-400 space-y-1.5 hidden md:block m-4 rounded-xl border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2">
             <Clock className="h-3.5 w-3.5 text-indigo-600" />
-            <span className="font-semibold font-mono text-slate-800">{currentTime || '12:00'}</span>
+            <span className="font-semibold font-mono text-slate-800 dark:text-slate-200">{currentTime || '12:00'}</span>
           </div>
-          <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+          <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">
             {new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'short' })}
           </p>
           <p className="text-[10px] text-slate-300 font-mono mt-1">v{appVersion.version}</p>
@@ -618,7 +641,7 @@ export default function App() {
       </aside>
 
       {/* MAIN CONTENT DISPLAY */}
-      <main className="flex-1 p-4 md:p-8 overflow-y-auto max-w-7xl mx-auto w-full">
+      <main className="flex-1 p-4 md:p-8 overflow-y-auto max-w-7xl mx-auto w-full bg-slate-50 dark:bg-slate-950">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
