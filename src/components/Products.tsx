@@ -1,23 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Product, Category } from '../types';
+import * as XLSX from 'xlsx';
 import { 
-  Plus, 
-  Search, 
-  Edit2, 
-  Trash2, 
-  AlertTriangle, 
-  Filter, 
-  Minus, 
-  ArrowUpRight, 
-  Sparkles,
-  Barcode,
-  X,
-  FileSpreadsheet,
-  ChevronUp,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  ArrowUpDown
+  Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
+  Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
+  ArrowUpDown, CheckSquare, Square, Download, Layers
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -32,36 +19,26 @@ interface ProductsProps {
   onAddCategory: (categoryName: string) => void;
 }
 
-export default function Products({ 
-  products, 
-  categories, 
-  onAddProduct, 
-  onUpdateProduct, 
-  onDeleteProduct,
-  onAddCategory
-}: ProductsProps) {
-  // Filter and Search states
+export default function Products({ products, categories, onAddProduct, onUpdateProduct, onDeleteProduct, onAddCategory }: ProductsProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out'>('all');
-
-  // Sort state
+  const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out' | 'ok'>('all');
+  const [priceMin, setPriceMin] = useState('');
+  const [priceMax, setPriceMax] = useState('');
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
-
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const ITEMS_PER_PAGE = 20;
-
-  // Modal states
+  const [itemsPerPage, setItemsPerPage] = useState(20);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
-  
-  // New Category state
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkAction, setBulkAction] = useState<'category' | 'stock' | null>(null);
+  const [bulkCategoryValue, setBulkCategoryValue] = useState('');
+  const [bulkStockValue, setBulkStockValue] = useState(0);
+  const [bulkActionType, setBulkActionType] = useState<'add' | 'sub'>('add');
 
-  // Form states
   const [formCode, setFormCode] = useState('');
   const [formName, setFormName] = useState('');
   const [formCategory, setFormCategory] = useState('');
@@ -71,62 +48,29 @@ export default function Products({
   const [formMinStock, setFormMinStock] = useState<number>(1);
   const [formDescription, setFormDescription] = useState('');
 
-  // Auto-generate Code/SKU
-  const generateSKU = (categoryName: string) => {
-    const prefix = categoryName ? categoryName.substring(0, 3).toUpperCase() : 'PRO';
-    const randomNum = Math.floor(1000 + Math.random() * 9000);
-    return `${prefix}-${randomNum}`;
-  };
+  const generateSKU = (cat: string) => `${cat ? cat.substring(0, 3).toUpperCase() : 'PRO'}-${Math.floor(1000 + Math.random() * 9000)}`;
 
   const handleOpenAddModal = () => {
     setEditingProduct(null);
-    setFormCode(generateSKU(categories[0]?.name || 'PRO'));
-    setFormName('');
-    setFormCategory(categories[0]?.name || '');
-    setFormCostPrice(0);
-    setFormSalePrice(0);
-    setFormStock(0);
-    setFormMinStock(3);
-    setFormDescription('');
+    setFormCode(generateSKU(categories[0]?.name || ''));
+    setFormName(''); setFormCategory(categories[0]?.name || '');
+    setFormCostPrice(0); setFormSalePrice(0); setFormStock(0); setFormMinStock(3); setFormDescription('');
     setIsModalOpen(true);
   };
 
-  const handleOpenEditModal = (product: Product) => {
-    setEditingProduct(product);
-    setFormCode(product.code);
-    setFormName(product.name);
-    setFormCategory(product.category);
-    setFormCostPrice(product.costPrice);
-    setFormSalePrice(product.salePrice);
-    setFormStock(product.stock);
-    setFormMinStock(product.minStock);
-    setFormDescription(product.description || '');
+  const handleOpenEditModal = (p: Product) => {
+    setEditingProduct(p);
+    setFormCode(p.code); setFormName(p.name); setFormCategory(p.category);
+    setFormCostPrice(p.costPrice); setFormSalePrice(p.salePrice);
+    setFormStock(p.stock); setFormMinStock(p.minStock); setFormDescription(p.description || '');
     setIsModalOpen(true);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formName.trim() || !formCategory) return;
-
-    const productData = {
-      code: formCode.trim() || generateSKU(formCategory),
-      name: formName.trim(),
-      category: formCategory,
-      costPrice: Number(formCostPrice),
-      salePrice: Number(formSalePrice),
-      stock: Number(formStock),
-      minStock: Number(formMinStock),
-      description: formDescription.trim() || undefined,
-    };
-
-    if (editingProduct) {
-      onUpdateProduct({
-        ...editingProduct,
-        ...productData
-      });
-    } else {
-      onAddProduct(productData);
-    }
+    const data = { code: formCode.trim() || generateSKU(formCategory), name: formName.trim(), category: formCategory, costPrice: Number(formCostPrice), salePrice: Number(formSalePrice), stock: Number(formStock), minStock: Number(formMinStock), description: formDescription.trim() || undefined };
+    editingProduct ? onUpdateProduct({ ...editingProduct, ...data }) : onAddProduct(data);
     setIsModalOpen(false);
   };
 
@@ -134,479 +78,325 @@ export default function Products({
     e.preventDefault();
     if (!newCategoryName.trim()) return;
     onAddCategory(newCategoryName.trim());
-    setNewCategoryName('');
-    setIsCategoryModalOpen(false);
+    setNewCategoryName(''); setIsCategoryModalOpen(false);
   };
 
-  // Quick stock updates
-  const handleQuickStockAdjust = (product: Product, delta: number) => {
-    const updatedStock = Math.max(0, product.stock + delta);
-    onUpdateProduct({
-      ...product,
-      stock: updatedStock
-    });
+  const handleQuickStockAdjust = (p: Product, delta: number) => {
+    onUpdateProduct({ ...p, stock: Math.max(0, p.stock + delta) });
   };
 
-  // Sort handler
   const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortDirection(prev => prev === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortDirection('asc');
-    }
+    if (sortField === field) setSortDirection(d => d === 'asc' ? 'desc' : 'asc');
+    else { setSortField(field); setSortDirection('asc'); }
     setCurrentPage(1);
   };
 
-  // Calculate profit margin helper
-  const calculateMargin = (cost: number, sale: number) => {
-    if (sale <= 0) return 0;
-    return ((sale - cost) / sale) * 100;
-  };
+  const calcMargin = (cost: number, sale: number) => sale > 0 ? ((sale - cost) / sale) * 100 : 0;
 
-  // Filter products
   const filteredProducts = useMemo(() => {
     return products.filter(p => {
-      const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                            p.code.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
-      let matchesStock = true;
-      if (stockFilter === 'low') {
-        matchesStock = p.stock <= p.minStock;
-      } else if (stockFilter === 'out') {
-        matchesStock = p.stock === 0;
-      }
-      return matchesSearch && matchesCategory && matchesStock;
+      const matchSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.code.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchCat = selectedCategory === 'all' || p.category === selectedCategory;
+      let matchStock = true;
+      if (stockFilter === 'low') matchStock = p.stock > 0 && p.stock <= p.minStock;
+      else if (stockFilter === 'out') matchStock = p.stock === 0;
+      else if (stockFilter === 'ok') matchStock = p.stock > p.minStock;
+      const price = p.salePrice;
+      const matchMin = !priceMin || price >= Number(priceMin);
+      const matchMax = !priceMax || price <= Number(priceMax);
+      return matchSearch && matchCat && matchStock && matchMin && matchMax;
     });
-  }, [products, searchQuery, selectedCategory, stockFilter]);
+  }, [products, searchQuery, selectedCategory, stockFilter, priceMin, priceMax]);
 
-  // Sort products
   const sortedProducts = useMemo(() => {
     const sorted = [...filteredProducts];
     sorted.sort((a, b) => {
-      let comparison = 0;
+      let c = 0;
       switch (sortField) {
-        case 'name':
-          comparison = a.name.localeCompare(b.name, 'pt-BR');
-          break;
-        case 'category':
-          comparison = a.category.localeCompare(b.category, 'pt-BR');
-          break;
-        case 'costPrice':
-          comparison = a.costPrice - b.costPrice;
-          break;
-        case 'salePrice':
-          comparison = a.salePrice - b.salePrice;
-          break;
-        case 'stock':
-          comparison = a.stock - b.stock;
-          break;
-        case 'margin':
-          comparison = calculateMargin(a.costPrice, a.salePrice) - calculateMargin(b.costPrice, b.salePrice);
-          break;
+        case 'name': c = a.name.localeCompare(b.name, 'pt-BR'); break;
+        case 'category': c = a.category.localeCompare(b.category, 'pt-BR'); break;
+        case 'costPrice': c = a.costPrice - b.costPrice; break;
+        case 'salePrice': c = a.salePrice - b.salePrice; break;
+        case 'stock': c = a.stock - b.stock; break;
+        case 'margin': c = calcMargin(a.costPrice, a.salePrice) - calcMargin(b.costPrice, b.salePrice); break;
       }
-      return sortDirection === 'asc' ? comparison : -comparison;
+      return sortDirection === 'asc' ? c : -c;
     });
     return sorted;
   }, [filteredProducts, sortField, sortDirection]);
 
-  // Pagination calculations
-  const totalPages = Math.ceil(sortedProducts.length / ITEMS_PER_PAGE);
-  const paginatedProducts = sortedProducts.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  );
+  const totalPages = Math.ceil(sortedProducts.length / itemsPerPage);
+  const paginatedProducts = sortedProducts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-  // Reset to page 1 when filters change
-  useMemo(() => {
-    setCurrentPage(1);
-  }, [searchQuery, selectedCategory, stockFilter]);
+  useMemo(() => setCurrentPage(1), [searchQuery, selectedCategory, stockFilter, priceMin, priceMax, itemsPerPage]);
 
-  // Summary totals (based on all filtered+sorted products, not just current page)
-  const totalStock = sortedProducts.reduce((sum, p) => sum + p.stock, 0);
-  const totalCostValue = sortedProducts.reduce((sum, p) => sum + (p.costPrice * p.stock), 0);
-  const totalRetailValue = sortedProducts.reduce((sum, p) => sum + (p.salePrice * p.stock), 0);
+  const totalStock = sortedProducts.reduce((s, p) => s + p.stock, 0);
+  const totalCostValue = sortedProducts.reduce((s, p) => s + (p.costPrice * p.stock), 0);
+  const totalRetailValue = sortedProducts.reduce((s, p) => s + (p.salePrice * p.stock), 0);
 
-  // Sort indicator component
-  const SortIndicator = ({ field }: { field: SortField }) => {
-    if (sortField !== field) {
-      return <ArrowUpDown className="h-3 w-3 ml-1 opacity-40" />;
-    }
-    return sortDirection === 'asc' 
-      ? <ChevronUp className="h-3 w-3 ml-1 text-indigo-600" />
-      : <ChevronDown className="h-3 w-3 ml-1 text-indigo-600" />;
+  const toggleSelectAll = () => {
+    if (selectedIds.size === paginatedProducts.length) setSelectedIds(new Set());
+    else setSelectedIds(new Set(paginatedProducts.map(p => p.id)));
+  };
+  const toggleSelect = (id: string) => {
+    const next = new Set(selectedIds);
+    next.has(id) ? next.delete(id) : next.add(id);
+    setSelectedIds(next);
   };
 
-  // Pagination range
+  const handleBulkDelete = () => {
+    if (!window.confirm(`Excluir ${selectedIds.size} produtos selecionados?`)) return;
+    selectedIds.forEach(id => onDeleteProduct(id));
+    setSelectedIds(new Set());
+  };
+  const handleBulkCategory = () => {
+    if (!bulkCategoryValue) return;
+    selectedIds.forEach(id => {
+      const p = products.find(p => p.id === id);
+      if (p) onUpdateProduct({ ...p, category: bulkCategoryValue });
+    });
+    setSelectedIds(new Set()); setBulkAction(null);
+  };
+  const handleBulkStock = () => {
+    selectedIds.forEach(id => {
+      const p = products.find(p => p.id === id);
+      if (p) {
+        const newStock = bulkActionType === 'add' ? p.stock + bulkStockValue : Math.max(0, p.stock - bulkStockValue);
+        onUpdateProduct({ ...p, stock: newStock });
+      }
+    });
+    setSelectedIds(new Set()); setBulkAction(null);
+  };
+
+  const handleExportFiltered = () => {
+    const headers = ['SKU', 'Nome', 'Categoria', 'Custo', 'Venda', 'Estoque', 'Mín', 'Margem%'];
+    const rows = sortedProducts.map(p => [p.code, p.name, p.category, p.costPrice, p.salePrice, p.stock, p.minStock, calcMargin(p.costPrice, p.salePrice).toFixed(0)]);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet([headers, ...rows]), 'Estoque');
+    XLSX.writeFile(wb, `Estoque_${new Date().toISOString().substring(0, 10)}.xlsx`);
+  };
+
+  const SortIndicator = ({ field }: { field: SortField }) => sortField !== field ? <ArrowUpDown className="h-3 w-3 ml-1 opacity-40" /> : sortDirection === 'asc' ? <ChevronUp className="h-3 w-3 ml-1 text-indigo-600" /> : <ChevronDown className="h-3 w-3 ml-1 text-indigo-600" />;
+
   const getPaginationRange = () => {
     const range: (number | string)[] = [];
     const maxVisible = 5;
     let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
     let end = Math.min(totalPages, start + maxVisible - 1);
-    if (end - start < maxVisible - 1) {
-      start = Math.max(1, end - maxVisible + 1);
-    }
-    for (let i = start; i <= end; i++) {
-      range.push(i);
-    }
+    if (end - start < maxVisible - 1) start = Math.max(1, end - maxVisible + 1);
+    for (let i = start; i <= end; i++) range.push(i);
     return range;
   };
 
-  const showingFrom = sortedProducts.length === 0 ? 0 : (currentPage - 1) * ITEMS_PER_PAGE + 1;
-  const showingTo = Math.min(currentPage * ITEMS_PER_PAGE, sortedProducts.length);
+  const showingFrom = sortedProducts.length === 0 ? 0 : (currentPage - 1) * itemsPerPage + 1;
+  const showingTo = Math.min(currentPage * itemsPerPage, sortedProducts.length);
+  const hasSelection = selectedIds.size > 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-slate-200 pb-5">
         <div>
-          <h1 id="products-title" className="text-2xl font-bold tracking-tight text-slate-900">Gestão de Estoque</h1>
-          <p className="text-sm text-slate-500 mt-1">Cadastre seus produtos, acompanhe quantidades físicas e gerencie margens de lucro.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">Gestão de Estoque</h1>
+          <p className="text-sm text-slate-500 mt-1">{products.length} produtos cadastrados | {totalStock} peças em estoque | {totalRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} patrimônio</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <button
-            id="new-category-btn"
-            onClick={() => setIsCategoryModalOpen(true)}
-            className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 transition-colors"
-          >
-            Nova Categoria
+          <button onClick={handleExportFiltered} className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 flex items-center gap-1.5 transition-colors">
+            <Download className="h-3.5 w-3.5" /> Exportar
           </button>
-          <button
-            id="new-product-btn"
-            onClick={handleOpenAddModal}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center gap-1.5 shadow-xs transition-colors"
-          >
-            <Plus className="h-4 w-4" />
-            Cadastrar Produto
+          <button onClick={() => setIsCategoryModalOpen(true)} className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 transition-colors">
+            + Categoria
+          </button>
+          <button onClick={handleOpenAddModal} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs transition-colors">
+            <Plus className="h-4 w-4" /> Novo Produto
           </button>
         </div>
       </div>
 
-      {/* Filters Section */}
-      <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm grid grid-cols-1 md:grid-cols-4 gap-4">
-        {/* Search */}
-        <div className="relative md:col-span-2">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 pointer-events-none">
-            <Search className="h-4 w-4" />
-          </span>
-          <input
-            id="product-search-input"
-            type="text"
-            placeholder="Buscar por nome ou código SKU..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 hover:bg-slate-100/50 focus:bg-white text-slate-900 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-          />
-        </div>
-
-        {/* Category Filter */}
-        <div className="flex items-center gap-2 border border-slate-200 rounded-lg bg-slate-50 px-2.5">
-          <span className="text-slate-400"><Filter className="h-4 w-4" /></span>
-          <select
-            id="category-filter-select"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full py-2 bg-transparent text-sm text-slate-700 outline-hidden border-none cursor-pointer focus:ring-0"
-          >
-            <option value="all">Todas Categorias</option>
-            {categories.map(c => (
-              <option key={c.id} value={c.name}>{c.name}</option>
+      {/* Filters */}
+      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm space-y-3">
+        <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
+          <div className="relative flex-1 w-full md:w-auto">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <input type="text" placeholder="Buscar nome ou SKU..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
+              className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 transition-all" />
+          </div>
+          <div className="flex items-center gap-2 border border-slate-200 rounded-lg bg-slate-50 px-2.5 py-1.5 w-full md:w-auto">
+            <Filter className="h-4 w-4 text-slate-400 shrink-0" />
+            <select value={selectedCategory} onChange={e => setSelectedCategory(e.target.value)} className="bg-transparent text-sm outline-none cursor-pointer flex-1 md:flex-none">
+              <option value="all">Todas categorias ({products.length})</option>
+              {categories.map(c => {
+                const count = products.filter(p => p.category === c.name).length;
+                return <option key={c.id} value={c.name}>{c.name} ({count})</option>;
+              })}
+            </select>
+          </div>
+          <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-200/40">
+            {([
+              { key: 'all' as const, label: `Todos (${products.length})` },
+              { key: 'low' as const, label: `Baixo (${products.filter(p => p.stock > 0 && p.stock <= p.minStock).length})` },
+              { key: 'out' as const, label: `Esgotado (${products.filter(p => p.stock === 0).length})` },
+              { key: 'ok' as const, label: `OK (${products.filter(p => p.stock > p.minStock).length})` },
+            ]).map(opt => (
+              <button key={opt.key} onClick={() => setStockFilter(opt.key)}
+                className={`px-2.5 py-1 text-[11px] font-semibold rounded-md transition-colors whitespace-nowrap ${stockFilter === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
+                {opt.label}
+              </button>
             ))}
-          </select>
+          </div>
         </div>
-
-        {/* Stock Alert Filter Toggle */}
-        <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-200/40">
-          <button
-            id="stock-filter-all"
-            onClick={() => setStockFilter('all')}
-            className={`flex-1 py-1 px-2.5 text-xs font-semibold rounded-md transition-colors ${
-              stockFilter === 'all' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-950'
-            }`}
-          >
-            Todos
-          </button>
-          <button
-            id="stock-filter-low"
-            onClick={() => setStockFilter('low')}
-            className={`flex-1 py-1 px-2.5 text-xs font-semibold rounded-md flex items-center justify-center gap-1 transition-colors ${
-              stockFilter === 'low' ? 'bg-white text-rose-600 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-rose-600'
-            }`}
-          >
-            Alerta ({products.filter(p => p.stock <= p.minStock).length})
-          </button>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2 text-xs text-slate-500">
+            <span className="font-semibold">Preço:</span>
+            <input type="number" placeholder="Mín" value={priceMin} onChange={e => setPriceMin(e.target.value)} className="w-20 px-2 py-1 border border-slate-200 rounded text-xs focus:outline-none focus:border-indigo-400" />
+            <span>-</span>
+            <input type="number" placeholder="Máx" value={priceMax} onChange={e => setPriceMax(e.target.value)} className="w-20 px-2 py-1 border border-slate-200 rounded text-xs focus:outline-none focus:border-indigo-400" />
+          </div>
+          <div className="flex items-center gap-2 text-xs text-slate-500 ml-auto">
+            <span>Mostrar:</span>
+            <select value={itemsPerPage} onChange={e => setItemsPerPage(Number(e.target.value))} className="px-2 py-1 border border-slate-200 rounded text-xs focus:outline-none">
+              <option value={20}>20</option><option value={50}>50</option><option value={100}>100</option><option value={9999}>Todos</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      {/* Products Table Card */}
-      <div id="products-table-card" className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+      {/* Bulk Actions Bar */}
+      {hasSelection && (
+        <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 flex flex-wrap items-center gap-3">
+          <span className="text-xs font-bold text-indigo-700">{selectedIds.size} selecionados</span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button onClick={handleBulkDelete} className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold rounded-lg flex items-center gap-1 transition-colors">
+              <Trash2 className="h-3 w-3" /> Excluir
+            </button>
+            {bulkAction === 'category' ? (
+              <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-indigo-200">
+                <select value={bulkCategoryValue} onChange={e => setBulkCategoryValue(e.target.value)} className="text-xs px-2 py-1 border-none outline-none">
+                  <option value="">Selecionar...</option>
+                  {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                </select>
+                <button onClick={handleBulkCategory} className="px-2 py-1 bg-indigo-600 text-white text-[10px] font-bold rounded">OK</button>
+                <button onClick={() => setBulkAction(null)} className="text-slate-400 hover:text-slate-600"><X className="h-3 w-3" /></button>
+              </div>
+            ) : (
+              <button onClick={() => setBulkAction('category')} className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-bold rounded-lg border border-slate-200 flex items-center gap-1 transition-colors">
+                <Layers className="h-3 w-3" /> Mudar Categoria
+              </button>
+            )}
+            {bulkAction === 'stock' ? (
+              <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-indigo-200">
+                <select value={bulkActionType} onChange={e => setBulkActionType(e.target.value as 'add' | 'sub')} className="text-xs px-2 py-1 border-none outline-none">
+                  <option value="add">+ Adicionar</option><option value="sub">- Remover</option>
+                </select>
+                <input type="number" min="1" value={bulkStockValue} onChange={e => setBulkStockValue(Number(e.target.value))} className="w-16 px-2 py-1 border border-slate-200 rounded text-xs text-center" />
+                <button onClick={handleBulkStock} className="px-2 py-1 bg-indigo-600 text-white text-[10px] font-bold rounded">OK</button>
+                <button onClick={() => setBulkAction(null)} className="text-slate-400 hover:text-slate-600"><X className="h-3 w-3" /></button>
+              </div>
+            ) : (
+              <button onClick={() => setBulkAction('stock')} className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-bold rounded-lg border border-slate-200 flex items-center gap-1 transition-colors">
+                <Layers className="h-3 w-3" /> Ajustar Estoque
+              </button>
+            )}
+          </div>
+          <button onClick={() => setSelectedIds(new Set())} className="ml-auto text-[11px] font-bold text-indigo-600 hover:text-indigo-800">Limpar seleção</button>
+        </div>
+      )}
+
+      {/* Table */}
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         {sortedProducts.length === 0 ? (
-          <div className="text-center py-16 px-4">
-            <div className="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center mx-auto text-slate-400 mb-4 border border-slate-100">
-              <Search className="h-6 w-6" />
-            </div>
-            <h3 className="text-sm font-bold text-slate-900">Nenhum produto localizado</h3>
-            <p className="text-xs text-slate-400 max-w-md mx-auto mt-1">
-              Tente reajustar seus filtros, limpar o campo de busca ou cadastre novos itens no estoque.
-            </p>
+          <div className="text-center py-16">
+            <Search className="h-8 w-8 text-slate-300 mx-auto mb-3" />
+            <h3 className="text-sm font-bold text-slate-900">Nenhum produto encontrado</h3>
+            <p className="text-xs text-slate-400 mt-1">Ajuste os filtros ou cadastre novos produtos.</p>
           </div>
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse">
+              <table className="w-full text-left border-collapse text-sm">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-500">
-                    <th 
-                      className="py-3 px-4 cursor-pointer select-none hover:bg-slate-100 transition-colors"
-                      onClick={() => handleSort('name')}
-                    >
-                      <div className="flex items-center">
-                        Código / Produto
-                        <SortIndicator field="name" />
-                      </div>
+                  <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                    <th className="py-3 px-3 w-8">
+                      <button onClick={toggleSelectAll} className="text-slate-400 hover:text-indigo-600">
+                        {selectedIds.size === paginatedProducts.length && paginatedProducts.length > 0 ? <CheckSquare className="h-4 w-4 text-indigo-600" /> : <Square className="h-4 w-4" />}
+                      </button>
                     </th>
-                    <th 
-                      className="py-3 px-4 cursor-pointer select-none hover:bg-slate-100 transition-colors"
-                      onClick={() => handleSort('category')}
-                    >
-                      <div className="flex items-center">
-                        Categoria
-                        <SortIndicator field="category" />
-                      </div>
-                    </th>
-                    <th 
-                      className="py-3 px-4 text-right cursor-pointer select-none hover:bg-slate-100 transition-colors"
-                      onClick={() => handleSort('costPrice')}
-                    >
-                      <div className="flex items-center justify-end">
-                        Valor Pago (Custo)
-                        <SortIndicator field="costPrice" />
-                      </div>
-                    </th>
-                    <th 
-                      className="py-3 px-4 text-right cursor-pointer select-none hover:bg-slate-100 transition-colors"
-                      onClick={() => handleSort('salePrice')}
-                    >
-                      <div className="flex items-center justify-end">
-                        Preço de Venda
-                        <SortIndicator field="salePrice" />
-                      </div>
-                    </th>
-                    <th 
-                      className="py-3 px-4 text-center cursor-pointer select-none hover:bg-slate-100 transition-colors"
-                      onClick={() => handleSort('stock')}
-                    >
-                      <div className="flex items-center justify-center">
-                        Estoque
-                        <SortIndicator field="stock" />
-                      </div>
-                    </th>
-                    <th 
-                      className="py-3 px-4 text-right cursor-pointer select-none hover:bg-slate-100 transition-colors"
-                      onClick={() => handleSort('margin')}
-                    >
-                      <div className="flex items-center justify-end">
-                        Margem
-                        <SortIndicator field="margin" />
-                      </div>
-                    </th>
-                    <th className="py-3 px-4 text-center">Ações</th>
+                    <th className="py-3 px-3 cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('name')}><div className="flex items-center">Produto <SortIndicator field="name" /></div></th>
+                    <th className="py-3 px-3 cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('category')}><div className="flex items-center">Categoria <SortIndicator field="category" /></div></th>
+                    <th className="py-3 px-3 text-right cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('costPrice')}><div className="flex items-center justify-end">Custo <SortIndicator field="costPrice" /></div></th>
+                    <th className="py-3 px-3 text-right cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('salePrice')}><div className="flex items-center justify-end">Venda <SortIndicator field="salePrice" /></div></th>
+                    <th className="py-3 px-3 text-center cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('stock')}><div className="flex items-center justify-center">Estoque <SortIndicator field="stock" /></div></th>
+                    <th className="py-3 px-3 text-right cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('margin')}><div className="flex items-center justify-end">Margem <SortIndicator field="margin" /></div></th>
+                    <th className="py-3 px-3 text-center">Ações</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-sm">
-                  {paginatedProducts.map(product => {
-                    const isLow = product.stock <= product.minStock;
-                    const isOut = product.stock === 0;
-                    const margin = calculateMargin(product.costPrice, product.salePrice);
-                    
+                <tbody className="divide-y divide-slate-100">
+                  {paginatedProducts.map(p => {
+                    const isLow = p.stock > 0 && p.stock <= p.minStock;
+                    const isOut = p.stock === 0;
+                    const margin = calcMargin(p.costPrice, p.salePrice);
                     return (
-                      <tr 
-                        key={product.id} 
-                        className={`hover:bg-slate-50/50 transition-colors ${
-                          isOut ? 'bg-rose-50/10' : isLow ? 'bg-amber-50/10' : ''
-                        }`}
-                      >
-                        {/* Product details */}
-                        <td className="py-3 px-4">
-                          <div className="flex items-start gap-2.5">
-                            <div className="mt-1">
-                              {isOut ? (
-                                <span className="inline-block w-2.5 h-2.5 rounded-full bg-rose-500" title="Esgotado!" />
-                              ) : isLow ? (
-                                <span className="inline-block w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse" title="Estoque Baixo!" />
-                              ) : (
-                                <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500" title="Estoque Saudável" />
-                              )}
-                            </div>
+                      <tr key={p.id} className={`hover:bg-slate-50/50 transition-colors ${isOut ? 'bg-rose-50/20' : isLow ? 'bg-amber-50/20' : ''} ${selectedIds.has(p.id) ? 'bg-indigo-50/30' : ''}`}>
+                        <td className="py-2.5 px-3">
+                          <button onClick={() => toggleSelect(p.id)} className="text-slate-400 hover:text-indigo-600">
+                            {selectedIds.has(p.id) ? <CheckSquare className="h-4 w-4 text-indigo-600" /> : <Square className="h-4 w-4" />}
+                          </button>
+                        </td>
+                        <td className="py-2.5 px-3">
+                          <div className="flex items-center gap-2">
+                            <span className={`w-2 h-2 rounded-full shrink-0 ${isOut ? 'bg-rose-500' : isLow ? 'bg-amber-500 animate-pulse' : 'bg-emerald-500'}`} />
                             <div>
-                              <div className="flex items-center gap-1.5">
-                                <span className="font-mono text-xs text-slate-400 flex items-center gap-0.5">
-                                  <Barcode className="h-3 w-3" />
-                                  {product.code}
-                                </span>
-                              </div>
-                              <p className="font-semibold text-slate-900 mt-0.5">{product.name}</p>
-                              {product.description && (
-                                <p className="text-xs text-slate-400 truncate max-w-[240px]" title={product.description}>
-                                  {product.description}
-                                </p>
-                              )}
+                              <span className="font-mono text-[10px] text-slate-400 flex items-center gap-0.5"><Barcode className="h-2.5 w-2.5" />{p.code}</span>
+                              <p className="font-semibold text-slate-900 text-xs truncate max-w-[200px]">{p.name}</p>
                             </div>
                           </div>
                         </td>
-
-                        {/* Category */}
-                        <td className="py-3 px-4 text-slate-500">
-                          <span className="px-2 py-0.5 bg-slate-100 text-slate-700 text-xs rounded-sm border border-slate-200/50">
-                            {product.category}
-                          </span>
-                        </td>
-
-                        {/* Cost price */}
-                        <td className="py-3 px-4 text-right font-mono text-slate-500">
-                          {product.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                        </td>
-
-                        {/* Sale price */}
-                        <td className="py-3 px-4 text-right font-semibold font-mono text-slate-900">
-                          {product.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                        </td>
-
-                        {/* Stock Level with Quick Adjust */}
-                        <td className="py-3 px-4 text-center">
-                          <div className="inline-flex items-center gap-2">
-                            <button
-                              id={`quick-minus-${product.id}`}
-                              onClick={() => handleQuickStockAdjust(product, -1)}
-                              disabled={product.stock === 0}
-                              className="p-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border border-slate-200/50"
-                              title="Remover 1 do estoque"
-                            >
-                              <Minus className="h-3 w-3" />
-                            </button>
-                            
-                            <div className="w-16 text-center">
-                              <span className={`font-bold font-mono ${
-                                isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : 'text-slate-800'
-                              }`}>
-                                {product.stock} un
-                              </span>
-                              {isLow && (
-                                <span className="block text-[9px] text-amber-600 font-medium">Mín. {product.minStock}</span>
-                              )}
-                            </div>
-
-                            <button
-                              id={`quick-plus-${product.id}`}
-                              onClick={() => handleQuickStockAdjust(product, 1)}
-                              className="p-1 rounded bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors border border-slate-200/50"
-                              title="Adicionar 1 ao estoque"
-                            >
-                              <Plus className="h-3 w-3" />
-                            </button>
+                        <td className="py-2.5 px-3"><span className="px-1.5 py-0.5 bg-slate-100 text-slate-600 text-[10px] rounded font-medium">{p.category}</span></td>
+                        <td className="py-2.5 px-3 text-right font-mono text-xs text-slate-500">{p.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 px-3 text-right font-mono text-xs font-semibold text-slate-900">{p.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 px-3 text-center">
+                          <div className="inline-flex items-center gap-1">
+                            <button onClick={() => handleQuickStockAdjust(p, -1)} disabled={p.stock === 0} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-30 border border-slate-200/50"><Minus className="h-3 w-3" /></button>
+                            <span className={`font-bold font-mono text-xs w-10 text-center ${isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : 'text-slate-800'}`}>{p.stock}</span>
+                            <button onClick={() => handleQuickStockAdjust(p, 1)} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 border border-slate-200/50"><Plus className="h-3 w-3" /></button>
                           </div>
                         </td>
-
-                        {/* Margin */}
-                        <td className="py-3 px-4 text-right">
-                          <span className={`font-semibold inline-flex items-center gap-0.5 text-xs px-2 py-0.5 rounded-full ${
-                            margin >= 50 ? 'bg-emerald-50 text-emerald-700' : margin >= 30 ? 'bg-indigo-50 text-indigo-700' : 'bg-amber-50 text-amber-700'
-                          }`}>
-                            <ArrowUpRight className="h-3 w-3" />
+                        <td className="py-2.5 px-3 text-right">
+                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${margin >= 50 ? 'bg-emerald-50 text-emerald-700' : margin >= 30 ? 'bg-indigo-50 text-indigo-700' : 'bg-amber-50 text-amber-700'}`}>
                             {margin.toFixed(0)}%
                           </span>
                         </td>
-
-                        {/* Edit / Delete Actions */}
-                        <td className="py-3 px-4 text-center">
-                          <div className="flex items-center justify-center gap-1">
-                            <button
-                              id={`edit-prod-${product.id}`}
-                              onClick={() => handleOpenEditModal(product)}
-                              className="p-1.5 hover:bg-indigo-50 text-indigo-600 rounded-lg transition-colors"
-                              title="Editar dados"
-                            >
-                              <Edit2 className="h-4 w-4" />
-                            </button>
-                            <button
-                              id={`delete-prod-${product.id}`}
-                              onClick={() => {
-                                if (window.confirm(`Tem certeza que deseja excluir o produto "${product.name}"?`)) {
-                                  onDeleteProduct(product.id);
-                                }
-                              }}
-                              className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors"
-                              title="Excluir produto"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </button>
+                        <td className="py-2.5 px-3 text-center">
+                          <div className="flex items-center justify-center gap-0.5">
+                            <button onClick={() => handleOpenEditModal(p)} className="p-1 hover:bg-indigo-50 text-indigo-600 rounded transition-colors" title="Editar"><Edit2 className="h-3.5 w-3.5" /></button>
+                            <button onClick={() => { if (window.confirm(`Excluir "${p.name}"?`)) onDeleteProduct(p.id); }} className="p-1 hover:bg-rose-50 text-rose-600 rounded transition-colors" title="Excluir"><Trash2 className="h-3.5 w-3.5" /></button>
                           </div>
                         </td>
                       </tr>
                     );
                   })}
                 </tbody>
-
-                {/* Summary Row */}
                 <tfoot>
-                  <tr className="bg-slate-50 border-t-2 border-slate-200 text-sm font-bold">
-                    <td className="py-3 px-4" colSpan={2}>
-                      <span className="text-slate-600 uppercase text-xs tracking-wider">Totais do Estoque</span>
-                    </td>
-                    <td className="py-3 px-4 text-right font-mono text-slate-600">
-                      {totalCostValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                    </td>
-                    <td className="py-3 px-4 text-right font-mono text-slate-600">
-                      {totalRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-                    </td>
-                    <td className="py-3 px-4 text-center">
-                      <span className="font-mono text-slate-800">{totalStock} un</span>
-                    </td>
-                    <td className="py-3 px-4 text-right text-xs text-slate-500">
-                      {totalCostValue > 0 && (
-                        <span>{(((totalRetailValue - totalCostValue) / totalRetailValue) * 100).toFixed(0)}% média</span>
-                      )}
-                    </td>
-                    <td className="py-3 px-4"></td>
+                  <tr className="bg-slate-50 border-t-2 border-slate-200 font-bold text-xs">
+                    <td className="py-2.5 px-3"></td>
+                    <td className="py-2.5 px-3 text-slate-600 uppercase tracking-wider text-[10px]" colSpan={2}>Totais ({sortedProducts.length} produtos)</td>
+                    <td className="py-2.5 px-3 text-right font-mono text-slate-600">{totalCostValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-2.5 px-3 text-right font-mono text-slate-600">{totalRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-2.5 px-3 text-center font-mono">{totalStock} un</td>
+                    <td className="py-2.5 px-3 text-right text-[10px] text-slate-500">{totalCostValue > 0 ? `${((totalRetailValue - totalCostValue) / totalRetailValue * 100).toFixed(0)}%` : ''}</td>
+                    <td></td>
                   </tr>
                 </tfoot>
               </table>
             </div>
-
-            {/* Pagination & Info */}
-            <div className="border-t border-slate-200 px-4 py-3 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-50/50">
-              <p className="text-xs text-slate-500">
-                Mostrando <span className="font-semibold text-slate-700">{showingFrom}-{showingTo}</span> de <span className="font-semibold text-slate-700">{sortedProducts.length}</span> produtos
-              </p>
+            <div className="border-t border-slate-200 px-4 py-2.5 flex flex-col sm:flex-row items-center justify-between gap-3 bg-slate-50/50">
+              <p className="text-[11px] text-slate-500">Mostrando <span className="font-semibold text-slate-700">{showingFrom}-{showingTo}</span> de <span className="font-semibold text-slate-700">{sortedProducts.length}</span></p>
               <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                  disabled={currentPage === 1}
-                  className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border border-slate-200/60"
-                >
-                  <ChevronLeft className="h-4 w-4" />
-                </button>
+                <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-40 border border-slate-200/60"><ChevronLeft className="h-4 w-4" /></button>
                 {getPaginationRange().map((page, idx) => (
-                  <button
-                    key={idx}
-                    typeof="number"
-                    onClick={() => setCurrentPage(page as number)}
-                    className={`min-w-[32px] h-8 rounded-lg text-xs font-semibold transition-colors border ${
-                      currentPage === page
-                        ? 'bg-indigo-600 text-white border-indigo-600 shadow-xs'
-                        : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
-                    }`}
-                  >
-                    {page}
-                  </button>
+                  <button key={idx} onClick={() => setCurrentPage(page as number)} className={`min-w-[28px] h-7 rounded-lg text-[11px] font-semibold border transition-colors ${currentPage === page ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}>{page}</button>
                 ))}
-                <button
-                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                  disabled={currentPage === totalPages}
-                  className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors border border-slate-200/60"
-                >
-                  <ChevronRight className="h-4 w-4" />
-                </button>
+                <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages} className="p-1.5 rounded-lg text-slate-500 hover:bg-slate-100 disabled:opacity-40 border border-slate-200/60"><ChevronRight className="h-4 w-4" /></button>
               </div>
             </div>
           </>
@@ -615,250 +405,89 @@ export default function Products({
 
       {/* PRODUCT FORM MODAL */}
       {isModalOpen && (
-        <div id="product-form-modal" className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden border border-slate-200 flex flex-col max-h-[90vh]">
-            {/* Modal Header */}
-            <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg border border-slate-200 flex flex-col max-h-[90vh]">
+            <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50 rounded-t-xl">
               <div>
-                <h3 className="text-base font-bold text-slate-900">
-                  {editingProduct ? 'Editar Produto' : 'Adicionar Novo Produto'}
-                </h3>
-                <p className="text-xs text-slate-400 mt-0.5">Preencha as informações detalhadas para manter seu estoque atualizado.</p>
+                <h3 className="text-base font-bold text-slate-900">{editingProduct ? 'Editar Produto' : 'Novo Produto'}</h3>
+                <p className="text-xs text-slate-400 mt-0.5">Preencha os dados do produto.</p>
               </div>
-              <button
-                id="close-modal-btn"
-                onClick={() => setIsModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-all"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100"><X className="h-5 w-5" /></button>
             </div>
-
-            {/* Modal Form */}
             <form onSubmit={handleSubmit} className="p-5 space-y-4 overflow-y-auto">
               <div className="grid grid-cols-2 gap-4">
-                {/* SKU Code */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Código SKU</label>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">SKU</label>
                   <div className="relative">
-                    <input
-                      id="form-code"
-                      type="text"
-                      required
-                      placeholder="Ex: ELE-SW01"
-                      value={formCode}
-                      onChange={(e) => setFormCode(e.target.value.toUpperCase())}
-                      className="w-full pl-3 pr-8 py-2 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-mono transition-all"
-                    />
-                    <button
-                      id="regen-sku-btn"
-                      type="button"
-                      onClick={() => setFormCode(generateSKU(formCategory))}
-                      className="absolute inset-y-0 right-0 flex items-center pr-2.5 text-slate-400 hover:text-indigo-600"
-                      title="Gerar código automático"
-                    >
-                      <Sparkles className="h-4 w-4" />
-                    </button>
+                    <input type="text" required value={formCode} onChange={e => setFormCode(e.target.value.toUpperCase())} className="w-full pl-3 pr-8 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
+                    <button type="button" onClick={() => setFormCode(generateSKU(formCategory))} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-indigo-600"><Sparkles className="h-4 w-4" /></button>
                   </div>
                 </div>
-
-                {/* Category Selection */}
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Categoria</label>
-                  <select
-                    id="form-category"
-                    required
-                    value={formCategory}
-                    onChange={(e) => setFormCategory(e.target.value)}
-                    className="w-full py-2 px-3 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-slate-700 bg-white"
-                  >
-                    {categories.map(c => (
-                      <option key={c.id} value={c.name}>{c.name}</option>
-                    ))}
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Categoria</label>
+                  <select required value={formCategory} onChange={e => setFormCategory(e.target.value)} className="w-full py-2 px-3 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 bg-white">
+                    {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
                   </select>
                 </div>
               </div>
-
-              {/* Product Name */}
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Nome do Produto</label>
-                <input
-                  id="form-name"
-                  type="text"
-                  required
-                  placeholder="Ex: Smartwatch Sport Ultra v2"
-                  value={formName}
-                  onChange={(e) => setFormName(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-                />
+                <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Nome do Produto</label>
+                <input type="text" required value={formName} onChange={e => setFormName(e.target.value)} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400" />
               </div>
-
-              {/* Financial values (Cost and Selling Price) */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Valor Pago (Custo)</label>
-                  <div className="relative">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs font-semibold pointer-events-none">R$</span>
-                    <input
-                      id="form-cost-price"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      required
-                      placeholder="0,00"
-                      value={formCostPrice || ''}
-                      onChange={(e) => setFormCostPrice(Number(e.target.value))}
-                      className="w-full pl-8 pr-3 py-2 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-mono transition-all"
-                    />
-                  </div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Custo (R$)</label>
+                  <input type="number" step="0.01" min="0" required value={formCostPrice || ''} onChange={e => setFormCostPrice(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Valor de Venda</label>
-                  <div className="relative">
-                    <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400 text-xs font-semibold pointer-events-none">R$</span>
-                    <input
-                      id="form-sale-price"
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      required
-                      placeholder="0,00"
-                      value={formSalePrice || ''}
-                      onChange={(e) => setFormSalePrice(Number(e.target.value))}
-                      className="w-full pl-8 pr-3 py-2 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-mono transition-all"
-                    />
-                  </div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Venda (R$)</label>
+                  <input type="number" step="0.01" min="0" required value={formSalePrice || ''} onChange={e => setFormSalePrice(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
               </div>
-
-              {/* Preview Margin Alert */}
               {formSalePrice > 0 && (
-                <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between text-xs">
-                  <span className="text-slate-500 font-medium">Margem Calculada:</span>
-                  <div className="flex items-center gap-1 font-bold">
-                    <span className={formSalePrice - formCostPrice >= 0 ? 'text-emerald-600' : 'text-rose-600'}>
-                      {(formSalePrice - formCostPrice).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} de lucro por unidade
-                    </span>
-                    <span className={`px-2 py-0.5 rounded-full ${
-                      calculateMargin(formCostPrice, formSalePrice) >= 30 ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
-                    }`}>
-                      ({calculateMargin(formCostPrice, formSalePrice).toFixed(0)}%)
-                    </span>
-                  </div>
+                <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between text-xs">
+                  <span className="text-slate-500">Margem:</span>
+                  <span className={`font-bold ${formSalePrice >= formCostPrice ? 'text-emerald-600' : 'text-rose-600'}`}>
+                    {(formSalePrice - formCostPrice).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} ({calcMargin(formCostPrice, formSalePrice).toFixed(0)}%)
+                  </span>
                 </div>
               )}
-
-              {/* Stock settings */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Quantidade em Estoque</label>
-                  <input
-                    id="form-stock"
-                    type="number"
-                    min="0"
-                    required
-                    placeholder="Ex: 10"
-                    value={formStock}
-                    onChange={(e) => setFormStock(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-mono transition-all"
-                  />
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Estoque</label>
+                  <input type="number" min="0" required value={formStock} onChange={e => setFormStock(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
-
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Estoque Mínimo (Alerta)</label>
-                  <input
-                    id="form-min-stock"
-                    type="number"
-                    min="1"
-                    required
-                    placeholder="Ex: 3"
-                    value={formMinStock}
-                    onChange={(e) => setFormMinStock(Number(e.target.value))}
-                    className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 font-mono transition-all"
-                  />
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Estoque Mínimo</label>
+                  <input type="number" min="1" required value={formMinStock} onChange={e => setFormMinStock(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
               </div>
-
-              {/* Description */}
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Descrição / Notas (Opcional)</label>
-                <textarea
-                  id="form-description"
-                  rows={2}
-                  placeholder="Informações adicionais do produto, fornecedor ou especificações técnicas..."
-                  value={formDescription}
-                  onChange={(e) => setFormDescription(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all resize-none"
-                />
+                <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Descrição (opcional)</label>
+                <textarea rows={2} value={formDescription} onChange={e => setFormDescription(e.target.value)} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 resize-none" />
               </div>
-
-              {/* Form Buttons */}
-              <div className="border-t border-slate-200 pt-4 flex items-center justify-end gap-2 bg-white">
-                <button
-                  id="form-cancel-btn"
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors"
-                >
-                  Cancelar
-                </button>
-                <button
-                  id="form-save-btn"
-                  type="submit"
-                  className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold shadow-xs transition-colors"
-                >
-                  {editingProduct ? 'Salvar Alterações' : 'Confirmar Cadastro'}
-                </button>
+              <div className="border-t border-slate-200 pt-4 flex items-center justify-end gap-2">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-50">Cancelar</button>
+                <button type="submit" className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold shadow-xs">{editingProduct ? 'Salvar' : 'Cadastrar'}</button>
               </div>
             </form>
           </div>
         </div>
       )}
 
-      {/* CATEGORY FORM MODAL */}
+      {/* CATEGORY MODAL */}
       {isCategoryModalOpen && (
-        <div id="category-modal" className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-sm overflow-hidden border border-slate-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-sm border border-slate-200">
             <div className="p-5 border-b border-slate-200 flex items-center justify-between">
               <h3 className="text-base font-bold text-slate-900">Nova Categoria</h3>
-              <button
-                id="close-category-btn"
-                onClick={() => setIsCategoryModalOpen(false)}
-                className="text-slate-400 hover:text-slate-600 p-1"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              <button onClick={() => setIsCategoryModalOpen(false)} className="text-slate-400 hover:text-slate-600 p-1"><X className="h-5 w-5" /></button>
             </div>
             <form onSubmit={handleAddCategorySubmit} className="p-5 space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Nome da Categoria</label>
-                <input
-                  id="category-name-input"
-                  type="text"
-                  required
-                  placeholder="Ex: Livros, Perfumaria..."
-                  value={newCategoryName}
-                  onChange={(e) => setNewCategoryName(e.target.value)}
-                  className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
-                />
-              </div>
+              <input type="text" required placeholder="Nome da categoria" value={newCategoryName} onChange={e => setNewCategoryName(e.target.value)} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400" />
               <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200">
-                <button
-                  id="cancel-category-btn"
-                  type="button"
-                  onClick={() => setIsCategoryModalOpen(false)}
-                  className="px-3 py-1.5 border border-slate-200 text-slate-700 rounded-lg text-xs font-semibold hover:bg-slate-50"
-                >
-                  Cancelar
-                </button>
-                <button
-                  id="save-category-btn"
-                  type="submit"
-                  className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold shadow-xs"
-                >
-                  Adicionar
-                </button>
+                <button type="button" onClick={() => setIsCategoryModalOpen(false)} className="px-3 py-1.5 border border-slate-200 text-slate-700 rounded-lg text-xs font-semibold">Cancelar</button>
+                <button type="submit" className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold">Adicionar</button>
               </div>
             </form>
           </div>
