@@ -20,7 +20,7 @@ interface DashboardProps {
 }
 
 export default function Dashboard({ products, sales, onNavigate }: DashboardProps) {
-  const [timeRange, setTimeRange] = useState<'1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('30days');
+  const [timeRange, setTimeRange] = useState<'all' | '1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('all');
   const [customStart, setCustomStart] = useState(() => {
     const d = new Date(); d.setMonth(d.getMonth() - 1); return d.toISOString().split('T')[0];
   });
@@ -30,13 +30,14 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   const completedSales = useMemo(() => {
     return sales.filter(s => {
       if (s.status !== 'completed') return false;
+      if (timeRange === 'all') return true;
       const saleDate = new Date(s.date);
-      const now = new Date();
       if (timeRange === 'custom') {
         const start = new Date(customStart + 'T00:00:00');
         const end = new Date(customEnd + 'T23:59:59');
         return saleDate >= start && saleDate <= end;
       }
+      const now = new Date();
       const daysToCount = timeRange === '1day' ? 1 : timeRange === '7days' ? 7 : timeRange === '14days' ? 14 : timeRange === '30days' ? 30 : 365;
       const cutoff = new Date();
       cutoff.setDate(now.getDate() - daysToCount);
@@ -143,6 +144,22 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
           profit: hourSales.reduce((acc, s) => acc + s.profit, 0)
         });
       }
+    } else if (timeRange === 'all') {
+      // All time: group by month
+      const months = new Map<string, { revenue: number; profit: number }>();
+      completedSales.forEach(sale => {
+        const d = new Date(sale.date);
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+        if (!months.has(key)) months.set(key, { revenue: 0, profit: 0 });
+        const m = months.get(key)!;
+        m.revenue += sale.total;
+        m.profit += sale.profit;
+      });
+      const sorted = Array.from(months.entries()).sort((a, b) => a[0].localeCompare(b[0]));
+      sorted.forEach(([key, val]) => {
+        const [y, mo] = key.split('-');
+        data.push({ label: `${mo}/${y.substring(2)}`, revenue: val.revenue, profit: val.profit });
+      });
     } else {
       // 7, 14, 30 days or 1 year: group by day
       const daysToCount = timeRange === '7days' ? 7 : timeRange === '14days' ? 14 : timeRange === '30days' ? 30 : 365;
@@ -262,6 +279,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
 
           <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/50 flex-wrap">
             {([
+              { key: 'all' as const, label: 'Todos' },
               { key: '1day' as const, label: '1 Dia' },
               { key: '7days' as const, label: '7 Dias' },
               { key: '14days' as const, label: '14 Dias' },
@@ -380,7 +398,8 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
             <div>
               <h2 className="text-base font-bold text-slate-900">Faturamento</h2>
               <p className="text-xs text-slate-400 mt-0.5">
-                {timeRange === '1day' ? 'Vendas por hora hoje' : 
+                {timeRange === 'all' ? 'Todos os períodos' :
+                 timeRange === '1day' ? 'Vendas por hora hoje' : 
                  timeRange === 'custom' ? 'Vendas no período selecionado' : 
                  `Últimos ${timeRange === '7days' ? '7' : timeRange === '14days' ? '14' : timeRange === '30days' ? '30' : '365'} dias`}
               </p>
