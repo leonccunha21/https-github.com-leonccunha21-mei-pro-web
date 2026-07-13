@@ -10,7 +10,8 @@
  *   git-push [msg]     Commita e envia para o GitHub (com throttle/retry)
  *   sync [msg]         Extrai planilha + pull + commit + push (fluxo completo)
  *   deploy             Deploy no Vercel (produção) com retentativas
- *   publish [msg]      sync + deploy
+ *   publish [msg]      sync + backup-local-db + deploy
+ *   backup-local-db    Embala o banco completo (data/local-db.json) em public/seed-backup.json
  *   dev                Inicia servidor de desenvolvimento
  *   build              Compila o projeto (produção)
  *   lint               Verifica tipos TypeScript
@@ -168,7 +169,27 @@ const COMMANDS = {
       console.error('[BOT] Sync falhou — abortando publicação.');
       return false;
     }
+    COMMANDS['backup-local-db']();
     return COMMANDS.deploy();
+  },
+
+  // Copia o banco completo sincronizado pelo servidor local (data/local-db.json)
+  // para public/seed-backup.json, que é embalado no build. Assim, um navegador/
+  // PC novo já abre com TODOS os dados (empréstimos, marketplace, etc.) sem
+  // precisar de export/import manual.
+  'backup-local-db'() {
+    const src = path.join(PROJECT_ROOT, 'data', 'local-db.json');
+    const destDir = path.join(PROJECT_ROOT, 'public');
+    const dest = path.join(destDir, 'seed-backup.json');
+    if (!fs.existsSync(src)) {
+      console.warn('[BOT] data/local-db.json não encontrado — mantendo seed-backup.json anterior (se houver).');
+      return false;
+    }
+    if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+    fs.copyFileSync(src, dest);
+    const sizeMb = (fs.statSync(dest).size / (1024 * 1024)).toFixed(2);
+    console.log(`[BOT] Banco completo embalado em public/seed-backup.json (${sizeMb} MB).`);
+    return true;
   },
 
   dev() {

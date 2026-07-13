@@ -14,3 +14,4 @@ arquivos excel/
 data/excel/~$*.xlsx
 
 data/local-db.json
+public/seed-backup.json

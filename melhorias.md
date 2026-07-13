@@ -50,12 +50,14 @@
 [ok] Dashboard: botão de olho (Eye/EyeOff) no cabeçalho para ocultar/exibir todos os valores monetários (KPIs, avaliação de estoque, Mais Vendidos e pagamentos).
 [ok] Filtro de Marketplace (Devedores) normalizado: ignora variantes de "Loja Física" (LOJA FISICA, Loja Fisica, etc.) e usa saleChannel + ecommerceOrderId corretamente.
 [ok] Backup portátil (troca de PC): botões Exportar/Restaurar Backup Completo (.json) em Configurações que salvam e restauam TODOS os dados (vendas, empréstimos, clientes, fornecedores, compras, fechamentos, marketplace, perfil). Antes o backup só cobria produtos/vendas/categorias/despesas e perdia os demais.
+[ok] Seed embalado para troca de PC sem passo manual: o `publish` copia o banco completo sincronizado (data/local-db.json) para public/seed-backup.json, servido pelo site; um navegador/PC novo com IndexedDB vazio ja abre com todos os dados. Comando `node scripts/bot.cjs backup-local-db`.
 
 ## Pendências / o que não ficou ok (preencher ao validar)
 [ ] __________________________________________________
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.9 [ok] — 13/07/2026: seed embalado (public/seed-backup.json) para troca de PC sem export/import manual; comando backup-local-db no bot.
 - v2.6.8 [ok] — 13/07/2026: backup portátil completo (Exportar/Restaurar Backup .json em Configurações) com todos os dados para troca de PC.
 - v2.6.7 [ok] — 13/07/2026: persistência local em IndexedDB (fim do reset do banco no site publicado); botão ocultar valores no Dashboard; filtro de Marketplace normalizado.
 - v2.6.6 [ok] — 13/07/2026: botão WhatsApp de cobrança nos empréstimos; Alertas de Reposição só com mínimo > 0; Mais Vendidos ordenado por volume e reativo ao filtro.
