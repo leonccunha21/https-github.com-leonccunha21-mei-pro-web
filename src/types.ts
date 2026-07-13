@@ -38,6 +38,7 @@ export interface Sale {
   status: 'completed' | 'cancelled' | 'pending';
   paidAt?: string;
   ecommerceOrderId?: string; // ID do pedido Shopee/TikTok/etc
+  saleType: 'CPF' | 'CNPJ';
   notes?: string;
 }
 

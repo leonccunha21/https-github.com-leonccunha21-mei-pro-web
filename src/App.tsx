@@ -398,6 +398,7 @@ export default function App() {
     paymentMethod: PaymentMethod;
     discount: number;
     ecommerceOrderId?: string;
+    saleType: 'CPF' | 'CNPJ';
     notes?: string;
   }) => {
     // 1. Calculate costs and prices with floating point fix
@@ -421,6 +422,7 @@ export default function App() {
       profit,
       status: 'completed',
       ecommerceOrderId: saleData.ecommerceOrderId,
+      saleType: saleData.saleType,
       notes: saleData.notes
     };
 

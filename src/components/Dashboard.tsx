@@ -25,10 +25,17 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
     const d = new Date(); d.setMonth(d.getMonth() - 1); return d.toISOString().split('T')[0];
   });
   const [customEnd, setCustomEnd] = useState(() => new Date().toISOString().split('T')[0]);
+  const [selectedYear, setSelectedYear] = useState<'all' | number>('all');
 
-  // Filter completed sales by time range
+  const availableYears = useMemo(() => {
+    const years = new Set<number>();
+    sales.filter(s => s.status === 'completed').forEach(s => years.add(new Date(s.date).getFullYear()));
+    return Array.from(years).sort((a, b) => b - a);
+  }, [sales]);
+
+  // Filter completed sales by time range and year
   const completedSales = useMemo(() => {
-    return sales.filter(s => {
+    let result = sales.filter(s => {
       if (s.status !== 'completed') return false;
       if (timeRange === 'all') return true;
       const saleDate = new Date(s.date);
@@ -44,7 +51,11 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       cutoff.setHours(0, 0, 0, 0);
       return saleDate >= cutoff;
     });
-  }, [sales, timeRange, customStart, customEnd]);
+    if (selectedYear !== 'all') {
+      result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
+    }
+    return result;
+  }, [sales, timeRange, customStart, customEnd, selectedYear]);
 
   // Calculate metrics
   const totalRevenue = completedSales.reduce((acc, s) => acc + s.total, 0);
@@ -278,6 +289,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
           </button>
         </div>
 
+        <div className="flex flex-wrap items-center gap-2">
         <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/50 overflow-x-auto no-scrollbar">
           {([
             { key: 'all' as const, label: 'Todos' },
@@ -299,6 +311,29 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
               {opt.label}
             </button>
           ))}
+        </div>
+
+        <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/50 overflow-x-auto no-scrollbar">
+          <button
+            onClick={() => setSelectedYear('all')}
+            className={`px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
+              selectedYear === 'all' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+            }`}
+          >
+            Todos os Anos
+          </button>
+          {availableYears.map(y => (
+            <button
+              key={y}
+              onClick={() => setSelectedYear(y)}
+              className={`px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
+                selectedYear === y ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              {y}
+            </button>
+          ))}
+        </div>
         </div>
       </div>
 

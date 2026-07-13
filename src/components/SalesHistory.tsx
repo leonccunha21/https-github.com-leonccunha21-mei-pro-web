@@ -300,6 +300,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
       'Itens': sale.items.reduce((acc, item) => acc + item.quantity, 0),
       'Produtos': sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', '),
       'Pagamento': paymentMethodLabelsPlain[sale.paymentMethod] || sale.paymentMethod,
+      'Tipo': sale.saleType || 'CPF',
       'ID Pedido': sale.ecommerceOrderId || '',
       'Valor Pago (Custo)': sale.totalCost,
       'Valor Vendido': sale.total,
@@ -316,6 +317,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
       'Itens': '',
       'Produtos': '',
       'Pagamento': '',
+      'Tipo': '',
       'Valor Pago (Custo)': summaryTotals.totalRevenue - summaryTotals.totalProfit,
       'Valor Vendido': summaryTotals.totalRevenue,
       'Lucro': summaryTotals.totalProfit,
@@ -776,6 +778,10 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                   <p className="text-slate-700 mt-1 flex items-center gap-1">
                     <CreditCard className="h-3 w-3 text-slate-400" />
                     Meio: <span className="font-semibold">{paymentMethodLabels[selectedSale.paymentMethod] || selectedSale.paymentMethod}</span>
+                  </p>
+                  <p className="text-slate-700 mt-1 flex items-center gap-1">
+                    <ShoppingCart className="h-3 w-3 text-slate-400" />
+                    Tipo: <span className={`font-semibold ${selectedSale.saleType === 'CNPJ' ? 'text-indigo-700' : 'text-emerald-700'}`}>{selectedSale.saleType || 'CPF'}</span>
                   </p>
                   {selectedSale.ecommerceOrderId && (
                     <p className="text-slate-700 mt-1 flex items-center gap-1">

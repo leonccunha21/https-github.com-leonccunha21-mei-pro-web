@@ -155,6 +155,10 @@ function parseSalesSheet(sheetName, year) {
       }
     }
     
+    // Determine saleType based on channel
+    let saleType = 'CPF';
+    if (saleChannel !== 'Loja Física') saleType = 'CNPJ';
+    
     // Columns differ by year:
     // 2024/2025: [0]Mes [1]Data [2]Produto [3]QT [4]Cliente [5]Vendedor [6]CustoUn [7]ValorGasto [8]ValorUniVenda [9]ValorVenda [10]TipoVenda [11]ValorCNPJ [12]Lucro [13]FormaPagam [14]%Lucro [15]RecebidoLoja
     // 2026:      [0]Mes [1]Data [2]Produto [3]QT [4]Cliente [5]Vendedor [6]CustoUn [7]ValorGasto [8]ValorUniVenda [9]entrada [10]ValorVenda [11]Lucro [12]Coluna2 [13]RecebidoLoja
@@ -195,6 +199,7 @@ function parseSalesSheet(sheetName, year) {
       paymentMethod,
       saleChannel,
       ecommerceOrderId,
+      saleType,
       year
     });
   }
@@ -302,6 +307,7 @@ for (const sale of allSales) {
     totalCost: roundCurrency(sale.totalCost),
     profit: roundCurrency(sale.profit),
     ecommerceOrderId: sale.ecommerceOrderId || undefined,
+    saleType: sale.saleType,
     notes: sale.saleChannel !== 'Loja Física' ? `[client_data]{"channel":"${sale.saleChannel}"}` : undefined,
     status: 'completed'
   });

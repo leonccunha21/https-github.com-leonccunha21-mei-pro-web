@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Product, SaleItem, PaymentMethod } from '../types';
 import { roundCurrency } from '../lib/currency';
 import { 
@@ -29,6 +29,7 @@ interface SalesProps {
     paymentMethod: PaymentMethod;
     discount: number;
     ecommerceOrderId?: string;
+    saleType: 'CPF' | 'CNPJ';
     notes?: string;
   }) => void;
   onNavigate: (tab: 'products') => void;
@@ -60,6 +61,16 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
   const [showMaxDiscountWarning, setShowMaxDiscountWarning] = useState<boolean>(false);
   const [saleNotes, setSaleNotes] = useState('');
   const [ecommerceOrderId, setEcommerceOrderId] = useState('');
+  const [saleType, setSaleType] = useState<'CPF' | 'CNPJ'>('CPF');
+  
+  // Auto-set saleType based on channel
+  useEffect(() => {
+    if (isEcommerceChannel(saleChannel)) {
+      setSaleType('CNPJ');
+    } else {
+      setSaleType('CPF');
+    }
+  }, [saleChannel]);
   
   // Checkout feedback
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -369,6 +380,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
       paymentMethod,
       discount: discountPercent,
       ecommerceOrderId: isEcommerceChannel(saleChannel) ? ecommerceOrderId.trim() || undefined : undefined,
+      saleType,
       notes: combinedNotes || undefined
     });
 
@@ -398,6 +410,7 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
     setShowMaxDiscountWarning(false);
     setSaleNotes('');
     setEcommerceOrderId('');
+    setSaleType('CPF');
     setErrorMessage(null);
     setSuccessMessage(true);
     
@@ -814,6 +827,36 @@ export default function Sales({ products, onRegisterSale, onNavigate }: SalesPro
                 <p className="text-[10px] text-amber-600 mt-1">Código de rastreamento do pedido no {saleChannel}.</p>
               </div>
             )}
+
+            {/* Sale Type selector (visible for all channels) */}
+            <div>
+              <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Tipo de Venda (Declaração Imposto)</label>
+              <div className="grid grid-cols-2 gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setSaleType('CPF')}
+                  className={`px-2 py-1.5 text-[10px] font-bold rounded-md transition-all ${
+                    saleType === 'CPF'
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200'
+                  }`}
+                >
+                  CPF - Consumidor Final
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setSaleType('CNPJ')}
+                  className={`px-2 py-1.5 text-[10px] font-bold rounded-md transition-all ${
+                    saleType === 'CNPJ'
+                      ? 'bg-indigo-600 text-white shadow-sm'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200'
+                  }`}
+                >
+                  CNPJ - Revenda / Empresa
+                </button>
+              </div>
+              <p className="text-[10px] text-slate-400 mt-1">E-commerce é automaticamente definido como CNPJ. Lojas físicas como CPF.</p>
+            </div>
 
             {/* Payment Method & Discount percent */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

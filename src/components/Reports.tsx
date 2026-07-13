@@ -83,8 +83,10 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       );
     }
 
+    result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
+
     return result;
-  }, [completedSales, resumeTimeRange, selectedPayment, selectedCategory, products]);
+  }, [completedSales, resumeTimeRange, selectedPayment, selectedCategory, selectedYear, products]);
 
   const resumeData = useMemo(() => {
     const totalFaturamento = filteredSales.reduce((acc, s) => acc + s.total, 0);
@@ -244,6 +246,20 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
         <div className="w-px h-5 bg-slate-200" />
 
         <div className="flex items-center gap-1.5">
+          <Calendar className="h-3.5 w-3.5 text-slate-400" />
+          <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
+        </div>
+        <select
+          value={selectedYear}
+          onChange={e => setSelectedYear(parseInt(e.target.value))}
+          className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
+        >
+          {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
+        </select>
+
+        <div className="w-px h-5 bg-slate-200" />
+
+        <div className="flex items-center gap-1.5">
           <PieChart className="h-3.5 w-3.5 text-slate-400" />
           <label className="text-[10px] font-bold text-slate-500 uppercase">Categoria:</label>
         </div>
@@ -299,6 +315,54 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
               <p className="text-xs text-slate-400 mt-1.5">% de lucro sobre faturamento.</p>
             </div>
           </div>
+
+          {/* ===== Declaração de Imposto - CPF vs CNPJ ===== */}
+          {availableYears.length > 0 && (
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+                <BarChart3 className="h-5 w-5 text-slate-500" />
+                <h2 className="text-base font-bold text-slate-900">Declaração de Imposto - CPF vs CNPJ</h2>
+              </div>
+              <div className="flex items-center gap-3 mb-4">
+                <Calendar className="h-4 w-4 text-slate-400" />
+                <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
+                <select
+                  value={selectedYear}
+                  onChange={e => setSelectedYear(parseInt(e.target.value))}
+                  className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium"
+                >
+                  {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
+                </select>
+              </div>
+              {(() => {
+                const yearSales = completedSales.filter(s => new Date(s.date).getFullYear() === selectedYear);
+                const cpfSales = yearSales.filter(s => s.saleType === 'CPF');
+                const cnpjSales = yearSales.filter(s => s.saleType === 'CNPJ');
+                const cpfTotal = cpfSales.reduce((a, s) => a + s.total, 0);
+                const cnpjTotal = cnpjSales.reduce((a, s) => a + s.total, 0);
+                const overallTotal = cpfTotal + cnpjTotal;
+                return (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
+                      <span className="text-[10px] font-bold text-emerald-600 uppercase">CPF - Consumidor Final</span>
+                      <span className="text-xl font-bold font-mono text-emerald-800 block mt-2">{cpfTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                      <span className="text-xs text-emerald-600 mt-1 block">{cpfSales.length} venda{cpfSales.length !== 1 ? 's' : ''}</span>
+                    </div>
+                    <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
+                      <span className="text-[10px] font-bold text-indigo-600 uppercase">CNPJ - Revenda / Empresa</span>
+                      <span className="text-xl font-bold font-mono text-indigo-800 block mt-2">{cnpjTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                      <span className="text-xs text-indigo-600 mt-1 block">{cnpjSales.length} venda{cnpjSales.length !== 1 ? 's' : ''}</span>
+                    </div>
+                    <div className="p-4 bg-slate-800 rounded-xl border border-slate-700 text-white">
+                      <span className="text-[10px] font-bold text-slate-300 uppercase">Total {selectedYear}</span>
+                      <span className="text-xl font-bold font-mono block mt-2">{overallTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                      <span className="text-xs text-slate-300 mt-1 block">{yearSales.length} venda{yearSales.length !== 1 ? 's' : ''}</span>
+                    </div>
+                  </div>
+                );
+              })()}
+            </div>
+          )}
 
           {yearlyData.length > 0 && (
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">

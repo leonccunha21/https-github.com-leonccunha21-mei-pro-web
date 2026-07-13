@@ -70,7 +70,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_2",
@@ -82,7 +82,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_3",
@@ -94,7 +94,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_4",
@@ -106,7 +106,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_5",
@@ -118,7 +118,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_6",
@@ -130,7 +130,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_7",
@@ -142,7 +142,7 @@ export const initialProducts: Product[] = [
     "stock": 2,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_8",
@@ -154,7 +154,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_9",
@@ -166,7 +166,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_10",
@@ -178,7 +178,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_11",
@@ -190,7 +190,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_12",
@@ -202,7 +202,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_13",
@@ -214,7 +214,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_14",
@@ -226,7 +226,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_15",
@@ -238,7 +238,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_16",
@@ -250,7 +250,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_17",
@@ -262,7 +262,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_18",
@@ -274,7 +274,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_19",
@@ -286,7 +286,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_20",
@@ -298,7 +298,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_21",
@@ -310,7 +310,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_22",
@@ -322,7 +322,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_23",
@@ -334,7 +334,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_24",
@@ -346,7 +346,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_25",
@@ -358,7 +358,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_26",
@@ -370,7 +370,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_27",
@@ -382,7 +382,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_28",
@@ -394,7 +394,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_29",
@@ -406,7 +406,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_30",
@@ -418,7 +418,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_31",
@@ -430,7 +430,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_32",
@@ -442,7 +442,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_33",
@@ -454,7 +454,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_34",
@@ -466,7 +466,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_35",
@@ -478,7 +478,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_36",
@@ -490,7 +490,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_37",
@@ -502,7 +502,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_38",
@@ -514,7 +514,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_39",
@@ -526,7 +526,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_40",
@@ -538,7 +538,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_41",
@@ -550,7 +550,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_42",
@@ -562,7 +562,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_43",
@@ -574,7 +574,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_44",
@@ -586,7 +586,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_45",
@@ -598,7 +598,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_46",
@@ -610,7 +610,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_47",
@@ -622,7 +622,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_48",
@@ -634,7 +634,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_49",
@@ -646,7 +646,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_50",
@@ -658,7 +658,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_51",
@@ -670,7 +670,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_52",
@@ -682,7 +682,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_53",
@@ -694,7 +694,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_54",
@@ -706,7 +706,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_55",
@@ -718,7 +718,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_56",
@@ -730,7 +730,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_57",
@@ -742,7 +742,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_58",
@@ -754,7 +754,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_59",
@@ -766,7 +766,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_60",
@@ -778,7 +778,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_61",
@@ -790,7 +790,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_62",
@@ -802,7 +802,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_63",
@@ -814,7 +814,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_64",
@@ -826,7 +826,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_65",
@@ -838,7 +838,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_66",
@@ -850,7 +850,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_67",
@@ -862,7 +862,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_68",
@@ -874,7 +874,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_69",
@@ -886,7 +886,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_70",
@@ -898,7 +898,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_71",
@@ -910,7 +910,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_72",
@@ -922,7 +922,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_73",
@@ -934,7 +934,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_74",
@@ -946,7 +946,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_75",
@@ -958,7 +958,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_76",
@@ -970,7 +970,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_77",
@@ -982,7 +982,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_78",
@@ -994,7 +994,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_79",
@@ -1006,7 +1006,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_80",
@@ -1018,7 +1018,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_81",
@@ -1030,7 +1030,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_82",
@@ -1042,7 +1042,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_83",
@@ -1054,7 +1054,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_84",
@@ -1066,7 +1066,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_85",
@@ -1078,7 +1078,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_86",
@@ -1090,7 +1090,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_87",
@@ -1102,7 +1102,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_88",
@@ -1114,7 +1114,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_89",
@@ -1126,7 +1126,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_90",
@@ -1138,7 +1138,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_91",
@@ -1150,7 +1150,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_92",
@@ -1162,7 +1162,7 @@ export const initialProducts: Product[] = [
     "stock": 1080,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_93",
@@ -1174,7 +1174,7 @@ export const initialProducts: Product[] = [
     "stock": 1028,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_94",
@@ -1186,7 +1186,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_95",
@@ -1198,7 +1198,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_96",
@@ -1210,7 +1210,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_97",
@@ -1222,7 +1222,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_98",
@@ -1234,7 +1234,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_99",
@@ -1246,7 +1246,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_100",
@@ -1258,7 +1258,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_101",
@@ -1270,7 +1270,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_102",
@@ -1282,7 +1282,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_103",
@@ -1294,7 +1294,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_104",
@@ -1306,7 +1306,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_105",
@@ -1318,7 +1318,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_106",
@@ -1330,7 +1330,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_107",
@@ -1342,7 +1342,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_108",
@@ -1354,7 +1354,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_109",
@@ -1366,7 +1366,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_110",
@@ -1378,7 +1378,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_111",
@@ -1390,7 +1390,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_112",
@@ -1402,7 +1402,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_113",
@@ -1414,7 +1414,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_114",
@@ -1426,7 +1426,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_115",
@@ -1438,7 +1438,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_116",
@@ -1450,7 +1450,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_117",
@@ -1462,7 +1462,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_118",
@@ -1474,7 +1474,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_119",
@@ -1486,7 +1486,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_120",
@@ -1498,7 +1498,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_121",
@@ -1510,7 +1510,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_122",
@@ -1522,7 +1522,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_123",
@@ -1534,7 +1534,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_124",
@@ -1546,7 +1546,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_125",
@@ -1558,7 +1558,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_126",
@@ -1570,7 +1570,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_127",
@@ -1582,7 +1582,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_128",
@@ -1594,7 +1594,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_129",
@@ -1606,7 +1606,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_130",
@@ -1618,7 +1618,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_131",
@@ -1630,7 +1630,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_132",
@@ -1642,7 +1642,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_133",
@@ -1654,7 +1654,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_134",
@@ -1666,7 +1666,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_135",
@@ -1678,7 +1678,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_136",
@@ -1690,7 +1690,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_137",
@@ -1702,7 +1702,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_138",
@@ -1714,7 +1714,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_139",
@@ -1726,7 +1726,7 @@ export const initialProducts: Product[] = [
     "stock": 192,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_140",
@@ -1738,7 +1738,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_141",
@@ -1750,7 +1750,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_142",
@@ -1762,7 +1762,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_143",
@@ -1774,7 +1774,7 @@ export const initialProducts: Product[] = [
     "stock": 2,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_144",
@@ -1786,7 +1786,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_145",
@@ -1798,7 +1798,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_146",
@@ -1810,7 +1810,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_147",
@@ -1822,7 +1822,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_148",
@@ -1834,7 +1834,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_149",
@@ -1846,7 +1846,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_150",
@@ -1858,7 +1858,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_151",
@@ -1870,7 +1870,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_152",
@@ -1882,7 +1882,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_153",
@@ -1894,7 +1894,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_154",
@@ -1906,7 +1906,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_155",
@@ -1918,7 +1918,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_156",
@@ -1930,7 +1930,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_157",
@@ -1942,7 +1942,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_158",
@@ -1954,7 +1954,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_159",
@@ -1966,7 +1966,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_160",
@@ -1978,7 +1978,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_161",
@@ -1990,7 +1990,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_162",
@@ -2002,7 +2002,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_163",
@@ -2014,7 +2014,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_164",
@@ -2026,7 +2026,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_165",
@@ -2038,7 +2038,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_166",
@@ -2050,7 +2050,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_167",
@@ -2062,7 +2062,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_168",
@@ -2074,7 +2074,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_169",
@@ -2086,7 +2086,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_170",
@@ -2098,7 +2098,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_171",
@@ -2110,7 +2110,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_172",
@@ -2122,7 +2122,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_173",
@@ -2134,7 +2134,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.571Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_174",
@@ -2146,7 +2146,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_175",
@@ -2158,7 +2158,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_176",
@@ -2170,7 +2170,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_177",
@@ -2182,7 +2182,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_178",
@@ -2194,7 +2194,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_179",
@@ -2206,7 +2206,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_180",
@@ -2218,7 +2218,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_181",
@@ -2230,7 +2230,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_182",
@@ -2242,7 +2242,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_183",
@@ -2254,7 +2254,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_184",
@@ -2266,7 +2266,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_185",
@@ -2278,7 +2278,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_186",
@@ -2290,7 +2290,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_187",
@@ -2302,7 +2302,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_188",
@@ -2314,7 +2314,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_189",
@@ -2326,7 +2326,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_190",
@@ -2338,7 +2338,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_191",
@@ -2350,7 +2350,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_192",
@@ -2362,7 +2362,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_193",
@@ -2374,7 +2374,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_194",
@@ -2386,7 +2386,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_195",
@@ -2398,7 +2398,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_196",
@@ -2410,7 +2410,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_197",
@@ -2422,7 +2422,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_198",
@@ -2434,7 +2434,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_199",
@@ -2446,7 +2446,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_200",
@@ -2458,7 +2458,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_201",
@@ -2470,7 +2470,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_202",
@@ -2482,7 +2482,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_203",
@@ -2494,7 +2494,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_204",
@@ -2506,7 +2506,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_205",
@@ -2518,7 +2518,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_206",
@@ -2530,7 +2530,7 @@ export const initialProducts: Product[] = [
     "stock": 95,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_207",
@@ -2542,7 +2542,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_208",
@@ -2554,7 +2554,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_209",
@@ -2566,7 +2566,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.698Z"
   },
   {
     "id": "p_210",
@@ -2578,7 +2578,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_211",
@@ -2590,7 +2590,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_212",
@@ -2602,7 +2602,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_213",
@@ -2614,7 +2614,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_214",
@@ -2626,7 +2626,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.572Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_215",
@@ -2638,7 +2638,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_216",
@@ -2650,7 +2650,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_217",
@@ -2662,7 +2662,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_218",
@@ -2674,7 +2674,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_219",
@@ -2686,7 +2686,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_220",
@@ -2698,7 +2698,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_221",
@@ -2710,7 +2710,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_222",
@@ -2722,7 +2722,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_223",
@@ -2734,7 +2734,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_224",
@@ -2746,7 +2746,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_225",
@@ -2758,7 +2758,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_226",
@@ -2770,7 +2770,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_227",
@@ -2782,7 +2782,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_228",
@@ -2794,7 +2794,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_229",
@@ -2806,7 +2806,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_230",
@@ -2818,7 +2818,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_231",
@@ -2830,7 +2830,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_232",
@@ -2842,7 +2842,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_233",
@@ -2854,7 +2854,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_234",
@@ -2866,7 +2866,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_235",
@@ -2878,7 +2878,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_236",
@@ -2890,7 +2890,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_237",
@@ -2902,7 +2902,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_238",
@@ -2914,7 +2914,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_239",
@@ -2926,7 +2926,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_240",
@@ -2938,7 +2938,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_241",
@@ -2950,7 +2950,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_242",
@@ -2962,7 +2962,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_243",
@@ -2974,7 +2974,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_244",
@@ -2986,7 +2986,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_245",
@@ -2998,7 +2998,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_246",
@@ -3010,7 +3010,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_247",
@@ -3022,7 +3022,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_248",
@@ -3034,7 +3034,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_249",
@@ -3046,7 +3046,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_250",
@@ -3058,7 +3058,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_251",
@@ -3070,7 +3070,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_252",
@@ -3082,7 +3082,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_253",
@@ -3094,7 +3094,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_254",
@@ -3106,7 +3106,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_255",
@@ -3118,7 +3118,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_256",
@@ -3130,7 +3130,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_257",
@@ -3142,7 +3142,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_258",
@@ -3154,7 +3154,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_259",
@@ -3166,7 +3166,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_260",
@@ -3178,7 +3178,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_261",
@@ -3190,7 +3190,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_262",
@@ -3202,7 +3202,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_263",
@@ -3214,7 +3214,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_264",
@@ -3226,7 +3226,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_265",
@@ -3238,7 +3238,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_266",
@@ -3250,7 +3250,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_267",
@@ -3262,7 +3262,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_268",
@@ -3274,7 +3274,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_269",
@@ -3286,7 +3286,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_270",
@@ -3298,7 +3298,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_271",
@@ -3310,7 +3310,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_272",
@@ -3322,7 +3322,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_273",
@@ -3334,7 +3334,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_274",
@@ -3346,7 +3346,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_275",
@@ -3358,7 +3358,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_276",
@@ -3370,7 +3370,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_277",
@@ -3382,7 +3382,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_278",
@@ -3394,7 +3394,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_279",
@@ -3406,7 +3406,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_280",
@@ -3418,7 +3418,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_281",
@@ -3430,7 +3430,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_282",
@@ -3442,7 +3442,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_283",
@@ -3454,7 +3454,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_284",
@@ -3466,7 +3466,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_285",
@@ -3478,7 +3478,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_286",
@@ -3490,7 +3490,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_287",
@@ -3502,7 +3502,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_288",
@@ -3514,7 +3514,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_289",
@@ -3526,7 +3526,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_290",
@@ -3538,7 +3538,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_291",
@@ -3550,7 +3550,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_292",
@@ -3562,7 +3562,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_293",
@@ -3574,7 +3574,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_294",
@@ -3586,7 +3586,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_295",
@@ -3598,7 +3598,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_296",
@@ -3610,7 +3610,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_297",
@@ -3622,7 +3622,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_298",
@@ -3634,7 +3634,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_299",
@@ -3646,7 +3646,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_300",
@@ -3658,7 +3658,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_301",
@@ -3670,7 +3670,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_302",
@@ -3682,7 +3682,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_303",
@@ -3694,7 +3694,7 @@ export const initialProducts: Product[] = [
     "stock": 96,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_304",
@@ -3706,7 +3706,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_305",
@@ -3718,7 +3718,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_306",
@@ -3730,7 +3730,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_307",
@@ -3742,7 +3742,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_308",
@@ -3754,7 +3754,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_309",
@@ -3766,7 +3766,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_310",
@@ -3778,7 +3778,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_311",
@@ -3790,7 +3790,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_312",
@@ -3802,7 +3802,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_313",
@@ -3814,7 +3814,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_314",
@@ -3826,7 +3826,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_315",
@@ -3838,7 +3838,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_316",
@@ -3850,7 +3850,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_317",
@@ -3862,7 +3862,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_318",
@@ -3874,7 +3874,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_319",
@@ -3886,7 +3886,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_320",
@@ -3898,7 +3898,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_321",
@@ -3910,7 +3910,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_322",
@@ -3922,7 +3922,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_323",
@@ -3934,7 +3934,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_324",
@@ -3946,7 +3946,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_325",
@@ -3958,7 +3958,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.573Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_326",
@@ -3970,7 +3970,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_327",
@@ -3982,7 +3982,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_328",
@@ -3994,7 +3994,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_329",
@@ -4006,7 +4006,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_330",
@@ -4018,7 +4018,7 @@ export const initialProducts: Product[] = [
     "stock": 98,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_331",
@@ -4030,7 +4030,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_332",
@@ -4042,7 +4042,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_333",
@@ -4054,7 +4054,7 @@ export const initialProducts: Product[] = [
     "stock": 1,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_334",
@@ -4066,7 +4066,7 @@ export const initialProducts: Product[] = [
     "stock": 97,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_335",
@@ -4078,7 +4078,7 @@ export const initialProducts: Product[] = [
     "stock": 7,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_336",
@@ -4090,7 +4090,7 @@ export const initialProducts: Product[] = [
     "stock": 58,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_337",
@@ -4102,7 +4102,7 @@ export const initialProducts: Product[] = [
     "stock": 5,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_338",
@@ -4114,7 +4114,7 @@ export const initialProducts: Product[] = [
     "stock": 68,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_339",
@@ -4126,7 +4126,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_340",
@@ -4138,7 +4138,7 @@ export const initialProducts: Product[] = [
     "stock": 95,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_341",
@@ -4150,7 +4150,7 @@ export const initialProducts: Product[] = [
     "stock": 997,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_342",
@@ -4162,7 +4162,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_343",
@@ -4174,7 +4174,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_344",
@@ -4186,7 +4186,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_345",
@@ -4198,7 +4198,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_346",
@@ -4210,7 +4210,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_347",
@@ -4222,7 +4222,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_348",
@@ -4234,7 +4234,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_349",
@@ -4246,7 +4246,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_350",
@@ -4258,7 +4258,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_351",
@@ -4270,7 +4270,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_352",
@@ -4282,7 +4282,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_353",
@@ -4294,7 +4294,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_354",
@@ -4306,7 +4306,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_355",
@@ -4318,7 +4318,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_356",
@@ -4330,7 +4330,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_357",
@@ -4342,7 +4342,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_358",
@@ -4354,7 +4354,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_359",
@@ -4366,7 +4366,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_360",
@@ -4378,7 +4378,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_361",
@@ -4390,7 +4390,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_362",
@@ -4402,7 +4402,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_363",
@@ -4414,7 +4414,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_364",
@@ -4426,7 +4426,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_365",
@@ -4438,7 +4438,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_366",
@@ -4450,7 +4450,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_367",
@@ -4462,7 +4462,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_368",
@@ -4474,7 +4474,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_369",
@@ -4486,7 +4486,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_370",
@@ -4498,7 +4498,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_371",
@@ -4510,7 +4510,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_372",
@@ -4522,7 +4522,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_373",
@@ -4534,7 +4534,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_374",
@@ -4546,7 +4546,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_375",
@@ -4558,7 +4558,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_376",
@@ -4570,7 +4570,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_377",
@@ -4582,7 +4582,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_378",
@@ -4594,7 +4594,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_379",
@@ -4606,7 +4606,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_380",
@@ -4618,7 +4618,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_381",
@@ -4630,7 +4630,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_382",
@@ -4642,7 +4642,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_383",
@@ -4654,7 +4654,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_384",
@@ -4666,7 +4666,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_385",
@@ -4678,7 +4678,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_386",
@@ -4690,7 +4690,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_387",
@@ -4702,7 +4702,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_388",
@@ -4714,7 +4714,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_389",
@@ -4726,7 +4726,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_390",
@@ -4738,7 +4738,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_391",
@@ -4750,7 +4750,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_392",
@@ -4762,7 +4762,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_393",
@@ -4774,7 +4774,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_394",
@@ -4786,7 +4786,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_395",
@@ -4798,7 +4798,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_396",
@@ -4810,7 +4810,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_397",
@@ -4822,7 +4822,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_398",
@@ -4834,7 +4834,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_399",
@@ -4846,7 +4846,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_400",
@@ -4858,7 +4858,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_401",
@@ -4870,7 +4870,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_402",
@@ -4882,7 +4882,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_403",
@@ -4894,7 +4894,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_404",
@@ -4906,7 +4906,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_405",
@@ -4918,7 +4918,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_406",
@@ -4930,7 +4930,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_407",
@@ -4942,7 +4942,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_408",
@@ -4954,7 +4954,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_409",
@@ -4966,7 +4966,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_410",
@@ -4978,7 +4978,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_411",
@@ -4990,7 +4990,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_412",
@@ -5002,7 +5002,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_413",
@@ -5014,7 +5014,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_414",
@@ -5026,7 +5026,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_415",
@@ -5038,7 +5038,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_416",
@@ -5050,7 +5050,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_417",
@@ -5062,7 +5062,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_418",
@@ -5074,7 +5074,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_419",
@@ -5086,7 +5086,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_420",
@@ -5098,7 +5098,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_421",
@@ -5110,7 +5110,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_422",
@@ -5122,7 +5122,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_423",
@@ -5134,7 +5134,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_424",
@@ -5146,7 +5146,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.575Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_425",
@@ -5158,7 +5158,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_426",
@@ -5170,7 +5170,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_427",
@@ -5182,7 +5182,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_428",
@@ -5194,7 +5194,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_429",
@@ -5206,7 +5206,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_430",
@@ -5218,7 +5218,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_431",
@@ -5230,7 +5230,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_432",
@@ -5242,7 +5242,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_433",
@@ -5254,7 +5254,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_434",
@@ -5266,7 +5266,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_435",
@@ -5278,7 +5278,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_436",
@@ -5290,7 +5290,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_437",
@@ -5302,7 +5302,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_438",
@@ -5314,7 +5314,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_439",
@@ -5326,7 +5326,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_440",
@@ -5338,7 +5338,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_441",
@@ -5350,7 +5350,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_442",
@@ -5362,7 +5362,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_443",
@@ -5374,7 +5374,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_444",
@@ -5386,7 +5386,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_445",
@@ -5398,7 +5398,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_446",
@@ -5410,7 +5410,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_447",
@@ -5422,7 +5422,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_448",
@@ -5434,7 +5434,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_449",
@@ -5446,7 +5446,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_450",
@@ -5458,7 +5458,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_451",
@@ -5470,7 +5470,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_452",
@@ -5482,7 +5482,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_453",
@@ -5494,7 +5494,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_454",
@@ -5506,7 +5506,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_455",
@@ -5518,7 +5518,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_456",
@@ -5530,7 +5530,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_457",
@@ -5542,7 +5542,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_458",
@@ -5554,7 +5554,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_459",
@@ -5566,7 +5566,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_460",
@@ -5578,7 +5578,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_461",
@@ -5590,7 +5590,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_462",
@@ -5602,7 +5602,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_463",
@@ -5614,7 +5614,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_464",
@@ -5626,7 +5626,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_465",
@@ -5638,7 +5638,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_466",
@@ -5650,7 +5650,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_467",
@@ -5662,7 +5662,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_468",
@@ -5674,7 +5674,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_469",
@@ -5686,7 +5686,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_470",
@@ -5698,7 +5698,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_471",
@@ -5710,7 +5710,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_472",
@@ -5722,7 +5722,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_473",
@@ -5734,7 +5734,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_474",
@@ -5746,7 +5746,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_475",
@@ -5758,7 +5758,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_476",
@@ -5770,7 +5770,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_477",
@@ -5782,7 +5782,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_478",
@@ -5794,7 +5794,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_479",
@@ -5806,7 +5806,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_480",
@@ -5818,7 +5818,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_481",
@@ -5830,7 +5830,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_482",
@@ -5842,7 +5842,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_483",
@@ -5854,7 +5854,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_484",
@@ -5866,7 +5866,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_485",
@@ -5878,7 +5878,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_486",
@@ -5890,7 +5890,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_487",
@@ -5902,7 +5902,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_488",
@@ -5914,7 +5914,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_489",
@@ -5926,7 +5926,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_490",
@@ -5938,7 +5938,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_491",
@@ -5950,7 +5950,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_492",
@@ -5962,7 +5962,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_493",
@@ -5974,7 +5974,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_494",
@@ -5986,7 +5986,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_495",
@@ -5998,7 +5998,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_496",
@@ -6010,7 +6010,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_497",
@@ -6022,7 +6022,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_498",
@@ -6034,7 +6034,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_499",
@@ -6046,7 +6046,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_500",
@@ -6058,7 +6058,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_501",
@@ -6070,7 +6070,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_502",
@@ -6082,7 +6082,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_503",
@@ -6094,7 +6094,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_504",
@@ -6106,7 +6106,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_505",
@@ -6118,7 +6118,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_506",
@@ -6130,7 +6130,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_507",
@@ -6142,7 +6142,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_508",
@@ -6154,7 +6154,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_509",
@@ -6166,7 +6166,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_510",
@@ -6178,7 +6178,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_511",
@@ -6190,7 +6190,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_512",
@@ -6202,7 +6202,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_513",
@@ -6214,7 +6214,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_514",
@@ -6226,7 +6226,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_515",
@@ -6238,7 +6238,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_516",
@@ -6250,7 +6250,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_517",
@@ -6262,7 +6262,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_518",
@@ -6274,7 +6274,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_519",
@@ -6286,7 +6286,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_520",
@@ -6298,7 +6298,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_521",
@@ -6310,7 +6310,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_522",
@@ -6322,7 +6322,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_523",
@@ -6334,7 +6334,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_524",
@@ -6346,7 +6346,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_525",
@@ -6358,7 +6358,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_526",
@@ -6370,7 +6370,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_527",
@@ -6382,7 +6382,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_528",
@@ -6394,7 +6394,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_529",
@@ -6406,7 +6406,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_530",
@@ -6418,7 +6418,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_531",
@@ -6430,7 +6430,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_532",
@@ -6442,7 +6442,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_533",
@@ -6454,7 +6454,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_534",
@@ -6466,7 +6466,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_535",
@@ -6478,7 +6478,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_536",
@@ -6490,7 +6490,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_537",
@@ -6502,7 +6502,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_538",
@@ -6514,7 +6514,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_539",
@@ -6526,7 +6526,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_540",
@@ -6538,7 +6538,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_541",
@@ -6550,7 +6550,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_542",
@@ -6562,7 +6562,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_543",
@@ -6574,7 +6574,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_544",
@@ -6586,7 +6586,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_545",
@@ -6598,7 +6598,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_546",
@@ -6610,7 +6610,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_547",
@@ -6622,7 +6622,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_548",
@@ -6634,7 +6634,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_549",
@@ -6646,7 +6646,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_550",
@@ -6658,7 +6658,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_551",
@@ -6670,7 +6670,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_552",
@@ -6682,7 +6682,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_553",
@@ -6694,7 +6694,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_554",
@@ -6706,7 +6706,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_555",
@@ -6718,7 +6718,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_556",
@@ -6730,7 +6730,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_557",
@@ -6742,7 +6742,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_558",
@@ -6754,7 +6754,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_559",
@@ -6766,7 +6766,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_560",
@@ -6778,7 +6778,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_561",
@@ -6790,7 +6790,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_562",
@@ -6802,7 +6802,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_563",
@@ -6814,7 +6814,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_564",
@@ -6826,7 +6826,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_565",
@@ -6838,7 +6838,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_566",
@@ -6850,7 +6850,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_567",
@@ -6862,7 +6862,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_568",
@@ -6874,7 +6874,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_569",
@@ -6886,7 +6886,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_570",
@@ -6898,7 +6898,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_571",
@@ -6910,7 +6910,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_572",
@@ -6922,7 +6922,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_573",
@@ -6934,7 +6934,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.576Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_574",
@@ -6946,7 +6946,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_575",
@@ -6958,7 +6958,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_576",
@@ -6970,7 +6970,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_577",
@@ -6982,7 +6982,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_578",
@@ -6994,7 +6994,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_579",
@@ -7006,7 +7006,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_580",
@@ -7018,7 +7018,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_581",
@@ -7030,7 +7030,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_582",
@@ -7042,7 +7042,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_583",
@@ -7054,7 +7054,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_584",
@@ -7066,7 +7066,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_585",
@@ -7078,7 +7078,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_586",
@@ -7090,7 +7090,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_587",
@@ -7102,7 +7102,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_588",
@@ -7114,7 +7114,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_589",
@@ -7126,7 +7126,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_590",
@@ -7138,7 +7138,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_591",
@@ -7150,7 +7150,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_592",
@@ -7162,7 +7162,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_593",
@@ -7174,7 +7174,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_594",
@@ -7186,7 +7186,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_595",
@@ -7198,7 +7198,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_596",
@@ -7210,7 +7210,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_597",
@@ -7222,7 +7222,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_598",
@@ -7234,7 +7234,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_599",
@@ -7246,7 +7246,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_600",
@@ -7258,7 +7258,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_601",
@@ -7270,7 +7270,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_602",
@@ -7282,7 +7282,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_603",
@@ -7294,7 +7294,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_604",
@@ -7306,7 +7306,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_605",
@@ -7318,7 +7318,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_606",
@@ -7330,7 +7330,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_607",
@@ -7342,7 +7342,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_608",
@@ -7354,7 +7354,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_609",
@@ -7366,7 +7366,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_610",
@@ -7378,7 +7378,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_611",
@@ -7390,7 +7390,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_612",
@@ -7402,7 +7402,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_613",
@@ -7414,7 +7414,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_614",
@@ -7426,7 +7426,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_615",
@@ -7438,7 +7438,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_616",
@@ -7450,7 +7450,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_617",
@@ -7462,7 +7462,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_618",
@@ -7474,7 +7474,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_619",
@@ -7486,7 +7486,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_620",
@@ -7498,7 +7498,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_621",
@@ -7510,7 +7510,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_622",
@@ -7522,7 +7522,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_623",
@@ -7534,7 +7534,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.699Z"
   },
   {
     "id": "p_624",
@@ -7546,7 +7546,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_625",
@@ -7558,7 +7558,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_626",
@@ -7570,7 +7570,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_627",
@@ -7582,7 +7582,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_628",
@@ -7594,7 +7594,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_629",
@@ -7606,7 +7606,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_630",
@@ -7618,7 +7618,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_631",
@@ -7630,7 +7630,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_632",
@@ -7642,7 +7642,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_633",
@@ -7654,7 +7654,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_634",
@@ -7666,7 +7666,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_635",
@@ -7678,7 +7678,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_636",
@@ -7690,7 +7690,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_637",
@@ -7702,7 +7702,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_638",
@@ -7714,7 +7714,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_639",
@@ -7726,7 +7726,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_640",
@@ -7738,7 +7738,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_641",
@@ -7750,7 +7750,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_642",
@@ -7762,7 +7762,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_643",
@@ -7774,7 +7774,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_644",
@@ -7786,7 +7786,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_645",
@@ -7798,7 +7798,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_646",
@@ -7810,7 +7810,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_647",
@@ -7822,7 +7822,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_648",
@@ -7834,7 +7834,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_649",
@@ -7846,7 +7846,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_650",
@@ -7858,7 +7858,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_651",
@@ -7870,7 +7870,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_652",
@@ -7882,7 +7882,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_653",
@@ -7894,7 +7894,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_654",
@@ -7906,7 +7906,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_655",
@@ -7918,7 +7918,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_656",
@@ -7930,7 +7930,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_657",
@@ -7942,7 +7942,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_658",
@@ -7954,7 +7954,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_659",
@@ -7966,7 +7966,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_660",
@@ -7978,7 +7978,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_661",
@@ -7990,7 +7990,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_662",
@@ -8002,7 +8002,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_663",
@@ -8014,7 +8014,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_664",
@@ -8026,7 +8026,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_665",
@@ -8038,7 +8038,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_666",
@@ -8050,7 +8050,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_667",
@@ -8062,7 +8062,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_668",
@@ -8074,7 +8074,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_669",
@@ -8086,7 +8086,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_670",
@@ -8098,7 +8098,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_671",
@@ -8110,7 +8110,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_672",
@@ -8122,7 +8122,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_673",
@@ -8134,7 +8134,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_674",
@@ -8146,7 +8146,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_675",
@@ -8158,7 +8158,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_676",
@@ -8170,7 +8170,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_677",
@@ -8182,7 +8182,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_678",
@@ -8194,7 +8194,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_679",
@@ -8206,7 +8206,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_680",
@@ -8218,7 +8218,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_681",
@@ -8230,7 +8230,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_682",
@@ -8242,7 +8242,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_683",
@@ -8254,7 +8254,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_684",
@@ -8266,7 +8266,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_685",
@@ -8278,7 +8278,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_686",
@@ -8290,7 +8290,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_687",
@@ -8302,7 +8302,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_688",
@@ -8314,7 +8314,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_689",
@@ -8326,7 +8326,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_690",
@@ -8338,7 +8338,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_691",
@@ -8350,7 +8350,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_692",
@@ -8362,7 +8362,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_693",
@@ -8374,7 +8374,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_694",
@@ -8386,7 +8386,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_695",
@@ -8398,7 +8398,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_696",
@@ -8410,7 +8410,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_697",
@@ -8422,7 +8422,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_698",
@@ -8434,7 +8434,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_699",
@@ -8446,7 +8446,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_700",
@@ -8458,7 +8458,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_701",
@@ -8470,7 +8470,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_702",
@@ -8482,7 +8482,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_703",
@@ -8494,7 +8494,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_704",
@@ -8506,7 +8506,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.577Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_705",
@@ -8518,7 +8518,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_706",
@@ -8530,7 +8530,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_707",
@@ -8542,7 +8542,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_708",
@@ -8554,7 +8554,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_709",
@@ -8566,7 +8566,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_710",
@@ -8578,7 +8578,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_711",
@@ -8590,7 +8590,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_712",
@@ -8602,7 +8602,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_713",
@@ -8614,7 +8614,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_714",
@@ -8626,7 +8626,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_715",
@@ -8638,7 +8638,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_716",
@@ -8650,7 +8650,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_717",
@@ -8662,7 +8662,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_718",
@@ -8674,7 +8674,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_719",
@@ -8686,7 +8686,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_720",
@@ -8698,7 +8698,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_721",
@@ -8710,7 +8710,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_722",
@@ -8722,7 +8722,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_723",
@@ -8734,7 +8734,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_724",
@@ -8746,7 +8746,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_725",
@@ -8758,7 +8758,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_726",
@@ -8770,7 +8770,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_727",
@@ -8782,7 +8782,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_728",
@@ -8794,7 +8794,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_729",
@@ -8806,7 +8806,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_730",
@@ -8818,7 +8818,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_731",
@@ -8830,7 +8830,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_732",
@@ -8842,7 +8842,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_733",
@@ -8854,7 +8854,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_734",
@@ -8866,7 +8866,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_735",
@@ -8878,7 +8878,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_736",
@@ -8890,7 +8890,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_737",
@@ -8902,7 +8902,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_738",
@@ -8914,7 +8914,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_739",
@@ -8926,7 +8926,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_740",
@@ -8938,7 +8938,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_741",
@@ -8950,7 +8950,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_742",
@@ -8962,7 +8962,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_743",
@@ -8974,7 +8974,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_744",
@@ -8986,7 +8986,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_745",
@@ -8998,7 +8998,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_746",
@@ -9010,7 +9010,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_747",
@@ -9022,7 +9022,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_748",
@@ -9034,7 +9034,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_749",
@@ -9046,7 +9046,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_750",
@@ -9058,7 +9058,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_751",
@@ -9070,7 +9070,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_752",
@@ -9082,7 +9082,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_753",
@@ -9094,7 +9094,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_754",
@@ -9106,7 +9106,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_755",
@@ -9118,7 +9118,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_756",
@@ -9130,7 +9130,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_757",
@@ -9142,7 +9142,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_758",
@@ -9154,7 +9154,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_759",
@@ -9166,7 +9166,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_760",
@@ -9178,7 +9178,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_761",
@@ -9190,7 +9190,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_762",
@@ -9202,7 +9202,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_763",
@@ -9214,7 +9214,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_764",
@@ -9226,7 +9226,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_765",
@@ -9238,7 +9238,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_766",
@@ -9250,7 +9250,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_767",
@@ -9262,7 +9262,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_768",
@@ -9274,7 +9274,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_769",
@@ -9286,7 +9286,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_770",
@@ -9298,7 +9298,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_771",
@@ -9310,7 +9310,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_772",
@@ -9322,7 +9322,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_773",
@@ -9334,7 +9334,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_774",
@@ -9346,7 +9346,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_775",
@@ -9358,7 +9358,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_776",
@@ -9370,7 +9370,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_777",
@@ -9382,7 +9382,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_778",
@@ -9394,7 +9394,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_779",
@@ -9406,7 +9406,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_780",
@@ -9418,7 +9418,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_781",
@@ -9430,7 +9430,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_782",
@@ -9442,7 +9442,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_783",
@@ -9454,7 +9454,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_784",
@@ -9466,7 +9466,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_785",
@@ -9478,7 +9478,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_786",
@@ -9490,7 +9490,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_787",
@@ -9502,7 +9502,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_788",
@@ -9514,7 +9514,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_789",
@@ -9526,7 +9526,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_790",
@@ -9538,7 +9538,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_791",
@@ -9550,7 +9550,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_792",
@@ -9562,7 +9562,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_793",
@@ -9574,7 +9574,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_794",
@@ -9586,7 +9586,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_795",
@@ -9598,7 +9598,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_796",
@@ -9610,7 +9610,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_797",
@@ -9622,7 +9622,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_798",
@@ -9634,7 +9634,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_799",
@@ -9646,7 +9646,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_800",
@@ -9658,7 +9658,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_801",
@@ -9670,7 +9670,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_802",
@@ -9682,7 +9682,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_803",
@@ -9694,7 +9694,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_804",
@@ -9706,7 +9706,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_805",
@@ -9718,7 +9718,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_806",
@@ -9730,7 +9730,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_807",
@@ -9742,7 +9742,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_808",
@@ -9754,7 +9754,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_809",
@@ -9766,7 +9766,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_810",
@@ -9778,7 +9778,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_811",
@@ -9790,7 +9790,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_812",
@@ -9802,7 +9802,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_813",
@@ -9814,7 +9814,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_814",
@@ -9826,7 +9826,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_815",
@@ -9838,7 +9838,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_816",
@@ -9850,7 +9850,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_817",
@@ -9862,7 +9862,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_818",
@@ -9874,7 +9874,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_819",
@@ -9886,7 +9886,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_820",
@@ -9898,7 +9898,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_821",
@@ -9910,7 +9910,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_822",
@@ -9922,7 +9922,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_823",
@@ -9934,7 +9934,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_824",
@@ -9946,7 +9946,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_825",
@@ -9958,7 +9958,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_826",
@@ -9970,7 +9970,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_827",
@@ -9982,7 +9982,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.578Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_828",
@@ -9994,7 +9994,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_829",
@@ -10006,7 +10006,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_830",
@@ -10018,7 +10018,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_831",
@@ -10030,7 +10030,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_832",
@@ -10042,7 +10042,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_833",
@@ -10054,7 +10054,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_834",
@@ -10066,7 +10066,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_835",
@@ -10078,7 +10078,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_836",
@@ -10090,7 +10090,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_837",
@@ -10102,7 +10102,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_838",
@@ -10114,7 +10114,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_839",
@@ -10126,7 +10126,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_840",
@@ -10138,7 +10138,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_841",
@@ -10150,7 +10150,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_842",
@@ -10162,7 +10162,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_843",
@@ -10174,7 +10174,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_844",
@@ -10186,7 +10186,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_845",
@@ -10198,7 +10198,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_846",
@@ -10210,7 +10210,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_847",
@@ -10222,7 +10222,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_848",
@@ -10234,7 +10234,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_849",
@@ -10246,7 +10246,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_850",
@@ -10258,7 +10258,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_851",
@@ -10270,7 +10270,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_852",
@@ -10282,7 +10282,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_853",
@@ -10294,7 +10294,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_854",
@@ -10306,7 +10306,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_855",
@@ -10318,7 +10318,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_856",
@@ -10330,7 +10330,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_857",
@@ -10342,7 +10342,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_858",
@@ -10354,7 +10354,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_859",
@@ -10366,7 +10366,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_860",
@@ -10378,7 +10378,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_861",
@@ -10390,7 +10390,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_862",
@@ -10402,7 +10402,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_863",
@@ -10414,7 +10414,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_864",
@@ -10426,7 +10426,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_865",
@@ -10438,7 +10438,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_866",
@@ -10450,7 +10450,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_867",
@@ -10462,7 +10462,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_868",
@@ -10474,7 +10474,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_869",
@@ -10486,7 +10486,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_870",
@@ -10498,7 +10498,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_871",
@@ -10510,7 +10510,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_872",
@@ -10522,7 +10522,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_873",
@@ -10534,7 +10534,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_874",
@@ -10546,7 +10546,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_875",
@@ -10558,7 +10558,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_876",
@@ -10570,7 +10570,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_877",
@@ -10582,7 +10582,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.700Z"
   },
   {
     "id": "p_878",
@@ -10594,7 +10594,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_879",
@@ -10606,7 +10606,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_880",
@@ -10618,7 +10618,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_881",
@@ -10630,7 +10630,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_882",
@@ -10642,7 +10642,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_883",
@@ -10654,7 +10654,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.579Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_884",
@@ -10666,7 +10666,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_885",
@@ -10678,7 +10678,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_886",
@@ -10690,7 +10690,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_887",
@@ -10702,7 +10702,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_888",
@@ -10714,7 +10714,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_889",
@@ -10726,7 +10726,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_890",
@@ -10738,7 +10738,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_891",
@@ -10750,7 +10750,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_892",
@@ -10762,7 +10762,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_893",
@@ -10774,7 +10774,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_894",
@@ -10786,7 +10786,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_895",
@@ -10798,7 +10798,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_896",
@@ -10810,7 +10810,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_897",
@@ -10822,7 +10822,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_898",
@@ -10834,7 +10834,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_899",
@@ -10846,7 +10846,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_900",
@@ -10858,7 +10858,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_901",
@@ -10870,7 +10870,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_902",
@@ -10882,7 +10882,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_903",
@@ -10894,7 +10894,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_904",
@@ -10906,7 +10906,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_905",
@@ -10918,7 +10918,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_906",
@@ -10930,7 +10930,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_907",
@@ -10942,7 +10942,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_908",
@@ -10954,7 +10954,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_909",
@@ -10966,7 +10966,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_910",
@@ -10978,7 +10978,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_911",
@@ -10990,7 +10990,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_912",
@@ -11002,7 +11002,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_913",
@@ -11014,7 +11014,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_914",
@@ -11026,7 +11026,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_915",
@@ -11038,7 +11038,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_916",
@@ -11050,7 +11050,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_917",
@@ -11062,7 +11062,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_918",
@@ -11074,7 +11074,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_919",
@@ -11086,7 +11086,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_920",
@@ -11098,7 +11098,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_921",
@@ -11110,7 +11110,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_922",
@@ -11122,7 +11122,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_923",
@@ -11134,7 +11134,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_924",
@@ -11146,7 +11146,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_925",
@@ -11158,7 +11158,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_926",
@@ -11170,7 +11170,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_927",
@@ -11182,7 +11182,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_928",
@@ -11194,7 +11194,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_929",
@@ -11206,7 +11206,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_930",
@@ -11218,7 +11218,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_931",
@@ -11230,7 +11230,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_932",
@@ -11242,7 +11242,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_933",
@@ -11254,7 +11254,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_934",
@@ -11266,7 +11266,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_935",
@@ -11278,7 +11278,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_936",
@@ -11290,7 +11290,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_937",
@@ -11302,7 +11302,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_938",
@@ -11314,7 +11314,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_939",
@@ -11326,7 +11326,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_940",
@@ -11338,7 +11338,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_941",
@@ -11350,7 +11350,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_942",
@@ -11362,7 +11362,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_943",
@@ -11374,7 +11374,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_944",
@@ -11386,7 +11386,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_945",
@@ -11398,7 +11398,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_946",
@@ -11410,7 +11410,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_947",
@@ -11422,7 +11422,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_948",
@@ -11434,7 +11434,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_949",
@@ -11446,7 +11446,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_950",
@@ -11458,7 +11458,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_951",
@@ -11470,7 +11470,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_952",
@@ -11482,7 +11482,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_953",
@@ -11494,7 +11494,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_954",
@@ -11506,7 +11506,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_955",
@@ -11518,7 +11518,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_956",
@@ -11530,7 +11530,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_957",
@@ -11542,7 +11542,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_958",
@@ -11554,7 +11554,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_959",
@@ -11566,7 +11566,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_960",
@@ -11578,7 +11578,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_961",
@@ -11590,7 +11590,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_962",
@@ -11602,7 +11602,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_963",
@@ -11614,7 +11614,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_964",
@@ -11626,7 +11626,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_965",
@@ -11638,7 +11638,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_966",
@@ -11650,7 +11650,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_967",
@@ -11662,7 +11662,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_968",
@@ -11674,7 +11674,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_969",
@@ -11686,7 +11686,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_970",
@@ -11698,7 +11698,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_971",
@@ -11710,7 +11710,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_972",
@@ -11722,7 +11722,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_973",
@@ -11734,7 +11734,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_974",
@@ -11746,7 +11746,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_975",
@@ -11758,7 +11758,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_976",
@@ -11770,7 +11770,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_977",
@@ -11782,7 +11782,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_978",
@@ -11794,7 +11794,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_979",
@@ -11806,7 +11806,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_980",
@@ -11818,7 +11818,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_981",
@@ -11830,7 +11830,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   },
   {
     "id": "p_982",
@@ -11842,7 +11842,7 @@ export const initialProducts: Product[] = [
     "stock": 0,
     "minStock": 5,
     "status": "disponivel",
-    "createdAt": "2026-07-13T16:27:11.581Z"
+    "createdAt": "2026-07-13T16:30:10.701Z"
   }
 ];
 
@@ -11865,6 +11865,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -11884,6 +11885,7 @@ export const initialSales: Sale[] = [
     "total": 55.5,
     "totalCost": 37,
     "profit": 18.5,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -11905,6 +11907,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 37,
     "profit": 23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -11925,6 +11928,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -11945,6 +11949,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 18,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -11965,6 +11970,7 @@ export const initialSales: Sale[] = [
     "total": 140,
     "totalCost": 80,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -11985,6 +11991,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12005,6 +12012,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12025,6 +12033,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12045,6 +12054,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12065,6 +12075,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 18,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12085,6 +12096,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 75,
     "profit": 75,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12105,6 +12117,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 7.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12125,6 +12138,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12145,6 +12159,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 28,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12165,6 +12180,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 22,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12185,6 +12201,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 31.99,
     "profit": 18.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12205,6 +12222,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 30,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12225,6 +12243,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 9,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12245,6 +12264,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 14,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12265,6 +12285,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12285,6 +12306,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 22,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12305,6 +12327,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 20,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12325,6 +12348,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12345,6 +12369,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12365,6 +12390,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 40,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12385,6 +12411,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 27.5,
     "profit": 22.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12405,6 +12432,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12425,6 +12453,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12445,6 +12474,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 40,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12465,6 +12495,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 3,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12485,6 +12516,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 27.5,
     "profit": 22.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12505,6 +12537,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12525,6 +12558,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12545,6 +12579,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 26,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12565,6 +12600,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 28,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12585,6 +12621,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12605,6 +12642,7 @@ export const initialSales: Sale[] = [
     "total": 85,
     "totalCost": 32.45,
     "profit": 52.55,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12625,6 +12663,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 60,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12645,6 +12684,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12665,6 +12705,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 12,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12685,6 +12726,7 @@ export const initialSales: Sale[] = [
     "total": 85,
     "totalCost": 37,
     "profit": 48,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12705,6 +12747,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 7,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12725,6 +12768,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 55,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12745,6 +12789,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 32.45,
     "profit": 67.55,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12765,6 +12810,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 55,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12785,6 +12831,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 4.5,
     "profit": 3.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12805,6 +12852,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1.2,
     "profit": 3.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12824,6 +12872,7 @@ export const initialSales: Sale[] = [
     "total": 10.6,
     "totalCost": 7.5,
     "profit": 3.1,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -12844,6 +12893,7 @@ export const initialSales: Sale[] = [
     "total": 63.3,
     "totalCost": 35,
     "profit": 28.3,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -12864,6 +12914,7 @@ export const initialSales: Sale[] = [
     "total": 10.6,
     "totalCost": 7.5,
     "profit": 3.1,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -12884,6 +12935,7 @@ export const initialSales: Sale[] = [
     "total": 10.6,
     "totalCost": 7.5,
     "profit": 3.1,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -12904,6 +12956,7 @@ export const initialSales: Sale[] = [
     "total": 16.89,
     "totalCost": 7.5,
     "profit": 9.39,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -12925,6 +12978,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 0,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12944,6 +12998,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 9,
     "profit": 3,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -12965,6 +13020,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1.2,
     "profit": 3.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -12985,6 +13041,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1.2,
     "profit": 3.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13005,6 +13062,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1.2,
     "profit": 3.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13025,6 +13083,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1.2,
     "profit": 3.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13045,6 +13104,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13065,6 +13125,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13085,6 +13146,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 11,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13105,6 +13167,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 6,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13125,6 +13188,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 11,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13145,6 +13209,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13165,6 +13230,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 18,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13185,6 +13251,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 19,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13205,6 +13272,7 @@ export const initialSales: Sale[] = [
     "total": 115,
     "totalCost": 80,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13225,6 +13293,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 23.5,
     "profit": 16.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13245,6 +13314,7 @@ export const initialSales: Sale[] = [
     "total": 6.67,
     "totalCost": 3,
     "profit": 3.67,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13265,6 +13335,7 @@ export const initialSales: Sale[] = [
     "total": 6.67,
     "totalCost": 3,
     "profit": 3.67,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13285,6 +13356,7 @@ export const initialSales: Sale[] = [
     "total": 6.67,
     "totalCost": 3,
     "profit": 3.67,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13305,6 +13377,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 14,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13325,6 +13398,7 @@ export const initialSales: Sale[] = [
     "total": 12.5,
     "totalCost": 2,
     "profit": 10.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13345,6 +13419,7 @@ export const initialSales: Sale[] = [
     "total": 12.5,
     "totalCost": 3,
     "profit": 9.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13365,6 +13440,7 @@ export const initialSales: Sale[] = [
     "total": 12.5,
     "totalCost": 2,
     "profit": 10.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13385,6 +13461,7 @@ export const initialSales: Sale[] = [
     "total": 12.5,
     "totalCost": 3,
     "profit": 9.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13405,6 +13482,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5.5,
     "profit": 9.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13425,6 +13503,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5.5,
     "profit": 9.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13445,6 +13524,7 @@ export const initialSales: Sale[] = [
     "total": 44,
     "totalCost": 27,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13465,6 +13545,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13485,6 +13566,7 @@ export const initialSales: Sale[] = [
     "total": 140,
     "totalCost": 75,
     "profit": 65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13505,6 +13587,7 @@ export const initialSales: Sale[] = [
     "total": 7.5,
     "totalCost": 3,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13525,6 +13608,7 @@ export const initialSales: Sale[] = [
     "total": 7.5,
     "totalCost": 3,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13545,6 +13629,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 3,
     "profit": 27,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13565,6 +13650,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13585,6 +13671,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13605,6 +13692,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 3,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13625,6 +13713,7 @@ export const initialSales: Sale[] = [
     "total": 55,
     "totalCost": 45,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13645,6 +13734,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 50,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13665,6 +13755,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 50,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13684,6 +13775,7 @@ export const initialSales: Sale[] = [
     "total": 14.2,
     "totalCost": 7.5,
     "profit": 6.7,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -13705,6 +13797,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 12,
     "profit": 23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13725,6 +13818,7 @@ export const initialSales: Sale[] = [
     "total": 28,
     "totalCost": 20,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13744,6 +13838,7 @@ export const initialSales: Sale[] = [
     "total": 11.41,
     "totalCost": 4,
     "profit": 7.41,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -13765,6 +13860,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13785,6 +13881,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13805,6 +13902,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 28,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13825,6 +13923,7 @@ export const initialSales: Sale[] = [
     "total": 27.5,
     "totalCost": 16,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13845,6 +13944,7 @@ export const initialSales: Sale[] = [
     "total": 27.5,
     "totalCost": 16,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13865,6 +13965,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13885,6 +13986,7 @@ export const initialSales: Sale[] = [
     "total": 165,
     "totalCost": 0,
     "profit": 165,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13905,6 +14007,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 11,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13925,6 +14028,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13945,6 +14049,7 @@ export const initialSales: Sale[] = [
     "total": 96.35,
     "totalCost": 65,
     "profit": 31.35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13965,6 +14070,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -13985,6 +14091,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14005,6 +14112,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14025,6 +14133,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14045,6 +14154,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14065,6 +14175,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 0,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14085,6 +14196,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14105,6 +14217,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14125,6 +14238,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14145,6 +14259,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14165,6 +14280,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14185,6 +14301,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14205,6 +14322,7 @@ export const initialSales: Sale[] = [
     "total": 98,
     "totalCost": 65,
     "profit": 33,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14225,6 +14343,7 @@ export const initialSales: Sale[] = [
     "total": 3.5,
     "totalCost": 0.35,
     "profit": 3.15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14245,6 +14364,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 1.25,
     "profit": 23.75,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14265,6 +14385,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14285,6 +14406,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 31.99,
     "profit": 18.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14305,6 +14427,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 31.99,
     "profit": 18.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14325,6 +14448,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 31.99,
     "profit": 18.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14345,6 +14469,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 31.99,
     "profit": 18.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14365,6 +14490,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14385,6 +14511,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14405,6 +14532,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14425,6 +14553,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 26,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14445,6 +14574,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14465,6 +14595,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14485,6 +14616,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14505,6 +14637,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 0.3,
     "profit": 5.7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14525,6 +14658,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 20,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14545,6 +14679,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14565,6 +14700,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 22,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14585,6 +14721,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14605,6 +14742,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14625,6 +14763,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.15,
     "profit": 2.85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14645,6 +14784,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 35,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14665,6 +14805,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14685,6 +14826,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 27.9,
     "profit": 22.1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14705,6 +14847,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14725,6 +14868,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14745,6 +14889,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14765,6 +14910,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14785,6 +14931,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 18.74,
     "profit": 31.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14805,6 +14952,7 @@ export const initialSales: Sale[] = [
     "total": 49.31,
     "totalCost": 25,
     "profit": 24.31,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14825,6 +14973,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14845,6 +14994,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 27,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14865,6 +15015,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14885,6 +15036,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 55,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14905,6 +15057,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 37,
     "profit": 23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14925,6 +15078,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 28,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14945,6 +15099,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14965,6 +15120,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -14985,6 +15141,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 22,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15005,6 +15162,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 25,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15025,6 +15183,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15045,6 +15204,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15065,6 +15225,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15085,6 +15246,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15105,6 +15267,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15125,6 +15288,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 50,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15145,6 +15309,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15165,6 +15330,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1.2,
     "profit": 3.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15185,6 +15351,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 19,
     "profit": 21,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15205,6 +15372,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 21.99,
     "profit": 28.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15225,6 +15393,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 27.5,
     "profit": 32.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15245,6 +15414,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15265,6 +15435,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15285,6 +15456,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 20.5,
     "profit": 39.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15305,6 +15477,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 1.7,
     "profit": 68.3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15325,6 +15498,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15345,6 +15519,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15365,6 +15540,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15385,6 +15561,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15405,6 +15582,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 27,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15425,6 +15603,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 0,
     "profit": 65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15445,6 +15624,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15465,6 +15645,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15485,6 +15666,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 28,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15505,6 +15687,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15525,6 +15708,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15545,6 +15729,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 14,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15565,6 +15750,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 27,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15585,6 +15771,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15605,6 +15792,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 26,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15625,6 +15813,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15645,6 +15834,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 35,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15665,6 +15855,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15685,6 +15876,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 20,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15705,6 +15897,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 9,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15725,6 +15918,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15745,6 +15939,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15765,6 +15960,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 31.99,
     "profit": 18.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15785,6 +15981,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 65,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15805,6 +16002,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15825,6 +16023,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15845,6 +16044,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 40,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15865,6 +16065,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 99.9,
     "profit": 100.1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15885,6 +16086,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15905,6 +16107,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15925,6 +16128,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15945,6 +16149,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15965,6 +16170,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -15985,6 +16191,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16005,6 +16212,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16025,6 +16233,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16045,6 +16254,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 35,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16065,6 +16275,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16085,6 +16296,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 9.5,
     "profit": 15.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16105,6 +16317,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16125,6 +16338,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 30,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16145,6 +16359,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16165,6 +16380,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16185,6 +16401,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16205,6 +16422,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 17,
     "profit": 23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16225,6 +16443,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16245,6 +16464,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16265,6 +16485,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16285,6 +16506,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16305,6 +16527,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 8,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16325,6 +16548,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 15,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16345,6 +16569,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 15,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16365,6 +16590,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5.5,
     "profit": 9.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16385,6 +16611,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 19,
     "profit": 21,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16405,6 +16632,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 18.74,
     "profit": 41.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16425,6 +16653,7 @@ export const initialSales: Sale[] = [
     "total": 202,
     "totalCost": 125,
     "profit": 77,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16445,6 +16674,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 6,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16465,6 +16695,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 65,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16485,6 +16716,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16505,6 +16737,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 18.74,
     "profit": 31.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16525,6 +16758,7 @@ export const initialSales: Sale[] = [
     "total": 210,
     "totalCost": 105.18,
     "profit": 104.83,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16545,6 +16779,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16565,6 +16800,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 35,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16585,6 +16821,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16605,6 +16842,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 27.5,
     "profit": 22.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16625,6 +16863,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 30,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16645,6 +16884,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 50,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16665,6 +16905,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16685,6 +16926,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16705,6 +16947,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16725,6 +16968,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.3,
     "profit": 6.7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16745,6 +16989,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.1,
     "profit": 1.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16765,6 +17010,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16785,6 +17031,7 @@ export const initialSales: Sale[] = [
     "total": 55,
     "totalCost": 18,
     "profit": 37,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16805,6 +17052,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 15,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16825,6 +17073,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16845,6 +17094,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 43,
     "profit": 27,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16865,6 +17115,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 20,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16885,6 +17136,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16905,6 +17157,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16925,6 +17178,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 1.2,
     "profit": 2.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16945,6 +17199,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16965,6 +17220,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -16985,6 +17241,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 25,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17005,6 +17262,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17025,6 +17283,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 15,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17045,6 +17304,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17065,6 +17325,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17085,6 +17346,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17105,6 +17367,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5.5,
     "profit": 14.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17125,6 +17388,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17145,6 +17409,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17165,6 +17430,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 0.56,
     "profit": 7.44,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17185,6 +17451,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 25,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17205,6 +17472,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 23.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17225,6 +17493,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 55,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17245,6 +17514,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17265,6 +17535,7 @@ export const initialSales: Sale[] = [
     "total": 190,
     "totalCost": 122,
     "profit": 68,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17285,6 +17556,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17305,6 +17577,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 0.49,
     "profit": 6.51,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17325,6 +17598,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17345,6 +17619,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 22,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17365,6 +17640,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 25,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17385,6 +17661,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 11,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17405,6 +17682,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 11,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17425,6 +17703,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17445,6 +17724,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 105.18,
     "profit": 94.83,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17465,6 +17745,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17485,6 +17766,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17505,6 +17787,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17525,6 +17808,7 @@ export const initialSales: Sale[] = [
     "total": 90,
     "totalCost": 55,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17545,6 +17829,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17565,6 +17850,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.1,
     "profit": 1.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17585,6 +17871,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 9,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17605,6 +17892,7 @@ export const initialSales: Sale[] = [
     "total": 350,
     "totalCost": 220,
     "profit": 130,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17625,6 +17913,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17645,6 +17934,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.15,
     "profit": 2.85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17665,6 +17955,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17685,6 +17976,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 18,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17705,6 +17997,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 4.5,
     "profit": 0.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17725,6 +18018,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 20,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17745,6 +18039,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17765,6 +18060,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17785,6 +18081,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 75,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17805,6 +18102,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 18,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17825,6 +18123,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17845,6 +18144,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17865,6 +18165,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 19,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17885,6 +18186,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17905,6 +18207,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 21.99,
     "profit": 28.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17925,6 +18228,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 32,
     "profit": 38,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17945,6 +18249,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17965,6 +18270,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 0,
     "profit": 65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -17985,6 +18291,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18005,6 +18312,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18025,6 +18333,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 9,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18045,6 +18354,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18065,6 +18375,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 18,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18085,6 +18396,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 15,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18105,6 +18417,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18125,6 +18438,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18145,6 +18459,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 50,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18165,6 +18480,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18185,6 +18501,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18205,6 +18522,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18225,6 +18543,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18244,6 +18563,7 @@ export const initialSales: Sale[] = [
     "total": 12.72,
     "totalCost": 5,
     "profit": 7.72,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -18264,6 +18584,7 @@ export const initialSales: Sale[] = [
     "total": 59.85,
     "totalCost": 37.5,
     "profit": 22.35,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -18284,6 +18605,7 @@ export const initialSales: Sale[] = [
     "total": 5.89,
     "totalCost": 4,
     "profit": 1.89,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -18305,6 +18627,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 35,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18325,6 +18648,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11.5,
     "profit": 8.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18345,6 +18669,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18365,6 +18690,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 30,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18385,6 +18711,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 27.5,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18405,6 +18732,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 8,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18425,6 +18753,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 2,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18444,6 +18773,7 @@ export const initialSales: Sale[] = [
     "total": 15.72,
     "totalCost": 7.5,
     "profit": 8.22,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -18464,6 +18794,7 @@ export const initialSales: Sale[] = [
     "total": 12.21,
     "totalCost": 7.5,
     "profit": 4.71,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -18485,6 +18816,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 38,
     "profit": 42,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18505,6 +18837,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 23,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18525,6 +18858,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18545,6 +18879,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18565,6 +18900,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18585,6 +18921,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.05,
     "profit": 1.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18605,6 +18942,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 50,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18625,6 +18963,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 18,
     "profit": -8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18644,6 +18983,7 @@ export const initialSales: Sale[] = [
     "total": 44,
     "totalCost": 38,
     "profit": 6,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -18665,6 +19005,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18685,6 +19026,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18705,6 +19047,7 @@ export const initialSales: Sale[] = [
     "total": 105,
     "totalCost": 0,
     "profit": 105,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18725,6 +19068,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18745,6 +19089,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 0,
     "profit": 150,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18765,6 +19110,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18785,6 +19131,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18805,6 +19152,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18825,6 +19173,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18845,6 +19194,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 35,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18865,6 +19215,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 9,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18885,6 +19236,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18905,6 +19257,7 @@ export const initialSales: Sale[] = [
     "total": 28,
     "totalCost": 15,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18925,6 +19278,7 @@ export const initialSales: Sale[] = [
     "total": 33,
     "totalCost": 18,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18945,6 +19299,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18965,6 +19320,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -18985,6 +19341,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 0,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19005,6 +19362,7 @@ export const initialSales: Sale[] = [
     "total": 55,
     "totalCost": 31.99,
     "profit": 23.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19025,6 +19383,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19045,6 +19404,7 @@ export const initialSales: Sale[] = [
     "total": 46,
     "totalCost": 3.22,
     "profit": 42.78,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19065,6 +19425,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 35,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19085,6 +19446,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19105,6 +19467,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19125,6 +19488,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19145,6 +19509,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19165,6 +19530,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19185,6 +19551,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.05,
     "profit": 4.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19205,6 +19572,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19225,6 +19593,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19245,6 +19614,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19265,6 +19635,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 25,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19285,6 +19656,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.05,
     "profit": 1.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19305,6 +19677,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19325,6 +19698,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19345,6 +19719,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 15,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19365,6 +19740,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 18,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19385,6 +19761,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19405,6 +19782,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 18,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19425,6 +19803,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19445,6 +19824,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 50,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19465,6 +19845,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19485,6 +19866,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.05,
     "profit": 1.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19505,6 +19887,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19525,6 +19908,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 6,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19545,6 +19929,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12.5,
     "profit": 17.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19565,6 +19950,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19585,6 +19971,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19605,6 +19992,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.05,
     "profit": 1.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19625,6 +20013,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19645,6 +20034,7 @@ export const initialSales: Sale[] = [
     "total": 300,
     "totalCost": 165,
     "profit": 135,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19665,6 +20055,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 25,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19685,6 +20076,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19705,6 +20097,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19725,6 +20118,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19745,6 +20139,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19765,6 +20160,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19785,6 +20181,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19805,6 +20202,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19825,6 +20223,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19845,6 +20244,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19865,6 +20265,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 10,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19885,6 +20286,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19905,6 +20307,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19925,6 +20328,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19945,6 +20349,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.15,
     "profit": 2.85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19965,6 +20370,7 @@ export const initialSales: Sale[] = [
     "total": 60.02,
     "totalCost": 2.2,
     "profit": 57.82,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -19985,6 +20391,7 @@ export const initialSales: Sale[] = [
     "total": 40.08,
     "totalCost": 1.2,
     "profit": 38.88,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20005,6 +20412,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 60,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20025,6 +20433,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.25,
     "profit": 9.75,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20045,6 +20454,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20065,6 +20475,7 @@ export const initialSales: Sale[] = [
     "total": 290,
     "totalCost": 99.9,
     "profit": 190.1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20085,6 +20496,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 40,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20105,6 +20517,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 0.49,
     "profit": 6.51,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20125,6 +20538,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 1.6,
     "profit": 48.4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20145,6 +20559,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.1,
     "profit": 3.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20165,6 +20580,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0.5,
     "profit": 14.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20185,6 +20601,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 36,
     "profit": 44,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20205,6 +20622,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20225,6 +20643,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20245,6 +20664,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20265,6 +20685,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 0.56,
     "profit": 7.44,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20285,6 +20706,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 2,
     "profit": 38,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20305,6 +20727,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20325,6 +20748,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20345,6 +20769,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20365,6 +20790,7 @@ export const initialSales: Sale[] = [
     "total": 120,
     "totalCost": 100,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20385,6 +20811,7 @@ export const initialSales: Sale[] = [
     "total": 85,
     "totalCost": 35,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20405,6 +20832,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20425,6 +20853,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 11,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20445,6 +20874,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.05,
     "profit": 1.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20465,6 +20895,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 1.75,
     "profit": 68.25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20485,6 +20916,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20505,6 +20937,7 @@ export const initialSales: Sale[] = [
     "total": 450,
     "totalCost": 0,
     "profit": 450,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20525,6 +20958,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 6,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20545,6 +20979,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20565,6 +21000,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.8,
     "profit": 11.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20585,6 +21021,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20605,6 +21042,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20625,6 +21063,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20645,6 +21084,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 6,
     "profit": 34,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20665,6 +21105,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20685,6 +21126,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20705,6 +21147,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20725,6 +21168,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 27.5,
     "profit": 22.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20745,6 +21189,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20765,6 +21210,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 11,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20785,6 +21231,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20805,6 +21252,7 @@ export const initialSales: Sale[] = [
     "total": 18,
     "totalCost": 0,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20825,6 +21273,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20845,6 +21294,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20865,6 +21315,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20885,6 +21336,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 25,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20905,6 +21357,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 6,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20925,6 +21378,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 6,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20945,6 +21399,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20965,6 +21420,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.05,
     "profit": 1.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -20985,6 +21441,7 @@ export const initialSales: Sale[] = [
     "total": 130,
     "totalCost": 77,
     "profit": 53,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21005,6 +21462,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21025,6 +21483,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21045,6 +21504,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21065,6 +21525,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 15,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21085,6 +21546,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21105,6 +21567,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11.5,
     "profit": 8.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21125,6 +21588,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21145,6 +21609,7 @@ export const initialSales: Sale[] = [
     "total": 120,
     "totalCost": 41.49,
     "profit": 78.51,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21165,6 +21630,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 24,
     "profit": 36,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21185,6 +21651,7 @@ export const initialSales: Sale[] = [
     "total": 9,
     "totalCost": 0.63,
     "profit": 8.37,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21205,6 +21672,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21225,6 +21693,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21245,6 +21714,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 2,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21265,6 +21735,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21285,6 +21756,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21305,6 +21777,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21325,6 +21798,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 18,
     "profit": 42,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21345,6 +21819,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21365,6 +21840,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21385,6 +21861,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21405,6 +21882,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.15,
     "profit": 2.85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21425,6 +21903,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21445,6 +21924,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21465,6 +21945,7 @@ export const initialSales: Sale[] = [
     "total": 306,
     "totalCost": 0,
     "profit": 306,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21485,6 +21966,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21505,6 +21987,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21525,6 +22008,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 35,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21545,6 +22029,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 0.42,
     "profit": 5.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21565,6 +22050,7 @@ export const initialSales: Sale[] = [
     "total": 22.5,
     "totalCost": 10,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21585,6 +22071,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 6,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21605,6 +22092,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 11,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21625,6 +22113,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21645,6 +22134,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 0.3,
     "profit": 5.7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21665,6 +22155,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 0.42,
     "profit": 5.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21685,6 +22176,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 24.5,
     "profit": 15.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21705,6 +22197,7 @@ export const initialSales: Sale[] = [
     "total": 9,
     "totalCost": 0.63,
     "profit": 8.37,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21725,6 +22218,7 @@ export const initialSales: Sale[] = [
     "total": 9,
     "totalCost": 0.63,
     "profit": 8.37,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21745,6 +22239,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21765,6 +22260,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21785,6 +22281,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.05,
     "profit": 1.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21805,6 +22302,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21825,6 +22323,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.25,
     "profit": 4.75,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21845,6 +22344,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21865,6 +22365,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.4,
     "profit": 3.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21885,6 +22386,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21905,6 +22407,7 @@ export const initialSales: Sale[] = [
     "total": 23.5,
     "totalCost": 17,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21925,6 +22428,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21945,6 +22449,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21965,6 +22470,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 1.4,
     "profit": 18.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -21985,6 +22491,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22005,6 +22512,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 0,
     "profit": 150,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22025,6 +22533,7 @@ export const initialSales: Sale[] = [
     "total": 16,
     "totalCost": 0,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22045,6 +22554,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22065,6 +22575,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22085,6 +22596,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 2,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22105,6 +22617,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.05,
     "profit": 1.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22125,6 +22638,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22145,6 +22659,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22165,6 +22680,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22185,6 +22701,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22205,6 +22722,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22225,6 +22743,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22245,6 +22764,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22265,6 +22785,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.2,
     "profit": 1.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22285,6 +22806,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22305,6 +22827,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 26,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22325,6 +22848,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22345,6 +22869,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22365,6 +22890,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22385,6 +22911,7 @@ export const initialSales: Sale[] = [
     "total": 9,
     "totalCost": 0.5,
     "profit": 8.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22405,6 +22932,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.4,
     "profit": 0.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22425,6 +22953,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 0.56,
     "profit": 7.44,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22445,6 +22974,7 @@ export const initialSales: Sale[] = [
     "total": 300,
     "totalCost": 130,
     "profit": 170,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22465,6 +22995,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22485,6 +23016,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 0.42,
     "profit": 5.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22505,6 +23037,7 @@ export const initialSales: Sale[] = [
     "total": 400,
     "totalCost": 0,
     "profit": 400,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22525,6 +23058,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22545,6 +23079,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22565,6 +23100,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 35,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22585,6 +23121,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22605,6 +23142,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22625,6 +23163,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 24.82,
     "profit": 55.18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22645,6 +23184,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 11,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22665,6 +23205,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22685,6 +23226,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22705,6 +23247,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 18,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22725,6 +23268,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22745,6 +23289,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10.99,
     "profit": 9.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22765,6 +23310,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22785,6 +23331,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.6,
     "profit": 5.4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22805,6 +23352,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22825,6 +23373,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22845,6 +23394,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22865,6 +23415,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22885,6 +23436,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22905,6 +23457,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22925,6 +23478,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22945,6 +23499,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22965,6 +23520,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -22985,6 +23541,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23005,6 +23562,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23025,6 +23583,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23045,6 +23604,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23065,6 +23625,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23085,6 +23646,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23105,6 +23667,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 15,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23125,6 +23688,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23145,6 +23709,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23165,6 +23730,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23185,6 +23751,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 41,
     "profit": 34,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23205,6 +23772,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23225,6 +23793,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23245,6 +23814,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23265,6 +23835,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 41,
     "profit": 34,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23285,6 +23856,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23305,6 +23877,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 6,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23325,6 +23898,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23345,6 +23919,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 17,
     "profit": 23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23365,6 +23940,7 @@ export const initialSales: Sale[] = [
     "total": 136.9,
     "totalCost": 100,
     "profit": 36.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23385,6 +23961,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23405,6 +23982,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23425,6 +24003,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23445,6 +24024,7 @@ export const initialSales: Sale[] = [
     "total": 71,
     "totalCost": 0,
     "profit": 71,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23465,6 +24045,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23485,6 +24066,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 35,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23505,6 +24087,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23525,6 +24108,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23545,6 +24129,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23565,6 +24150,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23585,6 +24171,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.1,
     "profit": 1.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23605,6 +24192,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 13,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23625,6 +24213,7 @@ export const initialSales: Sale[] = [
     "total": 0,
     "totalCost": 0,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23645,6 +24234,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23665,6 +24255,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23685,6 +24276,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 41,
     "profit": 34,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23705,6 +24297,7 @@ export const initialSales: Sale[] = [
     "total": 1.5,
     "totalCost": 0.73,
     "profit": 0.77,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23725,6 +24318,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23745,6 +24339,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.7,
     "profit": 9.3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23765,6 +24360,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23785,6 +24381,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.97,
     "profit": 1.03,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23805,6 +24402,7 @@ export const initialSales: Sale[] = [
     "total": 2.5,
     "totalCost": 0.25,
     "profit": 2.25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23825,6 +24423,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23845,6 +24444,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23865,6 +24465,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23885,6 +24486,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 14.84,
     "profit": 45.16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23905,6 +24507,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23925,6 +24528,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 35.99,
     "profit": 4.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23945,6 +24549,7 @@ export const initialSales: Sale[] = [
     "total": 9.5,
     "totalCost": 0,
     "profit": 9.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23965,6 +24570,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -23985,6 +24591,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.8,
     "profit": 11.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24005,6 +24612,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.49,
     "profit": 0.51,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24025,6 +24633,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24045,6 +24654,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24065,6 +24675,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24085,6 +24696,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24105,6 +24717,7 @@ export const initialSales: Sale[] = [
     "total": 184.82,
     "totalCost": 100,
     "profit": 84.82,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24125,6 +24738,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 41,
     "profit": 39,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24145,6 +24759,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 35,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24165,6 +24780,7 @@ export const initialSales: Sale[] = [
     "total": 3.5,
     "totalCost": 0.35,
     "profit": 3.15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24185,6 +24801,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24205,6 +24822,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0,
     "profit": 0.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24225,6 +24843,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.2,
     "profit": 1.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24245,6 +24864,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8.99,
     "profit": 6.01,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24265,6 +24885,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24285,6 +24906,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24305,6 +24927,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24325,6 +24948,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24345,6 +24969,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24365,6 +24990,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24385,6 +25011,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24405,6 +25032,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.7,
     "profit": 9.3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24425,6 +25053,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24445,6 +25074,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 18,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24465,6 +25095,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.24,
     "profit": 0.26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24485,6 +25116,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24505,6 +25137,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 26.11,
     "profit": 123.89,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24525,6 +25158,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24545,6 +25179,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 0,
     "profit": 150,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24565,6 +25200,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.4,
     "profit": 0.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24585,6 +25221,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 9,
     "profit": 21,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24605,6 +25242,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24625,6 +25263,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24645,6 +25284,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 1.05,
     "profit": 13.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24665,6 +25305,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24685,6 +25326,7 @@ export const initialSales: Sale[] = [
     "total": 277,
     "totalCost": 0,
     "profit": 277,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24705,6 +25347,7 @@ export const initialSales: Sale[] = [
     "total": 93,
     "totalCost": 0,
     "profit": 93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24725,6 +25368,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 13,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24745,6 +25389,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.5,
     "profit": 1.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24765,6 +25410,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24785,6 +25431,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24805,6 +25452,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24825,6 +25473,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.07,
     "profit": 0.43,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24845,6 +25494,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24865,6 +25515,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.2,
     "profit": 0.3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24885,6 +25536,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24905,6 +25557,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.49,
     "profit": 0.51,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24925,6 +25578,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 15,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24945,6 +25599,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 9,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24965,6 +25620,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -24985,6 +25641,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25005,6 +25662,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 1.05,
     "profit": 13.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25025,6 +25683,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25045,6 +25704,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 16.67,
     "profit": 33.33,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25065,6 +25725,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25085,6 +25746,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25105,6 +25767,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25125,6 +25788,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25145,6 +25809,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25165,6 +25830,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25185,6 +25851,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25205,6 +25872,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 30,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25225,6 +25893,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25245,6 +25914,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25265,6 +25935,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 60,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25285,6 +25956,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25305,6 +25977,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25325,6 +25998,7 @@ export const initialSales: Sale[] = [
     "total": 48.28,
     "totalCost": 17,
     "profit": 31.28,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25345,6 +26019,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 0.56,
     "profit": 7.44,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25365,6 +26040,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25385,6 +26061,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25405,6 +26082,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25425,6 +26103,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25445,6 +26124,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.05,
     "profit": 4.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25465,6 +26145,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25485,6 +26166,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25505,6 +26187,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 9,
     "profit": 21,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25525,6 +26208,7 @@ export const initialSales: Sale[] = [
     "total": 135,
     "totalCost": 75,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25545,6 +26229,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25565,6 +26250,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.07,
     "profit": 1.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25585,6 +26271,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 30,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25605,6 +26292,7 @@ export const initialSales: Sale[] = [
     "total": 67,
     "totalCost": 0,
     "profit": 67,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25625,6 +26313,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25645,6 +26334,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 6,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25665,6 +26355,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25685,6 +26376,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 0.84,
     "profit": 11.16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25705,6 +26397,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 35,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25725,6 +26418,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25745,6 +26439,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25765,6 +26460,7 @@ export const initialSales: Sale[] = [
     "total": 125,
     "totalCost": 125,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25785,6 +26481,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25805,6 +26502,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25825,6 +26523,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 0,
     "profit": 65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25845,6 +26544,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25865,6 +26565,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25885,6 +26586,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25905,6 +26607,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25925,6 +26628,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25945,6 +26649,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25965,6 +26670,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 6,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -25985,6 +26691,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26005,6 +26712,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26025,6 +26733,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 0,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26045,6 +26754,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 11,
     "profit": 29,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26065,6 +26775,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.25,
     "profit": 0.25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26085,6 +26796,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26105,6 +26817,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 40,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26125,6 +26838,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26145,6 +26859,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26165,6 +26880,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26185,6 +26901,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26205,6 +26922,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26225,6 +26943,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.25,
     "profit": 0.25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26245,6 +26964,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26265,6 +26985,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26285,6 +27006,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26304,6 +27026,7 @@ export const initialSales: Sale[] = [
     "total": 135,
     "totalCost": 0,
     "profit": 135,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -26325,6 +27048,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 144,
     "profit": 56,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26345,6 +27069,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 23.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26365,6 +27090,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26385,6 +27111,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26405,6 +27132,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26425,6 +27153,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26445,6 +27174,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 0.84,
     "profit": 11.16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26465,6 +27195,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 20,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26485,6 +27216,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26505,6 +27237,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26525,6 +27258,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26545,6 +27279,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26565,6 +27300,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26584,6 +27320,7 @@ export const initialSales: Sale[] = [
     "total": 72,
     "totalCost": 0,
     "profit": 72,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -26605,6 +27342,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26625,6 +27363,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26645,6 +27384,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.8,
     "profit": 3.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26665,6 +27405,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26685,6 +27426,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.5,
     "profit": 0.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26705,6 +27447,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.25,
     "profit": 0.25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26725,6 +27468,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 1,
     "profit": 1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26745,6 +27489,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26765,6 +27510,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26785,6 +27531,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 26.49,
     "profit": 23.51,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26805,6 +27552,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 1.77,
     "profit": 28.23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26825,6 +27573,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26845,6 +27594,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26865,6 +27615,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26885,6 +27636,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26905,6 +27657,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26925,6 +27678,7 @@ export const initialSales: Sale[] = [
     "total": 250,
     "totalCost": 0,
     "profit": 250,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26945,6 +27699,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 0.42,
     "profit": 5.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26965,6 +27720,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -26984,6 +27740,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 0,
     "profit": 65,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -27005,6 +27762,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27025,6 +27783,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6.5,
     "profit": 8.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27045,6 +27804,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 3.5,
     "profit": 1.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27065,6 +27825,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 14.14,
     "profit": 30.87,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27085,6 +27846,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27105,6 +27867,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 18,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27125,6 +27888,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27145,6 +27909,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27165,6 +27930,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27185,6 +27951,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27205,6 +27972,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27225,6 +27993,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27245,6 +28014,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27265,6 +28035,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.8,
     "profit": 3.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27285,6 +28056,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 0,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27305,6 +28077,7 @@ export const initialSales: Sale[] = [
     "total": 47.5,
     "totalCost": 0.75,
     "profit": 46.75,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27325,6 +28098,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27345,6 +28119,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27365,6 +28140,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 6,
     "profit": -5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27385,6 +28161,7 @@ export const initialSales: Sale[] = [
     "total": 1.5,
     "totalCost": 0.07,
     "profit": 1.43,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27405,6 +28182,7 @@ export const initialSales: Sale[] = [
     "total": 370,
     "totalCost": 270,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27425,6 +28203,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 17,
     "profit": 33,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27445,6 +28224,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27465,6 +28245,7 @@ export const initialSales: Sale[] = [
     "total": 55,
     "totalCost": 54.9,
     "profit": 0.1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27485,6 +28266,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 0,
     "profit": 200,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27505,6 +28287,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27525,6 +28308,7 @@ export const initialSales: Sale[] = [
     "total": 1.25,
     "totalCost": 92,
     "profit": -90.75,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27545,6 +28329,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27565,6 +28350,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0.21,
     "profit": 19.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27585,6 +28371,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 1.18,
     "profit": 4.82,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27605,6 +28392,7 @@ export const initialSales: Sale[] = [
     "total": 55,
     "totalCost": 0.42,
     "profit": 54.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27624,6 +28412,7 @@ export const initialSales: Sale[] = [
     "total": 123.28,
     "totalCost": 54.9,
     "profit": 68.38,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -27645,6 +28434,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27665,6 +28455,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27685,6 +28476,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 92,
     "profit": 58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27705,6 +28497,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27725,6 +28518,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.8,
     "profit": 3.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27745,6 +28539,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 19,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27765,6 +28560,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27785,6 +28581,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27805,6 +28602,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27825,6 +28623,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27845,6 +28644,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 33,
     "profit": 42,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27865,6 +28665,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27885,6 +28686,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1.5,
     "profit": 3.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27905,6 +28707,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27925,6 +28728,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27945,6 +28749,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.6,
     "profit": 5.4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27965,6 +28770,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6.5,
     "profit": 8.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -27985,6 +28791,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28005,6 +28812,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28025,6 +28833,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28045,6 +28854,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28065,6 +28875,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 50,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28085,6 +28896,7 @@ export const initialSales: Sale[] = [
     "total": 120,
     "totalCost": 60,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28105,6 +28917,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 13,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28125,6 +28938,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28145,6 +28959,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28165,6 +28980,7 @@ export const initialSales: Sale[] = [
     "total": 28,
     "totalCost": 1.96,
     "profit": 26.04,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28185,6 +29001,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 6,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28205,6 +29022,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 25,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28225,6 +29043,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 20,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28245,6 +29064,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.59,
     "profit": 9.41,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28265,6 +29085,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28285,6 +29106,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28305,6 +29127,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28325,6 +29148,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28345,6 +29169,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28365,6 +29190,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 16,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28385,6 +29211,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 7,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28405,6 +29232,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28425,6 +29253,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28445,6 +29274,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28465,6 +29295,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28485,6 +29316,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 8.33,
     "profit": 16.67,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28505,6 +29337,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 19,
     "profit": 1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28525,6 +29358,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28545,6 +29379,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28565,6 +29400,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28585,6 +29421,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28605,6 +29442,7 @@ export const initialSales: Sale[] = [
     "total": 170,
     "totalCost": 145,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28625,6 +29463,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28645,6 +29484,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 7,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28665,6 +29505,7 @@ export const initialSales: Sale[] = [
     "total": 22,
     "totalCost": 0,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28685,6 +29526,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28705,6 +29547,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28725,6 +29568,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 50,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28745,6 +29589,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 15,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28765,6 +29610,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28785,6 +29631,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28805,6 +29652,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28825,6 +29673,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28845,6 +29694,7 @@ export const initialSales: Sale[] = [
     "total": 110,
     "totalCost": 63,
     "profit": 47,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28865,6 +29715,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28885,6 +29736,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28905,6 +29757,7 @@ export const initialSales: Sale[] = [
     "total": 29,
     "totalCost": 0,
     "profit": 29,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28925,6 +29778,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 6,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28945,6 +29799,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 6,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28965,6 +29820,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -28985,6 +29841,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29005,6 +29862,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29025,6 +29883,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29045,6 +29904,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29065,6 +29925,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29085,6 +29946,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29105,6 +29967,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29125,6 +29988,7 @@ export const initialSales: Sale[] = [
     "total": 37.5,
     "totalCost": 0,
     "profit": 37.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29145,6 +30009,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 0,
     "profit": 150,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29165,6 +30030,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 13,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29185,6 +30051,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29205,6 +30072,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29225,6 +30093,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29245,6 +30114,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29265,6 +30135,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29285,6 +30156,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29305,6 +30177,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29325,6 +30198,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29345,6 +30219,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29365,6 +30240,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29385,6 +30261,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29405,6 +30282,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29425,6 +30303,7 @@ export const initialSales: Sale[] = [
     "total": 9,
     "totalCost": 0.63,
     "profit": 8.37,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29445,6 +30324,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 32,
     "profit": 38,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29465,6 +30345,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.4,
     "profit": 0.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29485,6 +30366,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 50,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29505,6 +30387,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29525,6 +30408,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 16,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29545,6 +30429,7 @@ export const initialSales: Sale[] = [
     "total": 57.5,
     "totalCost": 0,
     "profit": 57.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29565,6 +30450,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5.5,
     "profit": 9.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29585,6 +30471,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29605,6 +30492,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29625,6 +30513,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 19,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29645,6 +30534,7 @@ export const initialSales: Sale[] = [
     "total": 90,
     "totalCost": 60,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29665,6 +30555,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29685,6 +30576,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 19,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29705,6 +30597,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29725,6 +30618,7 @@ export const initialSales: Sale[] = [
     "total": 37,
     "totalCost": 0,
     "profit": 37,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29745,6 +30639,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 15,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29765,6 +30660,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4.5,
     "profit": 10.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29785,6 +30681,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29805,6 +30702,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29825,6 +30723,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 0.84,
     "profit": 11.16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29845,6 +30744,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29865,6 +30765,7 @@ export const initialSales: Sale[] = [
     "total": 61.75,
     "totalCost": 0,
     "profit": 61.75,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29885,6 +30786,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29905,6 +30807,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29925,6 +30828,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 18,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29945,6 +30849,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 7,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29965,6 +30870,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -29985,6 +30891,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30005,6 +30912,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30025,6 +30933,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 0,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30045,6 +30954,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 1.05,
     "profit": 13.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30065,6 +30975,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 50,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30085,6 +30996,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30105,6 +31017,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 1.05,
     "profit": 13.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30125,6 +31038,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 13,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30145,6 +31059,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30165,6 +31080,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30185,6 +31101,7 @@ export const initialSales: Sale[] = [
     "total": 600,
     "totalCost": 0,
     "profit": 600,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30205,6 +31122,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 18,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30225,6 +31143,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 20,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30245,6 +31164,7 @@ export const initialSales: Sale[] = [
     "total": 55,
     "totalCost": 0,
     "profit": 55,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30265,6 +31185,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30285,6 +31206,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30305,6 +31227,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30325,6 +31248,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30345,6 +31269,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30365,6 +31290,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30385,6 +31311,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 8,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30405,6 +31332,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30425,6 +31353,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30445,6 +31374,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30465,6 +31395,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30485,6 +31416,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 30,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30505,6 +31437,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30525,6 +31458,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 0,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30545,6 +31479,7 @@ export const initialSales: Sale[] = [
     "total": 250,
     "totalCost": 0,
     "profit": 250,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30565,6 +31500,7 @@ export const initialSales: Sale[] = [
     "total": 68,
     "totalCost": 38,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30585,6 +31521,7 @@ export const initialSales: Sale[] = [
     "total": 140,
     "totalCost": 0,
     "profit": 140,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30605,6 +31542,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30625,6 +31563,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30645,6 +31584,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 18,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30665,6 +31605,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 3.5,
     "profit": 41.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30685,6 +31626,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 18,
     "profit": 27,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30705,6 +31647,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30725,6 +31668,7 @@ export const initialSales: Sale[] = [
     "total": 110,
     "totalCost": 60,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30745,6 +31689,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 38,
     "profit": 32,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30765,6 +31710,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30785,6 +31731,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30805,6 +31752,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30825,6 +31773,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30845,6 +31794,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 12,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30865,6 +31815,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30885,6 +31836,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30905,6 +31857,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30925,6 +31878,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30945,6 +31899,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30965,6 +31920,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -30985,6 +31941,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31005,6 +31962,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31025,6 +31983,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 1.05,
     "profit": 13.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31045,6 +32004,7 @@ export const initialSales: Sale[] = [
     "total": 260,
     "totalCost": 145,
     "profit": 115,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31065,6 +32025,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 11,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31085,6 +32046,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31105,6 +32067,7 @@ export const initialSales: Sale[] = [
     "total": 125,
     "totalCost": 0,
     "profit": 125,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31125,6 +32088,7 @@ export const initialSales: Sale[] = [
     "total": 66,
     "totalCost": 0,
     "profit": 66,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31145,6 +32109,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31165,6 +32130,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31185,6 +32151,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31205,6 +32172,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31225,6 +32193,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 17,
     "profit": 33,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31245,6 +32214,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31265,6 +32235,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 0,
     "profit": 150,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31285,6 +32256,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31305,6 +32277,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31325,6 +32298,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 14,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31345,6 +32319,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31365,6 +32340,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31385,6 +32361,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31405,6 +32382,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31425,6 +32403,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31445,6 +32424,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31465,6 +32445,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31485,6 +32466,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31505,6 +32487,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31525,6 +32508,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 20,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31545,6 +32529,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31565,6 +32550,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 1.77,
     "profit": 28.23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31585,6 +32571,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1.5,
     "profit": 3.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31605,6 +32592,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31625,6 +32613,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31645,6 +32634,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31665,6 +32655,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31685,6 +32676,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 9,
     "profit": 21,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31705,6 +32697,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31725,6 +32718,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31745,6 +32739,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31765,6 +32760,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31785,6 +32781,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 50,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31805,6 +32802,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31825,6 +32823,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31845,6 +32844,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31865,6 +32865,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31885,6 +32886,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 95,
     "profit": 105,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31905,6 +32907,7 @@ export const initialSales: Sale[] = [
     "total": 220,
     "totalCost": 0,
     "profit": 220,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31925,6 +32928,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31945,6 +32949,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 0,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31965,6 +32970,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -31985,6 +32991,7 @@ export const initialSales: Sale[] = [
     "total": 165,
     "totalCost": 115,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32005,6 +33012,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32025,6 +33033,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.07,
     "profit": 1.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32045,6 +33054,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32065,6 +33075,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32085,6 +33096,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32105,6 +33117,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32125,6 +33138,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32145,6 +33159,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32165,6 +33180,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32185,6 +33201,7 @@ export const initialSales: Sale[] = [
     "total": 24,
     "totalCost": 0,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32205,6 +33222,7 @@ export const initialSales: Sale[] = [
     "total": 165,
     "totalCost": 105,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32225,6 +33243,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32245,6 +33264,7 @@ export const initialSales: Sale[] = [
     "total": 85,
     "totalCost": 40,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32265,6 +33285,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 3.5,
     "profit": 1.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32285,6 +33306,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32305,6 +33327,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.59,
     "profit": 9.41,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32325,6 +33348,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32345,6 +33369,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32365,6 +33390,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32385,6 +33411,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 58,
     "profit": 42,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32405,6 +33432,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32425,6 +33453,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0.59,
     "profit": 14.41,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32445,6 +33474,7 @@ export const initialSales: Sale[] = [
     "total": 315,
     "totalCost": 250,
     "profit": 65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32465,6 +33495,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32485,6 +33516,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32505,6 +33537,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32525,6 +33558,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 18,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32545,6 +33579,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32565,6 +33600,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32585,6 +33621,7 @@ export const initialSales: Sale[] = [
     "total": 27.67,
     "totalCost": 0,
     "profit": 27.67,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32605,6 +33642,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32625,6 +33663,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32645,6 +33684,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32665,6 +33705,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32685,6 +33726,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.48,
     "profit": 11.52,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32705,6 +33747,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32725,6 +33768,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 11.5,
     "profit": 3.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32745,6 +33789,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 17,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32765,6 +33810,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 23,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32785,6 +33831,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32805,6 +33852,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32825,6 +33873,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 100,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32845,6 +33894,7 @@ export const initialSales: Sale[] = [
     "total": 49,
     "totalCost": 32,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32865,6 +33915,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32885,6 +33936,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32905,6 +33957,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32925,6 +33978,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32945,6 +33999,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 0.42,
     "profit": 5.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32965,6 +34020,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -32985,6 +34041,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33005,6 +34062,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 66.23,
     "profit": 33.77,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33025,6 +34083,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33045,6 +34104,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33065,6 +34125,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.8,
     "profit": 3.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33085,6 +34146,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33105,6 +34167,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15.9,
     "profit": 14.1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33125,6 +34188,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 18,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33145,6 +34209,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33165,6 +34230,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33185,6 +34251,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33205,6 +34272,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33225,6 +34293,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33245,6 +34314,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33265,6 +34335,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33285,6 +34356,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33305,6 +34377,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33325,6 +34398,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33345,6 +34419,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33365,6 +34440,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33385,6 +34461,7 @@ export const initialSales: Sale[] = [
     "total": 0.5,
     "totalCost": 0.05,
     "profit": 0.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33405,6 +34482,7 @@ export const initialSales: Sale[] = [
     "total": 130,
     "totalCost": 0,
     "profit": 130,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33425,6 +34503,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 42,
     "profit": 28,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33445,6 +34524,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33465,6 +34545,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33485,6 +34566,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33505,6 +34587,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33525,6 +34608,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33545,6 +34629,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33565,6 +34650,7 @@ export const initialSales: Sale[] = [
     "total": 26,
     "totalCost": 9,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33585,6 +34671,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.15,
     "profit": 2.85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33605,6 +34692,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33625,6 +34713,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 15,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33645,6 +34734,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 23,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33665,6 +34755,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33685,6 +34776,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33705,6 +34797,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33725,6 +34818,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33745,6 +34839,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 18,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33765,6 +34860,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 13,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33785,6 +34881,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 2,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33805,6 +34902,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 5.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33825,6 +34923,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33845,6 +34944,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33865,6 +34965,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 0.84,
     "profit": 11.16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33885,6 +34986,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 45,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33905,6 +35007,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33925,6 +35028,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33945,6 +35049,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33965,6 +35070,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -33985,6 +35091,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34005,6 +35112,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34025,6 +35133,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 0,
     "profit": 150,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34045,6 +35154,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34065,6 +35175,7 @@ export const initialSales: Sale[] = [
     "total": 300,
     "totalCost": 0,
     "profit": 300,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34085,6 +35196,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34105,6 +35217,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34125,6 +35238,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34145,6 +35259,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.8,
     "profit": 4.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34165,6 +35280,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34185,6 +35301,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34205,6 +35322,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 35,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34225,6 +35343,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34245,6 +35364,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 0.49,
     "profit": 6.51,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34265,6 +35385,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34285,6 +35406,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 0,
     "profit": 200,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34305,6 +35427,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 40,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34325,6 +35448,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34345,6 +35469,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34365,6 +35490,7 @@ export const initialSales: Sale[] = [
     "total": 11,
     "totalCost": 0.77,
     "profit": 10.23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34385,6 +35511,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34405,6 +35532,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 10,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34425,6 +35553,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34445,6 +35574,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 32,
     "profit": 33,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34465,6 +35595,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34485,6 +35616,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34505,6 +35637,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34525,6 +35658,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34545,6 +35679,7 @@ export const initialSales: Sale[] = [
     "total": 22,
     "totalCost": 3.08,
     "profit": 18.92,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34565,6 +35700,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34585,6 +35721,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34605,6 +35742,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 30,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34625,6 +35763,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 5,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34645,6 +35784,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34665,6 +35805,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 10,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34685,6 +35826,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 10,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34705,6 +35847,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 10,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34725,6 +35868,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 5,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34745,6 +35889,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 10,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34765,6 +35910,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34785,6 +35931,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34805,6 +35952,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34825,6 +35973,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34845,6 +35994,7 @@ export const initialSales: Sale[] = [
     "total": 48.5,
     "totalCost": 6.79,
     "profit": 41.71,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34865,6 +36015,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34885,6 +36036,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34905,6 +36057,7 @@ export const initialSales: Sale[] = [
     "total": 2020,
     "totalCost": 0,
     "profit": 2020,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34925,6 +36078,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 20,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34945,6 +36099,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 10,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34965,6 +36120,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -34985,6 +36141,7 @@ export const initialSales: Sale[] = [
     "total": 400,
     "totalCost": 270,
     "profit": 130,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35005,6 +36162,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 20,
     "profit": -5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35025,6 +36183,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 5,
     "profit": -2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35045,6 +36204,7 @@ export const initialSales: Sale[] = [
     "total": 110,
     "totalCost": 60,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35065,6 +36225,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35085,6 +36246,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 0,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35105,6 +36267,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35125,6 +36288,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35145,6 +36309,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 51,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35165,6 +36330,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35185,6 +36351,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35205,6 +36372,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.8,
     "profit": 4.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35225,6 +36393,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35245,6 +36414,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35265,6 +36435,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 0.42,
     "profit": 5.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35285,6 +36456,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 0,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35305,6 +36477,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 14,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35325,6 +36498,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35345,6 +36519,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35365,6 +36540,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35385,6 +36561,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35405,6 +36582,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35425,6 +36603,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35445,6 +36624,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35465,6 +36645,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35485,6 +36666,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35505,6 +36687,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35525,6 +36708,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35545,6 +36729,7 @@ export const initialSales: Sale[] = [
     "total": 13,
     "totalCost": 0.91,
     "profit": 12.09,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35565,6 +36750,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35585,6 +36771,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35605,6 +36792,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35625,6 +36813,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.5,
     "profit": 1.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35645,6 +36834,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 7,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35665,6 +36855,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35685,6 +36876,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35705,6 +36897,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 0,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35725,6 +36918,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35745,6 +36939,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 15,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35765,6 +36960,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35785,6 +36981,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35805,6 +37002,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 1.4,
     "profit": 18.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35825,6 +37023,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.5,
     "profit": 1.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35845,6 +37044,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35865,6 +37065,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35885,6 +37086,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35905,6 +37107,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 13,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35925,6 +37128,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 14,
     "profit": 21,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35945,6 +37149,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35965,6 +37170,7 @@ export const initialSales: Sale[] = [
     "total": 90,
     "totalCost": 39,
     "profit": 51,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -35985,6 +37191,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 17.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36005,6 +37212,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36025,6 +37233,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 12,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36045,6 +37254,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 20,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36065,6 +37275,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 0,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36085,6 +37296,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36105,6 +37317,7 @@ export const initialSales: Sale[] = [
     "total": 90,
     "totalCost": 0,
     "profit": 90,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36125,6 +37338,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 18,
     "profit": 27,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36145,6 +37359,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36165,6 +37380,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36185,6 +37401,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36205,6 +37422,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 3,
     "profit": 27,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36225,6 +37443,7 @@ export const initialSales: Sale[] = [
     "total": 2.5,
     "totalCost": 0.5,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36245,6 +37464,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36265,6 +37485,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 20,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36285,6 +37506,7 @@ export const initialSales: Sale[] = [
     "total": 90,
     "totalCost": 57,
     "profit": 33,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36305,6 +37527,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36325,6 +37548,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36345,6 +37569,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36365,6 +37590,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36385,6 +37611,7 @@ export const initialSales: Sale[] = [
     "total": 120,
     "totalCost": 0,
     "profit": 120,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36405,6 +37632,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 0,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36425,6 +37653,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 2.8,
     "profit": 37.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36445,6 +37674,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36465,6 +37695,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36485,6 +37716,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 14,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36505,6 +37737,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 14,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36525,6 +37758,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36545,6 +37779,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 34,
     "profit": 66,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36565,6 +37800,7 @@ export const initialSales: Sale[] = [
     "total": 90,
     "totalCost": 32,
     "profit": 58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36585,6 +37821,7 @@ export const initialSales: Sale[] = [
     "total": 2.5,
     "totalCost": 0.5,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36605,6 +37842,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 25,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36625,6 +37863,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 37,
     "profit": 23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36645,6 +37884,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36665,6 +37905,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12.5,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36685,6 +37926,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 30,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36705,6 +37947,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 12,
     "profit": 48,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36725,6 +37968,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36745,6 +37989,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36765,6 +38010,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36785,6 +38031,7 @@ export const initialSales: Sale[] = [
     "total": 1100,
     "totalCost": 0,
     "profit": 1100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36805,6 +38052,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36825,6 +38073,7 @@ export const initialSales: Sale[] = [
     "total": 90,
     "totalCost": 0,
     "profit": 90,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36845,6 +38094,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 3,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36865,6 +38115,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36885,6 +38136,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36905,6 +38157,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36925,6 +38178,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36945,6 +38199,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36965,6 +38220,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -36985,6 +38241,7 @@ export const initialSales: Sale[] = [
     "total": 85,
     "totalCost": 0,
     "profit": 85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37005,6 +38262,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 8,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37025,6 +38283,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37045,6 +38304,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 0,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37065,6 +38325,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37085,6 +38346,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37105,6 +38367,7 @@ export const initialSales: Sale[] = [
     "total": 16,
     "totalCost": 8,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37125,6 +38388,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 6,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37145,6 +38409,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37165,6 +38430,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.07,
     "profit": 4.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37185,6 +38451,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37205,6 +38472,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 2,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37225,6 +38493,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37245,6 +38514,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.07,
     "profit": 4.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37265,6 +38535,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37285,6 +38556,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37305,6 +38577,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6.5,
     "profit": 3.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37325,6 +38598,7 @@ export const initialSales: Sale[] = [
     "total": 16,
     "totalCost": 8,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37345,6 +38619,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 0,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37365,6 +38640,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 18,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37385,6 +38661,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 4,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37405,6 +38682,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37425,6 +38703,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37445,6 +38724,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37465,6 +38745,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37485,6 +38766,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37505,6 +38787,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 28,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37525,6 +38808,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37545,6 +38829,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37565,6 +38850,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 0,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37585,6 +38871,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37605,6 +38892,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37625,6 +38913,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 32,
     "profit": 48,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37645,6 +38934,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37665,6 +38955,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37685,6 +38976,7 @@ export const initialSales: Sale[] = [
     "total": 40.5,
     "totalCost": 3.15,
     "profit": 37.35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37705,6 +38997,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37725,6 +39018,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37745,6 +39039,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.05,
     "profit": 0.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37765,6 +39060,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37785,6 +39081,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.05,
     "profit": 9.95,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37805,6 +39102,7 @@ export const initialSales: Sale[] = [
     "total": 36,
     "totalCost": 2.4,
     "profit": 33.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37825,6 +39123,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37845,6 +39144,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37865,6 +39165,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37885,6 +39186,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37905,6 +39207,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37925,6 +39228,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 8,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37945,6 +39249,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37965,6 +39270,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 13,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -37985,6 +39291,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38005,6 +39312,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38025,6 +39333,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38045,6 +39354,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38065,6 +39375,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38085,6 +39396,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38105,6 +39417,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38125,6 +39438,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38145,6 +39459,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38165,6 +39480,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38185,6 +39501,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38205,6 +39522,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38225,6 +39543,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38245,6 +39564,7 @@ export const initialSales: Sale[] = [
     "total": 255,
     "totalCost": 100,
     "profit": 155,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38265,6 +39585,7 @@ export const initialSales: Sale[] = [
     "total": 220,
     "totalCost": 140,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38285,6 +39606,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38305,6 +39627,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38325,6 +39648,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38345,6 +39669,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.07,
     "profit": 4.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38365,6 +39690,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 17,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38385,6 +39711,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38405,6 +39732,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38425,6 +39753,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 25,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38445,6 +39774,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38465,6 +39795,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38485,6 +39816,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38505,6 +39837,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38525,6 +39858,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38545,6 +39879,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 10,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38565,6 +39900,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38585,6 +39921,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38605,6 +39942,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38625,6 +39963,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38645,6 +39984,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38665,6 +40005,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38685,6 +40026,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 56,
     "profit": 44,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38705,6 +40047,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 23,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38725,6 +40068,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38745,6 +40089,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12.5,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38765,6 +40110,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 13,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38785,6 +40131,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38805,6 +40152,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38825,6 +40173,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38845,6 +40194,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38865,6 +40215,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38885,6 +40236,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38905,6 +40257,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38925,6 +40278,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 6,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38945,6 +40299,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38965,6 +40320,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -38985,6 +40341,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39005,6 +40362,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39025,6 +40383,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39045,6 +40404,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 3.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39065,6 +40425,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39085,6 +40446,7 @@ export const initialSales: Sale[] = [
     "total": 140,
     "totalCost": 70,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39105,6 +40467,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.83,
     "profit": 5.17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39125,6 +40488,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.25,
     "profit": 4.75,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39145,6 +40509,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39165,6 +40530,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39185,6 +40551,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39205,6 +40572,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.83,
     "profit": 5.17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39224,6 +40592,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.42,
     "profit": 2.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39244,6 +40613,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.7,
     "profit": 9.3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39264,6 +40634,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.42,
     "profit": 2.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39284,6 +40655,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39304,6 +40676,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.42,
     "profit": 2.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39324,6 +40697,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39344,6 +40718,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39364,6 +40739,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39384,6 +40760,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39404,6 +40781,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 2.42,
     "profit": 1.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39424,6 +40802,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.83,
     "profit": 5.17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39444,6 +40823,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 2.42,
     "profit": 4.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39464,6 +40844,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39484,6 +40865,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 18,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39504,6 +40886,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39524,6 +40907,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.7,
     "profit": 9.3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39544,6 +40928,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39564,6 +40949,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 1.2,
     "profit": 4.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39584,6 +40970,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39604,6 +40991,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39624,6 +41012,7 @@ export const initialSales: Sale[] = [
     "total": 1.5,
     "totalCost": 0.15,
     "profit": 1.35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39644,6 +41033,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.1,
     "profit": 0.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39664,6 +41054,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39684,6 +41075,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 2.42,
     "profit": 4.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39704,6 +41096,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39724,6 +41117,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39744,6 +41138,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 1.2,
     "profit": 4.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39764,6 +41159,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.83,
     "profit": 5.17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39784,6 +41180,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39804,6 +41201,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.42,
     "profit": 2.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39824,6 +41222,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39844,6 +41243,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39864,6 +41264,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.83,
     "profit": 5.17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39884,6 +41285,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39904,6 +41306,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39924,6 +41327,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39944,6 +41348,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 2.8,
     "profit": 37.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39964,6 +41369,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -39984,6 +41390,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.42,
     "profit": 2.58,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40004,6 +41411,7 @@ export const initialSales: Sale[] = [
     "total": 234,
     "totalCost": 69.63,
     "profit": 164.37,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40024,6 +41432,7 @@ export const initialSales: Sale[] = [
     "total": 600,
     "totalCost": 250,
     "profit": 350,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40044,6 +41453,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40064,6 +41474,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12.5,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40084,6 +41495,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.83,
     "profit": 5.17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40104,6 +41516,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40124,6 +41537,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40144,6 +41558,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 1.2,
     "profit": 4.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40164,6 +41579,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40184,6 +41600,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 30,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40204,6 +41621,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40224,6 +41642,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40244,6 +41663,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40264,6 +41684,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40284,6 +41705,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 6,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40304,6 +41726,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40324,6 +41747,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40344,6 +41768,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.07,
     "profit": 4.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40364,6 +41789,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 7.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40384,6 +41810,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40404,6 +41831,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 15,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40424,6 +41852,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 1,
     "profit": 1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40444,6 +41873,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40464,6 +41894,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 38,
     "profit": 32,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40484,6 +41915,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40504,6 +41936,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 104,
     "profit": 96,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40524,6 +41957,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40544,6 +41978,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 16,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40564,6 +41999,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 6,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40584,6 +42020,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40604,6 +42041,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.4,
     "profit": 1.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40624,6 +42062,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40644,6 +42083,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40664,6 +42104,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40684,6 +42125,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40704,6 +42146,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40724,6 +42167,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 30,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40744,6 +42188,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40764,6 +42209,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 9,
     "profit": 21,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40784,6 +42230,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40804,6 +42251,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 23,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40824,6 +42272,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40844,6 +42293,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40864,6 +42314,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40884,6 +42335,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0.8,
     "profit": 9.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40904,6 +42356,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40924,6 +42377,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40944,6 +42398,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40964,6 +42419,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.07,
     "profit": 4.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -40984,6 +42440,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41004,6 +42461,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41024,6 +42482,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41044,6 +42503,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12.5,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41064,6 +42524,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41084,6 +42545,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41104,6 +42566,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 15,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41124,6 +42587,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41144,6 +42608,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41164,6 +42629,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 97.55,
     "profit": 102.45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41184,6 +42650,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 46.2,
     "profit": 53.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41204,6 +42671,7 @@ export const initialSales: Sale[] = [
     "total": 75,
     "totalCost": 35,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41224,6 +42692,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41244,6 +42713,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41264,6 +42734,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 40,
     "profit": 110,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41284,6 +42755,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41304,6 +42776,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41324,6 +42797,7 @@ export const initialSales: Sale[] = [
     "total": 11,
     "totalCost": 0.77,
     "profit": 10.23,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41344,6 +42818,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 0.56,
     "profit": 7.44,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41364,6 +42839,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 16,
     "profit": 14,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -41385,6 +42861,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41405,6 +42882,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41425,6 +42903,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41445,6 +42924,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41465,6 +42945,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41485,6 +42966,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41505,6 +42987,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41525,6 +43008,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41545,6 +43029,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41565,6 +43050,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41585,6 +43071,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41605,6 +43092,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41625,6 +43113,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 9,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41645,6 +43134,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41665,6 +43155,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41685,6 +43176,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41705,6 +43197,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41725,6 +43218,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41745,6 +43239,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41765,6 +43260,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41785,6 +43281,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41805,6 +43302,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41825,6 +43323,7 @@ export const initialSales: Sale[] = [
     "total": 26,
     "totalCost": 1.82,
     "profit": 24.18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41845,6 +43344,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41865,6 +43365,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41885,6 +43386,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41905,6 +43407,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41925,6 +43428,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41945,6 +43449,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41965,6 +43470,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -41985,6 +43491,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 15,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42005,6 +43512,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42025,6 +43533,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42045,6 +43554,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42065,6 +43575,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 15,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42085,6 +43596,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42105,6 +43617,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42125,6 +43638,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 16,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42145,6 +43659,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 35,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42165,6 +43680,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42185,6 +43701,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42205,6 +43722,7 @@ export const initialSales: Sale[] = [
     "total": 6,
     "totalCost": 2,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42225,6 +43743,7 @@ export const initialSales: Sale[] = [
     "total": 110,
     "totalCost": 55,
     "profit": 55,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42244,6 +43763,7 @@ export const initialSales: Sale[] = [
     "total": 386.2,
     "totalCost": 25,
     "profit": 361.2,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42264,6 +43784,7 @@ export const initialSales: Sale[] = [
     "total": 82.5,
     "totalCost": 21,
     "profit": 61.5,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42284,6 +43805,7 @@ export const initialSales: Sale[] = [
     "total": 4.76,
     "totalCost": 2,
     "profit": 2.76,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42304,6 +43826,7 @@ export const initialSales: Sale[] = [
     "total": 386,
     "totalCost": 295,
     "profit": 91,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42324,6 +43847,7 @@ export const initialSales: Sale[] = [
     "total": 9.26,
     "totalCost": 7,
     "profit": 2.26,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42344,6 +43868,7 @@ export const initialSales: Sale[] = [
     "total": 95,
     "totalCost": 55,
     "profit": 40,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -42364,6 +43889,7 @@ export const initialSales: Sale[] = [
     "total": 334.4,
     "totalCost": 250,
     "profit": 84.4,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -42384,6 +43910,7 @@ export const initialSales: Sale[] = [
     "total": 347.6,
     "totalCost": 250,
     "profit": 97.6,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -42404,6 +43931,7 @@ export const initialSales: Sale[] = [
     "total": 304,
     "totalCost": 250,
     "profit": 54,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -42424,6 +43952,7 @@ export const initialSales: Sale[] = [
     "total": 21.19,
     "totalCost": 20,
     "profit": 1.19,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42444,6 +43973,7 @@ export const initialSales: Sale[] = [
     "total": 12.46,
     "totalCost": 7.5,
     "profit": 4.96,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42464,6 +43994,7 @@ export const initialSales: Sale[] = [
     "total": 48.7,
     "totalCost": 32.95,
     "profit": 15.75,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42484,6 +44015,7 @@ export const initialSales: Sale[] = [
     "total": 5.87,
     "totalCost": 2,
     "profit": 3.87,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42504,6 +44036,7 @@ export const initialSales: Sale[] = [
     "total": 12.46,
     "totalCost": 7.5,
     "profit": 4.96,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42525,6 +44058,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 45,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42545,6 +44079,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42565,6 +44100,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42584,6 +44120,7 @@ export const initialSales: Sale[] = [
     "total": 15.76,
     "totalCost": 12,
     "profit": 3.76,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42604,6 +44141,7 @@ export const initialSales: Sale[] = [
     "total": 38.62,
     "totalCost": 30,
     "profit": 8.62,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42624,6 +44162,7 @@ export const initialSales: Sale[] = [
     "total": 112.25,
     "totalCost": 52,
     "profit": 60.25,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42645,6 +44184,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42665,6 +44205,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 6,
     "profit": 19,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42685,6 +44226,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42705,6 +44247,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 0,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42725,6 +44268,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 25,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42745,6 +44289,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42765,6 +44310,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42785,6 +44331,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42805,6 +44352,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42824,6 +44372,7 @@ export const initialSales: Sale[] = [
     "total": 45.87,
     "totalCost": 37.5,
     "profit": 8.37,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42844,6 +44393,7 @@ export const initialSales: Sale[] = [
     "total": 38.62,
     "totalCost": 20,
     "profit": 18.62,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42864,6 +44414,7 @@ export const initialSales: Sale[] = [
     "total": 38.62,
     "totalCost": 20,
     "profit": 18.62,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42884,6 +44435,7 @@ export const initialSales: Sale[] = [
     "total": 38.62,
     "totalCost": 20,
     "profit": 18.62,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42904,6 +44456,7 @@ export const initialSales: Sale[] = [
     "total": 38.62,
     "totalCost": 20,
     "profit": 18.62,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -42924,6 +44477,7 @@ export const initialSales: Sale[] = [
     "total": 33.2,
     "totalCost": 10,
     "profit": 23.2,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -42945,6 +44499,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42965,6 +44520,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -42985,6 +44541,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43005,6 +44562,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43025,6 +44583,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43045,6 +44604,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 16,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43065,6 +44625,7 @@ export const initialSales: Sale[] = [
     "totalCost": 10,
     "profit": 28.62,
     "ecommerceOrderId": "251024UFEQ5C37",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43086,6 +44647,7 @@ export const initialSales: Sale[] = [
     "totalCost": 10,
     "profit": 28.62,
     "ecommerceOrderId": "251023SA4CE2K2",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43107,6 +44669,7 @@ export const initialSales: Sale[] = [
     "totalCost": 10,
     "profit": 28.62,
     "ecommerceOrderId": "251023S43AH3PT",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43128,6 +44691,7 @@ export const initialSales: Sale[] = [
     "totalCost": 10,
     "profit": 28.62,
     "ecommerceOrderId": "2510250T39QW0M",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43149,6 +44713,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 1.67,
     "ecommerceOrderId": "251022QW8WRWC1",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43170,6 +44735,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 7,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43190,6 +44756,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 16,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43210,6 +44777,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43230,6 +44798,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 40.37,
     "profit": 59.63,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43250,6 +44819,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43269,6 +44839,7 @@ export const initialSales: Sale[] = [
     "total": 42.5,
     "totalCost": 12,
     "profit": 30.5,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43290,6 +44861,7 @@ export const initialSales: Sale[] = [
     "totalCost": 12,
     "profit": 30.5,
     "ecommerceOrderId": "2510263XS7F3J5",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43311,6 +44883,7 @@ export const initialSales: Sale[] = [
     "totalCost": 12,
     "profit": 30.5,
     "ecommerceOrderId": "2510265F9DN9NR",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43332,6 +44905,7 @@ export const initialSales: Sale[] = [
     "totalCost": 12,
     "profit": 30.5,
     "ecommerceOrderId": "2510265HBSHQD7",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43353,6 +44927,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 102.1,
     "ecommerceOrderId": "2510276H79S327",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43374,6 +44949,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43394,6 +44970,7 @@ export const initialSales: Sale[] = [
     "totalCost": 20,
     "profit": 22.5,
     "ecommerceOrderId": "251028AN3589SG",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43415,6 +44992,7 @@ export const initialSales: Sale[] = [
     "totalCost": 20,
     "profit": 22.5,
     "ecommerceOrderId": "25102890QMSA50",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43436,6 +45014,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43456,6 +45035,7 @@ export const initialSales: Sale[] = [
     "totalCost": 20,
     "profit": 21.72,
     "ecommerceOrderId": "251029D5F5A0CC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43477,6 +45057,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 44.75,
     "ecommerceOrderId": "251030D9DEWAE9",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43498,6 +45079,7 @@ export const initialSales: Sale[] = [
     "totalCost": 14,
     "profit": 71.16,
     "ecommerceOrderId": "251030F8S9STWN",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43519,6 +45101,7 @@ export const initialSales: Sale[] = [
     "totalCost": 20,
     "profit": 21.72,
     "ecommerceOrderId": "251029D5F5A0CC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43540,6 +45123,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43560,6 +45144,7 @@ export const initialSales: Sale[] = [
     "totalCost": 2,
     "profit": 3,
     "ecommerceOrderId": "francisca",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43581,6 +45166,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43601,6 +45187,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 34.9,
     "ecommerceOrderId": "251102NJ6SPH85",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43622,6 +45209,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 40,
     "ecommerceOrderId": "251102Q652RSH7",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43643,6 +45231,7 @@ export const initialSales: Sale[] = [
     "totalCost": 20,
     "profit": 33.37,
     "ecommerceOrderId": "251102MYQY566D",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43664,6 +45253,7 @@ export const initialSales: Sale[] = [
     "totalCost": 2,
     "profit": 3.74,
     "ecommerceOrderId": "251103SHJAKJES",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43685,6 +45275,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7.5,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43705,6 +45296,7 @@ export const initialSales: Sale[] = [
     "totalCost": 18,
     "profit": 1.71,
     "ecommerceOrderId": "evandrodo206",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43726,6 +45318,7 @@ export const initialSales: Sale[] = [
     "totalCost": 20,
     "profit": 33.37,
     "ecommerceOrderId": "evandrodo206",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43747,6 +45340,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 34.9,
     "ecommerceOrderId": "fj5laf_w9t",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -43768,6 +45362,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43788,6 +45383,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 32,
     "ecommerceOrderId": "zelton.novais",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -43809,6 +45405,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 7.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43829,6 +45426,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7.5,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43849,6 +45447,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43869,6 +45468,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43889,6 +45489,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 20,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43908,6 +45509,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 25,
     "profit": 0,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -43928,6 +45530,7 @@ export const initialSales: Sale[] = [
     "total": 123.12,
     "totalCost": 25,
     "profit": 98.12,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -43949,6 +45552,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43969,6 +45573,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 6,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -43989,6 +45594,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44009,6 +45615,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44029,6 +45636,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44049,6 +45657,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44069,6 +45678,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44089,6 +45699,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44109,6 +45720,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44129,6 +45741,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 20,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44149,6 +45762,7 @@ export const initialSales: Sale[] = [
     "total": 90,
     "totalCost": 0,
     "profit": 90,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44169,6 +45783,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44189,6 +45804,7 @@ export const initialSales: Sale[] = [
     "total": 37.24,
     "totalCost": 7,
     "profit": 30.24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44209,6 +45825,7 @@ export const initialSales: Sale[] = [
     "total": 14.74,
     "totalCost": 7.5,
     "profit": 7.24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44229,6 +45846,7 @@ export const initialSales: Sale[] = [
     "total": 42,
     "totalCost": 0,
     "profit": 42,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44249,6 +45867,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44269,6 +45888,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44289,6 +45909,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 1,
     "profit": 49,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44309,6 +45930,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 1,
     "profit": 99,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44329,6 +45951,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44349,6 +45972,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44369,6 +45993,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44389,6 +46014,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44409,6 +46035,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44429,6 +46056,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44449,6 +46077,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 1,
     "profit": 49,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44469,6 +46098,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44489,6 +46119,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44509,6 +46140,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44529,6 +46161,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 15,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44549,6 +46182,7 @@ export const initialSales: Sale[] = [
     "total": 250,
     "totalCost": 99.9,
     "profit": 150.1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44569,6 +46203,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44589,6 +46224,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44609,6 +46245,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44629,6 +46266,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 25,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44649,6 +46287,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 23.1,
     "profit": 26.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44669,6 +46308,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44689,6 +46329,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7.5,
     "profit": 12.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44709,6 +46350,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44729,6 +46371,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44749,6 +46392,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44769,6 +46413,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44789,6 +46434,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44809,6 +46455,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44829,6 +46476,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 38,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44849,6 +46497,7 @@ export const initialSales: Sale[] = [
     "total": 18,
     "totalCost": 9,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44869,6 +46518,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 8.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44889,6 +46539,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44909,6 +46560,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.3,
     "ecommerceOrderId": "251125N6D00GHN",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -44930,6 +46582,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.3,
     "ecommerceOrderId": "251126QTAS3SAR",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -44951,6 +46604,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 34,
     "ecommerceOrderId": "2511195SVS58WQ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -44972,6 +46626,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 38,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -44992,6 +46647,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45012,6 +46668,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45032,6 +46689,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 8,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45052,6 +46710,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45072,6 +46731,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45092,6 +46752,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45112,6 +46773,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 21,
     "ecommerceOrderId": "251127T0EUU1WM",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45133,6 +46795,7 @@ export const initialSales: Sale[] = [
     "totalCost": 275,
     "profit": 77.88,
     "ecommerceOrderId": "7550209518518535943",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -45154,6 +46817,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45174,6 +46838,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 15,
     "profit": 45,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45194,6 +46859,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45214,6 +46880,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45234,6 +46901,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45254,6 +46922,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45274,6 +46943,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45294,6 +46964,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 7,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45314,6 +46985,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45334,6 +47006,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45354,6 +47027,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45374,6 +47048,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45394,6 +47069,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 38,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45414,6 +47090,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45434,6 +47111,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45454,6 +47132,7 @@ export const initialSales: Sale[] = [
     "total": 350,
     "totalCost": 280,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45474,6 +47153,7 @@ export const initialSales: Sale[] = [
     "totalCost": 10,
     "profit": 4,
     "ecommerceOrderId": "2512016D13CT6U",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45495,6 +47175,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 84,
     "ecommerceOrderId": "251204E2WQ3CR3",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45516,6 +47197,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 21,
     "ecommerceOrderId": "25112819EYDS0J",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45537,6 +47219,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 30.24,
     "ecommerceOrderId": "251208S746WPVS",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45558,6 +47241,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 9,
     "ecommerceOrderId": "251208TBTU0JQX",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45579,6 +47263,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 30.24,
     "ecommerceOrderId": "251208RNR5ABPX",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45600,6 +47285,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 30.24,
     "ecommerceOrderId": "251206KWK4SX80",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45621,6 +47307,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 30.24,
     "ecommerceOrderId": "251205JU4D091G",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45642,6 +47329,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 21,
     "ecommerceOrderId": "251127T0EUU1WM",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45663,6 +47351,7 @@ export const initialSales: Sale[] = [
     "totalCost": 19,
     "profit": 10.74,
     "ecommerceOrderId": "25112811QMV818",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45684,6 +47373,7 @@ export const initialSales: Sale[] = [
     "totalCost": 18,
     "profit": 4.24,
     "ecommerceOrderId": "251204E6UDR503",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45705,6 +47395,7 @@ export const initialSales: Sale[] = [
     "totalCost": 18,
     "profit": 11.74,
     "ecommerceOrderId": "251204EPGA4ETC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45726,6 +47417,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.3,
     "ecommerceOrderId": "251205GCHYG20G",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45747,6 +47439,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 21,
     "ecommerceOrderId": "251205HE7YTHM6",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45768,6 +47461,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 7.63,
     "ecommerceOrderId": "251208SMPRG11A",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45789,6 +47483,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.3,
     "ecommerceOrderId": "251208R3JYP1TD",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45810,6 +47505,7 @@ export const initialSales: Sale[] = [
     "totalCost": 3,
     "profit": 1.43,
     "ecommerceOrderId": "251207QQBN0Q1H",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45830,6 +47526,7 @@ export const initialSales: Sale[] = [
     "total": 34,
     "totalCost": 15,
     "profit": 19,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -45851,6 +47548,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45871,6 +47569,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 50,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45891,6 +47590,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 5,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45911,6 +47611,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 40,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45931,6 +47632,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 35,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45951,6 +47653,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45971,6 +47674,7 @@ export const initialSales: Sale[] = [
     "total": 15.09,
     "totalCost": 12.88,
     "profit": 2.21,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -45991,6 +47695,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 19,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46011,6 +47716,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46031,6 +47737,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46051,6 +47758,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 15,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46071,6 +47779,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 38,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46091,6 +47800,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46111,6 +47821,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46131,6 +47842,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46151,6 +47863,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 14,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46170,6 +47883,7 @@ export const initialSales: Sale[] = [
     "total": 270,
     "totalCost": 0,
     "profit": 270,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -46191,6 +47905,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46211,6 +47926,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46231,6 +47947,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46251,6 +47968,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46271,6 +47989,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46291,6 +48010,7 @@ export const initialSales: Sale[] = [
     "total": 185,
     "totalCost": 100,
     "profit": 85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46311,6 +48031,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 15,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46331,6 +48052,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46351,6 +48073,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46371,6 +48094,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46391,6 +48115,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46411,6 +48136,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46431,6 +48157,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 25,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46451,6 +48178,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 40,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46471,6 +48199,7 @@ export const initialSales: Sale[] = [
     "total": 200,
     "totalCost": 0,
     "profit": 200,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46491,6 +48220,7 @@ export const initialSales: Sale[] = [
     "total": 140,
     "totalCost": 100,
     "profit": 40,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46511,6 +48241,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46531,6 +48262,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 15,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46551,6 +48283,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46571,6 +48304,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 153,
     "ecommerceOrderId": "251217JA47THQU",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -46592,6 +48326,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 105,
     "ecommerceOrderId": "1733237725498345439",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -46613,6 +48348,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46633,6 +48369,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 6,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46653,6 +48390,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 18,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46673,6 +48411,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 20,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46693,6 +48432,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 258,
     "ecommerceOrderId": "581764922242532626",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -46714,6 +48454,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46734,6 +48475,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46754,6 +48496,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46774,6 +48517,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46794,6 +48538,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46814,6 +48559,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 25,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46834,6 +48580,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 28,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46854,6 +48601,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46874,6 +48622,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46894,6 +48643,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 15,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46914,6 +48664,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46934,6 +48685,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46954,6 +48706,7 @@ export const initialSales: Sale[] = [
     "total": 350,
     "totalCost": 270,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46974,6 +48727,7 @@ export const initialSales: Sale[] = [
     "total": 400,
     "totalCost": 300,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -46994,6 +48748,7 @@ export const initialSales: Sale[] = [
     "total": 300,
     "totalCost": 145,
     "profit": 155,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47014,6 +48769,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 30.24,
     "ecommerceOrderId": "251226BB55U3C7",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47035,6 +48791,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 30.24,
     "ecommerceOrderId": "251228GM6DF9FD",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47056,6 +48813,7 @@ export const initialSales: Sale[] = [
     "totalCost": 10,
     "profit": 8.5,
     "ecommerceOrderId": "251228GQAC35RE",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47077,6 +48835,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47097,6 +48856,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47117,6 +48877,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47137,6 +48898,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47157,6 +48919,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47177,6 +48940,7 @@ export const initialSales: Sale[] = [
     "totalCost": 280,
     "profit": 98.4,
     "ecommerceOrderId": "581881466757613048",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"tiktok\"}",
     "status": "completed"
   },
@@ -47198,6 +48962,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 12,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47218,6 +48983,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47238,6 +49004,7 @@ export const initialSales: Sale[] = [
     "totalCost": 15,
     "profit": 41.2,
     "ecommerceOrderId": "26010470HA378U",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47259,6 +49026,7 @@ export const initialSales: Sale[] = [
     "totalCost": 15,
     "profit": 26.6,
     "ecommerceOrderId": "2601057PDHKMGS",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47280,6 +49048,7 @@ export const initialSales: Sale[] = [
     "totalCost": 12,
     "profit": 2.99,
     "ecommerceOrderId": "26010322KX6CM7",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47301,6 +49070,7 @@ export const initialSales: Sale[] = [
     "totalCost": 12,
     "profit": 2.99,
     "ecommerceOrderId": "26010321EYMMGF",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47322,6 +49092,7 @@ export const initialSales: Sale[] = [
     "totalCost": 19,
     "profit": 15.75,
     "ecommerceOrderId": "26010330Y0QYCC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47343,6 +49114,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47363,6 +49135,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47383,6 +49156,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47403,6 +49177,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47423,6 +49198,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47443,6 +49219,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47463,6 +49240,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 2.5,
     "profit": 4.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47483,6 +49261,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47503,6 +49282,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47523,6 +49303,7 @@ export const initialSales: Sale[] = [
     "totalCost": 15,
     "profit": 13.1,
     "ecommerceOrderId": "260113UN53PDB3",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47544,6 +49325,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 100.32,
     "ecommerceOrderId": "1732942733137053663",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -47565,6 +49347,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47585,6 +49368,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.28,
     "profit": 3.72,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47605,6 +49389,7 @@ export const initialSales: Sale[] = [
     "totalCost": 3,
     "profit": 1.54,
     "ecommerceOrderId": "26011533GTJVCC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47626,6 +49411,7 @@ export const initialSales: Sale[] = [
     "totalCost": 25,
     "profit": 27.99,
     "ecommerceOrderId": "260115363HXRNS",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -47647,6 +49433,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47667,6 +49454,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0,
     "profit": 1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47687,6 +49475,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47707,6 +49496,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47727,6 +49517,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 12,
     "profit": 13,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47747,6 +49538,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47767,6 +49559,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 15,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47787,6 +49580,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 2.5,
     "profit": 2.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47807,6 +49601,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47827,6 +49622,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 0.56,
     "profit": 7.44,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47847,6 +49643,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 25,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47867,6 +49664,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47887,6 +49685,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47907,6 +49706,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47927,6 +49727,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 6,
     "profit": 14,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47947,6 +49748,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 6.5,
     "profit": 8.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47967,6 +49769,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 6,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -47987,6 +49790,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48007,6 +49811,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 18,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48027,6 +49832,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 25,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48047,6 +49853,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48067,6 +49874,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48087,6 +49895,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48107,6 +49916,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 3.7,
     "ecommerceOrderId": "260120HKJW21F6",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48128,6 +49938,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 45.84,
     "ecommerceOrderId": "260120HW0K4N7G",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48148,6 +49959,7 @@ export const initialSales: Sale[] = [
     "total": 55.2,
     "totalCost": 7,
     "profit": 48.2,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -48169,6 +49981,7 @@ export const initialSales: Sale[] = [
     "total": 12,
     "totalCost": 0.84,
     "profit": 11.16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48189,6 +50002,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48209,6 +50023,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0,
     "profit": 3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48229,6 +50044,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48249,6 +50065,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48269,6 +50086,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48289,6 +50107,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.35,
     "profit": 4.65,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48309,6 +50128,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 5.56,
     "ecommerceOrderId": "26012501R0305B",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48330,6 +50150,7 @@ export const initialSales: Sale[] = [
     "totalCost": 2.8,
     "profit": 3.46,
     "ecommerceOrderId": "260125W10MYBA6",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48351,6 +50172,7 @@ export const initialSales: Sale[] = [
     "totalCost": 4.5,
     "profit": 12.56,
     "ecommerceOrderId": "260123QKXEPFNT",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48372,6 +50194,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 38.39,
     "ecommerceOrderId": "2601262EWM7HSQ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48393,6 +50216,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.61,
     "ecommerceOrderId": "26012643AWWXYN",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48414,6 +50238,7 @@ export const initialSales: Sale[] = [
     "total": 360,
     "totalCost": 275,
     "profit": 85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48434,6 +50259,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "26012877ASXSW2",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48455,6 +50281,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "26012879CE069S",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48476,6 +50303,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.54,
     "ecommerceOrderId": "2601287HCSF395",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48497,6 +50325,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "2601288URC8VEF",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48518,6 +50347,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48538,6 +50368,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 14,
     "profit": 26,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48558,6 +50389,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48578,6 +50410,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 45.39,
     "ecommerceOrderId": "260131E6UQ7MER",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48599,6 +50432,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48619,6 +50453,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 55.2,
     "ecommerceOrderId": "582355031501800714",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -48640,6 +50475,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 12,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48660,6 +50496,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 5,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48680,6 +50517,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48700,6 +50538,7 @@ export const initialSales: Sale[] = [
     "totalCost": 2.1,
     "profit": 63.96,
     "ecommerceOrderId": "260202KGB8PW0S",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48721,6 +50560,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260202KDJAYA04",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48742,6 +50582,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260202KB9XFY1F",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48763,6 +50604,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1.4,
     "profit": 28.58,
     "ecommerceOrderId": "260201HUCC9A14",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48784,6 +50626,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.54,
     "ecommerceOrderId": "260130BPA5UXQ0",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48805,6 +50648,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 2.8,
     "profit": 7.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48825,6 +50669,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48845,6 +50690,7 @@ export const initialSales: Sale[] = [
     "totalCost": 12,
     "profit": 6.79,
     "ecommerceOrderId": "260203QVC1NHGG",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48866,6 +50712,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260203PK6Y0A25",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48887,6 +50734,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.5,
     "ecommerceOrderId": "260203PRHGUC97",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48908,6 +50756,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 7.49,
     "ecommerceOrderId": "260203Q3C34DNC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48929,6 +50778,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.54,
     "ecommerceOrderId": "260203QJNTUWSC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48950,6 +50800,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -48970,6 +50821,7 @@ export const initialSales: Sale[] = [
     "totalCost": 12.5,
     "profit": 6.29,
     "ecommerceOrderId": "260205TXSABCRN",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -48991,6 +50843,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260205TXVP1P5N",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49012,6 +50865,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49032,6 +50886,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49052,6 +50907,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49072,6 +50928,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260205UK2H546J",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49093,6 +50950,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "2602060TRY2SPR",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49114,6 +50972,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "26020619R29YC5",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49135,6 +50994,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "2602061AFHRWQS",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49156,6 +51016,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 11,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49176,6 +51037,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49196,6 +51058,7 @@ export const initialSales: Sale[] = [
     "total": 45,
     "totalCost": 20,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49216,6 +51079,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49236,6 +51100,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.5,
     "ecommerceOrderId": "2602087DYXN63P",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49257,6 +51122,7 @@ export const initialSales: Sale[] = [
     "totalCost": 15,
     "profit": 13.1,
     "ecommerceOrderId": "26020987RHU086",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49278,6 +51144,7 @@ export const initialSales: Sale[] = [
     "total": 3,
     "totalCost": 0.21,
     "profit": 2.79,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49298,6 +51165,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 4.2,
     "profit": 25.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49318,6 +51186,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1.4,
     "profit": 8.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49338,6 +51207,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 0,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49358,6 +51228,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 0,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49378,6 +51249,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "2602098NVFCAP8",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49399,6 +51271,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0.7,
     "profit": 4.3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49419,6 +51292,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49439,6 +51313,7 @@ export const initialSales: Sale[] = [
     "totalCost": 12.5,
     "profit": 6.29,
     "ecommerceOrderId": "260211EY108RQH",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49460,6 +51335,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 6,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49480,6 +51356,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260211EVXGJHUB",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49501,6 +51378,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260212G46PXBNW",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49522,6 +51400,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 4.64,
     "ecommerceOrderId": "260212G72M35W6",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49543,6 +51422,7 @@ export const initialSales: Sale[] = [
     "totalCost": 22.5,
     "profit": 13.94,
     "ecommerceOrderId": "260212G4R2W2EE",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49564,6 +51444,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49584,6 +51465,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49604,6 +51486,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1.4,
     "profit": 13.02,
     "ecommerceOrderId": "260213JQR733AV",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49625,6 +51508,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260213JDRSN8HV",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49646,6 +51530,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "260213HSDSJMQX",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49667,6 +51552,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49687,6 +51573,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 20,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49707,6 +51594,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 186.52,
     "ecommerceOrderId": "260214MX09MKJK",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49728,6 +51616,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49748,6 +51637,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49768,6 +51658,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.5,
     "ecommerceOrderId": "260214PRACWP1G",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49789,6 +51680,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.5,
     "ecommerceOrderId": "260214NC6AV4AW",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49810,6 +51702,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.5,
     "ecommerceOrderId": "260215S10WG2NV",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49831,6 +51724,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.5,
     "ecommerceOrderId": "260215QY2AJYYW",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49852,6 +51746,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.5,
     "ecommerceOrderId": "260215S0NNWVA1",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49873,6 +51768,7 @@ export const initialSales: Sale[] = [
     "totalCost": 3,
     "profit": 1.54,
     "ecommerceOrderId": "260216UC5PEXQS",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49894,6 +51790,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 4.64,
     "ecommerceOrderId": "260216T9YQWBCN",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49915,6 +51812,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260216UB0PYHCE",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49936,6 +51834,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 2.1,
     "profit": 12.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -49956,6 +51855,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2602181G0BWP7K",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49977,6 +51877,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 4.64,
     "ecommerceOrderId": "2602170V61Y572",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -49998,6 +51899,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50018,6 +51920,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50038,6 +51941,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 6,
     "profit": 24,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50058,6 +51962,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50078,6 +51983,7 @@ export const initialSales: Sale[] = [
     "totalCost": 10,
     "profit": 8.8,
     "ecommerceOrderId": "2602194QD3PDMR",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50099,6 +52005,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.54,
     "ecommerceOrderId": "260219506EESHD",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50120,6 +52027,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "26022088CEW7MH",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50141,6 +52049,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.29,
     "ecommerceOrderId": "582671832439162687",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -50162,6 +52071,7 @@ export const initialSales: Sale[] = [
     "totalCost": 34,
     "profit": 74.2,
     "ecommerceOrderId": "582693256409416785",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -50183,6 +52093,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50203,6 +52114,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 2.8,
     "profit": 17.2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50223,6 +52135,7 @@ export const initialSales: Sale[] = [
     "total": 300,
     "totalCost": 0,
     "profit": 300,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50243,6 +52156,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50263,6 +52177,7 @@ export const initialSales: Sale[] = [
     "totalCost": 15,
     "profit": 9.3,
     "ecommerceOrderId": "260223DWGFD4CB",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50284,6 +52199,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0,
     "profit": 14.54,
     "ecommerceOrderId": "260223E5E800MU",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50305,6 +52221,7 @@ export const initialSales: Sale[] = [
     "total": 110,
     "totalCost": 34,
     "profit": 76,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50325,6 +52242,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 10,
     "profit": 0,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50345,6 +52263,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "582767102684267825",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -50366,6 +52285,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260224HATE1P51",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50387,6 +52307,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50407,6 +52328,7 @@ export const initialSales: Sale[] = [
     "totalCost": 2.8,
     "profit": 17.2,
     "ecommerceOrderId": "582832973697222108",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -50428,6 +52350,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "582802201370330561",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -50449,6 +52372,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50469,6 +52393,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50489,6 +52414,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 20,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50509,6 +52435,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 10,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50529,6 +52456,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50549,6 +52477,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 0,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50569,6 +52498,7 @@ export const initialSales: Sale[] = [
     "total": 600,
     "totalCost": 400,
     "profit": 200,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50589,6 +52519,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50609,6 +52540,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50629,6 +52561,7 @@ export const initialSales: Sale[] = [
     "total": 400,
     "totalCost": 280,
     "profit": 120,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50649,6 +52582,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 90,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50669,6 +52603,7 @@ export const initialSales: Sale[] = [
     "total": 165,
     "totalCost": 135,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50689,6 +52624,7 @@ export const initialSales: Sale[] = [
     "total": 8,
     "totalCost": 0,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50709,6 +52645,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50729,6 +52666,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 0,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50748,6 +52686,7 @@ export const initialSales: Sale[] = [
     "total": 150,
     "totalCost": 0,
     "profit": 150,
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"olx\"}",
     "status": "completed"
   },
@@ -50769,6 +52708,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 15,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50789,6 +52729,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.29,
     "ecommerceOrderId": "582949664542655793",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -50810,6 +52751,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1.4,
     "profit": 16.58,
     "ecommerceOrderId": "582969363430213371",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -50831,6 +52773,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50851,6 +52794,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50871,6 +52815,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -50891,6 +52836,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 6.32,
     "ecommerceOrderId": "2603143RH3G5SJ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50912,6 +52858,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260311SUCVJT5B",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50933,6 +52880,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260312UJJBBAVE",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50954,6 +52902,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260311SA40Y1F8",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50975,6 +52924,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260311SNXJHKSB",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -50996,6 +52946,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260313103HV5F6",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51017,6 +52968,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2603131G6CJM2Y",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51038,6 +52990,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "26031325T58KDX",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51059,6 +53012,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2603143K853WWM",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51080,6 +53034,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2603145F5U847D",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51101,6 +53056,7 @@ export const initialSales: Sale[] = [
     "totalCost": 15,
     "profit": 28.52,
     "ecommerceOrderId": "583003560395768948",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51122,6 +53078,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.29,
     "ecommerceOrderId": "583028210992842730",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51143,6 +53100,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.29,
     "ecommerceOrderId": "583076402794039259",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51164,6 +53122,7 @@ export const initialSales: Sale[] = [
     "totalCost": 350,
     "profit": 103.69,
     "ecommerceOrderId": "2603156GA6X2KW",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51185,6 +53144,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2603168MB44W5B",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51206,6 +53166,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2603157YRJQ60Y",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51227,6 +53188,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2603168N84XUJ5",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51248,6 +53210,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2603169878A177",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51269,6 +53232,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 18.5,
     "profit": 11.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51289,6 +53253,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 0,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51309,6 +53274,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51329,6 +53295,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51349,6 +53316,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 15,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51369,6 +53337,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260320MRH5UP5A",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51390,6 +53359,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.54,
     "ecommerceOrderId": "260323UA87XECC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51411,6 +53381,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51431,6 +53402,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51451,6 +53423,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583086581104871031",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51472,6 +53445,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.29,
     "ecommerceOrderId": "583098538648110579",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51493,6 +53467,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583114960457861054",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51514,6 +53489,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583128761118000431",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51535,6 +53511,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.29,
     "ecommerceOrderId": "583128912663119443",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51556,6 +53533,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.29,
     "ecommerceOrderId": "583155029219772144",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51577,6 +53555,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1.4,
     "profit": 25.8,
     "ecommerceOrderId": "583191996668544497",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -51598,6 +53577,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 0,
     "profit": 80,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51618,6 +53598,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 4.2,
     "profit": 25.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51638,6 +53619,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 35,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51658,6 +53640,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 25,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51678,6 +53661,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 18,
     "profit": 17,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51698,6 +53682,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 8,
     "profit": 22,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51718,6 +53703,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 0,
     "profit": 60,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51738,6 +53724,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0,
     "profit": 1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51758,6 +53745,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 35,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51778,6 +53766,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 25,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51798,6 +53787,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 4.2,
     "profit": 25.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -51818,6 +53808,7 @@ export const initialSales: Sale[] = [
     "totalCost": 15,
     "profit": 15,
     "ecommerceOrderId": "2604052N4YAKVP",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51839,6 +53830,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260403U0Q395NK",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51860,6 +53852,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260403TU7QV6XT",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51881,6 +53874,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260401NR0BA272",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51902,6 +53896,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260328BWM81AGS",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51923,6 +53918,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260409CD2W2XJB",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51944,6 +53940,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260409BFX8SS7A",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51965,6 +53962,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260409BSHH7E0Q",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -51986,6 +53984,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2604089DYV9NFE",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52007,6 +54006,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2604088H2RCBCG",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52028,6 +54028,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2604088EAMB58S",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52049,6 +54050,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "26040888X1M69H",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52070,6 +54072,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 4.64,
     "ecommerceOrderId": "2604088WQH4MP3",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52091,6 +54094,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 4.64,
     "ecommerceOrderId": "2604077VFTMCCS",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52112,6 +54116,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583421944481809850",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52133,6 +54138,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583435469169263884",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52154,6 +54160,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583436730013615732",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52175,6 +54182,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -52195,6 +54203,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -52215,6 +54224,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260410DK38AXXA",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52236,6 +54246,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260410DP6H17MK",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52257,6 +54268,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260410F789WW11",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52278,6 +54290,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3,
     "profit": 7,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -52298,6 +54311,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -52318,6 +54332,7 @@ export const initialSales: Sale[] = [
     "total": 325,
     "totalCost": 0,
     "profit": 325,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -52338,6 +54353,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -52358,6 +54374,7 @@ export const initialSales: Sale[] = [
     "totalCost": 5,
     "profit": 23.3,
     "ecommerceOrderId": "260413PV0SU306",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52379,6 +54396,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260411HKY18FYT",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52400,6 +54418,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260401NR0BA272",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52421,6 +54440,7 @@ export const initialSales: Sale[] = [
     "totalCost": 2.8,
     "profit": 14.1,
     "ecommerceOrderId": "260413NCR54MQE",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52442,6 +54462,7 @@ export const initialSales: Sale[] = [
     "totalCost": 350,
     "profit": 64.33,
     "ecommerceOrderId": "260414R65317J0",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52463,6 +54484,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260411G5FBQ3XV",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52484,6 +54506,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260411GFJ31RRA",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52505,6 +54528,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260412JPXBAC7T",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52526,6 +54550,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260413MR5QNNP9",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52547,6 +54572,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260412K9E3GT7K",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52568,6 +54594,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260413NHDG2M9S",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52589,6 +54616,7 @@ export const initialSales: Sale[] = [
     "totalCost": 10,
     "profit": 8.22,
     "ecommerceOrderId": "260412KUNPAFPG",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52610,6 +54638,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260413NQ1NXHYE",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52631,6 +54660,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260413PVYRRD3C",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52652,6 +54682,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260415SNH97YP2",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52673,6 +54704,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 7.88,
     "ecommerceOrderId": "260414Q9STB3DN",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52694,6 +54726,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260414QVW70J9K",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52715,6 +54748,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2604172JHMVSDW",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52736,6 +54770,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "26041847PHYC32",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52757,6 +54792,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 7.88,
     "ecommerceOrderId": "26041619KGDYFH",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52778,6 +54814,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2604184UTQHWTB",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -52799,6 +54836,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 15,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -52819,6 +54857,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -52839,6 +54878,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583479030878472056",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52860,6 +54900,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583479882090972614",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52881,6 +54922,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583496655317993267",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52902,6 +54944,7 @@ export const initialSales: Sale[] = [
     "totalCost": 2.1,
     "profit": 25.5,
     "ecommerceOrderId": "583507949532579537",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52923,6 +54966,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583508537126847701",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52944,6 +54988,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583535071876711979",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52965,6 +55010,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583549454049118089",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -52986,6 +55032,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1.4,
     "profit": 17,
     "ecommerceOrderId": "583551026406720705",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53007,6 +55054,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583553405403694455",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53028,6 +55076,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53048,6 +55097,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53068,6 +55118,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 50,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53088,6 +55139,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 4.2,
     "profit": 25.8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53108,6 +55160,7 @@ export const initialSales: Sale[] = [
     "totalCost": 600,
     "profit": 46.4,
     "ecommerceOrderId": "260421C6SSPHA5",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53129,6 +55182,7 @@ export const initialSales: Sale[] = [
     "totalCost": 600,
     "profit": 46.4,
     "ecommerceOrderId": "260421CMEX7DWT",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53150,6 +55204,7 @@ export const initialSales: Sale[] = [
     "totalCost": 600,
     "profit": 42.29,
     "ecommerceOrderId": "260421CNENTYWD",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53171,6 +55226,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260421C89S5NE6",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53192,6 +55248,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "2604209HXS1DJ5",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53213,6 +55270,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 4.8,
     "ecommerceOrderId": "260420BBSM223J",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53234,6 +55292,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 5.5,
     "profit": 14.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53254,6 +55313,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 19,
     "profit": 16,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53274,6 +55334,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53294,6 +55355,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.7,
     "profit": 1.3,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53314,6 +55376,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53334,6 +55397,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53354,6 +55418,7 @@ export const initialSales: Sale[] = [
     "total": 235,
     "totalCost": 150,
     "profit": 85,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53374,6 +55439,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 20,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53394,6 +55460,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 22.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53414,6 +55481,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53434,6 +55502,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "2604280T01SJ8T",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53455,6 +55524,7 @@ export const initialSales: Sale[] = [
     "totalCost": 600,
     "profit": 38.2,
     "ecommerceOrderId": "260423K0DD8TQ5",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53476,6 +55546,7 @@ export const initialSales: Sale[] = [
     "totalCost": 15,
     "profit": 3.49,
     "ecommerceOrderId": "260425NRMJTJ1W",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53497,6 +55568,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "260426RJS23MB2",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53518,6 +55590,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "260426S0SH02BJ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53539,6 +55612,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "2605019WWE8B9Y",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53560,6 +55634,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "60502AD1TAKX0",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53581,6 +55656,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.3,
     "ecommerceOrderId": "260502B264YRW1",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53602,6 +55678,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 6.3,
     "ecommerceOrderId": "26042701X1MQWY",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53623,6 +55700,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "260505JFA3YXQE",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53644,6 +55722,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "260506MDXPYT4P",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53665,6 +55744,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "260506MUHE6AAR",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53686,6 +55766,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53706,6 +55787,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583876539229374042",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53727,6 +55809,7 @@ export const initialSales: Sale[] = [
     "totalCost": 4,
     "profit": 3.23,
     "ecommerceOrderId": "583899379960350386",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53748,6 +55831,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583915753558738499",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53769,6 +55853,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583619328241861914",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53790,6 +55875,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 24.34,
     "ecommerceOrderId": "583637996265834144",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53811,6 +55897,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583657289674360718",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53832,6 +55919,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 33.54,
     "ecommerceOrderId": "583699368798159949",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53853,6 +55941,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583729687816472455",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53874,6 +55963,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.5,
     "ecommerceOrderId": "583847449511429402",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Tiktok\"}",
     "status": "completed"
   },
@@ -53895,6 +55985,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.48,
     "ecommerceOrderId": "260507QWTJATPX",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53916,6 +56007,7 @@ export const initialSales: Sale[] = [
     "totalCost": 350,
     "profit": 63.02,
     "ecommerceOrderId": "260507RR9X6HP4",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -53937,6 +56029,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53957,6 +56050,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.5,
     "profit": 1.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53977,6 +56071,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -53997,6 +56092,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54017,6 +56113,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54037,6 +56134,7 @@ export const initialSales: Sale[] = [
     "totalCost": 600,
     "profit": 38.2,
     "ecommerceOrderId": "260513951BNUXD",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -54058,6 +56156,7 @@ export const initialSales: Sale[] = [
     "totalCost": 350,
     "profit": 63.02,
     "ecommerceOrderId": "2605126P91C4RV",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -54079,6 +56178,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "26051154M47D2S",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -54100,6 +56200,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 8.43,
     "ecommerceOrderId": "26051023Y32UH6",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -54121,6 +56222,7 @@ export const initialSales: Sale[] = [
     "total": 30,
     "totalCost": 10,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54141,6 +56243,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54161,6 +56264,7 @@ export const initialSales: Sale[] = [
     "total": 35,
     "totalCost": 15,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54181,6 +56285,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54201,6 +56306,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 5,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54221,6 +56327,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54241,6 +56348,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54261,6 +56369,7 @@ export const initialSales: Sale[] = [
     "total": 100,
     "totalCost": 0,
     "profit": 100,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54281,6 +56390,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 7,
     "profit": 8,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54301,6 +56411,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 1,
     "profit": 4,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54321,6 +56432,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54341,6 +56453,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 20,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54361,6 +56474,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1.4,
     "profit": 8.6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54381,6 +56495,7 @@ export const initialSales: Sale[] = [
     "total": 21,
     "totalCost": 13.5,
     "profit": 7.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54401,6 +56516,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 9,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54421,6 +56537,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 11,
     "profit": 9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54441,6 +56558,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 3,
     "profit": 12,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54461,6 +56579,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 9,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54481,6 +56600,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 9,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54501,6 +56621,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54521,6 +56642,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 1.52,
     "profit": 0.48,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54541,6 +56663,7 @@ export const initialSales: Sale[] = [
     "total": 33,
     "totalCost": 25.14,
     "profit": 7.86,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54561,6 +56684,7 @@ export const initialSales: Sale[] = [
     "total": 7,
     "totalCost": 6,
     "profit": 1,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54581,6 +56705,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 12,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54601,6 +56726,7 @@ export const initialSales: Sale[] = [
     "total": 350,
     "totalCost": 280,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54621,6 +56747,7 @@ export const initialSales: Sale[] = [
     "total": 60,
     "totalCost": 30,
     "profit": 30,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54641,6 +56768,7 @@ export const initialSales: Sale[] = [
     "total": 18,
     "totalCost": 0,
     "profit": 18,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54661,6 +56789,7 @@ export const initialSales: Sale[] = [
     "total": 50,
     "totalCost": 0,
     "profit": 50,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54681,6 +56810,7 @@ export const initialSales: Sale[] = [
     "total": 250,
     "totalCost": 0,
     "profit": 250,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54701,6 +56831,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 17.75,
     "profit": 7.25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54721,6 +56852,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 7.1,
     "profit": 2.9,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54741,6 +56873,7 @@ export const initialSales: Sale[] = [
     "total": 130,
     "totalCost": 60,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54761,6 +56894,7 @@ export const initialSales: Sale[] = [
     "total": 28,
     "totalCost": 22,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54781,6 +56915,7 @@ export const initialSales: Sale[] = [
     "total": 1,
     "totalCost": 0.07,
     "profit": 0.93,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54801,6 +56936,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54821,6 +56957,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 3.5,
     "profit": 6.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54841,6 +56978,7 @@ export const initialSales: Sale[] = [
     "total": 5,
     "totalCost": 3,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54861,6 +56999,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 20,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54881,6 +57020,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54901,6 +57041,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 4,
     "profit": 11,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54921,6 +57062,7 @@ export const initialSales: Sale[] = [
     "total": 70,
     "totalCost": 0,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54941,6 +57083,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0,
     "profit": 2,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54961,6 +57104,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -54981,6 +57125,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -55001,6 +57146,7 @@ export const initialSales: Sale[] = [
     "totalCost": 650,
     "profit": 295.51,
     "ecommerceOrderId": "260520TGBK12TA",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55022,6 +57168,7 @@ export const initialSales: Sale[] = [
     "totalCost": 650,
     "profit": 295.51,
     "ecommerceOrderId": "260520TGBK12TB",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55043,6 +57190,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.94,
     "ecommerceOrderId": "260515EU5QUHSW",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55064,6 +57212,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.18,
     "ecommerceOrderId": "260526DTGJEGPQ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55085,6 +57234,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260528HKCF4DH2",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55106,6 +57256,7 @@ export const initialSales: Sale[] = [
     "totalCost": 350,
     "profit": 44.71,
     "ecommerceOrderId": "260531S85XH2CM",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55127,6 +57278,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260531U9XWGJNQ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55148,6 +57300,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260525C758V5PB",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55169,6 +57322,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.18,
     "ecommerceOrderId": "260527FM7VYVW5",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55190,6 +57344,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260531UBQR4QEB",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55211,6 +57366,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260529MV79AB08",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55232,6 +57388,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 37.25,
     "ecommerceOrderId": "260526D8R6YTW1",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55253,6 +57410,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "2605248BHY5FNX",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55274,6 +57432,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260529PCMCB6M5",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55295,6 +57454,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.67,
     "ecommerceOrderId": "260528J1MSR1WM",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55316,6 +57476,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260529MJP3NUNV",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55337,6 +57498,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.67,
     "ecommerceOrderId": "260529P78M9G45",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55358,6 +57520,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260529NXFECXMX",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55379,6 +57542,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260601UG0U18WR",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55400,6 +57564,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260601UGBQ39NJ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55421,6 +57586,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260601UKQAUR2H",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55442,6 +57608,7 @@ export const initialSales: Sale[] = [
     "totalCost": 350,
     "profit": 44.71,
     "ecommerceOrderId": "260601UXGQ01BJ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55463,6 +57630,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.67,
     "ecommerceOrderId": "2606010MJDNVMR",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55484,6 +57652,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.67,
     "ecommerceOrderId": "260529MB8B6BM6",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55505,6 +57674,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260530PMRMR99A",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55526,6 +57696,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260602355XYHPS",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55547,6 +57718,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "2606021D7H2QCC",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55568,6 +57740,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.67,
     "ecommerceOrderId": "2606020YFPP4MQ",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55589,6 +57762,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.67,
     "ecommerceOrderId": "2606034202M90X",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55610,6 +57784,7 @@ export const initialSales: Sale[] = [
     "totalCost": 900,
     "profit": 285.6,
     "ecommerceOrderId": "2606035MGQMDYY",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55631,6 +57806,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1050,
     "profit": 135.6,
     "ecommerceOrderId": "2606045XY8MGF4",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55652,6 +57828,7 @@ export const initialSales: Sale[] = [
     "totalCost": 650,
     "profit": 101.6,
     "ecommerceOrderId": "2606045Y090WHW",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55673,6 +57850,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "2606033UE8PV0V",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55694,6 +57872,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "2606035KKVFRNU",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55715,6 +57894,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "2606046MGAH404",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55736,6 +57916,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260606B1XKPJYT",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55757,6 +57938,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260606B6MYY3DX",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55778,6 +57960,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "2606046P31KQAH",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55799,6 +57982,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "2606058PUG6HXN",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55820,6 +58004,7 @@ export const initialSales: Sale[] = [
     "totalCost": 1,
     "profit": 23.75,
     "ecommerceOrderId": "260606B1FWFNXG",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55841,6 +58026,7 @@ export const initialSales: Sale[] = [
     "totalCost": 0.7,
     "profit": 7.67,
     "ecommerceOrderId": "26060590G5B9P4",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55862,6 +58048,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7,
     "profit": 4,
     "ecommerceOrderId": "260606AY2SD1DW",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55883,6 +58070,7 @@ export const initialSales: Sale[] = [
     "totalCost": 7.5,
     "profit": 3.5,
     "ecommerceOrderId": "26060481Y18VMK",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55904,6 +58092,7 @@ export const initialSales: Sale[] = [
     "totalCost": 350,
     "profit": 45.2,
     "ecommerceOrderId": "260606BPCWMEVU",
+    "saleType": "CNPJ",
     "notes": "[client_data]{\"channel\":\"Shopee\"}",
     "status": "completed"
   },
@@ -55925,6 +58114,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 15,
     "profit": 25,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -55945,6 +58135,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -55965,6 +58156,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 1.5,
     "profit": 8.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -55985,6 +58177,7 @@ export const initialSales: Sale[] = [
     "total": 4,
     "totalCost": 0.38,
     "profit": 3.63,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56005,6 +58198,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56025,6 +58219,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 20,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56045,6 +58240,7 @@ export const initialSales: Sale[] = [
     "total": 42,
     "totalCost": 36,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56065,6 +58261,7 @@ export const initialSales: Sale[] = [
     "total": 80,
     "totalCost": 45,
     "profit": 35,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56085,6 +58282,7 @@ export const initialSales: Sale[] = [
     "total": 15,
     "totalCost": 0,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56105,6 +58303,7 @@ export const initialSales: Sale[] = [
     "total": 21,
     "totalCost": 15,
     "profit": 6,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56125,6 +58324,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 4.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56145,6 +58345,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 9,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56165,6 +58366,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56185,6 +58387,7 @@ export const initialSales: Sale[] = [
     "total": 65,
     "totalCost": 45,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56205,6 +58408,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56225,6 +58429,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 5,
     "profit": 5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56245,6 +58450,7 @@ export const initialSales: Sale[] = [
     "total": 25,
     "totalCost": 10,
     "profit": 15,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56265,6 +58471,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 10,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56285,6 +58492,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 8.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56305,6 +58513,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 8.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56325,6 +58534,7 @@ export const initialSales: Sale[] = [
     "total": 14,
     "totalCost": 8.5,
     "profit": 5.5,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56345,6 +58555,7 @@ export const initialSales: Sale[] = [
     "total": 20,
     "totalCost": 0,
     "profit": 20,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56365,6 +58576,7 @@ export const initialSales: Sale[] = [
     "total": 10,
     "totalCost": 0,
     "profit": 10,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56385,6 +58597,7 @@ export const initialSales: Sale[] = [
     "total": 40,
     "totalCost": 6,
     "profit": 34,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56405,6 +58618,7 @@ export const initialSales: Sale[] = [
     "total": 350,
     "totalCost": 280,
     "profit": 70,
+    "saleType": "CPF",
     "status": "completed"
   },
   {
@@ -56425,6 +58639,7 @@ export const initialSales: Sale[] = [
     "total": 2,
     "totalCost": 0.14,
     "profit": 1.86,
+    "saleType": "CPF",
     "status": "completed"
   }
 ];
