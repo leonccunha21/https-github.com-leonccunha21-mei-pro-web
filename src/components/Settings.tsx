@@ -17,6 +17,7 @@ import {
   HardDrive,
   AlertTriangle,
   Cloud,
+  Clock,
   Trash2,
   LogOut
 } from 'lucide-react';
@@ -552,6 +553,9 @@ interface SettingsProps {
   cloudSyncing: boolean;
   cloudLastSync: string | null;
   cloudError: string | null;
+  cloudPending: boolean;
+  dailyWrites: number;
+  dailyWriteLimit: number;
   onCloudSignIn: () => void;
   onCloudSignOut: () => void;
   onCloudSyncNow: () => void;
@@ -576,6 +580,9 @@ export default function Settings({
   cloudSyncing,
   cloudLastSync,
   cloudError,
+  cloudPending,
+  dailyWrites,
+  dailyWriteLimit,
   onCloudSignIn,
   onCloudSignOut,
   onCloudSyncNow,
@@ -1221,6 +1228,10 @@ export default function Settings({
                     <span className="flex items-center gap-1.5 text-indigo-600">
                       <Loader2 className="h-3.5 w-3.5 animate-spin" /> Sincronizando...
                     </span>
+                  ) : cloudPending ? (
+                    <span className="flex items-center gap-1.5 text-amber-600">
+                      <Clock className="h-3.5 w-3.5" /> Alterações pendentes (envio automático)
+                    </span>
                   ) : cloudLastSync ? (
                     <span>Última sincronização: {new Date(cloudLastSync).toLocaleString('pt-BR')}</span>
                   ) : (
@@ -1231,6 +1242,29 @@ export default function Settings({
                 {cloudError && (
                   <p className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg p-2">{cloudError}</p>
                 )}
+
+                {/* Uso da cota diária do Firestore */}
+                <div>
+                  <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono mb-1">
+                    <span>Operações hoje (Firebase)</span>
+                    <span className={dailyWrites / dailyWriteLimit > 0.9 ? 'text-rose-600 font-bold' : ''}>
+                      {dailyWrites.toLocaleString('pt-BR')} / {dailyWriteLimit.toLocaleString('pt-BR')}
+                    </span>
+                  </div>
+                  <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all ${
+                        dailyWrites / dailyWriteLimit > 0.9 ? 'bg-rose-500'
+                          : dailyWrites / dailyWriteLimit > 0.7 ? 'bg-amber-500'
+                          : 'bg-emerald-500'
+                      }`}
+                      style={{ width: `${Math.min(100, (dailyWrites / dailyWriteLimit) * 100)}%` }}
+                    />
+                  </div>
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    A sincronização é incremental (só o que muda), então o consumo é mínimo.
+                  </p>
+                </div>
 
                 <p className="text-[11px] text-slate-400 leading-snug">
                   A sincronização é <b>manual</b> e <b>incremental</b>: envia apenas o que mudou desde a última vez, economizando a cota do Firebase. Clique em <b>Sincronizar Agora</b> para espelhar os dados locais na nuvem quando quiser.

@@ -9,6 +9,7 @@ import {
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from './firebase';
 import { LocalDb } from './localDb';
+import { recordWrites } from './quota';
 
 const BATCH_SIZE = 500;
 
@@ -51,6 +52,7 @@ async function saveBatch<T extends { id: string }>(userId: string, name: string,
         batch.set(doc(db, path, item.id), cleanForFirestore(item));
       }
       await batch.commit();
+      recordWrites(chunk.length);
     }
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
@@ -85,6 +87,7 @@ export async function saveUserStoreInfo(userId: string, info: LocalDb['storeInfo
   const path = `users/${userId}/config/storeInfo`;
   try {
     await setDoc(doc(db, path), cleanForFirestore(info ?? {}));
+    recordWrites(1);
   } catch (error) {
     handleFirestoreError(error, OperationType.WRITE, path);
   }
@@ -200,6 +203,7 @@ async function deleteBatch(userId: string, name: string, ids: string[]): Promise
       const batch = writeBatch(db);
       for (const id of chunk) batch.delete(doc(db, path, id));
       await batch.commit();
+      recordWrites(chunk.length);
     }
   } catch (error) {
     handleFirestoreError(error, OperationType.DELETE, path);

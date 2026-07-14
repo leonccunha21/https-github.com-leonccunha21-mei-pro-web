@@ -50,7 +50,10 @@ import {
   Users,
   DollarSign,
   Truck,
-  Wallet
+  Wallet,
+  Cloud,
+  CloudOff,
+  AlertTriangle
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
@@ -59,6 +62,19 @@ import { categorizeProduct } from './lib/categorize';
 import { normalizeName } from './lib/normalize';
 import { roundCurrency } from './lib/currency';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
+import { getDailyWrites, DAILY_WRITE_LIMIT } from './lib/quota';
+
+function timeAgo(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const s = Math.floor(diff / 1000);
+  if (s < 60) return `há ${s}s`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `há ${m}min`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `há ${h}h`;
+  const d = Math.floor(h / 24);
+  return `há ${d}d`;
+}
 // Firebase e dbSync são importados dinamicamente (sob demanda) para não
 // penalizar o carregamento inicial do app.
 import type { User } from 'firebase/auth';
@@ -102,6 +118,8 @@ export default function App() {
   const [cloudSyncing, setCloudSyncing] = useState(false);
   const [cloudLastSync, setCloudLastSync] = useState<string | null>(null);
   const [cloudError, setCloudError] = useState<string | null>(null);
+  const [cloudPending, setCloudPending] = useState(false);
+  const [dailyWrites, setDailyWrites] = useState(0);
   const [restoringBackup, setRestoringBackup] = useState(false);
   const [clearingCloud, setClearingCloud] = useState(false);
 
@@ -132,20 +150,29 @@ export default function App() {
   // Load all data. The store is IndexedDB-backed (works on the static site);
   // an optional local server is used only when available.
   // Aplica os dados carregados (IndexedDB/servidor/seed) no estado da aplicação.
-  const applyLoadedDb = (db: Partial<LocalDb> | null): {
+  const applyLoadedDb = async (db: Partial<LocalDb> | null): Promise<{
     hasDb: boolean;
     seededProducts: Product[];
     s: Sale[];
     c: Category[];
     e: Expense[];
     seededCustomers: Customer[];
-  } => {
+  }> => {
     const hasDb = !!db && db.initialized === true;
     const dbData = (db ?? {}) as Partial<LocalDb>;
-    const p = hasDb && Array.isArray(dbData.products) ? dbData.products! : initialProducts;
-    const s = hasDb && Array.isArray(dbData.sales) ? dbData.sales! : initialSales;
-    const e = hasDb && Array.isArray(dbData.expenses) ? dbData.expenses! : initialExpenses;
-    const c = hasDb && Array.isArray(dbData.categories) ? dbData.categories! : initialCategories;
+    let p: Product[], s: Sale[], e: Expense[], c: Category[];
+    if (hasDb && Array.isArray(dbData.products) && Array.isArray(dbData.sales) && Array.isArray(dbData.expenses) && Array.isArray(dbData.categories)) {
+      p = dbData.products!;
+      s = dbData.sales!;
+      e = dbData.expenses!;
+      c = dbData.categories!;
+    } else {
+      const seed = await loadSeed();
+      p = hasDb && Array.isArray(dbData.products) ? dbData.products! : seed.initialProducts;
+      s = hasDb && Array.isArray(dbData.sales) ? dbData.sales! : seed.initialSales;
+      e = hasDb && Array.isArray(dbData.expenses) ? dbData.expenses! : seed.initialExpenses;
+      c = hasDb && Array.isArray(dbData.categories) ? dbData.categories! : seed.initialCategories;
+    }
     const seededProducts = runStockCleanup(p);
     setProducts(seededProducts);
     setSales(s);
@@ -168,7 +195,7 @@ export default function App() {
     (async () => {
       try {
         const db = await loadDb();
-        const res = applyLoadedDb(db);
+        const res = await applyLoadedDb(db);
         // First run: persist the seeded initial data and mark the DB as initialized
         // so a later "reset to empty" is respected (an empty DB is no longer
         // interpreted as "fresh install, reload defaults").
@@ -189,15 +216,16 @@ export default function App() {
           });
         }
       } catch {
-        setProducts(initialProducts);
-        setSales(initialSales);
-        setExpenses(initialExpenses);
-        setCategories(initialCategories);
+        const seed = await loadSeed();
+        setProducts(seed.initialProducts);
+        setSales(seed.initialSales);
+        setExpenses(seed.initialExpenses);
+        setCategories(seed.initialCategories);
         persist({
-          products: initialProducts,
-          sales: initialSales,
-          categories: initialCategories,
-          expenses: initialExpenses,
+          products: seed.initialProducts,
+          sales: seed.initialSales,
+          categories: seed.initialCategories,
+          expenses: seed.initialExpenses,
           orders: [],
           customers: [],
           suppliers: [],
@@ -274,13 +302,18 @@ export default function App() {
         setCloudError(msg);
         throw e;
       })
-      .finally(() => setCloudSyncing(false));
+      .finally(() => {
+        setCloudSyncing(false);
+        setCloudPending(false);
+        setDailyWrites(getDailyWrites().count);
+      });
   };
 
   // Agenda o envio incremental para a nuvem, coalescendo mudanças rápidas
   // (ex.: importação em massa) num único envio ~2s depois da última alteração.
   const scheduleCloudPush = () => {
     if (!cloudUser) return;
+    setCloudPending(true);
     if (cloudPushTimer.current) clearTimeout(cloudPushTimer.current);
     cloudPushTimer.current = window.setTimeout(() => {
       cloudPushTimer.current = null;
@@ -372,6 +405,7 @@ export default function App() {
   useEffect(() => {
     if (!cloudUser) return;
     setCloudError(null);
+    setDailyWrites(getDailyWrites().count);
     scheduleCloudPush(); // sobe alterações locais feitas enquanto estava desconectado
   }, [cloudUser]);
 
@@ -1415,6 +1449,70 @@ export default function App() {
           </div>
         </div>
 
+        {/* Cloud sync status */}
+        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
+          <div
+            onClick={cloudUser ? handleCloudSyncNow : undefined}
+            className={`p-3 rounded-xl border flex items-center gap-3 transition-colors ${
+              !cloudUser
+                ? 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700'
+                : cloudError
+                ? 'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800 hover:bg-rose-100'
+                : cloudSyncing
+                ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800'
+                : cloudPending
+                ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800'
+                : 'bg-emerald-50/60 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800 hover:bg-emerald-100'
+            } ${cloudUser ? 'cursor-pointer' : ''}`}
+            title={cloudUser ? 'Clique para sincronizar agora' : 'Entre com o Google em Configurações'}
+          >
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white shrink-0 ${
+              !cloudUser ? 'bg-slate-400'
+                : cloudError ? 'bg-rose-500'
+                : cloudSyncing ? 'bg-indigo-600'
+                : cloudPending ? 'bg-amber-500'
+                : 'bg-emerald-600'
+            }`}>
+              {!cloudUser ? <CloudOff className="h-4 w-4" />
+                : cloudSyncing ? <Loader2 className="h-4 w-4 animate-spin" />
+                : cloudError ? <AlertTriangle className="h-4 w-4" />
+                : cloudPending ? <Clock className="h-4 w-4" />
+                : <Cloud className="h-4 w-4" />}
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate leading-snug">
+                {!cloudUser ? 'Nuvem desconectada'
+                  : cloudSyncing ? 'Sincronizando…'
+                  : cloudError ? 'Erro na nuvem'
+                  : cloudPending ? 'Alterações pendentes'
+                  : 'Nuvem em dia'}
+              </p>
+              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
+                {!cloudUser ? 'Entre em Configurações'
+                  : cloudError ? 'Clique para tentar de novo'
+                  : cloudLastSync ? `Última: ${timeAgo(cloudLastSync)}` : 'Não sincronizado ainda'}
+              </span>
+              {cloudUser && (
+                <div className="mt-1.5">
+                  <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all ${
+                        dailyWrites / DAILY_WRITE_LIMIT > 0.9 ? 'bg-rose-500'
+                          : dailyWrites / DAILY_WRITE_LIMIT > 0.7 ? 'bg-amber-500'
+                          : 'bg-emerald-500'
+                      }`}
+                      style={{ width: `${Math.min(100, (dailyWrites / DAILY_WRITE_LIMIT) * 100)}%` }}
+                    />
+                  </div>
+                  <span className="text-[9px] text-slate-400 font-mono">
+                    {dailyWrites.toLocaleString('pt-BR')} / {DAILY_WRITE_LIMIT.toLocaleString('pt-BR')} ops hoje
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
         {/* Footer info box (time, date and version) */}
         <div className="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 text-xs text-slate-500 dark:text-slate-400 space-y-1.5 hidden md:block m-4 rounded-xl border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2">
@@ -1575,6 +1673,9 @@ export default function App() {
                 cloudSyncing={cloudSyncing}
                 cloudLastSync={cloudLastSync}
                 cloudError={cloudError}
+                cloudPending={cloudPending}
+                dailyWrites={dailyWrites}
+                dailyWriteLimit={DAILY_WRITE_LIMIT}
                 onCloudSignIn={handleCloudSignIn}
                 onCloudSignOut={handleCloudSignOut}
                 onCloudSyncNow={handleCloudSyncNow}
