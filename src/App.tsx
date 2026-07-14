@@ -607,8 +607,16 @@ export default function App() {
       };
       persist(merged);
       if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
-      if (cloudUser) pushToCloud(merged, { forceFull: true });
-      showToast(`Backup restaurado: ${merged.products.length} produtos e ${merged.sales.length} vendas. Dados reenviados para a nuvem.`);
+      if (cloudUser) {
+        try {
+          const { clearUserDb, clearSyncCache } = await import('./lib/dbSync');
+          await clearUserDb(cloudUser.uid);
+          clearSyncCache(cloudUser.uid);
+          await new Promise((r) => setTimeout(r, 400));
+        } catch (_) { /* ignore cloud clear failures */ }
+        pushToCloud(merged, { forceFull: true });
+      }
+      showToast(`Backup restaurado: ${merged.products.length} produtos e ${merged.sales.length} vendas. A nuvem foi redefinida com estes dados.`);
     } catch (e: unknown) {
       showToast(e instanceof Error ? e.message : 'Falha ao restaurar o backup.');
     } finally {
