@@ -13,7 +13,9 @@ import {
   Search,
   X,
   CreditCard,
-  Store
+  Store,
+  Download,
+  FileText
 } from 'lucide-react';
 
 interface ReportsProps {
@@ -336,6 +338,99 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
 
   const sortCaret = (field: SortField) =>
     productSort === field ? (productSortDir === 'asc' ? ' ▲' : ' ▼') : '';
+
+  // ----- Export helpers (respect current filters / search / sort) -----
+  const numBr = (v: number) => v.toFixed(2).replace('.', ',');
+
+  const exportCsv = () => {
+    const headers = ['Produto', 'Categoria', 'Qtd', 'Vendas', 'Faturamento', 'Custo', 'Lucro', 'Margem(%)'];
+    const lines = [headers.join(';')];
+    visibleProducts.forEach(p => {
+      lines.push([
+        `"${p.productName.replace(/"/g, '""')}"`,
+        p.category,
+        String(p.units),
+        String(p.salesCount),
+        numBr(p.revenue),
+        numBr(p.cost),
+        numBr(p.profit),
+        numBr(p.margin),
+      ].join(';'));
+    });
+    lines.push([
+      'TOTAL', '', String(productsTotals.units), '',
+      numBr(productsTotals.revenue), numBr(productsTotals.cost),
+      numBr(productsTotals.profit),
+      numBr(productsTotals.revenue > 0 ? (productsTotals.profit / productsTotals.revenue) * 100 : 0),
+    ].join(';'));
+    const csv = '﻿' + lines.join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `itens_vendidos_${yearLabel}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  const exportPdf = () => {
+    const filterText = [
+      `Ano: ${yearLabel}`,
+      selectedCategory !== 'all' ? `Categoria: ${selectedCategory}` : null,
+      selectedPayment !== 'all' ? `Pagamento: ${paymentMethodLabels[selectedPayment]}` : null,
+      selectedChannel !== 'all' ? `Canal: ${saleChannelLabels[selectedChannel] || selectedChannel}` : null,
+      selectedType !== 'all' ? `Tipo: ${saleTypeLabels[selectedType]}` : null,
+    ].filter(Boolean).join('  •  ');
+
+    const rows = visibleProducts.map(p => `
+      <tr>
+        <td>${p.productName.replace(/</g, '&lt;')}</td>
+        <td>${p.category}</td>
+        <td style="text-align:center">${p.units}</td>
+        <td style="text-align:center">${p.salesCount}</td>
+        <td style="text-align:right">${fmtBRL(p.revenue)}</td>
+        <td style="text-align:right">${fmtBRL(p.cost)}</td>
+        <td style="text-align:right">${fmtBRL(p.profit)}</td>
+        <td style="text-align:right">${p.margin.toFixed(0)}%</td>
+      </tr>`).join('');
+
+    const html = `<!doctype html><html><head><meta charset="utf-8">
+      <title>Itens Vendidos - ${yearLabel}</title>
+      <style>
+        body { font-family: Arial, sans-serif; font-size: 11px; color: #111; margin: 24px; }
+        h1 { font-size: 16px; margin: 0 0 4px; }
+        .sub { color: #555; margin-bottom: 12px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+        th, td { border-bottom: 1px solid #ddd; padding: 5px 6px; text-align: left; }
+        th { background: #f1f5f9; font-size: 10px; text-transform: uppercase; }
+        tfoot td { font-weight: bold; border-top: 2px solid #333; }
+        .right { text-align: right; }
+      </style></head>
+      <body>
+        <h1>Relatório de Itens Vendidos</h1>
+        <div class="sub">${filterText} &nbsp;|&nbsp; Gerado em ${new Date().toLocaleString('pt-BR')}</div>
+        <table>
+          <thead><tr>
+            <th>Produto</th><th>Categoria</th><th>Qtd</th><th>Vendas</th>
+            <th class="right">Faturamento</th><th class="right">Custo</th><th class="right">Lucro</th><th class="right">Margem</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+          <tfoot><tr>
+            <td>TOTAL</td><td></td><td style="text-align:center">${productsTotals.units}</td><td></td>
+            <td class="right">${fmtBRL(productsTotals.revenue)}</td>
+            <td class="right">${fmtBRL(productsTotals.cost)}</td>
+            <td class="right">${fmtBRL(productsTotals.profit)}</td>
+            <td class="right">${productsTotals.revenue > 0 ? ((productsTotals.profit / productsTotals.revenue) * 100).toFixed(0) : 0}%</td>
+          </tr></tfoot>
+        </table>
+      </body></html>`;
+    const w = window.open('', '_blank');
+    if (!w) { alert('Permita pop-ups para exportar o PDF.'); return; }
+    w.document.write(html);
+    w.document.close();
+    w.focus();
+    w.print();
+  };
 
   // ----- Breakdowns -----
   const paymentBreakdown = useMemo(() => {
@@ -898,6 +993,12 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
             <ShoppingBag className="h-5 w-5 text-slate-500" />
             <h2 className="text-base font-bold text-slate-900">Itens Vendidos</h2>
             <span className="text-[10px] font-medium text-slate-400 ml-auto">{visibleProducts.length} produto{visibleProducts.length !== 1 ? 's' : ''}</span>
+            <button onClick={exportCsv} className="flex items-center gap-1 px-2 py-1 text-[10px] font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-md border border-slate-200 transition-colors" title="Exportar CSV">
+              <Download className="h-3 w-3" /> CSV
+            </button>
+            <button onClick={exportPdf} className="flex items-center gap-1 px-2 py-1 text-[10px] font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-md border border-slate-200 transition-colors" title="Exportar PDF">
+              <FileText className="h-3 w-3" /> PDF
+            </button>
           </div>
 
           <div className="relative mb-3">
