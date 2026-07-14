@@ -15,7 +15,10 @@ import {
   CashSession,
   Loan
 } from './types';
-import { initialProducts, initialSales, initialCategories, initialExpenses } from './data';
+// Dados de seed (data.json, ~1,7 MB) são carregados sob demanda, apenas na
+// primeira execução ou quando o banco local está vazio — evitando parse no startup.
+let _seedPromise: Promise<typeof import('./data')> | null = null;
+const loadSeed = () => (_seedPromise ??= import('./data'));
 
 import { lazy } from 'react';
 const Dashboard = lazy(() => import('./components/Dashboard'));
@@ -56,8 +59,8 @@ import { categorizeProduct } from './lib/categorize';
 import { normalizeName } from './lib/normalize';
 import { roundCurrency } from './lib/currency';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
-import { initAuth, googleSignIn, logoutUser } from './lib/firebase';
-import { saveUserDb, clearUserDb, saveUserDbIncremental, clearSyncCache } from './lib/dbSync';
+// Firebase e dbSync são importados dinamicamente (sob demanda) para não
+// penalizar o carregamento inicial do app.
 import type { User } from 'firebase/auth';
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
@@ -212,11 +215,19 @@ export default function App() {
 
   // Observa o estado de autenticação do Firebase (nuvem)
   useEffect(() => {
-    const unsub = initAuth(
-      (user) => setCloudUser(user),
-      () => setCloudUser(null)
-    );
-    return unsub;
+    let unsub: (() => void) | undefined;
+    let cancelled = false;
+    import('./lib/firebase').then(({ initAuth }) => {
+      if (cancelled) return;
+      unsub = initAuth(
+        (user) => setCloudUser(user),
+        () => setCloudUser(null)
+      );
+    });
+    return () => {
+      cancelled = true;
+      if (unsub) unsub();
+    };
   }, []);
 
 
@@ -244,12 +255,19 @@ export default function App() {
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
 
+  // Auto-sync para a nuvem (incremental, com debounce)
+  const cloudPushTimer = React.useRef<number | null>(null);
+  const cloudDirty = React.useRef(false);
+  const cloudPushing = React.useRef(false);
+
   // --- Nuvem: envia para o Firestore de forma incremental (economiza cota) ---
   const pushToCloud = (data: LocalDb, opts?: { forceFull?: boolean }) => {
     if (!cloudUser) return Promise.resolve(null);
     setCloudSyncing(true);
     setCloudError(null);
-    return saveUserDbIncremental(cloudUser.uid, data, opts)
+    return import('./lib/dbSync').then(({ saveUserDbIncremental }) =>
+      saveUserDbIncremental(cloudUser.uid, data, opts)
+    )
       .then((res) => { setCloudLastSync(new Date().toISOString()); return res; })
       .catch((e: unknown) => {
         const msg = e instanceof Error ? e.message : 'Falha ao enviar para a nuvem';
@@ -257,6 +275,30 @@ export default function App() {
         throw e;
       })
       .finally(() => setCloudSyncing(false));
+  };
+
+  // Agenda o envio incremental para a nuvem, coalescendo mudanças rápidas
+  // (ex.: importação em massa) num único envio ~2s depois da última alteração.
+  const scheduleCloudPush = () => {
+    if (!cloudUser) return;
+    if (cloudPushTimer.current) clearTimeout(cloudPushTimer.current);
+    cloudPushTimer.current = window.setTimeout(() => {
+      cloudPushTimer.current = null;
+      if (cloudPushing.current) {
+        cloudDirty.current = true; // mudou durante o envio; reenvia em seguida
+        return;
+      }
+      cloudPushing.current = true;
+      pushToCloud(stateRef.current)
+        .catch(() => { /* erro já tratado dentro de pushToCloud */ })
+        .finally(() => {
+          cloudPushing.current = false;
+          if (cloudDirty.current) {
+            cloudDirty.current = false;
+            scheduleCloudPush();
+          }
+        });
+    }, 2000);
   };
 
   const persist = (partial: Partial<LocalDb>) => {
@@ -286,6 +328,7 @@ export default function App() {
         showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
       });
     }, 250);
+    scheduleCloudPush();
   };
 
   // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)
@@ -329,10 +372,12 @@ export default function App() {
   useEffect(() => {
     if (!cloudUser) return;
     setCloudError(null);
+    scheduleCloudPush(); // sobe alterações locais feitas enquanto estava desconectado
   }, [cloudUser]);
 
   const handleCloudSignIn = async () => {
     try {
+      const { googleSignIn } = await import('./lib/firebase');
       await googleSignIn();
     } catch (e: unknown) {
       setCloudError(e instanceof Error ? e.message : 'Falha ao entrar com o Google');
@@ -341,6 +386,7 @@ export default function App() {
 
   const handleCloudSignOut = async () => {
     try {
+      const { logoutUser } = await import('./lib/firebase');
       await logoutUser();
     } catch { /* ignore */ }
     setCloudUser(null);
@@ -350,6 +396,7 @@ export default function App() {
 
   const handleCloudSyncNow = async () => {
     if (!cloudUser) return;
+    if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
     const db = stateRef.current as LocalDb;
     showToast('Verificando alterações para sincronizar na nuvem...');
     try {
@@ -371,6 +418,7 @@ export default function App() {
     }
     setClearingCloud(true);
     try {
+      const { clearUserDb, clearSyncCache } = await import('./lib/dbSync');
       await clearUserDb(cloudUser.uid);
       clearSyncCache(cloudUser.uid);
       setCloudLastSync(null);
@@ -432,6 +480,7 @@ export default function App() {
         initialized: true,
       };
       persist(merged);
+      if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
       if (cloudUser) pushToCloud(merged, { forceFull: true });
       showToast(`Backup restaurado: ${merged.products.length} produtos e ${merged.sales.length} vendas. Dados reenviados para a nuvem.`);
     } catch (e: unknown) {
