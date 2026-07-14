@@ -57,6 +57,7 @@
 [ ] __________________________________________________
 
 ### Histórico de Versões
+- v2.6.10 [ok] — 13/07/2026: corrigido erro critico que deixava o site em branco (useCallback nao importado em App.tsx); seed-backup.json agora versionado no GitHub.
 - v2.6.9 [ok] — 13/07/2026: seed embalado (public/seed-backup.json) para troca de PC sem export/import manual; comando backup-local-db no bot.
 - v2.6.8 [ok] — 13/07/2026: backup portátil completo (Exportar/Restaurar Backup .json em Configurações) com todos os dados para troca de PC.
 - v2.6.7 [ok] — 13/07/2026: persistência local em IndexedDB (fim do reset do banco no site publicado); botão ocultar valores no Dashboard; filtro de Marketplace normalizado.
