@@ -285,6 +285,7 @@ export default function App() {
   const cloudPushTimer = React.useRef<number | null>(null);
   const cloudDirty = React.useRef(false);
   const cloudPushing = React.useRef(false);
+  const lastLocalChangeRef = React.useRef(0);
 
   // --- Nuvem: envia para o Firestore de forma incremental (economiza cota) ---
   const pushToCloud = (data: LocalDb, opts?: { forceFull?: boolean }) => {
@@ -360,6 +361,7 @@ export default function App() {
       });
     }, 250);
     scheduleCloudPush();
+    lastLocalChangeRef.current = Date.now();
   };
 
   // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)
@@ -458,6 +460,73 @@ export default function App() {
       showToast(e instanceof Error ? e.message : 'Falha ao baixar da nuvem.');
     }
   };
+
+  // Baixa a nuvem e MESCLA (união por id; a nuvem vence em conflito) com os
+  // dados locais. Assim uma venda feita no celular aparece no PC e vice-versa,
+  // sem apagar o que existe em cada aparelho. Roda sozinho em intervalo e ao
+  // focar/abrir a aba (ver efeito abaixo).
+  const pullFromCloud = async () => {
+    if (!cloudUser) return;
+    if (document.visibilityState !== 'visible') return; // não gasta leitura em aba oculta
+    if (cloudPushing.current) return;                   // empurrão em andamento
+    if (Object.keys(pendingRef.current).length > 0) return; // edição local em curso
+    if (Date.now() - lastLocalChangeRef.current < 3000) return; // acabou de editar aqui
+    try {
+      const { loadUserDb } = await import('./lib/dbSync');
+      const cloud = await loadUserDb(cloudUser.uid);
+      const cur = stateRef.current;
+      const unionRemote = <T extends { id?: string }>(local?: T[], remote?: T[]): T[] => {
+        const m = new Map<string, T>();
+        (local || []).forEach(x => { if (x && x.id) m.set(x.id, x); });
+        (remote || []).forEach(x => { if (x && x.id) m.set(x.id, x); }); // nuvem vence
+        return Array.from(m.values());
+      };
+      const merged: LocalDb = {
+        products: unionRemote(cur.products, cloud.products),
+        categories: unionRemote(cur.categories, cloud.categories),
+        sales: unionRemote(cur.sales, cloud.sales),
+        orders: unionRemote(cur.orders, cloud.orders),
+        customers: unionRemote(cur.customers, cloud.customers),
+        suppliers: unionRemote(cur.suppliers, cloud.suppliers),
+        purchases: unionRemote(cur.purchases, cloud.purchases),
+        cashSessions: unionRemote(cur.cashSessions, cloud.cashSessions),
+        loans: unionRemote(cur.loans, cloud.loans),
+        expenses: unionRemote(cur.expenses, cloud.expenses),
+        storeInfo: cloud.storeInfo ?? cur.storeInfo ?? null,
+        initialized: true,
+      };
+      // Comparação estável (ignora `initialized` e ordem de chaves) para saber
+      // se realmente há novidade antes de reescrever o estado/localStorage.
+      const sig = (db: Partial<LocalDb>) => JSON.stringify([
+        db.products, db.categories, db.sales, db.orders, db.customers,
+        db.suppliers, db.purchases, db.cashSessions, db.loans, db.expenses, db.storeInfo,
+      ]);
+      if (sig(merged) === sig(cur)) return; // nada novo
+      await applyLoadedDb(merged);
+      persist(merged);
+    } catch { /* ignora e tenta de novo no próximo ciclo */ }
+  };
+
+  // Sincronização automática nos DOIS sentidos: dispara pullFromCloud sozinho
+  // a cada 20s, ao focar/abrir a aba e 1,5s após entrar na nuvem.
+  const pullFromCloudRef = React.useRef<() => void>(() => {});
+  pullFromCloudRef.current = pullFromCloud;
+  useEffect(() => {
+    if (!cloudUser) return;
+    const tick = () => pullFromCloudRef.current();
+    const interval = window.setInterval(tick, 20000);
+    const onVisible = () => { if (document.visibilityState === 'visible') tick(); };
+    const onFocus = () => tick();
+    document.addEventListener('visibilitychange', onVisible);
+    window.addEventListener('focus', onFocus);
+    const firstPull = window.setTimeout(tick, 1500); // primeira sincronização
+    return () => {
+      clearInterval(interval);
+      clearTimeout(firstPull);
+      document.removeEventListener('visibilitychange', onVisible);
+      window.removeEventListener('focus', onFocus);
+    };
+  }, [cloudUser]);
 
   const handleCloudSyncNow = async () => {
     if (!cloudUser) return;

@@ -1270,7 +1270,7 @@ export default function Settings({
                 </div>
 
                 <p className="text-[11px] text-slate-400 leading-snug">
-                  A sincronização é <b>manual</b> e <b>incremental</b>: envia apenas o que mudou desde a última vez, economizando a cota do Firebase. Clique em <b>Sincronizar Agora</b> para espelhar os dados locais na nuvem quando quiser.
+                  A sincronização é <b>automática</b> e <b>incremental</b> (só o que muda). Toda alteração sobe para a nuvem em ~2s e cada aparelho baixa e mescla sozinho a cada 20s (e ao abrir/voltar à aba). Assim o celular e o computador ficam iguais. <b>Sincronizar Agora</b> força o envio imediato; <b>Baixar da Nuvem</b> substitui os dados deste aparelho pelos da nuvem.
                 </p>
 
                 <div className="flex gap-2">
