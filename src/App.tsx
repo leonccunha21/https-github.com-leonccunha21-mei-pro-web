@@ -514,7 +514,7 @@ export default function App() {
   useEffect(() => {
     if (!cloudUser) return;
     const tick = () => pullFromCloudRef.current();
-    const interval = window.setInterval(tick, 20000);
+    const interval = window.setInterval(tick, 30000);
     const onVisible = () => { if (document.visibilityState === 'visible') tick(); };
     const onFocus = () => tick();
     document.addEventListener('visibilitychange', onVisible);
