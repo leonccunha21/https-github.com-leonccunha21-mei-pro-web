@@ -14,3 +14,11 @@ arquivos excel/
 data/excel/~$*.xlsx
 
 data/local-db.json
+
+# Credenciais do Firebase (não versionar)
+firebase-applet-config.json
+
+# Arquivos derivados/temporários que podem conter dados reais (não versionar)
+src/extracted_data.json
+public/imported_data.json
+

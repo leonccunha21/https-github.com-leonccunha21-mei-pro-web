@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Customer, Sale } from '../types';
 import { roundCurrency } from '../lib/currency';
+import { normalizeName } from '../lib/normalize';
 import {
   Users, Plus, Search, Pencil, Trash2, Phone, Mail, MapPin,
   DollarSign, ShoppingBag, ArrowLeft, CreditCard, X, UserPlus, Clock
@@ -11,9 +12,6 @@ interface CustomersProps {
   sales: Sale[];
   onSaveCustomers: (customers: Customer[]) => void;
 }
-
-const normalize = (s: string) =>
-  (s || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
 
 export default function Customers({ customers, sales, onSaveCustomers }: CustomersProps) {
   const [search, setSearch] = useState('');
@@ -26,7 +24,7 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
     for (const s of sales) {
       const name = (s.clientName || '').trim();
       if (!name) continue;
-      const key = normalize(name);
+      const key = normalizeName(name);
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(s);
     }
@@ -34,15 +32,15 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
   }, [sales]);
 
   const filtered = useMemo(() => {
-    const q = normalize(search);
-    return customers.filter(c => !q || normalize(c.name).includes(q) || (c.phone || '').includes(q));
+    const q = normalizeName(search);
+    return customers.filter(c => !q || normalizeName(c.name).includes(q) || (c.phone || '').includes(q));
   }, [customers, search]);
 
   const selected = customers.find(c => c.id === selectedId) || null;
-  const selectedSales = selected ? (salesByCustomer.get(normalize(selected.name)) || []) : [];
+  const selectedSales = selected ? (salesByCustomer.get(normalizeName(selected.name)) || []) : [];
 
   const statsFor = (customer: Customer) => {
-    const list = salesByCustomer.get(normalize(customer.name)) || [];
+    const list = salesByCustomer.get(normalizeName(customer.name)) || [];
     const paid = list.filter(s => s.status === 'completed' || s.status === 'pending');
     const totalSpent = list
       .filter(s => s.status !== 'cancelled')

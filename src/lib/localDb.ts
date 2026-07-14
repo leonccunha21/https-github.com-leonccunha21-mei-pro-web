@@ -15,13 +15,26 @@ export interface LocalDb {
   initialized?: boolean;
 }
 
-// The app is published as a static site (GitHub Pages) with NO backend server.
-// IndexedDB is used as the primary local store so the data (sales, loans,
-// marketplace flags, etc.) survives reloads. The optional `/api/db` server is
-// only used when running locally (best-effort sync) and never required.
+// Quando publicado como site estático (GitHub Pages) não há servidor; o
+// IndexedDB é o armazenamento primário para que os dados (vendas, empréstimos,
+// flags de marketplace etc.) sobrevivam aos reloads. O servidor opcional em
+// `server.ts` (rota `/api/db`) é usado apenas em ambiente local para
+// sincronização best-effort e nunca é obrigatório.
 const DB_NAME = 'zmstore_local';
 const STORE = 'localdb';
 const KEY = 'main';
+
+// Notifica outras abas (mesma origem) quando o banco local é atualizado, para
+// manter o estado consistente entre elas (IndexedDB é compartilhado, mas o
+// estado em memória de cada aba precisa ser re-sincronizado).
+const syncChannel: BroadcastChannel | null =
+  typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('zmstore-sync') : null;
+
+function notifyDbUpdated(): void {
+  try {
+    syncChannel?.postMessage({ type: 'db-updated', at: Date.now() });
+  } catch { /* ignore */ }
+}
 
 function openDb(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
@@ -58,7 +71,6 @@ async function idbPut(value: LocalDb): Promise<void> {
     tx.onerror = () => reject(tx.error);
   });
 }
-
 export async function loadDb(): Promise<Partial<LocalDb> | null> {
   // 1. IndexedDB (primary, works on the static site)
   try {
@@ -73,8 +85,8 @@ export async function loadDb(): Promise<Partial<LocalDb> | null> {
     const res = await fetch('/api/db');
     if (res.ok) {
       const db = (await res.json()) as Partial<LocalDb>;
-      idbPut(db as LocalDb).catch(() => {});
-      return db;
+      idbPut({ ...(db as LocalDb), initialized: true }).catch(() => {});
+      return { ...(db as LocalDb), initialized: true };
     }
   } catch { /* ignore */ }
 
@@ -86,8 +98,8 @@ export async function loadDb(): Promise<Partial<LocalDb> | null> {
     if (res.ok) {
       const db = (await res.json()) as Partial<LocalDb>;
       if (db && (Array.isArray(db.sales) || Array.isArray(db.products))) {
-        idbPut(db as LocalDb).catch(() => {});
-        return db;
+        idbPut({ ...(db as LocalDb), initialized: true }).catch(() => {});
+        return { ...(db as LocalDb), initialized: true };
       }
     }
   } catch { /* ignore */ }
@@ -110,6 +122,7 @@ export async function saveDb(db: LocalDb): Promise<void> {
       body: JSON.stringify(db),
     });
   } catch { /* ignore */ }
+  notifyDbUpdated();
 }
 
 export async function resetDb(): Promise<void> {

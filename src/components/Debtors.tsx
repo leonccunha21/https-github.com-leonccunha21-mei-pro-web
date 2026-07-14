@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Sale, Loan } from '../types';
+import { normalizeChannel } from '../lib/normalize';
 import {
   User,
   DollarSign,
@@ -23,10 +24,11 @@ interface DebtorsProps {
   sales: Sale[];
   loans: Loan[];
   onUpdateSale: (sale: Sale) => void;
+  onUpdateSales: (sales: Sale[]) => void;
   onSaveLoans: (loans: Loan[]) => void;
 }
 
-export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: DebtorsProps) {
+export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onSaveLoans }: DebtorsProps) {
   const [view, setView] = useState<'debits' | 'loans' | 'marketplace'>('debits');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
@@ -40,8 +42,50 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
   const [selectedLoan, setSelectedLoan] = useState<Loan | null>(null);
   const [loanPartial, setLoanPartial] = useState<string>('');
 
+  // Multi-seleção para ações em lote
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const selectedIds = useMemo(() => selected, [selected]);
+  const toggleSelect = (id: string) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+  const clearSelection = () => setSelected(new Set());
+  const toggleSelectAll = (ids: string[]) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      const allSelected = ids.length > 0 && ids.every(id => next.has(id));
+      if (allSelected) ids.forEach(id => next.delete(id));
+      else ids.forEach(id => next.add(id));
+      return next;
+    });
+  };
+
+  const handleBulkMarkReceived = () => {
+    if (selectedIds.size === 0) return;
+    if (view === 'loans') {
+      onSaveLoans(loans.map(l => selectedIds.has(l.id)
+        ? { ...l, paidAmount: loanTotal(l), status: 'paid' as const }
+        : l));
+    } else {
+      const updated = sales
+        .filter(s => selectedIds.has(s.id))
+        .map(s => ({ ...s, status: 'completed' as const, paidAt: new Date().toISOString() }));
+      onUpdateSales(updated);
+    }
+    clearSelection();
+  };
+
+  const isMarketplace = (s: Sale) => {
+    const ch = normalizeChannel(s.saleChannel || '');
+    return (ch !== '' && ch !== 'loja fisica') || !!s.ecommerceOrderId;
+  };
+
   const debtSales = useMemo(() => {
     return sales.filter(s => {
+      if (isMarketplace(s)) return false;
       if (filterStatus === 'pending') return s.status === 'pending';
       if (filterStatus === 'completed') return s.status === 'completed' && s.clientName;
       return s.status === 'pending' || (s.status === 'completed' && s.clientName);
@@ -67,13 +111,8 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
   }, [debtSales]);
 
   const countPending = useMemo(() => {
-    return sales.filter(s => s.status === 'pending').length;
+    return sales.filter(s => s.status === 'pending' && !isMarketplace(s)).length;
   }, [sales]);
-
-  const isMarketplace = (s: Sale) => {
-    const ch = (s.saleChannel || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
-    return (ch !== '' && ch !== 'loja fisica') || !!s.ecommerceOrderId;
-  };
 
   const marketplaceSales = useMemo(() => {
     const filtered = sales.filter(isMarketplace).filter(s => {
@@ -346,6 +385,14 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
             <table className="w-full text-left border-collapse text-sm">
               <thead>
                 <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                  <th className="py-3 px-4 w-10 text-center">
+                    <input
+                      type="checkbox"
+                      className="accent-indigo-600 cursor-pointer"
+                      checked={debtSales.length > 0 && debtSales.every(s => selectedIds.has(s.id))}
+                      onChange={() => toggleSelectAll(debtSales.map(s => s.id))}
+                    />
+                  </th>
                   <th className="py-3 px-4">Cliente</th>
                   <th className="py-3 px-4">Telefone</th>
                   <th className="py-3 px-4 text-right">Valor</th>
@@ -366,6 +413,14 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
                         isPending ? 'bg-amber-50/30 hover:bg-amber-50/60' : 'hover:bg-slate-50/50'
                       }`}
                     >
+                      <td className="py-3 px-4 w-10 text-center">
+                        <input
+                          type="checkbox"
+                          className="accent-indigo-600 cursor-pointer"
+                          checked={selectedIds.has(sale.id)}
+                          onChange={() => toggleSelect(sale.id)}
+                        />
+                      </td>
                       <td className="py-3 px-4">
                         <div className="flex items-center gap-2">
                           <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold shrink-0 ${
@@ -666,7 +721,16 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
             </div>
           </div>
 
-          <div className="flex justify-end">
+          <div className="flex justify-end items-center gap-3">
+            <label className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                className="accent-indigo-600 cursor-pointer"
+                checked={loans.length > 0 && loans.every(l => selectedIds.has(l.id))}
+                onChange={() => toggleSelectAll(loans.map(l => l.id))}
+              />
+              Selecionar todos
+            </label>
             <button onClick={openLoanForm} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer">
               <Plus className="h-4 w-4" /> Novo Emprestimo
             </button>
@@ -686,9 +750,17 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
                 return (
                   <div key={l.id} className={`bg-white rounded-xl border p-4 ${isPaid ? 'border-slate-200' : overdue > 0 ? 'border-rose-300 bg-rose-50/40' : 'border-slate-200'}`}>
                     <div className="flex items-start justify-between gap-2">
-                      <div className="min-w-0">
-                        <p className="font-bold text-slate-900 text-sm truncate flex items-center gap-1"><User className="h-3.5 w-3.5 text-slate-400" />{l.borrowerName}</p>
+                      <div className="flex items-start gap-2 min-w-0">
+                        <input
+                          type="checkbox"
+                          className="accent-indigo-600 cursor-pointer mt-0.5 shrink-0"
+                          checked={selectedIds.has(l.id)}
+                          onChange={() => toggleSelect(l.id)}
+                        />
+                        <div className="min-w-0">
+                          <p className="font-bold text-slate-900 text-sm truncate flex items-center gap-1"><User className="h-3.5 w-3.5 text-slate-400" />{l.borrowerName}</p>
                         {l.borrowerPhone && <p className="text-[11px] text-slate-400 font-mono flex items-center gap-1 mt-0.5"><Phone className="h-3 w-3" />{l.borrowerPhone}</p>}
+                      </div>
                       </div>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${isPaid ? 'bg-emerald-100 text-emerald-700' : overdue > 0 ? 'bg-rose-100 text-rose-700' : 'bg-amber-100 text-amber-700'}`}>
                         {isPaid ? 'Quitado' : overdue > 0 ? `${overdue}d em atraso` : 'Em aberto'}
@@ -792,6 +864,14 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
                 <table className="w-full text-left border-collapse text-sm">
                   <thead>
                     <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                      <th className="py-3 px-4 w-10 text-center">
+                        <input
+                          type="checkbox"
+                          className="accent-indigo-600 cursor-pointer"
+                          checked={marketplaceSales.length > 0 && marketplaceSales.every(s => selectedIds.has(s.id))}
+                          onChange={() => toggleSelectAll(marketplaceSales.map(s => s.id))}
+                        />
+                      </th>
                       <th className="py-3 px-4">Canal / ID do Pedido</th>
                       <th className="py-3 px-4">Produto</th>
                       <th className="py-3 px-4">Data</th>
@@ -809,6 +889,14 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
                       const qty = s.items[0]?.quantity || 1;
                       return (
                         <tr key={s.id} className={`transition-colors ${isPending ? 'bg-amber-50/30 hover:bg-amber-50/60' : 'hover:bg-slate-50/50'}`}>
+                          <td className="py-3 px-4 w-10 text-center">
+                            <input
+                              type="checkbox"
+                              className="accent-indigo-600 cursor-pointer"
+                              checked={selectedIds.has(s.id)}
+                              onChange={() => toggleSelect(s.id)}
+                            />
+                          </td>
                           <td className="py-3 px-4">
                             <div className="flex items-center gap-2">
                               <span className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px] font-bold uppercase">{channel}</span>
@@ -858,6 +946,30 @@ export default function Debtors({ sales, loans, onUpdateSale, onSaveLoans }: Deb
                 </table>
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Barra de ação em lote (multi-seleção) */}
+      {selectedIds.size > 0 && (
+        <div className="sticky bottom-4 z-30 mt-4 flex items-center justify-between gap-3 bg-slate-900 text-white rounded-xl shadow-lg px-4 py-3 mx-auto max-w-3xl">
+          <span className="text-xs font-bold">
+            {selectedIds.size} item(ns) selecionado(s)
+          </span>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={clearSelection}
+              className="px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-700 hover:bg-slate-600 transition-colors cursor-pointer"
+            >
+              Limpar
+            </button>
+            <button
+              onClick={handleBulkMarkReceived}
+              className="px-3 py-1.5 text-xs font-bold rounded-lg bg-emerald-600 hover:bg-emerald-700 transition-colors flex items-center gap-1.5 cursor-pointer"
+            >
+              <Check className="h-3.5 w-3.5" />
+              {view === 'loans' ? 'Marcar como Recebido' : 'Marcar como Pago'}
+            </button>
           </div>
         </div>
       )}

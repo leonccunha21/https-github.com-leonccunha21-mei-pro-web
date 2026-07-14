@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Product, Sale } from '../types';
+import { normalizeName } from '../lib/normalize';
 import { 
   TrendingUp, 
   ArrowDownRight, 
@@ -40,7 +41,7 @@ function parseLocalDate(dateStr: string, defaultTime: string = '00:00:00'): Date
       day = parseInt(slashParts[2], 10);
     }
     
-    if (month > 12) { // Swap month and day if they got swapped
+    if (month > 12 && day <= 12) { // Swap only if plausibly swapped (day in month position)
       const tmp = day;
       day = month;
       month = tmp;
@@ -153,7 +154,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   // must rely on the name to avoid collapsing every item into a single entry.
   const itemKey = (item: { productId?: string; productName: string }) => {
     if (item.productId && item.productId.trim() !== '') return item.productId;
-    return item.productName.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    return normalizeName(item.productName);
   };
 
   // Top Selling Products (ranked by quantity sold — "Mais Vendidos")

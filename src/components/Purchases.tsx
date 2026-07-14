@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Product, Supplier, Purchase, PurchaseItem } from '../types';
 import { roundCurrency } from '../lib/currency';
+import { normalizeName } from '../lib/normalize';
 import {
   Truck, Plus, Search, Pencil, Trash2, Package, DollarSign,
   X, UserPlus, Building2
@@ -13,9 +14,6 @@ interface PurchasesProps {
   onSaveSuppliers: (suppliers: Supplier[]) => void;
   onAddPurchase: (purchase: Purchase) => void;
 }
-
-const normalize = (s: string) =>
-  (s || '').trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
 
 export default function Purchases({ products, suppliers, purchases, onSaveSuppliers, onAddPurchase }: PurchasesProps) {
   const [tab, setTab] = useState<'compras' | 'fornecedores'>('compras');
@@ -31,9 +29,9 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
   const [supplierForm, setSupplierForm] = useState<Supplier | null>(null);
 
   const filtered = useMemo(() => {
-    const q = normalize(search);
+    const q = normalizeName(search);
     return purchases
-      .filter(p => !q || normalize(p.supplierName || '')?.includes(q) || normalize(p.notes || '')?.includes(q))
+      .filter(p => !q || normalizeName(p.supplierName || '')?.includes(q) || normalizeName(p.notes || '')?.includes(q))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [purchases, search]);
 
@@ -195,7 +193,7 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
                   <button onClick={addItem} className="text-xs font-bold text-indigo-600 flex items-center gap-1 cursor-pointer"><Plus className="h-3 w-3" /> Adicionar</button>
                 </div>
                 {items.map((it, i) => {
-                  const match = products.find(p => normalize(p.name) === normalize(it.productName));
+                  const match = products.find(p => normalizeName(p.name) === normalizeName(it.productName));
                   return (
                     <div key={i} className="grid grid-cols-12 gap-2 items-end">
                       <div className="col-span-5">

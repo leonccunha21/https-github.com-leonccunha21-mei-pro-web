@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import * as XLSX from 'xlsx';
 import {
   Product, 
   Sale, 
-  Category, 
+  SaleItem,
+  Category,
   Expense,
   ActiveTab, 
   PaymentMethod,
@@ -52,8 +53,12 @@ import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
 
 import { categorizeProduct } from './lib/categorize';
+import { normalizeName } from './lib/normalize';
 import { roundCurrency } from './lib/currency';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
+import { initAuth, googleSignIn, logoutUser } from './lib/firebase';
+import { saveUserDb } from './lib/dbSync';
+import type { User } from 'firebase/auth';
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
 
@@ -79,6 +84,23 @@ export default function App() {
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [cashSessions, setCashSessions] = useState<CashSession[]>([]);
   const [loans, setLoans] = useState<Loan[]>([]);
+
+  // Toast de erro de persistência (M6)
+  const [toastMsg, setToastMsg] = useState<string | null>(null);
+  const toastTimer = useRef<number | null>(null);
+  const showToast = (msg: string) => {
+    setToastMsg(msg);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToastMsg(null), 4000);
+  };
+
+  // --- Sincronização na nuvem (Firebase/Firestore) ---
+  const [cloudUser, setCloudUser] = useState<User | null>(null);
+  const [cloudSyncing, setCloudSyncing] = useState(false);
+  const [cloudLastSync, setCloudLastSync] = useState<string | null>(null);
+  const [cloudError, setCloudError] = useState<string | null>(null);
+  const [restoringBackup, setRestoringBackup] = useState(false);
+  const [clearingCloud, setClearingCloud] = useState(false);
 
   const [storeInfo, setStoreInfo] = useState(() => {
     try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
@@ -106,49 +128,55 @@ export default function App() {
 
   // Load all data. The store is IndexedDB-backed (works on the static site);
   // an optional local server is used only when available.
+  // Aplica os dados carregados (IndexedDB/servidor/seed) no estado da aplicação.
+  const applyLoadedDb = (db: Partial<LocalDb> | null): {
+    hasDb: boolean;
+    seededProducts: Product[];
+    s: Sale[];
+    c: Category[];
+    e: Expense[];
+    seededCustomers: Customer[];
+  } => {
+    const hasDb = !!db && db.initialized === true;
+    const dbData = (db ?? {}) as Partial<LocalDb>;
+    const p = hasDb && Array.isArray(dbData.products) ? dbData.products! : initialProducts;
+    const s = hasDb && Array.isArray(dbData.sales) ? dbData.sales! : initialSales;
+    const e = hasDb && Array.isArray(dbData.expenses) ? dbData.expenses! : initialExpenses;
+    const c = hasDb && Array.isArray(dbData.categories) ? dbData.categories! : initialCategories;
+    const seededProducts = runStockCleanup(p);
+    setProducts(seededProducts);
+    setSales(s);
+    setExpenses(e);
+    setCategories(c);
+    setOrders(hasDb && Array.isArray(dbData.orders) ? dbData.orders! : []);
+    const loadedCustomers = hasDb && Array.isArray(dbData.customers) ? dbData.customers! : [];
+    setCustomers(loadedCustomers);
+    setSuppliers(hasDb && Array.isArray(dbData.suppliers) ? dbData.suppliers! : []);
+    setPurchases(hasDb && Array.isArray(dbData.purchases) ? dbData.purchases! : []);
+    setCashSessions(hasDb && Array.isArray(dbData.cashSessions) ? dbData.cashSessions! : []);
+    setLoans(hasDb && Array.isArray(dbData.loans) ? dbData.loans! : []);
+    if (db && db.storeInfo) setStoreInfo(db.storeInfo);
+    const seededCustomers = loadedCustomers.length === 0 ? seedCustomersFromSales(s) : loadedCustomers;
+    if (seededCustomers !== loadedCustomers) setCustomers(seededCustomers);
+    return { hasDb, seededProducts, s, c, e, seededCustomers };
+  };
+
   useEffect(() => {
     (async () => {
       try {
         const db = await loadDb();
-        const hasDb = !!db && db.initialized === true;
-        const dbData = (db ?? {}) as Partial<LocalDb>;
-        const p = hasDb && Array.isArray(dbData.products) ? dbData.products : initialProducts;
-        const s = hasDb && Array.isArray(dbData.sales) ? dbData.sales : initialSales;
-        const e = hasDb && Array.isArray(dbData.expenses) ? dbData.expenses : initialExpenses;
-        const c = hasDb && Array.isArray(dbData.categories) ? dbData.categories : initialCategories;
-        const seededProducts = runStockCleanup(p);
-        setProducts(seededProducts);
-        setSales(s);
-        setExpenses(e);
-        setCategories(c);
-        setOrders(hasDb && Array.isArray(dbData.orders) ? dbData.orders : []);
-        const loadedCustomers = hasDb && Array.isArray(dbData.customers) ? dbData.customers : [];
-        setCustomers(loadedCustomers);
-        setSuppliers(hasDb && Array.isArray(dbData.suppliers) ? dbData.suppliers : []);
-        setPurchases(hasDb && Array.isArray(dbData.purchases) ? dbData.purchases : []);
-        setCashSessions(hasDb && Array.isArray(dbData.cashSessions) ? dbData.cashSessions : []);
-        setLoans(hasDb && Array.isArray(dbData.loans) ? dbData.loans : []);
-        if (db && db.storeInfo) {
-          setStoreInfo(db.storeInfo);
-        }
-        // Seed customers from existing sales (clientName) when there are none loaded
-        const seededCustomers = (loadedCustomers.length === 0)
-          ? seedCustomersFromSales(s)
-          : loadedCustomers;
-        if (seededCustomers !== loadedCustomers) {
-          setCustomers(seededCustomers);
-        }
+        const res = applyLoadedDb(db);
         // First run: persist the seeded initial data and mark the DB as initialized
         // so a later "reset to empty" is respected (an empty DB is no longer
         // interpreted as "fresh install, reload defaults").
-        if (!hasDb) {
+        if (!res.hasDb) {
           persist({
-            products: seededProducts,
-            sales: s,
-            categories: c,
-            expenses: e,
+            products: res.seededProducts,
+            sales: res.s,
+            categories: res.c,
+            expenses: res.e,
             orders: [],
-            customers: seededCustomers,
+            customers: res.seededCustomers,
             suppliers: [],
             purchases: [],
             cashSessions: [],
@@ -182,6 +210,15 @@ export default function App() {
     })();
   }, []);
 
+  // Observa o estado de autenticação do Firebase (nuvem)
+  useEffect(() => {
+    const unsub = initAuth(
+      (user) => setCloudUser(user),
+      () => setCloudUser(null)
+    );
+    return unsub;
+  }, []);
+
 
 
 
@@ -207,6 +244,21 @@ export default function App() {
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
 
+  // --- Nuvem: envia o banco completo para o Firestore (com throttle) ---
+  const pushToCloud = (data: LocalDb) => {
+    if (!cloudUser) return Promise.resolve();
+    setCloudSyncing(true);
+    setCloudError(null);
+    return saveUserDb(cloudUser.uid, data)
+      .then(() => { setCloudLastSync(new Date().toISOString()); })
+      .catch((e: unknown) => {
+        const msg = e instanceof Error ? e.message : 'Falha ao enviar para a nuvem';
+        setCloudError(msg);
+        throw e;
+      })
+      .finally(() => setCloudSyncing(false));
+  };
+
   const persist = (partial: Partial<LocalDb>) => {
     const cur = stateRef.current;
     const prev = pendingRef.current;
@@ -222,15 +274,168 @@ export default function App() {
       purchases: partial.purchases ?? prev.purchases ?? cur.purchases,
       cashSessions: partial.cashSessions ?? prev.cashSessions ?? cur.cashSessions,
       loans: partial.loans ?? prev.loans ?? cur.loans,
-      initialized: partial.initialized !== undefined ? partial.initialized : (prev.initialized !== undefined ? prev.initialized : cur.initialized),
+      initialized: true,
     };
     pendingRef.current = merged;
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
       const db = pendingRef.current as LocalDb;
       pendingRef.current = {};
-      saveDb(db).catch((e) => console.error('Erro ao salvar banco local:', e));
+      saveDb(db).catch((e) => {
+        console.error('Erro ao salvar banco local:', e);
+        showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
+      });
     }, 250);
+  };
+
+  // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)
+  useEffect(() => {
+    const flush = () => {
+      if (document.visibilityState === 'hidden' && Object.keys(pendingRef.current).length > 0) {
+        const db = pendingRef.current as LocalDb;
+        pendingRef.current = {};
+        if (saveTimer.current) {
+          clearTimeout(saveTimer.current);
+          saveTimer.current = null;
+        }
+        saveDb(db).catch((e) => {
+          console.error('Erro ao salvar banco local:', e);
+          showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
+        });
+      }
+    };
+    document.addEventListener('visibilitychange', flush);
+    return () => document.removeEventListener('visibilitychange', flush);
+  }, []);
+
+  // Re-sincroniza o estado quando OUTRA aba atualiza o banco (M3).
+  // Só reaplica se não houver gravação pendente local, para não sobrescrever
+  // edições em andamento nesta aba.
+  useEffect(() => {
+    if (typeof BroadcastChannel === 'undefined') return;
+    const ch = new BroadcastChannel('zmstore-sync');
+    ch.onmessage = (ev) => {
+      if (ev.data && ev.data.type === 'db-updated' && Object.keys(pendingRef.current).length === 0) {
+        loadDb().then(db => { if (db) applyLoadedDb(db); });
+      }
+    };
+    return () => ch.close();
+  }, []);
+
+  // Ao entrar na nuvem (login) apenas autentica. O banco LOCAL é a fonte da
+  // verdade e NÃO é sobrescrito pela nuvem — assim dados antigos/quebrados da
+  // nuvem não voltam a aparecer no app. Os dados corretos são enviados para a
+  // nuvem manualmente (botão "Sincronizar Agora") quando desejado.
+  useEffect(() => {
+    if (!cloudUser) return;
+    setCloudError(null);
+  }, [cloudUser]);
+
+  const handleCloudSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (e: unknown) {
+      setCloudError(e instanceof Error ? e.message : 'Falha ao entrar com o Google');
+    }
+  };
+
+  const handleCloudSignOut = async () => {
+    try {
+      await logoutUser();
+    } catch { /* ignore */ }
+    setCloudUser(null);
+    setCloudLastSync(null);
+    setCloudError(null);
+  };
+
+  const handleCloudSyncNow = async () => {
+    if (!cloudUser) return;
+    const db = stateRef.current as LocalDb;
+    const count = (db.products?.length || 0) + (db.sales?.length || 0) + (db.categories?.length || 0) + (db.expenses?.length || 0);
+    showToast(`Enviando ${count} registros para a nuvem...`);
+    try {
+      await pushToCloud(db);
+      showToast('Sincronizado com a nuvem com sucesso.');
+    } catch {
+      showToast('Falha ao sincronizar. Verifique a conexão e a cota do projeto Firebase.');
+    }
+  };
+
+  const handleClearCloud = async () => {
+    if (!cloudUser || clearingCloud) return;
+    if (!window.confirm('Apagar TODOS os dados deste usuário na nuvem? Esta ação não pode ser desfeita. Recomendado antes de reimportar um backup antigo.')) {
+      return;
+    }
+    setClearingCloud(true);
+    try {
+      const { clearUserDb } = await import('./lib/dbSync');
+      await clearUserDb(cloudUser.uid);
+      setCloudLastSync(null);
+      setCloudError(null);
+      showToast('Dados da nuvem apagados. Agora importe seu backup antigo para subi-lo.');
+    } catch (e: unknown) {
+      setCloudError(e instanceof Error ? e.message : 'Falha ao apagar a nuvem');
+      showToast('Falha ao apagar os dados da nuvem.');
+    } finally {
+      setClearingCloud(false);
+    }
+  };
+
+  // Recupera os dados a partir do backup embutido (/seed-backup.json):
+  // - produtos/categorias: o backup vence (restaura estoque/minStock corretos),
+  //   mas produtos que existem só localmente são mantidos (união por id).
+  // - vendas/despesas/etc: o local vence (não perde transações), adicionando
+  //   o que existir só no backup.
+  // Em seguida reenvia tudo para a nuvem, corrigindo o espelho na nuvem.
+  const handleRestoreBackup = async () => {
+    if (restoringBackup) return;
+    if (!window.confirm('Restaurar a partir do backup embutido?\n\nProdutos e categorias serão sobrescritos pelos valores do backup (corrige estoque/estoque mínimo), mas seus produtos locais exclusivos serão mantidos. Vendas, despesas e demais registros locais são preservados e apenas completados com o que faltar.\n\nDepois os dados são reenviados para a nuvem.')) {
+      return;
+    }
+    setRestoringBackup(true);
+    try {
+      const res = await fetch('/seed-backup.json', { cache: 'no-store' });
+      if (!res.ok) throw new Error('Não foi possível carregar o backup.');
+      const backup = (await res.json()) as Partial<LocalDb>;
+      const cur = stateRef.current;
+      const unionKeepLocal = <T extends { id?: string }>(local: T[] | undefined, remote: T[] | undefined): T[] => {
+        const l = Array.isArray(local) ? local : [];
+        const r = Array.isArray(remote) ? remote : [];
+        const map = new Map<string, T>();
+        for (const x of l) { const id = x?.id; if (id) map.set(id, x); }
+        for (const x of r) { const id = x?.id; if (id) map.set(id, x); }
+        return Array.from(map.values());
+      };
+      const unionKeepRemote = <T extends { id?: string }>(local: T[] | undefined, remote: T[] | undefined): T[] => {
+        const l = Array.isArray(local) ? local : [];
+        const r = Array.isArray(remote) ? remote : [];
+        const map = new Map<string, T>();
+        for (const x of r) { const id = x?.id; if (id) map.set(id, x); }
+        for (const x of l) { const id = x?.id; if (id) map.set(id, x); }
+        return Array.from(map.values());
+      };
+      const merged: LocalDb = {
+        products: unionKeepRemote(cur.products, backup.products),
+        categories: unionKeepRemote(cur.categories, backup.categories),
+        sales: unionKeepLocal(cur.sales, backup.sales),
+        expenses: unionKeepLocal(cur.expenses, backup.expenses),
+        orders: unionKeepLocal(cur.orders, backup.orders),
+        storeInfo: cur.storeInfo ?? backup.storeInfo ?? null,
+        customers: unionKeepLocal(cur.customers, backup.customers),
+        suppliers: unionKeepLocal(cur.suppliers, backup.suppliers),
+        purchases: unionKeepLocal(cur.purchases, backup.purchases),
+        cashSessions: unionKeepLocal(cur.cashSessions, backup.cashSessions),
+        loans: unionKeepLocal(cur.loans, backup.loans),
+        initialized: true,
+      };
+      persist(merged);
+      if (cloudUser) pushToCloud(merged);
+      showToast(`Backup restaurado: ${merged.products.length} produtos e ${merged.sales.length} vendas. Dados reenviados para a nuvem.`);
+    } catch (e: unknown) {
+      showToast(e instanceof Error ? e.message : 'Falha ao restaurar o backup.');
+    } finally {
+      setRestoringBackup(false);
+    }
   };
 
   const saveProductsToStorage = async (updatedProducts: Product[], _changedProduct?: Product, _isDeletedId?: string) => {
@@ -243,6 +448,15 @@ export default function App() {
   const saveSalesToStorage = async (updatedSales: Sale[], _changedSale?: Sale) => {
     setSales(updatedSales);
     persist({ sales: updatedSales });
+  };
+
+  const updateSalesBulk = (updated: Sale[]) => {
+    const map = new Map(updated.map(s => [s.id, s]));
+    const updatedSales = sales.map(s => map.get(s.id) ?? s);
+    for (const s of updated) {
+      if (!sales.some(ex => ex.id === s.id)) updatedSales.push(s);
+    }
+    saveSalesToStorage(updatedSales);
   };
 
   const saveExpensesToStorage = (updatedExpenses: Expense[]) => {
@@ -320,7 +534,7 @@ export default function App() {
   const handleAddProduct = (newProductData: Omit<Product, 'id' | 'createdAt'>) => {
     const newProduct: Product = {
       ...newProductData,
-      id: `p_${Date.now()}`,
+      id: `p_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       createdAt: new Date().toISOString()
     };
     const updated = [newProduct, ...products];
@@ -366,7 +580,7 @@ export default function App() {
   // Add Category
   const handleAddCategory = (categoryName: string) => {
     const newCategory: Category = {
-      id: `cat_${Date.now()}`,
+      id: `cat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
       name: categoryName
     };
     const updated = [...categories, newCategory];
@@ -375,7 +589,7 @@ export default function App() {
 
   // Register New Sale (and deduct stock)
   const handleRegisterSale = (saleData: {
-    items: any[];
+    items: SaleItem[];
     clientName?: string;
     clientPhone?: string;
     paymentMethod: PaymentMethod;
@@ -465,16 +679,14 @@ export default function App() {
   // links and data; updates products matched by code/SKU or name instead of
   // wiping the store and regenerating IDs, which previously corrupted sales).
   const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[] }) => {
-    const norm = (s: string) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ').trim();
-
     // --- Merge products by code (SKU) then by normalized name ---
     const existingByCode = new Map<string, Product>(products.map(p => [p.code.trim().toLowerCase(), p] as [string, Product]));
-    const existingByName = new Map<string, Product>(products.map(p => [norm(p.name), p] as [string, Product]));
+    const existingByName = new Map<string, Product>(products.map(p => [normalizeName(p.name), p] as [string, Product]));
     const mergedProducts: Product[] = [...products];
 
     for (const imp of imported.products) {
       const codeKey = imp.code.trim().toLowerCase();
-      const nameKey = norm(imp.name);
+      const nameKey = normalizeName(imp.name);
       const existing = codeKey ? existingByCode.get(codeKey) : existingByName.get(nameKey);
 
       if (existing) {
@@ -509,7 +721,7 @@ export default function App() {
         };
         mergedProducts.push(np);
         if (np.code) existingByCode.set(np.code.trim().toLowerCase(), np);
-        existingByName.set(norm(np.name), np);
+        existingByName.set(normalizeName(np.name), np);
       }
     }
 
@@ -619,8 +831,6 @@ export default function App() {
   // Derive customers from the distinct clientName present in sales (used to
   // seed the CRM on existing databases that predate the Customer module).
   function seedCustomersFromSales(salesToScan: Sale[]): Customer[] {
-    const normalizeName = (name: string) =>
-      name.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
     const seen = new Set<string>();
     const result: Customer[] = [];
     for (const sale of salesToScan) {
@@ -642,8 +852,6 @@ export default function App() {
   // Register a purchase: records the buy and increments stock of the matching
   // products (creating them when they don't exist yet) and updates cost price.
   const handleAddPurchase = (purchase: Purchase) => {
-    const normalizeName = (name: string) =>
-      name.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, ' ');
     const byName = new Map<string, Product>(products.map(p => [normalizeName(p.name), p] as [string, Product]));
     let updatedProducts = [...products];
 
@@ -693,15 +901,6 @@ export default function App() {
     if (productsToClean.length === 0) return [];
 
     // Group products by normalized name (case-insensitive, trimmed, space-normalized, accent-normalized)
-    const normalizeName = (name: string) => {
-      return name
-        .trim()
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // remove accents
-        .replace(/\s+/g, ' '); // normalize whitespace to single spaces
-    };
-
     const byNormalizedName = new Map<string, Product[]>();
     for (const p of productsToClean) {
       if (!p.name) continue;
@@ -1261,6 +1460,7 @@ export default function App() {
                   const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
                   saveSalesToStorage(updatedSales, updatedSale);
                 }}
+                onUpdateSales={updateSalesBulk}
                 onSaveLoans={saveLoansToStorage}
               />
             )}
@@ -1313,6 +1513,17 @@ export default function App() {
                 onExportBackup={handleExportBackup}
                 onImportBackup={handleImportBackup}
                 onResetDatabase={handleResetDatabase}
+                cloudUser={cloudUser}
+                cloudSyncing={cloudSyncing}
+                cloudLastSync={cloudLastSync}
+                cloudError={cloudError}
+                onCloudSignIn={handleCloudSignIn}
+                onCloudSignOut={handleCloudSignOut}
+                onCloudSyncNow={handleCloudSyncNow}
+                onRestoreBackup={handleRestoreBackup}
+                restoringBackup={restoringBackup}
+                onClearCloud={handleClearCloud}
+                clearingCloud={clearingCloud}
               />
             )}
           </motion.div>
@@ -1411,6 +1622,13 @@ export default function App() {
               </div>
             )}
           </div>
+        </div>
+      )}
+
+      {/* Toast de erro de persistência (M6) */}
+      {toastMsg && (
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-[100] bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg text-sm font-semibold">
+          {toastMsg}
         </div>
       )}
 

@@ -15,7 +15,7 @@ function categorizeProduct(name) {
   if (/(capa|capinha|película|pelicula|privacidade|vidro temperado|protetor de tela|proteção de tela|pelicular)/.test(n)) return 'Capas e Películas';
   if (/(cabo|adaptador|hub |hubusb|hub usb|extensor|conversor)/.test(n)) return 'Cabos e Adaptadores';
   if (/(fone|earphone|airpods|headphone|ouvido)/.test(n)) return 'Fones de Ouvido';
-  if (/(carregador|fonte |fonte\n|fonte\s|carreg)/.test(n)) return 'Carregadores';
+  if (/(carregador|fontes?|carreg)/.test(n)) return 'Carregadores';
   if (/(suporte|suportecelular|ventosa|magnetico|magnético|veicular|retrovisor|suporte moto|suporte veicular|suporte celular|suporte de celular|suporte de mesa|suporte braço|suporte gancho|suporte triplo|suporte de tv|suporte fone|imã|cordinha|cordão|crachá|porta crachá|estoj|luvinha|luva|capa de chuva|capa a prova|selfie|tripé|tripe)/.test(n)) return 'Acessórios para Celular';
   if (/(mouse|teclado|keyboard|monitor|computador|pc |notebook|laptop|cool|hub.*porta|placa de som|hdmi|vga|displayport|mousepad|mouse pad|gamer.*mouse|gamer.*teclado)/.test(n)) return 'Computador e Periféricos';
   if (/(memória|memoria|cartão de memória|cartao de memoria|micro sd|memory card|pendrive|pen drive|hd |ssd|case.*hd|cartão|cartao)/.test(n)) return 'Memória e Armazenamento';
@@ -186,9 +186,10 @@ function parseSalesSheet(sheetName, year) {
     }
     
     // Determine payment method
+    // 2026 "Recebido loja" is at column 12 (Transferido = PIX/transferência)
     let paymentMethod = 'money';
     if (year === 2026) {
-      if (row[13] === 'Transferido') paymentMethod = 'pix';
+      if (String(row[12] || '').trim().toLowerCase() === 'transferido') paymentMethod = 'pix';
     } else {
 const forma = row[13];
     if (forma === 'Transferido' || forma === 'Pix') paymentMethod = 'pix';
@@ -196,13 +197,13 @@ const forma = row[13];
     }
 
     // Parse payment status from "Recebido Loja" column
-    // 2024/2025: col 15, 2026: col 13
-    const recebidoIdx = year === 2026 ? 13 : 15;
+    // 2024/2025: col 15, 2026: col 12
+    const recebidoIdx = year === 2026 ? 12 : 15;
     const recebidoRaw = row[recebidoIdx];
     let paymentStatus = 'completed'; // default
     if (recebidoRaw) {
       const val = String(recebidoRaw).toLowerCase().trim();
-      if (val === 'aguardando' || val === 'ainda n\u00e3o' || val === 'ainda nao') {
+      if (val === 'aguardando' || val === 'ainda n\u00e3o' || val === 'ainda nao' || val === 'pendente') {
         paymentStatus = 'pending';
       }
     }

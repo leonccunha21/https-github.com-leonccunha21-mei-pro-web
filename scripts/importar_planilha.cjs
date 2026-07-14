@@ -19,7 +19,7 @@ function categorizeProduct(name) {
   if (/(capa|capinha|película|pelicula|protetor de tela|vidro temperado)/.test(n)) return 'Capas e Películas';
   if (/(cabo|adaptador|hub)/.test(n)) return 'Cabos e Adaptadores';
   if (/(fone|earphone|airpods|headphone)/.test(n)) return 'Fones de Ouvido';
-  if (/(carregador|fonte|carreg)/.test(n)) return 'Carregadores';
+  if (/(carregador|fontes?|carreg)/.test(n)) return 'Carregadores';
   if (/(suporte|magnético|magnetico|veicular|ventosa|imã|cordão|cordinha)/.test(n)) return 'Acessórios para Celular';
   if (/(mouse|teclado|monitor|notebook|computador)/.test(n)) return 'Computador e Periféricos';
   if (/(memória|memoria|cartão|cartao|micro sd|pendrive|ssd|hd )/.test(n)) return 'Memória e Armazenamento';

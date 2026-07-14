@@ -35,7 +35,13 @@ function readDb(): LocalDb {
   ensureDb();
   try {
     return JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8')) as LocalDb;
-  } catch {
+  } catch (e) {
+    console.error('Erro ao ler/parsear o banco de dados (data/local-db.json):', e);
+    const backup = `${DATA_FILE}.corrupt.${Date.now()}`;
+    try {
+      fs.copyFileSync(DATA_FILE, backup);
+      console.error(`Backup do arquivo corrompido salvo em ${backup}`);
+    } catch { /* ignore */ }
     return {};
   }
 }

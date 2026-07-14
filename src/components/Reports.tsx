@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Product, Sale, Category, PaymentMethod } from '../types';
+import { normalizeName } from '../lib/normalize';
 import { 
   TrendingUp, 
   PieChart,
@@ -34,8 +35,6 @@ const timeRangeLabels: Record<string, string> = {
 
 // Resolve the catalog product for a sale item. Imported sales have an empty
 // productId, so we fall back to matching by the normalized product name.
-const normalizeName = (name: string) =>
-  name.trim().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
 const findProductForItem = (item: { productId?: string; productName: string }, products: Product[]) => {
   if (item.productId && item.productId.trim() !== '') {

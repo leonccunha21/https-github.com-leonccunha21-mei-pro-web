@@ -21,7 +21,7 @@ export function categorizeProduct(name: string): string {
   }
 
   // Carregadores
-  if (/(carregador|fonte |fonte\n|fonte\s|carreg)/.test(n)) {
+  if (/(carregador|fontes?|carreg)/.test(n)) {
     return 'Carregadores';
   }
 

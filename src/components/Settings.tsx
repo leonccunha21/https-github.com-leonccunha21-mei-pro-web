@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import type { User } from 'firebase/auth';
 import { Product, Sale, Category, SaleItem, StoreInfo, Expense } from '../types';
 import * as XLSX from 'xlsx';
 import {
@@ -11,11 +12,14 @@ import {
   Loader2,
   Settings as SettingsIcon,
   Store,
-  User,
+  User as UserIcon,
   Save,
   CheckCircle2,
   HardDrive,
-  AlertTriangle
+  AlertTriangle,
+  Cloud,
+  Trash2,
+  LogOut
 } from 'lucide-react';
 
 const defaultStoreInfo: StoreInfo = {
@@ -361,16 +365,19 @@ function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
     const totalCost = getFloatVal(row, costIdx) || saleItems.reduce((sum, item) => sum + (item.costPrice * item.quantity), 0);
     const total = getFloatVal(row, revenueIdx) || saleItems.reduce((sum, item) => sum + item.total, 0);
 
-    let status: 'completed' | 'cancelled' = 'completed';
+    let status: 'completed' | 'cancelled' | 'pending' = 'completed';
     if (statusIdx !== -1 && statusIdx < row.length && row[statusIdx]) {
       const sLower = String(row[statusIdx]).trim().toLowerCase();
       if (sLower.includes('canc') || sLower.includes('estor')) {
         status = 'cancelled';
+      } else if (sLower.includes('pend') || sLower.includes('abert') || sLower.includes('aguar')) {
+        status = 'pending';
       }
     }
 
     const tipoIdx = findColIndex(['tipo', 'cpf', 'cnpj', 'tipo venda', 'sale type']);
     const orderIdIdx = findColIndex(['id pedido', 'pedido', 'order id', 'ecommerce', 'shopee', 'tiktok']);
+    const channelIdx = findColIndex(['canal', 'channel', 'origem', 'marketplace']);
 
     let saleType = 'CPF';
     if (tipoIdx !== -1 && tipoIdx < row.length && row[tipoIdx]) {
@@ -379,6 +386,7 @@ function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
     }
 
     const ecommerceOrderId = (orderIdIdx !== -1 && orderIdIdx < row.length && row[orderIdIdx]) ? String(row[orderIdIdx]).trim() : undefined;
+    const saleChannel = (channelIdx !== -1 && channelIdx < row.length && row[channelIdx]) ? String(row[channelIdx]).trim() : undefined;
 
     sales.push({
       id,
@@ -392,6 +400,7 @@ function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
       profit: total - totalCost,
       saleType: saleType as 'CPF' | 'CNPJ',
       ecommerceOrderId,
+      saleChannel,
       status
     });
   }
@@ -410,6 +419,17 @@ interface SettingsProps {
   onExportBackup: () => void;
   onImportBackup: (file: File) => void;
   onResetDatabase: () => void;
+  cloudUser: User | null;
+  cloudSyncing: boolean;
+  cloudLastSync: string | null;
+  cloudError: string | null;
+  onCloudSignIn: () => void;
+  onCloudSignOut: () => void;
+  onCloudSyncNow: () => void;
+  onRestoreBackup: () => void;
+  restoringBackup: boolean;
+  onClearCloud: () => void;
+  clearingCloud: boolean;
 }
 
 export default function Settings({
@@ -422,7 +442,18 @@ export default function Settings({
   onImportDatabase,
   onExportBackup,
   onImportBackup,
-  onResetDatabase
+  onResetDatabase,
+  cloudUser,
+  cloudSyncing,
+  cloudLastSync,
+  cloudError,
+  onCloudSignIn,
+  onCloudSignOut,
+  onCloudSyncNow,
+  onRestoreBackup,
+  restoringBackup,
+  onClearCloud,
+  clearingCloud
 }: SettingsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const excelInputRef = useRef<HTMLInputElement>(null);
@@ -1001,6 +1032,82 @@ export default function Settings({
                 </button>
               </div>
             </div>
+          </div>
+
+          {/* Sincronização na Nuvem */}
+          <div className="bg-white p-5 rounded-xl border border-indigo-200 shadow-sm space-y-3">
+            <div className="border-b border-indigo-100 pb-3">
+              <h2 className="text-base font-bold text-indigo-700 flex items-center gap-2">
+                <Cloud className="h-5 w-5" />
+                Sincronização na Nuvem
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">Seus dados ficam salvos no Firebase e acessíveis em qualquer dispositivo conectado.</p>
+            </div>
+
+            {cloudUser ? (
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  {cloudUser.photoURL ? (
+                    <img src={cloudUser.photoURL} alt="" className="h-9 w-9 rounded-full" />
+                  ) : (
+                    <div className="h-9 w-9 rounded-full bg-indigo-100 flex items-center justify-center">
+                      <UserIcon className="h-4 w-4 text-indigo-600" />
+                    </div>
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-slate-700 truncate">{cloudUser.displayName || cloudUser.email}</p>
+                    <p className="text-xs text-slate-400 truncate">{cloudUser.email}</p>
+                  </div>
+                </div>
+
+                <div className="text-xs text-slate-500">
+                  {cloudSyncing ? (
+                    <span className="flex items-center gap-1.5 text-indigo-600">
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" /> Sincronizando...
+                    </span>
+                  ) : cloudLastSync ? (
+                    <span>Última sincronização: {new Date(cloudLastSync).toLocaleString('pt-BR')}</span>
+                  ) : (
+                    <span>Não sincronizado ainda.</span>
+                  )}
+                </div>
+
+                {cloudError && (
+                  <p className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg p-2">{cloudError}</p>
+                )}
+
+                <p className="text-[11px] text-slate-400 leading-snug">
+                  A sincronização é <b>manual</b>: o app trabalha apenas no seu navegador. Clique em <b>Sincronizar Agora</b> para enviar os dados locais para a nuvem quando quiser.
+                </p>
+
+                <div className="flex gap-2">
+                  <button onClick={onCloudSyncNow} className="flex-1 py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <RefreshCcw className="h-3.5 w-3.5" /> Sincronizar Agora
+                  </button>
+                  <button onClick={onCloudSignOut} className="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                    <LogOut className="h-3.5 w-3.5" /> Sair
+                  </button>
+                </div>
+
+                <button onClick={onRestoreBackup} disabled={restoringBackup} className="w-full py-2 px-3 bg-amber-500 hover:bg-amber-600 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                  <RefreshCcw className="h-3.5 w-3.5" /> {restoringBackup ? 'Restaurando...' : 'Restaurar do Backup (corrigir estoque)'}
+                </button>
+                <p className="text-[11px] text-slate-400 leading-snug">
+                  Mescla o backup embutido com seus dados: corrige produtos/estoque a partir do backup e preserva suas vendas e despesas locais. Reenvia tudo para a nuvem.
+                </p>
+
+                <button onClick={onClearCloud} disabled={clearingCloud} className="w-full py-2 px-3 bg-rose-600 hover:bg-rose-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                  <Trash2 className="h-3.5 w-3.5" /> {clearingCloud ? 'Apagando...' : 'Limpar dados da nuvem'}
+                </button>
+                <p className="text-[11px] text-slate-400 leading-snug">
+                  Apaga TUDO da nuvem deste usuário. Use antes de reimportar um backup antigo para subir os dados corretos do zero.
+                </p>
+              </div>
+            ) : (
+              <button onClick={onCloudSignIn} className="w-full py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                <Cloud className="h-3.5 w-3.5" /> Entrar com Google e Sincronizar
+              </button>
+            )}
           </div>
 
           {/* Danger Zone */}

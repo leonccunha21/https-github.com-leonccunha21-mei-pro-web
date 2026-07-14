@@ -657,8 +657,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Custo (R$)</label>
-                  <input type="number" step="0.01" min="0" required value={formCostPrice || ''} onChange={e => setFormCostPrice(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
+                <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Custo (R$)</label>
+                <input type="number" step="0.01" min="0" value={formCostPrice ?? ''} onChange={e => setFormCostPrice(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Venda (R$)</label>
@@ -681,7 +681,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Estoque Mínimo</label>
-                  <input type="number" min="1" required value={formMinStock} onChange={e => setFormMinStock(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
+                  <input type="number" min="0" value={formMinStock ?? ''} onChange={e => setFormMinStock(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
               </div>
               )}

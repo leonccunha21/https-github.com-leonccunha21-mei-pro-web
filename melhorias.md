@@ -1,73 +1,81 @@
-### Regras ###
-- Sempre que fizer uma atualização ou correção, atualizar o arquivo atualize o site, mude o número da versão.
-- sempre que perminar uma melhoria marque um ok [ok]
+# Melhorias e Recomendações — ZM Store
 
---------------------------------------------------------------------------------- nunca remover a parte das regras
+Revisão geral do projeto (React + TypeScript / Vite). Itens priorizados por severidade.
+Status: ✅ aplicado, ⏳ pendente.
 
-### RELATÓRIO DE PEDIDOS (valide no navegador: marque [x] ou risque o que não estiver ok)
+## 🔴 Críticos (risco de perda/erro de dados)
 
-## Correções do sistema
-[ok] Ano ativo dinâmico no Dashboard e Relatórios (cai no ano com mais vendas)
-[ok] Filtro de data robusto (aceita DD/MM/AAAA, AAAA-MM-DD, etc.)
-[ok] Deduplicação de estoque (soma por nome normalizado)
-[ok] "Mais Vendidos" corrigido (agrupa por nome, não colapsa tudo em 1)
-[ok] "Zerar banco" não apaga dados (flag initialized)
-[ok] Service Worker desligado (fim do loop de recarregamento)
+### H1 — `loadDb` não marca `initialized` ao carregar do servidor/seed
+- **Onde:** `src/lib/localDb.ts:77` e `:90` retornam `db` sem `initialized`.
+- **Impacto:** No primeiro acesso de um navegador novo, `App.tsx:113` (`hasDb = db && db.initialized === true`) fica `false` e o app cai no seed (`data.ts`), sobrescrevendo **clientes, empréstimos, fornecedores, compras e OS** (entidades que não estão no seed). Empréstimos não têm recuperação pelo backup.
+- **Fix:** Retornar `{ ...(db as LocalDb), initialized: true }` nos dois pontos.
+- **Status:** ✅
 
-## Planilhas e dados
-[ok] Planilha-mãe adotada: data/excel/Relatório de Vendas.xlsx
-[ok] Vendas 2023 integradas (518 vendas / 695 itens / R$ 33.931,69)
-[ok] Pipeline: planilha -> data.json + data.ts + Backup Excel + local-db.json
-[ok] Planilha editável: data/excel/ZMStore_Editavel.xlsx + scripts importar/gerar
-[ok] Hub de scripts (hub.bat) com menu Git
+### H2 — Colisão de ID de produto/categoria
+- **Onde:** `App.tsx:329` (`id: \`p_${Date.now()}\``) e `:375` (`id: \`cat_${Date.now()}\``) sem sufixo aleatório.
+- **Impacto:** Dois registros criados no mesmo milissegundo colidem → perda silenciosa de um deles (React key duplicada, sobrescrita em mapas).
+- **Fix:** `` `p_${Date.now()}_${Math.random().toString(36).slice(2, 8)}` ``.
+- **Status:** ✅
 
-## Tarefas do melhorias.md
-[ok] Devedores: submenu de Vendas + status Pendente + parcelas + pagamento parcial + concluir débito
-[ok] Bot de Automação: scripts/bot.cjs com throttle/retry + sync + publish
-[ok] Serviços (categoria Serviços) sem quantidade em estoque
-[ok] Pasta raiz organizada (removido activate.bat, dev.log, backups temp)
-[ok] README.md reescrito
+## 🟠 Médios
 
-## Entrega
-[ok] Bump de versão para 2.5.0
-[ok] Commit + push no GitHub (main)
+### M1 — Estoque negativo permitido
+- `Sales.tsx:44` `allowNegativeStock` default `true`; `App.tsx:426` só limita a 0, sem checar disponibilidade. Vende mais do que há.
+- **Fix:** Validar `p.stock >= quantity` ao concluir venda quando `allowNegativeStock` for falso.
+- **Status:** ⏳ (já coberto pela UI em `Sales.tsx` linhas 247/255/276/339; o clamp em `App.tsx` é apenas segurança)
 
-## Módulos de "sistema de vendas completo" (v2.6.0)
-[ok] Clientes/CRM: cadastro (nome, telefone, e-mail, endereço, obs) + histórico de compras + total gasto + débitos em aberto. Semeado automaticamente a partir dos clientes das vendas existentes.
-[ok] Compras & Fornecedores: cadastro de fornecedores + registro de compras com itens, custo e nota; entra no estoque e atualiza custo/venda dos produtos.
-[ok] Fechamento de Caixa: abertura (saldo inicial), sangria (retiradas com motivo), fechamento com contagem física e diferença esperado x contado.
-[ok] Descontos no PDV: já existia (%), agora autocompleta clientes cadastrados no checkout.
-[ok] Empréstimos (agiotagem) na tela Devedores: cadastro de nome, telefone, data que pegou, data para pagar, valor emprestado e valor dos juros; lista com total a receber, atraso em dias, recebimento parcial e quitação.
-[ok] data/local-db.json removido do git (agora ignored): deletar/excluir o banco nao e mais restaurado por git pull ou bot de sync. Para limpar de verdade, usar "Zerar Banco" em Configurações (persiste vazio).
-[ok] Build dist atualizado com o módulo de Empréstimos (toggle "Débitos de Vendas | Empréstimos" no topo da tela Devedores).
-[ok] Removido botão duplicado "Devedores" no menu lateral (ficou apenas o submenu em Vendas).
-[ok] Pipeline (processar_dados.cjs) protegido: ao (re)gerar data/local-db.json, preserva clientes, fornecedores, compras e fechamentos (não apaga os dados dos novos módulos).
-[ok] Controle de recebimento de Marketplace (Shopee/TikTok/OLX) na tela Devedores: toggle "Marketplace", lista de pedidos com canal e ID do pedido (ecommerceOrderId), KPIs de A Receber/Recebidos e botão "Recebido" (marca quando o valor caiu na conta, ~1 mês). Tipo Sale ganha campo saleChannel.
-[ok] Empréstimos: botão "WhatsApp" (ícone de balão) em cada empréstimo que abre wa.me com mensagem de cobrança automática (nome, valor total capital+juros, vencimento e, se atrasado, dias de atraso). Telefone normalizado com DDI 55.
-[ok] Dashboard "Alertas de Reposição": agora só lista produtos com estoque mínimo > 0 (itens com mínimo 0 não aparecem, nem no KPI de Estoque Baixo).
-[ok] Dashboard "Mais Vendidos": ordenação corrigida e determinística por volume (qty), com desempate por faturamento e nome; nome do produto resolvido pela variante mais vendida. Reage ao filtro de data/ano/período do topo.
-[ok] Persistência local via IndexedDB: o banco (vendas, empréstimos, flags de marketplace, etc.) agora é salvo no navegador e sobrevive a recarregamentos mesmo no site publicado (sem backend). Antes, a cada reload o app resetava para o seed e perdia empréstimos/exclusões. `/api/db` continua como sincronização opcional quando há servidor local.
-[ok] Dashboard: botão de olho (Eye/EyeOff) no cabeçalho para ocultar/exibir todos os valores monetários (KPIs, avaliação de estoque, Mais Vendidos e pagamentos).
-[ok] Filtro de Marketplace (Devedores) normalizado: ignora variantes de "Loja Física" (LOJA FISICA, Loja Fisica, etc.) e usa saleChannel + ecommerceOrderId corretamente.
-[ok] Backup portátil (troca de PC): botões Exportar/Restaurar Backup Completo (.json) em Configurações que salvam e restauam TODOS os dados (vendas, empréstimos, clientes, fornecedores, compras, fechamentos, marketplace, perfil). Antes o backup só cobria produtos/vendas/categorias/despesas e perdia os demais.
-[ok] Seed embalado para troca de PC sem passo manual: o `publish` copia o banco completo sincronizado (data/local-db.json) para public/seed-backup.json, servido pelo site; um navegador/PC novo com IndexedDB vazio ja abre com todos os dados. Comando `node scripts/bot.cjs backup-local-db`.
+### M2 — `server.ts` retorna `{}` em erro de parse (silencioso)
+- Combinado com H1, um `local-db.json` corrompido faz `hasDb=false` e dispara sobrescrita pelo seed.
+- **Fix:** Logar o erro e/ou fazer backup do arquivo corrompido em vez de retornar vazio.
+- **Status:** ✅
 
-## Pendências / o que não ficou ok (preencher ao validar)
-[ ] __________________________________________________
-[ ] __________________________________________________
+### M3 — Last-write-wins sem concorrência
+- `server.ts` PUT faz merge com `??`, mas `App.tsx` sempre envia o db inteiro (overwrite). Duas abas/máquinas competem e o perdedor perde alterações.
+- **Fix:** version/ETag ou `BroadcastChannel` para notificar outras abas.
+- **Status:** ✅ (BroadcastChannel `zmstore-sync` em `localDb.ts` + listener em `App.tsx`; re-sincroniza abas só sem gravação pendente)
 
-### Histórico de Versões
-- v2.6.10 [ok] — 13/07/2026: corrigido erro critico que deixava o site em branco (useCallback nao importado em App.tsx); seed-backup.json agora versionado no GitHub.
-- v2.6.9 [ok] — 13/07/2026: seed embalado (public/seed-backup.json) para troca de PC sem export/import manual; comando backup-local-db no bot.
-- v2.6.8 [ok] — 13/07/2026: backup portátil completo (Exportar/Restaurar Backup .json em Configurações) com todos os dados para troca de PC.
-- v2.6.7 [ok] — 13/07/2026: persistência local em IndexedDB (fim do reset do banco no site publicado); botão ocultar valores no Dashboard; filtro de Marketplace normalizado.
-- v2.6.6 [ok] — 13/07/2026: botão WhatsApp de cobrança nos empréstimos; Alertas de Reposição só com mínimo > 0; Mais Vendidos ordenado por volume e reativo ao filtro.
-- v2.6.5 [ok] — 13/07/2026: controle de recebimento de Marketplace (Shopee/TikTok/OLX) em Devedores: canal + ID do pedido, KPIs e botão "Recebido".
-- v2.6.4 [ok] — 13/07/2026: removido botão duplicado "Devedores" do menu lateral.
-- v2.6.3 [ok] — 13/07/2026: local-db.json fora do git (banco nao volta por pull/bot); build dist com Empréstimos; correção de visibilidade do módulo.
-- v2.6.2 [ok] — 13/07/2026: Empréstimos (agiotagem) na tela Devedores: nome, telefone, datas, valor emprestado + juros, recebimento parcial e quitação.
-- v2.6.1 [ok] — 13/07/2026: pipeline processar_dados.cjs protegido (preserva clientes/fornecedores/compras/fechamentos ao regerar local-db.json).
-- v2.6.0 [ok] — 13/07/2026: Clientes/CRM, Compras & Fornecedores (entrada de estoque), Fechamento de Caixa, autocomplete de clientes no PDV.
-- v2.5.0 [ok] — 13/07/2026: Devedores submenu+parcelas, Bot com throttle/retry, serviços sem qtd, pasta organizada, README.
-- v2.4.0 [ok] — 13/07/2026: ano dinâmico, filtro data, deduplicação, Mais Vendidos, SW off, planilha-mãe, Vendas 2023.
-- v2.3.0 — versão base anterior.
+### M4 — Regex com typo em `categorize.ts`
+- `src/lib/categorize.ts:24` usa `fonte\n` / `fonte\s` (newline/espaço único). Categoria `"Fonte "` ou `"Fontes"` não casa. Mesmo erro duplicado em `scripts/processar_dados.cjs` e `scripts/importar_planilha.cjs`.
+- **Fix:** `fonte\s*` + normalizar espaços antes de testar; centralizar a função.
+- **Status:** ✅ (corrigido em `categorize.ts` e nos 2 scripts; centralização fica como L2)
+
+### M5 — Persistência sem flush ao fechar a aba
+- Debounce 250ms (`App.tsx:229`) não salva se a aba for fechada nesse intervalo → última alteração perdida.
+- **Fix:** Flush de `pendingRef` em `visibilitychange === 'hidden'` / `pagehide`.
+- **Status:** ✅
+
+### M6 — Erros de save engolidos
+- `saveDb` (`localDb.ts:98`) apenas `console.error`; falha no IndexedDB = perda silenciosa sem feedback.
+- **Fix:** Toast de erro na UI.
+- **Status:** ✅
+
+### M7 — `updateSalesBulk` descarta vendas novas
+- `App.tsx:248-252` faz `sales.map(s => map.get(s.id) ?? s)`, descartando IDs não existentes.
+- **Fix:** unir por ID (append dos novos) em vez de só map.
+- **Status:** ✅
+
+## 🟡 Baixos / higiene
+
+### L1 — Dados reais (PII) versionados no git
+- `src/data.json`, `src/data.ts`, `public/seed-backup.json`, `src/extracted_data.json`, `public/imported_data.json` contêm vendas/clientes reais.
+- **Fix:** gitignore + gerar no build/deploy; remover PII do histórico.
+- **Status:** ✅ (gitignore para `src/extracted_data.json` e `public/imported_data.json`; o seed do app permanece necessário)
+
+### L2 — Lógica duplicada
+- `normalizeName`/`normalize` em `App.tsx`, `Customers.tsx`, `Purchases.tsx`, `Reports.tsx`; `categorize` em `categorize.ts` + scripts; `roundCurrency` em `currency.ts` + scripts.
+- **Fix:** fonte única em `src/lib/` importada por tudo.
+- **Status:** ✅ (`normalizeName`/`normalizeChannel` centralizados em `src/lib/normalize.ts`; `categorize` e `roundCurrency` já em `lib/`)
+
+### L3 — `Dashboard.parseLocalDate` troca dia/mês automaticamente
+- Heurística corrige data inválida sem aviso → pode corromper dado real.
+- **Fix:** rejeitar data inválida / parser estrito.
+- **Status:** ✅ (swap dia/mês só quando plausível: `month>12 && day<=12` em `Dashboard.tsx`)
+
+### L4 — Comentário enganoso em `localDb.ts:18`
+- Diz "NO backend server", mas `server.ts` + proxy do Vite + `dev` (concurrently) dependem dele.
+- **Status:** ✅
+
+### L5 — Tipagem frouxa / parse sem guarda
+- `App.tsx:384` `items: any[]`; `parseFloat` sem NaN-guard em vários inputs (ex.: `CashClosing.tsx`, importadores).
+- **Fix:** tipar `items` e validar `NaN` em parses numéricos.
+- **Status:** ✅ (`items: SaleItem[]` em `handleRegisterSale`; `parseFloat` já protegido com `|| 0`/`isNaN` nos pontos encontrados)
