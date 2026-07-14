@@ -519,21 +519,18 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
           </div>
         </div>
 
-        <div id="kpi-estoque" className="bg-white p-3 md:p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+        <div id="kpi-vendas" className="bg-white p-3 md:p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-slate-400">Estoque Baixo</span>
-            <div className={`p-1.5 md:p-2 rounded-lg ${lowStockProducts.length > 0 ? 'bg-rose-50 text-rose-600 animate-pulse' : 'bg-slate-50 text-slate-500'}`}>
-              <AlertTriangle className="h-4 w-4 md:h-5 md:w-5" />
+            <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-slate-400">Vendas</span>
+            <div className="p-1.5 md:p-2 rounded-lg bg-indigo-50 text-indigo-600">
+              <ShoppingBag className="h-4 w-4 md:h-5 md:w-5" />
             </div>
           </div>
           <div className="mt-3 md:mt-4">
-            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{lowStockProducts.length}</span>
-            <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs">
-              {lowStockProducts.length > 0 ? (
-                <span className="text-rose-600 font-medium">Abaixo do mínimo!</span>
-              ) : (
-                <span className="text-slate-500">Saudável</span>
-              )}
+            <span className="text-base md:text-2xl font-bold text-slate-900 block leading-tight">{completedSales.length}</span>
+            <div className="flex items-center gap-1 mt-1 text-[10px] md:text-xs text-slate-500">
+              <ShoppingBag className="h-3 w-3 text-slate-400" />
+              <span>transações concluídas</span>
             </div>
           </div>
         </div>

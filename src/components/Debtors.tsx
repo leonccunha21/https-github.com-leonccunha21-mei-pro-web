@@ -254,6 +254,12 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
 
   const formatCurrency = (v: number) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
+  // Aceita tanto "50.00" quanto "50,00" (padrão BR) sem quebrar o parse.
+  const parseMoney = (v: unknown): number => {
+    const n = parseFloat(String(v ?? '').trim().replace(/\s/g, '').replace(',', '.').replace(/[^\d.]/g, ''));
+    return isNaN(n) ? 0 : n;
+  };
+
   const daysSince = (dateStr: string) => {
     const diff = Date.now() - new Date(dateStr).getTime();
     return Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -614,14 +620,14 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                   <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Registrar Pagamento Parcial</h4>
                   <div className="flex items-center gap-2">
                     <span className="text-slate-500 font-mono">R$</span>
-                    <input
-                      type="number" min={0} step={0.01} value={partialAmount}
-                      onChange={e => setPartialAmount(e.target.value)}
-                      placeholder="0,00"
+                      <input
+                        type="text" inputMode="decimal" min={0} step={0.01} value={partialAmount}
+                        onChange={e => setPartialAmount(e.target.value)}
+                        placeholder="0,00"
                       className="flex-1 px-3 py-2 text-sm border border-slate-200 rounded-lg font-mono focus:outline-none focus:border-indigo-400"
                     />
                     <button
-                      onClick={() => handlePartialPayment(selectedSale, Number(partialAmount))}
+                      onClick={() => handlePartialPayment(selectedSale, parseMoney(partialAmount))}
                       className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-colors"
                     >
                       Registrar
@@ -1001,11 +1007,11 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Valor emprestado *</label>
-                <input type="number" min="0" step="0.01" value={loanForm.principal} onChange={e => setLoanForm({ ...loanForm, principal: Number(e.target.value) })} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
+                <input type="text" inputMode="decimal" min="0" step="0.01" value={loanForm.principal} onChange={e => setLoanForm({ ...loanForm, principal: parseMoney(e.target.value) })} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
               </div>
               <div>
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Valor dos juros</label>
-                <input type="number" min="0" step="0.01" value={loanForm.interest} onChange={e => setLoanForm({ ...loanForm, interest: Number(e.target.value) })} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
+                <input type="text" inputMode="decimal" min="0" step="0.01" value={loanForm.interest} onChange={e => setLoanForm({ ...loanForm, interest: parseMoney(e.target.value) })} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
               </div>
               <div className="col-span-2">
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Observações</label>
@@ -1047,8 +1053,8 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                 <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Registrar Recebimento</h4>
                 <div className="flex items-center gap-2">
                   <span className="text-slate-500 font-mono">R$</span>
-                  <input type="number" min="0" step="0.01" value={loanPartial} onChange={e => setLoanPartial(e.target.value)} placeholder="0,00" className="flex-1 px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg font-mono bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
-                  <button onClick={() => handleLoanPartial(selectedLoan, Number(loanPartial))} className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold cursor-pointer">Registrar</button>
+                  <input type="text" inputMode="decimal" min="0" step="0.01" value={loanPartial} onChange={e => setLoanPartial(e.target.value)} placeholder="0,00" className="flex-1 px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg font-mono bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
+                  <button onClick={() => handleLoanPartial(selectedLoan, parseMoney(loanPartial))} className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold cursor-pointer">Registrar</button>
                 </div>
               </div>
             </div>
