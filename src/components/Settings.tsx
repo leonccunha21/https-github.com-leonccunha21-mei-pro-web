@@ -603,12 +603,23 @@ export default function Settings({
 
   const handleExportSalesToExcel = () => {
     try {
-      const headers = ['ID da Venda', 'Data', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Tipo', 'Produtos Vendidos', 'Custo Total (R$)', 'Faturamento (R$)', 'Lucro Líquido (R$)', 'Status'];
-      const rows = sales.map(s => [
-        s.id, new Date(s.date).toLocaleString('pt-BR'), s.clientName || 'Cliente Geral', s.clientPhone || '-',
-        s.paymentMethod, s.saleType || 'CPF', s.items.map(item => `${item.productName} (${item.quantity}x)`).join(', '),
-        s.totalCost, s.total, s.profit, s.status === 'completed' ? 'Concluída' : 'Cancelada'
-      ]);
+      const headers = ['ID da Venda', 'Data', 'Hora', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Tipo', 'Produto', 'QTD', 'Custo (R$)', 'Faturamento (R$)', 'Lucro (R$)', 'Status'];
+      const rows: any[] = [];
+      sales.forEach(s => {
+        const dt = new Date(s.date);
+        const data = dt.toLocaleDateString('pt-BR');
+        const hora = dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        s.items.forEach(item => {
+          const itemCost = (item.costPrice || 0) * item.quantity;
+          const itemTotal = item.total != null ? item.total : (item.salePrice || 0) * item.quantity;
+          rows.push([
+            s.id, data, hora, s.clientName || 'Cliente Geral', s.clientPhone || '-',
+            s.paymentMethod, s.saleType || 'CPF', item.productName, item.quantity,
+            Number(itemCost.toFixed(2)), Number(itemTotal.toFixed(2)), Number((itemTotal - itemCost).toFixed(2)),
+            s.status === 'completed' ? 'Concluída' : s.status === 'cancelled' ? 'Cancelada' : 'Pendente'
+          ]);
+        });
+      });
       const wb = XLSX.utils.book_new();
       const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
       XLSX.utils.book_append_sheet(wb, ws, 'Vendas');
@@ -635,35 +646,41 @@ export default function Settings({
       prodWs['!cols'] = prodHeaders.map(() => ({ wch: 22 }));
       XLSX.utils.book_append_sheet(wb, prodWs, 'Produtos');
 
-      // Sheet 2: Vendas
-      const saleHeaders = ['ID', 'Data', 'Cliente', 'Telefone', 'Pagamento', 'Tipo', 'ID Pedido', 'Itens', 'Custo Total', 'Faturamento', 'Lucro', 'Status'];
-      const saleRows = sales.map(s => ({
-        id: s.id,
-        date: new Date(s.date).toLocaleString('pt-BR'),
-        client: s.clientName || 'Cliente Geral',
-        phone: s.clientPhone || '-',
-        payment: s.paymentMethod,
-        saleType: s.saleType || 'CPF',
-        orderId: s.ecommerceOrderId || '',
-        items: s.items.map(i => `${i.productName} (${i.quantity}x R$ ${i.salePrice.toFixed(2)})`).join('; '),
-        cost: s.totalCost,
-        revenue: s.total,
-        profit: s.profit,
-        status: s.status === 'completed' ? 'Concluída' : s.status === 'cancelled' ? 'Cancelada' : 'Pendente',
-      }));
-      const saleRowsArray = saleRows.map(r => [r.id, r.date, r.client, r.phone, r.payment, r.saleType, r.orderId, r.items, r.cost, r.revenue, r.profit, r.status]);
+      // Sheet 2: Vendas (uma linha por item)
+      const saleHeaders = ['ID', 'Data', 'Hora', 'Cliente', 'Telefone', 'Pagamento', 'Tipo', 'ID Pedido', 'Produto', 'QTD', 'Valor Venda', 'Custo', 'Lucro', 'Status', 'Canal'];
+      const saleRowsArray: any[] = [];
+      sales.forEach(s => {
+        const dt = new Date(s.date);
+        const data = dt.toLocaleDateString('pt-BR');
+        const hora = dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+        s.items.forEach(i => {
+          const itemCost = (i.costPrice || 0) * i.quantity;
+          const itemTotal = i.total != null ? i.total : (i.salePrice || 0) * i.quantity;
+          saleRowsArray.push([
+            s.id, data, hora, s.clientName || 'Cliente Geral', s.clientPhone || '-',
+            s.paymentMethod, s.saleType || 'CPF', s.ecommerceOrderId || '',
+            i.productName, i.quantity, Number(itemTotal.toFixed(2)), Number(itemCost.toFixed(2)),
+            Number((itemTotal - itemCost).toFixed(2)),
+            s.status === 'completed' ? 'Concluída' : s.status === 'cancelled' ? 'Cancelada' : 'Pendente',
+            s.saleChannel || 'Loja Física'
+          ]);
+        });
+      });
       const saleWs = XLSX.utils.aoa_to_sheet([saleHeaders, ...saleRowsArray]);
-      saleWs['!cols'] = [{ wch: 15 }, { wch: 20 }, { wch: 22 }, { wch: 18 }, { wch: 15 }, { wch: 55 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 12 }];
+      saleWs['!cols'] = [{ wch: 15 }, { wch: 12 }, { wch: 8 }, { wch: 22 }, { wch: 18 }, { wch: 15 }, { wch: 8 }, { wch: 12 }, { wch: 40 }, { wch: 8 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 14 }];
       XLSX.utils.book_append_sheet(wb, saleWs, 'Vendas');
 
       // Sheet 3: Itens de Venda (detalhado)
-      const itemHeaders = ['Venda ID', 'Data', 'Produto', 'Quantidade', 'Preço Unitário', 'Total do Item', 'Custo Unitário', 'Lucro do Item'];
+      const itemHeaders = ['Venda ID', 'Data', 'Hora', 'Produto', 'Quantidade', 'Preço Unitário', 'Total do Item', 'Custo Unitário', 'Lucro do Item'];
       const itemRows: any[] = [];
       sales.forEach(s => {
         if (s.status !== 'completed') return;
+        const dt = new Date(s.date);
+        const data = dt.toLocaleDateString('pt-BR');
+        const hora = dt.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
         s.items.forEach(i => {
           const itemProfit = (i.salePrice - i.costPrice) * i.quantity;
-          itemRows.push([s.id, new Date(s.date).toLocaleString('pt-BR'), i.productName, i.quantity, i.salePrice, i.total, i.costPrice, itemProfit]);
+          itemRows.push([s.id, data, hora, i.productName, i.quantity, i.salePrice, i.total, i.costPrice, itemProfit]);
         });
       });
       const itemWs = XLSX.utils.aoa_to_sheet([itemHeaders, ...itemRows]);

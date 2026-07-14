@@ -61,14 +61,25 @@ const prodExport = products.map((p) => ({
 }));
 XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(prodExport), 'Produtos');
 
-// Sales sheet
-const saleExport = sales.map((s) => ({
-  'ID': s.id, 'Data': s.date, 'Produto': s.items[0] ? s.items[0].productName : '',
-  'QTD': s.items[0] ? s.items[0].quantity : 0, 'Valor Venda': s.total, 'Custo': s.totalCost,
-  'Lucro': s.profit, 'Cliente': s.clientName || '', 'Pagamento': s.paymentMethod,
-  'Tipo': s.saleType === 'CNPJ' ? 'CNPJ' : 'CPF', 'ID Pedido': s.ecommerceOrderId || '',
-  'Status': s.status === 'completed' ? 'Pago' : 'Pendente', 'Canal': s.saleChannel || 'Loja Física',
-}));
+// Sales sheet - uma linha por item (produto/quantidade em colunas separadas)
+const saleExport = [];
+for (const s of sales) {
+  const dt = new Date(s.date);
+  const data = `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`;
+  const hora = `${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}`;
+  const statusLabel = s.status === 'completed' ? 'Pago' : s.status === 'cancelled' ? 'Cancelado' : 'Pendente';
+  for (const it of s.items) {
+    const itemCost = (it.costPrice || 0) * it.quantity;
+    const itemTotal = it.total != null ? it.total : (it.salePrice || 0) * it.quantity;
+    saleExport.push({
+      'ID': s.id, 'Data': data, 'Hora': hora, 'Produto': it.productName, 'QTD': it.quantity,
+      'Valor Venda': roundCurrency(itemTotal), 'Custo': roundCurrency(itemCost),
+      'Lucro': roundCurrency(itemTotal - itemCost), 'Cliente': s.clientName || '',
+      'Pagamento': s.paymentMethod, 'Tipo': s.saleType === 'CNPJ' ? 'CNPJ' : 'CPF',
+      'ID Pedido': s.ecommerceOrderId || '', 'Status': statusLabel, 'Canal': s.saleChannel || 'Loja Física',
+    });
+  }
+}
 XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(saleExport), 'Vendas');
 
 // Expenses sheet
