@@ -15,8 +15,10 @@ data/excel/~$*.xlsx
 
 data/local-db.json
 
-# Credenciais do Firebase (não versionar)
-firebase-applet-config.json
+# Credenciais do Firebase (não versionar) — exceto o config WEB público abaixo,
+# que é seguro expor (apiKey de frontend do Firebase é público por design) e
+# precisa estar no repo para o build no Vercel.
+# firebase-applet-config.json
 
 # Arquivos derivados/temporários que podem conter dados reais (não versionar)
 src/extracted_data.json
