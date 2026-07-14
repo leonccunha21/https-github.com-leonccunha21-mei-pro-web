@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Product, Category, Sale } from '../types';
 import { categorizeProduct } from '../lib/categorize';
-import * as XLSX from 'xlsx';
 import { 
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
@@ -266,7 +265,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
     setShowStockCheck(false);
   };
 
-  const handleExportMissing = () => {
+  const handleExportMissing = async () => {
+    const XLSX = await import('xlsx');
     const headers = ['Produto', 'Categoria Sugerida', 'Qtd Vendida', 'Custo', 'Venda', 'Status'];
     const rows = missingProducts.map(p => [p.name, p.suggestedCategory, p.qty, p.costPrice, p.salePrice, 'Não cadastrado']);
     const existingRows = products.map(p => [p.name, p.category, '-', p.costPrice, p.salePrice, 'Cadastrado']);
@@ -281,7 +281,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
     onClearAllProducts?.();
   };
 
-  const handleExportFiltered = () => {
+  const handleExportFiltered = async () => {
+    const XLSX = await import('xlsx');
     const headers = ['SKU', 'Nome', 'Categoria', 'Custo', 'Venda', 'Estoque', 'Mín', 'Margem%'];
     const rows = sortedProducts.map(p => [p.code, p.name, p.category, p.costPrice, p.salePrice, p.stock, p.minStock, calcMargin(p.costPrice, p.salePrice).toFixed(0)]);
     const wb = XLSX.utils.book_new();

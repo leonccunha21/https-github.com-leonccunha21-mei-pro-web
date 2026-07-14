@@ -31,7 +31,6 @@ const OsOrcamento = lazy(() => import('./components/OsOrcamento'));
 const Debtors = lazy(() => import('./components/Debtors'));
 const CashFlow = lazy(() => import('./components/CashFlow'));
 const Customers = lazy(() => import('./components/Customers'));
-const Purchases = lazy(() => import('./components/Purchases'));
 const CashClosing = lazy(() => import('./components/CashClosing'));
 import { 
   LayoutDashboard, 
@@ -49,7 +48,6 @@ import {
   PackageSearch,
   Users,
   DollarSign,
-  Truck,
   Wallet,
   Cloud,
   CloudOff,
@@ -1210,7 +1208,6 @@ export default function App() {
                 { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList },
                 { tab: 'debtors', label: 'Devedores', icon: Users },
                 { tab: 'customers', label: 'Clientes', icon: Users },
-                { tab: 'purchases', label: 'Compras', icon: Truck },
                 { tab: 'cashclosing', label: 'Fechamento', icon: Wallet },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
@@ -1401,20 +1398,6 @@ export default function App() {
             >
               <ClipboardList className="h-4 w-4" />
               OS / Orçamento
-            </button>
-
-            {/* Tab: Compras & Fornecedores */}
-            <button
-              id="nav-purchases"
-              onClick={() => setActiveTab('purchases')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'purchases' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Truck className="h-4 w-4" />
-              Compras & Fornecedores
             </button>
 
             {/* Tab 8: Settings */}
@@ -1626,16 +1609,6 @@ export default function App() {
                 customers={customers}
                 sales={sales}
                 onSaveCustomers={saveCustomersToStorage}
-              />
-            )}
-
-            {activeTab === 'purchases' && (
-              <Purchases
-                products={products}
-                suppliers={suppliers}
-                purchases={purchases}
-                onSaveSuppliers={saveSuppliersToStorage}
-                onAddPurchase={handleAddPurchase}
               />
             )}
 

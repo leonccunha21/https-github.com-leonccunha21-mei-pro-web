@@ -18,7 +18,6 @@ import {
   AlertTriangle,
   ShoppingCart
 } from 'lucide-react';
-import * as XLSX from 'xlsx';
 
 interface SalesHistoryProps {
   sales: Sale[];
@@ -291,7 +290,8 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
   };
 
   // Export to Excel
-  const handleExportExcel = () => {
+  const handleExportExcel = async () => {
+    const XLSX = await import('xlsx');
     const rows = filteredSales.map(sale => ({
       'Código': `#${sale.id.substring(0, 8)}`,
       'Data': formatDate(sale.date),

@@ -30,11 +30,13 @@ interface DebtorsProps {
 
 export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onSaveLoans }: DebtorsProps) {
   const [view, setView] = useState<'debits' | 'loans' | 'marketplace'>('debits');
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'completed'>('pending');
   const [marketplaceFilter, setMarketplaceFilter] = useState<'pending' | 'received' | 'all'>('pending');
   const [partialAmount, setPartialAmount] = useState<string>('');
+  const [debitSearch, setDebitSearch] = useState('');
+  const [loanSearch, setLoanSearch] = useState('');
+  const [marketplaceSearch, setMarketplaceSearch] = useState('');
 
   // Loans (empréstimos)
   const [showLoanForm, setShowLoanForm] = useState(false);
@@ -90,8 +92,8 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
       if (filterStatus === 'completed') return s.status === 'completed' && s.clientName;
       return s.status === 'pending' || (s.status === 'completed' && s.clientName);
     }).filter(s => {
-      if (!searchQuery) return true;
-      const q = searchQuery.toLowerCase();
+      if (!debitSearch) return true;
+      const q = debitSearch.toLowerCase();
       return (
         s.clientName?.toLowerCase().includes(q) ||
         s.clientPhone?.includes(q) ||
@@ -102,7 +104,7 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
       if (a.status !== 'pending' && b.status === 'pending') return 1;
       return new Date(b.date).getTime() - new Date(a.date).getTime();
     });
-  }, [sales, searchQuery, filterStatus]);
+  }, [sales, debitSearch, filterStatus]);
 
   const totalPending = useMemo(() => {
     return debtSales
@@ -119,9 +121,18 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
       if (marketplaceFilter === 'pending') return s.status !== 'completed';
       if (marketplaceFilter === 'received') return s.status === 'completed';
       return true;
+    }).filter(s => {
+      if (!marketplaceSearch) return true;
+      const q = marketplaceSearch.toLowerCase();
+      return (
+        s.id.toLowerCase().includes(q) ||
+        (s.ecommerceOrderId || '').toLowerCase().includes(q) ||
+        (s.saleChannel || '').toLowerCase().includes(q) ||
+        (s.items[0]?.productName || '').toLowerCase().includes(q)
+      );
     });
     return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [sales, marketplaceFilter]);
+  }, [sales, marketplaceFilter, marketplaceSearch]);
 
   const marketplacePendingTotal = useMemo(() =>
     sales.filter(s => isMarketplace(s) && s.status !== 'completed').reduce((a, s) => a + s.total, 0), [sales]);
@@ -169,6 +180,15 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
   // --- Loans (empréstimos) ---
   const loanTotal = (l: Loan) => l.principal + l.interest;
   const loanRemaining = (l: Loan) => Math.max(0, loanTotal(l) - (l.paidAmount || 0));
+
+  const filteredLoans = useMemo(() => {
+    if (!loanSearch) return loans;
+    const q = loanSearch.toLowerCase();
+    return loans.filter(l =>
+      l.borrowerName?.toLowerCase().includes(q) ||
+      l.borrowerPhone?.includes(q)
+    );
+  }, [loans, loanSearch]);
 
   const openLoanForm = () => {
     const today = new Date();
@@ -349,9 +369,9 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
           <input
             type="text"
-            placeholder="Buscar por nome, telefone ou codigo..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
+            placeholder="Buscar por nome, telefone ou codigo da venda..."
+            value={debitSearch}
+            onChange={e => setDebitSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 transition-all"
           />
         </div>
@@ -727,30 +747,42 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
             </div>
           </div>
 
-          <div className="flex justify-end items-center gap-3">
-            <label className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 cursor-pointer select-none">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="relative flex-1 w-full sm:w-auto">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
               <input
-                type="checkbox"
-                className="accent-indigo-600 cursor-pointer"
-                checked={loans.length > 0 && loans.every(l => selectedIds.has(l.id))}
-                onChange={() => toggleSelectAll(loans.map(l => l.id))}
+                type="text"
+                placeholder="Buscar por nome do cliente ou telefone..."
+                value={loanSearch}
+                onChange={e => setLoanSearch(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 transition-all"
               />
-              Selecionar todos
-            </label>
-            <button onClick={openLoanForm} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer">
-              <Plus className="h-4 w-4" /> Novo Emprestimo
-            </button>
+            </div>
+            <div className="flex items-center gap-3 sm:ml-auto">
+              <label className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-500 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  className="accent-indigo-600 cursor-pointer"
+                  checked={filteredLoans.length > 0 && filteredLoans.every(l => selectedIds.has(l.id))}
+                  onChange={() => toggleSelectAll(filteredLoans.map(l => l.id))}
+                />
+                Selecionar todos
+              </label>
+              <button onClick={openLoanForm} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer">
+                <Plus className="h-4 w-4" /> Novo Emprestimo
+              </button>
+            </div>
           </div>
 
-          {loans.length === 0 ? (
+          {filteredLoans.length === 0 ? (
             <div className="text-center py-16 bg-white rounded-xl border border-slate-200">
               <HandCoins className="h-8 w-8 text-slate-300 mx-auto mb-3" />
-              <h3 className="text-sm font-bold text-slate-900">Nenhum emprestimo registrado</h3>
-              <p className="text-xs text-slate-400 mt-1">Use "Novo Emprestimo" para registrar dinheiro emprestado com juros.</p>
+              <h3 className="text-sm font-bold text-slate-900">{loanSearch ? 'Nenhum emprestimo encontrado' : 'Nenhum emprestimo registrado'}</h3>
+              <p className="text-xs text-slate-400 mt-1">{loanSearch ? 'Tente outra busca por nome ou telefone.' : 'Use "Novo Emprestimo" para registrar dinheiro emprestado com juros.'}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {loans.map(l => {
+              {filteredLoans.map(l => {
                 const overdue = loanDaysOverdue(l);
                 const isPaid = l.status === 'paid';
                 return (
@@ -837,6 +869,16 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
 
           {/* Filtro Marketplace */}
           <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col sm:flex-row items-start sm:items-center gap-3">
+            <div className="relative flex-1 w-full sm:w-auto">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Buscar por codigo da venda, ID do pedido ou canal..."
+                value={marketplaceSearch}
+                onChange={e => setMarketplaceSearch(e.target.value)}
+                className="w-full pl-9 pr-4 py-2 text-sm bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 transition-all"
+              />
+            </div>
             <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-200/40">
               {([
                 { key: 'pending' as const, label: 'Pendentes' },

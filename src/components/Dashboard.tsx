@@ -145,6 +145,24 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   // Stock alerts
   const physicalProducts = products.filter(p => !isServiceProduct(p) && !p.archived);
   const lowStockProducts = physicalProducts.filter(p => p.status !== 'indisponivel' && p.minStock > 0 && p.stock <= p.minStock);
+
+  // Quantity sold per product (keyed by productId, with normalized-name fallback)
+  const soldQtyByProductId = useMemo(() => {
+    const byId: Record<string, number> = {};
+    const byName: Record<string, number> = {};
+    completedSales.forEach(sale => {
+      sale.items.forEach(item => {
+        if (item.productId && item.productId.trim() !== '') {
+          byId[item.productId] = (byId[item.productId] || 0) + item.quantity;
+        }
+        const nm = normalizeName(item.productName);
+        byName[nm] = (byName[nm] || 0) + item.quantity;
+      });
+    });
+    return { byId, byName };
+  }, [completedSales]);
+  const getSoldQty = (p: Product) =>
+    soldQtyByProductId.byId[p.id] ?? soldQtyByProductId.byName[normalizeName(p.name)] ?? 0;
   const totalInventoryQuantity = physicalProducts.reduce((acc, p) => acc + p.stock, 0);
   const totalInventoryCostValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.costPrice), 0);
   const totalInventoryRetailValue = physicalProducts.reduce((acc, p) => acc + (p.stock * p.salePrice), 0);
@@ -632,8 +650,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
                     <p className="text-sm font-semibold text-slate-900 truncate mt-0.5">{p.name}</p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-xs text-rose-600 font-bold">Estoque: {p.stock}</p>
-                    <p className="text-[10px] text-slate-400">Mín: {p.minStock}</p>
+                    <p className="text-xs text-rose-600 font-bold">Vendidos: {getSoldQty(p)}</p>
                   </div>
                 </div>
               ))}

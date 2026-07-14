@@ -12,6 +12,17 @@ interface CashClosingProps {
   onSaveSessions: (sessions: CashSession[]) => void;
 }
 
+const PAYMENT_LABELS: Record<string, string> = {
+  money: 'Dinheiro',
+  pix: 'PIX',
+  card_credit: 'Cartão de Crédito',
+  card_debit: 'Cartão de Débito',
+  transfer: 'Transferência',
+  other: 'Outros',
+};
+
+const fmt = (v: number) => `R$ ${v.toFixed(2)}`;
+
 export default function CashClosing({ sales, sessions, onSaveSessions }: CashClosingProps) {
   const [openBalance, setOpenBalance] = useState('0');
   const [closeBalance, setCloseBalance] = useState('');
@@ -21,6 +32,29 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
 
   const sorted = useMemo(() => [...sessions].sort((a, b) => new Date(b.openDate).getTime() - new Date(a.openDate).getTime()), [sessions]);
   const openSession = sessions.find(s => s.status === 'open') || null;
+
+  const isToday = (iso: string) => new Date(iso).toDateString() === new Date().toDateString();
+
+  // Soma por forma de pagamento (somente vendas concluídas).
+  const buildBreakdown = (list: Sale[]) => {
+    const acc: Record<string, number> = {};
+    list.filter(s => s.status === 'completed').forEach(s => {
+      const key = s.paymentMethod || 'other';
+      acc[key] = (acc[key] || 0) + (s.paidAmount ?? s.total);
+    });
+    return acc;
+  };
+
+  const todaySales = useMemo(
+    () => sales.filter(s => s.status === 'completed' && isToday(s.date)),
+    [sales]
+  );
+
+  const periodSales = useMemo(() => {
+    if (!openSession) return [];
+    const open = new Date(openSession.openDate).getTime();
+    return sales.filter(s => s.status === 'completed' && new Date(s.date).getTime() >= open);
+  }, [sales, openSession]);
 
   const cashIn = useMemo(() => {
     if (!openSession) return 0;
@@ -73,6 +107,11 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
     setCloseBalance('');
   };
 
+  const todayBreakdown = buildBreakdown(todaySales);
+  const periodBreakdown = buildBreakdown(periodSales);
+  const todayTotal = Object.values(todayBreakdown).reduce((a, b) => a + b, 0);
+  const periodTotal = Object.values(periodBreakdown).reduce((a, b) => a + b, 0);
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -80,7 +119,7 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
           <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
             <Wallet className="h-6 w-6 text-indigo-600" /> Fechamento de Caixa
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400">Controle de abertura, sangria e fechamento do caixa.</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Resumo de vendas e controle físico do dinheiro (troco, sangria e fechamento).</p>
         </div>
         {!openSession && (
           <button onClick={() => setShowOpen(true)} className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center gap-2 cursor-pointer">
@@ -88,6 +127,14 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
           </button>
         )}
       </div>
+
+      {/* Resumo de hoje (sempre visível, mesmo sem caixa aberto) */}
+      <BreakdownCard
+        title="Resumo de Hoje — todas as vendas"
+        data={todayBreakdown}
+        total={todayTotal}
+        hint="Total de vendas concluídas hoje, por forma de pagamento."
+      />
 
       {openSession ? (
         <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 space-y-4">
@@ -97,11 +144,18 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <Stat label="Saldo inicial" value={`R$ ${openSession.openingBalance.toFixed(2)}`} />
-            <Stat label="Entradas (dinheiro)" value={`R$ ${cashIn.toFixed(2)}`} />
-            <Stat label="Sangrias" value={`R$ ${withdrawalsTotal.toFixed(2)}`} accent />
-            <Stat label="Esperado" value={`R$ ${expected.toFixed(2)}`} highlight />
+            <Stat label="Saldo inicial" value={fmt(openSession.openingBalance)} />
+            <Stat label="Entradas (dinheiro)" value={fmt(cashIn)} />
+            <Stat label="Sangrias" value={fmt(withdrawalsTotal)} accent />
+            <Stat label="Esperado no caixa" value={fmt(expected)} highlight />
           </div>
+
+          <BreakdownCard
+            title="Vendas no período (todas formas)"
+            data={periodBreakdown}
+            total={periodTotal}
+            hint="Inclui PIX, cartão e transferências — não entra no dinheiro físico do caixa."
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-4 space-y-2">
@@ -135,9 +189,9 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
           </div>
         </div>
       ) : (
-        <div className="text-center py-12 bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
-          <Calculator className="h-10 w-10 mx-auto mb-2 text-slate-300" />
-          <p className="text-sm text-slate-500">Nenhum caixa aberto. Abra o caixa para iniciar o controle.</p>
+        <div className="text-center py-8 bg-white dark:bg-slate-900 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
+          <Calculator className="h-8 w-8 mx-auto mb-2 text-slate-300" />
+          <p className="text-sm text-slate-500">Nenhum caixa aberto. Abra o caixa para controlar o dinheiro físico (troco e sangrias).</p>
         </div>
       )}
 
@@ -190,6 +244,31 @@ function Stat({ label, value, accent, highlight }: { label: string; value: strin
     <div className="bg-slate-50 dark:bg-slate-800/60 rounded-xl p-3">
       <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">{label}</p>
       <p className={`text-base font-bold mt-1 ${highlight ? 'text-indigo-600 dark:text-indigo-400' : accent ? 'text-amber-600' : 'text-slate-900 dark:text-slate-100'}`}>{value}</p>
+    </div>
+  );
+}
+
+function BreakdownCard({ title, data, total, hint }: { title: string; data: Record<string, number>; total: number; hint?: string }) {
+  const entries = Object.entries(data).sort((a, b) => b[1] - a[1]);
+  return (
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-5">
+      <div className="flex items-center justify-between">
+        <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300">{title}</h3>
+        <span className="text-base font-bold text-slate-900 dark:text-slate-100 font-mono">{fmt(total)}</span>
+      </div>
+      {hint && <p className="text-[11px] text-slate-400 mt-0.5">{hint}</p>}
+      {entries.length === 0 ? (
+        <p className="text-xs text-slate-400 mt-3">Nenhuma venda concluída neste período.</p>
+      ) : (
+        <div className="mt-3 space-y-1.5">
+          {entries.map(([key, value]) => (
+            <div key={key} className="flex items-center justify-between text-xs">
+              <span className="text-slate-500 dark:text-slate-400">{PAYMENT_LABELS[key] || key}</span>
+              <span className="font-mono font-semibold text-slate-800 dark:text-slate-200">{fmt(value)}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
