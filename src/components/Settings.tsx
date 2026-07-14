@@ -238,9 +238,15 @@ function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
   const phoneIdx = findColIndex(['telefone', 'celular', 'fone', 'phone']);
   const paymentIdx = findColIndex(['pagamento', 'forma', 'meio', 'method']);
   const itemsIdx = findColIndex(['itens', 'produtos', 'item', 'descrição', 'descricao']);
+  const produtoIdx = findColIndex(['produto']);
+  const qtdIdx = findColIndex(['qtd', 'quantidade']);
+  const horaIdx = findColIndex(['hora']);
   const costIdx = findColIndex(['custo', 'custo total', 'total cost']);
   const revenueIdx = findColIndex(['faturamento', 'valor', 'total', 'venda total', 'revenue']);
   const statusIdx = findColIndex(['status', 'situação', 'situacao']);
+  const tipoIdx = findColIndex(['tipo', 'cpf', 'cnpj', 'tipo venda', 'sale type']);
+  const orderIdIdx = findColIndex(['id pedido', 'pedido', 'order id', 'ecommerce', 'shopee', 'tiktok']);
+  const channelIdx = findColIndex(['canal', 'channel', 'origem', 'marketplace']);
 
   const getFloatVal = (row: any[], idx: number) => {
     if (idx === -1 || idx >= row.length || row[idx] === undefined || row[idx] === null) return 0;
@@ -269,7 +275,131 @@ function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
     return parseFloat(clean) || 0;
   };
 
+  const parseDate = (row: any[]): string => {
+    let rawDate = (dateIdx !== -1 && dateIdx < row.length && row[dateIdx]) ? String(row[dateIdx]).trim() : '';
+    if (horaIdx !== -1 && horaIdx < row.length && row[horaIdx]) {
+      const h = String(row[horaIdx]).trim();
+      if (h) rawDate = rawDate ? `${rawDate} ${h}` : h;
+    }
+    if (!rawDate) return new Date().toISOString();
+    const d = new Date(rawDate);
+    if (!isNaN(d.getTime())) return d.toISOString();
+    const match = rawDate.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})(?:[^\d]*(\d{1,2}):(\d{2}))?/);
+    if (match) {
+      const day = parseInt(match[1], 10);
+      const month = parseInt(match[2], 10) - 1;
+      const year = parseInt(match[3], 10);
+      const hh = match[4] ? parseInt(match[4], 10) : 12;
+      const mm = match[5] ? parseInt(match[5], 10) : 0;
+      const parsed = new Date(year, month, day, hh, mm, 0);
+      if (!isNaN(parsed.getTime())) return parsed.toISOString();
+    }
+    return new Date().toISOString();
+  };
+
+  const parsePayment = (row: any[]): any => {
+    let paymentMethod: any = 'pix';
+    if (paymentIdx !== -1 && paymentIdx < row.length && row[paymentIdx]) {
+      const pLower = String(row[paymentIdx]).trim().toLowerCase();
+      if (pLower.includes('dinheiro') || pLower.includes('money')) paymentMethod = 'money';
+      else if (pLower.includes('crédito') || pLower.includes('credito') || pLower.includes('credit')) paymentMethod = 'card_credit';
+      else if (pLower.includes('débito') || pLower.includes('debito') || pLower.includes('debit')) paymentMethod = 'card_debit';
+      else if (pLower.includes('transf') || pLower.includes('banc')) paymentMethod = 'transfer';
+    }
+    return paymentMethod;
+  };
+
+  const parseStatus = (row: any[]): 'completed' | 'cancelled' | 'pending' => {
+    let status: 'completed' | 'cancelled' | 'pending' = 'completed';
+    if (statusIdx !== -1 && statusIdx < row.length && row[statusIdx]) {
+      const sLower = String(row[statusIdx]).trim().toLowerCase();
+      if (sLower.includes('canc') || sLower.includes('estor')) status = 'cancelled';
+      else if (sLower.includes('pend') || sLower.includes('abert') || sLower.includes('aguar')) status = 'pending';
+    }
+    return status;
+  };
+
+  const makeItem = (pNameRaw: any, qtyRaw: any): SaleItem => {
+    const pName = String(pNameRaw || '').trim();
+    let qty = parseInt(String(qtyRaw || '1'), 10);
+    if (isNaN(qty) || qty <= 0) qty = 1;
+    const pNameLower = pName.toLowerCase().trim();
+    let matchedProd = productsList.find(pr =>
+      pr.name.toLowerCase().trim() === pNameLower ||
+      pr.code.toLowerCase().trim() === pNameLower
+    );
+    if (!matchedProd) {
+      matchedProd = productsList.find(pr =>
+        pr.name.toLowerCase().includes(pNameLower) ||
+        pNameLower.includes(pr.name.toLowerCase())
+      );
+    }
+    const costPrice = matchedProd ? matchedProd.costPrice : 0;
+    const salePrice = matchedProd ? matchedProd.salePrice : 0;
+    return {
+      productId: matchedProd ? matchedProd.id : `p_temp_${Math.random().toString(36).substring(2, 6)}`,
+      productName: matchedProd ? matchedProd.name : pName,
+      quantity: qty,
+      costPrice,
+      salePrice,
+      total: salePrice * qty
+    };
+  };
+
   const sales: Sale[] = [];
+  const perItemMode = itemsIdx === -1 && produtoIdx !== -1 && qtdIdx !== -1;
+
+  // Novo formato: uma linha por item (colunas Produto/QTD separadas)
+  if (perItemMode) {
+    const groups = new Map<string, any[]>();
+    for (let i = headerRowIndex + 1; i < rows.length; i++) {
+      const row = rows[i];
+      if (!row || row.length === 0) continue;
+      if (row.every(c => c === null || c === undefined || String(c).trim() === '')) continue;
+      const id = (idIdx !== -1 && idIdx < row.length && row[idIdx]) ? String(row[idIdx]).trim() : `venda_${Date.now()}_${i}`;
+      if (!groups.has(id)) groups.set(id, []);
+      groups.get(id)!.push(row);
+    }
+    for (const [id, groupRows] of groups) {
+      const first = groupRows[0];
+      const items = groupRows.map(r => makeItem(r[produtoIdx], r[qtdIdx]));
+      let totalCost = 0;
+      let total = 0;
+      if (costIdx !== -1 || revenueIdx !== -1) {
+        for (const r of groupRows) {
+          totalCost += getFloatVal(r, costIdx);
+          total += getFloatVal(r, revenueIdx);
+        }
+      }
+      if (totalCost === 0) totalCost = items.reduce((s, it) => s + it.costPrice * it.quantity, 0);
+      if (total === 0) total = items.reduce((s, it) => s + it.total, 0);
+      const clientName = (clientIdx !== -1 && clientIdx < first.length && first[clientIdx]) ? String(first[clientIdx]).trim() : undefined;
+      const clientPhone = (phoneIdx !== -1 && phoneIdx < first.length && first[phoneIdx]) ? String(first[phoneIdx]).trim() : undefined;
+      let saleType = 'CPF';
+      if (tipoIdx !== -1 && tipoIdx < first.length && first[tipoIdx]) {
+        const t = String(first[tipoIdx]).trim().toLowerCase();
+        if (t.includes('cnpj')) saleType = 'CNPJ';
+      }
+      const ecommerceOrderId = (orderIdIdx !== -1 && orderIdIdx < first.length && first[orderIdIdx]) ? String(first[orderIdIdx]).trim() : undefined;
+      const saleChannel = (channelIdx !== -1 && channelIdx < first.length && first[channelIdx]) ? String(first[channelIdx]).trim() : undefined;
+      sales.push({
+        id,
+        date: parseDate(first),
+        clientName,
+        clientPhone,
+        paymentMethod: parsePayment(first),
+        items,
+        totalCost,
+        total,
+        profit: total - totalCost,
+        saleType: saleType as 'CPF' | 'CNPJ',
+        ecommerceOrderId,
+        saleChannel,
+        status: parseStatus(first)
+      });
+    }
+    return sales;
+  }
 
   for (let i = headerRowIndex + 1; i < rows.length; i++) {
     const row = rows[i];
@@ -787,11 +917,13 @@ export default function Settings({
       const prodWs = XLSX.utils.aoa_to_sheet([prodHeaders, ...prodSampleRows]);
       XLSX.utils.book_append_sheet(wb, prodWs, 'Produtos');
 
-      const salesHeaders = ['ID da Venda', 'Data', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Itens Vendidos', 'Custo Total', 'Faturamento', 'Lucro Líquido', 'Status'];
+      const salesHeaders = ['ID da Venda', 'Data', 'Hora', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Tipo', 'Produto', 'QTD', 'Custo (R$)', 'Faturamento (R$)', 'Lucro (R$)', 'Status'];
       const salesSampleRows = [
-        ['venda_001', '12/07/2026 14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'Camiseta Masculina (2x), Boné Aba Reta (1x)', '58.00', '149.80', '91.80', 'Concluída'],
-        ['venda_002', '12/07/2026 16:45', 'João Silva', '(11) 98888-2222', 'credito', 'Calça Jeans (1x)', '45.00', '119.90', '74.90', 'Concluída'],
-        ['venda_003', '13/07/2026 10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'Tênis Running (1x), Bolsa Couro (1x)', '110.00', '279.80', '169.80', 'Concluída'],
+        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Camiseta Masculina', 2, '50.00', '119.80', '69.80', 'Concluída'],
+        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Boné Aba Reta', 1, '8.00', '29.90', '21.90', 'Concluída'],
+        ['venda_002', '12/07/2026', '16:45', 'João Silva', '(11) 98888-2222', 'credito', 'CPF', 'Calça Jeans', 1, '45.00', '119.90', '74.90', 'Concluída'],
+        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Tênis Running', 1, '75.00', '189.90', '114.90', 'Concluída'],
+        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Bolsa Couro', 1, '35.00', '89.90', '54.90', 'Concluída'],
       ];
       const salesWs = XLSX.utils.aoa_to_sheet([salesHeaders, ...salesSampleRows]);
       XLSX.utils.book_append_sheet(wb, salesWs, 'Vendas');
@@ -812,16 +944,19 @@ export default function Settings({
         ['• Estoque: quantidade atual em estoque'],
         ['• Estoque Mínimo: quantidade mínima para alerta de estoque baixo'],
         [''],
-        ['PLANILHA DE VENDAS (aba "Vendas")'],
-        ['• ID da Venda: código único da venda (ex: venda_001)'],
-        ['• Data: formato DD/MM/AAAA HH:MM'],
+        ['PLANILHA DE VENDAS (aba "Vendas") - um item por linha'],
+        ['• ID da Venda: código único da venda (ex: venda_001); repita em todas as linhas dos itens da mesma venda'],
+        ['• Data: formato DD/MM/AAAA'],
+        ['• Hora: formato HH:MM'],
         ['• Cliente: nome do cliente (opcional)'],
         ['• Telefone: telefone do cliente (opcional)'],
         ['• Forma de Pagamento: pix, credito, debito, dinheiro, transferencia'],
-        ['• Itens Vendidos: produto (quantidadex), produto2 (quantidade2x)'],
-        ['• Custo Total: soma dos custos dos itens vendidos'],
-        ['• Faturamento: valor total recebido'],
-        ['• Lucro Líquido: Faturamento - Custo Total'],
+        ['• Tipo: CPF ou CNPJ'],
+        ['• Produto: nome exato do produto cadastrado'],
+        ['• QTD: quantidade vendida desse produto'],
+        ['• Custo (R$): custo total desse item (preço de custo x QTD)'],
+        ['• Faturamento (R$): valor total recebido desse item (preço de venda x QTD)'],
+        ['• Lucro (R$): Faturamento - Custo'],
         ['• Status: Concluída ou Cancelada'],
         [''],
         ['PLANILHA DE CATEGORIAS (aba "Categorias")'],
