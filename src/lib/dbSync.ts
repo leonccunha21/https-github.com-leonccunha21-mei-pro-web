@@ -139,6 +139,134 @@ export async function saveUserDb(userId: string, dbData: LocalDb): Promise<void>
   ]);
 }
 
+// ---------------------------------------------------------------------------
+// Sincronização INCREMENTAL (economia de cota do Firestore)
+//
+// O plano gratuito do Firebase limita escritas/deletes por dia. Reenviar o
+// banco inteiro a cada clique consome milhares de escritas e estoura a cota.
+// Para evitar isso, mantemos em cache (localStorage) um hash de cada documento
+// já enviado. Na próxima sincronização, só são gravados os documentos cujo
+// conteúdo mudou (e apagados os que foram removidos localmente). Assim, uma
+// venda nova custa 1 escrita, não 5.000.
+// ---------------------------------------------------------------------------
+
+const SYNC_CACHE_PREFIX = 'zm_cloud_cache_';
+
+const SYNC_COLLECTIONS: (keyof LocalDb)[] = [
+  'products', 'categories', 'sales', 'orders', 'customers',
+  'suppliers', 'purchases', 'cashSessions', 'loans', 'expenses',
+];
+
+type SyncCache = Record<string, Record<string, string>>;
+
+// Hash FNV-1a 32-bit do conteúdo "limpo" que será gravado no Firestore.
+function docHash(value: unknown): string {
+  const s = JSON.stringify(cleanForFirestore(value));
+  let h = 0x811c9dc5;
+  for (let i = 0; i < s.length; i++) {
+    h ^= s.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return (h >>> 0).toString(36);
+}
+
+function getSyncCache(userId: string): SyncCache {
+  try {
+    const raw = localStorage.getItem(SYNC_CACHE_PREFIX + userId);
+    return raw ? (JSON.parse(raw) as SyncCache) : {};
+  } catch {
+    return {};
+  }
+}
+
+function setSyncCache(userId: string, cache: SyncCache): void {
+  try {
+    localStorage.setItem(SYNC_CACHE_PREFIX + userId, JSON.stringify(cache));
+  } catch { /* armazenamento cheio: ignora (próxima sync reenvia tudo) */ }
+}
+
+/** Apaga o cache de sincronização (usar após limpar a nuvem ou forçar reenvio). */
+export function clearSyncCache(userId: string): void {
+  try {
+    localStorage.removeItem(SYNC_CACHE_PREFIX + userId);
+  } catch { /* ignore */ }
+}
+
+async function deleteBatch(userId: string, name: string, ids: string[]): Promise<void> {
+  const path = `users/${userId}/${name}`;
+  try {
+    for (let i = 0; i < ids.length; i += BATCH_SIZE) {
+      const chunk = ids.slice(i, i + BATCH_SIZE);
+      const batch = writeBatch(db);
+      for (const id of chunk) batch.delete(doc(db, path, id));
+      await batch.commit();
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, path);
+  }
+}
+
+export interface SyncResult {
+  uploaded: number;
+  deleted: number;
+  skipped: number;
+}
+
+/**
+ * Envia para a nuvem apenas as diferenças em relação à última sincronização.
+ * Com `forceFull`, ignora o cache e reenvia tudo (usado em restauração).
+ */
+export async function saveUserDbIncremental(
+  userId: string,
+  dbData: LocalDb,
+  opts?: { forceFull?: boolean }
+): Promise<SyncResult> {
+  const cache = opts?.forceFull ? {} : getSyncCache(userId);
+  const newCache: SyncCache = {};
+  let uploaded = 0;
+  let deleted = 0;
+  let skipped = 0;
+
+  for (const name of SYNC_COLLECTIONS) {
+    const items = (dbData[name] as Array<{ id?: string }> | undefined) || [];
+    const prev = cache[name] || {};
+    const cur: Record<string, string> = {};
+    const toUpload: unknown[] = [];
+
+    for (const item of items) {
+      if (!item || !item.id) continue;
+      const h = docHash(item);
+      cur[item.id] = h;
+      if (prev[item.id] !== h) toUpload.push(item);
+      else skipped++;
+    }
+
+    const removed = Object.keys(prev).filter(id => !(id in cur));
+    newCache[name] = cur;
+
+    if (toUpload.length) {
+      await saveBatch(userId, name, toUpload as Array<{ id: string }>);
+      uploaded += toUpload.length;
+    }
+    if (removed.length) {
+      await deleteBatch(userId, name, removed);
+      deleted += removed.length;
+    }
+  }
+
+  // storeInfo é um documento único (config/storeInfo)
+  const infoPrev = (cache['__storeInfo'] && cache['__storeInfo']['_']) || '';
+  const infoHash = docHash(dbData.storeInfo ?? {});
+  if (infoPrev !== infoHash || opts?.forceFull) {
+    await saveUserStoreInfo(userId, dbData.storeInfo);
+    uploaded++;
+  }
+  newCache['__storeInfo'] = { _: infoHash };
+
+  setSyncCache(userId, newCache);
+  return { uploaded, deleted, skipped };
+}
+
 // Granular helpers (mantidos para compatibilidade / sincronizações pontuais)
 export const saveUserProduct = (userId: string, p: NonNullable<LocalDb['products']>[number]) =>
   saveBatch(userId, 'products', [p]);

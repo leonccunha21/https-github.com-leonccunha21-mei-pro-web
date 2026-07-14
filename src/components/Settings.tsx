@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import type { User } from 'firebase/auth';
 import { Product, Sale, Category, SaleItem, StoreInfo, Expense } from '../types';
-import * as XLSX from 'xlsx';
 import {
   Download,
   Upload,
@@ -610,13 +609,14 @@ export default function Settings({
     e.target.value = '';
   };
 
-  const handleImportExcelOrCsv = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImportExcelOrCsv = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
     const file = files[0];
     setImportingExcel(true);
     setImportError(null);
 
+    const XLSX = await import('xlsx');
     const reader = new FileReader();
     reader.onload = (event) => {
       try {
@@ -716,8 +716,9 @@ export default function Settings({
     reader.readAsArrayBuffer(file);
   };
 
-  const handleExportStockToExcel = () => {
+  const handleExportStockToExcel = async () => {
     try {
+      const XLSX = await import('xlsx');
       const headers = ['Código/SKU', 'Nome do Produto', 'Categoria', 'Preço de Custo (R$)', 'Preço de Venda (R$)', 'Estoque', 'Estoque Mínimo'];
       const rows = products.map(p => [p.code, p.name, p.category, p.costPrice, p.salePrice, p.stock, p.minStock]);
       const wb = XLSX.utils.book_new();
@@ -731,8 +732,9 @@ export default function Settings({
     }
   };
 
-  const handleExportSalesToExcel = () => {
+  const handleExportSalesToExcel = async () => {
     try {
+      const XLSX = await import('xlsx');
       const headers = ['ID da Venda', 'Data', 'Hora', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Tipo', 'Produto', 'QTD', 'Custo (R$)', 'Faturamento (R$)', 'Lucro (R$)', 'Status'];
       const rows: any[] = [];
       sales.forEach(s => {
@@ -761,8 +763,9 @@ export default function Settings({
     }
   };
 
-  const handleExportFullDatabase = () => {
+  const handleExportFullDatabase = async () => {
     try {
+      const XLSX = await import('xlsx');
       const dateStr = new Date().toISOString().substring(0, 10);
       const wb = XLSX.utils.book_new();
 
@@ -902,8 +905,9 @@ export default function Settings({
     }
   };
 
-  const handleDownloadTemplate = () => {
+  const handleDownloadTemplate = async () => {
     try {
+      const XLSX = await import('xlsx');
       const wb = XLSX.utils.book_new();
 
       const prodHeaders = ['Código/SKU', 'Nome do Produto', 'Categoria', 'Preço de Custo', 'Preço de Venda', 'Estoque', 'Estoque Mínimo'];
@@ -1229,7 +1233,7 @@ export default function Settings({
                 )}
 
                 <p className="text-[11px] text-slate-400 leading-snug">
-                  A sincronização é <b>manual</b>: o app trabalha apenas no seu navegador. Clique em <b>Sincronizar Agora</b> para enviar os dados locais para a nuvem quando quiser.
+                  A sincronização é <b>manual</b> e <b>incremental</b>: envia apenas o que mudou desde a última vez, economizando a cota do Firebase. Clique em <b>Sincronizar Agora</b> para espelhar os dados locais na nuvem quando quiser.
                 </p>
 
                 <div className="flex gap-2">

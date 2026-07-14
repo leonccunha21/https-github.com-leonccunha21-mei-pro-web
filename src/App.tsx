@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
-import * as XLSX from 'xlsx';
 import {
   Product, 
   Sale, 
@@ -18,18 +17,19 @@ import {
 } from './types';
 import { initialProducts, initialSales, initialCategories, initialExpenses } from './data';
 
-import Dashboard from './components/Dashboard';
-import Products from './components/Products';
-import Sales from './components/Sales';
-import SalesHistory from './components/SalesHistory';
-import Reports from './components/Reports';
-import Settings from './components/Settings';
-import OsOrcamento from './components/OsOrcamento';
-import Debtors from './components/Debtors';
-import CashFlow from './components/CashFlow';
-import Customers from './components/Customers';
-import Purchases from './components/Purchases';
-import CashClosing from './components/CashClosing';
+import { lazy } from 'react';
+const Dashboard = lazy(() => import('./components/Dashboard'));
+const Products = lazy(() => import('./components/Products'));
+const Sales = lazy(() => import('./components/Sales'));
+const SalesHistory = lazy(() => import('./components/SalesHistory'));
+const Reports = lazy(() => import('./components/Reports'));
+const Settings = lazy(() => import('./components/Settings'));
+const OsOrcamento = lazy(() => import('./components/OsOrcamento'));
+const Debtors = lazy(() => import('./components/Debtors'));
+const CashFlow = lazy(() => import('./components/CashFlow'));
+const Customers = lazy(() => import('./components/Customers'));
+const Purchases = lazy(() => import('./components/Purchases'));
+const CashClosing = lazy(() => import('./components/CashClosing'));
 import { 
   LayoutDashboard, 
   Package, 
@@ -57,7 +57,7 @@ import { normalizeName } from './lib/normalize';
 import { roundCurrency } from './lib/currency';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 import { initAuth, googleSignIn, logoutUser } from './lib/firebase';
-import { saveUserDb } from './lib/dbSync';
+import { saveUserDb, clearUserDb, saveUserDbIncremental, clearSyncCache } from './lib/dbSync';
 import type { User } from 'firebase/auth';
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
@@ -244,13 +244,13 @@ export default function App() {
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
 
-  // --- Nuvem: envia o banco completo para o Firestore (com throttle) ---
-  const pushToCloud = (data: LocalDb) => {
-    if (!cloudUser) return Promise.resolve();
+  // --- Nuvem: envia para o Firestore de forma incremental (economiza cota) ---
+  const pushToCloud = (data: LocalDb, opts?: { forceFull?: boolean }) => {
+    if (!cloudUser) return Promise.resolve(null);
     setCloudSyncing(true);
     setCloudError(null);
-    return saveUserDb(cloudUser.uid, data)
-      .then(() => { setCloudLastSync(new Date().toISOString()); })
+    return saveUserDbIncremental(cloudUser.uid, data, opts)
+      .then((res) => { setCloudLastSync(new Date().toISOString()); return res; })
       .catch((e: unknown) => {
         const msg = e instanceof Error ? e.message : 'Falha ao enviar para a nuvem';
         setCloudError(msg);
@@ -351,11 +351,14 @@ export default function App() {
   const handleCloudSyncNow = async () => {
     if (!cloudUser) return;
     const db = stateRef.current as LocalDb;
-    const count = (db.products?.length || 0) + (db.sales?.length || 0) + (db.categories?.length || 0) + (db.expenses?.length || 0);
-    showToast(`Enviando ${count} registros para a nuvem...`);
+    showToast('Verificando alterações para sincronizar na nuvem...');
     try {
-      await pushToCloud(db);
-      showToast('Sincronizado com a nuvem com sucesso.');
+      const res = await pushToCloud(db);
+      if (res && res.uploaded === 0 && res.deleted === 0) {
+        showToast('Nuvem já está atualizada (sem alterações para enviar).');
+      } else {
+        showToast(`Nuvem sincronizada: ${res.uploaded} enviados, ${res.deleted} removidos.`);
+      }
     } catch {
       showToast('Falha ao sincronizar. Verifique a conexão e a cota do projeto Firebase.');
     }
@@ -368,11 +371,11 @@ export default function App() {
     }
     setClearingCloud(true);
     try {
-      const { clearUserDb } = await import('./lib/dbSync');
       await clearUserDb(cloudUser.uid);
+      clearSyncCache(cloudUser.uid);
       setCloudLastSync(null);
       setCloudError(null);
-      showToast('Dados da nuvem apagados. Agora importe seu backup antigo para subi-lo.');
+      showToast('Dados da nuvem apagados. Clique em "Sincronizar Agora" para reenviar tudo do zero.');
     } catch (e: unknown) {
       setCloudError(e instanceof Error ? e.message : 'Falha ao apagar a nuvem');
       showToast('Falha ao apagar os dados da nuvem.');
@@ -429,7 +432,7 @@ export default function App() {
         initialized: true,
       };
       persist(merged);
-      if (cloudUser) pushToCloud(merged);
+      if (cloudUser) pushToCloud(merged, { forceFull: true });
       showToast(`Backup restaurado: ${merged.products.length} produtos e ${merged.sales.length} vendas. Dados reenviados para a nuvem.`);
     } catch (e: unknown) {
       showToast(e instanceof Error ? e.message : 'Falha ao restaurar o backup.');
@@ -1018,7 +1021,8 @@ export default function App() {
     setShowVendasEstoque(false);
   };
 
-  const handleExportMissingProducts = () => {
+  const handleExportMissingProducts = async () => {
+    const XLSX = await import('xlsx');
     const data = missingProducts.map(item => ({
       'Produto': item.name,
       'Categoria Sugerida': suggestCategory(item.name),
@@ -1385,6 +1389,11 @@ export default function App() {
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.15 }}
           >
+            <React.Suspense fallback={
+              <div className="flex items-center justify-center py-20">
+                <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+              </div>
+            }>
             {activeTab === 'dashboard' && (
               <Dashboard 
                 products={products} 
@@ -1526,6 +1535,7 @@ export default function App() {
                 clearingCloud={clearingCloud}
               />
             )}
+            </React.Suspense>
           </motion.div>
         </AnimatePresence>
       </main>
