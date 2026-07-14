@@ -396,15 +396,16 @@ export default function App() {
     return () => ch.close();
   }, []);
 
-  // Ao entrar na nuvem (login) apenas autentica. O banco LOCAL é a fonte da
-  // verdade e NÃO é sobrescrito pela nuvem — assim dados antigos/quebrados da
-  // nuvem não voltam a aparecer no app. Os dados corretos são enviados para a
-  // nuvem manualmente (botão "Sincronizar Agora") quando desejado.
+  // Ao entrar na nuvem (login) apenas autentica. NÃO enviamos nem baixamos
+  // dados automaticamente no login: o app é por-aparelho (localStorage) e um
+  // push automático de um aparelho vazio/divergente apagaria os dados do outro
+  // na nuvem (a sincronização incremental remove da nuvem o que não existe
+  // localmente). O usuário decide: "Sincronizar Agora" (sobe) ou
+  // "Baixar da nuvem" (desce) — ambos explícitos.
   useEffect(() => {
     if (!cloudUser) return;
     setCloudError(null);
     setDailyWrites(getDailyWrites().count);
-    scheduleCloudPush(); // sobe alterações locais feitas enquanto estava desconectado
   }, [cloudUser]);
 
   const handleCloudSignIn = async () => {
@@ -424,6 +425,38 @@ export default function App() {
     setCloudUser(null);
     setCloudLastSync(null);
     setCloudError(null);
+  };
+
+  // Baixa os dados da nuvem para ESTE aparelho, substituindo o conteúdo local.
+  // Usado para espelhar no celular o que está no computador. A sincronização
+  // incremental em seguida limpa da nuvem o que era exclusivo deste aparelho.
+  const handleDownloadFromCloud = async () => {
+    if (!cloudUser) return;
+    if (!window.confirm('Baixar os dados da nuvem para ESTE aparelho?\n\nIsso substitui os dados locais deste aparelho pelos dados salvos na nuvem (os do computador). Registros que existem apenas aqui serão substituídos.\n\nDica: primeiro clique "Sincronizar Agora" no computador para garantir que a nuvem está com os dados mais recentes.')) return;
+    try {
+      const { loadUserDb } = await import('./lib/dbSync');
+      showToast('Baixando dados da nuvem...');
+      const cloud = await loadUserDb(cloudUser.uid);
+      const full: LocalDb = {
+        products: cloud.products || [],
+        categories: cloud.categories || [],
+        sales: cloud.sales || [],
+        orders: cloud.orders || [],
+        customers: cloud.customers || [],
+        suppliers: cloud.suppliers || [],
+        purchases: cloud.purchases || [],
+        cashSessions: cloud.cashSessions || [],
+        loans: cloud.loans || [],
+        expenses: cloud.expenses || [],
+        storeInfo: cloud.storeInfo ?? null,
+        initialized: true,
+      };
+      await applyLoadedDb(full);
+      persist(full);
+      showToast('Dados da nuvem carregados. Este aparelho agora está igual ao computador.');
+    } catch (e: unknown) {
+      showToast(e instanceof Error ? e.message : 'Falha ao baixar da nuvem.');
+    }
   };
 
   const handleCloudSyncNow = async () => {
@@ -1652,6 +1685,7 @@ export default function App() {
                 onCloudSignIn={handleCloudSignIn}
                 onCloudSignOut={handleCloudSignOut}
                 onCloudSyncNow={handleCloudSyncNow}
+                onDownloadFromCloud={handleDownloadFromCloud}
                 onRestoreBackup={handleRestoreBackup}
                 restoringBackup={restoringBackup}
                 onClearCloud={handleClearCloud}

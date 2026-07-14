@@ -17,6 +17,7 @@ import {
   HardDrive,
   AlertTriangle,
   Cloud,
+  CloudDownload,
   Clock,
   Trash2,
   LogOut
@@ -559,6 +560,7 @@ interface SettingsProps {
   onCloudSignIn: () => void;
   onCloudSignOut: () => void;
   onCloudSyncNow: () => void;
+  onDownloadFromCloud: () => void;
   onRestoreBackup: () => void;
   restoringBackup: boolean;
   onClearCloud: () => void;
@@ -586,6 +588,7 @@ export default function Settings({
   onCloudSignIn,
   onCloudSignOut,
   onCloudSyncNow,
+  onDownloadFromCloud,
   onRestoreBackup,
   restoringBackup,
   onClearCloud,
@@ -1278,6 +1281,13 @@ export default function Settings({
                     <LogOut className="h-3.5 w-3.5" /> Sair
                   </button>
                 </div>
+
+                <button onClick={onDownloadFromCloud} className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                  <CloudDownload className="h-3.5 w-3.5" /> Baixar da Nuvem (espelhar no celular)
+                </button>
+                <p className="text-[11px] text-slate-400 leading-snug">
+                  Baixa os dados salvos na nuvem (do computador) para ESTE aparelho. Use no celular depois de clicar <b>Sincronizar Agora</b> no computador, para deixar os dois iguais.
+                </p>
 
                 <button onClick={onRestoreBackup} disabled={restoringBackup} className="w-full py-2 px-3 bg-amber-500 hover:bg-amber-600 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
                   <RefreshCcw className="h-3.5 w-3.5" /> {restoringBackup ? 'Restaurando...' : 'Restaurar do Backup (corrigir estoque)'}
