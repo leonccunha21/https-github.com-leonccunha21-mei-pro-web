@@ -1,14 +1,19 @@
 import React, { useState, useMemo } from 'react';
 import { Product, Sale, Category, PaymentMethod } from '../types';
 import { normalizeName } from '../lib/normalize';
-import { 
-  TrendingUp, 
+import {
+  TrendingUp,
   PieChart,
   ShoppingBag,
   Calendar,
   BarChart3,
   ArrowUpRight,
-  ArrowDownRight
+  ArrowDownRight,
+  Filter,
+  Search,
+  X,
+  CreditCard,
+  Store
 } from 'lucide-react';
 
 interface ReportsProps {
@@ -26,16 +31,26 @@ const paymentMethodLabels: Record<string, string> = {
   transfer: 'Transferência',
 };
 
-const timeRangeLabels: Record<string, string> = {
-  all: 'Todas',
-  '7days': '7 Dias',
-  '30days': '30 Dias',
-  '1year': '1 Ano',
+const saleChannelLabels: Record<string, string> = {
+  'Loja Física': '🏪 Loja Física',
+  'Shopee': '🛒 Shopee',
+  'Magalu': '🛒 Magalu',
+  'TikTok': '🎵 TikTok',
+  'E-commerce': '🌐 E-commerce',
+  'WhatsApp': '📱 WhatsApp',
+  'Outro': '📦 Outro',
 };
+
+const saleTypeLabels: Record<string, string> = {
+  all: 'Todos',
+  CPF: 'CPF',
+  CNPJ: 'CNPJ',
+};
+
+const effectiveChannel = (s: Sale): string => s.saleChannel || 'Loja Física';
 
 // Resolve the catalog product for a sale item. Imported sales have an empty
 // productId, so we fall back to matching by the normalized product name.
-
 const findProductForItem = (item: { productId?: string; productName: string }, products: Product[]) => {
   if (item.productId && item.productId.trim() !== '') {
     const byId = products.find(p => p.id === item.productId);
@@ -45,12 +60,31 @@ const findProductForItem = (item: { productId?: string; productName: string }, p
   return products.find(p => normalizeName(p.name) === key);
 };
 
+const fmtBRL = (v: number) =>
+  v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const fmtPct = (v: number) => `${v.toFixed(1)}%`;
+
+type SortField = 'productName' | 'units' | 'salesCount' | 'revenue' | 'cost' | 'profit' | 'margin';
+
 export default function Reports({ products, sales, categories }: ReportsProps) {
   const [viewMode, setViewMode] = useState<'resume' | 'monthly' | 'yearly'>('resume');
-  const [selectedYearState, setSelectedYearState] = useState<number | null>(null);
-  const [resumeTimeRange, setResumeTimeRange] = useState<'all' | '7days' | '30days' | '1year'>('all');
+
+  // ----- General filters (the year filter applies to everything) -----
+  const [selectedYear, setSelectedYear] = useState<number | 'all'>(() => {
+    const years = new Set<number>();
+    sales.filter(s => s.status === 'completed').forEach(s => years.add(new Date(s.date).getFullYear()));
+    const arr = Array.from(years).sort((a, b) => b - a);
+    return arr.length ? arr[0] : new Date().getFullYear();
+  });
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedPayment, setSelectedPayment] = useState<string>('all');
+  const [selectedChannel, setSelectedChannel] = useState<string>('all');
+  const [selectedType, setSelectedType] = useState<string>('all');
+
+  // ----- Sold-items report controls -----
+  const [productSearch, setProductSearch] = useState('');
+  const [productSort, setProductSort] = useState<SortField>('revenue');
+  const [productSortDir, setProductSortDir] = useState<'asc' | 'desc'>('desc');
 
   const completedSales = useMemo(() => sales.filter(s => s.status === 'completed'), [sales]);
 
@@ -60,11 +94,16 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
     return Array.from(years).sort((a, b) => b - a);
   }, [completedSales]);
 
-  const activeYear = useMemo(() => {
-    if (selectedYearState !== null) return selectedYearState;
-    if (availableYears.length > 0) return availableYears[0];
-    return new Date().getFullYear();
-  }, [selectedYearState, availableYears]);
+  const latestYear = availableYears.length > 0 ? availableYears[0] : new Date().getFullYear();
+
+  // Independent year for the monthly chart (uses the global year when set)
+  const [monthlyYearLocal, setMonthlyYearLocal] = useState<number>(() => {
+    const years = new Set<number>();
+    sales.filter(s => s.status === 'completed').forEach(s => years.add(new Date(s.date).getFullYear()));
+    const arr = Array.from(years).sort((a, b) => b - a);
+    return arr.length ? arr[0] : new Date().getFullYear();
+  });
+  const monthlyYear = selectedYear !== 'all' ? selectedYear : monthlyYearLocal;
 
   const allCategoryNames = useMemo(() => {
     const names = new Set<string>();
@@ -73,26 +112,41 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
     return Array.from(names).sort();
   }, [products, categories]);
 
+  const availableChannels = useMemo(() => {
+    const names = new Set<string>();
+    completedSales.forEach(s => names.add(effectiveChannel(s)));
+    return Array.from(names).sort((a, b) => (saleChannelLabels[a] || a).localeCompare(saleChannelLabels[b] || b));
+  }, [completedSales]);
+
+  const filtersActive =
+    selectedCategory !== 'all' ||
+    selectedPayment !== 'all' ||
+    selectedChannel !== 'all' ||
+    selectedType !== 'all';
+
+  const clearFilters = () => {
+    setSelectedCategory('all');
+    setSelectedPayment('all');
+    setSelectedChannel('all');
+    setSelectedType('all');
+  };
+
+  // ----- The single source of truth: every view respects these filters -----
   const filteredSales = useMemo(() => {
     let result = completedSales;
 
-    if (resumeTimeRange !== 'all') {
-      const now = new Date();
-      let cutoff: Date;
-      if (resumeTimeRange === '7days') {
-        cutoff = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-      } else if (resumeTimeRange === '30days') {
-        cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-      } else {
-        cutoff = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
-      }
-      result = result.filter(s => new Date(s.date) >= cutoff);
+    if (selectedYear !== 'all') {
+      result = result.filter(s => new Date(s.date).getFullYear() === selectedYear);
     }
-
     if (selectedPayment !== 'all') {
       result = result.filter(s => s.paymentMethod === selectedPayment);
     }
-
+    if (selectedChannel !== 'all') {
+      result = result.filter(s => effectiveChannel(s) === selectedChannel);
+    }
+    if (selectedType !== 'all') {
+      result = result.filter(s => s.saleType === selectedType);
+    }
     if (selectedCategory !== 'all') {
       result = result.filter(s =>
         s.items.some(item => {
@@ -103,7 +157,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
     }
 
     return result;
-  }, [completedSales, resumeTimeRange, selectedPayment, selectedCategory, products]);
+  }, [completedSales, selectedYear, selectedPayment, selectedChannel, selectedType, selectedCategory, products]);
 
   const resumeData = useMemo(() => {
     const totalFaturamento = filteredSales.reduce((acc, s) => acc + s.total, 0);
@@ -112,17 +166,21 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
     const avgTicket = filteredSales.length > 0 ? totalFaturamento / filteredSales.length : 0;
     const roi = totalCusto > 0 ? (lucro / totalCusto) * 100 : 0;
     const margin = totalFaturamento > 0 ? (lucro / totalFaturamento) * 100 : 0;
-    return { totalFaturamento, totalCusto, lucro, avgTicket, roi, margin };
+    const totalUnits = filteredSales.reduce(
+      (acc, s) => acc + s.items.reduce((a, it) => a + it.quantity, 0),
+      0
+    );
+    return { totalFaturamento, totalCusto, lucro, avgTicket, roi, margin, totalUnits };
   }, [filteredSales]);
 
   const monthlyData = useMemo(() => {
-    const yearSales = filteredSales.filter(s => new Date(s.date).getFullYear() === activeYear);
+    const yearSales = filteredSales.filter(s => new Date(s.date).getFullYear() === monthlyYear);
     const months: Record<number, { revenue: number; cost: number; profit: number; count: number }> = {};
-    
+
     for (let m = 1; m <= 12; m++) {
       months[m] = { revenue: 0, cost: 0, profit: 0, count: 0 };
     }
-    
+
     yearSales.forEach(sale => {
       const m = new Date(sale.date).getMonth() + 1;
       months[m].revenue += sale.total;
@@ -130,7 +188,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       months[m].profit += sale.profit;
       months[m].count++;
     });
-    
+
     const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
     const result = Object.entries(months).map(([m, data]) => ({
       month: parseInt(m),
@@ -138,20 +196,20 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       ...data,
       margin: data.revenue > 0 ? (data.profit / data.revenue) * 100 : 0
     }));
-    
+
     const yearTotal = result.reduce((acc, r) => ({
       revenue: acc.revenue + r.revenue,
       cost: acc.cost + r.cost,
       profit: acc.profit + r.profit,
       count: acc.count + r.count
     }), { revenue: 0, cost: 0, profit: 0, count: 0 });
-    
+
     return { months: result, yearTotal };
-  }, [filteredSales, activeYear]);
+  }, [filteredSales, monthlyYear]);
 
   const yearlyData = useMemo(() => {
     const years: Record<number, { revenue: number; cost: number; profit: number; count: number }> = {};
-    
+
     filteredSales.forEach(sale => {
       const y = new Date(sale.date).getFullYear();
       if (!years[y]) years[y] = { revenue: 0, cost: 0, profit: 0, count: 0 };
@@ -160,7 +218,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       years[y].profit += sale.profit;
       years[y].count++;
     });
-    
+
     return Object.entries(years)
       .map(([y, data]) => ({ year: parseInt(y), ...data, margin: data.revenue > 0 ? (data.profit / data.revenue) * 100 : 0 }))
       .sort((a, b) => b.year - a.year);
@@ -172,7 +230,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
     const stats: Record<string, { revenue: number; cost: number; profit: number; itemsSold: number }> = {};
     categories.forEach(cat => { stats[cat.name] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 }; });
     stats['Outros'] = { revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
-    
+
     filteredSales.forEach(sale => {
       const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
       const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
@@ -187,7 +245,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
         stats[catName].profit += effectiveTotal - (item.costPrice * item.quantity);
       });
     });
-    
+
     return Object.entries(stats)
       .map(([categoryName, s]) => ({ categoryName, ...s }))
       .filter(c => c.revenue > 0 || c.itemsSold > 0)
@@ -195,28 +253,126 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
   }, [filteredSales, products, categories]);
 
   const productStats = useMemo(() => {
-    const stats: Record<string, { productName: string; category: string; revenue: number; cost: number; profit: number; itemsSold: number }> = {};
-    
+    const map = new Map<string, {
+      productName: string;
+      category: string;
+      units: number;
+      sales: Set<string>;
+      revenue: number;
+      cost: number;
+      profit: number;
+    }>();
+
     filteredSales.forEach(sale => {
       const subtotal = sale.items.reduce((acc, item) => acc + item.total, 0);
       const discountRatio = subtotal > 0 ? (sale.total / subtotal) : 1;
       sale.items.forEach(item => {
         const origProduct = findProductForItem(item, products);
         const catName = origProduct ? origProduct.category : 'Outros';
-        const key = item.productId || normalizeName(item.productName);
-        if (!stats[key]) stats[key] = { productName: item.productName, category: catName, revenue: 0, cost: 0, profit: 0, itemsSold: 0 };
+        const key = item.productId && item.productId.trim() ? item.productId : normalizeName(item.productName);
+        let entry = map.get(key);
+        if (!entry) {
+          entry = { productName: item.productName, category: catName, units: 0, sales: new Set(), revenue: 0, cost: 0, profit: 0 };
+          map.set(key, entry);
+        }
         const effectiveTotal = item.total * discountRatio;
-        stats[key].itemsSold += item.quantity;
-        stats[key].revenue += effectiveTotal;
-        stats[key].cost += item.costPrice * item.quantity;
-        stats[key].profit += effectiveTotal - (item.costPrice * item.quantity);
+        entry.units += item.quantity;
+        entry.sales.add(sale.id);
+        entry.revenue += effectiveTotal;
+        entry.cost += item.costPrice * item.quantity;
+        entry.profit += effectiveTotal - (item.costPrice * item.quantity);
       });
     });
-    
-    return Object.values(stats).sort((a, b) => b.revenue - a.revenue);
+
+    return Array.from(map.values()).map(e => ({
+      productName: e.productName,
+      category: e.category,
+      units: e.units,
+      salesCount: e.sales.size,
+      revenue: e.revenue,
+      cost: e.cost,
+      profit: e.profit,
+      margin: e.revenue > 0 ? (e.profit / e.revenue) * 100 : 0,
+    }));
   }, [filteredSales, products]);
 
+  // Apply search + sorting for the sold-items report
+  const visibleProducts = useMemo(() => {
+    const q = productSearch.trim().toLowerCase();
+    let list = productStats;
+    if (q) {
+      list = list.filter(p =>
+        p.productName.toLowerCase().includes(q) || p.category.toLowerCase().includes(q)
+      );
+    }
+    const dir = productSortDir === 'asc' ? 1 : -1;
+    return [...list].sort((a, b) => {
+      if (productSort === 'productName') return a.productName.localeCompare(b.productName) * dir;
+      return ((a[productSort] as number) - (b[productSort] as number)) * dir;
+    });
+  }, [productStats, productSearch, productSort, productSortDir]);
+
+  const productsTotals = useMemo(() => {
+    return visibleProducts.reduce(
+      (acc, p) => {
+        acc.units += p.units;
+        acc.revenue += p.revenue;
+        acc.cost += p.cost;
+        acc.profit += p.profit;
+        return acc;
+      },
+      { units: 0, revenue: 0, cost: 0, profit: 0 }
+    );
+  }, [visibleProducts]);
+
+  const handleSort = (field: SortField) => {
+    if (productSort === field) {
+      setProductSortDir(d => (d === 'asc' ? 'desc' : 'asc'));
+    } else {
+      setProductSort(field);
+      setProductSortDir(field === 'productName' ? 'asc' : 'desc');
+    }
+  };
+
+  const sortCaret = (field: SortField) =>
+    productSort === field ? (productSortDir === 'asc' ? ' ▲' : ' ▼') : '';
+
+  // ----- Breakdowns -----
+  const paymentBreakdown = useMemo(() => {
+    const map: Record<string, { revenue: number; count: number }> = {};
+    filteredSales.forEach(s => {
+      const k = s.paymentMethod;
+      if (!map[k]) map[k] = { revenue: 0, count: 0 };
+      map[k].revenue += s.total;
+      map[k].count++;
+    });
+    return Object.entries(map)
+      .map(([k, v]) => ({ key: k, label: paymentMethodLabels[k] || k, ...v }))
+      .sort((a, b) => b.revenue - a.revenue);
+  }, [filteredSales]);
+
+  const channelBreakdown = useMemo(() => {
+    const map: Record<string, { revenue: number; count: number }> = {};
+    filteredSales.forEach(s => {
+      const k = effectiveChannel(s);
+      if (!map[k]) map[k] = { revenue: 0, count: 0 };
+      map[k].revenue += s.total;
+      map[k].count++;
+    });
+    return Object.entries(map)
+      .map(([k, v]) => ({ key: k, label: saleChannelLabels[k] || k, ...v }))
+      .sort((a, b) => b.revenue - a.revenue);
+  }, [filteredSales]);
+
+  const maxBreakdownRevenue = Math.max(
+    ...paymentBreakdown.map(p => p.revenue),
+    ...channelBreakdown.map(c => c.revenue),
+    1
+  );
+
   const maxCategoryRevenue = Math.max(...categoryStats.map(c => c.revenue), 100);
+
+  const yearLabel = selectedYear === 'all' ? 'Todos os anos' : String(selectedYear);
 
   return (
     <div className="space-y-6">
@@ -226,12 +382,12 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
             <TrendingUp className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
             Relatórios
           </h1>
-          <p className="text-sm text-slate-500 mt-1">Análise comparativa de desempenho por período, categoria e produto.</p>
+          <p className="text-sm text-slate-500 mt-1">Análise de desempenho por período, categoria, canal e produto.</p>
         </div>
 
         <div className="flex items-center gap-2 bg-slate-100 p-1 rounded-lg border border-slate-200/50">
           <button onClick={() => setViewMode('resume')} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${viewMode === 'resume' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
-            Resumo Geral
+            Resumo
           </button>
           <button onClick={() => setViewMode('monthly')} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${viewMode === 'monthly' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
             Por Mês
@@ -243,118 +399,159 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       </div>
 
       {/* ========== FILTER BAR ========== */}
-      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-1.5">
-          <Calendar className="h-3.5 w-3.5 text-slate-400" />
-          <span className="text-[10px] font-bold text-slate-500 uppercase">Período:</span>
-        </div>
-        <div className="flex items-center gap-1 bg-slate-100 p-0.5 rounded-lg">
-          {(Object.keys(timeRangeLabels) as Array<'all' | '7days' | '30days' | '1year'>).map(key => (
-            <button
-              key={key}
-              onClick={() => setResumeTimeRange(key)}
-              className={`px-2.5 py-1 text-[11px] font-medium rounded-md transition-colors ${resumeTimeRange === key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}
-            >
-              {timeRangeLabels[key]}
+      <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
+        <div className="flex items-center gap-2 mb-3">
+          <Filter className="h-3.5 w-3.5 text-slate-400" />
+          <span className="text-[10px] font-bold text-slate-500 uppercase">Filtros</span>
+          {filtersActive && (
+            <button onClick={clearFilters} className="ml-1 flex items-center gap-1 text-[10px] font-semibold text-rose-600 hover:text-rose-700">
+              <X className="h-3 w-3" /> Limpar
             </button>
-          ))}
+          )}
+          <span className="text-[10px] text-slate-400 font-medium ml-auto">
+            {filteredSales.length} venda{filteredSales.length !== 1 ? 's' : ''} · {resumeData.totalFaturamento.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+          </span>
         </div>
 
-        <div className="w-px h-5 bg-slate-200" />
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-1.5">
+            <Calendar className="h-3.5 w-3.5 text-slate-400" />
+            <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
+          </div>
+          <select
+            value={selectedYear}
+            onChange={e => setSelectedYear(e.target.value === 'all' ? 'all' : parseInt(e.target.value))}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
+          >
+            <option value="all">Todos os anos</option>
+            {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
 
-        <div className="flex items-center gap-1.5">
-          <Calendar className="h-3.5 w-3.5 text-slate-400" />
-          <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
+          <div className="w-px h-5 bg-slate-200" />
+
+          <div className="flex items-center gap-1.5">
+            <PieChart className="h-3.5 w-3.5 text-slate-400" />
+            <label className="text-[10px] font-bold text-slate-500 uppercase">Categoria:</label>
+          </div>
+          <select
+            value={selectedCategory}
+            onChange={e => setSelectedCategory(e.target.value)}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
+          >
+            <option value="all">Todas</option>
+            {allCategoryNames.map(c => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+
+          <div className="w-px h-5 bg-slate-200" />
+
+          <div className="flex items-center gap-1.5">
+            <CreditCard className="h-3.5 w-3.5 text-slate-400" />
+            <label className="text-[10px] font-bold text-slate-500 uppercase">Pagamento:</label>
+          </div>
+          <select
+            value={selectedPayment}
+            onChange={e => setSelectedPayment(e.target.value)}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
+          >
+            {Object.entries(paymentMethodLabels).map(([key, label]) => (
+              <option key={key} value={key}>{label}</option>
+            ))}
+          </select>
+
+          <div className="w-px h-5 bg-slate-200" />
+
+          <div className="flex items-center gap-1.5">
+            <Store className="h-3.5 w-3.5 text-slate-400" />
+            <label className="text-[10px] font-bold text-slate-500 uppercase">Canal:</label>
+          </div>
+          <select
+            value={selectedChannel}
+            onChange={e => setSelectedChannel(e.target.value)}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
+          >
+            <option value="all">Todos</option>
+            {availableChannels.map(c => (
+              <option key={c} value={c}>{saleChannelLabels[c] || c}</option>
+            ))}
+          </select>
+
+          <div className="w-px h-5 bg-slate-200" />
+
+          <div className="flex items-center gap-1.5">
+            <BarChart3 className="h-3.5 w-3.5 text-slate-400" />
+            <label className="text-[10px] font-bold text-slate-500 uppercase">Tipo:</label>
+          </div>
+          <select
+            value={selectedType}
+            onChange={e => setSelectedType(e.target.value)}
+            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
+          >
+            {Object.entries(saleTypeLabels).map(([key, label]) => (
+              <option key={key} value={key}>{label}</option>
+            ))}
+          </select>
         </div>
-        <select
-          value={activeYear}
-          onChange={e => setSelectedYearState(parseInt(e.target.value))}
-          className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
-        >
-          {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
-        </select>
-
-        <div className="w-px h-5 bg-slate-200" />
-
-        <div className="flex items-center gap-1.5">
-          <PieChart className="h-3.5 w-3.5 text-slate-400" />
-          <label className="text-[10px] font-bold text-slate-500 uppercase">Categoria:</label>
-        </div>
-        <select
-          value={selectedCategory}
-          onChange={e => setSelectedCategory(e.target.value)}
-          className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
-        >
-          <option value="all">Todas</option>
-          {allCategoryNames.map(c => (
-            <option key={c} value={c}>{c}</option>
-          ))}
-        </select>
-
-        <div className="w-px h-5 bg-slate-200" />
-
-        <div className="flex items-center gap-1.5">
-          <ShoppingBag className="h-3.5 w-3.5 text-slate-400" />
-          <label className="text-[10px] font-bold text-slate-500 uppercase">Pagamento:</label>
-        </div>
-        <select
-          value={selectedPayment}
-          onChange={e => setSelectedPayment(e.target.value)}
-          className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium bg-white"
-        >
-          {Object.entries(paymentMethodLabels).map(([key, label]) => (
-            <option key={key} value={key}>{label}</option>
-          ))}
-        </select>
-
-        <span className="text-[10px] text-slate-400 font-medium ml-auto">
-          {filteredSales.length} venda{filteredSales.length !== 1 ? 's' : ''} | {filteredSales.reduce((acc, s) => acc + s.total, 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
-        </span>
       </div>
 
       {/* ========== RESUME VIEW ========== */}
       {viewMode === 'resume' && (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* KPI cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Faturamento</span>
+              <span className="text-2xl font-bold font-mono text-slate-900 block mt-3">{fmtBRL(resumeData.totalFaturamento)}</span>
+              <p className="text-xs text-slate-400 mt-1.5">{yearLabel}</p>
+            </div>
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Custo Total</span>
+              <span className="text-2xl font-bold font-mono text-amber-600 block mt-3">{fmtBRL(resumeData.totalCusto)}</span>
+              <p className="text-xs text-slate-400 mt-1.5">Valor pago nos produtos</p>
+            </div>
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Lucro Líquido</span>
+              <span className="text-2xl font-bold font-mono text-emerald-600 block mt-3">{fmtBRL(resumeData.lucro)}</span>
+              <p className="text-xs text-slate-400 mt-1.5">Margem {fmtPct(resumeData.margin)}</p>
+            </div>
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Ticket Médio</span>
-              <span className="text-2xl font-bold font-mono text-slate-900 block mt-3">{resumeData.avgTicket.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-              <p className="text-xs text-slate-400 mt-1.5">Faturamento / nº de vendas.</p>
+              <span className="text-2xl font-bold font-mono text-indigo-600 block mt-3">{fmtBRL(resumeData.avgTicket)}</span>
+              <p className="text-xs text-slate-400 mt-1.5">Faturamento / nº de vendas</p>
+            </div>
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Nº de Vendas</span>
+              <span className="text-2xl font-bold font-mono text-slate-900 block mt-3">{filteredSales.length}</span>
+              <p className="text-xs text-slate-400 mt-1.5">Vendas concluídas</p>
+            </div>
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Itens Vendidos</span>
+              <span className="text-2xl font-bold font-mono text-slate-900 block mt-3">{resumeData.totalUnits}</span>
+              <p className="text-xs text-slate-400 mt-1.5">Unidades comercializadas</p>
             </div>
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">ROI (Retorno)</span>
               <span className="text-2xl font-bold font-mono text-emerald-600 block mt-3">{resumeData.roi.toFixed(1)}%</span>
-              <p className="text-xs text-slate-400 mt-1.5">Lucro para cada R$ 1,00 investido.</p>
+              <p className="text-xs text-slate-400 mt-1.5">Lucro p/ R$ 1,00 investido</p>
             </div>
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
               <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block">Margem Líquida</span>
               <span className="text-2xl font-bold font-mono text-indigo-600 block mt-3">{resumeData.margin.toFixed(1)}%</span>
-              <p className="text-xs text-slate-400 mt-1.5">% de lucro sobre faturamento.</p>
+              <p className="text-xs text-slate-400 mt-1.5">% de lucro sobre faturamento</p>
             </div>
           </div>
 
           {/* ===== Declaração de Imposto - CPF vs CNPJ ===== */}
-          {availableYears.length > 0 && (
+          {filteredSales.length > 0 && (
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
               <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
                 <BarChart3 className="h-5 w-5 text-slate-500" />
-                <h2 className="text-base font-bold text-slate-900">Declaração de Imposto - CPF vs CNPJ</h2>
-              </div>
-              <div className="flex items-center gap-3 mb-4">
-                <Calendar className="h-4 w-4 text-slate-400" />
-                <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
-                <select
-                  value={activeYear}
-                  onChange={e => setSelectedYearState(parseInt(e.target.value))}
-                  className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium"
-                >
-                  {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
-                </select>
+                <h2 className="text-base font-bold text-slate-900">Declaração de Imposto - CPF vs CNPJ ({yearLabel})</h2>
               </div>
               {(() => {
-                const yearSales = completedSales.filter(s => new Date(s.date).getFullYear() === activeYear);
-                const cpfSales = yearSales.filter(s => s.saleType === 'CPF');
-                const cnpjSales = yearSales.filter(s => s.saleType === 'CNPJ');
+                const cpfSales = filteredSales.filter(s => s.saleType === 'CPF');
+                const cnpjSales = filteredSales.filter(s => s.saleType === 'CNPJ');
                 const cpfTotal = cpfSales.reduce((a, s) => a + s.total, 0);
                 const cnpjTotal = cnpjSales.reduce((a, s) => a + s.total, 0);
                 const overallTotal = cpfTotal + cnpjTotal;
@@ -362,24 +559,81 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
                       <span className="text-[10px] font-bold text-emerald-600 uppercase">CPF - Consumidor Final</span>
-                      <span className="text-xl font-bold font-mono text-emerald-800 block mt-2">{cpfTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                      <span className="text-xl font-bold font-mono text-emerald-800 block mt-2">{fmtBRL(cpfTotal)}</span>
                       <span className="text-xs text-emerald-600 mt-1 block">{cpfSales.length} venda{cpfSales.length !== 1 ? 's' : ''}</span>
                     </div>
                     <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-200">
                       <span className="text-[10px] font-bold text-indigo-600 uppercase">CNPJ - Revenda / Empresa</span>
-                      <span className="text-xl font-bold font-mono text-indigo-800 block mt-2">{cnpjTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                      <span className="text-xl font-bold font-mono text-indigo-800 block mt-2">{fmtBRL(cnpjTotal)}</span>
                       <span className="text-xs text-indigo-600 mt-1 block">{cnpjSales.length} venda{cnpjSales.length !== 1 ? 's' : ''}</span>
                     </div>
                     <div className="p-4 bg-slate-800 rounded-xl border border-slate-700 text-white">
-                      <span className="text-[10px] font-bold text-slate-300 uppercase">Total {activeYear}</span>
-                      <span className="text-xl font-bold font-mono block mt-2">{overallTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                      <span className="text-xs text-slate-300 mt-1 block">{yearSales.length} venda{yearSales.length !== 1 ? 's' : ''}</span>
+                      <span className="text-[10px] font-bold text-slate-300 uppercase">Total {yearLabel}</span>
+                      <span className="text-xl font-bold font-mono block mt-2">{fmtBRL(overallTotal)}</span>
+                      <span className="text-xs text-slate-300 mt-1 block">{filteredSales.length} venda{filteredSales.length !== 1 ? 's' : ''}</span>
                     </div>
                   </div>
                 );
               })()}
             </div>
           )}
+
+          {/* ===== Breakdowns: payment & channel ===== */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+                <CreditCard className="h-5 w-5 text-slate-500" />
+                <h2 className="text-base font-bold text-slate-900">Por Forma de Pagamento</h2>
+              </div>
+              {paymentBreakdown.length === 0 ? (
+                <div className="text-center py-8 text-slate-400"><p className="text-sm">Nenhuma venda no filtro.</p></div>
+              ) : (
+                <div className="space-y-4 max-h-80 overflow-y-auto pr-1">
+                  {paymentBreakdown.map((p, idx) => {
+                    const percentageOfMax = (p.revenue / maxBreakdownRevenue) * 100;
+                    return (
+                      <div key={idx} className="space-y-1">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-bold text-slate-700">{p.label}</span>
+                          <span className="font-mono text-slate-500">{p.count} vnd • <strong className="text-slate-900">{fmtBRL(p.revenue)}</strong></span>
+                        </div>
+                        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                          <div style={{ width: `${percentageOfMax}%` }} className="bg-indigo-600 h-full rounded-full transition-all duration-500" />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+              <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+                <Store className="h-5 w-5 text-slate-500" />
+                <h2 className="text-base font-bold text-slate-900">Por Canal de Venda</h2>
+              </div>
+              {channelBreakdown.length === 0 ? (
+                <div className="text-center py-8 text-slate-400"><p className="text-sm">Nenhuma venda no filtro.</p></div>
+              ) : (
+                <div className="space-y-4 max-h-80 overflow-y-auto pr-1">
+                  {channelBreakdown.map((c, idx) => {
+                    const percentageOfMax = (c.revenue / maxBreakdownRevenue) * 100;
+                    return (
+                      <div key={idx} className="space-y-1">
+                        <div className="flex items-center justify-between text-xs">
+                          <span className="font-bold text-slate-700">{c.label}</span>
+                          <span className="font-mono text-slate-500">{c.count} vnd • <strong className="text-slate-900">{fmtBRL(c.revenue)}</strong></span>
+                        </div>
+                        <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                          <div style={{ width: `${percentageOfMax}%` }} className="bg-emerald-600 h-full rounded-full transition-all duration-500" />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
 
           {yearlyData.length > 0 && (
             <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
@@ -404,9 +658,9 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                       <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
                         <td className="py-2.5 font-bold text-slate-900">{yd.year}</td>
                         <td className="py-2.5 text-center font-mono text-slate-600">{yd.count}</td>
-                        <td className="py-2.5 text-right font-mono text-slate-900 font-medium">{yd.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td className="py-2.5 text-right font-mono text-slate-500">{yd.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">{yd.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-900 font-medium">{fmtBRL(yd.revenue)}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-500">{fmtBRL(yd.cost)}</td>
+                        <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">{fmtBRL(yd.profit)}</td>
                         <td className="py-2.5 text-right font-mono font-bold text-indigo-600">{yd.margin.toFixed(0)}%</td>
                       </tr>
                     ))}
@@ -424,36 +678,40 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
           <div className="flex items-center gap-3 bg-white p-3 rounded-xl border border-slate-200 shadow-sm">
             <Calendar className="h-4 w-4 text-slate-400" />
             <label className="text-[10px] font-bold text-slate-500 uppercase">Ano:</label>
-            <select value={activeYear} onChange={e => setSelectedYearState(parseInt(e.target.value))} className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium">
-              {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
-            </select>
+            {selectedYear === 'all' ? (
+              <select value={monthlyYearLocal} onChange={e => setMonthlyYearLocal(parseInt(e.target.value))} className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium">
+                {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
+              </select>
+            ) : (
+              <span className="px-3 py-1.5 text-xs font-bold text-slate-900 bg-slate-100 rounded-lg">{monthlyYear}</span>
+            )}
             <span className="text-[10px] text-slate-400 font-medium ml-2">
-              {monthlyData.yearTotal.count} vendas | {monthlyData.yearTotal.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+              {monthlyData.yearTotal.count} vendas | {fmtBRL(monthlyData.yearTotal.revenue)}
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase">Faturamento {activeYear}</span>
-              <span className="text-xl font-bold font-mono text-slate-900 block mt-2">{monthlyData.yearTotal.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Faturamento {monthlyYear}</span>
+              <span className="text-xl font-bold font-mono text-slate-900 block mt-2">{fmtBRL(monthlyData.yearTotal.revenue)}</span>
             </div>
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase">Custo {activeYear}</span>
-              <span className="text-xl font-bold font-mono text-amber-600 block mt-2">{monthlyData.yearTotal.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Custo {monthlyYear}</span>
+              <span className="text-xl font-bold font-mono text-amber-600 block mt-2">{fmtBRL(monthlyData.yearTotal.cost)}</span>
             </div>
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase">Lucro {activeYear}</span>
-              <span className="text-xl font-bold font-mono text-emerald-600 block mt-2">{monthlyData.yearTotal.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Lucro {monthlyYear}</span>
+              <span className="text-xl font-bold font-mono text-emerald-600 block mt-2">{fmtBRL(monthlyData.yearTotal.profit)}</span>
             </div>
             <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-              <span className="text-[10px] font-bold text-slate-400 uppercase">Nº Vendas {activeYear}</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase">Nº Vendas {monthlyYear}</span>
               <span className="text-xl font-bold font-mono text-indigo-600 block mt-2">{monthlyData.yearTotal.count}</span>
             </div>
           </div>
 
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-            <h2 className="text-base font-bold text-slate-900 mb-4">Faturamento Mensal - {activeYear}</h2>
-            
+            <h2 className="text-base font-bold text-slate-900 mb-4">Faturamento Mensal - {monthlyYear}</h2>
+
             <div className="relative h-48 w-full mb-6">
               <svg className="w-full h-full" viewBox="0 0 700 180" preserveAspectRatio="xMidYMid meet">
                 {[0, 0.25, 0.5, 0.75, 1].map((val, idx) => (
@@ -504,18 +762,18 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                     <tr key={idx} className={`hover:bg-slate-50/50 transition-colors ${m.count === 0 ? 'opacity-40' : ''}`}>
                       <td className="py-2 font-bold text-slate-900">{m.name}</td>
                       <td className="py-2 text-center font-mono text-slate-600">{m.count}</td>
-                      <td className="py-2 text-right font-mono text-slate-900 font-medium">{m.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                      <td className="py-2 text-right font-mono text-slate-500">{m.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                      <td className="py-2 text-right font-mono text-emerald-600 font-bold">{m.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                      <td className="py-2 text-right font-mono text-slate-900 font-medium">{fmtBRL(m.revenue)}</td>
+                      <td className="py-2 text-right font-mono text-slate-500">{fmtBRL(m.cost)}</td>
+                      <td className="py-2 text-right font-mono text-emerald-600 font-bold">{fmtBRL(m.profit)}</td>
                       <td className="py-2 text-right font-mono font-bold text-indigo-600">{m.margin.toFixed(0)}%</td>
                     </tr>
                   ))}
                   <tr className="border-t-2 border-slate-300 font-bold">
-                    <td className="py-2 text-slate-900">TOTAL {activeYear}</td>
+                    <td className="py-2 text-slate-900">TOTAL {monthlyYear}</td>
                     <td className="py-2 text-center font-mono text-slate-900">{monthlyData.yearTotal.count}</td>
-                    <td className="py-2 text-right font-mono text-slate-900">{monthlyData.yearTotal.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                    <td className="py-2 text-right font-mono text-slate-900">{monthlyData.yearTotal.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                    <td className="py-2 text-right font-mono text-emerald-600">{monthlyData.yearTotal.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="py-2 text-right font-mono text-slate-900">{fmtBRL(monthlyData.yearTotal.revenue)}</td>
+                    <td className="py-2 text-right font-mono text-slate-900">{fmtBRL(monthlyData.yearTotal.cost)}</td>
+                    <td className="py-2 text-right font-mono text-emerald-600">{fmtBRL(monthlyData.yearTotal.profit)}</td>
                     <td className="py-2 text-right font-mono text-indigo-600">{monthlyData.yearTotal.revenue > 0 ? ((monthlyData.yearTotal.profit / monthlyData.yearTotal.revenue) * 100).toFixed(0) : 0}%</td>
                   </tr>
                 </tbody>
@@ -543,7 +801,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                 {yearlyData.map((yd, idx) => {
                   const prevYear = yearlyData[idx + 1];
                   const revenueChange = prevYear ? ((yd.revenue - prevYear.revenue) / prevYear.revenue) * 100 : null;
-                  
+
                   return (
                     <div key={idx} className="p-4 bg-slate-50 rounded-xl border border-slate-200 hover:shadow-md transition-shadow">
                       <div className="flex items-center justify-between mb-3">
@@ -557,9 +815,9 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                       </div>
                       <div className="space-y-1.5 text-xs">
                         <div className="flex justify-between"><span className="text-slate-500">Vendas:</span><span className="font-bold text-slate-900">{yd.count}</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500">Receita:</span><span className="font-bold text-slate-900">{yd.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></div>
-                        <div className="flex justify-between"><span className="text-slate-500">Custo:</span><span className="font-medium text-slate-600">{yd.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></div>
-                        <div className="flex justify-between border-t border-slate-200 pt-1.5"><span className="text-slate-500">Lucro:</span><span className="font-bold text-emerald-600">{yd.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></div>
+                        <div className="flex justify-between"><span className="text-slate-500">Receita:</span><span className="font-bold text-slate-900">{fmtBRL(yd.revenue)}</span></div>
+                        <div className="flex justify-between"><span className="text-slate-500">Custo:</span><span className="font-medium text-slate-600">{fmtBRL(yd.cost)}</span></div>
+                        <div className="flex justify-between border-t border-slate-200 pt-1.5"><span className="text-slate-500">Lucro:</span><span className="font-bold text-emerald-600">{fmtBRL(yd.profit)}</span></div>
                         <div className="flex justify-between"><span className="text-slate-500">Margem:</span><span className="font-bold text-indigo-600">{yd.margin.toFixed(1)}%</span></div>
                       </div>
                     </div>
@@ -585,11 +843,11 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                       <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
                         <td className="py-2.5 font-bold text-slate-900">{yd.year}</td>
                         <td className="py-2.5 text-center font-mono text-slate-600">{yd.count}</td>
-                        <td className="py-2.5 text-right font-mono text-slate-900 font-medium">{yd.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td className="py-2.5 text-right font-mono text-slate-500">{yd.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">{yd.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-900 font-medium">{fmtBRL(yd.revenue)}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-500">{fmtBRL(yd.cost)}</td>
+                        <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">{fmtBRL(yd.profit)}</td>
                         <td className="py-2.5 text-right font-mono font-bold text-indigo-600">{yd.margin.toFixed(0)}%</td>
-                        <td className="py-2.5 text-right font-mono text-slate-900">{yd.count > 0 ? (yd.revenue / yd.count).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '-'}</td>
+                        <td className="py-2.5 text-right font-mono text-slate-900">{yd.count > 0 ? fmtBRL(yd.revenue / yd.count) : '-'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -600,7 +858,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
         </div>
       )}
 
-      {/* ========== CATEGORY & PRODUCT (always shown) ========== */}
+      {/* ========== CATEGORY & SOLD ITEMS (always shown) ========== */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
@@ -618,14 +876,14 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
                   <div key={idx} className="space-y-1">
                     <div className="flex items-center justify-between text-xs">
                       <span className="font-bold text-slate-700">{cat.categoryName}</span>
-                      <span className="font-mono text-slate-500">{cat.itemsSold} un • <strong className="text-slate-900">{cat.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</strong></span>
+                      <span className="font-mono text-slate-500">{cat.itemsSold} un • <strong className="text-slate-900">{fmtBRL(cat.revenue)}</strong></span>
                     </div>
                     <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
                       <div style={{ width: `${percentageOfMax}%` }} className="bg-indigo-600 h-full rounded-full transition-all duration-500" />
                     </div>
                     <div className="flex items-center justify-between text-[10px] text-slate-400">
-                      <span>Custo: {cat.cost.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                      <span className="text-emerald-600 font-semibold">Lucro: {cat.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} ({catMargin.toFixed(0)}%)</span>
+                      <span>Custo: {fmtBRL(cat.cost)}</span>
+                      <span className="text-emerald-600 font-semibold">Lucro: {fmtBRL(cat.profit)} ({catMargin.toFixed(0)}%)</span>
                     </div>
                   </div>
                 );
@@ -634,42 +892,67 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
           )}
         </div>
 
+        {/* ===== Sold items report (full, searchable, sortable) ===== */}
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+          <div className="flex items-center gap-2 mb-3 border-b border-slate-200 pb-3">
             <ShoppingBag className="h-5 w-5 text-slate-500" />
-            <h2 className="text-base font-bold text-slate-900">Top 10 Produtos</h2>
+            <h2 className="text-base font-bold text-slate-900">Itens Vendidos</h2>
+            <span className="text-[10px] font-medium text-slate-400 ml-auto">{visibleProducts.length} produto{visibleProducts.length !== 1 ? 's' : ''}</span>
           </div>
-          {productStats.length === 0 ? (
-            <div className="text-center py-8 text-slate-400"><p className="text-sm">Nenhum produto registrou vendas.</p></div>
+
+          <div className="relative mb-3">
+            <Search className="h-3.5 w-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
+            <input
+              value={productSearch}
+              onChange={e => setProductSearch(e.target.value)}
+              placeholder="Buscar produto ou categoria..."
+              className="w-full pl-8 pr-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+            />
+          </div>
+
+          {visibleProducts.length === 0 ? (
+            <div className="text-center py-8 text-slate-400"><p className="text-sm">Nenhum item vendido no filtro.</p></div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                    <th className="pb-3 pr-2">Produto</th>
-                    <th className="pb-3 text-center">Un.</th>
-                    <th className="pb-3 text-right">Faturamento</th>
-                    <th className="pb-3 text-right">Lucro</th>
-                    <th className="pb-3 text-right">Margem</th>
+                    <th className="pb-2 pr-2 cursor-pointer select-none hover:text-slate-600" onClick={() => handleSort('productName')}>Produto{sortCaret('productName')}</th>
+                    <th className="pb-2 text-center cursor-pointer select-none hover:text-slate-600" onClick={() => handleSort('units')}>Qtd{sortCaret('units')}</th>
+                    <th className="pb-2 text-center cursor-pointer select-none hover:text-slate-600" onClick={() => handleSort('salesCount')}>Vendas{sortCaret('salesCount')}</th>
+                    <th className="pb-2 text-right cursor-pointer select-none hover:text-slate-600" onClick={() => handleSort('revenue')}>Faturamento{sortCaret('revenue')}</th>
+                    <th className="pb-2 text-right cursor-pointer select-none hover:text-slate-600" onClick={() => handleSort('cost')}>Custo{sortCaret('cost')}</th>
+                    <th className="pb-2 text-right cursor-pointer select-none hover:text-slate-600" onClick={() => handleSort('profit')}>Lucro{sortCaret('profit')}</th>
+                    <th className="pb-2 text-right cursor-pointer select-none hover:text-slate-600" onClick={() => handleSort('margin')}>Margem{sortCaret('margin')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 text-xs">
-                  {productStats.slice(0, 10).map((prod, idx) => {
-                    const prodMargin = prod.revenue > 0 ? (prod.profit / prod.revenue) * 100 : 0;
-                    return (
-                      <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
-                        <td className="py-2 pr-2 font-bold text-slate-900">
-                          <p className="line-clamp-1" title={prod.productName}>{prod.productName}</p>
-                          <span className="text-[9px] text-slate-400 font-normal uppercase">{prod.category}</span>
-                        </td>
-                        <td className="py-2 text-center font-mono text-slate-600">{prod.itemsSold}</td>
-                        <td className="py-2 text-right font-mono text-slate-900 font-medium">{prod.revenue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td className="py-2 text-right font-mono text-emerald-600 font-bold">{prod.profit.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td className="py-2 text-right font-mono font-bold text-indigo-600">{prodMargin.toFixed(0)}%</td>
-                      </tr>
-                    );
-                  })}
+                  {visibleProducts.map((prod, idx) => (
+                    <tr key={idx} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="py-2 pr-2 font-bold text-slate-900">
+                        <p className="line-clamp-1" title={prod.productName}>{prod.productName}</p>
+                        <span className="text-[9px] text-slate-400 font-normal uppercase">{prod.category}</span>
+                      </td>
+                      <td className="py-2 text-center font-mono text-slate-600">{prod.units}</td>
+                      <td className="py-2 text-center font-mono text-slate-500">{prod.salesCount}</td>
+                      <td className="py-2 text-right font-mono text-slate-900 font-medium">{fmtBRL(prod.revenue)}</td>
+                      <td className="py-2 text-right font-mono text-slate-500">{fmtBRL(prod.cost)}</td>
+                      <td className="py-2 text-right font-mono text-emerald-600 font-bold">{fmtBRL(prod.profit)}</td>
+                      <td className="py-2 text-right font-mono font-bold text-indigo-600">{prod.margin.toFixed(0)}%</td>
+                    </tr>
+                  ))}
                 </tbody>
+                <tfoot>
+                  <tr className="border-t-2 border-slate-300 font-bold text-xs">
+                    <td className="py-2 pr-2 text-slate-900">TOTAL</td>
+                    <td className="py-2 text-center font-mono text-slate-900">{productsTotals.units}</td>
+                    <td className="py-2 text-center font-mono text-slate-400">—</td>
+                    <td className="py-2 text-right font-mono text-slate-900">{fmtBRL(productsTotals.revenue)}</td>
+                    <td className="py-2 text-right font-mono text-slate-900">{fmtBRL(productsTotals.cost)}</td>
+                    <td className="py-2 text-right font-mono text-emerald-600">{fmtBRL(productsTotals.profit)}</td>
+                    <td className="py-2 text-right font-mono font-bold text-indigo-600">{productsTotals.revenue > 0 ? ((productsTotals.profit / productsTotals.revenue) * 100).toFixed(0) : 0}%</td>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           )}
