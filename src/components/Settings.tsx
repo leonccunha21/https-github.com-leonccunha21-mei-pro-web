@@ -565,6 +565,7 @@ interface SettingsProps {
   restoringBackup: boolean;
   onClearCloud: () => void;
   clearingCloud: boolean;
+  syncEnabled: boolean;
 }
 
 export default function Settings({
@@ -592,7 +593,8 @@ export default function Settings({
   onRestoreBackup,
   restoringBackup,
   onClearCloud,
-  clearingCloud
+  clearingCloud,
+  syncEnabled
 }: SettingsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const excelInputRef = useRef<HTMLInputElement>(null);
@@ -1210,6 +1212,13 @@ export default function Settings({
               <p className="text-xs text-slate-400 mt-0.5">Seus dados ficam salvos no Firebase e acessíveis em qualquer dispositivo conectado.</p>
             </div>
 
+            {!syncEnabled && (
+              <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-2">
+                <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
+                <span><b>Sincronização desativada (modo local).</b> Nenhum dado está sendo enviado ou baixado da nuvem. Seus dados ficam salvos apenas neste aparelho/navegador.</span>
+              </div>
+            )}
+
             {cloudUser ? (
               <div className="space-y-3">
                 <div className="flex items-center gap-3">
@@ -1274,7 +1283,7 @@ export default function Settings({
                 </p>
 
                 <div className="flex gap-2">
-                  <button onClick={onCloudSyncNow} className="flex-1 py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                  <button onClick={onCloudSyncNow} disabled={!syncEnabled} className="flex-1 py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
                     <RefreshCcw className="h-3.5 w-3.5" /> Sincronizar Agora
                   </button>
                   <button onClick={onCloudSignOut} className="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
@@ -1282,7 +1291,7 @@ export default function Settings({
                   </button>
                 </div>
 
-                <button onClick={onDownloadFromCloud} className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                <button onClick={onDownloadFromCloud} disabled={!syncEnabled} className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
                   <CloudDownload className="h-3.5 w-3.5" /> Baixar da Nuvem (espelhar no celular)
                 </button>
                 <p className="text-[11px] text-slate-400 leading-snug">
@@ -1293,7 +1302,7 @@ export default function Settings({
                   <RefreshCcw className="h-3.5 w-3.5" /> {restoringBackup ? 'Restaurando...' : 'Restaurar do Backup (corrigir estoque)'}
                 </button>
                 <p className="text-[11px] text-slate-400 leading-snug">
-                  Mescla o backup embutido com seus dados: corrige produtos/estoque a partir do backup e preserva suas vendas e despesas locais. Reenvia tudo para a nuvem.
+                  Substitui produtos, categorias, vendas e despesas pelos dados limpos do backup embutido (BASE 2). Apenas local (a nuvem está desativada).
                 </p>
 
                 <button onClick={onClearCloud} disabled={clearingCloud} className="w-full py-2 px-3 bg-rose-600 hover:bg-rose-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">

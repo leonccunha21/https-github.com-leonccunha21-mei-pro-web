@@ -77,6 +77,10 @@ function timeAgo(iso: string): string {
 // penalizar o carregamento inicial do app.
 import type { User } from 'firebase/auth';
 
+// Sincronização com a nuvem está DESATIVADA (modo local). Nenhum dado é enviado
+// ou baixado automaticamente. Mantenha `false` até o usuário querer reativar.
+const SYNC_ENABLED = false;
+
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
 
 export default function App() {
@@ -289,7 +293,7 @@ export default function App() {
 
   // --- Nuvem: envia para o Firestore de forma incremental (economiza cota) ---
   const pushToCloud = (data: LocalDb, opts?: { forceFull?: boolean }) => {
-    if (!cloudUser) return Promise.resolve(null);
+    if (!SYNC_ENABLED || !cloudUser) return Promise.resolve(null);
     setCloudSyncing(true);
     setCloudError(null);
     return import('./lib/dbSync').then(({ saveUserDbIncremental }) =>
@@ -311,7 +315,7 @@ export default function App() {
   // Agenda o envio incremental para a nuvem, coalescendo mudanças rápidas
   // (ex.: importação em massa) num único envio ~2s depois da última alteração.
   const scheduleCloudPush = () => {
-    if (!cloudUser) return;
+    if (!SYNC_ENABLED || !cloudUser) return;
     setCloudPending(true);
     if (cloudPushTimer.current) clearTimeout(cloudPushTimer.current);
     cloudPushTimer.current = window.setTimeout(() => {
@@ -433,6 +437,7 @@ export default function App() {
   // Usado para espelhar no celular o que está no computador. A sincronização
   // incremental em seguida limpa da nuvem o que era exclusivo deste aparelho.
   const handleDownloadFromCloud = async () => {
+    if (!SYNC_ENABLED) { showToast('Sincronização desativada (modo local).'); return; }
     if (!cloudUser) return;
     if (!window.confirm('Baixar os dados da nuvem para ESTE aparelho?\n\nIsso substitui os dados locais deste aparelho pelos dados salvos na nuvem (os do computador). Registros que existem apenas aqui serão substituídos.\n\nDica: primeiro clique "Sincronizar Agora" no computador para garantir que a nuvem está com os dados mais recentes.')) return;
     try {
@@ -465,7 +470,7 @@ export default function App() {
   // verdade). Assim os dois aparelhos ficam sempre IDÊNTICOS. Roda sozinho a
   // cada 30s e ao focar/abrir a aba.
   const pullFromCloud = async () => {
-    if (!cloudUser) return;
+    if (!SYNC_ENABLED || !cloudUser) return;
     if (document.visibilityState !== 'visible') return; // não gasta leitura em aba oculta
     if (cloudPushing.current) return;                   // empurrão em andamento
     if (Object.keys(pendingRef.current).length > 0) return; // edição local em curso
@@ -504,7 +509,7 @@ export default function App() {
   const pullFromCloudRef = React.useRef<() => void>(() => {});
   pullFromCloudRef.current = pullFromCloud;
   useEffect(() => {
-    if (!cloudUser) return;
+    if (!SYNC_ENABLED || !cloudUser) return;
     const tick = () => pullFromCloudRef.current();
     const interval = window.setInterval(tick, 30000);
     const onVisible = () => { if (document.visibilityState === 'visible') tick(); };
@@ -521,7 +526,7 @@ export default function App() {
   }, [cloudUser]);
 
   const handleCloudSyncNow = async () => {
-    if (!cloudUser) return;
+    if (!SYNC_ENABLED || !cloudUser) { showToast('Sincronização desativada (modo local).'); return; }
     if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
     const db = stateRef.current as LocalDb;
     showToast('Verificando alterações para sincronizar na nuvem...');
@@ -566,7 +571,7 @@ export default function App() {
   // Em seguida reenvia tudo para a nuvem, corrigindo o espelho na nuvem.
   const handleRestoreBackup = async () => {
     if (restoringBackup) return;
-    if (!window.confirm('Restaurar a partir do backup embutido?\n\nProdutos e categorias serão sobrescritos pelos valores do backup (corrige estoque/estoque mínimo), mas seus produtos locais exclusivos serão mantidos. Vendas, despesas e demais registros locais são preservados e apenas completados com o que faltar.\n\nDepois os dados são reenviados para a nuvem.')) {
+    if (!window.confirm('Restaurar a partir do backup embutido (BASE 2)?\n\nProdutos, categorias, vendas e despesas serão SUBSTUÍDOS integralmente pelos dados limpos do backup (remove os dados atuais embaralhados). Configurações da loja e clientes são mantidas.\n\nA nuvem também será redefinida com estes dados limpos.')) {
       return;
     }
     setRestoringBackup(true);
@@ -575,39 +580,28 @@ export default function App() {
       if (!res.ok) throw new Error('Não foi possível carregar o backup.');
       const backup = (await res.json()) as Partial<LocalDb>;
       const cur = stateRef.current;
-      const unionKeepLocal = <T extends { id?: string }>(local: T[] | undefined, remote: T[] | undefined): T[] => {
-        const l = Array.isArray(local) ? local : [];
-        const r = Array.isArray(remote) ? remote : [];
-        const map = new Map<string, T>();
-        for (const x of l) { const id = x?.id; if (id) map.set(id, x); }
-        for (const x of r) { const id = x?.id; if (id) map.set(id, x); }
-        return Array.from(map.values());
-      };
-      const unionKeepRemote = <T extends { id?: string }>(local: T[] | undefined, remote: T[] | undefined): T[] => {
-        const l = Array.isArray(local) ? local : [];
-        const r = Array.isArray(remote) ? remote : [];
-        const map = new Map<string, T>();
-        for (const x of r) { const id = x?.id; if (id) map.set(id, x); }
-        for (const x of l) { const id = x?.id; if (id) map.set(id, x); }
-        return Array.from(map.values());
-      };
+      const arr = <T,>(x: T[] | undefined): T[] => (Array.isArray(x) ? x : []);
       const merged: LocalDb = {
-        products: unionKeepRemote(cur.products, backup.products),
-        categories: unionKeepRemote(cur.categories, backup.categories),
-        sales: unionKeepLocal(cur.sales, backup.sales),
-        expenses: unionKeepLocal(cur.expenses, backup.expenses),
-        orders: unionKeepLocal(cur.orders, backup.orders),
+        products: arr(backup.products).length ? (backup.products as Product[]) : cur.products,
+        categories: arr(backup.categories).length ? (backup.categories as Category[]) : cur.categories,
+        sales: arr(backup.sales).length ? (backup.sales as Sale[]) : cur.sales,
+        expenses: arr(backup.expenses).length ? (backup.expenses as Expense[]) : cur.expenses,
+        orders: cur.orders ?? [],
         storeInfo: cur.storeInfo ?? backup.storeInfo ?? null,
-        customers: unionKeepLocal(cur.customers, backup.customers),
-        suppliers: unionKeepLocal(cur.suppliers, backup.suppliers),
-        purchases: unionKeepLocal(cur.purchases, backup.purchases),
-        cashSessions: unionKeepLocal(cur.cashSessions, backup.cashSessions),
-        loans: unionKeepLocal(cur.loans, backup.loans),
+        customers: cur.customers ?? (backup.customers as Customer[] | undefined) ?? [],
+        suppliers: cur.suppliers ?? [],
+        purchases: cur.purchases ?? [],
+        cashSessions: cur.cashSessions ?? [],
+        loans: cur.loans ?? [],
         initialized: true,
       };
       persist(merged);
+      setProducts(merged.products);
+      setSales(merged.sales);
+      setCategories(merged.categories);
+      setExpenses(merged.expenses);
       if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
-      if (cloudUser) {
+      if (SYNC_ENABLED && cloudUser) {
         try {
           const { clearUserDb, clearSyncCache } = await import('./lib/dbSync');
           await clearUserDb(cloudUser.uid);
@@ -616,7 +610,7 @@ export default function App() {
         } catch (_) { /* ignore cloud clear failures */ }
         pushToCloud(merged, { forceFull: true });
       }
-      showToast(`Backup restaurado: ${merged.products.length} produtos e ${merged.sales.length} vendas. A nuvem foi redefinida com estes dados.`);
+      showToast(`Backup restaurado: ${merged.products.length} produtos e ${merged.sales.length} vendas.`);
     } catch (e: unknown) {
       showToast(e instanceof Error ? e.message : 'Falha ao restaurar o backup.');
     } finally {
@@ -1759,6 +1753,7 @@ export default function App() {
                 restoringBackup={restoringBackup}
                 onClearCloud={handleClearCloud}
                 clearingCloud={clearingCloud}
+                syncEnabled={SYNC_ENABLED}
               />
             )}
             </React.Suspense>
