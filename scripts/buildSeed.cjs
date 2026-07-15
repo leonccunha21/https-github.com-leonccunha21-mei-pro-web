@@ -9,9 +9,8 @@ const wb = XLSX.readFile('data/excel/BASE 2.xlsx');
 const LOCAL_DB_PATH = 'data/local-db.json';
 
 const num = (v) => {
-  if (v === null || v === undefined || v === '') return 0;
-  const s = String(v).replace(/[^\d.,-]/g, '').replace(/\.(?=\d{2}\b)/g, '').replace(',', '.');
-  const n = parseFloat(s);
+  if (v === '' || v == null) return 0;
+  const n = Number(v);
   return isNaN(n) ? 0 : n;
 };
 
@@ -105,34 +104,6 @@ for (let i = 1; i < pRows.length; i++) {
 const prodByName = new Map();
 products.forEach(p => prodByName.set(p.name.trim().toLowerCase(), p));
 
-// ---- Itens de venda (agrupados por Venda ID) ----
-const itSheet = wb.Sheets['Itens Vendidos'];
-const itRows = itSheet ? XLSX.utils.sheet_to_json(itSheet, { header: 1 }) : [];
-const itemsBySale = {};
-
-if (itRows.length > 1) {
-  for (let i = 1; i < itRows.length; i++) {
-    const r = itRows[i];
-    if (!r || r.length < 5) continue;
-    const saleId = String(r[0] || '').trim();
-    if (!saleId) continue;
-    const productName = String(r[3] || '').trim();
-    const quantity = num(r[4]) || 1;
-    const salePrice = num(r[5]) || 0;
-    const costPrice = num(r[7]) || 0;
-    const total = num(r[6]) || salePrice * quantity;
-    const match = prodByName.get(productName.toLowerCase());
-    (itemsBySale[saleId] = itemsBySale[saleId] || []).push({
-      productId: match ? match.id : '',
-      productName,
-      quantity,
-      costPrice,
-      salePrice,
-      total,
-    });
-  }
-}
-
 // ---- Cabeçalho das vendas ----
 const vendaSheet = wb.Sheets['Vendas'];
 const vRows = vendaSheet ? XLSX.utils.sheet_to_json(vendaSheet, { header: 1 }) : [];
@@ -146,13 +117,43 @@ for (let i = 1; i < vRows.length; i++) {
   if (saleId) vHeader[saleId] = r;
 }
 
+// ---- FONTE DE VERDADE: aba Vendas ----
+// A aba "Vendas" (corrigida pelo usuário) é a fonte primária de valor/custo/lucro.
+// "Itens Vendidos" é usado apenas como fallback para vendas ausentes na aba Vendas.
+const vendasBySale = {};
+const vendaProfitMap = new Map();
+
+for (const row of rawVendasObjects) {
+  const saleId = String(getField(row, 'ID', 'Id')).trim();
+  if (!saleId) continue;
+  const productName = String(getField(row, 'Produto')).trim();
+  if (!productName) continue;
+
+  const quantity = num(getField(row, 'QTD', 'Qtd', 'Quantidade')) || 1;
+  const total = num(getField(row, 'Valor Venda', ' Valor Venda ', 'ValorVenda', 'Venda', 'Total'));
+  const totalCost = num(getField(row, 'Custo', ' Custo ', 'Custo Total', 'ValorCusto'));
+  const profit = num(getField(row, 'Lucro'));
+  const match = prodByName.get(productName.toLowerCase());
+
+  (vendasBySale[saleId] = vendasBySale[saleId] || []).push({
+    productId: match ? match.id : '',
+    productName,
+    quantity,
+    costPrice: quantity > 0 ? (totalCost / quantity) : 0,
+    salePrice: quantity > 0 ? (total / quantity) : 0,
+    total,
+  });
+
+  if (profit) vendaProfitMap.set(saleId, profit);
+}
+
 // ---- Monta as vendas ----
 const sales = [];
 const processedSaleIds = new Set();
 
-// Primeiro processa as vendas que possuem detalhamento de itens
-for (const saleId of Object.keys(itemsBySale)) {
-  const items = itemsBySale[saleId];
+// Primeiro processa as vendas da aba Vendas (fonte de verdade)
+for (const saleId of Object.keys(vendasBySale)) {
+  const items = vendasBySale[saleId];
   const v = vHeader[saleId] || [];
   const date = parseDateTime(v[1], v[2]);
   const clientName = String(v[3] || '').trim() || undefined;
@@ -164,10 +165,11 @@ for (const saleId of Object.keys(itemsBySale)) {
   const ecommerceOrderId = oidRaw ? oidRaw : undefined;
   const status = mapStatus(v[13]);
   const saleChannel = String(v[14] || '').trim() || undefined;
-  
+
   const total = items.reduce((s, it) => s + it.total, 0);
   const totalCost = items.reduce((s, it) => s + it.costPrice * it.quantity, 0);
-  
+  const profit = vendaProfitMap.has(saleId) ? vendaProfitMap.get(saleId) : (total - totalCost);
+
   sales.push({
     id: saleId,
     date,
@@ -180,54 +182,13 @@ for (const saleId of Object.keys(itemsBySale)) {
     saleChannel,
     total,
     totalCost,
-    profit: total - totalCost,
+    profit,
     status,
   });
   processedSaleIds.add(saleId);
 }
 
-// Segundo: fallback para Vendas que não estavam em "Itens Vendidos"
-for (const row of rawVendasObjects) {
-  const saleId = String(getField(row, 'ID', 'Id')).trim();
-  if (!saleId || processedSaleIds.has(saleId)) continue;
 
-  const productName = String(getField(row, 'Produto')).trim();
-  if (!productName) continue;
-
-  const qty = num(getField(row, 'QTD', 'Qtd', 'Quantidade')) || 1;
-  const total = num(getField(row, 'Valor Venda', ' Valor Venda ', 'ValorVenda', 'Venda', 'Total'));
-  const totalCost = num(getField(row, 'Custo', ' Custo ', 'Custo Total', 'ValorCusto'));
-  const profit = num(getField(row, 'Lucro'));
-  const client = String(getField(row, 'Cliente')).trim();
-  const phone = String(getField(row, 'Telefone')).trim();
-  
-  const match = prodByName.get(productName.toLowerCase());
-
-  const items = [{
-    productId: match ? match.id : '',
-    productName,
-    quantity: qty,
-    costPrice: qty > 0 ? (totalCost / qty) : 0,
-    salePrice: qty > 0 ? (total / qty) : 0,
-    total,
-  }];
-
-  sales.push({
-    id: saleId,
-    date: parseDateTime(getField(row, 'Data'), getField(row, 'Hora')),
-    items,
-    clientName: client || undefined,
-    clientPhone: (phone && phone !== '-') ? phone : undefined,
-    paymentMethod: mapPayment(getField(row, 'Pagamento', 'Forma Pagamento')),
-    saleType: String(getField(row, 'Tipo')).toLowerCase().includes('cnpj') ? 'CNPJ' : 'CPF',
-    ecommerceOrderId: String(getField(row, 'ID Pedido', 'Pedido')).trim() || undefined,
-    saleChannel: String(getField(row, 'Canal')).trim() || 'Loja Física',
-    total,
-    totalCost,
-    profit: profit || (total - totalCost),
-    status: mapStatus(getField(row, 'Status', 'Situação')),
-  });
-}
 
 // ---- Despesas ----
 const eRows = XLSX.utils.sheet_to_json(wb.Sheets['Despesas'], { header: 1 });

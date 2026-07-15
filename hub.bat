@@ -44,7 +44,7 @@ goto menu
 :g_imp
 echo.
 echo  [2] Importando planilha para o app...
-node scripts/importar_planilha.cjs
+node scripts/importar_base2.cjs
 pause
 goto menu
 

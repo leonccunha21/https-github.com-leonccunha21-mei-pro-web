@@ -198,26 +198,20 @@ for (const row of prodRaw) {
   };
 
   // ---- SINCRONIZAR COM VERDADE DA ABA VENDAS ----
-  // 1. Atualizar salePrice com média real das vendas se disponível
+  // Apenas atualizar categoria se a aba Vendas tiver e a Produtos não tiver
   if (vendaSalePriceMap.has(nameKey)) {
     const sp = vendaSalePriceMap.get(nameKey);
-    const avgSalePrice = roundCurrency(sp.sumTotal / sp.sumQty);
-    if (avgSalePrice > 0 && avgSalePrice !== produto.salePrice) {
-      console.log(`  [SYNC salePrice] "${name}": Produtos=${produto.salePrice} → Vendas=${avgSalePrice}`);
-      produto.salePrice = avgSalePrice;
-    }
-    // Atualizar categoria se a aba Vendas tiver e a Produtos não tiver
     if (sp.category && (!produto.category || produto.category === 'Diversos')) {
       produto.category = sp.category;
     }
   }
 
-  // 2. Se o custo está zerado na aba Produtos mas temos dados nas Vendas, usar custo médio das vendas
+  // Se o custo está zerado na aba Produtos mas temos dados nas Vendas, usar custo médio das vendas apenas como fallback
   if (produto.costPrice === 0 && vendaCostMap.has(nameKey)) {
     const cm = vendaCostMap.get(nameKey);
     if (cm.sumQty > 0) {
       const avgCost = roundCurrency(cm.sumCost / cm.sumQty);
-      console.log(`  [SYNC costPrice] "${name}": Produtos=0 → Vendas=${avgCost}`);
+      console.log(`  [Fallback costPrice] "${name}": Produtos=0 → Vendas=${avgCost}`);
       produto.costPrice = avgCost;
     }
   }
