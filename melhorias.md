@@ -1,17 +1,35 @@
-1. Performance (mais urgente)
-- O chunk data-JddvFpeW.js tem 1,08 MB — é o seed-backup.json (966 produtos + 2804 vendas) embutido e carregado junto no boot. Isso deixa o carregamento inicial lento. Recomendo carregar esse seed sob demanda (lazy import) ou movê-lo para o IndexedDB/localStorage em vez de bundle.
-- xlsx (429 kB) e firebase (436 kB) já são importados dinamicamente em boa parte dos lugares — mantenha assim; evite importá-los no topo.
-- Ative build.chunkSizeWarningLimit maior ou faça manualChunks para separar vendors (firebase/xlsx/motion) em caches de longa duração.
-2. Organização de código
-- Settings.tsx (1341 linhas) faz parsing de Excel/CSV, import/export e UI num só arquivo. Separe em lib/parsers.ts (lógica) + componentes de UI menores. Mesma ideia para Dashboard.tsx (723 linhas, com gráfico SVG feito à mão) — extraia o gráfico para um componente próprio.
-- Componentes gigantes dificultam manutenção e aumentam o risco de regressão em melhorias de UI.
-3. Camada de dados
-- O app alterna entre localStorage, seed embutido e Firebase. Centralize isso num lib/storage.ts / lib/db.ts com uma interface única, em vez de espalhar saveXToStorage pelo App.tsx.
-- Muitas funções de parsing usam any livremente — tipar melhor evita bugs silenciosos na importação.
-4. Robustez / UX
-- Não há testes. Adicionar pelo menos testes unitários para os parsers de planilha (que são a parte mais frágil) já evitaria muita dor.
-- Vários botões de ícone não têm aria-label — melhorar acessibilidade.
-- O "modo local" vs "nuvem" tem regras misturadas (restore/baixar viram no-op). Deixar esse estado explícito e documentado ajuda a evitar confusão do usuário.
+# Melhorias — status
 
+## 1. Performance
+- [x] O seed **foi removido**: não há mais `loadSeed`/`import('./data')` nem `public/seed-backup.json` sendo carregado no primeiro acesso. Cada conta nova inicia com 0 dados e só recebe dados via importação manual de Excel.
+- [x] `xlsx` (429 kB) e `firebase` (436 kB) continuam sendo importados dinamicamente (lazy) onde são usados. Mantido.
+- [x] `manualChunks` já separa `vendor-firebase`, `vendor-xlsx`, `vendor-motion` e `vendor-react` (caches de longa duração). Mantido `chunkSizeWarningLimit: 1500` em `vite.config.ts`.
 
+## 2. Organização de código
+- [x] `Settings.tsx` (era 1701 linhas) teve toda a lógica de parsing de planilhas extraída para `src/lib/sheetParsers.ts`. O componente caiu para ~965 linhas e passa a importar os parsers.
+- [x] `Dashboard.tsx` teve o gráfico SVG de faturamento extraído para `src/components/SalesChart.tsx`.
+- [~] Os componentes ainda são grandes; uma separação em UI menor (sub-componentes de Cards/Seções) ficou como melhoria futura, mas o risco de regressão justificou não dividir tudo agora.
 
+## 3. Camada de dados
+- [x] Centralização já existente em `src/lib/localDb.ts` (load/save IndexedDB + servidor opcional) e `src/lib/dbSync.ts` (nuvem). `App.tsx` usa um único `persist()` em vez de `saveXToStorage` espalhados.
+- [x] Os parsers de planilha (antes `any[][]` em todo lugar) agora usam os tipos `Cell`/`SheetRows` e uniões corretas (`PaymentMethod`, `Loan['status']`, etc.) em `src/lib/sheetParsers.ts`. Zero `any` nos parsers.
+
+## 4. Robustez / UX
+- [x] Testes unitários adicionados em `src/lib/parsers.test.ts` (9 testes cobrindo produtos, categorias, vendas, empréstimos e clientes). Roda com `npm test`.
+- [x] `aria-label` adicionado aos botões de ícone (header do App, Dashboard, SalesHistory, Products, Debtors, OsOrcamento, Reports).
+- [x] O estado "modo local vs nuvem" já é explícito em `Settings.tsx` (banner "Sincronização desativada (modo local)" + botões de nuvem desabilitados quando `syncEnabled` é false).
+
+## 5. Uso particular por conta (login Google obrigatório)
+- [x] **Login obrigatório**: `App.tsx` agora tem um gate de autenticação. Enquanto `authReady` é falso mostra "Verificando conta…"; se não houver `cloudUser`, renderiza `src/components/Login.tsx` (tela com botão "Entrar com Google"). Sem login, nenhum dado é exibido (app mostra 0 dados).
+- [x] **Sem seed automático**: removidos `loadSeed`/`import('./data')` em `App.tsx` e o fallback de `seed-backup.json` em `src/lib/localDb.ts` (`loadDb`). Nova conta inicia zerada.
+- [x] **Entrada de dados só via Excel manual**: removido o botão "Restaurar do Backup" (`handleRestoreBackup`) de `App.tsx` e `Settings.tsx`. Os dados devem ser enviados pelo usuário via importação de planilha (`sheetParsers.ts`).
+- [x] `src/components/Login.tsx` criado com botão "Entrar com Google" (usa `googleSignIn()` de `lib/firebase`), tratamento de erro e explicação de uso particular.
+
+---
+
+## Correção de dados (BASE 2 → BASE 1)
+- O `public/seed-backup.json` (backup de restauração, rotulado "BASE 2") havia sido gerado a partir de `data/excel/BASE 2.xlsx`, que **tinha dados errados**.
+- Regenerado a partir de `data/excel/BASE 1.xlsx` (referência correta/funcionando) usando `node scripts/importar_base2.cjs`, que atualizou `src/data.json`, `src/data.ts`, `data/local-db.json` e `public/seed-backup.json` (e o `dist/`).
+- Resultado: 856 produtos, 2804 vendas, 18 categorias, 20 despesas, 1 empréstimo — faturamento R$ 120.369,71.
+- O recurso de "Restaurar do Backup" foi **removido** (modelo de uso particular: dados só entram via Excel manual). O `seed-backup.json` deixou de ser carregado automaticamente.
+- `data/excel/BASE 2.xlsx` (a planilha que o usuário envia) foi **sobrescrita** com o conteúdo correto de `data/excel/BASE 1.xlsx`, para que o arquivo enviado esteja com os dados certos.

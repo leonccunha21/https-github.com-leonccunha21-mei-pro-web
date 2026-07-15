@@ -634,6 +634,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                               onClick={() => handleConfirmPayment(sale)}
                               className="p-1.5 hover:bg-amber-100 text-amber-600 rounded-lg transition-colors"
                               title="Confirmar Pagamento"
+                              aria-label="Confirmar Pagamento"
                             >
                               <CheckCircle className="h-4 w-4" />
                             </button>
@@ -644,6 +645,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                             onClick={() => setSelectedSale(sale)}
                             className="p-1.5 hover:bg-slate-100 text-slate-600 rounded-lg transition-colors"
                             title="Ver Cupom / Detalhes"
+                            aria-label="Ver Cupom / Detalhes"
                           >
                             <Info className="h-4 w-4" />
                           </button>
@@ -654,6 +656,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                               onClick={() => handleCancelClick(sale)}
                               className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors"
                               title="Estornar / Cancelar venda"
+                              aria-label="Estornar / Cancelar venda"
                             >
                               <CornerUpLeft className="h-4 w-4" />
                             </button>

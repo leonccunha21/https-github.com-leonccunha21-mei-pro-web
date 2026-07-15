@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect } from 'react';
 import { Sale, Loan } from '../types';
 import { normalizeChannel } from '../lib/normalize';
 import {
@@ -833,12 +833,12 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                       <div className="flex items-center gap-1">
                         {!isPaid && (
                           <>
-                            <button onClick={() => { setSelectedLoan(l); setLoanPartial(''); }} className="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold cursor-pointer" title="Receber">Receber</button>
-                            <button onClick={() => handleLoanPay(l)} className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold cursor-pointer" title="Quitar">Quitar</button>
+                            <button onClick={() => { setSelectedLoan(l); setLoanPartial(''); }} className="px-2.5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold cursor-pointer" title="Receber" aria-label="Receber">Receber</button>
+                            <button onClick={() => handleLoanPay(l)} className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-[11px] font-bold cursor-pointer" title="Quitar" aria-label="Quitar">Quitar</button>
                           </>
                         )}
-                        <button onClick={() => openLoanWhatsApp(l)} className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-600 cursor-pointer" title="Enviar cobrança via WhatsApp"><MessageCircle className="h-3.5 w-3.5" /></button>
-                        <button onClick={() => removeLoan(l.id)} className="p-1.5 rounded-lg bg-red-50 dark:bg-red-900/30 hover:bg-red-100 text-red-600 cursor-pointer" title="Remover"><Trash2 className="h-3.5 w-3.5" /></button>
+                        <button onClick={() => openLoanWhatsApp(l)} className="p-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-600 cursor-pointer" title="Enviar cobrança via WhatsApp" aria-label="Enviar cobrança via WhatsApp"><MessageCircle className="h-3.5 w-3.5" /></button>
+                        <button onClick={() => removeLoan(l.id)} className="p-1.5 rounded-lg bg-red-50 dark:bg-red-900/30 hover:bg-red-100 text-red-600 cursor-pointer" title="Remover" aria-label="Remover"><Trash2 className="h-3.5 w-3.5" /></button>
                       </div>
                     </div>
                   </div>

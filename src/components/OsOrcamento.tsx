@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect } from 'react';
 import { ServiceOrder, OsItem, Product, StoreInfo } from '../types';
 import {
   FileText,
@@ -320,13 +320,13 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
                         R$ {order.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}
                       </p>
                       <div className="flex items-center gap-1.5 mt-2">
-                          <button onClick={() => { setSelectedOrder(order); setActiveView('detail'); }} className="p-2 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer" title="Ver detalhes">
+                          <button onClick={() => { setSelectedOrder(order); setActiveView('detail'); }} className="p-2 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer" title="Ver detalhes" aria-label="Ver detalhes">
                             <Eye className="h-3.5 w-3.5" />
                           </button>
-                          <button onClick={() => handlePrint(order)} className="p-2 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors cursor-pointer" title="Imprimir">
+                          <button onClick={() => handlePrint(order)} className="p-2 rounded-lg text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors cursor-pointer" title="Imprimir" aria-label="Imprimir">
                             <Printer className="h-3.5 w-3.5" />
                           </button>
-                          <button onClick={() => handleDelete(order.id)} className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer" title="Excluir">
+                          <button onClick={() => handleDelete(order.id)} className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer" title="Excluir" aria-label="Excluir">
                             <Trash2 className="h-3.5 w-3.5" />
                           </button>
                       </div>

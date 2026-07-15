@@ -12,6 +12,8 @@ Hub.log
 scripts/legacy/
 arquivos excel/
 data/excel/~$*.xlsx
+**/~$*.xlsx
+**/~$*.xls
 
 data/local-db.json
 

@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PROJECT_ROOT = path.resolve(__dirname, '..');
-const INPUT = path.join(PROJECT_ROOT, 'data', 'excel', 'BASE 2.xlsx');
+const INPUT = path.join(PROJECT_ROOT, 'data', 'excel', 'BASE 1.xlsx');
 const OUTPUT_DATA_JSON = path.join(PROJECT_ROOT, 'src', 'data.json');
 const OUTPUT_DATA_TS = path.join(PROJECT_ROOT, 'src', 'data.ts');
 const OUTPUT_LOCAL_DB = path.join(PROJECT_ROOT, 'data', 'local-db.json');
@@ -11,6 +11,18 @@ const OUTPUT_SEED_BACKUP = path.join(PROJECT_ROOT, 'public', 'seed-backup.json')
 
 const roundCurrency = (v) => Math.round((Number(v) + Number.EPSILON) * 100) / 100;
 const n = (v) => (v === '' || v == null ? 0 : Number(v));
+
+// Converte valores monetários que podem vir como texto "R$ 15.00", "R$ 1.200,00" ou número puro.
+// No BASE 1.xlsx o ponto é separador decimal (ex.: "55.50" = 55,50) e a vírgula é rara (decimal pt-BR).
+function money(v) {
+  if (v === '' || v == null) return 0;
+  if (typeof v === 'number') return v;
+  let t = String(v).replace(/[^\d.,]/g, '').trim();
+  if (!t) return 0;
+  if (t.includes(',')) t = t.replace(/\./g, '').replace(',', '.');
+  const num = Number(t);
+  return isNaN(num) ? 0 : num;
+}
 const str = (v) => (v == null ? '' : String(v).trim());
 
 // Normaliza nome para chave de comparação (sem acento, minúsculo, sem espaço extra)
@@ -114,9 +126,9 @@ for (const row of vendaRaw) {
   if (!productName) continue;
 
   const qty = n(getField(row, 'QTD', 'Qtd', 'Quantidade')) || 1;
-  const total = roundCurrency(n(getField(row, 'Valor Venda', ' Valor Venda ', 'ValorVenda', 'Venda')));
-  const totalCost = roundCurrency(n(getField(row, 'Custo', ' Custo ', 'Custo Total', 'ValorCusto')));
-  const profit = roundCurrency(n(getField(row, 'Lucro')));
+  const total = roundCurrency(money(getField(row, 'Valor Venda', ' Valor Venda ', 'ValorVenda', 'Venda')));
+  const totalCost = roundCurrency(money(getField(row, 'Custo', ' Custo ', 'Custo Total', 'ValorCusto')));
+  const profit = roundCurrency(money(getField(row, 'Lucro')));
   const client = str(getField(row, 'Cliente'));
   const categoria = str(getField(row, 'Categoria'));
 
@@ -189,8 +201,8 @@ for (const row of prodRaw) {
     code: str(getField(row, 'SKU', 'Código', 'Codigo')) || `PROD-${String(pid).padStart(4,'0')}`,
     name,
     category: str(getField(row, 'Categoria')) || 'Diversos',
-    costPrice: roundCurrency(n(getField(row, 'Preço Custo', 'Preco Custo', 'Custo'))),
-    salePrice: roundCurrency(n(getField(row, 'Preço Venda', 'Preco Venda', 'Venda'))),
+    costPrice: roundCurrency(money(getField(row, 'Preço Custo', 'Preco Custo', 'Custo'))),
+    salePrice: roundCurrency(money(getField(row, 'Preço Venda', 'Preco Venda', 'Venda'))),
     stock: Math.max(0, stock),
     minStock: n(getField(row, 'Estoque Mínimo', 'Estoque Minimo')),
     status: stock > 0 ? 'disponivel' : 'indisponivel',
@@ -267,7 +279,7 @@ if (wb.Sheets['Despesas']) {
   let eid = 1;
   for (const row of expRaw) {
     const category = str(getField(row, 'Categoria'));
-    const amount = n(getField(row, 'Valor'));
+    const amount = money(getField(row, 'Valor'));
     if (!category || amount <= 0) continue;
     finalExpenses.push({
       id: str(getField(row, 'ID')) || `exp_${eid}`,
@@ -299,8 +311,8 @@ if (wb.Sheets['Empréstimos']) {
       borrowerPhone: str(getField(row, 'Telefone')),
       loanDate: toISODateBR(getField(row, 'Data Empréstimo', 'Data Emprestimo')),
       dueDate: toISODateBR(getField(row, 'Vencimento')),
-      principal: roundCurrency(n(getField(row, 'Valor Emprestado'))),
-      interest: roundCurrency(n(getField(row, 'Juros'))),
+      principal: roundCurrency(money(getField(row, 'Valor Emprestado'))),
+      interest: roundCurrency(money(getField(row, 'Juros'))),
       status: str(getField(row, 'Situação', 'Situacao')) || 'open',
       createdAt: str(getField(row, 'CreatedAt')) || new Date().toISOString(),
     });

@@ -13,6 +13,10 @@ export default defineConfig(() => {
     },
     build: {
       target: 'es2020',
+      // Aumenta o limite de aviso de tamanho de chunk. O seed (data.json) e os
+      // vendors (firebase/xlsx/motion) são grandes por natureza, mas são
+      // carregados sob demanda (lazy/dynamic import), então não penalizam o boot.
+      chunkSizeWarningLimit: 1500,
       cssCodeSplit: true,
       rollupOptions: {
         output: {

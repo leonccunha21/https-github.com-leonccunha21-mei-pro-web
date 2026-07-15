@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { Product, Category, Sale } from '../types';
 import { categorizeProduct } from '../lib/categorize';
 import { 
@@ -474,9 +474,9 @@ export default function Products({ products, categories, sales, onAddProduct, on
                     <div className="flex items-center gap-1 shrink-0">
                       <button onClick={() => handleOpenEditModal(p)} className="p-1.5 hover:bg-indigo-50 text-indigo-600 rounded-lg transition-colors"><Edit2 className="h-4 w-4" /></button>
                       {p.archived ? (
-                        <button onClick={() => onUnarchiveProduct(p.id)} className="p-1.5 hover:bg-emerald-50 text-emerald-600 rounded-lg transition-colors" title="Restaurar"><RotateCcw className="h-4 w-4" /></button>
+                        <button onClick={() => onUnarchiveProduct(p.id)} className="p-1.5 hover:bg-emerald-50 text-emerald-600 rounded-lg transition-colors" title="Restaurar" aria-label="Restaurar"><RotateCcw className="h-4 w-4" /></button>
                       ) : (
-                        <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1.5 hover:bg-amber-50 text-amber-600 rounded-lg transition-colors" title="Arquivar"><Archive className="h-4 w-4" /></button>
+                        <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1.5 hover:bg-amber-50 text-amber-600 rounded-lg transition-colors" title="Arquivar" aria-label="Arquivar"><Archive className="h-4 w-4" /></button>
                       )}
                     </div>
                   </div>
@@ -585,11 +585,11 @@ export default function Products({ products, categories, sales, onAddProduct, on
                         </td>
                         <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
                           <div className="flex items-center justify-center gap-0.5">
-                            <button onClick={() => handleOpenEditModal(p)} className="p-1 hover:bg-indigo-50 text-indigo-600 rounded transition-colors" title="Editar"><Edit2 className="h-3.5 w-3.5" /></button>
+                            <button onClick={() => handleOpenEditModal(p)} className="p-1 hover:bg-indigo-50 text-indigo-600 rounded transition-colors" title="Editar" aria-label="Editar"><Edit2 className="h-3.5 w-3.5" /></button>
                             {p.archived ? (
-                              <button onClick={() => onUnarchiveProduct(p.id)} className="p-1 hover:bg-emerald-50 text-emerald-600 rounded transition-colors" title="Restaurar"><RotateCcw className="h-3.5 w-3.5" /></button>
+                              <button onClick={() => onUnarchiveProduct(p.id)} className="p-1 hover:bg-emerald-50 text-emerald-600 rounded transition-colors" title="Restaurar" aria-label="Restaurar"><RotateCcw className="h-3.5 w-3.5" /></button>
                             ) : (
-                              <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1 hover:bg-amber-50 text-amber-600 rounded transition-colors" title="Arquivar"><Archive className="h-3.5 w-3.5" /></button>
+                              <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1 hover:bg-amber-50 text-amber-600 rounded transition-colors" title="Arquivar" aria-label="Arquivar"><Archive className="h-3.5 w-3.5" /></button>
               )}
                           </div>
                         </td>

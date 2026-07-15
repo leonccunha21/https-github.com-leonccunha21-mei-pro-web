@@ -15,10 +15,10 @@ import {
   CashSession,
   Loan
 } from './types';
-// Dados de seed (data.json, ~1,7 MB) são carregados sob demanda, apenas na
-// primeira execução ou quando o banco local está vazio — evitando parse no startup.
-let _seedPromise: Promise<typeof import('./data')> | null = null;
-const loadSeed = () => (_seedPromise ??= import('./data'));
+// Nenhum seed automático: contas novas começam com 0 dados. A entrada de dados
+// ocorre apenas via importação manual de planilha Excel (ver tela de Configurações).
+// "uso particular": cada login (Google) acessa apenas os dados deste dispositivo;
+// dados de vendas NÃO são enviados à nuvem (apenas as informações da loja).
 
 import { lazy } from 'react';
 const Dashboard = lazy(() => import('./components/Dashboard'));
@@ -27,6 +27,7 @@ const Sales = lazy(() => import('./components/Sales'));
 const SalesHistory = lazy(() => import('./components/SalesHistory'));
 const Reports = lazy(() => import('./components/Reports'));
 const Settings = lazy(() => import('./components/Settings'));
+const LoginScreen = lazy(() => import('./components/Login'));
 const OsOrcamento = lazy(() => import('./components/OsOrcamento'));
 const Debtors = lazy(() => import('./components/Debtors'));
 const CashFlow = lazy(() => import('./components/CashFlow'));
@@ -106,6 +107,10 @@ export default function App() {
   const [cashSessions, setCashSessions] = useState<CashSession[]>([]);
   const [loans, setLoans] = useState<Loan[]>([]);
 
+  // Estado de resolução da autenticação (Firebase). Só revela a tela principal
+  // após saber se há usuário logado. Usuário não logado => 0 dados.
+  const [authReady, setAuthReady] = useState(false);
+
   // Toast de erro de persistência (M6)
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const toastTimer = useRef<number | null>(null);
@@ -122,7 +127,6 @@ export default function App() {
   const [cloudError, setCloudError] = useState<string | null>(null);
   const [cloudPending, setCloudPending] = useState(false);
   const [dailyWrites, setDailyWrites] = useState(0);
-  const [restoringBackup, setRestoringBackup] = useState(false);
   const [clearingCloud, setClearingCloud] = useState(false);
 
   const [storeInfo, setStoreInfo] = useState(() => {
@@ -169,11 +173,8 @@ export default function App() {
       e = dbData.expenses!;
       c = dbData.categories!;
     } else {
-      const seed = await loadSeed();
-      p = hasDb && Array.isArray(dbData.products) ? dbData.products! : seed.initialProducts;
-      s = hasDb && Array.isArray(dbData.sales) ? dbData.sales! : seed.initialSales;
-      e = hasDb && Array.isArray(dbData.expenses) ? dbData.expenses! : seed.initialExpenses;
-      c = hasDb && Array.isArray(dbData.categories) ? dbData.categories! : seed.initialCategories;
+      // Sem dados locais e sem seed: conta nova começa vazia (0 dados).
+      p = []; s = []; e = []; c = [];
     }
     const seededProducts = runStockCleanup(p);
     setProducts(seededProducts);
@@ -194,6 +195,8 @@ export default function App() {
   };
 
   useEffect(() => {
+    if (!authReady) return;
+    if (!cloudUser) { setLoading(false); return; }
     (async () => {
       try {
         const db = await loadDb();
@@ -218,16 +221,15 @@ export default function App() {
           });
         }
       } catch {
-        const seed = await loadSeed();
-        setProducts(seed.initialProducts);
-        setSales(seed.initialSales);
-        setExpenses(seed.initialExpenses);
-        setCategories(seed.initialCategories);
+        setProducts([]);
+        setSales([]);
+        setExpenses([]);
+        setCategories([]);
         persist({
-          products: seed.initialProducts,
-          sales: seed.initialSales,
-          categories: seed.initialCategories,
-          expenses: seed.initialExpenses,
+          products: [],
+          sales: [],
+          categories: [],
+          expenses: [],
           orders: [],
           customers: [],
           suppliers: [],
@@ -241,7 +243,7 @@ export default function App() {
         setLoading(false);
       }
     })();
-  }, []);
+  }, [authReady, cloudUser]);
 
   // Observa o estado de autenticação do Firebase (nuvem)
   useEffect(() => {
@@ -249,11 +251,12 @@ export default function App() {
     let cancelled = false;
     import('./lib/firebase').then(({ initAuth }) => {
       if (cancelled) return;
+      setAuthReady(true);
       unsub = initAuth(
         (user) => setCloudUser(user),
         () => setCloudUser(null)
       );
-    });
+    }).catch(() => setAuthReady(true));
     return () => {
       cancelled = true;
       if (unsub) unsub();
@@ -564,61 +567,6 @@ export default function App() {
       showToast('Falha ao apagar os dados da nuvem.');
     } finally {
       setClearingCloud(false);
-    }
-  };
-
-  // Recupera os dados a partir do backup embutido (/seed-backup.json):
-  // - produtos/categorias: o backup vence (restaura estoque/minStock corretos),
-  //   mas produtos que existem só localmente são mantidos (união por id).
-  // - vendas/despesas/etc: o local vence (não perde transações), adicionando
-  //   o que existir só no backup.
-  // Em seguida reenvia tudo para a nuvem, corrigindo o espelho na nuvem.
-  const handleRestoreBackup = async () => {
-    if (restoringBackup) return;
-    if (!window.confirm('Restaurar a partir do backup embutido (BASE 2)?\n\nProdutos, categorias, vendas e despesas serão SUBSTUÍDOS integralmente pelos dados limpos do backup (remove os dados atuais embaralhados). Configurações da loja e clientes são mantidas.\n\nA nuvem também será redefinida com estes dados limpos.')) {
-      return;
-    }
-    setRestoringBackup(true);
-    try {
-      const res = await fetch('/seed-backup.json', { cache: 'no-store' });
-      if (!res.ok) throw new Error('Não foi possível carregar o backup.');
-      const backup = (await res.json()) as Partial<LocalDb>;
-      const cur = stateRef.current;
-      const arr = <T,>(x: T[] | undefined): T[] => (Array.isArray(x) ? x : []);
-      const merged: LocalDb = {
-        products: arr(backup.products).length ? (backup.products as Product[]) : cur.products,
-        categories: arr(backup.categories).length ? (backup.categories as Category[]) : cur.categories,
-        sales: arr(backup.sales).length ? (backup.sales as Sale[]) : cur.sales,
-        expenses: arr(backup.expenses).length ? (backup.expenses as Expense[]) : cur.expenses,
-        orders: cur.orders ?? [],
-        storeInfo: cur.storeInfo ?? backup.storeInfo ?? null,
-        customers: cur.customers ?? (backup.customers as Customer[] | undefined) ?? [],
-        suppliers: cur.suppliers ?? [],
-        purchases: cur.purchases ?? [],
-        cashSessions: cur.cashSessions ?? [],
-        loans: arr(backup.loans).length ? (backup.loans as Loan[]) : cur.loans,
-        initialized: true,
-      };
-      persist(merged);
-      setProducts(merged.products);
-      setSales(merged.sales);
-      setCategories(merged.categories);
-      setExpenses(merged.expenses);
-      if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
-      if (SYNC_ENABLED && cloudUser) {
-        try {
-          const { clearUserDb, clearSyncCache } = await import('./lib/dbSync');
-          await clearUserDb(cloudUser.uid);
-          clearSyncCache(cloudUser.uid);
-          await new Promise((r) => setTimeout(r, 400));
-        } catch (_) { /* ignore cloud clear failures */ }
-        pushToCloud(merged, { forceFull: true });
-      }
-      showToast(`Backup restaurado: ${merged.products.length} produtos e ${merged.sales.length} vendas.`);
-    } catch (e: unknown) {
-      showToast(e instanceof Error ? e.message : 'Falha ao restaurar o backup.');
-    } finally {
-      setRestoringBackup(false);
     }
   };
 
@@ -1235,6 +1183,22 @@ export default function App() {
     );
   }
 
+  // --- AUTH GATE: login obrigatório (uso particular por conta) ---
+  if (!authReady) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+          <p className="text-sm text-slate-500 dark:text-slate-400 font-semibold">Verificando conta...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!cloudUser) {
+    return <LoginScreen onSignIn={handleCloudSignIn} error={cloudError} />;
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
 
@@ -1255,6 +1219,7 @@ export default function App() {
           onClick={() => setShowVendasEstoque(true)}
           className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors cursor-pointer"
           title="Verificar Vendas x Estoque"
+          aria-label="Verificar Vendas x Estoque"
         >
           <PackageSearch className="h-5 w-5" />
         </button>
@@ -1262,6 +1227,7 @@ export default function App() {
           onClick={toggleDarkMode}
           className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
           title={darkMode ? 'Modo claro' : 'Modo escuro'}
+          aria-label={darkMode ? 'Modo claro' : 'Modo escuro'}
         >
           {darkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
         </button>
@@ -1765,8 +1731,6 @@ export default function App() {
                 onCloudSignOut={handleCloudSignOut}
                 onCloudSyncNow={handleCloudSyncNow}
                 onDownloadFromCloud={handleDownloadFromCloud}
-                onRestoreBackup={handleRestoreBackup}
-                restoringBackup={restoringBackup}
                 onClearCloud={handleClearCloud}
                 clearingCloud={clearingCloud}
                 syncEnabled={SYNC_ENABLED}

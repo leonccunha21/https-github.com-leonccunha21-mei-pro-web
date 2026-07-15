@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { Product, Sale, Category, PaymentMethod } from '../types';
 import { normalizeName } from '../lib/normalize';
 import {
@@ -993,10 +993,10 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
             <ShoppingBag className="h-5 w-5 text-slate-500" />
             <h2 className="text-base font-bold text-slate-900">Itens Vendidos</h2>
             <span className="text-[10px] font-medium text-slate-400 ml-auto">{visibleProducts.length} produto{visibleProducts.length !== 1 ? 's' : ''}</span>
-            <button onClick={exportCsv} className="flex items-center gap-1 px-2 py-1 text-[10px] font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-md border border-slate-200 transition-colors" title="Exportar CSV">
+            <button onClick={exportCsv} className="flex items-center gap-1 px-2 py-1 text-[10px] font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-md border border-slate-200 transition-colors" title="Exportar CSV" aria-label="Exportar CSV">
               <Download className="h-3 w-3" /> CSV
             </button>
-            <button onClick={exportPdf} className="flex items-center gap-1 px-2 py-1 text-[10px] font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-md border border-slate-200 transition-colors" title="Exportar PDF">
+            <button onClick={exportPdf} className="flex items-center gap-1 px-2 py-1 text-[10px] font-semibold text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-md border border-slate-200 transition-colors" title="Exportar PDF" aria-label="Exportar PDF">
               <FileText className="h-3 w-3" /> PDF
             </button>
           </div>
