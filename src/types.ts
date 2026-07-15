@@ -132,6 +132,7 @@ export interface Loan {
   loanDate: string; // Data em que pegou o dinheiro
   dueDate: string;  // Data para pagamento
   principal: number; // Valor emprestado
+  interestRate?: number; // Taxa de juros em % (aplicada sobre o principal)
   interest: number;  // Valor dos juros (R$)
   paidAmount?: number; // Valor já recebido
   status: 'open' | 'paid';

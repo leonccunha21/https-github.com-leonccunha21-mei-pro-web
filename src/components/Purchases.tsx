@@ -127,7 +127,7 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
                     </p>
                     <p className="text-xs text-slate-400">{new Date(p.date).toLocaleDateString('pt-BR')} · {p.items.length} item(ns)</p>
                   </div>
-                  <span className="text-base font-bold text-slate-900 dark:text-slate-100">R$ {roundCurrency(p.total).toFixed(2)}</span>
+                  <span className="text-base font-bold text-slate-900 dark:text-slate-100">R$ {roundCurrency(p.total).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {p.items.map((it, i) => (
@@ -217,7 +217,7 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
                       <div className="col-span-1">
                         <button onClick={() => removeItem(i)} className="p-2 rounded-lg border border-rose-200 dark:border-rose-900/40 text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-900/30 transition-colors cursor-pointer"><Trash2 className="h-4 w-4" /></button>
                       </div>
-                      {match && <p className="col-span-12 -mt-1 text-[10px] text-slate-400">Estoque atual: {match.stock} · último custo R$ {match.costPrice.toFixed(2)}</p>}
+                      {match && <p className="col-span-12 -mt-1 text-[10px] text-slate-400">Estoque atual: {match.stock} · último custo R$ {match.costPrice.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</p>}
                     </div>
                   );
                 })}
@@ -229,7 +229,7 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
               </div>
             </div>
             <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between sticky bottom-0 bg-white dark:bg-slate-900">
-              <span className="text-sm font-bold text-slate-700 dark:text-slate-200">Total: R$ {total.toFixed(2)}</span>
+              <span className="text-sm font-bold text-slate-700 dark:text-slate-200">Total: R$ {total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
               <button onClick={savePurchase} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm">Registrar Compra</button>
             </div>
           </div>

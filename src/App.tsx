@@ -385,7 +385,11 @@ export default function App() {
       }
     };
     document.addEventListener('visibilitychange', flush);
-    return () => document.removeEventListener('visibilitychange', flush);
+    window.addEventListener('pagehide', flush);
+    return () => {
+      document.removeEventListener('visibilitychange', flush);
+      window.removeEventListener('pagehide', flush);
+    };
   }, []);
 
   // Re-sincroniza o estado quando OUTRA aba atualiza o banco (M3).

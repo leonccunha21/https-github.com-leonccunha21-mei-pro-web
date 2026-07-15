@@ -40,6 +40,11 @@ export function categorizeProduct(name: string): string {
     return 'Memória e Armazenamento';
   }
 
+  // Som Automotivo
+  if (/(som automotivo|radio automotivo|rádio automotivo|auto radio|auto rádio|autoradio|subwoofer|subwofer|modulo amplificador|módulo amplificador|amplificador automotivo|falante automotivo|tweeter automotivo|crossover|caixa automotiva|auto falante|auto-falante|mid bass|midbass|corneta|driver automotivo|install automotivo|car audio|car áudio)/.test(n)) {
+    return 'Som Automotivo';
+  }
+
   // Áudio e Vídeo
   if (/(caixa de som|alto falante|parafuso|som|tweeter|evok|fluxo|áudio|audio|bluetooth.*speaker|mini caixa|impressora|impressão|impressao|xerox|lousa|projetor)/.test(n)) {
     return 'Áudio e Vídeo';

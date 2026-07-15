@@ -190,7 +190,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
   };
 
   const handleConfirmPayment = (sale: Sale) => {
-    if (window.confirm(`Deseja confirmar o recebimento do pagamento desta venda?\n\nVenda: #${sale.id.substring(0, 8)}\nCliente: ${sale.clientName || 'Não informado'}\nValor: R$ ${sale.total.toFixed(2)}`)) {
+    if (window.confirm(`Deseja confirmar o recebimento do pagamento desta venda?\n\nVenda: #${sale.id.substring(0, 8)}\nCliente: ${sale.clientName || 'Não informado'}\nValor: R$ ${sale.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}`)) {
       const updatedSale: Sale = { ...sale, status: 'completed' };
       onUpdateSale?.(updatedSale);
     }
@@ -205,8 +205,8 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
       <tr>
         <td style="padding:4px 0;border-bottom:1px dashed #ddd;font-size:12px">${item.productName}</td>
         <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:center;font-size:12px">${item.quantity}x</td>
-        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:right;font-size:12px">R$ ${item.salePrice.toFixed(2)}</td>
-        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:right;font-size:12px;font-weight:bold">R$ ${item.total.toFixed(2)}</td>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:right;font-size:12px">R$ ${item.salePrice.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+        <td style="padding:4px 0;border-bottom:1px dashed #ddd;text-align:right;font-size:12px;font-weight:bold">R$ ${item.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
       </tr>
     `).join('');
 
@@ -261,7 +261,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
       <div class="line"></div>
       
       <div style="text-align:right">
-        <div class="total-row" style="font-size:16px;margin-top:5px">TOTAL: R$ ${sale.total.toFixed(2)}</div>
+        <div class="total-row" style="font-size:16px;margin-top:5px">TOTAL: R$ ${sale.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</div>
       </div>
       
       <div class="line"></div>

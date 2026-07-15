@@ -124,8 +124,8 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <Stat icon={<ShoppingBag className="h-4 w-4" />} label="Compras" value={String(statsFor(selected).count)} />
-            <Stat icon={<DollarSign className="h-4 w-4" />} label="Total gasto" value={`R$ ${roundCurrency(statsFor(selected).totalSpent).toFixed(2)}`} />
-            <Stat icon={<CreditCard className="h-4 w-4" />} label="Em aberto" value={`R$ ${roundCurrency(statsFor(selected).debts).toFixed(2)}`} accent={statsFor(selected).debts > 0} />
+            <Stat icon={<DollarSign className="h-4 w-4" />} label="Total gasto" value={`R$ ${roundCurrency(statsFor(selected).totalSpent).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}`} />
+            <Stat icon={<CreditCard className="h-4 w-4" />} label="Em aberto" value={`R$ ${roundCurrency(statsFor(selected).debts).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}`} accent={statsFor(selected).debts > 0} />
             <Stat icon={<Clock className="h-4 w-4" />} label="Última compra" value={statsFor(selected).lastDate ? new Date(statsFor(selected).lastDate!).toLocaleDateString('pt-BR') : '—'} />
           </div>
 
@@ -156,7 +156,7 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
                         <tr key={s.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
                           <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300 align-middle">{new Date(s.date).toLocaleDateString('pt-BR')}</td>
                           <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300 align-middle">{s.paymentMethod}</td>
-                          <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 text-right font-mono text-slate-700 dark:text-slate-200 align-middle">R$ {s.total.toFixed(2)}</td>
+                          <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 text-right font-mono text-slate-700 dark:text-slate-200 align-middle">R$ {s.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
                           <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 align-middle">
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
                               s.status === 'cancelled' ? 'bg-red-100 text-red-600 dark:bg-red-900/30' :
@@ -200,7 +200,7 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
                   {c.phone && <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-1"><Phone className="h-3 w-3" /> {c.phone}</p>}
                   <div className="flex items-center gap-3 mt-3 text-xs text-slate-500 dark:text-slate-400">
                     <span>{st.count} compras</span>
-                    <span className="font-semibold text-slate-700 dark:text-slate-200">R$ {roundCurrency(st.totalSpent).toFixed(2)}</span>
+                    <span className="font-semibold text-slate-700 dark:text-slate-200">R$ {roundCurrency(st.totalSpent).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
                   </div>
                 </button>
               );

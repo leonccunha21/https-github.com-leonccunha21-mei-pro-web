@@ -20,6 +20,7 @@ export default defineConfig(() => {
             if (id.includes('node_modules')) {
               if (id.includes('firebase') || id.includes('@firebase')) return 'vendor-firebase';
               if (id.includes('motion') || id.includes('framer-motion')) return 'vendor-motion';
+              if (id.includes('xlsx') || id.includes('preadd') || id.includes('adler32') || id.includes('cfb') || id.includes('commander')) return 'vendor-xlsx';
               if (id.includes('react') || id.includes('scheduler')) return 'vendor-react';
             }
           },

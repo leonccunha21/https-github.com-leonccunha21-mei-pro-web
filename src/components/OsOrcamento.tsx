@@ -175,8 +175,8 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
       <tr>
         <td style="padding:6px;border-bottom:1px solid #eee">${item.description}</td>
         <td style="padding:6px;border-bottom:1px solid #eee;text-align:center">${item.quantity}</td>
-        <td style="padding:6px;border-bottom:1px solid #eee;text-align:right">R$ ${item.unitPrice.toFixed(2)}</td>
-        <td style="padding:6px;border-bottom:1px solid #eee;text-align:right">R$ ${item.total.toFixed(2)}</td>
+        <td style="padding:6px;border-bottom:1px solid #eee;text-align:right">R$ ${item.unitPrice.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+        <td style="padding:6px;border-bottom:1px solid #eee;text-align:right">R$ ${item.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
       </tr>
     `).join('');
 
@@ -223,9 +223,9 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
         <tbody>${itemsHtml}</tbody>
       </table>
       <div class="totals">
-        <p>Subtotal: R$ ${order.subtotal.toFixed(2)}</p>
-        ${order.discount > 0 ? `<p>Desconto (${order.discount}%): -R$ ${(order.subtotal * order.discount / 100).toFixed(2)}</p>` : ''}
-        <p class="total-final">TOTAL: R$ ${order.total.toFixed(2)}</p>
+        <p>Subtotal: R$ ${order.subtotal.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</p>
+        ${order.discount > 0 ? `<p>Desconto (${order.discount}%): -R$ ${(order.subtotal * order.discount / 100).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</p>` : ''}
+        <p class="total-final">TOTAL: R$ ${order.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</p>
       </div>
       ${order.notes ? `<p style="margin-top:15px;font-size:12px"><strong>Obs:</strong> ${order.notes}</p>` : ''}
       <div class="signature">
@@ -317,7 +317,7 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
                     </div>
                     <div className="text-right shrink-0">
                       <p className="text-lg font-bold font-mono text-slate-900">
-                        R$ {order.total.toFixed(2)}
+                        R$ {order.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}
                       </p>
                       <div className="flex items-center gap-1.5 mt-2">
                           <button onClick={() => { setSelectedOrder(order); setActiveView('detail'); }} className="p-2 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 transition-colors cursor-pointer" title="Ver detalhes">
@@ -432,8 +432,8 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
                       <span className="text-xs text-slate-400 font-mono w-5">{idx + 1}</span>
                       <span className="flex-1 text-xs font-medium text-slate-800 truncate">{item.description}</span>
                       <span className="text-xs text-slate-500 font-mono">{item.quantity}x</span>
-                      <span className="text-xs text-slate-500 font-mono">R$ {item.unitPrice.toFixed(2)}</span>
-                      <span className="text-xs font-bold text-slate-900 font-mono">R$ {item.total.toFixed(2)}</span>
+                      <span className="text-xs text-slate-500 font-mono">R$ {item.unitPrice.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+                      <span className="text-xs font-bold text-slate-900 font-mono">R$ {item.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
                         <button onClick={() => handleRemoveItem(idx)} className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer">
                         <X className="h-3.5 w-3.5" />
                       </button>
@@ -454,7 +454,7 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
               <div className="space-y-2 text-xs">
                 <div className="flex justify-between">
                   <span className="text-slate-500">Subtotal</span>
-                  <span className="font-mono font-medium">R$ {subtotal.toFixed(2)}</span>
+                  <span className="font-mono font-medium">R$ {subtotal.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-slate-500">Desconto (%)</span>
@@ -463,12 +463,12 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
                 {formDiscount > 0 && (
                   <div className="flex justify-between text-rose-600">
                     <span>Desconto</span>
-                    <span className="font-mono">-R$ {discountAmount.toFixed(2)}</span>
+                    <span className="font-mono">-R$ {discountAmount.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
                   </div>
                 )}
                 <div className="flex justify-between pt-2 border-t border-slate-200">
                   <span className="font-bold text-slate-900">Total</span>
-                  <span className="font-bold text-lg font-mono text-slate-900">R$ {total.toFixed(2)}</span>
+                  <span className="font-bold text-lg font-mono text-slate-900">R$ {total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
                 </div>
               </div>
 
@@ -579,8 +579,8 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
                       <tr key={item.id} className="hover:bg-slate-50 transition-colors">
                         <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle font-medium">{item.description}</td>
                         <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-center font-mono">{item.quantity}</td>
-                        <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono">R$ {item.unitPrice.toFixed(2)}</td>
-                        <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono font-bold">R$ {item.total.toFixed(2)}</td>
+                        <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono">R$ {item.unitPrice.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+                        <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono font-bold">R$ {item.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -592,9 +592,9 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
           <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-3 sticky top-4">
             <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider">Valores</h3>
             <div className="space-y-2 text-xs">
-              <div className="flex justify-between"><span className="text-slate-500">Subtotal</span><span className="font-mono">R$ {order.subtotal.toFixed(2)}</span></div>
-              {order.discount > 0 && <div className="flex justify-between text-rose-600"><span>Desconto ({order.discount}%)</span><span className="font-mono">-R$ {(order.subtotal * order.discount / 100).toFixed(2)}</span></div>}
-              <div className="flex justify-between pt-2 border-t border-slate-200"><span className="font-bold text-slate-900">Total</span><span className="font-bold text-lg font-mono">R$ {order.total.toFixed(2)}</span></div>
+              <div className="flex justify-between"><span className="text-slate-500">Subtotal</span><span className="font-mono">R$ {order.subtotal.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span></div>
+              {order.discount > 0 && <div className="flex justify-between text-rose-600"><span>Desconto ({order.discount}%)</span><span className="font-mono">-R$ {(order.subtotal * order.discount / 100).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span></div>}
+              <div className="flex justify-between pt-2 border-t border-slate-200"><span className="font-bold text-slate-900">Total</span><span className="font-bold text-lg font-mono">R$ {order.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span></div>
             </div>
             {order.notes && <p className="text-xs text-slate-500 mt-2"><strong>Obs:</strong> {order.notes}</p>}
           </div>

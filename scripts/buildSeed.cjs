@@ -1,11 +1,12 @@
 // Converte data/excel/BASE 2.xlsx no formato LocalDb do app (public/seed-backup.json).
-// Usa a aba "Itens Vendidos" para montar os itens de cada venda (qtd correta)
-// e a aba "Vendas" para o cabeçalho (cliente, pagamento, canal, status).
+// IMPORTANTE: BASE 2.xlsx é a única fonte de verdade. Dados antigos do local-db são ignorados
+// para garantir que nenhuma informação fantasma ou antiga interfira.
 const XLSX = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 
 const wb = XLSX.readFile('data/excel/BASE 2.xlsx');
+const LOCAL_DB_PATH = 'data/local-db.json';
 
 const num = (v) => {
   if (v === null || v === undefined || v === '') return 0;
@@ -41,10 +42,42 @@ const mapStatus = (s) => {
   return 'completed';
 };
 
+function getField(row, ...keys) {
+  for (const k of keys) {
+    if (row[k] !== undefined && row[k] !== '') return row[k];
+    for (const rk of Object.keys(row)) {
+      if (rk.trim() === k.trim() && row[rk] !== undefined && row[rk] !== '') return row[rk];
+    }
+  }
+  return '';
+}
+
+// Classificação automática (alinhada com o frontend)
+function categorizeProduct(name) {
+  const n = String(name || '').toLowerCase();
+  if (/(som automotivo|radio automotivo|rádio automotivo|auto radio|auto rádio|autoradio|subwoofer|subwofer|modulo amplificador|módulo amplificador|amplificador automotivo|falante automotivo|tweeter automotivo|crossover|caixa automotiva|auto falante|auto-falante|mid bass|midbass|corneta|driver automotivo|car audio|car áudio)/.test(n)) {
+    return 'Som Automotivo';
+  }
+  if (/(capa|capinha|película|pelicula|privacidade|vidro temperado|protetor de tela|proteção de tela|pelicular)/.test(n)) return 'Capas e Películas';
+  if (/(cabo|adaptador|hub |hubusb|hub usb|extensor|conversor)/.test(n)) return 'Cabos e Adaptadores';
+  if (/(fone|earphone|airpods|headphone|ouvido)/.test(n)) return 'Fones de Ouvido';
+  if (/(carregador|fontes?|carreg)/.test(n)) return 'Carregadores';
+  if (/(suporte|suportecelular|ventosa|magnetico|magnético|veicular|retrovisor|suporte moto|suporte veicular|suporte celular|suporte de celular|suporte de mesa|suporte braço|suporte gancho|suporte triplo|suporte de tv|suporte fone|imã|cordinha|cordão|crachá|porta crachá|estoj|luvinha|luva|capa de chuva|capa a prova|selfie|tripé|tripe)/.test(n)) return 'Acessórios para Celular';
+  if (/(mouse|teclado|keyboard|monitor|computador|pc |notebook|laptop|cool|hub.*porta|placa de som|hdmi|vga|displayport|mousepad|mouse pad|gamer.*mouse|gamer.*teclado)/.test(n)) return 'Computador e Periféricos';
+  if (/(memória|memoria|cartão de memória|cartao de memoria|micro sd|memory card|pendrive|pen drive|hd |ssd|case.*hd|cartão|cartao)/.test(n)) return 'Memória e Armazenamento';
+  if (/(caixa de som|alto falante|parafuso|som|tweeter|evok|fluxo|áudio|audio|bluetooth.*speaker|mini caixa|impressora|impressão|impressao|xerox|lousa|projetor)/.test(n)) return 'Áudio e Vídeo';
+  if (/(lanterna|câmera|camera|ip cam|detector|isqueiro|bateria|pilha|fusível|fusivel|antena|wifi|router|roteador|mini router|controle.*tv|controle.*universal|tv box|unitv|chip|sim card|globo de luz|led|lâmpada|lampada|luminária|luminaria|refletor|módulo|modulo)/.test(n)) return 'Eletrônicos Diversos';
+  if (/(garrafa|stanley|kit.*forma|kit.*colher|kit.*talher|kit.*facas|kit.*pote|kit.*banheiro|kit.*taboa|ralador|fatiador|triturador|processador|liquidificador|mini liquidificado|máquina de costura|mini máquina|dispenser|bucha|porta detergente|balança|balâ|tapete|massageador|escova|depilador|cortador|desentupidor|lixas?|canivete|alicate|chave|chaveiro|tork)/.test(n)) return 'Casa e Utensílios';
+  if (/(lego|boneco|brinquedo|jogo.*ps|jogo.*xbox|jogo.*game|game boy|controle.*ps|controle.*xbox|pen drive.*jogo|pop it|card.*jogo|figurinha|baralho|lousa|mochila|caderno|bobbie)/.test(n)) return 'Brinquedos e Jogos';
+  if (/(relógio|relogio|smartband|pulseira|watch|xiaomi.*band|laxasfit)/.test(n)) return 'Relógios e Wearables';
+  if (/(formatação|formatacao|restauração|restauracao|serviço|servico|impressão|impressao|xerox|gravação|gravacao|manutenção|manutencao|instalação|instalacao)/.test(n)) return 'Serviços';
+  return 'Diversos';
+}
+
 // ---- Produtos ----
 const pRows = XLSX.utils.sheet_to_json(wb.Sheets['Produtos'], { header: 1 });
 const products = [];
-const categoriesSet = new Set();
+const categoriesSet = new Set(['Som Automotivo']);
 const seenCode = new Set();
 for (let i = 1; i < pRows.length; i++) {
   const r = pRows[i];
@@ -54,7 +87,7 @@ for (let i = 1; i < pRows.length; i++) {
   let code = String(r[0] || '').trim();
   if (!code || seenCode.has(code)) code = `PROD-${String(i).padStart(4, '0')}`;
   seenCode.add(code);
-  const category = String(r[2] || '').trim();
+  const category = String(r[2] || '').trim() || categorizeProduct(name);
   if (category) categoriesSet.add(category);
   products.push({
     id: code,
@@ -65,7 +98,7 @@ for (let i = 1; i < pRows.length; i++) {
     salePrice: num(r[4]),
     stock: num(r[5]),
     minStock: num(r[6]),
-    status: 'disponivel',
+    status: num(r[5]) > 0 ? 'disponivel' : 'indisponivel',
     createdAt: new Date().toISOString(),
   });
 }
@@ -73,32 +106,39 @@ const prodByName = new Map();
 products.forEach(p => prodByName.set(p.name.trim().toLowerCase(), p));
 
 // ---- Itens de venda (agrupados por Venda ID) ----
-const itRows = XLSX.utils.sheet_to_json(wb.Sheets['Itens Vendidos'], { header: 1 });
+const itSheet = wb.Sheets['Itens Vendidos'];
+const itRows = itSheet ? XLSX.utils.sheet_to_json(itSheet, { header: 1 }) : [];
 const itemsBySale = {};
-for (let i = 1; i < itRows.length; i++) {
-  const r = itRows[i];
-  if (!r || r.length < 5) continue;
-  const saleId = String(r[0] || '').trim();
-  if (!saleId) continue;
-  const productName = String(r[3] || '').trim();
-  const quantity = num(r[4]) || 1;
-  const salePrice = num(r[5]) || 0;
-  const costPrice = num(r[7]) || 0;
-  const total = num(r[6]) || salePrice * quantity;
-  const match = prodByName.get(productName.toLowerCase());
-  (itemsBySale[saleId] = itemsBySale[saleId] || []).push({
-    productId: match ? match.id : '',
-    productName,
-    quantity,
-    costPrice,
-    salePrice,
-    total,
-  });
+
+if (itRows.length > 1) {
+  for (let i = 1; i < itRows.length; i++) {
+    const r = itRows[i];
+    if (!r || r.length < 5) continue;
+    const saleId = String(r[0] || '').trim();
+    if (!saleId) continue;
+    const productName = String(r[3] || '').trim();
+    const quantity = num(r[4]) || 1;
+    const salePrice = num(r[5]) || 0;
+    const costPrice = num(r[7]) || 0;
+    const total = num(r[6]) || salePrice * quantity;
+    const match = prodByName.get(productName.toLowerCase());
+    (itemsBySale[saleId] = itemsBySale[saleId] || []).push({
+      productId: match ? match.id : '',
+      productName,
+      quantity,
+      costPrice,
+      salePrice,
+      total,
+    });
+  }
 }
 
 // ---- Cabeçalho das vendas ----
-const vRows = XLSX.utils.sheet_to_json(wb.Sheets['Vendas'], { header: 1 });
+const vendaSheet = wb.Sheets['Vendas'];
+const vRows = vendaSheet ? XLSX.utils.sheet_to_json(vendaSheet, { header: 1 }) : [];
 const vHeader = {};
+const rawVendasObjects = vendaSheet ? XLSX.utils.sheet_to_json(vendaSheet, { defval: '' }) : [];
+
 for (let i = 1; i < vRows.length; i++) {
   const r = vRows[i];
   if (!r || r.length < 1) continue;
@@ -108,6 +148,9 @@ for (let i = 1; i < vRows.length; i++) {
 
 // ---- Monta as vendas ----
 const sales = [];
+const processedSaleIds = new Set();
+
+// Primeiro processa as vendas que possuem detalhamento de itens
 for (const saleId of Object.keys(itemsBySale)) {
   const items = itemsBySale[saleId];
   const v = vHeader[saleId] || [];
@@ -121,8 +164,10 @@ for (const saleId of Object.keys(itemsBySale)) {
   const ecommerceOrderId = oidRaw ? oidRaw : undefined;
   const status = mapStatus(v[13]);
   const saleChannel = String(v[14] || '').trim() || undefined;
+  
   const total = items.reduce((s, it) => s + it.total, 0);
   const totalCost = items.reduce((s, it) => s + it.costPrice * it.quantity, 0);
+  
   sales.push({
     id: saleId,
     date,
@@ -137,6 +182,50 @@ for (const saleId of Object.keys(itemsBySale)) {
     totalCost,
     profit: total - totalCost,
     status,
+  });
+  processedSaleIds.add(saleId);
+}
+
+// Segundo: fallback para Vendas que não estavam em "Itens Vendidos"
+for (const row of rawVendasObjects) {
+  const saleId = String(getField(row, 'ID', 'Id')).trim();
+  if (!saleId || processedSaleIds.has(saleId)) continue;
+
+  const productName = String(getField(row, 'Produto')).trim();
+  if (!productName) continue;
+
+  const qty = num(getField(row, 'QTD', 'Qtd', 'Quantidade')) || 1;
+  const total = num(getField(row, 'Valor Venda', ' Valor Venda ', 'ValorVenda', 'Venda', 'Total'));
+  const totalCost = num(getField(row, 'Custo', ' Custo ', 'Custo Total', 'ValorCusto'));
+  const profit = num(getField(row, 'Lucro'));
+  const client = String(getField(row, 'Cliente')).trim();
+  const phone = String(getField(row, 'Telefone')).trim();
+  
+  const match = prodByName.get(productName.toLowerCase());
+
+  const items = [{
+    productId: match ? match.id : '',
+    productName,
+    quantity: qty,
+    costPrice: qty > 0 ? (totalCost / qty) : 0,
+    salePrice: qty > 0 ? (total / qty) : 0,
+    total,
+  }];
+
+  sales.push({
+    id: saleId,
+    date: parseDateTime(getField(row, 'Data'), getField(row, 'Hora')),
+    items,
+    clientName: client || undefined,
+    clientPhone: (phone && phone !== '-') ? phone : undefined,
+    paymentMethod: mapPayment(getField(row, 'Pagamento', 'Forma Pagamento')),
+    saleType: String(getField(row, 'Tipo')).toLowerCase().includes('cnpj') ? 'CNPJ' : 'CPF',
+    ecommerceOrderId: String(getField(row, 'ID Pedido', 'Pedido')).trim() || undefined,
+    saleChannel: String(getField(row, 'Canal')).trim() || 'Loja Física',
+    total,
+    totalCost,
+    profit: profit || (total - totalCost),
+    status: mapStatus(getField(row, 'Status', 'Situação')),
   });
 }
 
@@ -163,7 +252,7 @@ const categories = Array.from(categoriesSet).map((name, i) => ({
   name,
 }));
 
-// ---- Empréstimos (lidos da aba Empréstimos do Excel) ----
+// ---- Empréstimos ----
 let loans = [];
 try {
   const lRows = XLSX.utils.sheet_to_json(wb.Sheets['Empréstimos'], { header: 1 });
@@ -183,18 +272,19 @@ try {
       loanDate: String(r[3] || '').trim(),
       dueDate: String(r[4] || '').trim(),
       principal: num(r[5]),
-      interest: num(r[6]),
-      paidAmount: num(r[7]),
-      status: normStatus(r[8]),
-      notes: String(r[9] || '').trim(),
-      createdAt: String(r[10] || '').trim() || new Date().toISOString(),
+      interestRate: (r[6] !== '' && r[6] != null && num(r[6]) > 0) ? num(r[6]) : undefined,
+      interest: (r[6] !== '' && r[6] != null && num(r[6]) > 0) ? Math.round(num(r[5]) * num(r[6]) / 100 * 100) / 100 : num(r[7]),
+      paidAmount: num(r[8]),
+      status: normStatus(r[9]),
+      notes: String(r[10] || '').trim(),
+      createdAt: String(r[11] || '').trim() || new Date().toISOString(),
     });
   }
 } catch (e) {
   console.warn('Aba Empréstimos não encontrada, seguindo com loans vazio:', e.message);
 }
 
-// ---- Abas extras (opcionais) para backup completo ----
+// ---- Outras abas ----
 const stripAccents = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 const findIdx = (header, ...names) => header.findIndex(h => names.some(n => String(h || '').toLowerCase().includes(n)));
 const readSheet = (...nameOptions) => {
@@ -242,6 +332,7 @@ let cashSessions = parseExtraSheet(['Caixa', 'Fechamentos', 'Caixa (Fechamentos)
   { id: ['id'], open: ['abertura', 'open'], close: ['fechamento', 'close'], openBal: ['saldo inicial', 'abertura', 'opening'], exp: ['esperado', 'expected'], closeBal: ['final', 'fechamento', 'closing'], diff: ['diferenca', 'difference'], sit: ['status', 'situacao'], obs: ['observ', 'nota'], with: ['retirada', 'withdrawal', 'saque'] },
   (r, c) => ({ id: String(r[c.id] ?? '').trim(), openDate: normDateStr(r[c.open]), closeDate: String(r[c.close] ?? '').trim() ? normDateStr(r[c.close]) : undefined, openingBalance: num(r[c.openBal]), expectedBalance: (r[c.exp] !== '' && r[c.exp] != null) ? num(r[c.exp]) : undefined, closingBalance: (r[c.closeBal] !== '' && r[c.closeBal] != null) ? num(r[c.closeBal]) : undefined, difference: (r[c.diff] !== '' && r[c.diff] != null) ? num(r[c.diff]) : undefined, status: (String(r[c.sit] ?? '').trim().toLowerCase().includes('fech') ? 'closed' : 'open'), withdrawals: parseJsonCol(r[c.with]), notes: String(r[c.obs] ?? '').trim() }));
 
+// Não mesclar/preservar nada antigo
 const db = {
   products,
   categories,
@@ -259,7 +350,9 @@ const db = {
 
 const out = path.resolve('public/seed-backup.json');
 fs.writeFileSync(out, JSON.stringify(db, null, 0));
-console.log(`OK -> ${out}`);
+fs.writeFileSync(LOCAL_DB_PATH, JSON.stringify(db, null, 2));
+
+console.log(`OK -> ${out} e ${LOCAL_DB_PATH} atualizados com dados EXCLUSIVOS da planilha.`);
 console.log('products:', products.length);
 console.log('sales:', sales.length);
 console.log('categories:', categories.length);

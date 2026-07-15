@@ -145,20 +145,20 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
         <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-200">
           <span className="text-[10px] font-bold text-emerald-600 uppercase">Receita</span>
-          <span className="text-lg font-bold font-mono text-emerald-800 block mt-1">R$ {yearSummary.totalRevenue.toFixed(2)}</span>
+          <span className="text-lg font-bold font-mono text-emerald-800 block mt-1">R$ {yearSummary.totalRevenue.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
         </div>
         <div className="p-4 bg-rose-50 rounded-xl border border-rose-200">
           <span className="text-[10px] font-bold text-rose-600 uppercase">Custo Produtos</span>
-          <span className="text-lg font-bold font-mono text-rose-800 block mt-1">R$ {yearSummary.totalCost.toFixed(2)}</span>
+          <span className="text-lg font-bold font-mono text-rose-800 block mt-1">R$ {yearSummary.totalCost.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
         </div>
         <div className="p-4 bg-orange-50 rounded-xl border border-orange-200">
           <span className="text-[10px] font-bold text-orange-600 uppercase">Despesas</span>
-          <span className="text-lg font-bold font-mono text-orange-800 block mt-1">R$ {yearSummary.totalExpenses.toFixed(2)}</span>
+          <span className="text-lg font-bold font-mono text-orange-800 block mt-1">R$ {yearSummary.totalExpenses.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
         </div>
         <div className={`p-4 rounded-xl border ${yearSummary.totalProfit >= 0 ? 'bg-blue-50 border-blue-200' : 'bg-red-50 border-red-200'}`}>
           <span className="text-[10px] font-bold uppercase ${yearSummary.totalProfit >= 0 ? 'text-blue-600' : 'text-red-600'}">Saldo</span>
           <span className={`text-lg font-bold font-mono block mt-1 ${yearSummary.totalProfit >= 0 ? 'text-blue-800' : 'text-red-800'}`}>
-            R$ {yearSummary.totalProfit.toFixed(2)}
+            R$ {yearSummary.totalProfit.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}
           </span>
         </div>
       </div>
@@ -191,11 +191,11 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
                 return (
                   <tr key={m} className="hover:bg-slate-50 transition-colors">
                     <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle font-medium">{monthName}</td>
-                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-emerald-700">R$ {d.revenue.toFixed(2)}</td>
-                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-rose-700">R$ {d.cost.toFixed(2)}</td>
-                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-orange-700">R$ {d.expenses.toFixed(2)}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-emerald-700">R$ {d.revenue.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-rose-700">R$ {d.cost.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-orange-700">R$ {d.expenses.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</td>
                     <td className={`px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono font-bold ${d.profit >= 0 ? 'text-blue-700' : 'text-red-700'}`}>
-                      R$ {d.profit.toFixed(2)}
+                      R$ {d.profit.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}
                     </td>
                   </tr>
                 );

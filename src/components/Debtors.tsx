@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Sale, Loan } from '../types';
 import { normalizeChannel } from '../lib/normalize';
 import {
@@ -29,8 +29,15 @@ interface DebtorsProps {
 }
 
 export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onSaveLoans }: DebtorsProps) {
-  const [view, setView] = useState<'debits' | 'loans' | 'marketplace'>('debits');
+  const [view, setView] = useState<'debits' | 'loans' | 'marketplace'>(() => {
+    const saved = localStorage.getItem('zmstore-debtors-view');
+    return saved === 'debits' || saved === 'loans' || saved === 'marketplace' ? saved : 'debits';
+  });
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+
+  useEffect(() => {
+    localStorage.setItem('zmstore-debtors-view', view);
+  }, [view]);
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'completed'>('pending');
   const [marketplaceFilter, setMarketplaceFilter] = useState<'pending' | 'received' | 'all'>('pending');
   const [partialAmount, setPartialAmount] = useState<string>('');
@@ -197,7 +204,7 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
     setLoanForm({
       id: '', borrowerName: '', borrowerPhone: '',
       loanDate: iso(today), dueDate: iso(due),
-      principal: 0, interest: 0, status: 'open', createdAt: new Date().toISOString()
+      principal: 0, interestRate: 0, interest: 0, status: 'open', createdAt: new Date().toISOString()
     });
     setShowLoanForm(true);
   };
@@ -669,7 +676,7 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                     <div key={idx} className="flex justify-between items-center text-xs border-b border-slate-100 pb-2">
                       <div>
                         <p className="font-bold text-slate-900">{item.productName}</p>
-                        <p className="text-slate-400 font-mono">{item.quantity} x R$ {item.salePrice.toFixed(2)}</p>
+                        <p className="text-slate-400 font-mono">{item.quantity} x R$ {item.salePrice.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</p>
                       </div>
                       <span className="font-bold font-mono text-slate-900">{formatCurrency(item.total)}</span>
                     </div>
@@ -813,7 +820,7 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                       <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Pegou: {formatDate(l.loanDate)}</span>
                       <span className="flex items-center gap-1"><Calendar className="h-3 w-3" /> Vence: {formatDate(l.dueDate)}</span>
                       <span>Emprestado: <b className="text-slate-700">{formatCurrency(l.principal)}</b></span>
-                      <span>Juros: <b className="text-slate-700">{formatCurrency(l.interest)}</b></span>
+                      <span>Juros: <b className="text-slate-700">{formatCurrency(l.interest)}</b>{l.interestRate ? <b className="text-slate-400"> ({l.interestRate}%)</b> : null}</span>
                     </div>
                     <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between">
                       <div>
@@ -1056,9 +1063,19 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Valor emprestado *</label>
                 <input type="text" inputMode="decimal" min="0" step="0.01" value={loanForm.principal} onChange={e => setLoanForm({ ...loanForm, principal: parseMoney(e.target.value) })} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
               </div>
-              <div>
-                <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Valor dos juros</label>
-                <input type="text" inputMode="decimal" min="0" step="0.01" value={loanForm.interest} onChange={e => setLoanForm({ ...loanForm, interest: parseMoney(e.target.value) })} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Taxa de juros (%)</label>
+                  <input type="text" inputMode="decimal" min="0" step="0.01" value={loanForm.interestRate ?? ''} onChange={e => {
+                    const rate = parseMoney(e.target.value);
+                    const interest = loanForm.principal > 0 && rate > 0 ? Math.round(loanForm.principal * rate / 100 * 100) / 100 : loanForm.interest;
+                    setLoanForm({ ...loanForm, interestRate: rate, interest });
+                  }} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Juros (R$)</label>
+                  <input type="text" inputMode="decimal" min="0" step="0.01" value={loanForm.interest} onChange={e => setLoanForm({ ...loanForm, interest: parseMoney(e.target.value) })} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
+                </div>
               </div>
               <div className="col-span-2">
                 <label className="block text-[10px] font-bold text-slate-500 uppercase mb-1">Observações</label>
@@ -1092,7 +1109,7 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
               </div>
               <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-500">
                 <span>Emprestado: {formatCurrency(selectedLoan.principal)}</span>
-                <span>Juros: {formatCurrency(selectedLoan.interest)}</span>
+                <span>Juros: {formatCurrency(selectedLoan.interest)}{selectedLoan.interestRate ? ` (${selectedLoan.interestRate}%)` : ''}</span>
                 <span>Recebido: {formatCurrency(selectedLoan.paidAmount || 0)}</span>
                 <span>Restante: {formatCurrency(loanRemaining(selectedLoan))}</span>
               </div>
