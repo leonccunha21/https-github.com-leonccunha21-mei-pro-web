@@ -23,6 +23,17 @@ function serialToBr(v) {
 const num = v => (v == null || v === '' || isNaN(Number(v))) ? '' : Number(v);
 const str = v => (v == null ? '' : String(v).trim());
 
+const MNAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+function monthNum(v) {
+  if (v == null || v === '') return 0;
+  if (typeof v === 'number') return (v >= 1 && v <= 12) ? v : 0;
+  const s = String(v).trim().toLowerCase();
+  const idx = MNAMES.findIndex(m => m.toLowerCase() === s);
+  if (idx >= 0) return idx + 1;
+  const n = parseInt(s, 10);
+  return (n >= 1 && n <= 12) ? n : 0;
+}
+
 function readRows(file, sheet) {
   const wb = XLSX.readFile(path.join(base, file), { sheets: [sheet] });
   const ws = wb.Sheets[sheet];
@@ -32,19 +43,17 @@ function readRows(file, sheet) {
 // config: {file, sheet, year, label, headerRow, shift, cols{}, mesFromFirstCell, dataFrom[], skipAggregate}
 const SOURCES = [
   { file: 'venda 2024 a 2026 .xlsx', sheet: 'Vendas 2024', year: 2024, label: 'venda 2024 a 2026',
-    cols: { mes: 0, produto: 2, data: 1, qtd: 3, cliente: 4, tipo: 10, custo: 7, faturamento: 9, lucro: 12, status: 13, forma: 14 } },
+    cols: { mes: 0, produto: 2, data: 1, qtd: 3, cliente: 4, tipo: 9, custo: 6, faturamento: 8, lucro: 10, status: 11 } },
   { file: 'venda 2024 a 2026 .xlsx', sheet: 'Vendas 2025', year: 2025, label: 'venda 2024 a 2026',
-    cols: { mes: 0, produto: 2, data: 1, qtd: 3, cliente: 4, tipo: 10, custo: 7, faturamento: 9, lucro: 12, status: 15, forma: 13 } },
+    cols: { mes: 0, produto: 2, data: 1, qtd: 3, cliente: 4, tipo: 9, custo: 6, faturamento: 8, lucro: 10, status: 11 } },
   { file: 'venda 2024 a 2026 .xlsx', sheet: 'Vendas 2026', year: 2026, label: 'venda 2024 a 2026',
-    cols: { mes: 0, produto: 2, data: 1, qtd: 3, cliente: 4, custo: 7, faturamento: 10, lucro: 11, status: 12 } },
+    cols: { mes: 0, produto: 2, data: 1, qtd: 3, cliente: 4, tipo: 9, custo: 6, faturamento: 8, lucro: 10, status: 11 } },
   { file: 'Vendas 2023 bi.xlsx', sheet: 'Vendas', year: 2023, label: 'Vendas 2023 bi',
     cols: { produto: 2, mes: 1, qtd: 3, tipo: 9, custo: 4, faturamento: 6, lucro: 7, status: 8 } },
-  { file: 'Vendas 2022.xlsx', sheet: 'vendas', year: 2022, label: 'Vendas 2022', shift: true, mesFromFirstCell: true,
-    cols: { produto: 1, tipo: 7, custo: 2, faturamento: 3, lucro: 4, status: 5 } },
-  { file: 'Gastos 2019.xlsx', sheet: 'Historio', year: 2019, label: 'Gastos 2019',
-    cols: { produto: 1, cliente: 3, custo: 4, faturamento: 5, lucro: 6, mes: 7 } },
-  { file: 'Gastos 2020.xlsx', sheet: 'Historio', year: 2020, label: 'Gastos 2020',
-    shift: true, cols: { produto: 0, cliente: 1, custo: 3, faturamento: 4, lucro: 5, mes: 6 } },
+  { file: 'Vendas 2022.xlsx', sheet: 'vendas', year: 2022, label: 'Vendas 2022', mesFromFirstCell: true,
+    cols: { produto: 1, tipo: 8, custo: 3, faturamento: 4, lucro: 5, status: 6 } },
+  { file: 'Gastos 2019.xlsx', sheet: 'Vendas', year: 2019, label: 'Gastos 2019',
+    cols: { produto: 1, cliente: 2, custo: 4, faturamento: 3, lucro: 5, status: 6, mes: 0 } },
   { file: 'Gastos 2020.xlsx', sheet: 'Vendas 20', year: 2020, label: 'Gastos 2020',
     shift: true, cols: { produto: 0, custo: 2, faturamento: 3, lucro: 4, status: 5, data: 6 } },
   { file: 'Gastos 2021.xlsx', sheet: 'vendas', year: 2021, label: 'Gastos 2021',
@@ -61,7 +70,7 @@ for (const cfg of SOURCES) {
   const hr = cfg.headerRow || 0;
   let data = cfg.shift ? rows.map(r => r.slice(1)) : rows;
   let currentMonth = '';
-  for (let i = hr + 1; i < data.length; i++) {
+  for (let i = hr + 1; i < data.length && i < 30000; i++) {
     const r = data[i];
     if (r.every(c => c == null || c === '')) continue;
     if (cfg.mesFromFirstCell) {
@@ -81,7 +90,9 @@ for (const cfg of SOURCES) {
     let forma = c.forma != null ? str(r[c.forma]) : '';
     let qtd = c.qtd != null ? num(r[c.qtd]) : '';
     if (qtd === '') qtd = 1;
-    let mes = c.mes != null ? str(r[c.mes]) : (cfg.mesFromFirstCell ? currentMonth : '');
+    let rawMes = c.mes != null ? r[c.mes] : (cfg.mesFromFirstCell ? currentMonth : '');
+    let mnum = monthNum(rawMes);
+    let mes = mnum ? MNAMES[mnum - 1] : (typeof rawMes === 'string' ? str(rawMes) : '');
     let dataBr = '';
     if (c.data != null) dataBr = serialToBr(r[c.data]);
     if (cfg.dataFrom) {
@@ -90,8 +101,11 @@ for (const cfg of SOURCES) {
         if (v) { dataBr = v; break; }
       }
     }
+    if (!dataBr && mnum && cfg.year) {
+      dataBr = `01/${String(mnum).padStart(2, '0')}/${cfg.year}`;
+    }
 
-    if (!produto && faturamento === '' && lucro === '') { skipped++; continue; }
+    if (!produto) { skipped++; continue; }
     seq++;
     records.push({
       'ID da Venda': 'V' + String(seq).padStart(5, '0'),
