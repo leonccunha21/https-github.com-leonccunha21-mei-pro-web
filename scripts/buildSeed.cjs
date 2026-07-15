@@ -163,17 +163,96 @@ const categories = Array.from(categoriesSet).map((name, i) => ({
   name,
 }));
 
+// ---- Empréstimos (lidos da aba Empréstimos do Excel) ----
+let loans = [];
+try {
+  const lRows = XLSX.utils.sheet_to_json(wb.Sheets['Empréstimos'], { header: 1 });
+  const normStatus = (s) => {
+    const t = String(s || '').trim().toLowerCase();
+    return (t === 'pago' || t === 'paid' || t === 'concluido' || t === 'concluído') ? 'paid' : 'open';
+  };
+  for (let i = 1; i < lRows.length; i++) {
+    const r = lRows[i];
+    if (!r || r.length < 2) continue;
+    const borrowerName = String(r[1] || '').trim();
+    if (!borrowerName) continue;
+    loans.push({
+      id: String(r[0] || '').trim() || `emp_${Date.now()}_${i}`,
+      borrowerName,
+      borrowerPhone: String(r[2] || '').trim(),
+      loanDate: String(r[3] || '').trim(),
+      dueDate: String(r[4] || '').trim(),
+      principal: num(r[5]),
+      interest: num(r[6]),
+      paidAmount: num(r[7]),
+      status: normStatus(r[8]),
+      notes: String(r[9] || '').trim(),
+      createdAt: String(r[10] || '').trim() || new Date().toISOString(),
+    });
+  }
+} catch (e) {
+  console.warn('Aba Empréstimos não encontrada, seguindo com loans vazio:', e.message);
+}
+
+// ---- Abas extras (opcionais) para backup completo ----
+const stripAccents = (s) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const findIdx = (header, ...names) => header.findIndex(h => names.some(n => String(h || '').toLowerCase().includes(n)));
+const readSheet = (...nameOptions) => {
+  for (const nm of nameOptions) { if (wb.Sheets[nm]) return XLSX.utils.sheet_to_json(wb.Sheets[nm], { header: 1 }); }
+  return null;
+};
+const parseJsonCol = (v) => { try { const a = JSON.parse(String(v || '[]')); return Array.isArray(a) ? a : []; } catch { return []; } };
+const normDateStr = (v) => { const m = String(v || '').trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/); return m ? `${m[3]}-${m[1]}-${m[2]}` : String(v || ''); };
+
+function parseExtraSheet(nameOptions, colMap, build) {
+  const rows = readSheet(...nameOptions);
+  if (!rows || rows.length < 2) return [];
+  const header = rows[0].map(h => stripAccents(h));
+  const cols = {};
+  for (const [key, names] of Object.entries(colMap)) cols[key] = findIdx(header, ...names);
+  const out = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    if (!r || r.every(c => c === '' || c === null || c === undefined)) continue;
+    out.push(build(r, cols));
+  }
+  return out;
+}
+
+let orders = parseExtraSheet(['Ordens de Serviço', 'Ordens de Servico', 'OS', 'Ordem de Serviço'],
+  { id: ['id'], tipo: ['tipo'], num: ['numero'], data: ['data'], cli: ['cliente'], tel: ['telefone', 'fone'], end: ['endereco', 'end'], dev: ['aparelho', 'equipamento', 'device'], def: ['defeito'], sub: ['subtotal'], desc: ['desconto'], tot: ['total'], sit: ['status', 'situacao'], obs: ['observ', 'nota'], itens: ['itens'], created: ['created', 'criado'] },
+  (r, c) => {
+    const tipo = String(r[c.tipo] ?? '').toLowerCase();
+    return { id: String(r[c.id] ?? '').trim(), type: (tipo.includes('orc') || tipo.includes('budget')) ? 'orcamento' : 'os', number: Number(r[c.num]) || 0, date: normDateStr(r[c.data]), clientName: String(r[c.cli] ?? '').trim(), clientPhone: String(r[c.tel] ?? '').trim(), clientAddress: String(r[c.end] ?? '').trim(), device: String(r[c.dev] ?? '').trim(), defect: String(r[c.def] ?? '').trim(), items: parseJsonCol(r[c.itens]), subtotal: num(r[c.sub]), discount: num(r[c.desc]), total: num(r[c.tot]), status: String(r[c.sit] ?? '').trim().toLowerCase() || 'aberta', notes: String(r[c.obs] ?? '').trim(), createdAt: String(r[c.created] ?? '').trim() || new Date().toISOString() };
+  });
+
+let purchases = parseExtraSheet(['Compras', 'Compras de Mercadoria'],
+  { id: ['id'], data: ['data'], forn: ['fornecedor', 'supplier'], tot: ['total'], obs: ['observ', 'nota'], itens: ['itens'], created: ['created', 'criado'] },
+  (r, c) => ({ id: String(r[c.id] ?? '').trim(), date: normDateStr(r[c.data]), supplierName: String(r[c.forn] ?? '').trim(), items: parseJsonCol(r[c.itens]), total: num(r[c.tot]), notes: String(r[c.obs] ?? '').trim(), createdAt: String(r[c.created] ?? '').trim() || new Date().toISOString() }));
+
+let customers = parseExtraSheet(['Clientes'],
+  { id: ['id'], nome: ['nome'], tel: ['telefone', 'fone'], mail: ['email', 'e-mail'], end: ['endereco', 'end'], obs: ['observ', 'nota'], created: ['created', 'criado'] },
+  (r, c) => ({ id: String(r[c.id] ?? '').trim(), name: String(r[c.nome] ?? '').trim(), phone: String(r[c.tel] ?? '').trim(), email: String(r[c.mail] ?? '').trim(), address: String(r[c.end] ?? '').trim(), notes: String(r[c.obs] ?? '').trim(), createdAt: String(r[c.created] ?? '').trim() || new Date().toISOString() }));
+
+let suppliers = parseExtraSheet(['Fornecedores'],
+  { id: ['id'], nome: ['nome'], tel: ['telefone', 'fone'], mail: ['email', 'e-mail'], obs: ['observ', 'nota'], created: ['created', 'criado'] },
+  (r, c) => ({ id: String(r[c.id] ?? '').trim(), name: String(r[c.nome] ?? '').trim(), phone: String(r[c.tel] ?? '').trim(), email: String(r[c.mail] ?? '').trim(), notes: String(r[c.obs] ?? '').trim(), createdAt: String(r[c.created] ?? '').trim() || new Date().toISOString() }));
+
+let cashSessions = parseExtraSheet(['Caixa', 'Fechamentos', 'Caixa (Fechamentos)'],
+  { id: ['id'], open: ['abertura', 'open'], close: ['fechamento', 'close'], openBal: ['saldo inicial', 'abertura', 'opening'], exp: ['esperado', 'expected'], closeBal: ['final', 'fechamento', 'closing'], diff: ['diferenca', 'difference'], sit: ['status', 'situacao'], obs: ['observ', 'nota'], with: ['retirada', 'withdrawal', 'saque'] },
+  (r, c) => ({ id: String(r[c.id] ?? '').trim(), openDate: normDateStr(r[c.open]), closeDate: String(r[c.close] ?? '').trim() ? normDateStr(r[c.close]) : undefined, openingBalance: num(r[c.openBal]), expectedBalance: (r[c.exp] !== '' && r[c.exp] != null) ? num(r[c.exp]) : undefined, closingBalance: (r[c.closeBal] !== '' && r[c.closeBal] != null) ? num(r[c.closeBal]) : undefined, difference: (r[c.diff] !== '' && r[c.diff] != null) ? num(r[c.diff]) : undefined, status: (String(r[c.sit] ?? '').trim().toLowerCase().includes('fech') ? 'closed' : 'open'), withdrawals: parseJsonCol(r[c.with]), notes: String(r[c.obs] ?? '').trim() }));
+
 const db = {
   products,
   categories,
   sales,
   expenses,
-  customers: [],
-  suppliers: [],
-  purchases: [],
-  cashSessions: [],
-  orders: [],
-  loans: [],
+  customers,
+  suppliers,
+  purchases,
+  cashSessions,
+  orders,
+  loans,
   storeInfo: null,
   initialized: true,
 };
@@ -185,3 +264,4 @@ console.log('products:', products.length);
 console.log('sales:', sales.length);
 console.log('categories:', categories.length);
 console.log('expenses:', expenses.length);
+console.log('loans:', loans.length);

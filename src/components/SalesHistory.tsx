@@ -335,9 +335,29 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-5">
-        <h1 id="sales-history-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">Histórico de Vendas</h1>
-        <p className="text-sm text-slate-500 mt-1">Consulte todas as vendas efetuadas, veja detalhes de lucro por item ou efetue estornos de mercadoria.</p>
+      <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 id="sales-history-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            <FileText className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+            Histórico de Vendas
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">Consulte todas as vendas efetuadas, veja detalhes de lucro por item ou efetue estornos de mercadoria.</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
+          <button onClick={() => { setShowProductSummary(false); setShowDebtors(!showDebtors); }} className={`px-4 py-2 text-sm font-semibold rounded-lg border flex items-center justify-center gap-2 transition-colors cursor-pointer ${ showDebtors ? 'bg-amber-50 border-amber-200 text-amber-700' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100' }`}>
+            <AlertTriangle className="h-4 w-4" />
+            Devedores ({sales.filter(s => isDebtorSale(s)).length})
+          </button>
+
+          <button onClick={() => { setShowDebtors(false); setShowProductSummary(!showProductSummary); }} className={`px-4 py-2 text-sm font-semibold rounded-lg border flex items-center justify-center gap-2 transition-colors cursor-pointer ${ showProductSummary ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100' }`}>
+            {showProductSummary ? 'Ocultar Resumo' : 'Ver Resumo por Produto'} ({productSummary.length} produtos)
+          </button>
+
+          <button onClick={handleExportExcel} className="px-4 py-2 text-sm font-semibold rounded-lg border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <FileDown className="h-4 w-4" />
+            Exportar para Excel
+          </button>
+        </div>
       </div>
 
       {/* Date Range Filter */}
@@ -432,40 +452,6 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
         </div>
       </div>
 
-      {/* Action buttons row */}
-      <div className="flex items-center gap-2 flex-wrap">
-        <button
-          onClick={() => { setShowProductSummary(false); setShowDebtors(!showDebtors); }}
-          className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-colors flex items-center gap-1.5 ${
-            showDebtors 
-              ? 'bg-amber-50 border-amber-200 text-amber-700' 
-              : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
-          }`}
-        >
-          <AlertTriangle className="h-4 w-4" />
-          Devedores ({sales.filter(s => isDebtorSale(s)).length})
-        </button>
-
-        <button
-          onClick={() => { setShowDebtors(false); setShowProductSummary(!showProductSummary); }}
-          className={`px-4 py-2 text-sm font-semibold rounded-lg border transition-colors ${
-            showProductSummary 
-              ? 'bg-indigo-50 border-indigo-200 text-indigo-700' 
-              : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
-          }`}
-        >
-          {showProductSummary ? 'Ocultar Resumo' : 'Ver Resumo por Produto'} ({productSummary.length} produtos)
-        </button>
-
-        <button
-          onClick={handleExportExcel}
-          className="px-4 py-2 text-sm font-semibold rounded-lg border border-slate-200 bg-white text-slate-600 hover:bg-slate-50 transition-colors flex items-center gap-1.5"
-        >
-          <FileDown className="h-4 w-4" />
-          Exportar para Excel
-        </button>
-      </div>
-
       {/* Debtor Summary Card */}
       {showDebtors && (
         <div className="bg-gradient-to-r from-amber-50 to-orange-50 p-5 rounded-xl border border-amber-200 shadow-sm">
@@ -499,24 +485,24 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
             <p className="text-xs text-slate-400 mt-0.5">Lista consolidada de todos os produtos vendidos com quantidades e valores.</p>
           </div>
           <div className="overflow-x-auto max-h-80">
-            <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 bg-white">
-                <tr className="border-b border-slate-200 text-[10px] font-bold uppercase tracking-wider text-slate-400">
-                  <th className="py-2 px-4">#</th>
-                  <th className="py-2 px-4">Produto</th>
-                  <th className="py-2 px-4 text-center">Qtd Vendida</th>
-                  <th className="py-2 px-4 text-right">Faturamento</th>
-                  <th className="py-2 px-4 text-right">Lucro</th>
+            <table className="w-full text-sm">
+              <thead className="sticky top-0">
+                <tr className="border-b border-slate-200">
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">#</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Produto</th>
+                  <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Qtd Vendida</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Faturamento</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Lucro</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-xs">
+              <tbody className="text-xs">
                 {productSummary.map((item, idx) => (
-                  <tr key={idx} className="hover:bg-slate-50/50">
-                    <td className="py-1.5 px-4 font-mono text-slate-400">{idx + 1}</td>
-                    <td className="py-1.5 px-4 font-semibold text-slate-900">{item.name}</td>
-                    <td className="py-1.5 px-4 text-center font-mono">{item.qty}</td>
-                    <td className="py-1.5 px-4 text-right font-mono">{formatCurrency(item.revenue)}</td>
-                    <td className="py-1.5 px-4 text-right font-mono text-emerald-600 font-bold">{formatCurrency(item.revenue - item.cost)}</td>
+                  <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle font-mono text-slate-400">{idx + 1}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle font-semibold text-slate-900">{item.name}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle text-center font-mono">{item.qty}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono">{formatCurrency(item.revenue)}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono text-emerald-600 font-bold">{formatCurrency(item.revenue - item.cost)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -544,21 +530,21 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+            <table className="w-full text-sm">
               <thead>
-                <tr className="bg-slate-50 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-400">
-                  <th className="py-3 px-4">Cód / Data</th>
-                  <th className="py-3 px-4">Produto</th>
-                  <th className="py-3 px-4">Cliente</th>
-                  <th className="py-3 px-4 text-center">Itens</th>
-                  <th className="py-3 px-4">Pagamento</th>
-                  <th className="py-3 px-4 text-right">Valor Vendido</th>
-                  <th className="py-3 px-4 text-right">Lucro</th>
-                  <th className="py-3 px-4 text-center">Status</th>
-                  <th className="py-3 px-4 text-center">Ações</th>
+                <tr className="border-b border-slate-200">
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Cód / Data</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Produto</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Cliente</th>
+                  <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Itens</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Pagamento</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Valor Vendido</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Lucro</th>
+                  <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Status</th>
+                  <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Ações</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 text-sm">
+              <tbody className="text-sm">
                 {filteredSales.map(sale => {
                   const isCancelled = sale.status === 'cancelled';
                   const isPending = sale.status === 'pending';
@@ -567,20 +553,20 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                   return (
                     <tr 
                       key={sale.id}
-                      className={`hover:bg-slate-50/50 transition-colors ${
+                      className={`hover:bg-slate-50 transition-colors ${
                         isCancelled ? 'bg-rose-50/5 text-slate-400' : ''
                       } ${
                         isPending ? 'bg-amber-50/60' : ''
                       }`}
                     >
                       {/* ID / Date */}
-                      <td className="py-3 px-4">
+                      <td className="px-4 py-3 border-b border-slate-100 align-middle">
                         <span className="font-mono text-xs font-bold block text-slate-400">#{sale.id.substring(0, 8)}</span>
                         <span className="text-xs text-slate-500 block mt-0.5">{formatDate(sale.date)}</span>
                       </td>
 
                       {/* Client info */}
-                      <td className="py-3 px-4 font-semibold">
+                      <td className="px-4 py-3 border-b border-slate-100 align-middle font-semibold">
                         {sale.clientName ? (
                           <div>
                             <p className={isCancelled ? 'text-slate-400 line-through' : 'text-slate-900'}>{sale.clientName}</p>
@@ -592,7 +578,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                       </td>
 
                       {/* Items count */}
-                      <td className="py-3 px-4">
+                      <td className="px-4 py-3 border-b border-slate-100 align-middle">
                         <span className="font-mono font-medium text-slate-700 block">{totalItems} un</span>
                         <span className="text-[10px] text-slate-400 block max-w-[180px] truncate mt-0.5" title={sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', ')}>
                           {sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', ')}
@@ -600,30 +586,30 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                       </td>
 
                       {/* Product names (first 2 products) */}
-                      <td className="py-3 px-4 text-xs text-slate-600 max-w-[200px] truncate">
+                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-xs text-slate-600 max-w-[200px] truncate">
                         {sale.items.slice(0, 2).map(i => i.productName).join(', ')}
                         {sale.items.length > 2 && ' ...'}
                       </td>
 
                       {/* Payment method */}
-                      <td className="py-3 px-4 text-xs font-medium text-slate-600">
+                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-xs font-medium text-slate-600">
                         {paymentMethodLabels[sale.paymentMethod] || sale.paymentMethod}
                       </td>
 
                       {/* Sold total */}
-                      <td className="py-3 px-4 text-right font-mono font-bold text-slate-900">
+                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono font-bold text-slate-900">
                         {formatCurrency(sale.total)}
                       </td>
 
                       {/* Profit */}
-                      <td className={`py-3 px-4 text-right font-mono font-extrabold ${
+                      <td className={`px-4 py-3 border-b border-slate-100 align-middle text-right font-mono font-extrabold ${
                         isCancelled ? 'text-slate-300' : 'text-emerald-600'
                       }`}>
                         {isCancelled ? '—' : formatCurrency(sale.profit)}
                       </td>
 
                       {/* Status */}
-                      <td className="py-3 px-4 text-center">
+                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
                         {isCancelled ? (
                           <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-rose-50 text-rose-700 text-xs font-bold rounded-sm border border-rose-100">
                             <XCircle className="h-3 w-3 shrink-0" /> Cancelada
@@ -640,7 +626,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                       </td>
 
                       {/* Details / Cancel Action */}
-                      <td className="py-3 px-4 text-center">
+                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
                         <div className="flex items-center justify-center gap-1">
                           {isPending && (
                             <button
@@ -682,25 +668,25 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
               {/* Summary Totals Row */}
               <tfoot>
                 <tr className="bg-slate-100 border-t-2 border-slate-200 text-sm">
-                  <td colSpan={4} className="py-3 px-4 font-bold text-slate-700 uppercase text-xs tracking-wider">
+                  <td colSpan={4} className="px-4 py-3 border-b border-slate-100 align-middle font-bold text-slate-700 uppercase text-xs tracking-wider">
                     {showDebtors 
                       ? `Total (${debtorSummary.count} ${debtorSummary.count === 1 ? 'venda' : 'vendas'} pendentes)`
                       : `Totais (${summaryTotals.totalCount} ${summaryTotals.totalCount === 1 ? 'venda' : 'vendas'} concluídas)`
                     }
                   </td>
-                  <td className="py-3 px-4 text-right font-mono text-slate-600 font-bold">
+                  <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono text-slate-600 font-bold">
                     {showDebtors 
                       ? formatCurrency(filteredSales.reduce((acc, s) => acc + s.totalCost, 0))
                       : formatCurrency(summaryTotals.totalRevenue - summaryTotals.totalProfit)
                     }
                   </td>
-                  <td className="py-3 px-4 text-right font-mono text-slate-900 font-black text-base">
+                  <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono text-slate-900 font-black text-base">
                     {showDebtors 
                       ? formatCurrency(debtorSummary.total)
                       : formatCurrency(summaryTotals.totalRevenue)
                     }
                   </td>
-                  <td className="py-3 px-4 text-right font-mono text-emerald-600 font-black text-base">
+                  <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono text-emerald-600 font-black text-base">
                     {showDebtors 
                       ? formatCurrency(debtorSummary.total - filteredSales.reduce((acc, s) => acc + s.totalCost, 0))
                       : formatCurrency(summaryTotals.totalProfit)
@@ -864,7 +850,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                   <button
                     id="confirm-payment-modal-btn"
                     onClick={() => { handleConfirmPayment(selectedSale); setSelectedSale(null); }}
-                    className="px-4 py-2 border border-amber-200 text-amber-700 hover:bg-amber-50 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors"
+                    className="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 text-sm font-semibold rounded-lg border border-amber-200 flex items-center justify-center gap-2 transition-colors cursor-pointer"
                   >
                     <CheckCircle className="h-3.5 w-3.5" />
                     Confirmar Pagamento
@@ -874,7 +860,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                   <button
                     id="refund-sale-btn"
                     onClick={() => handleCancelClick(selectedSale)}
-                    className="px-4 py-2 border border-rose-200 text-rose-700 hover:bg-rose-50 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors"
+                    className="px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-700 text-sm font-semibold rounded-lg border border-rose-200 flex items-center justify-center gap-2 transition-colors cursor-pointer"
                   >
                     <CornerUpLeft className="h-3.5 w-3.5" />
                     Estornar Transação
@@ -883,7 +869,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                 <button
                   id="print-receipt-btn"
                   onClick={() => handlePrintReceipt(selectedSale)}
-                  className="px-4 py-2 border border-slate-200 text-slate-700 hover:bg-slate-100 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors"
+                  className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
                   <Printer className="h-3.5 w-3.5" />
                   Imprimir Recibo
@@ -892,7 +878,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
               <button
                 id="close-receipt-btn"
                 onClick={() => setSelectedSale(null)}
-                className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-colors shadow-xs"
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 Fechar Comprovante
               </button>

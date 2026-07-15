@@ -82,31 +82,34 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between flex-wrap gap-2">
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 border-b border-slate-200 dark:border-slate-700 pb-5 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-            <Users className="h-6 w-6 text-indigo-600" /> Clientes
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <Users className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+            Clientes
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400">CRM: histórico de compras e débitos por cliente.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">CRM: histórico de compras e débitos por cliente.</p>
         </div>
-        <button
-          onClick={openNew}
-          className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center gap-2 transition-colors cursor-pointer"
-        >
-          <Plus className="h-4 w-4" /> Novo Cliente
-        </button>
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={openNew}
+            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
+          >
+            <Plus className="h-4 w-4" /> Novo Cliente
+          </button>
+        </div>
       </div>
 
       {selected ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 space-y-4">
+        <div className="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
           <div className="flex items-center justify-between">
             <button onClick={() => setSelectedId(null)} className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-indigo-600 cursor-pointer">
               <ArrowLeft className="h-4 w-4" /> Voltar
             </button>
-            <div className="flex gap-2">
-              <button onClick={() => openEdit(selected)} className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-600 cursor-pointer"><Pencil className="h-4 w-4" /></button>
-              <button onClick={() => remove(selected.id)} className="p-2 rounded-lg bg-red-50 dark:bg-red-900/30 hover:bg-red-100 text-red-600 cursor-pointer"><Trash2 className="h-4 w-4" /></button>
+            <div className="flex flex-wrap items-center gap-2">
+              <button onClick={() => openEdit(selected)} className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"><Pencil className="h-4 w-4" /></button>
+              <button onClick={() => remove(selected.id)} className="p-2 rounded-lg border border-rose-200 dark:border-red-900/30 text-rose-600 hover:bg-rose-50 dark:hover:bg-red-900/30 transition-colors cursor-pointer"><Trash2 className="h-4 w-4" /></button>
             </div>
           </div>
 
@@ -135,14 +138,14 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
             {selectedSales.length === 0 ? (
               <p className="text-xs text-slate-400 py-4 text-center">Nenhuma venda registrada para este cliente.</p>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs">
+              <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-700">
+                <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 uppercase tracking-wider">
-                      <th className="text-left py-2 px-2">Data</th>
-                      <th className="text-left py-2 px-2">Forma</th>
-                      <th className="text-right py-2 px-2">Total</th>
-                      <th className="text-left py-2 px-2">Status</th>
+                    <tr>
+                      <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Data</th>
+                      <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Forma</th>
+                      <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Total</th>
+                      <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -150,11 +153,11 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
                       .slice()
                       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                       .map(s => (
-                        <tr key={s.id} className="border-b border-slate-100 dark:border-slate-800">
-                          <td className="py-2 px-2 text-slate-600 dark:text-slate-300">{new Date(s.date).toLocaleDateString('pt-BR')}</td>
-                          <td className="py-2 px-2 text-slate-600 dark:text-slate-300">{s.paymentMethod}</td>
-                          <td className="py-2 px-2 text-right font-mono text-slate-700 dark:text-slate-200">R$ {s.total.toFixed(2)}</td>
-                          <td className="py-2 px-2">
+                        <tr key={s.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                          <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300 align-middle">{new Date(s.date).toLocaleDateString('pt-BR')}</td>
+                          <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 text-slate-700 dark:text-slate-300 align-middle">{s.paymentMethod}</td>
+                          <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 text-right font-mono text-slate-700 dark:text-slate-200 align-middle">R$ {s.total.toFixed(2)}</td>
+                          <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-800 align-middle">
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase ${
                               s.status === 'cancelled' ? 'bg-red-100 text-red-600 dark:bg-red-900/30' :
                               s.status === 'pending' ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30' :
@@ -229,8 +232,8 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
               <Field label="Observações"><textarea value={form.notes || ''} onChange={e => setForm({ ...form, notes: e.target.value })} rows={2} className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-indigo-500/20" /></Field>
             </div>
             <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-2">
-              <button onClick={() => { setShowForm(false); setForm(null); }} className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">Cancelar</button>
-              <button onClick={saveForm} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold cursor-pointer">Salvar</button>
+              <button onClick={() => { setShowForm(false); setForm(null); }} className="px-4 py-2 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 text-slate-700 dark:text-slate-300 text-sm font-semibold rounded-lg border border-slate-200 dark:border-slate-700 flex items-center justify-center gap-2 transition-colors cursor-pointer">Cancelar</button>
+              <button onClick={saveForm} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">Salvar</button>
             </div>
           </div>
         </div>

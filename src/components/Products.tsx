@@ -5,7 +5,7 @@ import {
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck,
-  Trash, Archive, RotateCcw
+  Trash, Archive, RotateCcw, Boxes
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -309,29 +309,28 @@ export default function Products({ products, categories, sales, onAddProduct, on
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex flex-col gap-3 border-b border-slate-200 pb-5">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">Gestão de Estoque</h1>
-            <p className="text-xs md:text-sm text-slate-500 mt-1">{products.length} produtos | {totalStock} peças | {totalRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <button onClick={handleOpenAddModal} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs transition-colors">
-              <Plus className="h-4 w-4" /> Novo
-            </button>
-            <button onClick={handleClearAllStock} className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-xs font-semibold rounded-lg flex items-center gap-1.5 shadow-xs transition-colors">
-              <Trash className="h-4 w-4" /> Remover Tudo
-            </button>
-          </div>
+      <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            <Boxes className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+            Gestão de Estoque
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">{products.length} produtos | {totalStock} peças | {totalRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <button onClick={handleExportFiltered} className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-semibold rounded-lg border border-slate-200 flex items-center gap-1 transition-colors">
-            <Download className="h-3.5 w-3.5" /> <span className="hidden sm:inline">Exportar</span>
+          <button onClick={handleOpenAddModal} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <Plus className="h-4 w-4" /> Novo
           </button>
-          <button onClick={handleCheckStock} className="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 text-[11px] font-semibold rounded-lg border border-amber-200 flex items-center gap-1 transition-colors">
-            <ClipboardCheck className="h-3.5 w-3.5" /> <span className="hidden sm:inline">Verificar Vendas x Estoque</span><span className="sm:hidden">Verificar</span>
+          <button onClick={handleClearAllStock} className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <Trash className="h-4 w-4" /> Remover Tudo
           </button>
-          <button onClick={() => setIsCategoryModalOpen(true)} className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-semibold rounded-lg border border-slate-200 transition-colors">
+          <button onClick={handleExportFiltered} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <Download className="h-4 w-4" /> <span className="hidden sm:inline">Exportar</span>
+          </button>
+          <button onClick={handleCheckStock} className="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 text-sm font-semibold rounded-lg border border-amber-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <ClipboardCheck className="h-4 w-4" /> <span className="hidden sm:inline">Verificar Vendas x Estoque</span><span className="sm:hidden">Verificar</span>
+          </button>
+          <button onClick={() => setIsCategoryModalOpen(true)} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
             + Categoria
           </button>
         </div>
@@ -402,8 +401,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
         <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 flex flex-wrap items-center gap-3">
           <span className="text-xs font-bold text-indigo-700">{selectedIds.size} selecionados</span>
           <div className="flex items-center gap-2 flex-wrap">
-            <button onClick={handleBulkDelete} className="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold rounded-lg flex items-center gap-1 transition-colors">
-              <Trash2 className="h-3 w-3" /> Excluir
+            <button onClick={handleBulkDelete} className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">
+              <Trash2 className="h-4 w-4" /> Excluir
             </button>
             {bulkAction === 'category' ? (
               <div className="flex items-center gap-2 bg-white p-1 rounded-lg border border-indigo-200">
@@ -415,8 +414,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
                 <button onClick={() => setBulkAction(null)} className="text-slate-400 hover:text-slate-600"><X className="h-3 w-3" /></button>
               </div>
             ) : (
-              <button onClick={() => setBulkAction('category')} className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-bold rounded-lg border border-slate-200 flex items-center gap-1 transition-colors">
-                <Layers className="h-3 w-3" /> Mudar Categoria
+                <button onClick={() => setBulkAction('category')} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+                <Layers className="h-4 w-4" /> Mudar Categoria
               </button>
             )}
             {bulkAction === 'stock' ? (
@@ -429,8 +428,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
                 <button onClick={() => setBulkAction(null)} className="text-slate-400 hover:text-slate-600"><X className="h-3 w-3" /></button>
               </div>
             ) : (
-              <button onClick={() => setBulkAction('stock')} className="px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 text-[11px] font-bold rounded-lg border border-slate-200 flex items-center gap-1 transition-colors">
-                <Layers className="h-3 w-3" /> Ajustar Estoque
+                <button onClick={() => setBulkAction('stock')} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+                <Layers className="h-4 w-4" /> Ajustar Estoque
               </button>
             )}
           </div>
@@ -527,21 +526,21 @@ export default function Products({ products, categories, sales, onAddProduct, on
         ) : (
           <>
             <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-sm">
+              <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-200 text-[10px] font-bold uppercase tracking-wider text-slate-500">
-                    <th className="py-3 px-3 w-8">
+                  <tr className="border-b border-slate-200">
+                    <th className="px-4 py-3 w-8 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">
                       <button onClick={toggleSelectAll} className="text-slate-400 hover:text-indigo-600">
                         {selectedIds.size === paginatedProducts.length && paginatedProducts.length > 0 ? <CheckSquare className="h-4 w-4 text-indigo-600" /> : <Square className="h-4 w-4" />}
                       </button>
                     </th>
-                    <th className="py-3 px-3 cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('name')}><div className="flex items-center">Produto <SortIndicator field="name" /></div></th>
-                    <th className="py-3 px-3 cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('category')}><div className="flex items-center">Categoria <SortIndicator field="category" /></div></th>
-                    <th className="py-3 px-3 text-right cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('costPrice')}><div className="flex items-center justify-end">Custo <SortIndicator field="costPrice" /></div></th>
-                    <th className="py-3 px-3 text-right cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('salePrice')}><div className="flex items-center justify-end">Venda <SortIndicator field="salePrice" /></div></th>
-                    <th className="py-3 px-3 text-center cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('stock')}><div className="flex items-center justify-center">Estoque <SortIndicator field="stock" /></div></th>
-                    <th className="py-3 px-3 text-right cursor-pointer select-none hover:bg-slate-100" onClick={() => handleSort('margin')}><div className="flex items-center justify-end">Margem <SortIndicator field="margin" /></div></th>
-                    <th className="py-3 px-3 text-center">Ações</th>
+                    <th className="px-4 py-3 cursor-pointer select-none hover:bg-slate-100 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50" onClick={() => handleSort('name')}><div className="flex items-center">Produto <SortIndicator field="name" /></div></th>
+                    <th className="px-4 py-3 cursor-pointer select-none hover:bg-slate-100 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50" onClick={() => handleSort('category')}><div className="flex items-center">Categoria <SortIndicator field="category" /></div></th>
+                    <th className="px-4 py-3 text-right cursor-pointer select-none hover:bg-slate-100 text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50" onClick={() => handleSort('costPrice')}><div className="flex items-center justify-end">Custo <SortIndicator field="costPrice" /></div></th>
+                    <th className="px-4 py-3 text-right cursor-pointer select-none hover:bg-slate-100 text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50" onClick={() => handleSort('salePrice')}><div className="flex items-center justify-end">Venda <SortIndicator field="salePrice" /></div></th>
+                    <th className="px-4 py-3 text-center cursor-pointer select-none hover:bg-slate-100 text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50" onClick={() => handleSort('stock')}><div className="flex items-center justify-center">Estoque <SortIndicator field="stock" /></div></th>
+                    <th className="px-4 py-3 text-right cursor-pointer select-none hover:bg-slate-100 text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50" onClick={() => handleSort('margin')}><div className="flex items-center justify-end">Margem <SortIndicator field="margin" /></div></th>
+                    <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Ações</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
@@ -551,13 +550,13 @@ export default function Products({ products, categories, sales, onAddProduct, on
                     const isOut = !isIndisponivel && p.stock === 0;
                     const margin = calcMargin(p.costPrice, p.salePrice);
                     return (
-                      <tr key={p.id} className={`hover:bg-slate-50/50 transition-colors ${isOut ? 'bg-rose-50/20' : isLow ? 'bg-amber-50/20' : isIndisponivel ? 'bg-slate-50/50 opacity-60' : ''} ${selectedIds.has(p.id) ? 'bg-indigo-50/30' : ''}`}>
-                        <td className="py-2.5 px-3">
+                      <tr key={p.id} className={`hover:bg-slate-50 transition-colors ${isOut ? 'bg-rose-50/20' : isLow ? 'bg-amber-50/20' : isIndisponivel ? 'bg-slate-50/50 opacity-60' : ''} ${selectedIds.has(p.id) ? 'bg-indigo-50/30' : ''}`}>
+                        <td className="px-4 py-3 border-b border-slate-100 align-middle">
                           <button onClick={() => toggleSelect(p.id)} className="text-slate-400 hover:text-indigo-600">
                             {selectedIds.has(p.id) ? <CheckSquare className="h-4 w-4 text-indigo-600" /> : <Square className="h-4 w-4" />}
                           </button>
                         </td>
-                        <td className="py-2.5 px-3">
+                        <td className="px-4 py-3 border-b border-slate-100 align-middle">
                           <div className="flex items-center gap-2">
                             <span className={`w-2 h-2 rounded-full shrink-0 ${isOut ? 'bg-rose-500' : isLow ? 'bg-amber-500 animate-pulse' : isIndisponivel ? 'bg-slate-400' : 'bg-emerald-500'}`} />
                             <div>
@@ -566,25 +565,25 @@ export default function Products({ products, categories, sales, onAddProduct, on
                             </div>
                           </div>
                         </td>
-                        <td className="py-2.5 px-3">
+                        <td className="px-4 py-3 border-b border-slate-100 align-middle">
                           <span className="px-1.5 py-0.5 bg-slate-100 text-slate-600 text-[10px] rounded font-medium">{p.category}</span>
                           {isIndisponivel && <span className="ml-1 px-1.5 py-0.5 bg-slate-200 text-slate-500 text-[9px] rounded font-bold">Indisp.</span>}
                         </td>
-                        <td className="py-2.5 px-3 text-right font-mono text-xs text-slate-500">{p.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td className="py-2.5 px-3 text-right font-mono text-xs font-semibold text-slate-900">{p.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                        <td className="py-2.5 px-3 text-center">
+                        <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono text-xs text-slate-500">{p.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono text-xs font-semibold text-slate-900">{p.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                        <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
                           <div className="inline-flex items-center gap-1">
                             <button onClick={() => handleQuickStockAdjust(p, -1)} disabled={p.stock === 0 || isIndisponivel} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-30 border border-slate-200/50"><Minus className="h-3 w-3" /></button>
                             <span className={`font-bold font-mono text-xs w-10 text-center ${isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : isIndisponivel ? 'text-slate-400' : 'text-slate-800'}`}>{p.stock}</span>
                             <button onClick={() => handleQuickStockAdjust(p, 1)} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 border border-slate-200/50"><Plus className="h-3 w-3" /></button>
                           </div>
                         </td>
-                        <td className="py-2.5 px-3 text-right">
+                        <td className="px-4 py-3 border-b border-slate-100 align-middle text-right">
                           <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${margin >= 50 ? 'bg-emerald-50 text-emerald-700' : margin >= 30 ? 'bg-indigo-50 text-indigo-700' : 'bg-amber-50 text-amber-700'}`}>
                             {margin.toFixed(0)}%
                           </span>
                         </td>
-                        <td className="py-2.5 px-3 text-center">
+                        <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
                           <div className="flex items-center justify-center gap-0.5">
                             <button onClick={() => handleOpenEditModal(p)} className="p-1 hover:bg-indigo-50 text-indigo-600 rounded transition-colors" title="Editar"><Edit2 className="h-3.5 w-3.5" /></button>
                             {p.archived ? (
@@ -600,12 +599,12 @@ export default function Products({ products, categories, sales, onAddProduct, on
                 </tbody>
                 <tfoot>
                   <tr className="bg-slate-50 border-t-2 border-slate-200 font-bold text-xs">
-                    <td className="py-2.5 px-3"></td>
-                    <td className="py-2.5 px-3 text-slate-600 uppercase tracking-wider text-[10px]" colSpan={2}>Totais ({sortedProducts.length} produtos)</td>
-                    <td className="py-2.5 px-3 text-right font-mono text-slate-600">{totalCostValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                    <td className="py-2.5 px-3 text-right font-mono text-slate-600">{totalRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-                    <td className="py-2.5 px-3 text-center font-mono">{totalStock} un</td>
-                    <td className="py-2.5 px-3 text-right text-[10px] text-slate-500">{totalCostValue > 0 ? `${((totalRetailValue - totalCostValue) / totalRetailValue * 100).toFixed(0)}%` : ''}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle"></td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle text-slate-600 uppercase tracking-wider text-[10px]" colSpan={2}>Totais ({sortedProducts.length} produtos)</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono text-slate-600">{totalCostValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono text-slate-600">{totalRetailValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle text-center font-mono">{totalStock} un</td>
+                    <td className="px-4 py-3 border-b border-slate-100 align-middle text-right text-[10px] text-slate-500">{totalCostValue > 0 ? `${((totalRetailValue - totalCostValue) / totalRetailValue * 100).toFixed(0)}%` : ''}</td>
                     <td></td>
                   </tr>
                 </tfoot>
@@ -703,8 +702,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
                 <textarea rows={2} value={formDescription} onChange={e => setFormDescription(e.target.value)} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 resize-none" />
               </div>
               <div className="border-t border-slate-200 pt-4 flex items-center justify-end gap-2">
-                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-50">Cancelar</button>
-                <button type="submit" className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-semibold shadow-xs">{editingProduct ? 'Salvar' : 'Cadastrar'}</button>
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">Cancelar</button>
+                <button type="submit" className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">{editingProduct ? 'Salvar' : 'Cadastrar'}</button>
               </div>
             </form>
           </div>
@@ -722,8 +721,8 @@ export default function Products({ products, categories, sales, onAddProduct, on
             <form onSubmit={handleAddCategorySubmit} className="p-5 space-y-4">
               <input type="text" required placeholder="Nome da categoria" value={newCategoryName} onChange={e => setNewCategoryName(e.target.value)} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400" />
               <div className="flex items-center justify-end gap-2 pt-2 border-t border-slate-200">
-                <button type="button" onClick={() => setIsCategoryModalOpen(false)} className="px-3 py-1.5 border border-slate-200 text-slate-700 rounded-lg text-xs font-semibold">Cancelar</button>
-                <button type="submit" className="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-semibold">Adicionar</button>
+                <button type="button" onClick={() => setIsCategoryModalOpen(false)} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">Cancelar</button>
+                <button type="submit" className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">Adicionar</button>
               </div>
             </form>
           </div>
@@ -768,7 +767,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                             <span className="text-[10px] text-slate-400">Venda: <span className="font-mono text-slate-600">{item.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></span>
                           </div>
                         </div>
-                        <button onClick={() => handleRegisterMissing(item)} className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold rounded-lg shrink-0 transition-colors">
+                        <button onClick={() => handleRegisterMissing(item)} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shrink-0">
                           Cadastrar
                         </button>
                       </div>
@@ -778,16 +777,16 @@ export default function Products({ products, categories, sales, onAddProduct, on
               )}
             </div>
             <div className="p-5 border-t border-slate-200 flex items-center justify-between bg-slate-50 rounded-b-xl">
-              <button onClick={handleExportMissing} className="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-lg border border-slate-200 flex items-center gap-1.5 transition-colors">
-                <Download className="h-3.5 w-3.5" /> Exportar Controle
+              <button onClick={handleExportMissing} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+                <Download className="h-4 w-4" /> Exportar Controle
               </button>
               <div className="flex items-center gap-2">
                 {missingProducts.length > 0 && (
-                  <button onClick={handleRegisterAllMissing} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition-colors">
+                  <button onClick={handleRegisterAllMissing} className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">
                     Cadastrar Todos ({missingProducts.length})
                   </button>
                 )}
-                <button onClick={() => setShowStockCheck(false)} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-colors shadow-xs">
+                <button onClick={() => setShowStockCheck(false)} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">
                   Fechar
                 </button>
               </div>

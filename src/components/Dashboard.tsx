@@ -13,7 +13,8 @@ import {
   Calendar,
   Layers,
   Eye,
-  EyeOff
+  EyeOff,
+  LayoutDashboard
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -389,14 +390,18 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       <div className="flex flex-col gap-4 border-b border-slate-200 pb-5">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <div>
-            <h1 id="dashboard-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">Painel de Controle</h1>
+            <h1 id="dashboard-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+              <LayoutDashboard className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+              Painel de Controle
+            </h1>
             <p className="text-xs md:text-sm text-slate-500 mt-1">Visão geral do desempenho da sua loja.</p>
           </div>
-          
+
+          <div className="flex items-center gap-2 self-start sm:self-auto">
             <button
               id="quick-start-sale-btn"
               onClick={() => onNavigate('pos')}
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 shadow-xs transition-colors cursor-pointer self-start sm:self-auto"
+              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-lg flex items-center gap-2 shadow-sm transition-colors cursor-pointer"
             >
               <ShoppingBag className="h-4 w-4" />
               Nova Venda
@@ -404,10 +409,11 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
             <button
               onClick={() => setHideValues(v => !v)}
               title={hideValues ? 'Mostrar valores' : 'Ocultar valores'}
-              className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer self-start sm:self-auto"
+              className="p-2 rounded-lg border border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors cursor-pointer"
             >
               {hideValues ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
             </button>
+          </div>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
@@ -426,7 +432,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
               id={`range-${opt.key}`}
               onClick={() => setTimeRange(opt.key)}
               className={`px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-medium rounded-md transition-colors whitespace-nowrap shrink-0 ${
-                timeRange === opt.key ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
+                timeRange === opt.key ? 'bg-white text-slate-900 border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               {opt.label}
@@ -616,7 +622,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
               </div>
             )}
           </div>
-          <button onClick={() => onNavigate('sales')} className="w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-colors border border-slate-200">
+          <button onClick={() => onNavigate('sales')} className="w-full py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors border border-slate-200">
             Histórico de Vendas <ArrowRight className="h-3 w-3" />
           </button>
         </div>

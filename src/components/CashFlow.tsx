@@ -123,13 +123,19 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
   }, [allExpenses]);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-bold text-slate-900">Fluxo de Caixa</h2>
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            <DollarSign className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+            Fluxo de Caixa
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">Acompanhe receitas, custos e despesas ao longo do ano.</p>
+        </div>
+        <div className="flex flex-wrap items-center gap-2">
           <select value={selectedYear} onChange={e => setSelectedYear(Number(e.target.value))}
-            className="px-3 py-1.5 text-xs border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-medium">
+            className="px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 font-medium">
             {availableYears.map(y => <option key={y} value={y}>{y}</option>)}
           </select>
         </div>
@@ -158,19 +164,22 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
       </div>
 
       {/* Monthly Table */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="p-3 border-b border-slate-100 flex items-center justify-between">
-          <span className="text-xs font-bold text-slate-700 uppercase">Detalhamento Mensal - {selectedYear}</span>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="border-b border-slate-100 pb-3 mb-4 px-5 pt-5">
+          <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+            <Calendar className="h-5 w-5 text-indigo-600" /> Detalhamento Mensal
+          </h2>
+          <p className="text-xs text-slate-400 mt-0.5">Receitas, custos e saldo por mês em {selectedYear}.</p>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full text-xs">
+          <table className="w-full text-sm">
             <thead>
               <tr className="bg-slate-50">
-                <th className="text-left p-2 font-semibold text-slate-600">Mês</th>
-                <th className="text-right p-2 font-semibold text-slate-600">Receita</th>
-                <th className="text-right p-2 font-semibold text-slate-600">Custo</th>
-                <th className="text-right p-2 font-semibold text-slate-600">Despesas</th>
-                <th className="text-right p-2 font-semibold text-slate-600">Saldo</th>
+                <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Mês</th>
+                <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Receita</th>
+                <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Custo</th>
+                <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Despesas</th>
+                <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Saldo</th>
               </tr>
             </thead>
             <tbody>
@@ -180,12 +189,12 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
                 const hasData = d.revenue > 0 || d.expenses > 0;
                 if (!hasData) return null;
                 return (
-                  <tr key={m} className="border-t border-slate-100">
-                    <td className="p-2 font-medium text-slate-900">{monthName}</td>
-                    <td className="p-2 text-right font-mono text-emerald-700">R$ {d.revenue.toFixed(2)}</td>
-                    <td className="p-2 text-right font-mono text-rose-700">R$ {d.cost.toFixed(2)}</td>
-                    <td className="p-2 text-right font-mono text-orange-700">R$ {d.expenses.toFixed(2)}</td>
-                    <td className={`p-2 text-right font-mono font-bold ${d.profit >= 0 ? 'text-blue-700' : 'text-red-700'}`}>
+                  <tr key={m} className="hover:bg-slate-50 transition-colors">
+                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle font-medium">{monthName}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-emerald-700">R$ {d.revenue.toFixed(2)}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-rose-700">R$ {d.cost.toFixed(2)}</td>
+                    <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-orange-700">R$ {d.expenses.toFixed(2)}</td>
+                    <td className={`px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono font-bold ${d.profit >= 0 ? 'text-blue-700' : 'text-red-700'}`}>
                       R$ {d.profit.toFixed(2)}
                     </td>
                   </tr>
@@ -195,7 +204,7 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
                 const d = monthlyData[i + 1];
                 return !d || (d.revenue === 0 && d.expenses === 0);
               }) && (
-                <tr><td colSpan={5} className="p-4 text-center text-slate-400">Nenhum dado para {selectedYear}</td></tr>
+                <tr><td colSpan={5} className="px-4 py-3 text-center text-slate-400">Nenhum dado para {selectedYear}</td></tr>
               )}
             </tbody>
           </table>
@@ -203,36 +212,41 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
       </div>
 
       {/* Expense Details */}
-      <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <div className="p-3 border-b border-slate-100 flex items-center justify-between">
-          <span className="text-xs font-bold text-slate-700 uppercase">Despesas Detalhadas</span>
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="border-b border-slate-100 pb-3 mb-4 px-5 pt-5 flex items-center justify-between gap-2">
+          <div>
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <DollarSign className="h-5 w-5 text-indigo-600" /> Despesas Detalhadas
+            </h2>
+            <p className="text-xs text-slate-400 mt-0.5">Gerencie as despesas do período selecionado.</p>
+          </div>
           <button onClick={() => setShowAddForm(!showAddForm)}
-            className="flex items-center gap-1 px-2.5 py-1 bg-indigo-50 text-indigo-600 rounded-lg text-[10px] font-semibold hover:bg-indigo-100">
-            <Plus size={12} /> Nova Despesa
+            className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <Plus className="h-4 w-4" /> Nova Despesa
           </button>
         </div>
 
         {showAddForm && (
-          <div className="p-3 bg-indigo-50 border-b border-indigo-100">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-2">
+          <div className="px-5 py-4 bg-indigo-50 border-b border-indigo-100">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
               <input type="text" placeholder="Descrição" value={newExpense.description}
                 onChange={e => setNewExpense({ ...newExpense, description: e.target.value })}
-                className="px-2 py-1.5 text-xs border border-indigo-200 rounded-lg focus:outline-none focus:border-indigo-400" />
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
               <input type="number" placeholder="Valor (R$)" value={newExpense.amount || ''}
                 onChange={e => setNewExpense({ ...newExpense, amount: Number(e.target.value) })}
-                className="px-2 py-1.5 text-xs border border-indigo-200 rounded-lg focus:outline-none focus:border-indigo-400" />
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
               <input type="text" placeholder="Categoria" value={newExpense.category}
                 onChange={e => setNewExpense({ ...newExpense, category: e.target.value })}
-                className="px-2 py-1.5 text-xs border border-indigo-200 rounded-lg focus:outline-none focus:border-indigo-400" />
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
               <input type="date" value={newExpense.date}
                 onChange={e => setNewExpense({ ...newExpense, date: e.target.value })}
-                className="px-2 py-1.5 text-xs border border-indigo-200 rounded-lg focus:outline-none focus:border-indigo-400" />
+                className="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
             </div>
             <div className="flex justify-end gap-2">
               <button onClick={() => { setShowAddForm(false); setEditingExpense(null); setNewExpense({ description: '', amount: 0, category: '', date: new Date().toISOString().substring(0, 10) }); }}
-                className="px-3 py-1.5 text-[10px] font-semibold text-slate-500 hover:text-slate-700">Cancelar</button>
+                className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">Cancelar</button>
               <button onClick={editingExpense ? handleUpdateExpense : handleAddExpense}
-                className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-[10px] font-semibold hover:bg-indigo-700">
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm">
                 {editingExpense ? 'Salvar' : 'Adicionar'}
               </button>
             </div>
@@ -241,10 +255,10 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
 
         {/* Expense categories summary */}
         {expenseByCategory.length > 0 && (
-          <div className="p-3 border-b border-slate-100">
+          <div className="px-5 py-4 border-b border-slate-100">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {expenseByCategory.map(([cat, total]) => (
-                <div key={cat} className="p-2 bg-slate-50 rounded-lg">
+                <div key={cat} className="p-3 bg-slate-50 rounded-lg border border-slate-100">
                   <span className="text-[10px] font-bold text-slate-500 block">{cat}</span>
                   <span className="text-xs font-bold font-mono text-slate-800">R$ {total.toFixed(2)}</span>
                 </div>
@@ -256,9 +270,9 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
         {/* Expense list */}
         <div className="divide-y divide-slate-100">
           {allExpenses.length === 0 ? (
-            <div className="p-4 text-center text-slate-400 text-xs">Nenhuma despesa cadastrada para {selectedYear}</div>
+            <div className="p-4 text-center text-slate-400 text-sm">Nenhuma despesa cadastrada para {selectedYear}</div>
           ) : allExpenses.map(exp => (
-            <div key={exp.id} className="flex items-center justify-between p-2.5 hover:bg-slate-50">
+            <div key={exp.id} className="flex items-center justify-between px-5 py-3 hover:bg-slate-50">
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
                   <span className="text-xs font-semibold text-slate-800">{exp.description}</span>
@@ -271,12 +285,12 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold font-mono text-rose-600">R$ {exp.amount.toFixed(2)}</span>
                 <button onClick={() => { setEditingExpense(exp); setNewExpense({...exp}); setShowAddForm(true); }}
-                  className="p-1 text-slate-300 hover:text-indigo-500" title="Editar">
-                  <Edit2 size={12} />
+                  className="p-2 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-slate-100 transition-colors cursor-pointer" title="Editar">
+                  <Edit2 className="h-4 w-4" />
                 </button>
                 <button onClick={() => onDeleteExpense?.(exp.id)}
-                  className="p-1 text-slate-300 hover:text-red-500">
-                  <Trash2 size={12} />
+                  className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer">
+                  <Trash2 className="h-4 w-4" />
                 </button>
               </div>
             </div>
@@ -286,19 +300,22 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
 
       {/* Annual comparison */}
       {availableYears.length > 1 && (
-        <div className="bg-white rounded-xl border border-slate-200 overflow-hidden">
-          <div className="p-3 border-b border-slate-100">
-            <span className="text-xs font-bold text-slate-700 uppercase">Comparativo Anual</span>
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="border-b border-slate-100 pb-3 mb-4 px-5 pt-5">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <PieChart className="h-5 w-5 text-indigo-600" /> Comparativo Anual
+            </h2>
+            <p className="text-xs text-slate-400 mt-0.5">Receitas, custos e saldo por ano.</p>
           </div>
           <div className="overflow-x-auto">
-            <table className="w-full text-xs">
+            <table className="w-full text-sm">
               <thead>
                 <tr className="bg-slate-50">
-                  <th className="text-left p-2 font-semibold text-slate-600">Ano</th>
-                  <th className="text-right p-2 font-semibold text-slate-600">Receita</th>
-                  <th className="text-right p-2 font-semibold text-slate-600">Custo</th>
-                  <th className="text-right p-2 font-semibold text-slate-600">Despesas</th>
-                  <th className="text-right p-2 font-semibold text-slate-600">Saldo</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Ano</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Receita</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Custo</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Despesas</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200">Saldo</th>
                 </tr>
               </thead>
               <tbody>
@@ -310,12 +327,12 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
                   const exp = yearExpenses.reduce((a, e) => a + e.amount, 0);
                   const profit = rev - cost - exp;
                   return (
-                    <tr key={year} className="border-t border-slate-100">
-                      <td className="p-2 font-semibold text-slate-900">{year}</td>
-                      <td className="p-2 text-right font-mono text-emerald-700">R$ {rev.toFixed(2)}</td>
-                      <td className="p-2 text-right font-mono text-rose-700">R$ {cost.toFixed(2)}</td>
-                      <td className="p-2 text-right font-mono text-orange-700">R$ {exp.toFixed(2)}</td>
-                      <td className={`p-2 text-right font-mono font-bold ${profit >= 0 ? 'text-blue-700' : 'text-red-700'}`}>
+                    <tr key={year} className="hover:bg-slate-50 transition-colors">
+                      <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle font-semibold">{year}</td>
+                      <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-emerald-700">R$ {rev.toFixed(2)}</td>
+                      <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-rose-700">R$ {cost.toFixed(2)}</td>
+                      <td className="px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono text-orange-700">R$ {exp.toFixed(2)}</td>
+                      <td className={`px-4 py-3 border-b border-slate-100 text-slate-700 align-middle text-right font-mono font-bold ${profit >= 0 ? 'text-blue-700' : 'text-red-700'}`}>
                         R$ {profit.toFixed(2)}
                       </td>
                     </tr>

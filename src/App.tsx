@@ -592,7 +592,7 @@ export default function App() {
         suppliers: cur.suppliers ?? [],
         purchases: cur.purchases ?? [],
         cashSessions: cur.cashSessions ?? [],
-        loans: cur.loans ?? [],
+        loans: arr(backup.loans).length ? (backup.loans as Loan[]) : cur.loans,
         initialized: true,
       };
       persist(merged);
@@ -858,7 +858,7 @@ export default function App() {
   // Import whole database from external source (MERGE: preserves existing IDs,
   // links and data; updates products matched by code/SKU or name instead of
   // wiping the store and regenerating IDs, which previously corrupted sales).
-  const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[] }) => {
+  const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[]; loans?: Loan[]; orders?: ServiceOrder[]; customers?: Customer[]; suppliers?: Supplier[]; purchases?: Purchase[]; cashSessions?: CashSession[] }) => {
     // --- Merge products by code (SKU) then by normalized name ---
     const existingByCode = new Map<string, Product>(products.map(p => [p.code.trim().toLowerCase(), p] as [string, Product]));
     const existingByName = new Map<string, Product>(products.map(p => [normalizeName(p.name), p] as [string, Product]));
@@ -926,6 +926,12 @@ export default function App() {
     saveSalesToStorage(mergedSales);
     saveCategoriesToStorage(mergedCategories);
     if (imported.expenses) saveExpensesToStorage(imported.expenses);
+    if (imported.loans) saveLoansToStorage(imported.loans);
+    if (imported.orders) saveOrdersToStorage(imported.orders);
+    if (imported.customers) saveCustomersToStorage(imported.customers);
+    if (imported.suppliers) saveSuppliersToStorage(imported.suppliers);
+    if (imported.purchases) savePurchasesToStorage(imported.purchases);
+    if (imported.cashSessions) saveCashSessionsToStorage(imported.cashSessions);
     persist({ initialized: true });
   };
 
@@ -1732,6 +1738,12 @@ export default function App() {
                 sales={sales}
                 categories={categories}
                 expenses={expenses}
+                loans={loans}
+                orders={orders}
+                customers={customers}
+                suppliers={suppliers}
+                purchases={purchases}
+                cashSessions={cashSessions}
                 storeInfo={storeInfo as StoreInfo}
                 onStoreInfoChange={handleStoreInfoChange}
                 onImportDatabase={handleImportDatabase}

@@ -431,14 +431,18 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="border-b border-slate-200 pb-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div className="flex flex-col gap-4 border-b border-slate-200 pb-5 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 id="pos-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900">Frente de Caixa (PDV)</h1>
-          <p className="text-xs md:text-sm text-slate-500 mt-1">Registre vendas rápidas com baixa automática no estoque.</p>
+          <h1 id="pos-title" className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+            <ShoppingCart className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
+            Frente de Caixa (PDV)
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">Registre vendas rápidas com baixa automática no estoque.</p>
         </div>
         
         {/* Toggle option for selling without stock constraint */}
-        <div className="flex items-center gap-2.5 bg-slate-100 px-3 py-2 rounded-lg border border-slate-200 self-start sm:self-auto shadow-xs">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2.5 bg-slate-100 px-3 py-2 rounded-lg border border-slate-200 self-start sm:self-auto">
           <label className="text-[11px] md:text-xs font-bold text-slate-600 cursor-pointer select-none" htmlFor="allow-negative-stock-toggle">
             Vender sem estoque
           </label>
@@ -448,7 +452,8 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
             checked={allowNegativeStock}
             onChange={(e) => setAllowNegativeStock(e.target.checked)}
             className="w-4 h-4 text-indigo-600 bg-white border-slate-300 rounded-sm focus:ring-indigo-500 cursor-pointer"
-          />
+            />
+          </div>
         </div>
       </div>
 
@@ -466,11 +471,11 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
       {/* Persistent receipt button */}
       {lastSaleData && (
         <div className="flex gap-2">
-          <button onClick={generateReceipt} className="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-bold flex items-center gap-2 transition-colors cursor-pointer shadow-sm">
+          <button onClick={generateReceipt} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">
             <Printer className="h-4 w-4" />
             Imprimir Último Recibo
           </button>
-          <button onClick={() => setLastSaleData(null)} className="py-2 px-3 text-slate-400 hover:text-slate-600 text-sm rounded-lg transition-colors cursor-pointer">
+          <button onClick={() => setLastSaleData(null)} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
             Dispensar
           </button>
         </div>
@@ -1012,7 +1017,7 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
               id="confirm-checkout-btn"
               type="submit"
               disabled={cart.length === 0}
-              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white text-sm font-bold rounded-lg flex items-center justify-center gap-2 shadow-xs transition-colors"
+              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
             >
               <CheckCircle2 className="h-4 w-4" />
               {creditSale ? 'Registrar Venda a Prazo' : 'Finalizar Venda'}

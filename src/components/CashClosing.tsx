@@ -113,19 +113,21 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
   const periodTotal = Object.values(periodBreakdown).reduce((a, b) => a + b, 0);
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between flex-wrap gap-2">
+    <div className="space-y-6">
+      <div className="flex flex-col gap-4 border-b border-slate-200 dark:border-slate-700 pb-5 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-xl md:text-2xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-            <Wallet className="h-6 w-6 text-indigo-600" /> Fechamento de Caixa
+          <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <Wallet className="h-5 w-5 md:h-6 md:w-6 text-slate-500 dark:text-slate-400" /> Fechamento de Caixa
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400">Resumo de vendas e controle físico do dinheiro (troco, sangria e fechamento).</p>
         </div>
-        {!openSession && (
-          <button onClick={() => setShowOpen(true)} className="px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center gap-2 cursor-pointer">
-            <Plus className="h-4 w-4" /> Abrir Caixa
-          </button>
-        )}
+        <div className="flex flex-wrap items-center gap-2">
+          {!openSession && (
+            <button onClick={() => setShowOpen(true)} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm">
+              <Plus className="h-4 w-4" /> Abrir Caixa
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Resumo de hoje (sempre visível, mesmo sem caixa aberto) */}
@@ -137,7 +139,7 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
       />
 
       {openSession ? (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-5 space-y-4">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-5 space-y-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-bold text-emerald-600 flex items-center gap-2"><Clock className="h-4 w-4" /> Caixa aberto em {new Date(openSession.openDate).toLocaleString('pt-BR')}</span>
             <span className="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30">Em operação</span>
@@ -163,7 +165,7 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
               <div className="flex gap-2">
                 <input type="number" min="0" step="0.01" value={withdrawalAmount} onChange={e => setWithdrawalAmount(e.target.value)} placeholder="Valor" className="w-24 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden" />
                 <input value={withdrawalReason} onChange={e => setWithdrawalReason(e.target.value)} placeholder="Motivo" className="flex-1 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden" />
-                <button onClick={addWithdrawal} className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold flex items-center gap-1 cursor-pointer"><ArrowDownCircle className="h-4 w-4" /> Sangrar</button>
+                <button onClick={addWithdrawal} className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"><ArrowDownCircle className="h-4 w-4" /> Sangrar</button>
               </div>
               {openSession.withdrawals.length > 0 && (
                 <ul className="text-xs text-slate-500 dark:text-slate-400 space-y-1 mt-1">
@@ -182,7 +184,7 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
                   <AlertCircle className="h-3.5 w-3.5" /> Diferença: R$ {roundCurrency(Number(closeBalance) - expected).toFixed(2)}
                 </p>
               )}
-              <button onClick={closeCash} className="w-full px-3 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 cursor-pointer">
+              <button onClick={closeCash} className="w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm">
                 <CheckCircle2 className="h-4 w-4" /> Fechar Caixa
               </button>
             </div>
@@ -229,8 +231,8 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
               </div>
             </div>
             <div className="px-5 py-4 border-t border-slate-200 dark:border-slate-700 flex justify-end gap-2">
-              <button onClick={() => setShowOpen(false)} className="px-4 py-2 text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">Cancelar</button>
-              <button onClick={openCash} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold cursor-pointer">Abrir</button>
+              <button onClick={() => setShowOpen(false)} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">Cancelar</button>
+              <button onClick={openCash} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer shadow-sm">Abrir</button>
             </div>
           </div>
         </div>
@@ -251,7 +253,7 @@ function Stat({ label, value, accent, highlight }: { label: string; value: strin
 function BreakdownCard({ title, data, total, hint }: { title: string; data: Record<string, number>; total: number; hint?: string }) {
   const entries = Object.entries(data).sort((a, b) => b[1] - a[1]);
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 p-5">
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm p-5">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-bold text-slate-700 dark:text-slate-300">{title}</h3>
         <span className="text-base font-bold text-slate-900 dark:text-slate-100 font-mono">{fmt(total)}</span>

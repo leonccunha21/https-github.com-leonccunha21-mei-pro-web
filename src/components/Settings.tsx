@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import type { User } from 'firebase/auth';
-import { Product, Sale, Category, SaleItem, StoreInfo, Expense } from '../types';
+import { Product, Sale, Category, SaleItem, StoreInfo, Expense, Loan, ServiceOrder, Customer, Supplier, Purchase, CashSession } from '../types';
+
+const stripAccents = (s: string) => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 import {
   Download,
   Upload,
@@ -204,6 +206,241 @@ function parseCategoriesSheet(rows: any[][]): string[] {
     }
   }
   return categories;
+}
+
+const toNum = (v: any): number => {
+  if (v === '' || v === null || v === undefined) return 0;
+  if (typeof v === 'number') return v;
+  let c = String(v).replace(/[R$\s]/g, '');
+  if (c.includes('.') && c.includes(',')) {
+    c = c.indexOf('.') < c.indexOf(',') ? c.replace(/\./g, '').replace(',', '.') : c.replace(/,/g, '');
+  } else if (c.includes(',')) c = c.replace(/,/g, '.');
+  c = c.replace(/[^0-9.]/g, '');
+  return parseFloat(c) || 0;
+};
+
+const normDate = (v: any): string => {
+  const s = String(v ?? '').trim();
+  if (!s) return '';
+  const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (m) return `${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}`;
+  return s;
+};
+
+const findHeaderIdx = (header: string[], ...names: string[]): number =>
+  header.findIndex(h => names.some(n => h.includes(n)));
+
+function parseLoansSheet(rows: any[][]): Loan[] {
+  const header = rows[0].map((h: any) => stripAccents(h));
+  const iId = findHeaderIdx(header, 'id');
+  const iNome = findHeaderIdx(header, 'nome', 'devedor', 'cliente');
+  const iTel = findHeaderIdx(header, 'telefone', 'fone');
+  const iLoan = findHeaderIdx(header, 'emprestimo', 'data');
+  const iDue = findHeaderIdx(header, 'vencimento', 'prazo');
+  const iVal = findHeaderIdx(header, 'emprestado', 'valor', 'principal');
+  const iJuros = findHeaderIdx(header, 'juros', 'acrescimo');
+  const iRec = findHeaderIdx(header, 'recebido', 'pago');
+  const iSit = findHeaderIdx(header, 'situacao', 'status');
+  const iObs = findHeaderIdx(header, 'observ', 'nota');
+  const iCreated = findHeaderIdx(header, 'created', 'criado');
+  const normStatus = (s: any) => {
+    const t = String(s ?? '').trim().toLowerCase();
+    return (t === 'pago' || t === 'paid' || t === 'concluido' || t === 'concluído' || t === 'quitado') ? 'paid' : 'open';
+  };
+  const out: Loan[] = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    if (!r || r.every((c: any) => c === '' || c === null || c === undefined)) continue;
+    const borrowerName = String(r[iNome] ?? '').trim();
+    if (!borrowerName) continue;
+    out.push({
+      id: String(r[iId] ?? '').trim() || `emp_${Date.now()}_${i}`,
+      borrowerName,
+      borrowerPhone: String(r[iTel] ?? '').trim(),
+      loanDate: normDate(r[iLoan]),
+      dueDate: normDate(r[iDue]),
+      principal: toNum(r[iVal]),
+      interest: toNum(r[iJuros]),
+      paidAmount: toNum(r[iRec]),
+      status: normStatus(r[iSit]),
+      notes: String(r[iObs] ?? '').trim(),
+      createdAt: String(r[iCreated] ?? '').trim() || new Date().toISOString(),
+    });
+  }
+  return out;
+}
+
+function parseOrdersSheet(rows: any[][]): ServiceOrder[] {
+  const header = rows[0].map((h: any) => stripAccents(h));
+  const iId = findHeaderIdx(header, 'id');
+  const iTipo = findHeaderIdx(header, 'tipo');
+  const iNum = findHeaderIdx(header, 'numero');
+  const iData = findHeaderIdx(header, 'data');
+  const iCli = findHeaderIdx(header, 'cliente');
+  const iTel = findHeaderIdx(header, 'telefone', 'fone');
+  const iEnd = findHeaderIdx(header, 'endereco', 'end');
+  const iDev = findHeaderIdx(header, 'aparelho', 'equipamento', 'device');
+  const iDef = findHeaderIdx(header, 'defeito');
+  const iSub = findHeaderIdx(header, 'subtotal');
+  const iDesc = findHeaderIdx(header, 'desconto');
+  const iTot = findHeaderIdx(header, 'total');
+  const iSit = findHeaderIdx(header, 'status', 'situacao');
+  const iObs = findHeaderIdx(header, 'observ', 'nota');
+  const iItens = findHeaderIdx(header, 'itens');
+  const iCreated = findHeaderIdx(header, 'created', 'criado');
+  const out: ServiceOrder[] = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    if (!r || r.every((c: any) => c === '' || c === null || c === undefined)) continue;
+    const id = String(r[iId] ?? '').trim();
+    if (!id) continue;
+    let items: any[] = [];
+    try { items = JSON.parse(String(r[iItens] ?? '[]')); } catch { items = []; }
+    const tipo = String(r[iTipo] ?? '').trim().toLowerCase();
+    out.push({
+      id,
+      type: (tipo.includes('orc') || tipo.includes('budget')) ? 'orcamento' : 'os',
+      number: Number(r[iNum]) || 0,
+      date: normDate(r[iData]),
+      clientName: String(r[iCli] ?? '').trim(),
+      clientPhone: String(r[iTel] ?? '').trim(),
+      clientAddress: String(r[iEnd] ?? '').trim(),
+      device: String(r[iDev] ?? '').trim(),
+      defect: String(r[iDef] ?? '').trim(),
+      items: Array.isArray(items) ? items : [],
+      subtotal: toNum(r[iSub]),
+      discount: toNum(r[iDesc]),
+      total: toNum(r[iTot]),
+      status: (String(r[iSit] ?? '').trim().toLowerCase() || 'aberta') as any,
+      notes: String(r[iObs] ?? '').trim(),
+      createdAt: String(r[iCreated] ?? '').trim() || new Date().toISOString(),
+    });
+  }
+  return out;
+}
+
+function parsePurchasesSheet(rows: any[][], suppliers: Supplier[]): Purchase[] {
+  const header = rows[0].map((h: any) => stripAccents(h));
+  const iId = findHeaderIdx(header, 'id');
+  const iData = findHeaderIdx(header, 'data');
+  const iForn = findHeaderIdx(header, 'fornecedor', 'supplier');
+  const iTot = findHeaderIdx(header, 'total');
+  const iObs = findHeaderIdx(header, 'observ', 'nota');
+  const iItens = findHeaderIdx(header, 'itens');
+  const iCreated = findHeaderIdx(header, 'created', 'criado');
+  const out: Purchase[] = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    if (!r || r.every((c: any) => c === '' || c === null || c === undefined)) continue;
+    const id = String(r[iId] ?? '').trim();
+    if (!id) continue;
+    let items: any[] = [];
+    try { items = JSON.parse(String(r[iItens] ?? '[]')); } catch { items = []; }
+    const supName = String(r[iForn] ?? '').trim();
+    const sup = suppliers.find(s => s.name.toLowerCase() === supName.toLowerCase());
+    out.push({
+      id,
+      date: normDate(r[iData]),
+      supplierId: sup?.id,
+      supplierName: supName,
+      items: Array.isArray(items) ? items : [],
+      total: toNum(r[iTot]),
+      notes: String(r[iObs] ?? '').trim(),
+      createdAt: String(r[iCreated] ?? '').trim() || new Date().toISOString(),
+    });
+  }
+  return out;
+}
+
+function parseCustomersSheet(rows: any[][]): Customer[] {
+  const header = rows[0].map((h: any) => stripAccents(h));
+  const iId = findHeaderIdx(header, 'id');
+  const iNome = findHeaderIdx(header, 'nome');
+  const iTel = findHeaderIdx(header, 'telefone', 'fone');
+  const iMail = findHeaderIdx(header, 'email', 'e-mail');
+  const iEnd = findHeaderIdx(header, 'endereco', 'end');
+  const iObs = findHeaderIdx(header, 'observ', 'nota');
+  const iCreated = findHeaderIdx(header, 'created', 'criado');
+  const out: Customer[] = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    if (!r || r.every((c: any) => c === '' || c === null || c === undefined)) continue;
+    const id = String(r[iId] ?? '').trim();
+    const name = String(r[iNome] ?? '').trim();
+    if (!id || !name) continue;
+    out.push({
+      id, name,
+      phone: String(r[iTel] ?? '').trim(),
+      email: String(r[iMail] ?? '').trim(),
+      address: String(r[iEnd] ?? '').trim(),
+      notes: String(r[iObs] ?? '').trim(),
+      createdAt: String(r[iCreated] ?? '').trim() || new Date().toISOString(),
+    });
+  }
+  return out;
+}
+
+function parseSuppliersSheet(rows: any[][]): Supplier[] {
+  const header = rows[0].map((h: any) => stripAccents(h));
+  const iId = findHeaderIdx(header, 'id');
+  const iNome = findHeaderIdx(header, 'nome');
+  const iTel = findHeaderIdx(header, 'telefone', 'fone');
+  const iMail = findHeaderIdx(header, 'email', 'e-mail');
+  const iObs = findHeaderIdx(header, 'observ', 'nota');
+  const iCreated = findHeaderIdx(header, 'created', 'criado');
+  const out: Supplier[] = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    if (!r || r.every((c: any) => c === '' || c === null || c === undefined)) continue;
+    const id = String(r[iId] ?? '').trim();
+    const name = String(r[iNome] ?? '').trim();
+    if (!id || !name) continue;
+    out.push({
+      id, name,
+      phone: String(r[iTel] ?? '').trim(),
+      email: String(r[iMail] ?? '').trim(),
+      notes: String(r[iObs] ?? '').trim(),
+      createdAt: String(r[iCreated] ?? '').trim() || new Date().toISOString(),
+    });
+  }
+  return out;
+}
+
+function parseCashSheet(rows: any[][]): CashSession[] {
+  const header = rows[0].map((h: any) => stripAccents(h));
+  const iId = findHeaderIdx(header, 'id');
+  const iOpen = findHeaderIdx(header, 'abertura', 'open');
+  const iClose = findHeaderIdx(header, 'fechamento', 'close');
+  const iOpenBal = findHeaderIdx(header, 'saldo inicial', 'abertura', 'opening');
+  const iExp = findHeaderIdx(header, 'esperado', 'expected');
+  const iCloseBal = findHeaderIdx(header, 'final', 'fechamento', 'closing');
+  const iDiff = findHeaderIdx(header, 'diferenca', 'difference');
+  const iSit = findHeaderIdx(header, 'status', 'situacao');
+  const iObs = findHeaderIdx(header, 'observ', 'nota');
+  const iWith = findHeaderIdx(header, 'retirada', 'withdrawal', 'saque');
+  const out: CashSession[] = [];
+  for (let i = 1; i < rows.length; i++) {
+    const r = rows[i];
+    if (!r || r.every((c: any) => c === '' || c === null || c === undefined)) continue;
+    const id = String(r[iId] ?? '').trim();
+    if (!id) continue;
+    let w: any[] = [];
+    try { w = JSON.parse(String(r[iWith] ?? '[]')); } catch { w = []; }
+    const closeStr = String(r[iClose] ?? '').trim();
+    out.push({
+      id,
+      openDate: normDate(r[iOpen]),
+      closeDate: closeStr ? normDate(r[iClose]) : undefined,
+      openingBalance: toNum(r[iOpenBal]),
+      expectedBalance: (r[iExp] !== '' && r[iExp] != null) ? toNum(r[iExp]) : undefined,
+      closingBalance: (r[iCloseBal] !== '' && r[iCloseBal] != null) ? toNum(r[iCloseBal]) : undefined,
+      difference: (r[iDiff] !== '' && r[iDiff] != null) ? toNum(r[iDiff]) : undefined,
+      status: (String(r[iSit] ?? '').trim().toLowerCase().includes('fech') ? 'closed' : 'open') as any,
+      withdrawals: Array.isArray(w) ? w : [],
+      notes: String(r[iObs] ?? '').trim(),
+    });
+  }
+  return out;
 }
 
 function parseSalesSheet(rows: any[][], productsList: Product[]): Sale[] {
@@ -544,9 +781,15 @@ interface SettingsProps {
   sales: Sale[];
   categories: Category[];
   expenses: Expense[];
+  loans: Loan[];
+  orders: ServiceOrder[];
+  customers: Customer[];
+  suppliers: Supplier[];
+  purchases: Purchase[];
+  cashSessions: CashSession[];
   storeInfo: StoreInfo;
   onStoreInfoChange: (info: StoreInfo) => void;
-  onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[]; expenses: Expense[] }) => void;
+  onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[]; expenses: Expense[]; loans?: Loan[]; orders?: ServiceOrder[]; customers?: Customer[]; suppliers?: Supplier[]; purchases?: Purchase[]; cashSessions?: CashSession[] }) => void;
   onExportBackup: () => void;
   onImportBackup: (file: File) => void;
   onResetDatabase: () => void;
@@ -573,6 +816,12 @@ export default function Settings({
   sales,
   categories,
   expenses,
+  loans,
+  orders,
+  customers,
+  suppliers,
+  purchases,
+  cashSessions,
   storeInfo: initialStoreInfo,
   onStoreInfoChange,
   onImportDatabase,
@@ -644,6 +893,12 @@ export default function Settings({
         let productsSheetData: any[][] | null = null;
         let salesSheetData: any[][] | null = null;
         let categoriesSheetData: any[][] | null = null;
+        let loansSheetData: any[][] | null = null;
+        let ordersSheetData: any[][] | null = null;
+        let purchasesSheetData: any[][] | null = null;
+        let customersSheetData: any[][] | null = null;
+        let suppliersSheetData: any[][] | null = null;
+        let cashSheetData: any[][] | null = null;
 
         for (const sheetName of workbook.SheetNames) {
           const worksheet = workbook.Sheets[sheetName];
@@ -652,14 +907,27 @@ export default function Settings({
 
           const nameLower = sheetName.toLowerCase();
           const firstRow = jsonRows[0].map(h => String(h || '').trim().toLowerCase());
+          const n = stripAccents(nameLower);
 
           const isProducts = nameLower.includes('prod') || nameLower.includes('estoq') || firstRow.includes('nome do produto') || firstRow.includes('preço de venda');
           const isSales = nameLower.includes('vend') || nameLower.includes('saída') || firstRow.includes('id da venda') || firstRow.includes('itens vendidos') || firstRow.includes('produtos vendidos');
           const isCategories = nameLower.includes('cat') || nameLower.includes('setor') || firstRow.includes('nome da categoria');
+          const isLoans = n.includes('emprest') || n.includes('loan') || n.includes('divida') || n.includes('devedor');
+          const isOrders = n.includes('ordem') || n.includes('servico') || n.includes('servi') || n.includes('orcamento') || n.includes('os ');
+          const isPurchases = n.includes('compra') || n.includes('purchase') || n.includes('entrada');
+          const isCustomers = n.includes('cliente') || n.includes('customer');
+          const isSuppliers = n.includes('fornecedor') || n.includes('supplier');
+          const isCash = n.includes('caixa') || n.includes('fechamento') || n.includes('cash');
 
           if (isProducts && !productsSheetData) productsSheetData = jsonRows;
           else if (isSales && !salesSheetData) { salesSheetData = jsonRows; hasSalesSheet = true; }
           else if (isCategories && !categoriesSheetData) categoriesSheetData = jsonRows;
+          else if (isLoans && !loansSheetData) loansSheetData = jsonRows;
+          else if (isOrders && !ordersSheetData) ordersSheetData = jsonRows;
+          else if (isPurchases && !purchasesSheetData) purchasesSheetData = jsonRows;
+          else if (isCustomers && !customersSheetData) customersSheetData = jsonRows;
+          else if (isSuppliers && !suppliersSheetData) suppliersSheetData = jsonRows;
+          else if (isCash && !cashSheetData) cashSheetData = jsonRows;
         }
 
         if (!productsSheetData && workbook.SheetNames.length > 0) {
@@ -690,11 +958,31 @@ export default function Settings({
           importedSales = parseSalesSheet(salesSheetData, importedProducts.length > 0 ? importedProducts : products);
         }
 
+        let importedLoans: Loan[] | undefined;
+        let importedOrders: ServiceOrder[] | undefined;
+        let importedPurchases: Purchase[] | undefined;
+        let importedCustomers: Customer[] | undefined;
+        let importedSuppliers: Supplier[] | undefined;
+        let importedCash: CashSession[] | undefined;
+
+        if (loansSheetData) importedLoans = parseLoansSheet(loansSheetData);
+        if (ordersSheetData) importedOrders = parseOrdersSheet(ordersSheetData);
+        if (purchasesSheetData) importedPurchases = parsePurchasesSheet(purchasesSheetData, suppliers);
+        if (customersSheetData) importedCustomers = parseCustomersSheet(customersSheetData);
+        if (suppliersSheetData) importedSuppliers = parseSuppliersSheet(suppliersSheetData);
+        if (cashSheetData) importedCash = parseCashSheet(cashSheetData);
+
         onImportDatabase({
           products: importedProducts.length > 0 ? importedProducts : products,
           categories: importedCategories,
           sales: importedSales,
-          expenses: expenses
+          expenses: expenses,
+          ...(importedLoans ? { loans: importedLoans } : {}),
+          ...(importedOrders ? { orders: importedOrders } : {}),
+          ...(importedCustomers ? { customers: importedCustomers } : {}),
+          ...(importedSuppliers ? { suppliers: importedSuppliers } : {}),
+          ...(importedPurchases ? { purchases: importedPurchases } : {}),
+          ...(importedCash ? { cashSessions: importedCash } : {}),
         });
 
         let successMsg = 'Planilha importada com sucesso! ';
@@ -704,6 +992,12 @@ export default function Settings({
           successMsg += 'Nenhum produto encontrado na planilha. Verifique se as colunas estão corretas. ';
         }
         if (hasSalesSheet) successMsg += `${importedSales.length} vendas. `;
+        if (importedLoans) successMsg += `${importedLoans.length} empréstimos. `;
+        if (importedOrders) successMsg += `${importedOrders.length} ordens de serviço. `;
+        if (importedPurchases) successMsg += `${importedPurchases.length} compras. `;
+        if (importedCustomers) successMsg += `${importedCustomers.length} clientes. `;
+        if (importedSuppliers) successMsg += `${importedSuppliers.length} fornecedores. `;
+        if (importedCash) successMsg += `${importedCash.length} fechamentos de caixa. `;
         const catCount = importedCategories.length - categories.length;
         if (catCount > 0) successMsg += `${catCount} categorias novas.`;
         setImportSuccessMsg(successMsg);
@@ -909,6 +1203,76 @@ export default function Settings({
       dashWs['!cols'] = [{ wch: 25 }, { wch: 20 }];
       XLSX.utils.book_append_sheet(wb, dashWs, 'Dashboard');
 
+      // Sheet 8: Empréstimos
+      if (loans.length) {
+        const loanHeaders = ['ID', 'Nome', 'Telefone', 'Data Empréstimo', 'Vencimento', 'Valor Emprestado', 'Juros', 'Recebido', 'Situação', 'Observações', 'CreatedAt'];
+        const loanRows = loans.map(l => [
+          l.id, l.borrowerName, l.borrowerPhone || '', l.loanDate ? new Date(l.loanDate).toLocaleDateString('pt-BR') : '',
+          l.dueDate ? new Date(l.dueDate).toLocaleDateString('pt-BR') : '', l.principal, l.interest ?? 0, l.paidAmount ?? 0,
+          l.status === 'paid' ? 'Pago' : 'Em aberto', l.notes || '', l.createdAt || ''
+        ]);
+        const loanWs = XLSX.utils.aoa_to_sheet([loanHeaders, ...loanRows]);
+        loanWs['!cols'] = [{ wch: 14 }, { wch: 24 }, { wch: 16 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 10 }, { wch: 10 }, { wch: 12 }, { wch: 30 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, loanWs, 'Empréstimos');
+      }
+
+      // Sheet 9: Ordens de Serviço
+      if (orders.length) {
+        const osHeaders = ['ID', 'Tipo', 'Número', 'Data', 'Cliente', 'Telefone', 'Endereço', 'Aparelho/Equipamento', 'Defeito', 'Subtotal', 'Desconto', 'Total', 'Status', 'Observações', 'Itens (JSON)', 'CreatedAt'];
+        const osRows = orders.map(o => [
+          o.id, o.type === 'orcamento' ? 'Orçamento' : 'OS', o.number,
+          new Date(o.date).toLocaleDateString('pt-BR'), o.clientName, o.clientPhone || '', o.clientAddress || '',
+          o.device || '', o.defect || '', o.subtotal, o.discount, o.total, o.status, o.notes || '',
+          JSON.stringify(o.items || []), o.createdAt || ''
+        ]);
+        const osWs = XLSX.utils.aoa_to_sheet([osHeaders, ...osRows]);
+        osWs['!cols'] = [{ wch: 14 }, { wch: 12 }, { wch: 8 }, { wch: 12 }, { wch: 24 }, { wch: 16 }, { wch: 26 }, { wch: 24 }, { wch: 24 }, { wch: 12 }, { wch: 12 }, { wch: 12 }, { wch: 14 }, { wch: 28 }, { wch: 40 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, osWs, 'Ordens de Serviço');
+      }
+
+      // Sheet 10: Compras
+      if (purchases.length) {
+        const purHeaders = ['ID', 'Data', 'Fornecedor', 'Total', 'Observações', 'Itens (JSON)', 'CreatedAt'];
+        const purRows = purchases.map(p => [
+          p.id, new Date(p.date).toLocaleDateString('pt-BR'), p.supplierName || '', p.total, p.notes || '',
+          JSON.stringify(p.items || []), p.createdAt || ''
+        ]);
+        const purWs = XLSX.utils.aoa_to_sheet([purHeaders, ...purRows]);
+        purWs['!cols'] = [{ wch: 14 }, { wch: 12 }, { wch: 24 }, { wch: 12 }, { wch: 30 }, { wch: 50 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, purWs, 'Compras');
+      }
+
+      // Sheet 11: Clientes
+      if (customers.length) {
+        const cliHeaders = ['ID', 'Nome', 'Telefone', 'Email', 'Endereço', 'Observações', 'CreatedAt'];
+        const cliRows = customers.map(c => [c.id, c.name, c.phone || '', c.email || '', c.address || '', c.notes || '', c.createdAt || '']);
+        const cliWs = XLSX.utils.aoa_to_sheet([cliHeaders, ...cliRows]);
+        cliWs['!cols'] = [{ wch: 14 }, { wch: 28 }, { wch: 16 }, { wch: 24 }, { wch: 28 }, { wch: 30 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, cliWs, 'Clientes');
+      }
+
+      // Sheet 12: Fornecedores
+      if (suppliers.length) {
+        const supHeaders = ['ID', 'Nome', 'Telefone', 'Email', 'Observações', 'CreatedAt'];
+        const supRows = suppliers.map(s => [s.id, s.name, s.phone || '', s.email || '', s.notes || '', s.createdAt || '']);
+        const supWs = XLSX.utils.aoa_to_sheet([supHeaders, ...supRows]);
+        supWs['!cols'] = [{ wch: 14 }, { wch: 28 }, { wch: 16 }, { wch: 24 }, { wch: 30 }, { wch: 22 }];
+        XLSX.utils.book_append_sheet(wb, supWs, 'Fornecedores');
+      }
+
+      // Sheet 13: Caixa (Fechamentos)
+      if (cashSessions.length) {
+        const cashHeaders = ['ID', 'Abertura', 'Fechamento', 'Saldo Inicial', 'Saldo Esperado', 'Saldo Final', 'Diferença', 'Status', 'Observações', 'Retiradas (JSON)'];
+        const cashRows = cashSessions.map(c => [
+          c.id, new Date(c.openDate).toLocaleDateString('pt-BR'), c.closeDate ? new Date(c.closeDate).toLocaleDateString('pt-BR') : '',
+          c.openingBalance, c.expectedBalance ?? '', c.closingBalance ?? '', c.difference ?? '', c.status === 'closed' ? 'Fechado' : 'Aberto',
+          c.notes || '', JSON.stringify(c.withdrawals || [])
+        ]);
+        const cashWs = XLSX.utils.aoa_to_sheet([cashHeaders, ...cashRows]);
+        cashWs['!cols'] = [{ wch: 14 }, { wch: 12 }, { wch: 12 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 12 }, { wch: 12 }, { wch: 28 }, { wch: 50 }];
+        XLSX.utils.book_append_sheet(wb, cashWs, 'Caixa');
+      }
+
       XLSX.writeFile(wb, `BaseCompleta_${dateStr}.xlsx`);
       setImportSuccessMsg('Base completa exportada com sucesso!');
       setTimeout(() => setImportSuccessMsg(null), 5000);
@@ -999,7 +1363,7 @@ export default function Settings({
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-5xl mx-auto space-y-6">
       <div className="border-b border-slate-200 pb-5">
         <h1 className="text-xl md:text-2xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
           <SettingsIcon className="h-5 w-5 md:h-6 md:w-6 text-slate-500" />
@@ -1105,13 +1469,10 @@ export default function Settings({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
 
-        {/* LEFT: Excel & Local Backup */}
-        <div className="space-y-6">
-
-          {/* Excel Import/Export */}
-          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        {/* Excel Import/Export */}
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
             <div className="border-b border-slate-200 pb-3">
               <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <FileSpreadsheet className="h-5 w-5 text-emerald-600" />
@@ -1333,7 +1694,6 @@ export default function Settings({
               Zerar Todo o Banco de Dados
             </button>
           </div>
-        </div>
 
       </div>
     </div>
