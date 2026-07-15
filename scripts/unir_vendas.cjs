@@ -67,7 +67,8 @@ for (const cfg of SOURCES) {
     if (cfg.mesFromFirstCell) {
       if (isMonth(r[0])) { currentMonth = str(r[0]); continue; }
     }
-    if (typeof r[0] === 'string' && !isMonth(r[0])) continue; // aggregate label row
+    if (isMonth(r[0])) continue;
+    if (!cfg.shift && typeof r[0] === 'string') continue; // aggregate label row in non-shifted sheets
 
     const c = cfg.cols;
     let produto = c.produto != null ? str(r[c.produto]) : '';
