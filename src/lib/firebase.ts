@@ -24,9 +24,6 @@ export const db = dbId ? getFirestore(app, dbId) : getFirestore(app);
 
 // Setup OAuth Google Provider
 export const provider = new GoogleAuthProvider();
-// Add required Google Workspace scopes
-provider.addScope('https://www.googleapis.com/auth/drive.file');
-provider.addScope('https://www.googleapis.com/auth/spreadsheets');
 
 // Flags and cache
 let isSigningIn = false;
