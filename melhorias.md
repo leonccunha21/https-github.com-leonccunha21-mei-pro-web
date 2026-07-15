@@ -34,6 +34,11 @@
 - O recurso de "Restaurar do Backup" foi **removido** (modelo de uso particular: dados só entram via Excel manual). O `seed-backup.json` deixou de ser carregado automaticamente.
 - `data/excel/BASE 2.xlsx` (a planilha que o usuário envia) foi **sobrescrita** com o conteúdo correto de `data/excel/BASE 1.xlsx`, para que o arquivo enviado esteja com os dados certos.
 
+## 7. Relatórios comparativos (v2.6.15)
+- [x] Nova aba **Comparativo** em `src/components/Reports.tsx`: grade mês × ano com faturamento, variação YoY (% vs mesmo mês do ano anterior) e barra de intensidade relativa.
+- [x] Resumo anual comparativo: faturamento, lucro, nº de vendas e ticket médio com variação YoY entre anos consecutivos.
+- [x] A grade ignora o filtro de ano (mantém todos os anos) e respeita os demais filtros (pagamento, canal, tipo, categoria).
+
 ## 6. Convenções de dados (sempre aplicar)
 - **Colunas numéricas**: nunca usar **ponto** (nem como separador de milhar, nem como separador decimal). Decimal vai com **vírgula** (ex: `25,90`).
 - **Nenhum número como texto**: preço, estoque, QTD, valores (custo/faturamento/lucro), valores de empréstimo etc. devem ser células do **tipo numérico**, não texto. O modelo (`handleDownloadTemplate` em `Settings.tsx`) já usa números; o parser (`getFloatVal` em `sheetParsers.ts`) aceita ambos `.` e `,` na importação, mas a geração/convenção é vírgula + tipo numérico.

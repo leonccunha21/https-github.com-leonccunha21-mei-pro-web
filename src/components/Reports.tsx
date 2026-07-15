@@ -69,7 +69,7 @@ const fmtPct = (v: number) => `${v.toFixed(1)}%`;
 type SortField = 'productName' | 'units' | 'salesCount' | 'revenue' | 'cost' | 'profit' | 'margin';
 
 export default function Reports({ products, sales, categories }: ReportsProps) {
-  const [viewMode, setViewMode] = useState<'resume' | 'monthly' | 'yearly'>('resume');
+  const [viewMode, setViewMode] = useState<'resume' | 'monthly' | 'yearly' | 'comparative'>('resume');
 
   // ----- General filters (the year filter applies to everything) -----
   const [selectedYear, setSelectedYear] = useState<number | 'all'>(() => {
@@ -225,6 +225,99 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       .map(([y, data]) => ({ year: parseInt(y), ...data, margin: data.revenue > 0 ? (data.profit / data.revenue) * 100 : 0 }))
       .sort((a, b) => b.year - a.year);
   }, [filteredSales]);
+
+  // Sales respecting every filter EXCEPT the year filter — used by the
+  // comparative (month x year) view so all years remain visible.
+  const comparativeSales = useMemo(() => {
+    let result = completedSales;
+    if (selectedPayment !== 'all') result = result.filter(s => s.paymentMethod === selectedPayment);
+    if (selectedChannel !== 'all') result = result.filter(s => effectiveChannel(s) === selectedChannel);
+    if (selectedType !== 'all') result = result.filter(s => s.saleType === selectedType);
+    if (selectedCategory !== 'all') {
+      result = result.filter(s =>
+        s.items.some(item => {
+          const origProduct = findProductForItem(item, products);
+          return (origProduct ? origProduct.category : 'Outros') === selectedCategory;
+        })
+      );
+    }
+    return result;
+  }, [completedSales, selectedPayment, selectedChannel, selectedType, selectedCategory, products]);
+
+  const comparativeData = useMemo(() => {
+    const monthNames = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Agos', 'Set', 'Out', 'Nov', 'Dez'];
+    const yearSet = new Set<number>();
+    comparativeSales.forEach(s => yearSet.add(new Date(s.date).getFullYear()));
+    const years: number[] = Array.from(yearSet).sort((a, b) => a - b);
+    const grid: Record<number, Record<number, { revenue: number; cost: number; profit: number; count: number }>> = {};
+    years.forEach(y => {
+      grid[y] = {};
+      for (let m = 1; m <= 12; m++) grid[y][m] = { revenue: 0, cost: 0, profit: 0, count: 0 };
+    });
+    comparativeSales.forEach(s => {
+      const y = new Date(s.date).getFullYear();
+      const m = new Date(s.date).getMonth() + 1;
+      grid[y][m].revenue += s.total;
+      grid[y][m].cost += s.totalCost;
+      grid[y][m].profit += s.profit;
+      grid[y][m].count++;
+    });
+
+    type YearTotal = {
+      year: number;
+      revenue: number;
+      cost: number;
+      profit: number;
+      count: number;
+      margin: number;
+      ticket: number;
+      revenueYoY: number | null;
+      profitYoY: number | null;
+      countYoY: number | null;
+      ticketYoY: number | null;
+    };
+    const yearTotals: YearTotal[] = years.map(y => {
+      const t = { revenue: 0, cost: 0, profit: 0, count: 0 };
+      for (let m = 1; m <= 12; m++) {
+        t.revenue += grid[y][m].revenue;
+        t.cost += grid[y][m].cost;
+        t.profit += grid[y][m].profit;
+        t.count += grid[y][m].count;
+      }
+      return {
+        year: y,
+        ...t,
+        margin: t.revenue > 0 ? (t.profit / t.revenue) * 100 : 0,
+        ticket: t.count > 0 ? t.revenue / t.count : 0,
+        revenueYoY: null,
+        profitYoY: null,
+        countYoY: null,
+        ticketYoY: null,
+      };
+    });
+    yearTotals.forEach((yt, i) => {
+      const prev = yearTotals[i - 1];
+      yt.revenueYoY = prev && prev.revenue > 0 ? ((yt.revenue - prev.revenue) / prev.revenue) * 100 : null;
+      yt.profitYoY = prev && prev.profit !== 0 ? ((yt.profit - prev.profit) / Math.abs(prev.profit)) * 100 : null;
+      yt.countYoY = prev && prev.count > 0 ? ((yt.count - prev.count) / prev.count) * 100 : null;
+      yt.ticketYoY = prev && prev.ticket > 0 ? ((yt.ticket - prev.ticket) / prev.ticket) * 100 : null;
+    });
+
+    const months = monthNames.map((name, mi) => {
+      const m = mi + 1;
+      const cells = years.map(y => {
+        const cur = grid[y][m];
+        const prevYear = years.find(yy => yy === y - 1);
+        const prev = prevYear !== undefined ? grid[prevYear][m] : null;
+        const yoy = prev && prev.revenue > 0 ? ((cur.revenue - prev.revenue) / prev.revenue) * 100 : null;
+        return { year: y, ...cur, yoy };
+      });
+      return { month: m, name, cells };
+    });
+
+    const maxCellRevenue = Math.max(1, ...years.flatMap(y => Array.from({ length: 12 }, (_, i) => grid[y][i + 1].revenue)));
+    return { years, months, yearTotals, maxCellRevenue };
+  }, [comparativeSales]);
 
   const maxMonthlyRevenue = Math.max(...monthlyData.months.map(m => m.revenue), 1);
 
@@ -489,6 +582,9 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
           </button>
           <button onClick={() => setViewMode('yearly')} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${viewMode === 'yearly' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
             Por Ano
+          </button>
+          <button onClick={() => setViewMode('comparative')} className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${viewMode === 'comparative' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'}`}>
+            Comparativo
           </button>
         </div>
       </div>
@@ -950,6 +1046,115 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
               </div>
             </>
           )}
+        </div>
+      )}
+
+      {/* ========== COMPARATIVE VIEW ========== */}
+      {viewMode === 'comparative' && (
+        <div className="space-y-6">
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div className="flex items-center gap-2 mb-1 border-b border-slate-200 pb-3">
+              <BarChart3 className="h-5 w-5 text-slate-500" />
+              <h2 className="text-base font-bold text-slate-900">Comparativo por Mês e Ano</h2>
+            </div>
+            <p className="text-[11px] text-slate-400 mb-4">
+              Cada célula mostra o <b>Faturamento</b> do mês/ano. O <b>%</b> é a variação vs o mesmo mês do ano anterior (YoY).
+            </p>
+
+            {comparativeData.years.length === 0 ? (
+              <div className="text-center py-12 text-slate-400"><p className="text-sm font-medium">Nenhuma venda registrada.</p></div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      <th className="pb-3">Mês</th>
+                      {comparativeData.years.map(y => (
+                        <th key={y} className="pb-3 text-right min-w-[120px]">{y}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 text-xs">
+                    {comparativeData.months.map((row) => (
+                      <tr key={row.month} className="hover:bg-slate-50/50 transition-colors">
+                        <td className="py-2 font-bold text-slate-900">{row.name}</td>
+                        {row.cells.map((c) => {
+                          const intensity = comparativeData.maxCellRevenue > 0 ? (c.revenue / comparativeData.maxCellRevenue) : 0;
+                          return (
+                            <td key={c.year} className="py-2 text-right align-top">
+                              <div className="font-mono font-medium text-slate-900">{fmtBRL(c.revenue)}</div>
+                              {c.revenue > 0 && (
+                                <div className={`text-[10px] font-bold ${c.yoy !== null && c.yoy >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                                  {c.yoy !== null ? `${c.yoy >= 0 ? '▲' : '▼'} ${Math.abs(c.yoy).toFixed(1)}%` : '—'}
+                                </div>
+                              )}
+                              <div className="h-1 mt-1 rounded-full bg-slate-100 overflow-hidden">
+                                <div style={{ width: `${intensity * 100}%` }} className="h-full bg-indigo-500/70 rounded-full" />
+                              </div>
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    ))}
+                    <tr className="border-t-2 border-slate-300 font-bold">
+                      <td className="py-2 text-slate-900">TOTAL</td>
+                      {comparativeData.yearTotals.map((yt) => (
+                        <td key={yt.year} className="py-2 text-right align-top">
+                          <div className="font-mono text-slate-900">{fmtBRL(yt.revenue)}</div>
+                          {yt.revenueYoY !== null && (
+                            <div className={`text-[10px] font-bold ${yt.revenueYoY >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                              {yt.revenueYoY >= 0 ? '▲' : '▼'} {Math.abs(yt.revenueYoY).toFixed(1)}%
+                            </div>
+                          )}
+                        </td>
+                      ))}
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+            <div className="flex items-center gap-2 mb-4 border-b border-slate-200 pb-3">
+              <TrendingUp className="h-5 w-5 text-slate-500" />
+              <h2 className="text-base font-bold text-slate-900">Resumo Anual (variação ano a ano)</h2>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-200 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <th className="pb-3">Ano</th>
+                    <th className="pb-3 text-right">Faturamento</th>
+                    <th className="pb-3 text-right">Δ Fat.</th>
+                    <th className="pb-3 text-right">Lucro</th>
+                    <th className="pb-3 text-right">Δ Lucro</th>
+                    <th className="pb-3 text-right">Vendas</th>
+                    <th className="pb-3 text-right">Δ Vendas</th>
+                    <th className="pb-3 text-right">Ticket Médio</th>
+                    <th className="pb-3 text-right">Δ Ticket</th>
+                    <th className="pb-3 text-right">Margem</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 text-xs">
+                  {comparativeData.yearTotals.map((yt) => (
+                    <tr key={yt.year} className="hover:bg-slate-50/50 transition-colors">
+                      <td className="py-2.5 font-bold text-slate-900">{yt.year}</td>
+                      <td className="py-2.5 text-right font-mono text-slate-900 font-medium">{fmtBRL(yt.revenue)}</td>
+                      <td className="py-2.5 text-right font-mono font-bold">{yt.revenueYoY !== null ? <span className={yt.revenueYoY >= 0 ? 'text-emerald-600' : 'text-rose-600'}>{yt.revenueYoY >= 0 ? '▲' : '▼'} {Math.abs(yt.revenueYoY).toFixed(1)}%</span> : '—'}</td>
+                      <td className="py-2.5 text-right font-mono text-emerald-600 font-bold">{fmtBRL(yt.profit)}</td>
+                      <td className="py-2.5 text-right font-mono font-bold">{yt.profitYoY !== null ? <span className={yt.profitYoY >= 0 ? 'text-emerald-600' : 'text-rose-600'}>{yt.profitYoY >= 0 ? '▲' : '▼'} {Math.abs(yt.profitYoY).toFixed(1)}%</span> : '—'}</td>
+                      <td className="py-2.5 text-right font-mono text-slate-600">{yt.count}</td>
+                      <td className="py-2.5 text-right font-mono font-bold">{yt.countYoY !== null ? <span className={yt.countYoY >= 0 ? 'text-emerald-600' : 'text-rose-600'}>{yt.countYoY >= 0 ? '▲' : '▼'} {Math.abs(yt.countYoY).toFixed(1)}%</span> : '—'}</td>
+                      <td className="py-2.5 text-right font-mono text-slate-900">{fmtBRL(yt.ticket)}</td>
+                      <td className="py-2.5 text-right font-mono font-bold">{yt.ticketYoY !== null ? <span className={yt.ticketYoY >= 0 ? 'text-emerald-600' : 'text-rose-600'}>{yt.ticketYoY >= 0 ? '▲' : '▼'} {Math.abs(yt.ticketYoY).toFixed(1)}%</span> : '—'}</td>
+                      <td className="py-2.5 text-right font-mono font-bold text-indigo-600">{yt.margin.toFixed(0)}%</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       )}
 
