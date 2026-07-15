@@ -476,6 +476,7 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
   const tipoIdx = findColIndex(['tipo', 'cpf', 'cnpj', 'tipo venda', 'sale type']);
   const orderIdIdx = findColIndex(['id pedido', 'pedido', 'order id', 'ecommerce', 'shopee', 'tiktok']);
   const channelIdx = findColIndex(['canal', 'channel', 'origem', 'marketplace']);
+  const profitIdx = findColIndex(['lucro', 'profit', 'resultado', 'lucro total']);
 
   const getFloatVal = (row: Cell[], idx: number) => {
     if (idx === -1 || idx >= row.length || row[idx] === undefined || row[idx] === null) return 0;
@@ -594,14 +595,19 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
       const items = groupRows.map(r => makeItem(r[produtoIdx], r[qtdIdx]));
       let totalCost = 0;
       let total = 0;
-      if (costIdx !== -1 || revenueIdx !== -1) {
-        for (const r of groupRows) {
-          totalCost += getFloatVal(r, costIdx);
-          total += getFloatVal(r, revenueIdx);
-        }
+      if (costIdx !== -1) {
+        for (const r of groupRows) totalCost += getFloatVal(r, costIdx);
+      } else {
+        totalCost = items.reduce((s, it) => s + it.costPrice * it.quantity, 0);
       }
-      if (totalCost === 0) totalCost = items.reduce((s, it) => s + it.costPrice * it.quantity, 0);
-      if (total === 0) total = items.reduce((s, it) => s + it.total, 0);
+      if (revenueIdx !== -1) {
+        for (const r of groupRows) total += getFloatVal(r, revenueIdx);
+      } else {
+        total = items.reduce((s, it) => s + it.total, 0);
+      }
+      const profit = profitIdx !== -1
+        ? groupRows.reduce((acc, r) => acc + getFloatVal(r, profitIdx), 0)
+        : total - totalCost;
       const clientName = (clientIdx !== -1 && clientIdx < first.length && first[clientIdx]) ? String(first[clientIdx]).trim() : undefined;
       const clientPhone = (phoneIdx !== -1 && phoneIdx < first.length && first[phoneIdx]) ? String(first[phoneIdx]).trim() : undefined;
       let saleType: 'CPF' | 'CNPJ' = 'CPF';
@@ -620,7 +626,7 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
         items,
         totalCost,
         total,
-        profit: total - totalCost,
+        profit: profit,
         saleType,
         ecommerceOrderId,
         saleChannel,
@@ -714,8 +720,9 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
       }
     }
 
-    const totalCost = getFloatVal(row, costIdx) || saleItems.reduce((sum, item) => sum + (item.costPrice * item.quantity), 0);
-    const total = getFloatVal(row, revenueIdx) || saleItems.reduce((sum, item) => sum + item.total, 0);
+    const totalCost = costIdx !== -1 ? getFloatVal(row, costIdx) : saleItems.reduce((sum, item) => sum + (item.costPrice * item.quantity), 0);
+    const total = revenueIdx !== -1 ? getFloatVal(row, revenueIdx) : saleItems.reduce((sum, item) => sum + item.total, 0);
+    const profit = profitIdx !== -1 ? getFloatVal(row, profitIdx) : total - totalCost;
 
     let status: 'completed' | 'cancelled' | 'pending' = 'completed';
     if (statusIdx !== -1 && statusIdx < row.length && row[statusIdx]) {
@@ -749,7 +756,7 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
       items: saleItems,
       totalCost,
       total,
-      profit: total - totalCost,
+      profit,
       saleType,
       ecommerceOrderId,
       saleChannel,

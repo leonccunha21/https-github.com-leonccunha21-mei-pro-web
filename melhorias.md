@@ -34,6 +34,13 @@
 - O recurso de "Restaurar do Backup" foi **removido** (modelo de uso particular: dados só entram via Excel manual). O `seed-backup.json` deixou de ser carregado automaticamente.
 - `data/excel/BASE 2.xlsx` (a planilha que o usuário envia) foi **sobrescrita** com o conteúdo correto de `data/excel/BASE 1.xlsx`, para que o arquivo enviado esteja com os dados certos.
 
+## 8. Correção de valores na importação (v2.6.16)
+- [x] **Bug crítico**: ao importar uma planilha onde a coluna **Custo (R$)** ou **Faturamento (R$)** vinha `0` (ou vazia), o parser "caía" para o preço *atual* do produto (aba Produtos), inflacionando custo (+R$7.580) e faturamento (+R$7.112) em `Modelo_Importacao.xlsx`.
+- [x] Corrigido em `src/lib/sheetParsers.ts`: o parser agora **confia nas colunas da planilha** (Custo/Faturamento/Lucro) quando presentes, usando o valor exato (inclusive 0). Só deriva do catálogo de produtos quando a coluna **não existe** no sheet.
+- [x] Resultado: Custo, Faturamento e Lucro batem **exatamente** (diff 0,00) com `Modelo_Importacao.xlsx` (6.566 vendas, 2019–2026, R$ 395.700,79 de faturamento).
+- [x] Teste de regressão adicionado em `src/lib/parsers.test.ts`.
+- [x] Fonte de dados canônica: `data/excel/Dados coletas/Modelo_Importacao.xlsx` (segue o modelo: Produtos/Vendas/Categorias/Empréstimos/Clientes/Fornecedores/Instruções).
+
 ## 7. Relatórios comparativos (v2.6.15)
 - [x] Nova aba **Comparativo** em `src/components/Reports.tsx`: grade mês × ano com faturamento, variação YoY (% vs mesmo mês do ano anterior) e barra de intensidade relativa.
 - [x] Resumo anual comparativo: faturamento, lucro, nº de vendas e ticket médio com variação YoY entre anos consecutivos.

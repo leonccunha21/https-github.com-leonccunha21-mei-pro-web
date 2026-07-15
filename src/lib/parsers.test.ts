@@ -127,3 +127,26 @@ test('parseCustomersSheet requires id and name', () => {
   assert.equal(customers[0].id, 'c1');
   assert.equal(customers[0].name, 'Maria');
 });
+
+test('parseSalesSheet trusts Custo/Faturamento/Lucro columns when present (no product-price fallback)', () => {
+  // Regression: when the sheet has a Custo/Faturamento/Lucro column, a 0 value must be
+  // kept as 0 — the parser must NOT fall back to the product's current price (which
+  // would inflate cost/revenue and corrupt totals).
+  const rows: SheetRows = [
+    ['ID da Venda', 'Data', 'Produto', 'QTD', 'Custo (R$)', 'Faturamento (R$)', 'Lucro (R$)', 'Status'],
+    ['v1', '12/07/2026', 'Camiseta', '1', 0, 30, 10, 'Concluída'],
+    ['v2', '13/07/2026', 'Camiseta', '1', 5, 0, 5, 'Concluída'],
+  ];
+  const products = [
+    { id: 'p1', code: 'C1', name: 'Camiseta', category: 'Geral', costPrice: 50, salePrice: 100, stock: 5, minStock: 1, status: 'disponivel' as const, createdAt: '' },
+  ];
+  const sales = parseSalesSheet(rows, products as never);
+  const v1 = sales.find(s => s.id === 'v1')!;
+  const v2 = sales.find(s => s.id === 'v2')!;
+  assert.equal(v1.totalCost, 0, 'custo 0 da planilha nao deve cair para preco do produto (50)');
+  assert.equal(v1.total, 30);
+  assert.equal(v1.profit, 10, 'lucro deve vir da coluna Lucro da planilha');
+  assert.equal(v2.total, 0, 'faturamento 0 da planilha nao deve cair para preco do produto (100)');
+  assert.equal(v2.totalCost, 5);
+  assert.equal(v2.profit, 5);
+});
