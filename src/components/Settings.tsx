@@ -565,19 +565,43 @@ export default function Settings({
       const prodWs = XLSX.utils.aoa_to_sheet([prodHeaders, ...prodSampleRows]);
       XLSX.utils.book_append_sheet(wb, prodWs, 'Produtos');
 
-      const salesHeaders = ['ID da Venda', 'Data', 'Hora', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Tipo', 'Produto', 'QTD', 'Custo (R$)', 'Faturamento (R$)', 'Lucro (R$)', 'Status'];
+      const salesHeaders = ['ID da Venda', 'Data', 'Hora', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Tipo', 'Produto', 'QTD', 'Custo (R$)', 'Faturamento (R$)', 'Lucro (R$)', 'Status', 'Canal'];
       const salesSampleRows = [
-        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Camiseta Masculina', 2, '50.00', '119.80', '69.80', 'Concluída'],
-        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Boné Aba Reta', 1, '8.00', '29.90', '21.90', 'Concluída'],
-        ['venda_002', '12/07/2026', '16:45', 'João Silva', '(11) 98888-2222', 'credito', 'CPF', 'Calça Jeans', 1, '45.00', '119.90', '74.90', 'Concluída'],
-        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Tênis Running', 1, '75.00', '189.90', '114.90', 'Concluída'],
-        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Bolsa Couro', 1, '35.00', '89.90', '54.90', 'Concluída'],
+        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Camiseta Masculina', 2, '50.00', '119.80', '69.80', 'Concluída', 'Loja Física'],
+        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Boné Aba Reta', 1, '8.00', '29.90', '21.90', 'Concluída', 'Loja Física'],
+        ['venda_002', '12/07/2026', '16:45', 'João Silva', '(11) 98888-2222', 'credito', 'CPF', 'Calça Jeans', 1, '45.00', '119.90', '74.90', 'Concluída', 'Shopee'],
+        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Tênis Running', 1, '75.00', '189.90', '114.90', 'Concluída', 'Loja Física'],
+        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Bolsa Couro', 1, '35.00', '89.90', '54.90', 'Concluída', 'Loja Física'],
       ];
       const salesWs = XLSX.utils.aoa_to_sheet([salesHeaders, ...salesSampleRows]);
       XLSX.utils.book_append_sheet(wb, salesWs, 'Vendas');
 
       const catWs = XLSX.utils.aoa_to_sheet([['Nome da Categoria'], ['Vestuário'], ['Calçados'], ['Acessórios']]);
       XLSX.utils.book_append_sheet(wb, catWs, 'Categorias');
+
+      const loanHeaders = ['ID', 'Nome', 'Telefone', 'Data Empréstimo', 'Vencimento', 'Valor Emprestado', 'Juros', 'Recebido', 'Situação', 'Observações'];
+      const loanSampleRows = [
+        ['emp_001', 'José Pereira', '(11) 95555-4444', '10/07/2026', '10/08/2026', '500.00', '50.00', '200.00', 'Aberto', 'Empréstimo pessoal'],
+        ['emp_002', 'Carla Dias', '(11) 94444-3333', '05/07/2026', '05/09/2026', '1000.00', '100.00', '1000.00', 'Pago', 'Quitado'],
+      ];
+      const loanWs = XLSX.utils.aoa_to_sheet([loanHeaders, ...loanSampleRows]);
+      XLSX.utils.book_append_sheet(wb, loanWs, 'Empréstimos');
+
+      const customerHeaders = ['ID', 'Nome', 'Telefone', 'Email', 'Endereço', 'Observações'];
+      const customerSampleRows = [
+        ['cli_001', 'Maria Souza', '(11) 99999-1111', 'maria@email.com', 'Rua A, 123', 'Cliente frequente'],
+        ['cli_002', 'João Silva', '(11) 98888-2222', 'joao@email.com', 'Rua B, 456', ''],
+      ];
+      const customerWs = XLSX.utils.aoa_to_sheet([customerHeaders, ...customerSampleRows]);
+      XLSX.utils.book_append_sheet(wb, customerWs, 'Clientes');
+
+      const supplierHeaders = ['ID', 'Nome', 'Telefone', 'Email', 'Observações'];
+      const supplierSampleRows = [
+        ['for_001', 'Distribuidora X', '(11) 97777-3333', 'contato@x.com', 'Fornecedor principal'],
+        ['for_002', 'Atacado Y', '(11) 96666-5555', 'contato@y.com', ''],
+      ];
+      const supplierWs = XLSX.utils.aoa_to_sheet([supplierHeaders, ...supplierSampleRows]);
+      XLSX.utils.book_append_sheet(wb, supplierWs, 'Fornecedores');
 
       const instrHeaders = ['Instruções de Preenchimento'];
       const instrRows = [
@@ -606,12 +630,26 @@ export default function Settings({
         ['• Faturamento (R$): valor total recebido desse item (preço de venda x QTD)'],
         ['• Lucro (R$): Faturamento - Custo'],
         ['• Status: Concluída ou Cancelada'],
+        ['• Canal: opcional — Loja Física, Shopee, Mercado Livre, TikTok, etc. (um por venda)'],
         [''],
         ['PLANILHA DE CATEGORIAS (aba "Categorias")'],
         ['• Nome da Categoria: nome de cada categoria (uma por linha)'],
         [''],
+        ['PLANILHA DE EMPRÉSTIMOS (aba "Empréstimos")'],
+        ['• ID: código do empréstimo (ex: emp_001)'],
+        ['• Nome / Telefone: do devedor'],
+        ['• Data Empréstimo / Vencimento: formato DD/MM/AAAA'],
+        ['• Valor Emprestado: principal; Juros: acréscimo; Recebido: quanto já foi pago'],
+        ['• Situação: Aberto ou Pago'],
+        [''],
+        ['PLANILHA DE CLIENTES (aba "Clientes")'],
+        ['• ID / Nome: obrigatórios; Telefone, Email, Endereço e Observações opcionais'],
+        [''],
+        ['PLANILHA DE FORNECEDORES (aba "Fornecedores")'],
+        ['• ID / Nome: obrigatórios; Telefone, Email e Observações opcionais'],
+        [''],
         ['DICA: Você pode apagar as linhas de exemplo e preencher com seus próprios dados.'],
-        ['Ao importar, os dados substituirão todos os dados atuais.'],
+        ['Ao importar, os dados substituirão todos os dados atuais. Use sua conta Google — sem login, nada é exibido.'],
       ];
       const instrWs = XLSX.utils.aoa_to_sheet([instrHeaders, ...instrRows]);
       XLSX.utils.book_append_sheet(wb, instrWs, 'Instruções');

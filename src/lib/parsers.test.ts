@@ -46,6 +46,20 @@ test('parseProductsSheet maps columns to a Product', () => {
   assert.deepEqual(categoriesFromProducts, ['Vestuário']);
 });
 
+test('parseProductsSheet distinguishes Preço de Custo from Preço de Venda', () => {
+  // Regression: "preço" casava com "Preço de Custo" antes de "Preço de Venda",
+  // fazendo salePrice == costPrice.
+  const rows: SheetRows = [
+    ['Código/SKU', 'Nome do Produto', 'Categoria', 'Preço de Custo', 'Preço de Venda', 'Estoque', 'Estoque Mínimo'],
+    ['SKU1', 'Camiseta', 'Vestuário', '25.00', '59.90', '100', '10'],
+  ];
+  const { importedProducts } = parseProductsSheet(rows);
+  assert.equal(importedProducts.length, 1);
+  const p = importedProducts[0];
+  assert.equal(p.costPrice, 25);
+  assert.equal(p.salePrice, 59.9);
+});
+
 test('parseProductsSheet throws on empty/invalid input', () => {
   assert.throws(() => parseProductsSheet([]));
   assert.throws(() => parseProductsSheet([['only', 'header']]));

@@ -84,8 +84,16 @@ function parseProductsSheet(rows: SheetRows): { importedProducts: Product[]; cat
   let codeIdx = findColIndex(['código', 'codigo', 'sku', 'ref', 'id', 'referência', 'referencia', 'cod']);
   let nameIdx = findColIndex(['nome', 'produto', 'descrição', 'descricao', 'item', 'name', 'titulo', 'título', 'artigo']);
   let categoryIdx = findColIndex(['categoria', 'grupo', 'setor', 'tipo', 'category', 'família', 'familia', 'departamento']);
-  let costPriceIdx = findColIndex(['custo', 'preço custo', 'preco custo', 'compra', 'cost', 'vlr custo', 'valor custo']);
-  let salePriceIdx = findColIndex(['venda', 'preço venda', 'preco venda', 'valor', 'price', 'preço', 'preco', 'vlr venda', 'valor venda']);
+  let costPriceIdx = findColIndex(['preço custo', 'preco custo', 'custo', 'compra', 'cost', 'vlr custo', 'valor custo']);
+  let salePriceIdx = findColIndex(['preço venda', 'preco venda', 'valor venda', 'vlr venda', 'venda', 'price', 'sale', 'valor']);
+  // A palavra "preço" é genérica e casa com "Preço de Custo"; se o preço de venda
+  // caiu na mesma coluna do custo, re-tentamos ignorando a coluna de custo.
+  if (salePriceIdx !== -1 && salePriceIdx === costPriceIdx) {
+    salePriceIdx = headerRow.findIndex((h, idx) =>
+      idx !== costPriceIdx &&
+      ['preço venda', 'preco venda', 'valor venda', 'vlr venda', 'venda', 'price', 'sale', 'valor'].some(k => h.includes(k))
+    );
+  }
   let stockIdx = findColIndex(['estoque', 'qtd', 'quantidade', 'stock', 'saldo', 'atual', 'quant', 'qnt']);
   let minStockIdx = findColIndex(['mínimo', 'minimo', 'estoque mínimo', 'estoque minimo', 'min', 'est. min', 'est.min', 'est min', 'mín', 'min ']);
 
