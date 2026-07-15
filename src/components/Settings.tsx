@@ -556,22 +556,22 @@ export default function Settings({
 
       const prodHeaders = ['Código/SKU', 'Nome do Produto', 'Categoria', 'Preço de Custo', 'Preço de Venda', 'Estoque', 'Estoque Mínimo'];
       const prodSampleRows = [
-        ['SKU-1001', 'Camiseta Masculina', 'Vestuário', '25.00', '59.90', '100', '10'],
-        ['SKU-1002', 'Calça Jeans', 'Vestuário', '45.00', '119.90', '50', '5'],
-        ['SKU-1003', 'Tênis Running', 'Calçados', '75.00', '189.90', '30', '3'],
-        ['SKU-1004', 'Boné Aba Reta', 'Acessórios', '8.00', '29.90', '200', '20'],
-        ['SKU-1005', 'Bolsa Couro', 'Acessórios', '35.00', '89.90', '40', '5'],
+        ['SKU-1001', 'Camiseta Masculina', 'Vestuário', 25, 59.9, 100, 10],
+        ['SKU-1002', 'Calça Jeans', 'Vestuário', 45, 119.9, 50, 5],
+        ['SKU-1003', 'Tênis Running', 'Calçados', 75, 189.9, 30, 3],
+        ['SKU-1004', 'Boné Aba Reta', 'Acessórios', 8, 29.9, 200, 20],
+        ['SKU-1005', 'Bolsa Couro', 'Acessórios', 35, 89.9, 40, 5],
       ];
       const prodWs = XLSX.utils.aoa_to_sheet([prodHeaders, ...prodSampleRows]);
       XLSX.utils.book_append_sheet(wb, prodWs, 'Produtos');
 
       const salesHeaders = ['ID da Venda', 'Data', 'Hora', 'Cliente', 'Telefone', 'Forma de Pagamento', 'Tipo', 'Produto', 'QTD', 'Custo (R$)', 'Faturamento (R$)', 'Lucro (R$)', 'Status', 'Canal'];
       const salesSampleRows = [
-        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Camiseta Masculina', 2, '50.00', '119.80', '69.80', 'Concluída', 'Loja Física'],
-        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Boné Aba Reta', 1, '8.00', '29.90', '21.90', 'Concluída', 'Loja Física'],
-        ['venda_002', '12/07/2026', '16:45', 'João Silva', '(11) 98888-2222', 'credito', 'CPF', 'Calça Jeans', 1, '45.00', '119.90', '74.90', 'Concluída', 'Shopee'],
-        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Tênis Running', 1, '75.00', '189.90', '114.90', 'Concluída', 'Loja Física'],
-        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Bolsa Couro', 1, '35.00', '89.90', '54.90', 'Concluída', 'Loja Física'],
+        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Camiseta Masculina', 2, 50, 119.8, 69.8, 'Concluída', 'Loja Física'],
+        ['venda_001', '12/07/2026', '14:30', 'Maria Souza', '(11) 99999-1111', 'pix', 'CPF', 'Boné Aba Reta', 1, 8, 29.9, 21.9, 'Concluída', 'Loja Física'],
+        ['venda_002', '12/07/2026', '16:45', 'João Silva', '(11) 98888-2222', 'credito', 'CPF', 'Calça Jeans', 1, 45, 119.9, 74.9, 'Concluída', 'Shopee'],
+        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Tênis Running', 1, 75, 189.9, 114.9, 'Concluída', 'Loja Física'],
+        ['venda_003', '13/07/2026', '10:00', 'Ana Costa', '(11) 97777-3333', 'dinheiro', 'CPF', 'Bolsa Couro', 1, 35, 89.9, 54.9, 'Concluída', 'Loja Física'],
       ];
       const salesWs = XLSX.utils.aoa_to_sheet([salesHeaders, ...salesSampleRows]);
       XLSX.utils.book_append_sheet(wb, salesWs, 'Vendas');
@@ -581,8 +581,8 @@ export default function Settings({
 
       const loanHeaders = ['ID', 'Nome', 'Telefone', 'Data Empréstimo', 'Vencimento', 'Valor Emprestado', 'Juros', 'Recebido', 'Situação', 'Observações'];
       const loanSampleRows = [
-        ['emp_001', 'José Pereira', '(11) 95555-4444', '10/07/2026', '10/08/2026', '500.00', '50.00', '200.00', 'Aberto', 'Empréstimo pessoal'],
-        ['emp_002', 'Carla Dias', '(11) 94444-3333', '05/07/2026', '05/09/2026', '1000.00', '100.00', '1000.00', 'Pago', 'Quitado'],
+        ['emp_001', 'José Pereira', '(11) 95555-4444', '10/07/2026', '10/08/2026', 500, 50, 200, 'Aberto', 'Empréstimo pessoal'],
+        ['emp_002', 'Carla Dias', '(11) 94444-3333', '05/07/2026', '05/09/2026', 1000, 100, 1000, 'Pago', 'Quitado'],
       ];
       const loanWs = XLSX.utils.aoa_to_sheet([loanHeaders, ...loanSampleRows]);
       XLSX.utils.book_append_sheet(wb, loanWs, 'Empréstimos');
@@ -611,9 +611,13 @@ export default function Settings({
         ['• Código/SKU: identificador único do produto (ex: SKU-001)'],
         ['• Nome do Produto: nome completo do produto'],
         ['• Categoria: agrupamento do produto (ex: Vestuário, Calçados)'],
-        ['• Preço de Custo: valor que o produto custa (use ponto para decimal)'],
+        ['• COLUNAS NUMÉRICAS (Preço de Custo, Preço de Venda, Estoque, Estoque Mínimo):'],
+        ['  - Use tipo NUMÉRICO (célula de número), NUNCA texto.'],
+        ['  - Decimal com VÍRGULA (ex: 25,90). NÃO use PONTO (nem de milhar, nem decimal).'],
+        ['  - Exemplo correto: 25,90  |  Incorreto: 25.90 ou "25,90" (texto)'],
+        ['• Preço de Custo: valor que o produto custa'],
         ['• Preço de Venda: valor que o produto será vendido'],
-        ['• Estoque: quantidade atual em estoque'],
+        ['• Estoque: quantidade atual em estoque (somente números)'],
         ['• Estoque Mínimo: quantidade mínima para alerta de estoque baixo'],
         [''],
         ['PLANILHA DE VENDAS (aba "Vendas") - um item por linha'],
@@ -625,7 +629,8 @@ export default function Settings({
         ['• Forma de Pagamento: pix, credito, debito, dinheiro, transferencia'],
         ['• Tipo: CPF ou CNPJ'],
         ['• Produto: nome exato do produto cadastrado'],
-        ['• QTD: quantidade vendida desse produto'],
+        ['• QTD: quantidade vendida (número inteiro, não texto)'],
+        ['• Custo (R$), Faturamento (R$), Lucro (R$): valores numéricos, decimal com VÍRGULA, sem ponto'],
         ['• Custo (R$): custo total desse item (preço de custo x QTD)'],
         ['• Faturamento (R$): valor total recebido desse item (preço de venda x QTD)'],
         ['• Lucro (R$): Faturamento - Custo'],
