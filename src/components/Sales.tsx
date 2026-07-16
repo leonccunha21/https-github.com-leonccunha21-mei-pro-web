@@ -31,6 +31,7 @@ interface SalesProps {
     paymentMethod: PaymentMethod;
     discount: number;
     ecommerceOrderId?: string;
+    saleChannel?: string;
     saleType: 'CPF' | 'CNPJ';
     notes?: string;
     pending?: boolean;
@@ -387,6 +388,7 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
       paymentMethod,
       discount: discountPercent,
       ecommerceOrderId: isEcommerceChannel(saleChannel) ? ecommerceOrderId.trim() || undefined : undefined,
+      saleChannel: saleChannel,
       saleType,
       notes: combinedNotes || undefined,
       pending: creditSale

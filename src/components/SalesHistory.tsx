@@ -43,9 +43,24 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
   // Selected sale for detail modal
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
 
+  // Converte a data da venda para Date LOCAL, tratando os 3 formatos possíveis:
+  // - "AAAA-MM-DD" (vendas importadas, sem hora) -> meia-noite LOCAL (não UTC)
+  // - "DD/MM/AAAA" ou "DD/MM/AAAA HH:MM" -> local
+  // - ISO completo "AAAA-MM-DDTHH:MM:SS.sssZ" -> horário local correto
+  const parseSaleDate = (dateStr: string): Date | null => {
+    if (!dateStr) return null;
+    const m1 = String(dateStr).match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (m1) return new Date(+m1[1], +m1[2] - 1, +m1[3]);
+    const m2 = String(dateStr).match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    if (m2) return new Date(+m2[3], +m2[2] - 1, +m2[1]);
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? null : d;
+  };
+
   // Date range filter helper
   const isInDateRange = (dateStr: string): boolean => {
-    const saleDate = new Date(dateStr);
+    const saleDate = parseSaleDate(dateStr);
+    if (!saleDate) return true;
     const now = new Date();
     if (dateRange === 'all') return true;
     if (dateRange === 'today') {
@@ -95,7 +110,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
   const filteredSales = useMemo(() => {
     if (showDebtors) {
       return [...sales]
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .sort((a, b) => (parseSaleDate(b.date)?.getTime() ?? 0) - (parseSaleDate(a.date)?.getTime() ?? 0))
         .filter(s => {
           if (!isInDateRange(s.date)) return false;
           if (!isDebtorSale(s)) return false;
@@ -114,7 +129,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
     }
 
     return [...sales]
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .sort((a, b) => (parseSaleDate(b.date)?.getTime() ?? 0) - (parseSaleDate(a.date)?.getTime() ?? 0))
       .filter(s => {
         // Date range match
         if (!isInDateRange(s.date)) return false;
@@ -172,7 +187,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
   };
 
   const formatDate = (isoString: string) => {
-    const d = new Date(isoString);
+    const d = parseSaleDate(isoString) || new Date();
     return d.toLocaleString('pt-BR', {
       day: '2-digit',
       month: '2-digit',
@@ -210,7 +225,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
       </tr>
     `).join('');
 
-    const saleDate = new Date(sale.date);
+    const saleDate = parseSaleDate(sale.date) || new Date();
 
     const receiptHtml = `
       <html><head><title>Recibo - #${sale.id.substring(0, 8)}</title>

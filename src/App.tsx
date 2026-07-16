@@ -58,8 +58,9 @@ import { motion, AnimatePresence } from 'motion/react';
 import appVersion from '../package.json';
 
 import { categorizeProduct } from './lib/categorize';
-import { normalizeName } from './lib/normalize';
+import { normalizeName, normalizeChannel } from './lib/normalize';
 import { roundCurrency } from './lib/currency';
+import { localNowISO } from './lib/datetime';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 import { getDailyWrites, DAILY_WRITE_LIMIT } from './lib/quota';
 
@@ -727,6 +728,7 @@ export default function App() {
     paymentMethod: PaymentMethod;
     discount: number;
     ecommerceOrderId?: string;
+    saleChannel?: string;
     saleType: 'CPF' | 'CNPJ';
     notes?: string;
     pending?: boolean;
@@ -740,9 +742,17 @@ export default function App() {
     const profit = roundCurrency(finalTotal - totalCost);
 
     // 2. Generate sale object
+    // Vendas em marketplace (Shopee, TikTok, OLX, etc.) não são pagas na hora:
+    // caem como "pending" no painel de Marketplace até o valor cair na conta.
+    const saleChannelRaw = saleData.saleChannel || '';
+    const isMarketplaceChannel = (() => {
+      const c = normalizeChannel(saleChannelRaw);
+      return c !== '' && c !== 'loja fisica';
+    })();
+
     const newSale: Sale = {
       id: `v_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      date: new Date().toISOString(),
+      date: localNowISO(),
       items: saleData.items,
       clientName: saleData.clientName,
       clientPhone: saleData.clientPhone,
@@ -750,8 +760,9 @@ export default function App() {
       total: finalTotal,
       totalCost,
       profit,
-      status: saleData.pending ? 'pending' : 'completed',
+      status: (isMarketplaceChannel || saleData.pending) ? 'pending' : 'completed',
       ecommerceOrderId: saleData.ecommerceOrderId,
+      saleChannel: saleChannelRaw || undefined,
       saleType: saleData.saleType,
       notes: saleData.notes
     };
