@@ -75,7 +75,15 @@ export async function loadDb(): Promise<Partial<LocalDb> | null> {
   // 1. IndexedDB (primary, works on the static site)
   try {
     const local = await idbGet();
-    if (local && (Array.isArray(local.sales) || Array.isArray(local.products))) {
+    // Só considera o IndexedDB válido se ele realmente tiver dados. Um banco
+    // "inicializado" porém vazio (ex.: primeira carga falhou, ou o usuário
+    // limpou os dados do site) NÃO deve bloquear o fallback para o servidor,
+    // senão o app abre sempre vazio mesmo havendo dados no servidor.
+    const localHasData =
+      local &&
+      (Array.isArray(local.sales) && local.sales.length > 0 ||
+        Array.isArray(local.products) && local.products.length > 0);
+    if (localHasData) {
       return local;
     }
   } catch { /* ignore */ }
@@ -85,8 +93,10 @@ export async function loadDb(): Promise<Partial<LocalDb> | null> {
     const res = await fetch('/api/db');
     if (res.ok) {
       const db = (await res.json()) as Partial<LocalDb>;
-      idbPut({ ...(db as LocalDb), initialized: true }).catch(() => {});
-      return { ...(db as LocalDb), initialized: true };
+      if (Array.isArray(db.sales) || Array.isArray(db.products)) {
+        idbPut({ ...(db as LocalDb), initialized: true }).catch(() => {});
+        return { ...(db as LocalDb), initialized: true };
+      }
     }
   } catch { /* ignore */ }
 
