@@ -17,7 +17,8 @@ import {
   Lead,
   LeadExtractionJob,
   WhatsAppInstance,
-  AIAgent
+  AIAgent,
+  Opportunity
 } from './types';
 // Nenhum seed automático: contas novas começam com 0 dados. A entrada de dados
 // ocorre apenas via importação manual de planilha Excel (ver tela de Configurações).
@@ -40,6 +41,7 @@ const CashClosing = lazy(() => import('./components/CashClosing'));
 const LeadsPage = lazy(() => import('./components/Leads'));
 const WhatsAppPage = lazy(() => import('./components/WhatsApp'));
 const AIModulePage = lazy(() => import('./components/AIModule'));
+const FunnelPage = lazy(() => import('./components/Funnel'));
 import { 
   LayoutDashboard, 
   Package, 
@@ -62,7 +64,8 @@ import {
   AlertTriangle,
   Target,
   MessageSquare,
-  Brain
+  Brain,
+  KanbanSquare
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
@@ -125,6 +128,7 @@ export default function App() {
   const [leadJobs, setLeadJobs] = useState<LeadExtractionJob[]>([]);
   const [whatsappInstances, setWhatsappInstances] = useState<WhatsAppInstance[]>([]);
   const [aiAgents, setAiAgents] = useState<AIAgent[]>([]);
+  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
 
   // Estado de resolução da autenticação (Firebase). Só revela a tela principal
   // após saber se há usuário logado. Usuário não logado => 0 dados.
@@ -212,6 +216,7 @@ export default function App() {
     setLeadJobs(hasDb && Array.isArray(dbData.leadJobs) ? dbData.leadJobs! : []);
     setWhatsappInstances(hasDb && Array.isArray(dbData.whatsappInstances) ? dbData.whatsappInstances! : []);
     setAiAgents(hasDb && Array.isArray(dbData.aiAgents) ? dbData.aiAgents! : []);
+    setOpportunities(hasDb && Array.isArray(dbData.opportunities) ? dbData.opportunities! : []);
 
     if (db && db.storeInfo) setStoreInfo(db.storeInfo);
     const seededCustomers = loadedCustomers.length === 0 ? seedCustomersFromSales(s) : loadedCustomers;
@@ -245,6 +250,7 @@ export default function App() {
             leadJobs: [],
             whatsappInstances: [],
             aiAgents: [],
+            opportunities: [],
             storeInfo: (db && db.storeInfo) || null,
             initialized: true,
           });
@@ -314,9 +320,12 @@ export default function App() {
     purchases: Purchase[];
     cashSessions: CashSession[];
     loans: Loan[];
+    whatsappInstances: WhatsAppInstance[];
+    aiAgents: AIAgent[];
+    opportunities: Opportunity[];
     initialized?: boolean;
-  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [], loans: [] });
-  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans };
+  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [], loans: [], whatsappInstances: [], aiAgents: [], opportunities: [] });
+  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans, whatsappInstances, aiAgents, opportunities };
 
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
@@ -422,6 +431,7 @@ export default function App() {
       leadJobs: partial.leadJobs ?? prev.leadJobs ?? cur.leadJobs ?? [],
       whatsappInstances: partial.whatsappInstances ?? prev.whatsappInstances ?? cur.whatsappInstances ?? [],
       aiAgents: partial.aiAgents ?? prev.aiAgents ?? cur.aiAgents ?? [],
+      opportunities: partial.opportunities ?? prev.opportunities ?? cur.opportunities ?? [],
       initialized: true,
     };
     pendingRef.current = merged;
@@ -532,6 +542,7 @@ export default function App() {
         leadJobs: cloud.leadJobs || [],
         whatsappInstances: cloud.whatsappInstances || [],
         aiAgents: cloud.aiAgents || [],
+        opportunities: cloud.opportunities || [],
         storeInfo: cloud.storeInfo ?? null,
         initialized: true,
       };
@@ -585,6 +596,7 @@ export default function App() {
         leadJobs: cloud.leadJobs || [],
         whatsappInstances: cloud.whatsappInstances || [],
         aiAgents: cloud.aiAgents || [],
+        opportunities: cloud.opportunities || [],
         storeInfo: cloud.storeInfo ?? null,
         initialized: true,
       };
@@ -754,6 +766,32 @@ export default function App() {
   const saveCustomersToStorage = (updatedCustomers: Customer[]) => {
     setCustomers(updatedCustomers);
     persist({ customers: updatedCustomers });
+  };
+
+  // Converte um Lead em Cliente do CRM (evita duplicar pelo CNPJ/nome).
+  const convertLeadToCustomer = (lead: Lead) => {
+    const exists = customers.some(c =>
+      (lead.cnpj && c.cnpj === lead.cnpj) ||
+      (c.name || '').trim().toLowerCase() === (lead.name || '').trim().toLowerCase()
+    );
+    if (exists) {
+      showToast('Este lead já é um cliente cadastrado.');
+      setActiveTab('customers');
+      return;
+    }
+    const newCustomer: Customer = {
+      id: `c_${Date.now()}`,
+      name: lead.name,
+      phone: lead.phone,
+      email: lead.email,
+      notes: lead.cnpj ? `CNPJ: ${lead.cnpj}` : '',
+      createdAt: new Date().toISOString(),
+    };
+    const updated = [newCustomer, ...customers];
+    setCustomers(updated);
+    persist({ customers: updated });
+    showToast('Lead convertido em cliente!');
+    setActiveTab('customers');
   };
 
   const saveSuppliersToStorage = (updatedSuppliers: Supplier[]) => {
@@ -1064,7 +1102,7 @@ export default function App() {
     const db: LocalDb = {
       products, sales, categories, expenses, orders,
       storeInfo, customers, suppliers, purchases, cashSessions, loans,
-      leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [],
+      leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [], opportunities: [],
       initialized: true,
     };
     const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
@@ -1105,6 +1143,7 @@ export default function App() {
           leadJobs: parsed.leadJobs || [],
           whatsappInstances: parsed.whatsappInstances || [],
           aiAgents: parsed.aiAgents || [],
+          opportunities: parsed.opportunities || [],
           initialized: true,
         };
         setProducts(db.products);
@@ -1674,6 +1713,20 @@ export default function App() {
               Leads
             </button>
 
+            {/* Tab: Funil de Vendas */}
+            <button
+              id="nav-funnel"
+              onClick={() => setActiveTab('funnel')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'funnel'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <KanbanSquare className="h-4 w-4" />
+              Funil de Vendas
+            </button>
+
             {/* Tab: WhatsApp */}
             <button
               id="nav-whatsapp"
@@ -1924,6 +1977,7 @@ export default function App() {
                 leadJobs={leadJobs}
                 onSaveLeads={l => { setLeads(l); persist({ leads: l }); }}
                 onSaveLeadJobs={j => { setLeadJobs(j); persist({ leadJobs: j }); }}
+                onConvertToCustomer={convertLeadToCustomer}
               />
             )}
 
@@ -1938,6 +1992,14 @@ export default function App() {
               <AIModulePage
                 agents={aiAgents}
                 onSaveAgents={a => { setAiAgents(a); persist({ aiAgents: a }); }}
+              />
+            )}
+
+            {activeTab === 'funnel' && (
+              <FunnelPage
+                opportunities={opportunities}
+                leads={leads}
+                onSaveOpportunities={o => { setOpportunities(o); persist({ opportunities: o }); }}
               />
             )}
 

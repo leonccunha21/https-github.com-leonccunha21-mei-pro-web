@@ -39,7 +39,7 @@ type Progress = {
 const SYNC_COLLECTIONS: (keyof LocalDb)[] = [
   'products', 'categories', 'sales', 'orders', 'customers',
   'suppliers', 'purchases', 'cashSessions', 'loans', 'expenses',
-  'leads', 'leadJobs', 'whatsappInstances', 'aiAgents',
+  'leads', 'leadJobs', 'whatsappInstances', 'aiAgents', 'opportunities',
 ];
 
 // Campos de data usados para agrupar por ano, por coleção.

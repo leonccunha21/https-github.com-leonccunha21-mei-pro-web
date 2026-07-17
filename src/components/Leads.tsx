@@ -1,12 +1,14 @@
-import { useState, useCallback } from 'react';
-import { Search, Plus, Trash2, Building2, Phone, Mail, Loader2, CheckCircle2, XCircle, Target, MapPin, X, ChevronRight, RefreshCw } from 'lucide-react';
+import { useState, useCallback, useEffect } from 'react';
+import { Search, Plus, Trash2, Building2, Phone, Mail, Loader2, CheckCircle2, XCircle, Target, MapPin, X, ChevronRight, RefreshCw, UserPlus, AlertTriangle } from 'lucide-react';
 import type { Lead, LeadExtractionJob } from '../types';
+import { scrapers, vpsHealth, VPS_API_URL } from '../lib/vps';
 
 interface LeadsProps {
   leads: Lead[];
   leadJobs: LeadExtractionJob[];
   onSaveLeads: (leads: Lead[]) => void;
   onSaveLeadJobs: (jobs: LeadExtractionJob[]) => void;
+  onConvertToCustomer: (lead: Lead) => void;
 }
 
 const SOURCE_LABELS: Record<Lead['source'], string> = {
@@ -46,7 +48,7 @@ interface CnpjResult {
   situacao?: string;
 }
 
-export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs }: LeadsProps) {
+export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs, onConvertToCustomer }: LeadsProps) {
   const [search, setSearch] = useState('');
   const [showNewJobModal, setShowNewJobModal] = useState(false);
   const [showManualModal, setShowManualModal] = useState(false);
@@ -68,13 +70,24 @@ export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs }: 
   const [cnpjResult, setCnpjResult] = useState<CnpjResult | null>(null);
   const [cnpjError, setCnpjError] = useState('');
 
+  const [vpsOnline, setVpsOnline] = useState<boolean | null>(null);
+  const [jobBusy, setJobBusy] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => { vpsHealth().then(h => setVpsOnline(h.ok)); }, []);
+
+  const showToast = (msg: string) => {
+    setToast(msg);
+    window.setTimeout(() => setToast(null), 3500);
+  };
+
   const filteredLeads = leads.filter(l =>
     l.name.toLowerCase().includes(search.toLowerCase()) ||
     (l.cnpj || '').includes(search) ||
     (l.phone || '').includes(search)
   );
 
-  const handleCreateJob = () => {
+  const handleCreateJob = async () => {
     if (!jobKeyword.trim() || !jobLocation.trim()) return;
     const newJob: LeadExtractionJob = {
       id: `job_${Date.now()}`,
@@ -88,6 +101,20 @@ export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs }: 
     setJobKeyword('');
     setJobLocation('');
     setShowNewJobModal(false);
+
+    if (vpsOnline) {
+      setJobBusy(true);
+      try {
+        await scrapers.enqueue({ keyword: newJob.keyword, location: newJob.location });
+        showToast('Varredura enfileirada na VPS. Os leads aparecerão em breve.');
+      } catch (e: any) {
+        showToast(`Falha ao acionar a VPS: ${e.message}`);
+      } finally {
+        setJobBusy(false);
+      }
+    } else {
+      showToast('Backend (VPS) offline: o job foi salvo localmente e será executado quando a VPS estiver online.');
+    }
   };
 
   const handleAddManualLead = () => {
@@ -266,6 +293,9 @@ export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs }: 
                   <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border w-fit ${SOURCE_COLORS[lead.source]}`}>
                     {SOURCE_LABELS[lead.source]}
                   </span>
+                  <button onClick={() => onConvertToCustomer(lead)} title="Converter em cliente do CRM" className="p-1 text-slate-300 hover:text-indigo-500 transition-colors cursor-pointer justify-self-end">
+                    <UserPlus className="h-3.5 w-3.5" />
+                  </button>
                   <button onClick={() => handleDeleteLead(lead.id)} className="p-1 text-slate-300 hover:text-rose-500 transition-colors cursor-pointer justify-self-end">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>

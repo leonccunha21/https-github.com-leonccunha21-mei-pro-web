@@ -65,7 +65,7 @@ export interface Expense {
   notes?: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai';
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel';
 
 export interface Customer {
   id: string;
@@ -73,6 +73,7 @@ export interface Customer {
   phone?: string;
   email?: string;
   address?: string;
+  cnpj?: string;
   notes?: string;
   createdAt: string;
 }
@@ -216,4 +217,36 @@ export interface AIAgent {
   prompt: string;
   model: 'gpt-4o' | 'gpt-3.5-turbo' | 'claude-3-opus' | 'claude-3-sonnet';
   createdAt: string;
+}
+
+export type FunnelStage =
+  | 'lead'
+  | 'contacted'
+  | 'qualification'
+  | 'proposal'
+  | 'negotiation'
+  | 'won'
+  | 'lost';
+
+export interface FunnelStageDef {
+  id: FunnelStage;
+  name: string;
+  color: string;
+  text: string;
+  bg: string;
+  order: number;
+}
+
+export interface Opportunity {
+  id: string;
+  title: string;
+  leadId?: string;
+  leadName?: string;
+  value: number;
+  stage: FunnelStage;
+  owner?: string;
+  expectedCloseDate?: string;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }

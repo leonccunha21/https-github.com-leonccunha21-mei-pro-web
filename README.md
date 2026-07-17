@@ -23,6 +23,7 @@ Os dados são carregados a partir de planilhas Excel (a "planilha-mãe") e conve
 
 - **Frontend:** React + TypeScript + Vite + Tailwind CSS
 - **Backend local:** Node (`server.ts` via `tsx`) servindo `/api/db` a partir de `data/local-db.json`
+- **Módulos avançados (VPS stub):** `server.ts` também expõe `/api/whatsapp`, `/api/scrape` e `/api/rag` (Evolution API, scrapers e RAG simulados em memória) para testar a integração end-to-end sem uma VPS real. Em produção, esses endpoints devem ser implementados na VPS (PostgreSQL + pgvector).
 - **Dados:** Excel → `scripts/processar_dados.cjs` → `src/data.json` / `src/data.ts`
 - **Deploy:** Vercel
 
