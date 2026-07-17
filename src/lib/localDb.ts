@@ -1,4 +1,4 @@
-import { Product, Sale, Category, Expense, StoreInfo, ServiceOrder, Customer, Supplier, Purchase, CashSession, Loan } from '../types';
+import { Product, Sale, Category, Expense, StoreInfo, ServiceOrder, Customer, Supplier, Purchase, CashSession, Loan, Lead, LeadExtractionJob, WhatsAppInstance, AIAgent } from '../types';
 
 export interface LocalDb {
   products: Product[];
@@ -12,6 +12,10 @@ export interface LocalDb {
   purchases: Purchase[];
   cashSessions: CashSession[];
   loans: Loan[];
+  leads: Lead[];
+  leadJobs: LeadExtractionJob[];
+  whatsappInstances: WhatsAppInstance[];
+  aiAgents: AIAgent[];
   initialized?: boolean;
 }
 

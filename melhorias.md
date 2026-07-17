@@ -1,52 +1,50 @@
-# Melhorias — status
+# Análise de Viabilidade: Extensão Módulos Avançados
 
-## 1. Performance
-- [x] O seed **foi removido**: não há mais `loadSeed`/`import('./data')` nem `public/seed-backup.json` sendo carregado no primeiro acesso. Cada conta nova inicia com 0 dados e só recebe dados via importação manual de Excel.
-- [x] `xlsx` (429 kB) e `firebase` (436 kB) continuam sendo importados dinamicamente (lazy) onde são usados. Mantido.
-- [x] `manualChunks` já separa `vendor-firebase`, `vendor-xlsx`, `vendor-motion` e `vendor-react` (caches de longa duração). Mantido `chunkSizeWarningLimit: 1500` em `vite.config.ts`.
-
-## 2. Organização de código
-- [x] `Settings.tsx` (era 1701 linhas) teve toda a lógica de parsing de planilhas extraída para `src/lib/sheetParsers.ts`. O componente caiu para ~965 linhas e passa a importar os parsers.
-- [x] `Dashboard.tsx` teve o gráfico SVG de faturamento extraído para `src/components/SalesChart.tsx`.
-- [~] Os componentes ainda são grandes; uma separação em UI menor (sub-componentes de Cards/Seções) ficou como melhoria futura, mas o risco de regressão justificou não dividir tudo agora.
-
-## 3. Camada de dados
-- [x] Centralização já existente em `src/lib/localDb.ts` (load/save IndexedDB + servidor opcional) e `src/lib/dbSync.ts` (nuvem). `App.tsx` usa um único `persist()` em vez de `saveXToStorage` espalhados.
-- [x] Os parsers de planilha (antes `any[][]` em todo lugar) agora usam os tipos `Cell`/`SheetRows` e uniões corretas (`PaymentMethod`, `Loan['status']`, etc.) em `src/lib/sheetParsers.ts`. Zero `any` nos parsers.
-
-## 4. Robustez / UX
-- [x] Testes unitários adicionados em `src/lib/parsers.test.ts` (9 testes cobrindo produtos, categorias, vendas, empréstimos e clientes). Roda com `npm test`.
-- [x] `aria-label` adicionado aos botões de ícone (header do App, Dashboard, SalesHistory, Products, Debtors, OsOrcamento, Reports).
-- [x] O estado "modo local vs nuvem" já é explícito em `Settings.tsx` (banner "Sincronização desativada (modo local)" + botões de nuvem desabilitados quando `syncEnabled` é false).
-
-## 5. Uso particular por conta (login Google obrigatório)
-- [x] **Login obrigatório**: `App.tsx` agora tem um gate de autenticação. Enquanto `authReady` é falso mostra "Verificando conta…"; se não houver `cloudUser`, renderiza `src/components/Login.tsx` (tela com botão "Entrar com Google"). Sem login, nenhum dado é exibido (app mostra 0 dados).
-- [x] **Sem seed automático**: removidos `loadSeed`/`import('./data')` em `App.tsx` e o fallback de `seed-backup.json` em `src/lib/localDb.ts` (`loadDb`). Nova conta inicia zerada.
-- [x] **Entrada de dados só via Excel manual**: removido o botão "Restaurar do Backup" (`handleRestoreBackup`) de `App.tsx` e `Settings.tsx`. Os dados devem ser enviados pelo usuário via importação de planilha (`sheetParsers.ts`).
-- [x] `src/components/Login.tsx` criado com botão "Entrar com Google" (usa `googleSignIn()` de `lib/firebase`), tratamento de erro e explicação de uso particular.
+## 1. Visão Geral da Arquitetura
+A diretriz do documento de separar a infraestrutura em **Frontend (Vercel)** e **Backend (VPS contínua)** está perfeitamente correta. Plataformas Serverless como a Vercel têm limites rígidos de tempo de execução (timeouts de poucos segundos na versão gratuita/Pro) e não suportam processos rodando eternamente em segundo plano, o que é mandatório para websockets e scrapers.
 
 ---
 
-## Correção de dados (BASE 2 → BASE 1)
-- O `public/seed-backup.json` (backup de restauração, rotulado "BASE 2") havia sido gerado a partir de `data/excel/BASE 2.xlsx`, que **tinha dados errados**.
-- Regenerado a partir de `data/excel/BASE 1.xlsx` (referência correta/funcionando) usando `node scripts/importar_base2.cjs`, que atualizou `src/data.json`, `src/data.ts`, `data/local-db.json` e `public/seed-backup.json` (e o `dist/`).
-- Resultado: 856 produtos, 2804 vendas, 18 categorias, 20 despesas, 1 empréstimo — faturamento R$ 120.369,71.
-- O recurso de "Restaurar do Backup" foi **removido** (modelo de uso particular: dados só entram via Excel manual). O `seed-backup.json` deixou de ser carregado automaticamente.
-- `data/excel/BASE 2.xlsx` (a planilha que o usuário envia) foi **sobrescrita** com o conteúdo correto de `data/excel/BASE 1.xlsx`, para que o arquivo enviado esteja com os dados certos.
+## 2. Roadmap de Implementação (Frontend)
 
-## 8. Correção de valores na importação (v2.6.16)
-- [x] **Bug crítico**: ao importar uma planilha onde a coluna **Custo (R$)** ou **Faturamento (R$)** vinha `0` (ou vazia), o parser "caía" para o preço *atual* do produto (aba Produtos), inflacionando custo (+R$7.580) e faturamento (+R$7.112) em `Modelo_Importacao.xlsx`.
-- [x] Corrigido em `src/lib/sheetParsers.ts`: o parser agora **confia nas colunas da planilha** (Custo/Faturamento/Lucro) quando presentes, usando o valor exato (inclusive 0). Só deriva do catálogo de produtos quando a coluna **não existe** no sheet.
-- [x] Resultado: Custo, Faturamento e Lucro batem **exatamente** (diff 0,00) com `Modelo_Importacao.xlsx` (6.566 vendas, 2019–2026, R$ 395.700,79 de faturamento).
-- [x] Teste de regressão adicionado em `src/lib/parsers.test.ts`.
-- [x] Fonte de dados canônica: `data/excel/Dados coletas/Modelo_Importacao.xlsx` (segue o modelo: Produtos/Vendas/Categorias/Empréstimos/Clientes/Fornecedores/Instruções).
+À medida que formos avançando, marcaremos com `[x]` as tarefas concluídas.
 
-## 7. Relatórios comparativos (v2.6.15)
-- [x] Nova aba **Comparativo** em `src/components/Reports.tsx`: grade mês × ano com faturamento, variação YoY (% vs mesmo mês do ano anterior) e barra de intensidade relativa.
-- [x] Resumo anual comparativo: faturamento, lucro, nº de vendas e ticket médio com variação YoY entre anos consecutivos.
-- [x] A grade ignora o filtro de ano (mantém todos os anos) e respeita os demais filtros (pagamento, canal, tipo, categoria).
+### ⚙️ Fase 1: Setup e Estrutura de Dados
+- [x] Atualizar o arquivo `src/types.ts` para incluir as interfaces `Lead`, `WhatsAppInstance`, `LeadExtractionJob` e `AIAgent`.
+- [x] Configurar os estados iniciais no `App.tsx` e `localDb.ts` para salvar esses dados localmente (enquanto o backend/VPS não estiver pronto).
 
-## 6. Convenções de dados (sempre aplicar)
-- **Colunas numéricas**: nunca usar **ponto** (nem como separador de milhar, nem como separador decimal). Decimal vai com **vírgula** (ex: `25,90`).
-- **Nenhum número como texto**: preço, estoque, QTD, valores (custo/faturamento/lucro), valores de empréstimo etc. devem ser células do **tipo numérico**, não texto. O modelo (`handleDownloadTemplate` em `Settings.tsx`) já usa números; o parser (`getFloatVal` em `sheetParsers.ts`) aceita ambos `.` e `,` na importação, mas a geração/convenção é vírgula + tipo numérico.
-- Aplicado no modelo de importação (`Baixar Modelo`): amostras numéricas como número e instruções reforçando vírgula + tipo numérico.
+### 🎯 Fase 2: Módulo de Varredura de Leads (Scrapers)
+- [x] Criar ícone e rota para a nova página "Leads" no menu lateral esquerdo (Sidebar).
+- [x] Construir a tela principal de Leads (com layout em Tabela e botões de filtro).
+- [x] Criar a janela/modal "Nova Varredura" (campos: Palavra-chave/Segmento, Cidade/Região).
+- [x] Desenvolver a função de consultar CNPJ via API pública (BrasilAPI) operando de forma 100% real no frontend.
+- [ ] **(Backend/VPS)** Executar a varredura em si (o job é criado com status PENDING, mas o scraper que popula leads a partir da keyword/localidade só roda na VPS).
+
+### 💬 Fase 3: Módulo Omnichannel (WhatsApp)
+- [x] Criar ícone e rota para a nova página "WhatsApp" no menu lateral.
+- [x] Construir o painel "Instâncias de WhatsApp" (mostrando os aparelhos conectados, status e botão de adicionar novo).
+- [x] Desenhar o Modal "Conectar WhatsApp" com espaço preparado para exibir o QR Code em Base64.
+- [x] Criar um modelo visual de Caixa de Entrada (Inbox) para as mensagens do CRM.
+- [ ] **(Backend/VPS)** Conectar de verdade à Evolution API: QR Code real em Base64, status em tempo real e envio/recebimento de mensagens.
+
+### 🤖 Fase 4: Inteligência Artificial (Maestro & Agentes)
+- [x] Criar a página "Inteligência Artificial" no menu lateral.
+- [x] Montar a interface para cadastrar Agentes Básicos (definir Nome, Objetivo e Prompt de Comportamento).
+- [x] Desenhar a interface de "Base de Conhecimento" (área de upload de documentos PDF/TXT).
+- [ ] **(Backend/VPS)** Pipeline de RAG real (PostgreSQL + pgvector): processar os documentos enviados e usá-los como contexto nas respostas dos agentes.
+
+---
+
+## 3. Status de Sincronização (Firebase)
+- [x] Envio dos dados para o Firestore implementado em lotes **ano a ano**, respeitando o orçamento diário de escritas (`src/lib/throttledSync.ts`) — evita estourar a cota do plano Spark.
+- [x] Envio/Baixa agora é **100% manual** (botões "Sincronizar Agora" e "Baixar da nuvem"). Removidos os gatilhos automáticos (push 2s após edição, pull a cada 30s, retomada a cada 3h) para não consumir cota nem divergir dados antes do envio inicial completo.
+
+---
+
+## 4. Conclusão
+O documento é extremamente maduro e as tecnologias recomendadas são padrão de mercado. Tudo é viável, desde que seja mantida a premissa fundamental: **o trabalho pesado vai para a VPS, o controle visual e estratégico fica aqui no React**.
+
+### Próximos passos (dependem de Backend/VPS)
+1. Evolution API rodando na VPS + WebSocket para QR Code e mensagens em tempo real.
+2. Scraper de varredura de leads (Google Maps / Instagram) consumindo os jobs criados no frontend.
+3. PostgreSQL + pgvector para o pipeline de RAG da Base de Conhecimento.

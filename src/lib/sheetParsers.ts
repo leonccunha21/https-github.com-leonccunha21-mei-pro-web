@@ -605,9 +605,12 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
       } else {
         total = items.reduce((s, it) => s + it.total, 0);
       }
-      const profit = profitIdx !== -1
-        ? groupRows.reduce((acc, r) => acc + getFloatVal(r, profitIdx), 0)
-        : total - totalCost;
+      let profit = 0;
+      if (profitIdx !== -1) {
+        for (const r of groupRows) profit += getFloatVal(r, profitIdx);
+      } else {
+        profit = total - totalCost;
+      }
       const clientName = (clientIdx !== -1 && clientIdx < first.length && first[clientIdx]) ? String(first[clientIdx]).trim() : undefined;
       const clientPhone = (phoneIdx !== -1 && phoneIdx < first.length && first[phoneIdx]) ? String(first[phoneIdx]).trim() : undefined;
       let saleType: 'CPF' | 'CNPJ' = 'CPF';

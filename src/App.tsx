@@ -13,7 +13,11 @@ import {
   Supplier,
   Purchase,
   CashSession,
-  Loan
+  Loan,
+  Lead,
+  LeadExtractionJob,
+  WhatsAppInstance,
+  AIAgent
 } from './types';
 // Nenhum seed automático: contas novas começam com 0 dados. A entrada de dados
 // ocorre apenas via importação manual de planilha Excel (ver tela de Configurações).
@@ -33,6 +37,9 @@ const Debtors = lazy(() => import('./components/Debtors'));
 const CashFlow = lazy(() => import('./components/CashFlow'));
 const Customers = lazy(() => import('./components/Customers'));
 const CashClosing = lazy(() => import('./components/CashClosing'));
+const LeadsPage = lazy(() => import('./components/Leads'));
+const WhatsAppPage = lazy(() => import('./components/WhatsApp'));
+const AIModulePage = lazy(() => import('./components/AIModule'));
 import { 
   LayoutDashboard, 
   Package, 
@@ -52,9 +59,13 @@ import {
   Wallet,
   Cloud,
   CloudOff,
-  AlertTriangle
+  AlertTriangle,
+  Target,
+  MessageSquare,
+  Brain
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Toaster } from 'react-hot-toast';
 import appVersion from '../package.json';
 
 import { categorizeProduct } from './lib/categorize';
@@ -79,8 +90,9 @@ function timeAgo(iso: string): string {
 // penalizar o carregamento inicial do app.
 import type { User } from 'firebase/auth';
 
-// Sincronização com a nuvem está DESATIVADA (modo local). Nenhum dado é enviado
-// ou baixado automaticamente. Mantenha `false` até o usuário querer reativar.
+// Sincronização com a nuvem está ATIVADA (Firebase/Firestore).
+// Dados são enviados de forma incremental a cada alteração (debounce 2s)
+// e baixados automaticamente a cada 30s quando o usuário estiver logado.
 const SYNC_ENABLED = false;
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
@@ -107,6 +119,12 @@ export default function App() {
   const [purchases, setPurchases] = useState<Purchase[]>([]);
   const [cashSessions, setCashSessions] = useState<CashSession[]>([]);
   const [loans, setLoans] = useState<Loan[]>([]);
+
+  // Extensão Módulos Avançados
+  const [leads, setLeads] = useState<Lead[]>([]);
+  const [leadJobs, setLeadJobs] = useState<LeadExtractionJob[]>([]);
+  const [whatsappInstances, setWhatsappInstances] = useState<WhatsAppInstance[]>([]);
+  const [aiAgents, setAiAgents] = useState<AIAgent[]>([]);
 
   // Estado de resolução da autenticação (Firebase). Só revela a tela principal
   // após saber se há usuário logado. Usuário não logado => 0 dados.
@@ -189,6 +207,12 @@ export default function App() {
     setPurchases(hasDb && Array.isArray(dbData.purchases) ? dbData.purchases! : []);
     setCashSessions(hasDb && Array.isArray(dbData.cashSessions) ? dbData.cashSessions! : []);
     setLoans(hasDb && Array.isArray(dbData.loans) ? dbData.loans! : []);
+    
+    setLeads(hasDb && Array.isArray(dbData.leads) ? dbData.leads! : []);
+    setLeadJobs(hasDb && Array.isArray(dbData.leadJobs) ? dbData.leadJobs! : []);
+    setWhatsappInstances(hasDb && Array.isArray(dbData.whatsappInstances) ? dbData.whatsappInstances! : []);
+    setAiAgents(hasDb && Array.isArray(dbData.aiAgents) ? dbData.aiAgents! : []);
+
     if (db && db.storeInfo) setStoreInfo(db.storeInfo);
     const seededCustomers = loadedCustomers.length === 0 ? seedCustomersFromSales(s) : loadedCustomers;
     if (seededCustomers !== loadedCustomers) setCustomers(seededCustomers);
@@ -217,6 +241,10 @@ export default function App() {
             purchases: [],
             cashSessions: [],
             loans: [],
+            leads: [],
+            leadJobs: [],
+            whatsappInstances: [],
+            aiAgents: [],
             storeInfo: (db && db.storeInfo) || null,
             initialized: true,
           });
@@ -237,6 +265,10 @@ export default function App() {
           purchases: [],
           cashSessions: [],
           loans: [],
+          leads: [],
+          leadJobs: [],
+          whatsappInstances: [],
+          aiAgents: [],
           storeInfo: null,
           initialized: true,
         });
@@ -295,9 +327,64 @@ export default function App() {
   const cloudPushing = React.useRef(false);
   const lastLocalChangeRef = React.useRef(0);
 
+  // -------------------------------------------------------------------------
+  // PAUSA DE COTA DO FIREBASE
+  //
+  // Quando a cota diária estoura, NÃO podemos enviar nem baixar nada da nuvem
+  // (escritas E leituras consomem cota). Este bloqueio impede qualquer acesso
+  // automático ou manual ao Firestore até a data de liberação (meia-noite de
+  // amanhã, por padrão). O usuário só retoma no dia seguinte, manualmente.
+  // -------------------------------------------------------------------------
+  const QUOTA_PAUSE_KEY = 'zm_quota_paused_until';
+
+  // Calcula a meia-noite (local) do dia seguinte.
+  function nextMidnight(): number {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    d.setHours(0, 0, 0, 0);
+    return d.getTime();
+  }
+
+  // Retorna o timestamp até quando a nuvem está pausada. Se nada estiver
+  // salvo, assume a meia-noite de amanhã (pausa por segurança até o dia novo).
+  function quotaPausedUntil(): number {
+    try {
+      const raw = localStorage.getItem(QUOTA_PAUSE_KEY);
+      if (raw) return Number(raw) || 0;
+    } catch { /* ignore */ }
+    return nextMidnight();
+  }
+
+  function isCloudSyncPaused(): boolean {
+    return Date.now() < quotaPausedUntil();
+  }
+
+  // Pausa a nuvem até a meia-noite de amanhã (ou até `until` se informado).
+  function pauseCloudSync(until?: number): void {
+    try {
+      localStorage.setItem(QUOTA_PAUSE_KEY, String(until ?? nextMidnight()));
+    } catch { /* ignore */ }
+  }
+
+  // Libera a nuvem imediatamente (usado pelo botão "Liberar agora").
+  function resumeCloudSyncNow(): void {
+    try {
+      localStorage.removeItem(QUOTA_PAUSE_KEY);
+    } catch { /* ignore */ }
+  }
+
+  // Pausa por padrão assim que o app sobe, já que a cota costuma estar estourada
+  // no fim do dia. O usuário libera manualmente no dia seguinte.
+  React.useEffect(() => {
+    if (!localStorage.getItem(QUOTA_PAUSE_KEY)) {
+      pauseCloudSync();
+    }
+  }, []);
+
   // --- Nuvem: envia para o Firestore de forma incremental (economiza cota) ---
   const pushToCloud = (data: LocalDb, opts?: { forceFull?: boolean }) => {
     if (!SYNC_ENABLED || !cloudUser) return Promise.resolve(null);
+    if (isCloudSyncPaused()) return Promise.resolve(null); // cota estourada: nada hoje
     setCloudSyncing(true);
     setCloudError(null);
     return import('./lib/dbSync').then(({ saveUserDbIncremental }) =>
@@ -316,31 +403,6 @@ export default function App() {
       });
   };
 
-  // Agenda o envio incremental para a nuvem, coalescendo mudanças rápidas
-  // (ex.: importação em massa) num único envio ~2s depois da última alteração.
-  const scheduleCloudPush = () => {
-    if (!SYNC_ENABLED || !cloudUser) return;
-    setCloudPending(true);
-    if (cloudPushTimer.current) clearTimeout(cloudPushTimer.current);
-    cloudPushTimer.current = window.setTimeout(() => {
-      cloudPushTimer.current = null;
-      if (cloudPushing.current) {
-        cloudDirty.current = true; // mudou durante o envio; reenvia em seguida
-        return;
-      }
-      cloudPushing.current = true;
-      pushToCloud(stateRef.current)
-        .catch(() => { /* erro já tratado dentro de pushToCloud */ })
-        .finally(() => {
-          cloudPushing.current = false;
-          if (cloudDirty.current) {
-            cloudDirty.current = false;
-            scheduleCloudPush();
-          }
-        });
-    }, 2000);
-  };
-
   const persist = (partial: Partial<LocalDb>) => {
     const cur = stateRef.current;
     const prev = pendingRef.current;
@@ -356,6 +418,10 @@ export default function App() {
       purchases: partial.purchases ?? prev.purchases ?? cur.purchases,
       cashSessions: partial.cashSessions ?? prev.cashSessions ?? cur.cashSessions,
       loans: partial.loans ?? prev.loans ?? cur.loans,
+      leads: partial.leads ?? prev.leads ?? cur.leads ?? [],
+      leadJobs: partial.leadJobs ?? prev.leadJobs ?? cur.leadJobs ?? [],
+      whatsappInstances: partial.whatsappInstances ?? prev.whatsappInstances ?? cur.whatsappInstances ?? [],
+      aiAgents: partial.aiAgents ?? prev.aiAgents ?? cur.aiAgents ?? [],
       initialized: true,
     };
     pendingRef.current = merged;
@@ -368,7 +434,6 @@ export default function App() {
         showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
       });
     }, 250);
-    scheduleCloudPush();
     lastLocalChangeRef.current = Date.now();
   };
 
@@ -463,6 +528,10 @@ export default function App() {
         cashSessions: cloud.cashSessions || [],
         loans: cloud.loans || [],
         expenses: cloud.expenses || [],
+        leads: cloud.leads || [],
+        leadJobs: cloud.leadJobs || [],
+        whatsappInstances: cloud.whatsappInstances || [],
+        aiAgents: cloud.aiAgents || [],
         storeInfo: cloud.storeInfo ?? null,
         initialized: true,
       };
@@ -486,6 +555,21 @@ export default function App() {
     try {
       const { loadUserDb } = await import('./lib/dbSync');
       const cloud = await loadUserDb(cloudUser.uid);
+
+      // Proteção crítica: se a nuvem está vazia mas temos dados locais,
+      // NÃO sobrescrever. Nuvem vazia = ainda não sincronizamos.
+      // O usuário deve clicar "Sincronizar Agora" para enviar os dados locais.
+      const cloudIsEmpty =
+        (!cloud.products || cloud.products.length === 0) &&
+        (!cloud.sales || cloud.sales.length === 0) &&
+        (!cloud.expenses || cloud.expenses.length === 0) &&
+        (!cloud.orders || cloud.orders.length === 0);
+      const localHasData =
+        (stateRef.current.products && stateRef.current.products.length > 0) ||
+        (stateRef.current.sales && stateRef.current.sales.length > 0) ||
+        (stateRef.current.expenses && stateRef.current.expenses.length > 0);
+      if (cloudIsEmpty && localHasData) return; // nuvem vazia não apaga dados locais
+
       const merged: LocalDb = {
         products: cloud.products || [],
         categories: cloud.categories || [],
@@ -497,6 +581,10 @@ export default function App() {
         cashSessions: cloud.cashSessions || [],
         loans: cloud.loans || [],
         expenses: cloud.expenses || [],
+        leads: cloud.leads || [],
+        leadJobs: cloud.leadJobs || [],
+        whatsappInstances: cloud.whatsappInstances || [],
+        aiAgents: cloud.aiAgents || [],
         storeInfo: cloud.storeInfo ?? null,
         initialized: true,
       };
@@ -512,26 +600,44 @@ export default function App() {
     } catch { /* ignora e tenta de novo no próximo ciclo */ }
   };
 
-  // Sincronização automática nos DOIS sentidos: dispara pullFromCloud sozinho
-  // a cada 20s, ao focar/abrir a aba e 1,5s após entrar na nuvem.
+  // Sincronização AUTOMÁTICA DESATIVADA por enquanto (envio/baixa só manual).
+  // O app fica 100% local; o usuário decide quando enviar ("Sincronizar Agora")
+  // ou baixar ("Baixar da nuvem") para não consumir cota nem divergir dados
+  // antes de concluir o envio inicial completo.
   const pullFromCloudRef = React.useRef<() => void>(() => {});
   pullFromCloudRef.current = pullFromCloud;
-  useEffect(() => {
+
+  // Retoma AUTOMÁTICA do envio em lotes DESATIVADA por enquanto (só manual).
+  // A retomada de lotes pendentes por cota será feita pelo usuário clicando em
+  // "Sincronizar Agora", que chama syncToCloudThrottled e continua de onde parou.
+  const resumeThrottledSync = React.useRef<() => void>(() => {});
+  resumeThrottledSync.current = async () => {
     if (!SYNC_ENABLED || !cloudUser) return;
-    const tick = () => pullFromCloudRef.current();
-    const interval = window.setInterval(tick, 30000);
-    const onVisible = () => { if (document.visibilityState === 'visible') tick(); };
-    const onFocus = () => tick();
-    document.addEventListener('visibilitychange', onVisible);
-    window.addEventListener('focus', onFocus);
-    const firstPull = window.setTimeout(tick, 1500); // primeira sincronização
-    return () => {
-      clearInterval(interval);
-      clearTimeout(firstPull);
-      document.removeEventListener('visibilitychange', onVisible);
-      window.removeEventListener('focus', onFocus);
-    };
-  }, [cloudUser]);
+    if (cloudPushing.current || cloudSyncing) return;
+    try {
+      const { getSyncProgress } = await import('./lib/throttledSync');
+      const p = getSyncProgress(cloudUser.uid);
+      // Há retomada pendente se alguma coleção tem um ano parcialmente enviado
+      // ou se o storeInfo ainda não foi enviado.
+      const inProgress = Object.values(p.done).some((c) =>
+        Object.keys(c).some((k) => k.startsWith('_partial_'))
+      ) || p.storeInfo === false;
+      if (!inProgress) return;
+      setCloudSyncing(true);
+      const { syncToCloudThrottled } = await import('./lib/throttledSync');
+      const res = await syncToCloudThrottled(cloudUser.uid, stateRef.current as LocalDb);
+      setCloudLastSync(new Date().toISOString());
+      setCloudSyncing(false);
+      setDailyWrites(getDailyWrites().count);
+      if (!res.finished) {
+        showToast(`📤 Continuando envio: +${res.uploaded} docs hoje. Resta para amanhã.`);
+      } else {
+        showToast(`✅ Envio à nuvem concluído (+${res.uploaded} docs hoje).`);
+      }
+    } catch {
+      setCloudSyncing(false);
+    }
+  };
 
   const handleCloudSyncNow = async () => {
     if (!SYNC_ENABLED || !cloudUser) { showToast('Sincronização desativada (modo local).'); return; }
@@ -539,6 +645,43 @@ export default function App() {
     const db = stateRef.current as LocalDb;
     showToast('Verificando alterações para sincronizar na nuvem...');
     try {
+      // Verifica se a nuvem está vazia para decidir se precisa de reenvio completo
+      const { loadUserDb, clearSyncCache } = await import('./lib/dbSync');
+      const { syncToCloudThrottled } = await import('./lib/throttledSync');
+      const cloudData = await loadUserDb(cloudUser.uid);
+      const cloudIsEmpty =
+        (!cloudData.products || cloudData.products.length === 0) &&
+        (!cloudData.sales || cloudData.sales.length === 0) &&
+        (!cloudData.expenses || cloudData.expenses.length === 0);
+
+      const localHasData =
+        (db.products && db.products.length > 0) ||
+        (db.sales && db.sales.length > 0) ||
+        (db.expenses && db.expenses.length > 0);
+
+      // Se a nuvem está vazia mas temos dados locais → cache desatualizado:
+      // limpa o progresso e faz o reenvio em LOTES (ano a ano, com orçamento
+      // diário) em vez de mandar tudo de uma vez e estourar a cota.
+      if (cloudIsEmpty && localHasData) {
+        clearSyncCache(cloudUser.uid);
+        const { clearSyncProgress } = await import('./lib/throttledSync');
+        clearSyncProgress(cloudUser.uid);
+        showToast('Nuvem vazia detectada! Enviando os dados em lotes (ano a ano)...');
+        setCloudSyncing(true);
+        setCloudError(null);
+        const res = await syncToCloudThrottled(cloudUser.uid, db, { resetProgress: true });
+        setCloudLastSync(new Date().toISOString());
+        setCloudSyncing(false);
+        setCloudPending(false);
+        if (res.finished) {
+          showToast(`✅ Envio completo: ${res.uploaded} documentos na nuvem.`);
+        } else {
+          showToast(`📤 Enviados ${res.uploaded} docs hoje. Cota diária atingida — o resto continua amanhã.`);
+        }
+        setDailyWrites(getDailyWrites().count);
+        return;
+      }
+
       const res = await pushToCloud(db);
       if (res && res.uploaded === 0 && res.deleted === 0) {
         showToast('Nuvem já está atualizada (sem alterações para enviar).');
@@ -546,6 +689,7 @@ export default function App() {
         showToast(`Nuvem sincronizada: ${res.uploaded} enviados, ${res.deleted} removidos.`);
       }
     } catch {
+      setCloudSyncing(false);
       showToast('Falha ao sincronizar. Verifique a conexão e a cota do projeto Firebase.');
     }
   };
@@ -823,12 +967,12 @@ export default function App() {
   // wiping the store and regenerating IDs, which previously corrupted sales).
   const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[]; loans?: Loan[]; orders?: ServiceOrder[]; customers?: Customer[]; suppliers?: Supplier[]; purchases?: Purchase[]; cashSessions?: CashSession[] }) => {
     // --- Merge products by code (SKU) then by normalized name ---
-    const existingByCode = new Map<string, Product>(products.map(p => [p.code.trim().toLowerCase(), p] as [string, Product]));
+    const existingByCode = new Map<string, Product>(products.map(p => [(p.code || '').trim().toLowerCase(), p] as [string, Product]));
     const existingByName = new Map<string, Product>(products.map(p => [normalizeName(p.name), p] as [string, Product]));
     const mergedProducts: Product[] = [...products];
 
-    for (const imp of imported.products) {
-      const codeKey = imp.code.trim().toLowerCase();
+    for (const imp of (imported.products || [])) {
+      const codeKey = (imp.code || '').trim().toLowerCase();
       const nameKey = normalizeName(imp.name);
       const existing = codeKey ? existingByCode.get(codeKey) : existingByName.get(nameKey);
 
@@ -871,7 +1015,7 @@ export default function App() {
     // --- Merge categories (keep existing, add new by name) ---
     const catNames = new Set(categories.map(c => c.name.toLowerCase()));
     const mergedCategories = [...categories];
-    for (const c of imported.categories) {
+    for (const c of (imported.categories || [])) {
       if (!catNames.has(c.name.toLowerCase())) {
         mergedCategories.push(c);
         catNames.add(c.name.toLowerCase());
@@ -880,7 +1024,7 @@ export default function App() {
 
     // --- Merge sales by id (update if same id, else append) ---
     const salesById = new Map<string, Sale>(sales.map(s => [s.id, s] as [string, Sale]));
-    for (const s of imported.sales) {
+    for (const s of (imported.sales || [])) {
       salesById.set(s.id, salesById.has(s.id) ? { ...salesById.get(s.id)!, ...s } : s);
     }
     const mergedSales = Array.from(salesById.values());
@@ -920,6 +1064,7 @@ export default function App() {
     const db: LocalDb = {
       products, sales, categories, expenses, orders,
       storeInfo, customers, suppliers, purchases, cashSessions, loans,
+      leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [],
       initialized: true,
     };
     const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
@@ -956,6 +1101,10 @@ export default function App() {
           purchases: parsed.purchases || [],
           cashSessions: parsed.cashSessions || [],
           loans: parsed.loans || [],
+          leads: parsed.leads || [],
+          leadJobs: parsed.leadJobs || [],
+          whatsappInstances: parsed.whatsappInstances || [],
+          aiAgents: parsed.aiAgents || [],
           initialized: true,
         };
         setProducts(db.products);
@@ -969,6 +1118,12 @@ export default function App() {
         setPurchases(db.purchases);
         setCashSessions(db.cashSessions);
         setLoans(db.loans);
+        
+        setLeads(db.leads);
+        setLeadJobs(db.leadJobs);
+        setWhatsappInstances(db.whatsappInstances);
+        setAiAgents(db.aiAgents);
+
         persist(db);
       } catch {
         alert('Arquivo de backup inválido.');
@@ -1292,6 +1447,9 @@ export default function App() {
                 { tab: 'debtors', label: 'Devedores', icon: Users },
                 { tab: 'customers', label: 'Clientes', icon: Users },
                 { tab: 'cashclosing', label: 'Fechamento', icon: Wallet },
+                { tab: 'leads', label: 'Leads', icon: Target },
+                { tab: 'whatsapp', label: 'WhatsApp', icon: MessageSquare },
+                { tab: 'ai', label: 'Inteligência Artificial', icon: Brain },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
                 const Icon = item.icon;
@@ -1483,7 +1641,7 @@ export default function App() {
               OS / Orçamento
             </button>
 
-            {/* Tab 8: Settings */}
+            {/* Tab: Configurações */}
             <button
               id="nav-settings"
               onClick={() => setActiveTab('settings')}
@@ -1495,6 +1653,53 @@ export default function App() {
             >
               <SettingsIcon className="h-4 w-4" />
               Configurações
+            </button>
+
+            {/* Separator: Módulos Avançados */}
+            <div className="pt-3 pb-1">
+              <span className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-widest px-3">Módulos Avançados</span>
+            </div>
+
+            {/* Tab: Leads */}
+            <button
+              id="nav-leads"
+              onClick={() => setActiveTab('leads')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'leads'
+                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Target className="h-4 w-4" />
+              Leads
+            </button>
+
+            {/* Tab: WhatsApp */}
+            <button
+              id="nav-whatsapp"
+              onClick={() => setActiveTab('whatsapp')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'whatsapp'
+                  ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <MessageSquare className="h-4 w-4" />
+              WhatsApp
+            </button>
+
+            {/* Tab: IA */}
+            <button
+              id="nav-ai"
+              onClick={() => setActiveTab('ai')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'ai'
+                  ? 'bg-violet-50 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 font-bold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Brain className="h-4 w-4" />
+              Inteligência Artificial
             </button>
           </nav>
         </div>
@@ -1713,6 +1918,29 @@ export default function App() {
               />
             )}
 
+            {activeTab === 'leads' && (
+              <LeadsPage
+                leads={leads}
+                leadJobs={leadJobs}
+                onSaveLeads={l => { setLeads(l); persist({ leads: l }); }}
+                onSaveLeadJobs={j => { setLeadJobs(j); persist({ leadJobs: j }); }}
+              />
+            )}
+
+            {activeTab === 'whatsapp' && (
+              <WhatsAppPage
+                instances={whatsappInstances}
+                onSaveInstances={i => { setWhatsappInstances(i); persist({ whatsappInstances: i }); }}
+              />
+            )}
+
+            {activeTab === 'ai' && (
+              <AIModulePage
+                agents={aiAgents}
+                onSaveAgents={a => { setAiAgents(a); persist({ aiAgents: a }); }}
+              />
+            )}
+
             {activeTab === 'settings' && (
               <Settings 
                 products={products}
@@ -1854,6 +2082,8 @@ export default function App() {
         </div>
       )}
 
+      <Toaster position="bottom-right" />
     </div>
   );
 }
+

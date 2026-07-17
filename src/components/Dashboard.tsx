@@ -139,7 +139,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   // Calculate metrics
   const totalRevenue = completedSales.reduce((acc, s) => acc + s.total, 0);
   const totalCost = completedSales.reduce((acc, s) => acc + s.totalCost, 0);
-  const totalProfit = totalRevenue - totalCost;
+  const totalProfit = completedSales.reduce((acc, s) => acc + (s.profit || 0), 0);
   const averageMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
 
   const isServiceProduct = (p: Product) => /^servi/i.test(p.category);

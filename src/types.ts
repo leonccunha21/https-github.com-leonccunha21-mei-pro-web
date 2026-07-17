@@ -65,7 +65,7 @@ export interface Expense {
   notes?: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing';
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai';
 
 export interface Customer {
   id: string;
@@ -177,5 +177,43 @@ export interface ServiceOrder {
   total: number;
   status: 'aberta' | 'em_andamento' | 'concluida' | 'cancelada' | 'aprovada' | 'rejeitada';
   notes?: string;
+  createdAt: string;
+}
+
+export interface Lead {
+  id: string;
+  jobId?: string;
+  name: string;
+  phone?: string;
+  email?: string;
+  cnpj?: string;
+  source: 'GOOGLE_MAPS' | 'SPREADSHEET' | 'INSTAGRAM' | 'MANUAL';
+  createdAt: string;
+}
+
+export interface LeadExtractionJob {
+  id: string;
+  keyword: string;
+  location: string;
+  status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
+  totalFound: number;
+  createdAt: string;
+}
+
+export interface WhatsAppInstance {
+  id: string;
+  companyId?: string;
+  name: string;
+  status: 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING';
+  qrCode?: string;
+  createdAt: string;
+}
+
+export interface AIAgent {
+  id: string;
+  name: string;
+  objective: string;
+  prompt: string;
+  model: 'gpt-4o' | 'gpt-3.5-turbo' | 'claude-3-opus' | 'claude-3-sonnet';
   createdAt: string;
 }

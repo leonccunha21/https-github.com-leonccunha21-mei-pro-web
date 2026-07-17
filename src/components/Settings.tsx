@@ -1,4 +1,4 @@
-﻿import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import type { User } from 'firebase/auth';
 import { Product, Sale, Category, SaleItem, StoreInfo, Expense, Loan, ServiceOrder, Customer, Supplier, Purchase, CashSession } from '../types';
 import {
@@ -81,6 +81,8 @@ interface SettingsProps {
   syncEnabled: boolean;
 }
 
+import ExcelUploader from '../components/ExcelUploader';
+
 export default function Settings({
   products,
   sales,
@@ -114,6 +116,7 @@ export default function Settings({
   syncEnabled
 }: SettingsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showExcelUploader, setShowExcelUploader] = useState(false);
   const excelInputRef = useRef<HTMLInputElement>(null);
 
   // Store profile
@@ -138,157 +141,14 @@ export default function Settings({
     e.target.value = '';
   };
 
-  const handleImportExcelOrCsv = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files || files.length === 0) return;
-    const file = files[0];
-    setImportingExcel(true);
-    setImportError(null);
-
-    const XLSX = await import('xlsx');
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      try {
-        const data = event.target?.result;
-        if (!data) throw new Error('Não foi possível ler os dados do arquivo.');
-        const workbook = XLSX.read(data, { type: 'array' });
-
-        let importedProducts: Product[] = [];
-        let importedCategories: Category[] = [...categories];
-        let importedSales: Sale[] = [...sales];
-        let hasSalesSheet = false;
-
-        let productsSheetData: any[][] | null = null;
-        let salesSheetData: any[][] | null = null;
-        let categoriesSheetData: any[][] | null = null;
-        let loansSheetData: any[][] | null = null;
-        let ordersSheetData: any[][] | null = null;
-        let purchasesSheetData: any[][] | null = null;
-        let customersSheetData: any[][] | null = null;
-        let suppliersSheetData: any[][] | null = null;
-        let cashSheetData: any[][] | null = null;
-
-        for (const sheetName of workbook.SheetNames) {
-          const worksheet = workbook.Sheets[sheetName];
-          const jsonRows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-          if (!jsonRows || jsonRows.length < 2) continue;
-
-          const nameLower = sheetName.toLowerCase();
-          const firstRow = jsonRows[0].map(h => String(h || '').trim().toLowerCase());
-          const n = stripAccents(nameLower);
-
-          const isProducts = nameLower.includes('prod') || nameLower.includes('estoq') || firstRow.includes('nome do produto') || firstRow.includes('preço de venda');
-          const isSales = nameLower.includes('vend') || nameLower.includes('saída') || firstRow.includes('id da venda') || firstRow.includes('itens vendidos') || firstRow.includes('produtos vendidos');
-          const isCategories = nameLower.includes('cat') || nameLower.includes('setor') || firstRow.includes('nome da categoria');
-          const isLoans = n.includes('emprest') || n.includes('loan') || n.includes('divida') || n.includes('devedor');
-          const isOrders = n.includes('ordem') || n.includes('servico') || n.includes('servi') || n.includes('orcamento') || n.includes('os ');
-          const isPurchases = n.includes('compra') || n.includes('purchase') || n.includes('entrada');
-          const isCustomers = n.includes('cliente') || n.includes('customer');
-          const isSuppliers = n.includes('fornecedor') || n.includes('supplier');
-          const isCash = n.includes('caixa') || n.includes('fechamento') || n.includes('cash');
-
-          if (isProducts && !productsSheetData) productsSheetData = jsonRows;
-          else if (isSales && !salesSheetData) { salesSheetData = jsonRows; hasSalesSheet = true; }
-          else if (isCategories && !categoriesSheetData) categoriesSheetData = jsonRows;
-          else if (isLoans && !loansSheetData) loansSheetData = jsonRows;
-          else if (isOrders && !ordersSheetData) ordersSheetData = jsonRows;
-          else if (isPurchases && !purchasesSheetData) purchasesSheetData = jsonRows;
-          else if (isCustomers && !customersSheetData) customersSheetData = jsonRows;
-          else if (isSuppliers && !suppliersSheetData) suppliersSheetData = jsonRows;
-          else if (isCash && !cashSheetData) cashSheetData = jsonRows;
-        }
-
-        if (!productsSheetData && workbook.SheetNames.length > 0) {
-          const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-          const jsonRows: any[][] = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-          if (jsonRows && jsonRows.length >= 2) productsSheetData = jsonRows;
-        }
-
-        if (categoriesSheetData) {
-          parseCategoriesSheet(categoriesSheetData).forEach(cName => {
-            if (!importedCategories.some(c => c.name.toLowerCase() === cName.toLowerCase())) {
-              importedCategories.push({ id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`, name: cName });
-            }
-          });
-        }
-
-        if (productsSheetData) {
-          const parsed = parseProductsSheet(productsSheetData);
-          importedProducts = parsed.importedProducts;
-          parsed.categoriesFromProducts.forEach(cName => {
-            if (!importedCategories.some(c => c.name.toLowerCase() === cName.toLowerCase())) {
-              importedCategories.push({ id: `cat_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`, name: cName });
-            }
-          });
-        }
-
-        if (salesSheetData) {
-          importedSales = parseSalesSheet(salesSheetData, importedProducts.length > 0 ? importedProducts : products);
-        }
-
-        let importedLoans: Loan[] | undefined;
-        let importedOrders: ServiceOrder[] | undefined;
-        let importedPurchases: Purchase[] | undefined;
-        let importedCustomers: Customer[] | undefined;
-        let importedSuppliers: Supplier[] | undefined;
-        let importedCash: CashSession[] | undefined;
-
-        if (loansSheetData) importedLoans = parseLoansSheet(loansSheetData);
-        if (ordersSheetData) importedOrders = parseOrdersSheet(ordersSheetData);
-        if (purchasesSheetData) importedPurchases = parsePurchasesSheet(purchasesSheetData, suppliers);
-        if (customersSheetData) importedCustomers = parseCustomersSheet(customersSheetData);
-        if (suppliersSheetData) importedSuppliers = parseSuppliersSheet(suppliersSheetData);
-        if (cashSheetData) importedCash = parseCashSheet(cashSheetData);
-
-        onImportDatabase({
-          products: importedProducts.length > 0 ? importedProducts : products,
-          categories: importedCategories,
-          sales: importedSales,
-          expenses: expenses,
-          ...(importedLoans ? { loans: importedLoans } : {}),
-          ...(importedOrders ? { orders: importedOrders } : {}),
-          ...(importedCustomers ? { customers: importedCustomers } : {}),
-          ...(importedSuppliers ? { suppliers: importedSuppliers } : {}),
-          ...(importedPurchases ? { purchases: importedPurchases } : {}),
-          ...(importedCash ? { cashSessions: importedCash } : {}),
-        });
-
-        let successMsg = 'Planilha importada com sucesso! ';
-        if (importedProducts.length > 0) {
-          successMsg += `${importedProducts.length} produtos encontrados. `;
-        } else {
-          successMsg += 'Nenhum produto encontrado na planilha. Verifique se as colunas estão corretas. ';
-        }
-        if (hasSalesSheet) successMsg += `${importedSales.length} vendas. `;
-        if (importedLoans) successMsg += `${importedLoans.length} empréstimos. `;
-        if (importedOrders) successMsg += `${importedOrders.length} ordens de serviço. `;
-        if (importedPurchases) successMsg += `${importedPurchases.length} compras. `;
-        if (importedCustomers) successMsg += `${importedCustomers.length} clientes. `;
-        if (importedSuppliers) successMsg += `${importedSuppliers.length} fornecedores. `;
-        if (importedCash) successMsg += `${importedCash.length} fechamentos de caixa. `;
-        const catCount = importedCategories.length - categories.length;
-        if (catCount > 0) successMsg += `${catCount} categorias novas.`;
-        setImportSuccessMsg(successMsg);
-        setImportError(null);
-        setTimeout(() => setImportSuccessMsg(null), 10000);
-      } catch (err: any) {
-        const msg = err.message || 'Erro ao processar o arquivo.';
-        if (msg.includes('planilha está vazia')) {
-          setImportError('A planilha está vazia ou não possui dados. Baixe o modelo oficial e preencha os dados.');
-        } else {
-          setImportError('Erro ao processar: ' + msg);
-        }
-      } finally {
-        setImportingExcel(false);
-        if (e.target) e.target.value = '';
-      }
-    };
-    reader.onerror = () => {
-      setImportError('Erro ao carregar o arquivo.');
-      setImportingExcel(false);
-    };
-    reader.readAsArrayBuffer(file);
+  const handleImportExcelOrCsv = () => {
+    // Open the dedicated ExcelUploader modal directly.
+    openExcelUploader();
   };
+
+  // New handler to open ExcelUploader modal
+  const openExcelUploader = () => setShowExcelUploader(true);
+  const closeExcelUploader = () => setShowExcelUploader(false);
 
   const handleExportStockToExcel = async () => {
     try {
@@ -683,6 +543,19 @@ export default function Settings({
         <p className="text-sm text-slate-500 mt-1">Importe, exporte, faça backup e gerencie sua conta.</p>
       </div>
 
+      {/* Excel Uploader Modal */}
+      {showExcelUploader && (
+        <ExcelUploader
+          isOpen={showExcelUploader}
+          onClose={closeExcelUploader}
+          onImport={(data) => {
+            onImportDatabase(data);
+            setImportSuccessMsg('Dados importados com sucesso!');
+            setTimeout(() => setImportSuccessMsg(null), 5000);
+          }}
+        />
+      )}
+
       {/* Store Profile */}
       <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
         <div className="border-b border-slate-200 pb-3">
@@ -818,8 +691,7 @@ export default function Settings({
 
               <div className="space-y-2">
                 <span className="text-xs font-bold text-slate-700 uppercase tracking-wider block">Enviar Planilha</span>
-                <input type="file" ref={excelInputRef} accept=".xlsx,.xls,.csv" onChange={handleImportExcelOrCsv} className="hidden" />
-                <button onClick={() => excelInputRef.current?.click()} disabled={importingExcel} className="w-full py-2.5 px-4 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 hover:border-indigo-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer">
+                <button onClick={handleImportExcelOrCsv} disabled={importingExcel} className="w-full py-2.5 px-4 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 hover:border-indigo-300 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50 cursor-pointer">
                   {importingExcel ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
                   Carregar Planilha (.xlsx, .csv)
                 </button>
@@ -883,6 +755,12 @@ export default function Settings({
               </h2>
               <p className="text-xs text-slate-400 mt-0.5">Seus dados ficam salvos no Firebase e acessíveis em qualquer dispositivo conectado.</p>
             </div>
+            {/* Sync button */}
+            <button onClick={onCloudSyncNow} className="w-full py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
+              disabled={!cloudUser || cloudSyncing}
+            >
+              {cloudSyncing ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Sincronizar agora'}
+            </button>
 
             {!syncEnabled && (
               <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-2">
