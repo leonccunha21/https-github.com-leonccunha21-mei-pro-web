@@ -11,26 +11,31 @@ export default defineConfig(() => {
         '@': path.resolve(__dirname, '.'),
       },
     },
-    build: {
-      target: 'es2020',
-      // Aumenta o limite de aviso de tamanho de chunk. O seed (data.json) e os
-      // vendors (firebase/xlsx/motion) são grandes por natureza, mas são
-      // carregados sob demanda (lazy/dynamic import), então não penalizam o boot.
-      chunkSizeWarningLimit: 1500,
-      cssCodeSplit: true,
-      rollupOptions: {
-        output: {
-          manualChunks(id) {
-            if (id.includes('node_modules')) {
-              if (id.includes('firebase') || id.includes('@firebase')) return 'vendor-firebase';
-              if (id.includes('motion') || id.includes('framer-motion')) return 'vendor-motion';
-              if (id.includes('xlsx') || id.includes('preadd') || id.includes('adler32') || id.includes('cfb') || id.includes('commander')) return 'vendor-xlsx';
-              if (id.includes('react') || id.includes('scheduler')) return 'vendor-react';
-            }
+      build: {
+        target: 'es2020',
+        // Subsite Mounjaro (controle de medicamento) como segunda entrada (MPA).
+        rollupOptions: {
+          input: {
+            main: path.resolve(__dirname, 'index.html'),
+            mounjaro: path.resolve(__dirname, 'mounjaro.html'),
+          },
+          output: {
+            manualChunks(id) {
+              if (id.includes('node_modules')) {
+                if (id.includes('firebase') || id.includes('@firebase')) return 'vendor-firebase';
+                if (id.includes('motion') || id.includes('framer-motion')) return 'vendor-motion';
+                if (id.includes('xlsx') || id.includes('preadd') || id.includes('adler32') || id.includes('cfb') || id.includes('commander')) return 'vendor-xlsx';
+                if (id.includes('react') || id.includes('scheduler')) return 'vendor-react';
+              }
+            },
           },
         },
+        // Aumenta o limite de aviso de tamanho de chunk. O seed (data.json) e os
+        // vendors (firebase/xlsx/motion) são grandes por natureza, mas são
+        // carregados sob demanda (lazy/dynamic import), então não penalizam o boot.
+        chunkSizeWarningLimit: 1500,
+        cssCodeSplit: true,
       },
-    },
     server: {
       // HMR is disabled in AI Studio via DISABLE_HMR env var.
       // Do not modifyâfile watching is disabled to prevent flickering during agent edits.

@@ -1,0 +1,351 @@
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
+import { motion, AnimatePresence } from 'motion/react';
+import {
+  LayoutDashboard, Users, Syringe, Scale, Wallet, ArrowLeft, Sun, Moon, Info,
+  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle,
+} from 'lucide-react';
+import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro } from './types';
+import { emptyDb, loadMounjaroDb, saveMounjaroDb } from './localDb';
+import { loadMounjaroCloud, saveMounjaroCloud } from './dbSync';
+import Dashboard from './pages/Dashboard';
+import Clientes from './pages/Clientes';
+import Doses from './pages/Doses';
+import Peso from './pages/Peso';
+import Pagamentos from './pages/Pagamentos';
+import Referencia from './pages/Referencia';
+import { initAuth, googleSignIn, logoutUser } from '../lib/firebase';
+import type { User } from 'firebase/auth';
+
+export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'referencia';
+
+const NAV: { id: Tab; label: string; icon: React.ReactNode }[] = [
+  { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
+  { id: 'clientes', label: 'Clientes', icon: <Users size={20} /> },
+  { id: 'doses', label: 'Doses', icon: <Syringe size={20} /> },
+  { id: 'peso', label: 'Peso', icon: <Scale size={20} /> },
+  { id: 'pagamentos', label: 'Pagamentos', icon: <Wallet size={20} /> },
+  { id: 'referencia', label: 'Referência', icon: <Info size={20} /> },
+];
+
+export default function MounjaroApp() {
+  const [db, setDb] = useState<MounjaroDb>(emptyDb());
+  const [loading, setLoading] = useState(true);
+  const [authReady, setAuthReady] = useState(false);
+  const [cloudUser, setCloudUser] = useState<User | null>(null);
+  const [cloudError, setCloudError] = useState<string | null>(null);
+  const [syncing, setSyncing] = useState(false);
+  const [lastSync, setLastSync] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<Tab>('dashboard');
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('mounjaro_darkMode') === 'true');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const timerRef = useRef<number | null>(null);
+  const [timerState, setTimerState] = useState<number | null>(null);
+
+  const stateRef = useRef<MounjaroDb>(db);
+  stateRef.current = db;
+
+  // --- Persistência local (IndexedDB) + nuvem (Firebase) ---
+  const persist = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = window.setTimeout(() => {
+      const cur = stateRef.current;
+      const data = { ...cur, initialized: true };
+      saveMounjaroDb(data).catch(() => {});
+      // Sincroniza com a nuvem (se logado)
+      if (cloudUser) {
+        setSyncing(true);
+        saveMounjaroCloud(cloudUser.uid, data)
+          .then(() => { setLastSync(new Date().toISOString()); })
+          .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); })
+          .finally(() => setSyncing(false));
+      }
+      timerRef.current = null;
+      setTimerState(null);
+    }, 400);
+    setTimerState(timerRef.current);
+  }, [cloudUser]);
+
+  useEffect(() => { document.documentElement.classList.toggle('dark', darkMode); }, []);
+
+  // Observa autenticação
+  useEffect(() => {
+    let unsub: (() => void) | undefined;
+    let cancelled = false;
+    import('../lib/firebase').then(({ initAuth }) => {
+      if (cancelled) return;
+      setAuthReady(true);
+      unsub = initAuth(
+        (user) => setCloudUser(user),
+        () => setCloudUser(null)
+      );
+    }).catch(() => setAuthReady(true));
+    return () => { cancelled = true; if (unsub) unsub(); };
+  }, []);
+
+  // Carrega dados (local + nuvem) quando o usuário está logado
+  useEffect(() => {
+    if (!authReady) return;
+    if (!cloudUser) { setLoading(false); return; }
+    (async () => {
+      try {
+        // 1. Local primeiro (rápido)
+        const local = await loadMounjaroDb();
+        if (local.clientes.length || local.doses.length || local.pesagens.length || local.pagamentos.length) {
+          setDb(local);
+        }
+        // 2. Nuvem (fonte da verdade entre aparelhos)
+        const cloud = await loadMounjaroCloud(cloudUser.uid);
+        if (cloud.clientes || cloud.doses || cloud.pesagens || cloud.pagamentos) {
+          const merged: MounjaroDb = {
+            clientes: cloud.clientes || [],
+            pesagens: cloud.pesagens || [],
+            doses: cloud.doses || [],
+            pagamentos: cloud.pagamentos || [],
+            initialized: true,
+          };
+          setDb(merged);
+          saveMounjaroDb(merged).catch(() => {});
+          setLastSync(new Date().toISOString());
+        }
+      } catch (e) {
+        console.error(e);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [authReady, cloudUser]);
+
+  // Re-sync entre abas
+  useEffect(() => {
+    if (typeof BroadcastChannel === 'undefined') return;
+    const ch = new BroadcastChannel('mounjaro-sync');
+    ch.onmessage = (ev) => {
+      if (ev.data?.type === 'db-updated' && timerRef.current === null) {
+        loadMounjaroDb().then(setDb);
+      }
+    };
+    return () => ch.close();
+  }, []);
+
+  const toggleDarkMode = () => {
+    setDarkMode((prev) => {
+      const next = !prev;
+      localStorage.setItem('mounjaro_darkMode', String(next));
+      document.documentElement.classList.toggle('dark', next);
+      return next;
+    });
+  };
+
+  const handleSignIn = async () => {
+    try {
+      await googleSignIn();
+    } catch (e: unknown) {
+      setCloudError(e instanceof Error ? e.message : 'Falha ao entrar com o Google');
+    }
+  };
+
+  const handleSignOut = async () => {
+    try { await logoutUser(); } catch { /* ignore */ }
+    setCloudUser(null);
+    setLastSync(null);
+    setCloudError(null);
+  };
+
+  // --- Setters por entidade ---
+  const setClientes = (clientes: ClienteMounjaro[]) => { setDb((d) => ({ ...d, clientes })); persist(); };
+  const setPesagens = (pesagens: PesagemMounjaro[]) => { setDb((d) => ({ ...d, pesagens })); persist(); };
+  const setDoses = (doses: DoseMounjaro[]) => { setDb((d) => ({ ...d, doses })); persist(); };
+  const setPagamentos = (pagamentos: PagamentoMounjaro[]) => { setDb((d) => ({ ...d, pagamentos })); persist(); };
+
+  const exportBackup = () => {
+    const blob = new Blob([JSON.stringify({ ...db, initialized: true }, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `mounjaro-backup-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('Backup exportado.');
+  };
+
+  const importBackup = (file: File) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const parsed = JSON.parse(String(reader.result)) as Partial<MounjaroDb>;
+        if (!window.confirm('Importar este backup? Isso substituirá todos os dados atuais do Mounjaro PRO neste navegador e na nuvem.')) return;
+        const merged: MounjaroDb = {
+          clientes: parsed.clientes || [],
+          pesagens: parsed.pesagens || [],
+          doses: parsed.doses || [],
+          pagamentos: parsed.pagamentos || [],
+          initialized: true,
+        };
+        setDb(merged);
+        persist();
+        toast.success('Backup importado e sincronizado.');
+      } catch {
+        toast.error('Arquivo de backup inválido.');
+      }
+    };
+    reader.readAsText(file);
+  };
+
+  // --- Telas de loading / auth ---
+  if (!authReady) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-cyan-600" />
+      </div>
+    );
+  }
+
+  if (!cloudUser) {
+    return (
+      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center px-4">
+        <div className="w-full max-w-sm bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-8 flex flex-col items-center gap-6">
+          <div className="w-14 h-14 bg-cyan-600 rounded-2xl flex items-center justify-center text-white">
+            <Stethoscope className="h-7 w-7" />
+          </div>
+          <div className="text-center">
+            <h1 className="text-xl font-bold text-slate-950 dark:text-slate-100 tracking-tight">Mounjaro PRO</h1>
+            <p className="text-xs text-cyan-600 font-bold uppercase tracking-wider mt-0.5">Controle de Tratamento</p>
+          </div>
+          <div className="text-center text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+            Faça login com sua conta Google para acessar e sincronizar seus dados na nuvem.
+          </div>
+          {cloudError && (
+            <div className="w-full text-center text-xs text-rose-600 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-lg py-2 px-3">
+              {cloudError}
+            </div>
+          )}
+          <button
+            onClick={handleSignIn}
+            className="w-full py-3 px-4 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 rounded-xl text-sm font-bold flex items-center justify-center gap-3 transition-colors"
+          >
+            <svg className="h-5 w-5" viewBox="0 0 24 24" aria-hidden="true">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" />
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+            </svg>
+            Entrar com Google
+          </button>
+          <button onClick={() => { localStorage.removeItem('mei_pro_system_choice'); window.location.href = '/'; }}
+            className="text-xs text-slate-400 hover:text-cyan-600">
+            ← Voltar à escolha de sistema
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-cyan-600" />
+      </div>
+    );
+  }
+
+  const goHome = () => {
+    try { localStorage.removeItem('mei_pro_system_choice'); } catch { /* ignore */ }
+    window.location.href = '/';
+  };
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+      <Toaster position="top-center" />
+
+      {/* Header */}
+      <header className="sticky top-0 z-30 bg-white/80 dark:bg-slate-800/80 backdrop-blur border-b border-slate-200 dark:border-slate-700">
+        <div className="flex items-center justify-between px-4 py-3 max-w-6xl mx-auto">
+          <div className="flex items-center gap-2">
+            <button onClick={goHome} title="Trocar de sistema" className="flex items-center gap-1 text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400">
+              <ArrowLeft size={20} />
+              <span className="hidden sm:inline text-sm font-medium">Trocar</span>
+            </button>
+            <div className="p-2 rounded-xl bg-cyan-600 text-white">
+              <Stethoscope size={20} />
+            </div>
+            <div>
+              <h1 className="text-base sm:text-lg font-bold leading-tight">Mounjaro PRO</h1>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">Controle de tratamento · Tirzepatida</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="hidden sm:flex items-center gap-1 text-xs text-slate-400" title={lastSync ? `Sincronizado ${new Date(lastSync).toLocaleString('pt-BR')}` : 'Sincronizando...'}>
+              {syncing ? <CloudOff size={14} className="text-amber-500" /> : <Cloud size={14} className="text-emerald-500" />}
+            </span>
+            <button onClick={exportBackup} className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1">
+              Exportar
+            </button>
+            <label className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1 cursor-pointer">
+              Importar
+              <input type="file" accept="application/json" className="hidden" onChange={(e) => e.target.files?.[0] && importBackup(e.target.files[0])} />
+            </label>
+            <button onClick={handleSignOut} title="Sair" className="text-slate-400 hover:text-rose-600 p-1">
+              <LogOut size={18} />
+            </button>
+            <button onClick={toggleDarkMode} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">
+              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
+        </div>
+        {/* Tabs desktop */}
+        <nav className="hidden sm:flex gap-1 px-4 pb-2 max-w-6xl mx-auto overflow-x-auto no-scrollbar">
+          {NAV.map((n) => (
+            <button
+              key={n.id}
+              onClick={() => setActiveTab(n.id)}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap ${
+                activeTab === n.id
+                  ? 'bg-cyan-600 text-white'
+                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+              }`}
+            >
+              {n.icon}{n.label}
+            </button>
+          ))}
+        </nav>
+      </header>
+
+      {/* Bottom nav mobile */}
+      <nav className="sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 grid grid-cols-6">
+        {NAV.map((n) => (
+          <button
+            key={n.id}
+            onClick={() => setActiveTab(n.id)}
+            className={`flex flex-col items-center justify-center py-2 text-[10px] gap-0.5 ${
+              activeTab === n.id ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-500 dark:text-slate-400'
+            }`}
+          >
+            {n.icon}
+            {n.label}
+          </button>
+        ))}
+      </nav>
+
+      <main className="max-w-6xl mx-auto px-4 py-5 pb-24 sm:pb-8">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.15 }}
+          >
+            {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
+            {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} setClientes={setClientes} setPesagens={setPesagens} />}
+            {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} setDoses={setDoses} />}
+            {activeTab === 'peso' && <Peso clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} setPesagens={setPesagens} />}
+            {activeTab === 'pagamentos' && <Pagamentos clientes={db.clientes} pagamentos={db.pagamentos} doses={db.doses} setPagamentos={setPagamentos} setDoses={setDoses} />}
+            {activeTab === 'referencia' && <Referencia />}
+          </motion.div>
+        </AnimatePresence>
+      </main>
+    </div>
+  );
+}

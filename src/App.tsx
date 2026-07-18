@@ -42,6 +42,7 @@ const LeadsPage = lazy(() => import('./components/Leads'));
 const WhatsAppPage = lazy(() => import('./components/WhatsApp'));
 const AIModulePage = lazy(() => import('./components/AIModule'));
 const FunnelPage = lazy(() => import('./components/Funnel'));
+const SystemChooser = lazy(() => import('./components/SystemChooser'));
 import { 
   LayoutDashboard, 
   Package, 
@@ -65,7 +66,8 @@ import {
   Target,
   MessageSquare,
   Brain,
-  KanbanSquare
+  KanbanSquare,
+  Stethoscope
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
@@ -133,6 +135,11 @@ export default function App() {
   // Estado de resolução da autenticação (Firebase). Só revela a tela principal
   // após saber se há usuário logado. Usuário não logado => 0 dados.
   const [authReady, setAuthReady] = useState(false);
+
+  // Tela de escolha dos sistemas (Loja vs Mounjaro PRO) ao entrar no site.
+  const [showChooser, setShowChooser] = useState(() => {
+    try { return !localStorage.getItem('mei_pro_system_choice'); } catch { return true; }
+  });
 
   // Toast de erro de persistência (M6)
   const [toastMsg, setToastMsg] = useState<string | null>(null);
@@ -1376,6 +1383,15 @@ export default function App() {
     XLSX.writeFile(wb, 'controle_vendas_estoque.xlsx');
   };
 
+  // --- TELA DE ESCOLHA DOS SISTEMAS (Loja vs Mounjaro PRO) ---
+  if (showChooser) {
+    return (
+      <React.Suspense fallback={null}>
+        <SystemChooser onChoose={() => setShowChooser(false)} />
+      </React.Suspense>
+    );
+  }
+
   // --- LOADING STATE (local backend) ---
   if (loading) {
     return (
@@ -1489,13 +1505,17 @@ export default function App() {
                 { tab: 'leads', label: 'Leads', icon: Target },
                 { tab: 'whatsapp', label: 'WhatsApp', icon: MessageSquare },
                 { tab: 'ai', label: 'Inteligência Artificial', icon: Brain },
+                { tab: 'mounjaro', label: 'Mounjaro PRO', icon: Stethoscope },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
                 const Icon = item.icon;
                 return (
                   <button
                     key={item.tab}
-                    onClick={() => { setActiveTab(item.tab); setMobileMenuOpen(false); }}
+                    onClick={() => {
+                     if (item.tab === 'mounjaro') { setMobileMenuOpen(false); window.location.href = '/mounjaro'; return; }
+                     setActiveTab(item.tab); setMobileMenuOpen(false);
+                   }}
                     className="flex flex-col items-center gap-2 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                   >
                     <Icon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
@@ -1753,6 +1773,15 @@ export default function App() {
             >
               <Brain className="h-4 w-4" />
               Inteligência Artificial
+            </button>
+
+            {/* Subsite Mounjaro PRO */}
+            <button
+              onClick={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch { /* ignore */ } setShowChooser(true); }}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
+            >
+              <Stethoscope className="h-4 w-4" />
+              Mounjaro PRO
             </button>
           </nav>
         </div>

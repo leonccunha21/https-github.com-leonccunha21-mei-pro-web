@@ -87,6 +87,14 @@ src/
   types.ts         modelos (Product, Sale, Expense, Category, ServiceOrder)
   data.json/.ts    dados gerados a partir da planilha
   App.tsx          shell, navegação e estado do banco local
+  mounjaro/        SUBSITE "Mounjaro PRO" (controle de tratamento com tirzepatida)
+    App.tsx        shell e navegação do subsite
+    main.tsx       entrypoint (montado em /mounjaro)
+    types.ts       modelos (Cliente, Dose, Pesagem, Pagamento, Score)
+    localDb.ts     banco local IndexedDB do subsite
+    lib.ts         cálculos clínicos (IMC, score, próxima dose, perda)
+    ui.tsx         componentes visuais compartilhados
+    pages/         Dashboard, Clientes, Doses, Peso, Pagamentos, Referencia
 scripts/
   processar_dados.cjs   pipeline planilha -> dados
   importar_planilha.cjs planilha editável -> dados
@@ -98,6 +106,34 @@ data/
   excel/          planilhas (Relatório de Vendas, Vendas 2023, backups)
 hub.bat           menu rápido de scripts + git
 ```
+
+## 💊 Subsite Mounjaro PRO (controle de medicamento)
+
+Sistema separado, acessível no **mesmo endereço** em **`/mounjaro`** (ou `/mounjaro.html`),
+para acompanhamento de pacientes em tratamento com **tirzepatida (Mounjaro®)**.
+Informações clínicas baseadas na bula oficial (Eli Lilly / Anvisa) e nos estudos
+SURMOUNT-1/2 e SURPASS 1-5. **Não substitui avaliação médica.**
+
+**Fluxo de entrada:** ao abrir o site, o usuário vê a tela de **escolha dos 2 sistemas**
+(`src/components/SystemChooser.tsx`): *Sistema da Loja* (ZM Store) ou *Mounjaro PRO*.
+A escolha fica salva em `localStorage` (`mei_pro_system_choice`) e pode ser trocada a
+qualquer momento pelo menu (botão "Mounjaro PRO" na loja / "← Voltar" no subsite).
+
+**Autenticação e nuvem:** tanto a loja quanto o Mounjaro PRO exigem login com **Google**
+(Firebase Auth). Os dados do Mounjaro PRO são salvos na nuvem em
+`users/{uid}/mounjaro/{clientes,pesagens,doses,pagamentos}` (ver `src/mounjaro/dbSync.ts`),
+sincronizados automaticamente a cada alteração, além do banco local IndexedDB.
+
+Funcionalidades:
+- **Clientes**: cadastro com dados clínicos (altura, peso inicial, IMC, comorbidades, objetivo, médico).
+- **Doses**: registro de aplicações com dose (2,5–15 mg), intervalo configurável de **7 a 15 dias**,
+  local de aplicação, lote, efeitos colaterais e vínculo com pagamento. Agenda de próximas doses com alertas de atraso.
+- **Peso**: pesagens ao longo do tempo, peso atual, peso perdido desde o início, **perda média por dose**,
+  IMC atual, meta e gráfico de evolução.
+- **Pagamentos + Score**: controle de pagamentos por cliente e **score de pagamento (0–100)**
+  calculado por pontualidade, atrasos e valor em aberto (classificação excelente/bom/regular/ruim).
+
+> Deploy: o `vercel.json` faz rewrite de `/mounjaro` para `mounjaro.html` (MPA via Vite).
 
 ## 📌 Notas
 
