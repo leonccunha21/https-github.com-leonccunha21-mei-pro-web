@@ -75,3 +75,49 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [ ] **Redrive 360º / Atendimento omnichannel** (e-mail, Instagram DM) não foi iniciado.
 
 **Status atual:** tudo que é possível no frontend está feito e funcionando (modo local + VPS stub testado end-to-end). O app compila (`npm run build`) e passa no lint (`npm run lint`) sem erros.
+
+---
+
+## 5. Subsite Mounjaro PRO (controle de medicamento) — [CONCLUÍDO]
+
+Sistema irmão da loja, no **mesmo endereço**, para acompanhamento de pacientes em
+tratamento com **tirzepatida (Mounjaro®)**. Informações clínicas baseadas na bula oficial
+(Eli Lilly / Anvisa) e nos estudos SURMOUNT-1/2 e SURPASS 1-5. **Não substitui avaliação médica.**
+
+### Fluxo de entrada
+- [x] Tela de **escolha dos 2 sistemas** ao abrir o site (`src/components/SystemChooser.tsx`):
+  *Sistema da Loja* (ZM Store) e *Mounjaro PRO*. Escolha salva em `localStorage`.
+- [x] Botão **"Trocar"** no header do subsite e botão *Mounjaro PRO* na sidebar da loja para
+  alternar entre os sistemas sem perder os dados.
+
+### Autenticação e nuvem
+- [x] Login obrigatório com **Google** (Firebase Auth) no subsite.
+- [x] Dados salvos na nuvem em `users/{uid}/mounjaro/{clientes,pesagens,doses,pagamentos}`
+  (`src/mounjaro/dbSync.ts`), sincronizados automaticamente a cada alteração.
+- [x] Banco local IndexedDB próprio + indicador de status de sincronização no header.
+- [x] Export/import de backup JSON.
+
+### Módulos
+- [x] **Clientes**: dados clínicos (altura, peso inicial, IMC, comorbidades, objetivo, médico).
+- [x] **Doses**: dose 2,5–15 mg, intervalo configurável de **7 a 15 dias**, local, lote,
+  efeitos colaterais, vínculo com pagamento e agenda de próximas doses com alerta de atraso.
+- [x] **Peso**: peso atual, perdido desde o início, **perda média por dose**, IMC, meta e gráfico.
+- [x] **Pagamentos + Score**: score de pagamento (0–100) por pontualidade/atraso/aberto
+  (excelente/bom/regular/ruim).
+- [x] **Referência**: esquema de escalonamento oficial, frequência, efeitos e resultados.
+
+### Deploy
+- [x] Build MPA no Vite (`mounjaro.html`) + rewrite em `vercel.json` (`/mounjaro` → `mounjaro.html`).
+- [x] Publicado em produção: **https://mei-pro-web.vercel.app** e **https://mei-pro-web.vercel.app/mounjaro**
+- [x] Commit `45b60c7` no GitHub (`origin/main`).
+
+### Recomendações de melhoria (próximos passos, não bloqueantes)
+- [ ] **Multiúsuario por clínica**: hoje cada conta Google tem seus próprios pacientes;
+  se a cliente quiser equipe, adicionar `clinicaId` e regras de acesso compartilhado.
+- [ ] **Relatórios/exportação**: exportar relatório de pacientes (PDF/Excel) com evolução de peso e financeiro.
+- [ ] **Lembretes**: notificação push/e-mail quando a dose estiver próxima do vencimento.
+- [ ] **Foto de evolução**: anexar fotos do paciente por etapa do tratamento.
+- [ ] **Cálculo de dose sugerida**: sugerir próxima dose com base na tolerância/efeitos colaterais registrados.
+- [ ] **Backup automático na nuvem**: snapshot periódico do banco na nuvem além da sincronização incremental.
+- [ ] **Auditoria**: histórico de quem alterou dose/pagamento (útil para a cliente).
+
