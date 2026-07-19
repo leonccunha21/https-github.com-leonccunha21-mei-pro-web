@@ -136,10 +136,12 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
     return result;
   }, [sales, timeRange, customStart, customEnd, activeYear, selectedMonth]);
 
-  // Calculate metrics
+  // Calculate metrics — fonte única e determinística: lucro = faturamento - custo.
+  // Igual à regra do Relatório (Reports.tsx), para o mesmo valor aparecer em
+  // todas as telas e não variar conforme o filtro de período.
   const totalRevenue = completedSales.reduce((acc, s) => acc + s.total, 0);
   const totalCost = completedSales.reduce((acc, s) => acc + s.totalCost, 0);
-  const totalProfit = completedSales.reduce((acc, s) => acc + (s.profit || 0), 0);
+  const totalProfit = totalRevenue - totalCost;
   const averageMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
 
   const isServiceProduct = (p: Product) => /^servi/i.test(p.category);
@@ -147,6 +149,21 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   // Stock alerts
   const physicalProducts = products.filter(p => !isServiceProduct(p) && !p.archived);
   const lowStockProducts = physicalProducts.filter(p => p.status !== 'indisponivel' && p.minStock > 0 && p.stock <= p.minStock);
+
+  // Últimas vendas (mais recentes primeiro), sempre mostrando as mais novas,
+  // independentemente do filtro de ano do painel de métricas.
+  const recentSales = useMemo(() => {
+    return [...sales]
+      .filter(s => s.status !== 'cancelled')
+      .sort((a, b) => (parseLocalDate(b.date).getTime()) - (parseLocalDate(a.date).getTime()))
+      .slice(0, 8);
+  }, [sales]);
+
+  const formatSaleDate = (dateStr: string): string => {
+    const d = parseLocalDate(dateStr);
+    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' }) +
+      ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  };
 
   // Quantity sold per product (keyed by productId, with normalized-name fallback)
   const soldQtyByProductId = useMemo(() => {
@@ -570,33 +587,39 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
 
       {/* Two Columns: Low Stock & Top Products */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div id="low-stock-checklist-card" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <div id="recent-sales-card" className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
           <div className="flex items-center justify-between mb-4 border-b border-slate-100 pb-3">
             <div className="flex items-center gap-2">
-              <span className="p-1.5 bg-rose-50 text-rose-600 rounded-md"><AlertTriangle className="h-4 w-4" /></span>
+              <span className="p-1.5 bg-indigo-50 text-indigo-600 rounded-md"><ShoppingBag className="h-4 w-4" /></span>
               <div>
-                <h2 className="text-base font-bold text-slate-900">Alertas de Reposição</h2>
-                <p className="text-xs text-slate-400">Produtos abaixo do mínimo.</p>
+                <h2 className="text-base font-bold text-slate-900">Histórico de Vendas</h2>
+                <p className="text-xs text-slate-400">Últimas vendas registradas.</p>
               </div>
             </div>
-            <button onClick={() => onNavigate('products')} className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:underline flex items-center gap-1">
-              Comprar / Abastecer
+            <button onClick={() => onNavigate('sales')} className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 hover:underline flex items-center gap-1">
+              Ver todas
             </button>
           </div>
-          {lowStockProducts.length === 0 ? (
+          {recentSales.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-sm text-slate-500 font-medium">Excelente! Todos abastecidos.</p>
+              <p className="text-sm text-slate-500 font-medium">Nenhuma venda registrada ainda.</p>
             </div>
           ) : (
             <div className="space-y-2 max-h-60 overflow-y-auto pr-1">
-              {lowStockProducts.map(p => (
-                <div key={p.id} className="flex items-center justify-between p-2.5 bg-rose-50/50 hover:bg-rose-50 rounded-lg border border-rose-100/50 transition-colors">
+              {recentSales.map(s => (
+                <div key={s.id} className="flex items-center justify-between p-2.5 bg-slate-50/60 hover:bg-slate-50 rounded-lg border border-slate-100 transition-colors">
                   <div className="min-w-0 flex-1 pr-3">
-                    <p className="text-xs font-mono text-rose-700">{p.code}</p>
-                    <p className="text-sm font-semibold text-slate-900 truncate mt-0.5">{p.name}</p>
+                    <p className="text-xs text-slate-400">{formatSaleDate(s.date)}</p>
+                    <p className="text-sm font-semibold text-slate-900 truncate mt-0.5">
+                      {s.items.length === 1 ? s.items[0].productName : `${s.items.length} itens`}
+                      {s.clientName ? ` · ${s.clientName}` : ''}
+                    </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className="text-xs text-rose-600 font-bold">Vendidos: {getSoldQty(p)}</p>
+                    <p className="text-sm font-bold text-slate-900">{money(s.total)}</p>
+                    <span className={`text-[10px] font-medium ${s.status === 'completed' ? 'text-emerald-600' : s.status === 'pending' ? 'text-amber-600' : 'text-rose-600'}`}>
+                      {s.status === 'completed' ? 'Concluída' : s.status === 'pending' ? 'Pendente' : 'Cancelada'}
+                    </span>
                   </div>
                 </div>
               ))}

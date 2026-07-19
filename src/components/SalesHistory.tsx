@@ -1,13 +1,14 @@
 import React, { useState, useMemo } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
 import { Sale, Product } from '../types';
-import { 
-  Search, 
-  X, 
-  Calendar, 
-  User, 
-  CreditCard, 
-  CornerUpLeft, 
-  Info, 
+import {
+  Search,
+  X,
+  Calendar,
+  User,
+  CreditCard,
+  CornerUpLeft,
+  Info,
   Filter,
   CheckCircle,
   XCircle,
@@ -23,10 +24,11 @@ interface SalesHistoryProps {
   sales: Sale[];
   products: Product[];
   onCancelSale: (saleId: string) => void;
+  onFixDates?: () => number;
   onUpdateSale?: (updatedSale: Sale) => void;
 }
 
-export default function SalesHistory({ sales, products, onCancelSale, onUpdateSale }: SalesHistoryProps) {
+export default function SalesHistory({ sales, products, onCancelSale, onFixDates, onUpdateSale }: SalesHistoryProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'cancelled'>('all');
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
@@ -151,6 +153,33 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
         return matchesSearch && matchesStatus && matchesPayment;
       });
   }, [sales, searchQuery, statusFilter, paymentFilter, dateRange, customStart, customEnd, showDebtors]);
+
+  // Agrupa as vendas filtradas por dia (Hoje / Ontem / data), mantendo a ordem
+  // cronológica decrescente dentro de cada grupo.
+  const groupedSales = useMemo(() => {
+    const groups: { label: string; key: string; sales: Sale[] }[] = [];
+    const map = new Map<string, { label: string; sales: Sale[] }>();
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
+
+    for (const s of filteredSales) {
+      const d = parseSaleDate(s.date);
+      if (!d) continue;
+      const dayStart = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      const key = dayStart.toISOString().slice(0, 10);
+      let label: string;
+      if (dayStart.getTime() === today.getTime()) label = 'Hoje';
+      else if (dayStart.getTime() === yesterday.getTime()) label = 'Ontem';
+      else label = d.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+      if (!map.has(key)) map.set(key, { label, sales: [] });
+      map.get(key)!.sales.push(s);
+    }
+    // Ordem decrescente de dias
+    Array.from(map.keys()).sort((a, b) => b.localeCompare(a)).forEach(k => {
+      groups.push({ key: k, label: map.get(k)!.label, sales: map.get(k)!.sales });
+    });
+    return groups;
+  }, [filteredSales]);
 
   // Debtor summary
   const debtorSummary = useMemo(() => {
@@ -372,6 +401,17 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
             <FileDown className="h-4 w-4" />
             Exportar para Excel
           </button>
+
+          {onFixDates && (
+            <button onClick={() => {
+              const n = onFixDates();
+              if (n > 0) toast.success(`${n} venda(s) com data corrigida(s) para o ano anterior.`);
+              else toast('Nenhuma venda com data futura encontrada.');
+            }} className="px-4 py-2 text-sm font-semibold rounded-lg border border-amber-200 bg-amber-50 text-amber-700 hover:bg-amber-100 flex items-center justify-center gap-2 transition-colors cursor-pointer" title="Corrige vendas cuja data está no futuro (relógio adiantado): mantém dia/mês e reduz o ano em 1.">
+              <AlertTriangle className="h-4 w-4" />
+              Corrigir datas
+            </button>
+          )}
         </div>
       </div>
 
@@ -549,8 +589,8 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
               <thead>
                 <tr className="border-b border-slate-200">
                   <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Cód / Data</th>
-                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Produto</th>
                   <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Cliente</th>
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Produto</th>
                   <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Itens</th>
                   <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Pagamento</th>
                   <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Valor Vendido</th>
@@ -559,8 +599,15 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                   <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Ações</th>
                 </tr>
               </thead>
-              <tbody className="text-sm">
-                {filteredSales.map(sale => {
+              {groupedSales.map(group => (
+                <tbody key={group.key} className="text-sm">
+                  <tr>
+                    <td colSpan={9} className="px-4 py-2 bg-slate-100/70 border-b border-slate-200">
+                      <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{group.label}</span>
+                      <span className="text-xs text-slate-400 ml-2">{group.sales.length} {group.sales.length === 1 ? 'venda' : 'vendas'}</span>
+                    </td>
+                  </tr>
+                {group.sales.map(sale => {
                   const isCancelled = sale.status === 'cancelled';
                   const isPending = sale.status === 'pending';
                   const totalItems = sale.items.reduce((acc, item) => acc + item.quantity, 0);
@@ -681,7 +728,8 @@ export default function SalesHistory({ sales, products, onCancelSale, onUpdateSa
                     </tr>
                   );
                 })}
-              </tbody>
+                </tbody>
+              ))}
               
               {/* Summary Totals Row */}
               <tfoot>

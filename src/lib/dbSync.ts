@@ -31,6 +31,10 @@ async function loadCollection<T>(userId: string, name: string): Promise<T[]> {
 function cleanForFirestore<T>(value: T): any {
   if (value === undefined) return null;
   if (value === null) return null;
+  // O SDK web do Firestore rejeita NaN/Infinity (diferente do Admin). Se fosse
+  // enviado, a escrita do lote inteira falharia silenciosamente. Convertemos
+  // para null para preservar a gravação das demais coleções.
+  if (typeof value === 'number' && !Number.isFinite(value)) return null;
   if (Array.isArray(value)) return value.map((v) => cleanForFirestore(v));
   if (typeof value === 'object') {
     const out: Record<string, unknown> = {};

@@ -30,6 +30,10 @@ const BATCH_SIZE = 500;
 function cleanForFirestore<T>(value: T): any {
   if (value === undefined) return null;
   if (value === null) return null;
+  // O SDK web do Firestore rejeita NaN/Infinity (diferente do Admin). Se fosse
+  // enviado, a escrita do lote inteiro falharia silenciosamente. Convertemos
+  // para null para preservar a gravação das demais coleções.
+  if (typeof value === 'number' && !Number.isFinite(value)) return null;
   if (Array.isArray(value)) return value.map((v) => cleanForFirestore(v));
   if (typeof value === 'object') {
     const out: Record<string, unknown> = {};
@@ -85,16 +89,17 @@ async function clearCollection(scope: MounjaroScope, name: string): Promise<void
 
 /** Carrega o banco completo do Mounjaro da nuvem. */
 export async function loadMounjaroCloud(scope: MounjaroScope): Promise<Partial<MounjaroDb>> {
-  const [clientes, pesagens, doses, pagamentos, fotos, auditoria, config] = await Promise.all([
+  const [clientes, pesagens, doses, pagamentos, fotos, auditoria, configSnap] = await Promise.all([
     loadCollection<MounjaroDb['clientes'][number]>(scope, 'clientes'),
     loadCollection<MounjaroDb['pesagens'][number]>(scope, 'pesagens'),
     loadCollection<MounjaroDb['doses'][number]>(scope, 'doses'),
     loadCollection<MounjaroDb['pagamentos'][number]>(scope, 'pagamentos'),
     loadCollection<MounjaroDb['fotos'][number]>(scope, 'fotos'),
     loadCollection<MounjaroDb['auditoria'][number]>(scope, 'auditoria'),
-    loadCollection<MounjaroDb['config']>(scope, 'config'),
+    getDoc(doc(db, scopePath(scope, 'config'))),
   ]);
-  return { clientes, pesagens, doses, pagamentos, fotos, auditoria, config: config[0], initialized: true };
+  const config = configSnap.exists() ? (configSnap.data() as MounjaroDb['config']) : undefined;
+  return { clientes, pesagens, doses, pagamentos, fotos, auditoria, config, initialized: true };
 }
 
 /** Salva o banco completo do Mounjaro na nuvem (substitui as coleções). */
@@ -106,8 +111,9 @@ export async function saveMounjaroCloud(scope: MounjaroScope, data: MounjaroDb):
     saveBatch(scope, 'pagamentos', data.pagamentos || []),
     saveBatch(scope, 'fotos', data.fotos || []),
     saveBatch(scope, 'auditoria', data.auditoria || []),
-    saveBatch(scope, 'config', [{ ...(data.config || {}), id: 'main' }]),
   ]);
+  // Config é um documento único (4 segmentos), não coleção.
+  await setDoc(doc(db, scopePath(scope, 'config')), cleanForFirestore(data.config || {}));
 }
 
 /** Salva apenas uma coleção (uso incremental leve). */
@@ -311,7 +317,11 @@ export async function syncMounjaroThrottled(
         nextYear = year;
         break;
       }
-      if (!isCurrent) {
+      // SÓ marca o ano como concluído se a escrita REALMENTE ocorreu.
+      // Se w === 0 (ex.: erro de escrita capturado em writeMItems), NÃO marcamos,
+      // para que uma próxima sincronização tente novamente. Marcar mesmo com
+      // falha fazia os dados ficarem presos só no local e a nuvem ficava vazia.
+      if (!isCurrent && w > 0) {
         doneYears[year] = true;
         delete (doneYears as any)['_partial_' + year];
       }
@@ -319,11 +329,13 @@ export async function syncMounjaroThrottled(
     progress.done[name] = doneYears;
   }
 
-  // Config (documento único)
-  if (!stoppedByBudget && !progress.config) {
+  // Config (documento único em users/{uid}/mounjaro/config — 4 segmentos, par).
+  // Sempre reenviado para garantir que edições recentes não fiquem presas só no
+  // local. Não depende de progress.config (que poderia travar em "já enviado").
+  if (!stoppedByBudget) {
     if (remainingBudget() >= 1) {
       try {
-        await setDoc(doc(db, scopePath(scope, 'config'), 'main'), cleanForFirestore({ ...(data.config || {}), id: 'main' }));
+        await setDoc(doc(db, scopePath(scope, 'config')), cleanForFirestore(data.config || {}));
         recordWrites(1);
         progress.config = true;
         uploaded++;

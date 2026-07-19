@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from './types';
 import { emptyDb, loadMounjaroDb, saveMounjaroDb, defaultConfig } from './localDb';
-import { loadMounjaroCloud, saveMounjaroCloud, MounjaroScope, ClinicaDoc, criarClinica, buscarClinica } from './dbSync';
+import { loadMounjaroCloud, saveMounjaroCloud, clearMounjaroSyncProgress, MounjaroScope, ClinicaDoc, criarClinica, buscarClinica } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
 import Doses from './pages/Doses';
@@ -23,6 +23,17 @@ import { criarRegistroAuditoria } from './lib';
 import type { User } from 'firebase/auth';
 
 export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'relatorio' | 'fotos' | 'auditoria' | 'configuracoes' | 'referencia';
+
+// Extrai uma mensagem legível de qualquer erro (incluindo o objeto JSON
+// serializado por handleFirestoreError) para exibir ao usuário no toast.
+function errMsg(e: unknown): string {
+  if (!e) return 'erro desconhecido';
+  if (typeof e === 'string') {
+    try { const o = JSON.parse(e); return o?.error || e; } catch { return e; }
+  }
+  if (e instanceof Error) return e.message;
+  return String(e);
+}
 
 const NAV: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
@@ -80,7 +91,25 @@ export default function MounjaroApp() {
       else toast(`Enviados ${res.uploaded} hoje. Cota diária atingida — o resto continua amanhã.`);
     }).catch((e) => {
       console.error('Falha ao sincronizar Mounjaro:', e);
-      toast.error('Falha ao sincronizar com a nuvem.');
+      toast.error('Falha ao sincronizar com a nuvem: ' + errMsg(e));
+    }).finally(() => setSyncing(false));
+  }, [getScope]);
+
+  // Sincronização COMPLETA: reenvia TODOS os dados de uma vez (ignora o progresso
+  // de lotes). Usado para garantir que nada fique preso só no dispositivo.
+  const syncTudoAgora = useCallback(() => {
+    const scope = getScope();
+    if (!scope) return;
+    setSyncing(true);
+    import('./dbSync').then(({ saveMounjaroCloud, clearMounjaroSyncProgress }) => {
+      clearMounjaroSyncProgress(scope);
+      return saveMounjaroCloud(scope, { ...stateRef.current, initialized: true });
+    }).then(() => {
+      setLastSync(new Date().toISOString());
+      toast.success('Todos os dados foram enviados à nuvem com sucesso.');
+    }).catch((e) => {
+      console.error('Falha ao sincronizar Mounjaro:', e);
+      toast.error('Falha ao sincronizar com a nuvem: ' + errMsg(e));
     }).finally(() => setSyncing(false));
   }, [getScope]);
 
@@ -99,7 +128,7 @@ export default function MounjaroApp() {
             setLastSync(new Date().toISOString());
             if (!res.finished) console.warn('Sincronização Mounjaro pausou por cota diária; retoma amanhã.');
           })
-          .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); toast.error('Falha ao sincronizar com a nuvem.'); })
+          .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); toast.error('Falha ao sincronizar com a nuvem: ' + errMsg(e)); })
           .finally(() => setSyncing(false));
       }
       timerRef.current = null;
@@ -125,18 +154,25 @@ export default function MounjaroApp() {
     return () => { cancelled = true; if (unsub) unsub(); };
   }, []);
 
-  // Remove registros órfãos APENAS quando não há nenhum cliente (banco vazio de
-  // referência). Não apaga dados de cliente existente em nenhuma circunstância,
-  // para evitar perda acidental de pagamentos/doses/fotos.
+  // Só considera "vazio" (e reseta) se TODAS as coleções estiverem vazias.
+  // Nunca apaga dados parciais (ex.: só doses/pesagens sem clientes), para
+  // evitar perda acidental de pagamentos/doses/fotos já registrados.
   const sanitizar = useCallback((dbIn: MounjaroDb): MounjaroDb => {
-    if (dbIn.clientes.length > 0) return { ...dbIn, initialized: true };
+    const temAlgumDado =
+      dbIn.clientes.length || dbIn.doses.length || dbIn.pesagens.length ||
+      dbIn.pagamentos.length || dbIn.fotos.length || dbIn.auditoria.length;
+    if (temAlgumDado) return { ...dbIn, initialized: true };
     return { ...emptyDb(), initialized: true };
   }, []);
 
+  // Merge por id: o SEGUNDO argumento prevalece em conflito de id.
+  // Usamos (nuvem, local) para que o LOCAL (mais atual no dispositivo) prevaleça
+  // sobre a nuvem — assim uma nuvem vazia/parcial nunca apaga o que está salvo
+  // no navegador. A nuvem só contribui com ids que o local ainda não tem.
   const mergePorId = <T extends { id: string }>(a: T[], b: T[]): T[] => {
     const map = new Map<string, T>();
     for (const x of a) map.set(x.id, x);
-    for (const x of b) map.set(x.id, x); // nuvem prevalece em conflito de id
+    for (const x of b) map.set(x.id, x); // b (local) prevalece em conflito de id
     return Array.from(map.values());
   };
 
@@ -155,15 +191,17 @@ export default function MounjaroApp() {
         const cloud = await loadMounjaroCloud(scope);
         // 3. Estado em memória (pode ter dados ainda não gravados no local/nuvem)
         const mem = stateRef.current || emptyDb();
-        // Merge de 3 fontes por id (nuvem e memória prevalecem sobre local antigo)
+        // Merge de 3 fontes por id. Ordem: nuvem primeiro, local por último
+        // (prevalece). Assim o que está no dispositivo nunca é apagado por uma
+        // nuvem vazia/parcial, e a nuvem só preenche o que falta.
         const merged: MounjaroDb = {
-          clientes: mergePorId(mergePorId(local.clientes, mem.clientes), cloud.clientes || []),
-          pesagens: mergePorId(mergePorId(local.pesagens, mem.pesagens), cloud.pesagens || []),
-          doses: mergePorId(mergePorId(local.doses, mem.doses), cloud.doses || []),
-          pagamentos: mergePorId(mergePorId(local.pagamentos, mem.pagamentos), cloud.pagamentos || []),
-          fotos: mergePorId(mergePorId(local.fotos, mem.fotos), cloud.fotos || []),
-          auditoria: mergePorId(mergePorId(local.auditoria, mem.auditoria), cloud.auditoria || []),
-          config: { ...defaultConfig(), ...(local.config || {}), ...(mem.config || {}), ...(cloud.config || {}) },
+          clientes: mergePorId(mergePorId(cloud.clientes || [], mem.clientes), local.clientes),
+          pesagens: mergePorId(mergePorId(cloud.pesagens || [], mem.pesagens), local.pesagens),
+          doses: mergePorId(mergePorId(cloud.doses || [], mem.doses), local.doses),
+          pagamentos: mergePorId(mergePorId(cloud.pagamentos || [], mem.pagamentos), local.pagamentos),
+          fotos: mergePorId(mergePorId(cloud.fotos || [], mem.fotos), local.fotos),
+          auditoria: mergePorId(mergePorId(cloud.auditoria || [], mem.auditoria), local.auditoria),
+          config: { ...defaultConfig(), ...(cloud.config || {}), ...(mem.config || {}), ...(local.config || {}) },
           initialized: true,
         };
         // Só sobrescreve o estado se houver dados; caso contrário mantém o que já está em memória.
@@ -451,8 +489,11 @@ export default function MounjaroApp() {
             <button onClick={exportBackup} className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1">
               Exportar
             </button>
-            <button onClick={syncAgora} title="Forçar sincronização com a nuvem" className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1">
+            <button onClick={syncAgora} title="Forçar sincronização com a nuvem" className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 text-center">
               Sincronizar
+            </button>
+            <button onClick={syncTudoAgora} title="Enviar TODOS os dados à nuvem agora (recupera dados presos)" className="hidden sm:block text-xs font-semibold text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-1 rounded-lg">
+              Sincronizar tudo
             </button>
             <label className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1 cursor-pointer">
               Importar

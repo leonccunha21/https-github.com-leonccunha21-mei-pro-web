@@ -77,31 +77,15 @@ async function idbPut(value: LocalDb): Promise<void> {
   });
 }
 export async function loadDb(): Promise<Partial<LocalDb> | null> {
-  // 1. IndexedDB (primary, works on the static site)
+  // FONTE ÚNICA DE VERDADE: IndexedDB do navegador.
+  // O arquivo data/local-db.json (servidor) NUNCA é lido como fonte de dados,
+  // apenas espelhado na escrita (saveDb) como backup. Isso evita que dados
+  // antigos/estranhos do JSON contaminem o app (ex.: vendas de testes que
+  // aparecem nos cálculos mas não na lista de vendas).
   try {
     const local = await idbGet();
-    // Só considera o IndexedDB válido se ele realmente tiver dados. Um banco
-    // "inicializado" porém vazio (ex.: primeira carga falhou, ou o usuário
-    // limpou os dados do site) NÃO deve bloquear o fallback para o servidor,
-    // senão o app abre sempre vazio mesmo havendo dados no servidor.
-    const localHasData =
-      local &&
-      (Array.isArray(local.sales) && local.sales.length > 0 ||
-        Array.isArray(local.products) && local.products.length > 0);
-    if (localHasData) {
+    if (local && (Array.isArray(local.sales) || Array.isArray(local.products))) {
       return local;
-    }
-  } catch { /* ignore */ }
-
-  // 2. Optional local server (only when running with node server.js)
-  try {
-    const res = await fetch('/api/db');
-    if (res.ok) {
-      const db = (await res.json()) as Partial<LocalDb>;
-      if (Array.isArray(db.sales) || Array.isArray(db.products)) {
-        idbPut({ ...(db as LocalDb), initialized: true }).catch(() => {});
-        return { ...(db as LocalDb), initialized: true };
-      }
     }
   } catch { /* ignore */ }
 

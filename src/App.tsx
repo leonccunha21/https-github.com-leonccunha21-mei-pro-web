@@ -761,6 +761,32 @@ export default function App() {
     persist({ sales: updatedSales });
   };
 
+  // Corrige vendas cuja data está no FUTURO (relógio do PC adiantado ao
+  // registrar). Mantém dia/mês e reduz o ano em 1 (ex.: 07/12/2026 -> 07/12/2025),
+  // preservando a hora. Retorna a quantidade de vendas corrigidas.
+  const fixSaleDates = (): number => {
+    const now = new Date();
+    let fixed = 0;
+    const corrected = sales.map(s => {
+      const d = new Date(s.date);
+      if (isNaN(d.getTime())) return s;
+      if (d > now) {
+        d.setFullYear(d.getFullYear() - 1);
+        fixed++;
+        return { ...s, date: d.getFullYear() + '-' +
+          String(d.getMonth() + 1).padStart(2, '0') + '-' +
+          String(d.getDate()).padStart(2, '0') + 'T' +
+          String(d.getHours()).padStart(2, '0') + ':' +
+          String(d.getMinutes()).padStart(2, '0') + ':' +
+          String(d.getSeconds()).padStart(2, '0') + '.' +
+          String(d.getMilliseconds()).padStart(3, '0') };
+      }
+      return s;
+    });
+    if (fixed > 0) saveSalesToStorage(corrected);
+    return fixed;
+  };
+
   const updateSalesBulk = (updated: Sale[]) => {
     const map = new Map(updated.map(s => [s.id, s]));
     const updatedSales = sales.map(s => map.get(s.id) ?? s);
@@ -1952,6 +1978,7 @@ export default function App() {
                 sales={sales} 
                 products={products}
                 onCancelSale={handleCancelSale}
+                onFixDates={fixSaleDates}
                 onUpdateSale={(updatedSale) => {
                   const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
                   saveSalesToStorage(updatedSales, updatedSale);
