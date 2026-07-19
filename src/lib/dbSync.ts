@@ -70,8 +70,13 @@ async function clearCollection(userId: string, name: string): Promise<void> {
   const path = `users/${userId}/${name}`;
   try {
     const snap = await getDocs(collection(db, path));
-    for (const d of snap.docs) {
-      await deleteDoc(d.ref);
+    const docs = snap.docs;
+    for (let i = 0; i < docs.length; i += BATCH_SIZE) {
+      const batch = writeBatch(db);
+      const chunk = docs.slice(i, i + BATCH_SIZE);
+      for (const d of chunk) batch.delete(d.ref);
+      await batch.commit();
+      recordWrites(chunk.length);
     }
   } catch (error) {
     handleFirestoreError(error, OperationType.DELETE, path);
