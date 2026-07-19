@@ -72,14 +72,16 @@ export function pesoAtual(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[],
   return cliente.pesoInicial ?? 0;
 }
 
-// Peso registrado como linha de base (mais antiga medição ou peso inicial).
+// Peso registrado como linha de base: prioriza o peso inicial do cadastro
+// (mesmo que existam doses/pesagens com datas anteriores), senão a 1ª medição.
 export function pesoBase(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], doses: DoseMounjaro[]): number {
+  if (cliente.pesoInicial) return cliente.pesoInicial;
   const meds = medicoesDePeso(cliente, pesagens, doses);
   if (meds.length > 0) return meds[0].peso;
-  return cliente.pesoInicial ?? 0;
+  return 0;
 }
 
-// Peso perdido desde o início do tratamento.
+// Peso perdido desde o início do tratamento (pode ser negativo se houve ganho).
 export function pesoPerdido(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], doses: DoseMounjaro[]): number {
   const base = pesoBase(cliente, pesagens, doses);
   const atual = pesoAtual(cliente, pesagens, doses);

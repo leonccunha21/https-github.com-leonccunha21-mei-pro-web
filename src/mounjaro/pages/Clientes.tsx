@@ -3,7 +3,7 @@ import { Plus, Pencil, Trash2, UserPlus, Search, Scale, Syringe, Wallet } from '
 import { ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao, RegistroAuditoria } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge, StatCard } from '../ui';
 import { newId } from '../localDb';
-import { calcIMC, classificacaoIMC, pesoAtual, pesoPerdido, calcularScore, formatarMoeda, LogAuditoriaFn } from '../lib';
+import { calcIMC, classificacaoIMC, pesoAtual, pesoBase, pesoPerdido, calcularScore, formatarMoeda, LogAuditoriaFn } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
@@ -151,6 +151,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {filtrados.map((c) => {
           const peso = pesoAtual(c, pesagens, doses);
+          const base = pesoBase(c, pesagens, doses);
           const perdido = pesoPerdido(c, pesagens, doses);
           const score = calcularScore(c.id, pagamentos);
           const qtdDoses = doses.filter((d) => d.clienteId === c.id).length;
@@ -165,16 +166,18 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
               </div>
               <div className="mt-3 grid grid-cols-3 gap-2 text-center">
                 <div>
-                  <p className="text-[11px] text-slate-400">Peso atual</p>
+                  <p className="text-[11px] text-slate-400">Peso base</p>
+                  <p className="font-semibold">{base ? `${base} kg` : '-'}</p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-slate-400">Atual</p>
                   <p className="font-semibold">{peso ? `${peso} kg` : '-'}</p>
                 </div>
                 <div>
                   <p className="text-[11px] text-slate-400">Perdido</p>
-                  <p className="font-semibold text-emerald-600">{perdido > 0 ? `${perdido} kg` : '-'}</p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-slate-400">Doses</p>
-                  <p className="font-semibold">{qtdDoses}</p>
+                  <p className={`font-semibold ${perdido > 0 ? 'text-emerald-600' : perdido < 0 ? 'text-rose-500' : 'text-slate-500'}`}>
+                    {perdido !== 0 ? `${perdido > 0 ? '' : '+'}${perdido} kg` : '0,0 kg'}
+                  </p>
                 </div>
               </div>
               <div className="mt-2 flex items-center justify-between">
@@ -258,6 +261,7 @@ function DetalheCliente({
   fotos: FotoEvolucao[];
 }) {
   const peso = pesoAtual(cliente, pesagens, doses);
+  const base = pesoBase(cliente, pesagens, doses);
   const perdido = pesoPerdido(cliente, pesagens, doses);
   const score = calcularScore(cliente.id, pagamentos);
   const ultimaDose = doses.filter((d) => d.clienteId === cliente.id).sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0];
@@ -267,9 +271,10 @@ function DetalheCliente({
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-3 gap-3">
+        <StatCard title="Peso base" value={`${base || '-'} kg`} icon={<Scale size={18} />} accent="blue" />
         <StatCard title="Peso atual" value={`${peso || '-'} kg`} icon={<Scale size={18} />} accent="cyan" />
-        <StatCard title="Perda total" value={`${perdido > 0 ? perdido : 0} kg`} icon={<Scale size={18} />} accent="green" />
+        <StatCard title="Perda" value={`${perdido > 0 ? perdido : perdido < 0 ? `+${perdido}` : 0} kg`} icon={<Scale size={18} />} accent={perdido > 0 ? 'green' : perdido < 0 ? 'red' : 'blue'} />
         <StatCard title="Doses aplicadas" value={doses.filter((d) => d.clienteId === cliente.id).length} icon={<Syringe size={18} />} accent="violet" />
         <StatCard title="Score pagamento" value={score.pontuacao} icon={<Wallet size={18} />} accent="amber"
           hint={`${score.pagamentosEmDia} em dia · ${score.pagamentosAtrasados} atrasados`} />
