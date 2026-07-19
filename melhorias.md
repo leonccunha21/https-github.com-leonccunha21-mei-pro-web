@@ -129,6 +129,10 @@ tratamento com **tirzepatida (Mounjaro®)**. Informações clínicas baseadas na
 - [x] **Correção de cadastro/peso**: ao cadastrar (ou editar) cliente com peso inicial, o app agora cria
   automaticamente a **pesagem inicial** (data = início do tratamento), corrigindo os cálculos de peso base,
   perda e gráfico de evolução (`Clientes.tsx`).
-- [ ] **Foto de evolução**: anexar fotos do paciente por etapa do tratamento.
+- [x] **Foto de evolução**: nova aba "Fotos" para registrar acompanhamento visual por paciente.
+  Imagens são **compactadas** (canvas, webp/jpeg, até ~1MB) e salvas em base64 junto ao banco,
+  sincronizando na nuvem como as demais entidades (`FotoEvolucao` em `fotos`, `image.ts`, `Fotos.tsx`).
+  Inclui galeria, legenda/data, visualização em tela cheia (setas/Esc) e **comparar início vs. atual**.
+  Miniaturas também aparecem na ficha do cliente.
 - [ ] **Auditoria**: histórico de quem alterou dose/pagamento (útil para a cliente).
 

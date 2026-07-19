@@ -91,5 +91,16 @@ export interface MounjaroDb {
   pesagens: PesagemMounjaro[];
   doses: DoseMounjaro[];
   pagamentos: PagamentoMounjaro[];
+  fotos: FotoEvolucao[];
   initialized?: boolean;
+}
+
+export interface FotoEvolucao {
+  id: string;
+  clienteId: string;
+  data: string; // YYYY-MM-DD
+  legenda?: string;
+  // Imagem compactada em base64 (data URL). Armazenada junto no sync da nuvem.
+  imagem: string;
+  createdAt: string;
 }

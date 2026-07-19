@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Plus, Pencil, Trash2, UserPlus, Search, Scale, Syringe, Wallet } from 'lucide-react';
-import { ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro } from '../types';
+import { ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge, StatCard } from '../ui';
 import { newId } from '../localDb';
 import { calcIMC, classificacaoIMC, pesoAtual, pesoPerdido, calcularScore, formatarMoeda } from '../lib';
@@ -10,11 +10,12 @@ interface Props {
   pesagens: PesagemMounjaro[];
   doses: DoseMounjaro[];
   pagamentos: PagamentoMounjaro[];
+  fotos: FotoEvolucao[];
   setClientes: (c: ClienteMounjaro[]) => void;
   setPesagens: (p: PesagemMounjaro[]) => void;
 }
 
-export default function Clientes({ clientes, pesagens, doses, pagamentos, setClientes, setPesagens }: Props) {
+export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos, setClientes, setPesagens }: Props) {
   const [busca, setBusca] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editando, setEditando] = useState<ClienteMounjaro | null>(null);
@@ -230,24 +231,28 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, setCli
           </>
         }
       >
-        {detalhe && <DetalheCliente cliente={detalhe} pesagens={pesagens} doses={doses} pagamentos={pagamentos} />}
+        {detalhe && <DetalheCliente cliente={detalhe} pesagens={pesagens} doses={doses} pagamentos={pagamentos} fotos={fotos} />}
       </Modal>
     </div>
   );
 }
 
 function DetalheCliente({
-  cliente, pesagens, doses, pagamentos,
+  cliente, pesagens, doses, pagamentos, fotos,
 }: {
   cliente: ClienteMounjaro;
   pesagens: PesagemMounjaro[];
   doses: DoseMounjaro[];
   pagamentos: PagamentoMounjaro[];
+  fotos: FotoEvolucao[];
 }) {
   const peso = pesoAtual(cliente, pesagens);
   const perdido = pesoPerdido(cliente, pesagens, doses);
   const score = calcularScore(cliente.id, pagamentos);
   const ultimaDose = doses.filter((d) => d.clienteId === cliente.id).sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0];
+  const fotosCliente = fotos
+    .filter((f) => f.clienteId === cliente.id)
+    .sort((a, b) => a.data.localeCompare(b.data));
 
   return (
     <div className="space-y-4">
@@ -258,6 +263,18 @@ function DetalheCliente({
         <StatCard title="Score pagamento" value={score.pontuacao} icon={<Wallet size={18} />} accent="amber"
           hint={`${score.pagamentosEmDia} em dia · ${score.pagamentosAtrasados} atrasados`} />
       </div>
+
+      {fotosCliente.length > 0 && (
+        <div>
+          <p className="text-sm font-semibold mb-1">Fotos de evolução ({fotosCliente.length})</p>
+          <div className="flex gap-2 flex-wrap">
+            {fotosCliente.slice(-6).map((f) => (
+              <img key={f.id} src={f.imagem} alt={f.legenda || f.data} title={f.legenda || f.data}
+                className="w-16 h-20 object-cover rounded-lg border border-slate-200 dark:border-slate-700" />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 gap-2 text-sm">
         <InfoRow label="IMC inicial" value={cliente.imcInicial ? `${cliente.imcInicial} (${classificacaoIMC(cliente.imcInicial)})` : '-'} />

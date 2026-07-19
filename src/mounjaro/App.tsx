@@ -3,9 +3,9 @@ import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   LayoutDashboard, Users, Syringe, Scale, Wallet, ArrowLeft, Sun, Moon, Info,
-  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle, FileText, Bell,
+  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle, FileText, Bell, Camera,
 } from 'lucide-react';
-import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro } from './types';
+import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from './types';
 import { emptyDb, loadMounjaroDb, saveMounjaroDb } from './localDb';
 import { loadMounjaroCloud, saveMounjaroCloud } from './dbSync';
 import Dashboard from './pages/Dashboard';
@@ -15,10 +15,11 @@ import Peso from './pages/Peso';
 import Pagamentos from './pages/Pagamentos';
 import Referencia from './pages/Referencia';
 import Relatorio from './pages/Relatorio';
+import Fotos from './pages/Fotos';
 import { initAuth, googleSignIn, logoutUser } from '../lib/firebase';
 import type { User } from 'firebase/auth';
 
-export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'relatorio' | 'referencia';
+export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'relatorio' | 'fotos' | 'referencia';
 
 const NAV: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
@@ -27,6 +28,7 @@ const NAV: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'peso', label: 'Peso', icon: <Scale size={20} /> },
   { id: 'pagamentos', label: 'Pagamentos', icon: <Wallet size={20} /> },
   { id: 'relatorio', label: 'Relatório', icon: <FileText size={20} /> },
+  { id: 'fotos', label: 'Fotos', icon: <Camera size={20} /> },
   { id: 'referencia', label: 'Referência', icon: <Info size={20} /> },
 ];
 
@@ -99,12 +101,13 @@ export default function MounjaroApp() {
         }
         // 2. Nuvem (fonte da verdade entre aparelhos)
         const cloud = await loadMounjaroCloud(cloudUser.uid);
-        if (cloud.clientes || cloud.doses || cloud.pesagens || cloud.pagamentos) {
+        if (cloud.clientes || cloud.doses || cloud.pesagens || cloud.pagamentos || cloud.fotos) {
           const merged: MounjaroDb = {
             clientes: cloud.clientes || [],
             pesagens: cloud.pesagens || [],
             doses: cloud.doses || [],
             pagamentos: cloud.pagamentos || [],
+            fotos: cloud.fotos || [],
             initialized: true,
           };
           setDb(merged);
@@ -160,6 +163,7 @@ export default function MounjaroApp() {
   const setPesagens = (pesagens: PesagemMounjaro[]) => { setDb((d) => ({ ...d, pesagens })); persist(); };
   const setDoses = (doses: DoseMounjaro[]) => { setDb((d) => ({ ...d, doses })); persist(); };
   const setPagamentos = (pagamentos: PagamentoMounjaro[]) => { setDb((d) => ({ ...d, pagamentos })); persist(); };
+  const setFotos = (fotos: FotoEvolucao[]) => { setDb((d) => ({ ...d, fotos })); persist(); };
 
   const exportBackup = () => {
     const blob = new Blob([JSON.stringify({ ...db, initialized: true }, null, 2)], { type: 'application/json' });
@@ -183,6 +187,7 @@ export default function MounjaroApp() {
           pesagens: parsed.pesagens || [],
           doses: parsed.doses || [],
           pagamentos: parsed.pagamentos || [],
+          fotos: parsed.fotos || [],
           initialized: true,
         };
         setDb(merged);
@@ -358,11 +363,12 @@ export default function MounjaroApp() {
             transition={{ duration: 0.15 }}
           >
             {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
-            {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} setClientes={setClientes} setPesagens={setPesagens} />}
+            {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} fotos={db.fotos} setClientes={setClientes} setPesagens={setPesagens} />}
             {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} setDoses={setDoses} />}
             {activeTab === 'peso' && <Peso clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} setPesagens={setPesagens} />}
             {activeTab === 'pagamentos' && <Pagamentos clientes={db.clientes} pagamentos={db.pagamentos} doses={db.doses} setPagamentos={setPagamentos} setDoses={setDoses} />}
             {activeTab === 'relatorio' && <Relatorio clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} />}
+            {activeTab === 'fotos' && <Fotos clientes={db.clientes} fotos={db.fotos} setFotos={setFotos} />}
             {activeTab === 'referencia' && <Referencia />}
           </motion.div>
         </AnimatePresence>
