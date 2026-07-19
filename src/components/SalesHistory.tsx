@@ -17,18 +17,20 @@ import {
   FileDown,
   Printer,
   AlertTriangle,
-  ShoppingCart
+  ShoppingCart,
+  Trash2
 } from 'lucide-react';
 
 interface SalesHistoryProps {
   sales: Sale[];
   products: Product[];
   onCancelSale: (saleId: string) => void;
+  onDeleteSale?: (saleId: string) => void;
   onFixDates?: () => number;
   onUpdateSale?: (updatedSale: Sale) => void;
 }
 
-export default function SalesHistory({ sales, products, onCancelSale, onFixDates, onUpdateSale }: SalesHistoryProps) {
+export default function SalesHistory({ sales, products, onCancelSale, onDeleteSale, onFixDates, onUpdateSale }: SalesHistoryProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'cancelled'>('all');
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
@@ -721,6 +723,22 @@ export default function SalesHistory({ sales, products, onCancelSale, onFixDates
                               aria-label="Estornar / Cancelar venda"
                             >
                               <CornerUpLeft className="h-4 w-4" />
+                            </button>
+                          )}
+
+                          {onDeleteSale && (
+                            <button
+                              id={`delete-${sale.id}`}
+                              onClick={() => {
+                                if (window.confirm(`Apagar DEFINITIVAMENTE a venda #${sale.id.substring(0, 8)}?\n\nEsta ação não pode ser desfeita e a venda sumirá do histórico e de todos os cálculos.`)) {
+                                  onDeleteSale(sale.id);
+                                }
+                              }}
+                              className="p-2 hover:bg-rose-100 text-rose-700 rounded-lg transition-colors"
+                              title="Apagar definitivamente"
+                              aria-label="Apagar definitivamente"
+                            >
+                              <Trash2 className="h-4 w-4" />
                             </button>
                           )}
                         </div>

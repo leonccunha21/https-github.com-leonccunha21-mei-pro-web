@@ -1078,6 +1078,13 @@ export default function App() {
     saveSalesToStorage(updatedSales, { ...cancelledSale, status: 'cancelled' });
   };
 
+  // Exclui uma venda definitivamente do banco (não apenas cancela). Não restaura
+  // estoque, pois a venda deixa de existir — use o cancelamento para estorno.
+  const deleteSale = (saleId: string) => {
+    const updatedSales = sales.filter(s => s.id !== saleId);
+    saveSalesToStorage(updatedSales);
+  };
+
   // Import whole database from external source (MERGE: preserves existing IDs,
   // links and data; updates products matched by code/SKU or name instead of
   // wiping the store and regenerating IDs, which previously corrupted sales).
@@ -2013,10 +2020,11 @@ export default function App() {
             )}
 
             {activeTab === 'sales' && (
-              <SalesHistory 
-                sales={sales} 
+              <SalesHistory
+                sales={sales}
                 products={products}
                 onCancelSale={handleCancelSale}
+                onDeleteSale={deleteSale}
                 onFixDates={fixSaleDates}
                 onUpdateSale={(updatedSale) => {
                   const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
