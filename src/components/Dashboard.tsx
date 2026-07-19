@@ -98,7 +98,7 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
 
   const availableYears = useMemo(() => {
     const years = new Set<number>();
-    sales.filter(s => s.status === 'completed').forEach(s => years.add(new Date(s.date).getFullYear()));
+    sales.filter(s => s.status === 'completed' || s.status === 'pending').forEach(s => years.add(new Date(s.date).getFullYear()));
     return Array.from(years).sort((a, b) => b - a);
   }, [sales]);
 
@@ -109,9 +109,11 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   }, [selectedYearState, availableYears]);
 
   // Filter completed sales by time range and year
+  // Inclui vendas 'completed' e 'pending' (marketplace ainda não liquidado) no
+  // faturamento/lucro: ambas são receita real. 'cancelled' continua excluída.
   const completedSales = useMemo(() => {
     let result = sales.filter(s => {
-      if (s.status !== 'completed') return false;
+      if (s.status !== 'completed' && s.status !== 'pending') return false;
       if (timeRange === 'all') return true;
       const saleDate = new Date(s.date);
       if (timeRange === 'custom') {

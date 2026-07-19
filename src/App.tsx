@@ -443,16 +443,28 @@ export default function App() {
     resumeCloudSyncNow();
   }, []);
 
-  // --- Nuvem: envia para o Firestore de forma incremental (economiza cota) ---
+  // --- Nuvem: envia o banco completo, SEM PERDER DADO de nenhum aparelho ---
+  // Antes de subir, baixa a nuvem e faz UNIÃO por id (o mais recente vence por
+  // id, mas nada é descartado). Assim os dados de OUTROS aparelhos nunca somem.
+  // Depois sobe o resultado unificado. A nuvem passa a ter TUDO de todos.
   const pushToCloud = (data: LocalDb, opts?: { forceFull?: boolean }) => {
     if (!SYNC_ENABLED || !cloudUser) return Promise.resolve(null);
     if (isCloudSyncPaused()) return Promise.resolve(null); // cota estourada: nada hoje
     setCloudSyncing(true);
     setCloudError(null);
-    return import('./lib/dbSync').then(({ saveUserDbIncremental }) =>
-      saveUserDbIncremental(cloudUser.uid, data, opts)
-    )
-      .then((res) => { setCloudLastSync(new Date().toISOString()); return res; })
+    return import('./lib/dbSync').then(async ({ saveUserDbIncremental, loadUserDb }) => {
+      const cloud = await loadUserDb(cloudUser.uid).catch(() => ({} as Partial<LocalDb>));
+      const unified = mergeLocalDb(data, cloud); // local como base; nuvem traz o que falta
+      await saveUserDbIncremental(cloudUser.uid, unified, opts);
+      return unified;
+    })
+      .then((res) => {
+        // Reflete o unificado localmente também (pode ter trazido itens da nuvem).
+        applyLoadedDb(res as LocalDb);
+        persist(res as LocalDb);
+        setCloudLastSync(new Date().toISOString());
+        return res;
+      })
       .catch((e: unknown) => {
         const msg = e instanceof Error ? e.message : 'Falha ao enviar para a nuvem';
         setCloudError(msg);
@@ -626,32 +638,27 @@ export default function App() {
     setCloudError(null);
   };
 
-  // Baixa os dados da nuvem para ESTE aparelho, substituindo o conteúdo local.
-  // Usado para espelhar no celular o que está no computador. A sincronização
-  // incremental em seguida limpa da nuvem o que era exclusivo deste aparelho.
+  // Baixa os dados da nuvem para ESTE aparelho, SUBSTITUINDO o conteúdo local.
+  // A nuvem é a fonte da verdade: o que está lá é o que aparece aqui.
   const handleDownloadFromCloud = async () => {
     if (!SYNC_ENABLED) { showToast('Sincronização desativada (modo local).'); return; }
     if (!cloudUser) return;
-    if (!window.confirm('Baixar os dados da nuvem para ESTE aparelho?\n\nIsso substitui os dados locais deste aparelho pelos dados salvos na nuvem (os do computador). Registros que existem apenas aqui serão substituídos.\n\nDica: primeiro clique "Sincronizar Agora" no computador para garantir que a nuvem está com os dados mais recentes.')) return;
     try {
       const { loadUserDb } = await import('./lib/dbSync');
-      showToast('Baixando dados da nuvem (mesclando com os locais)...');
+      showToast('Baixando todos os dados da nuvem...');
       const cloud = await loadUserDb(cloudUser.uid);
-      // MERGE por id: preserva dados locais mais recentes e os da nuvem.
-      const full = mergeLocalDb(stateRef.current, cloud);
-      await applyLoadedDb(full);
-      persist(full);
-      // Sobe o resultado do merge para a nuvem ficar idêntica ao local.
-      pushToCloud(full);
-      showToast('Dados sincronizados (nuvem + local mesclados).');
+      await applyLoadedDb(cloud as LocalDb);
+      persist(cloud as LocalDb);
+      showToast('Dados da nuvem carregados neste aparelho.');
     } catch (e: unknown) {
       showToast(e instanceof Error ? e.message : 'Falha ao baixar da nuvem.');
     }
   };
 
-  // Baixa a nuvem e ESPELHA no aparelho local (a nuvem é a fonte única da
-  // verdade). Assim os dois aparelhos ficam sempre IDÊNTICOS. Roda sozinho a
-  // cada 30s e ao focar/abrir a aba.
+  // Baixa a nuvem e SUBSTITUI o local (a nuvem é a fonte da verdade). Assim,
+  // onde você for, vê EXATAMENTE os mesmos dados. Roda sozinho a cada 30s e ao
+  // focar/abrir a aba. Proteção: só pula se a nuvem estiver vazia E o local tiver
+  // dados (primeira sincronização de um aparelho novo, para não apagar o local).
   const pullFromCloud = async () => {
     if (!SYNC_ENABLED || !cloudUser) return;
     if (document.visibilityState !== 'visible') return; // não gasta leitura em aba oculta
@@ -662,9 +669,6 @@ export default function App() {
       const { loadUserDb } = await import('./lib/dbSync');
       const cloud = await loadUserDb(cloudUser.uid);
 
-      // Proteção crítica: se a nuvem está vazia mas temos dados locais,
-      // NÃO sobrescrever. Nuvem vazia = ainda não sincronizamos.
-      // O usuário deve clicar "Sincronizar Agora" para enviar os dados locais.
       const cloudIsEmpty =
         (!cloud.products || cloud.products.length === 0) &&
         (!cloud.sales || cloud.sales.length === 0) &&
@@ -676,18 +680,9 @@ export default function App() {
         (stateRef.current.expenses && stateRef.current.expenses.length > 0);
       if (cloudIsEmpty && localHasData) return; // nuvem vazia não apaga dados locais
 
-      // MERGE por id (não replace): local prevalece se mais recente; dados
-      // exclusivos da nuvem são preservados. Garante fidelidade sem "inflar".
-      const merged: LocalDb = mergeLocalDb(stateRef.current, cloud);
-      // Comparação estável (ignora `initialized` e ordem de chaves) para saber
-      // se realmente há novidade antes de reescrever o estado/localStorage.
-      const sig = (db: Partial<LocalDb>) => JSON.stringify([
-        db.products, db.categories, db.sales, db.orders, db.customers,
-        db.suppliers, db.purchases, db.cashSessions, db.loans, db.expenses, db.storeInfo,
-      ]);
-      if (sig(merged) === sig(stateRef.current)) return; // nada novo
-      await applyLoadedDb(merged);
-      persist(merged);
+      // Substitui o local pela nuvem (fonte da verdade). Nada de merge frágil.
+      await applyLoadedDb(cloud as LocalDb);
+      persist(cloud as LocalDb);
     } catch { /* ignora e tenta de novo no próximo ciclo */ }
   };
 
@@ -785,30 +780,31 @@ export default function App() {
     }
   };
 
-  // Envia TODOS os dados deste aparelho para a nuvem de uma vez (forceFull),
-  // ignorando o cache incremental. Garante que nada fique preso só localmente.
+  // Envia TODOS os dados deste aparelho para a nuvem de uma vez, fazendo uma
+  // LIMPEZA COMPLETA da nuvem antes (clearUserDb + saveUserDb). Resultado: a
+  // nuvem fica IDÊNTICA a este aparelho. Use quando a nuvem estiver errada/
+  // incompleta e este aparelho tiver os dados corretos. Depois, em qualquer
+  // outro lugar, basta logar que ele baixa tudo igual.
   const handleCloudPushAll = async () => {
     if (!SYNC_ENABLED || !cloudUser) { showToast('Sincronização desativada (modo local).'); return; }
     if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
     const db = stateRef.current as LocalDb;
-    showToast('Enviando TODOS os dados para a nuvem...');
+    if (!window.confirm('Isso vai SUBSTITUIR todos os dados da nuvem pelos deste aparelho.\n\nSó use se este aparelho tiver os dados CORRETOS e COMPLETOS. Depois, todos os outros aparelhos vão baixar exatamente estes dados.\n\nContinuar?')) return;
+    showToast('Enviando TODOS os dados para a nuvem (substituindo tudo)...');
     try {
-      const { clearSyncCache } = await import('./lib/dbSync');
+      const { saveUserDb, clearUserDb, clearSyncCache } = await import('./lib/dbSync');
       const { clearSyncProgress } = await import('./lib/throttledSync');
       clearSyncCache(cloudUser.uid);
       clearSyncProgress(cloudUser.uid);
       setCloudSyncing(true);
       setCloudError(null);
-      const res = await pushToCloud(db, { forceFull: true });
+      await clearUserDb(cloudUser.uid);   // apaga tudo da nuvem
+      await saveUserDb(cloudUser.uid, db); // reescreve idêntico ao local
       setCloudLastSync(new Date().toISOString());
       setCloudSyncing(false);
       setCloudPending(false);
       setDailyWrites(getDailyWrites().count);
-      if (res && res.uploaded === 0 && res.deleted === 0) {
-        showToast('Nuvem já está atualizada (sem alterações para enviar).');
-      } else {
-        showToast(`✅ Envio completo: ${res?.uploaded ?? 0} documentos na nuvem.`);
-      }
+      showToast(`✅ Nuvem substituída: ${db.sales.length} vendas, ${db.products.length} produtos enviados.`);
     } catch {
       setCloudSyncing(false);
       showToast('Falha ao enviar tudo. Verifique a conexão e a cota do Firebase.');
