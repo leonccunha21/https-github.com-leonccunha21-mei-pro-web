@@ -19,10 +19,16 @@ export type MounjaroScope =
   | { tipo: 'user'; uid: string }
   | { tipo: 'clinica'; clinicaId: string };
 
-function scopePath(scope: MounjaroScope, name: string): string {
+// Caminho-base do escopo Mounjaro (3 segmentos, ímpar = coleção válida).
+// As coleções (clientes, doses, etc.) e o documento 'config' são adicionados
+// por cima desta base. IMPORTANTE: o Firestore exige número PAR de segmentos
+// num documento. Ex.: doc(base, 'clientes', id) => users/{uid}/mounjaro/clientes/{id}
+// (6 segmentos, par = documento válido). Antes, scopePath já incluía o nome da
+// coleção e doc(path, id) gerava 5 segmentos (ímpar) -> "Invalid document reference".
+function scopeBase(scope: MounjaroScope): string {
   return scope.tipo === 'user'
-    ? `users/${scope.uid}/mounjaro/${name}`
-    : `clinicas/${scope.clinicaId}/mounjaro/${name}`;
+    ? `users/${scope.uid}/mounjaro`
+    : `clinicas/${scope.clinicaId}/mounjaro`;
 }
 
 const BATCH_SIZE = 500;
@@ -46,44 +52,44 @@ function cleanForFirestore<T>(value: T): any {
 }
 
 async function loadCollection<T>(scope: MounjaroScope, name: string): Promise<T[]> {
-  const path = scopePath(scope, name);
+  const base = scopeBase(scope);
   try {
-    const snap = await getDocs(collection(db, path));
+    const snap = await getDocs(collection(db, base, name));
     const items: T[] = [];
     snap.forEach((d) => items.push(d.data() as T));
     return items;
   } catch (error) {
-    handleFirestoreError(error, OperationType.GET, path);
+    handleFirestoreError(error, OperationType.GET, `${base}/${name}`);
     return [];
   }
 }
 
 async function saveBatch<T extends { id: string }>(scope: MounjaroScope, name: string, items: T[]): Promise<void> {
-  const path = scopePath(scope, name);
+  const base = scopeBase(scope);
   try {
     for (let i = 0; i < items.length; i += BATCH_SIZE) {
       const chunk = items.slice(i, i + BATCH_SIZE);
       const batch = writeBatch(db);
       for (const item of chunk) {
-        batch.set(doc(db, path, item.id), cleanForFirestore(item));
+        batch.set(doc(db, base, name, item.id), cleanForFirestore(item));
       }
       await batch.commit();
       recordWrites(chunk.length);
     }
   } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, path);
+    handleFirestoreError(error, OperationType.WRITE, `${base}/${name}`);
   }
 }
 
 async function clearCollection(scope: MounjaroScope, name: string): Promise<void> {
-  const path = scopePath(scope, name);
+  const base = scopeBase(scope);
   try {
-    const snap = await getDocs(collection(db, path));
+    const snap = await getDocs(collection(db, base, name));
     for (const d of snap.docs) {
       await deleteDoc(d.ref);
     }
   } catch (error) {
-    handleFirestoreError(error, OperationType.DELETE, path);
+    handleFirestoreError(error, OperationType.DELETE, `${base}/${name}`);
   }
 }
 
@@ -96,7 +102,7 @@ export async function loadMounjaroCloud(scope: MounjaroScope): Promise<Partial<M
     loadCollection<MounjaroDb['pagamentos'][number]>(scope, 'pagamentos'),
     loadCollection<MounjaroDb['fotos'][number]>(scope, 'fotos'),
     loadCollection<MounjaroDb['auditoria'][number]>(scope, 'auditoria'),
-    getDoc(doc(db, scopePath(scope, 'config'))),
+    getDoc(doc(db, scopeBase(scope), 'config')),
   ]);
   const config = configSnap.exists() ? (configSnap.data() as MounjaroDb['config']) : undefined;
   return { clientes, pesagens, doses, pagamentos, fotos, auditoria, config, initialized: true };
@@ -112,8 +118,8 @@ export async function saveMounjaroCloud(scope: MounjaroScope, data: MounjaroDb):
     saveBatch(scope, 'fotos', data.fotos || []),
     saveBatch(scope, 'auditoria', data.auditoria || []),
   ]);
-  // Config é um documento único (4 segmentos), não coleção.
-  await setDoc(doc(db, scopePath(scope, 'config')), cleanForFirestore(data.config || {}));
+  // Config é um documento único em users/{uid}/mounjaro/config (4 segmentos, par).
+  await setDoc(doc(db, scopeBase(scope), 'config'), cleanForFirestore(data.config || {}));
 }
 
 /** Salva apenas uma coleção (uso incremental leve). */
@@ -237,19 +243,19 @@ function yearOf(item: any, dateField?: string): string {
 
 async function writeMItems(scope: MounjaroScope, name: string, items: any[]): Promise<number> {
   if (!items.length) return 0;
-  const path = scopePath(scope, name);
+  const base = scopeBase(scope);
   let written = 0;
   try {
     for (let i = 0; i < items.length; i += SYNC_BATCH) {
       const chunk = items.slice(i, i + SYNC_BATCH);
       const batch = writeBatch(db);
-      for (const item of chunk) batch.set(doc(db, path, item.id), cleanForFirestore(item));
+      for (const item of chunk) batch.set(doc(db, base, name, item.id), cleanForFirestore(item));
       await batch.commit();
       written += chunk.length;
       recordWrites(chunk.length);
     }
   } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, path);
+    handleFirestoreError(error, OperationType.WRITE, `${base}/${name}`);
   }
   return written;
 }
@@ -335,12 +341,12 @@ export async function syncMounjaroThrottled(
   if (!stoppedByBudget) {
     if (remainingBudget() >= 1) {
       try {
-        await setDoc(doc(db, scopePath(scope, 'config')), cleanForFirestore(data.config || {}));
+        await setDoc(doc(db, scopeBase(scope), 'config'), cleanForFirestore(data.config || {}));
         recordWrites(1);
         progress.config = true;
         uploaded++;
       } catch (error) {
-        handleFirestoreError(error, OperationType.WRITE, scopePath(scope, 'config'));
+        handleFirestoreError(error, OperationType.WRITE, `${scopeBase(scope)}/config`);
       }
     } else stoppedByBudget = true;
   }
