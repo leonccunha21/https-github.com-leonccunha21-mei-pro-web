@@ -3,10 +3,10 @@ import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   LayoutDashboard, Users, Syringe, Scale, Wallet, ArrowLeft, Sun, Moon, Info,
-  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle, FileText, Bell, Camera, History,
+  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle, FileText, Bell, Camera, History, Settings,
 } from 'lucide-react';
 import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from './types';
-import { emptyDb, loadMounjaroDb, saveMounjaroDb } from './localDb';
+import { emptyDb, loadMounjaroDb, saveMounjaroDb, defaultConfig } from './localDb';
 import { loadMounjaroCloud, saveMounjaroCloud } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
@@ -17,11 +17,12 @@ import Referencia from './pages/Referencia';
 import Relatorio from './pages/Relatorio';
 import Fotos from './pages/Fotos';
 import Auditoria from './pages/Auditoria';
+import Configuracoes from './pages/Configuracoes';
 import { initAuth, googleSignIn, logoutUser } from '../lib/firebase';
 import { criarRegistroAuditoria } from './lib';
 import type { User } from 'firebase/auth';
 
-export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'relatorio' | 'fotos' | 'auditoria' | 'referencia';
+export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'relatorio' | 'fotos' | 'auditoria' | 'configuracoes' | 'referencia';
 
 const NAV: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
@@ -32,6 +33,7 @@ const NAV: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'relatorio', label: 'Relatório', icon: <FileText size={20} /> },
   { id: 'fotos', label: 'Fotos', icon: <Camera size={20} /> },
   { id: 'auditoria', label: 'Auditoria', icon: <History size={20} /> },
+  { id: 'configuracoes', label: 'Ajustes', icon: <Settings size={20} /> },
   { id: 'referencia', label: 'Referência', icon: <Info size={20} /> },
 ];
 
@@ -91,6 +93,23 @@ export default function MounjaroApp() {
     return () => { cancelled = true; if (unsub) unsub(); };
   }, []);
 
+  // Remove registros órfãos (cliente excluído em outro aparelho) para manter
+  // todas as entidades referências consistentes entre si.
+  const sanitizar = useCallback((dbIn: MounjaroDb): MounjaroDb => {
+    const ids = new Set(dbIn.clientes.map((c) => c.id));
+    if (ids.size === 0) return dbIn;
+    const tem = (id?: string) => !!id && ids.has(id);
+    return {
+      ...dbIn,
+      pesagens: dbIn.pesagens.filter((p) => tem(p.clienteId)),
+      doses: dbIn.doses.filter((d) => tem(d.clienteId)),
+      pagamentos: dbIn.pagamentos.filter((p) => tem(p.clienteId)),
+      fotos: dbIn.fotos.filter((f) => tem(f.clienteId)),
+      auditoria: dbIn.auditoria.filter((a) => tem(a.clienteId)),
+      initialized: true,
+    };
+  }, []);
+
   // Carrega dados (local + nuvem) quando o usuário está logado
   useEffect(() => {
     if (!authReady) return;
@@ -98,22 +117,24 @@ export default function MounjaroApp() {
     (async () => {
       try {
         // 1. Local primeiro (rápido)
-        const local = await loadMounjaroDb();
+        const localRaw = await loadMounjaroDb();
+        const local = sanitizar(localRaw);
         if (local.clientes.length || local.doses.length || local.pesagens.length || local.pagamentos.length) {
           setDb(local);
         }
         // 2. Nuvem (fonte da verdade entre aparelhos)
         const cloud = await loadMounjaroCloud(cloudUser.uid);
         if (cloud.clientes || cloud.doses || cloud.pesagens || cloud.pagamentos || cloud.fotos || cloud.auditoria) {
-          const merged: MounjaroDb = {
+          const merged = sanitizar({
             clientes: cloud.clientes || [],
             pesagens: cloud.pesagens || [],
             doses: cloud.doses || [],
             pagamentos: cloud.pagamentos || [],
             fotos: cloud.fotos || [],
             auditoria: cloud.auditoria || [],
+            config: { ...defaultConfig(), ...(cloud.config || {}) },
             initialized: true,
-          };
+          });
           setDb(merged);
           saveMounjaroDb(merged).catch(() => {});
           setLastSync(new Date().toISOString());
@@ -168,6 +189,7 @@ export default function MounjaroApp() {
   const setDoses = (doses: DoseMounjaro[]) => { setDb((d) => ({ ...d, doses })); persist(); };
   const setPagamentos = (pagamentos: PagamentoMounjaro[]) => { setDb((d) => ({ ...d, pagamentos })); persist(); };
   const setFotos = (fotos: FotoEvolucao[]) => { setDb((d) => ({ ...d, fotos })); persist(); };
+  const setConfig = (config: MounjaroDb['config']) => { setDb((d) => ({ ...d, config })); persist(); };
 
   // Registro de auditoria: histórico de alterações críticas.
   const nomeUsuario = cloudUser?.displayName || cloudUser?.email || 'usuário';
@@ -203,6 +225,7 @@ export default function MounjaroApp() {
           pagamentos: parsed.pagamentos || [],
           fotos: parsed.fotos || [],
           auditoria: parsed.auditoria || [],
+          config: { ...defaultConfig(), ...(parsed.config || {}) },
           initialized: true,
         };
         setDb(merged);
@@ -353,12 +376,13 @@ export default function MounjaroApp() {
       </header>
 
       {/* Bottom nav mobile */}
-      <nav className="sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 grid grid-cols-6">
+      <nav className="sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 overflow-x-auto no-scrollbar">
+        <div className="flex min-w-max">
         {NAV.map((n) => (
           <button
             key={n.id}
             onClick={() => setActiveTab(n.id)}
-            className={`flex flex-col items-center justify-center py-2 text-[10px] gap-0.5 ${
+            className={`flex flex-col items-center justify-center py-2 px-4 text-[10px] gap-0.5 min-w-[64px] ${
               activeTab === n.id ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-500 dark:text-slate-400'
             }`}
           >
@@ -366,6 +390,7 @@ export default function MounjaroApp() {
             {n.label}
           </button>
         ))}
+        </div>
       </nav>
 
       <main className="max-w-6xl mx-auto px-4 py-5 pb-24 sm:pb-8">
@@ -378,17 +403,24 @@ export default function MounjaroApp() {
             transition={{ duration: 0.15 }}
           >
             {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
-            {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} fotos={db.fotos} setClientes={setClientes} setPesagens={setPesagens} logAuditoria={logAuditoria} />}
-            {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} setDoses={setDoses} logAuditoria={logAuditoria} />}
+            {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} fotos={db.fotos} auditoria={db.auditoria} setClientes={setClientes} setPesagens={setPesagens} setDoses={setDoses} setPagamentos={setPagamentos} setFotos={setFotos} logAuditoria={logAuditoria} />}
+            {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} pagamentos={db.pagamentos} setDoses={setDoses} setPagamentos={setPagamentos} logAuditoria={logAuditoria} />}
             {activeTab === 'peso' && <Peso clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} setPesagens={setPesagens} logAuditoria={logAuditoria} />}
             {activeTab === 'pagamentos' && <Pagamentos clientes={db.clientes} pagamentos={db.pagamentos} doses={db.doses} setPagamentos={setPagamentos} setDoses={setDoses} logAuditoria={logAuditoria} />}
-            {activeTab === 'relatorio' && <Relatorio clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} />}
+            {activeTab === 'relatorio' && <Relatorio clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} config={db.config} />}
             {activeTab === 'fotos' && <Fotos clientes={db.clientes} fotos={db.fotos} setFotos={setFotos} logAuditoria={logAuditoria} />}
             {activeTab === 'auditoria' && <Auditoria auditoria={db.auditoria} clientes={db.clientes} />}
+            {activeTab === 'configuracoes' && <Configuracoes config={db.config} setConfig={setConfig} />}
             {activeTab === 'referencia' && <Referencia />}
           </motion.div>
         </AnimatePresence>
       </main>
+
+      {/* Aviso de responsabilidade (disclaimer médico) */}
+      <footer className="max-w-6xl mx-auto px-4 py-4 text-center text-[11px] leading-snug text-slate-400 dark:text-slate-500">
+        Mounjaro PRO é uma ferramenta de organização e acompanhamento. Não substitui avaliação,
+        prescrição ou acompanhamento médico profissional. Sempre consulte um médico habilitado.
+      </footer>
     </div>
   );
 }

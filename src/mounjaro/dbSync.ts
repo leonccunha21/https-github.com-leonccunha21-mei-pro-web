@@ -75,15 +75,16 @@ async function clearCollection(userId: string, name: string): Promise<void> {
 
 /** Carrega o banco completo do Mounjaro da nuvem. */
 export async function loadMounjaroCloud(userId: string): Promise<Partial<MounjaroDb>> {
-  const [clientes, pesagens, doses, pagamentos, fotos, auditoria] = await Promise.all([
+  const [clientes, pesagens, doses, pagamentos, fotos, auditoria, config] = await Promise.all([
     loadCollection<MounjaroDb['clientes'][number]>(userId, 'clientes'),
     loadCollection<MounjaroDb['pesagens'][number]>(userId, 'pesagens'),
     loadCollection<MounjaroDb['doses'][number]>(userId, 'doses'),
     loadCollection<MounjaroDb['pagamentos'][number]>(userId, 'pagamentos'),
     loadCollection<MounjaroDb['fotos'][number]>(userId, 'fotos'),
     loadCollection<MounjaroDb['auditoria'][number]>(userId, 'auditoria'),
+    loadCollection<MounjaroDb['config']>(userId, 'config'),
   ]);
-  return { clientes, pesagens, doses, pagamentos, fotos, auditoria, initialized: true };
+  return { clientes, pesagens, doses, pagamentos, fotos, auditoria, config: config[0], initialized: true };
 }
 
 /** Salva o banco completo do Mounjaro na nuvem (substitui as coleções). */
@@ -95,13 +96,14 @@ export async function saveMounjaroCloud(userId: string, data: MounjaroDb): Promi
     saveBatch(userId, 'pagamentos', data.pagamentos || []),
     saveBatch(userId, 'fotos', data.fotos || []),
     saveBatch(userId, 'auditoria', data.auditoria || []),
+    saveBatch(userId, 'config', [{ ...(data.config || {}), id: 'main' }]),
   ]);
 }
 
 /** Salva apenas uma coleção (uso incremental leve). */
 export async function saveMounjaroCollection<T extends { id: string }>(
   userId: string,
-  name: 'clientes' | 'pesagens' | 'doses' | 'pagamentos' | 'fotos' | 'auditoria',
+  name: 'clientes' | 'pesagens' | 'doses' | 'pagamentos' | 'fotos' | 'auditoria' | 'config',
   items: T[]
 ): Promise<void> {
   await saveBatch(userId, name, items as any);
@@ -116,5 +118,6 @@ export async function clearMounjaroCloud(userId: string): Promise<void> {
     clearCollection(userId, 'pagamentos'),
     clearCollection(userId, 'fotos'),
     clearCollection(userId, 'auditoria'),
+    clearCollection(userId, 'config'),
   ]);
 }

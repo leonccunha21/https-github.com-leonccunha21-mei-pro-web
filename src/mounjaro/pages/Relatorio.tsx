@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { FileText, Printer, Download } from 'lucide-react';
-import { ClienteMounjaro, DoseMounjaro, PagamentoMounjaro, PesagemMounjaro } from '../types';
+import { ClienteMounjaro, DoseMounjaro, PagamentoMounjaro, PesagemMounjaro, ConfigMounjaro } from '../types';
 import { Card, Button, SelectField, StatCard } from '../ui';
 import { pesoAtual, pesoPerdido, formatarDataCurta, formatarMoeda, calcularScore } from '../lib';
 
@@ -15,6 +15,7 @@ interface Props {
   pesagens: PesagemMounjaro[];
   doses: DoseMounjaro[];
   pagamentos: PagamentoMounjaro[];
+  config: ConfigMounjaro;
 }
 
 function gerarRelatorio(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], doses: DoseMounjaro[], pagamentos: PagamentoMounjaro[]) {
@@ -36,7 +37,7 @@ function gerarRelatorio(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], d
   return { pesagens: p, doses: d, pagamentos: pg, score, totalPago, totalAberto, receitaDoses };
 }
 
-export default function Relatorio({ clientes, pesagens, doses, pagamentos }: Props) {
+export default function Relatorio({ clientes, pesagens, doses, pagamentos, config }: Props) {
   const [clienteId, setClienteId] = useState('');
   const ativos = clientes.filter((c) => c.ativo);
 
@@ -85,15 +86,19 @@ export default function Relatorio({ clientes, pesagens, doses, pagamentos }: Pro
           {/* Cabeçalho do relatório */}
           <Card className="print:shadow-none">
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3 mb-3">
-              <div>
-                <h3 className="text-lg font-bold">{cliente.nome}</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {cliente.telefone || '—'} · {cliente.cidade ? `${cliente.cidade}/${cliente.estado || ''}` : '—'}
-                </p>
+              <div className="flex items-center gap-3 min-w-0">
+                {config.logo && <img src={config.logo} alt="logo" className="w-12 h-12 object-contain shrink-0" />}
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold text-cyan-700 dark:text-cyan-400">{config.nomeClinica || 'Mounjaro PRO'}</p>
+                  <h3 className="text-lg font-bold truncate">{cliente.nome}</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {cliente.telefone || '—'} · {cliente.cidade ? `${cliente.cidade}/${cliente.estado || ''}` : '—'}
+                  </p>
+                </div>
               </div>
-              <div className="text-right text-xs text-slate-500 dark:text-slate-400">
+              <div className="text-right text-xs text-slate-500 dark:text-slate-400 shrink-0">
                 Emitido em {formatarDataCurta(new Date().toISOString().slice(0, 10))}<br />
-                Mounjaro PRO
+                {config.profissional ? `Dr(a). ${config.profissional}` : 'Mounjaro PRO'}
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">

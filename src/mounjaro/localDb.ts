@@ -51,8 +51,12 @@ async function idbPut(value: MounjaroDb): Promise<void> {
   });
 }
 
+export function defaultConfig(): MounjaroDb['config'] {
+  return { nomeClinica: 'Mounjaro PRO', profissional: '', telefoneContato: '', valorDosePadrao: 0, intervaloPadraoDias: 7 };
+}
+
 export function emptyDb(): MounjaroDb {
-  return { clientes: [], pesagens: [], doses: [], pagamentos: [], fotos: [], auditoria: [], initialized: true };
+  return { clientes: [], pesagens: [], doses: [], pagamentos: [], fotos: [], auditoria: [], config: defaultConfig(), initialized: true };
 }
 
 export async function loadMounjaroDb(): Promise<MounjaroDb> {
@@ -66,6 +70,7 @@ export async function loadMounjaroDb(): Promise<MounjaroDb> {
         pagamentos: local.pagamentos || [],
         fotos: local.fotos || [],
         auditoria: local.auditoria || [],
+        config: { ...defaultConfig(), ...(local.config || {}) },
         initialized: true,
       };
     }

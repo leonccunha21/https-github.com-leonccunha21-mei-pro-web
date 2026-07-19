@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Plus, Pencil, Trash2, UserPlus, Search, Scale, Syringe, Wallet } from 'lucide-react';
-import { ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from '../types';
+import { ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao, RegistroAuditoria } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge, StatCard } from '../ui';
 import { newId } from '../localDb';
 import { calcIMC, classificacaoIMC, pesoAtual, pesoPerdido, calcularScore, formatarMoeda, LogAuditoriaFn } from '../lib';
@@ -11,12 +11,16 @@ interface Props {
   doses: DoseMounjaro[];
   pagamentos: PagamentoMounjaro[];
   fotos: FotoEvolucao[];
+  auditoria: RegistroAuditoria[];
   setClientes: (c: ClienteMounjaro[]) => void;
   setPesagens: (p: PesagemMounjaro[]) => void;
+  setDoses: (d: DoseMounjaro[]) => void;
+  setPagamentos: (p: PagamentoMounjaro[]) => void;
+  setFotos: (f: FotoEvolucao[]) => void;
   logAuditoria: LogAuditoriaFn;
 }
 
-export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos, setClientes, setPesagens, logAuditoria }: Props) {
+export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos, auditoria, setClientes, setPesagens, setDoses, setPagamentos, setFotos, logAuditoria }: Props) {
   const [busca, setBusca] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editando, setEditando] = useState<ClienteMounjaro | null>(null);
@@ -109,11 +113,14 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
   };
 
   const excluir = (c: ClienteMounjaro) => {
-    if (!window.confirm(`Excluir ${c.nome}? Isso também remove pesagens e doses vinculadas.`)) return;
+    if (!window.confirm(`Excluir ${c.nome}? Isso remove também pesagens, doses, pagamentos, fotos e histórico vinculados.`)) return;
     setClientes(clientes.filter((x) => x.id !== c.id));
     setPesagens(pesagens.filter((p) => p.clienteId !== c.id));
-    logAuditoria({ entidade: 'cliente', acao: 'excluir', resumo: `Cliente ${c.nome}`, clienteId: c.id, refId: c.id });
+    setDoses(doses.filter((d) => d.clienteId !== c.id));
+    setPagamentos(pagamentos.filter((p) => p.clienteId !== c.id));
+    setFotos(fotos.filter((f) => f.clienteId !== c.id));
     setDetalhe(null);
+    logAuditoria({ entidade: 'cliente', acao: 'excluir', resumo: `Cliente ${c.nome} (e dados vinculados)`, clienteId: c.id, refId: c.id });
   };
 
   const filtrados = useMemo(() => {

@@ -316,26 +316,28 @@ export function linkWhatsapp(telefone: string | undefined, mensagem: string): st
 }
 
 // Monta a mensagem de lembrete de dose para o paciente.
-export function mensagemLembreteDose(cliente: ClienteMounjaro, proxima: string | null, status: LembreteDose['status']): string {
+export function mensagemLembreteDose(cliente: ClienteMounjaro, proxima: string | null, status: LembreteDose['status'], clinica?: string): string {
   const nome = cliente.nome.split(' ')[0];
   const data = proxima ? formatarDataCurta(proxima) : 'em breve';
+  const ass = clinica ? `\n\nAtenciosamente, ${clinica}.` : '';
   if (status === 'atrasada') {
-    return `Olá ${nome}! Notei que sua aplicação de Mounjaro está atrasada. Por favor, agende sua dose o quanto antes. Qualquer dúvida, estou à disposição.`;
+    return `Olá ${nome}! Notei que sua aplicação de Mounjaro está atrasada. Por favor, agende sua dose o quanto antes. Qualquer dúvida, estou à disposição.${ass}`;
   }
   if (status === 'hoje') {
-    return `Olá ${nome}! Lembrando que hoje é o dia da sua aplicação de Mounjaro. Não esqueça! 💉`;
+    return `Olá ${nome}! Lembrando que hoje é o dia da sua aplicação de Mounjaro. Não esqueça! 💉${ass}`;
   }
-  return `Olá ${nome}! Sua próxima aplicação de Mounjaro está prevista para ${data}. Vamos nos preparar? Qualquer dúvida, estou à disposição.`;
+  return `Olá ${nome}! Sua próxima aplicação de Mounjaro está prevista para ${data}. Vamos nos preparar? Qualquer dúvida, estou à disposição.${ass}`;
 }
 
 // Monta a mensagem de cobrança para o paciente.
-export function mensagemCobranca(c: CobrancaPendente): string {
+export function mensagemCobranca(c: CobrancaPendente, clinica?: string): string {
   const nome = c.cliente.nome.split(' ')[0];
   const v = formatarMoeda(c.pagamento.valor);
+  const ass = clinica ? `\n\nAtenciosamente, ${clinica}.` : '';
   if (c.vencida) {
-    return `Olá ${nome}! Passando para lembrar sobre o pagamento de ${v} (${c.pagamento.descricao}) que está vencido. Pode nos enviar assim que possível? Obrigado!`;
+    return `Olá ${nome}! Passando para lembrar sobre o pagamento de ${v} (${c.pagamento.descricao}) que está vencido. Pode nos enviar assim que possível? Obrigado!${ass}`;
   }
-  return `Olá ${nome}! Lembrando que o pagamento de ${v} (${c.pagamento.descricao}) vence em ${formatarDataCurta(c.pagamento.dataVencimento)}. Obrigado!`;
+  return `Olá ${nome}! Lembrando que o pagamento de ${v} (${c.pagamento.descricao}) vence em ${formatarDataCurta(c.pagamento.dataVencimento)}. Obrigado!${ass}`;
 }
 
 export interface LogAuditoriaParams {

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { Plus, Syringe, Search, CalendarClock } from 'lucide-react';
-import { ClienteMounjaro, DoseMounjaro } from '../types';
+import { ClienteMounjaro, DoseMounjaro, PagamentoMounjaro } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge } from '../ui';
 import { newId } from '../localDb';
 import { DOSES_DISPONIVEIS, formatarDataCurta, proximaDose, statusDose, diasEntre, sugerirProximaDose, LogAuditoriaFn } from '../lib';
@@ -8,11 +8,13 @@ import { DOSES_DISPONIVEIS, formatarDataCurta, proximaDose, statusDose, diasEntr
 interface Props {
   clientes: ClienteMounjaro[];
   doses: DoseMounjaro[];
+  pagamentos: PagamentoMounjaro[];
   setDoses: (d: DoseMounjaro[]) => void;
+  setPagamentos: (p: PagamentoMounjaro[]) => void;
   logAuditoria: LogAuditoriaFn;
 }
 
-export default function Doses({ clientes, doses, setDoses, logAuditoria }: Props) {
+export default function Doses({ clientes, doses, pagamentos, setDoses, setPagamentos, logAuditoria }: Props) {
   const [busca, setBusca] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editandoId, setEditandoId] = useState<string | null>(null);
@@ -80,9 +82,15 @@ export default function Doses({ clientes, doses, setDoses, logAuditoria }: Props
   };
 
   const excluir = (d: DoseMounjaro) => {
-    if (!window.confirm('Excluir esta dose?')) return;
+    if (!window.confirm('Excluir esta dose? Os pagamentos vinculados a ela serão desassociados.')) return;
     const cliente = clientes.find((c) => c.id === d.clienteId);
     setDoses(doses.filter((x) => x.id !== d.id));
+    // Desassocia pagamentos que apontavam para esta dose (mantém o registro financeiro).
+    const pagsAfetados = pagamentos.filter((p) => p.referenciaDoseId === d.id);
+    if (pagsAfetados.length > 0) {
+      setPagamentos(pagamentos.map((p) => (p.referenciaDoseId === d.id ? { ...p, referenciaDoseId: undefined } : p)));
+      logAuditoria({ entidade: 'pagamento', acao: 'editar', resumo: `Desvinculou ${pagsAfetados.length} pagamento(s) da dose excluída`, clienteId: d.clienteId, refId: d.id });
+    }
     logAuditoria({ entidade: 'dose', acao: 'excluir', resumo: `Dose ${d.dose} mg de ${cliente?.nome || '—'}`, clienteId: d.clienteId, refId: d.id });
   };
 

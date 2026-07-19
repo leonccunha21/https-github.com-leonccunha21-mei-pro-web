@@ -10,6 +10,7 @@ import type { Tab } from '../App';
 
 export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNavigate: (t: Tab) => void }) {
   const { clientes, doses, pesagens, pagamentos } = db;
+  const configClinica = db.config?.nomeClinica || undefined;
 
   const abrirWhatsapp = (telefone: string | undefined, msg: string) => {
     const url = linkWhatsapp(telefone, msg);
@@ -98,7 +99,7 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
                   <span className="text-xs opacity-80">{txt}</span>
                 </div>
                 <div className="flex items-center gap-2 shrink-0 ml-2">
-                  <button onClick={() => abrirWhatsapp(l.cliente.telefone, mensagemLembreteDose(l.cliente, l.proxima, l.status))}
+                  <button onClick={() => abrirWhatsapp(l.cliente.telefone, mensagemLembreteDose(l.cliente, l.proxima, l.status, configClinica))}
                     title="Avisar paciente no WhatsApp" className="text-cyan-700 dark:text-cyan-300 hover:scale-110 transition">
                     <MessageCircle size={16} />
                   </button>
@@ -127,7 +128,7 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
                   <span className="text-xs opacity-80">{formatarMoeda(c.pagamento.valor)} · {txt}</span>
                 </div>
                 <div className="flex items-center gap-2 shrink-0 ml-2">
-                  <button onClick={() => abrirWhatsapp(c.cliente.telefone, mensagemCobranca(c))}
+                  <button onClick={() => abrirWhatsapp(c.cliente.telefone, mensagemCobranca(c, configClinica))}
                     title="Avisar paciente no WhatsApp" className="text-cyan-700 dark:text-cyan-300 hover:scale-110 transition">
                     <MessageCircle size={16} />
                   </button>

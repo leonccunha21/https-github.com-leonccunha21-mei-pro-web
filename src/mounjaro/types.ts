@@ -93,6 +93,7 @@ export interface MounjaroDb {
   pagamentos: PagamentoMounjaro[];
   fotos: FotoEvolucao[];
   auditoria: RegistroAuditoria[];
+  config: ConfigMounjaro;
   initialized?: boolean;
 }
 
@@ -116,4 +117,14 @@ export interface RegistroAuditoria {
   resumo: string; // texto legível (ex.: "Dose 5 mg de Maria")
   clienteId?: string;
   refId?: string; // id do registro afetado
+}
+
+// Configurações do profissional/clínica (aplicadas a relatórios e mensagens).
+export interface ConfigMounjaro {
+  nomeClinica: string;
+  profissional: string; // nome do profissional responsável
+  telefoneContato?: string;
+  valorDosePadrao: number; // valor sugerido por dose (R$)
+  intervaloPadraoDias: number; // intervalo padrão entre doses
+  logo?: string; // imagem em base64 (data URL), opcional
 }
