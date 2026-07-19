@@ -186,6 +186,52 @@ export default function App() {
   // Load all data. The store is IndexedDB-backed (works on the static site);
   // an optional local server is used only when available.
   // Aplica os dados carregados (IndexedDB/servidor/seed) no estado da aplicação.
+  // ---------------------------------------------------------------------------
+  // MERGE por id entre dados locais e da nuvem.
+  // GARANTE FIDELIDADE: o que existe localmente vai para a nuvem exatamente
+  // como está, e o que existe só na nuvem (outro aparelho) é preservado.
+  // Em conflito de mesmo id, prevalece o registro com timestamp mais recente
+  // (updatedAt > createdAt > data do registro). Nunca soma nem "infla" valores.
+  // ---------------------------------------------------------------------------
+  const tsOf = (x: any): number => {
+    const v = x?.updatedAt ?? x?.createdAt ?? x?.date ?? x?.dataVenda ?? x?.loanDate ?? x?.openDate ?? x?.timestamp;
+    if (!v) return 0;
+    const t = typeof v === 'number' ? v : new Date(v).getTime();
+    return isNaN(t) ? 0 : t;
+  };
+
+  const mergeById = <T extends { id?: string }>(local: T[] | undefined, cloud: T[] | undefined): T[] => {
+    const map = new Map<string, T>();
+    for (const it of local || []) if (it?.id) map.set(it.id, it);
+    for (const it of cloud || []) {
+      if (!it?.id) continue;
+      const prev = map.get(it.id);
+      // local prevalece se for mais recente (ou empatado); nuvem só se não houver local ou for mais nova
+      if (!prev || tsOf(it) > tsOf(prev)) map.set(it.id, it);
+    }
+    return Array.from(map.values());
+  };
+
+  const mergeLocalDb = (local: LocalDb, cloud: Partial<LocalDb>): LocalDb => ({
+    products: mergeById(local.products, cloud.products) as LocalDb['products'],
+    categories: mergeById(local.categories, cloud.categories) as LocalDb['categories'],
+    sales: mergeById(local.sales, cloud.sales) as LocalDb['sales'],
+    orders: mergeById(local.orders, cloud.orders) as LocalDb['orders'],
+    customers: mergeById(local.customers, cloud.customers) as LocalDb['customers'],
+    suppliers: mergeById(local.suppliers, cloud.suppliers) as LocalDb['suppliers'],
+    purchases: mergeById(local.purchases, cloud.purchases) as LocalDb['purchases'],
+    cashSessions: mergeById(local.cashSessions, cloud.cashSessions) as LocalDb['cashSessions'],
+    loans: mergeById(local.loans, cloud.loans) as LocalDb['loans'],
+    expenses: mergeById(local.expenses, cloud.expenses) as LocalDb['expenses'],
+    leads: mergeById(local.leads, cloud.leads) as LocalDb['leads'],
+    leadJobs: mergeById(local.leadJobs, cloud.leadJobs) as LocalDb['leadJobs'],
+    whatsappInstances: mergeById(local.whatsappInstances, cloud.whatsappInstances) as LocalDb['whatsappInstances'],
+    aiAgents: mergeById(local.aiAgents, cloud.aiAgents) as LocalDb['aiAgents'],
+    opportunities: mergeById(local.opportunities, cloud.opportunities) as LocalDb['opportunities'],
+    storeInfo: cloud.storeInfo ?? local.storeInfo,
+    initialized: true,
+  });
+
   const applyLoadedDb = async (db: Partial<LocalDb> | null): Promise<{
     hasDb: boolean;
     seededProducts: Product[];
@@ -532,30 +578,15 @@ export default function App() {
     if (!window.confirm('Baixar os dados da nuvem para ESTE aparelho?\n\nIsso substitui os dados locais deste aparelho pelos dados salvos na nuvem (os do computador). Registros que existem apenas aqui serão substituídos.\n\nDica: primeiro clique "Sincronizar Agora" no computador para garantir que a nuvem está com os dados mais recentes.')) return;
     try {
       const { loadUserDb } = await import('./lib/dbSync');
-      showToast('Baixando dados da nuvem...');
+      showToast('Baixando dados da nuvem (mesclando com os locais)...');
       const cloud = await loadUserDb(cloudUser.uid);
-      const full: LocalDb = {
-        products: cloud.products || [],
-        categories: cloud.categories || [],
-        sales: cloud.sales || [],
-        orders: cloud.orders || [],
-        customers: cloud.customers || [],
-        suppliers: cloud.suppliers || [],
-        purchases: cloud.purchases || [],
-        cashSessions: cloud.cashSessions || [],
-        loans: cloud.loans || [],
-        expenses: cloud.expenses || [],
-        leads: cloud.leads || [],
-        leadJobs: cloud.leadJobs || [],
-        whatsappInstances: cloud.whatsappInstances || [],
-        aiAgents: cloud.aiAgents || [],
-        opportunities: cloud.opportunities || [],
-        storeInfo: cloud.storeInfo ?? null,
-        initialized: true,
-      };
+      // MERGE por id: preserva dados locais mais recentes e os da nuvem.
+      const full = mergeLocalDb(stateRef.current, cloud);
       await applyLoadedDb(full);
       persist(full);
-      showToast('Dados da nuvem carregados. Este aparelho agora está igual ao computador.');
+      // Sobe o resultado do merge para a nuvem ficar idêntica ao local.
+      pushToCloud(full);
+      showToast('Dados sincronizados (nuvem + local mesclados).');
     } catch (e: unknown) {
       showToast(e instanceof Error ? e.message : 'Falha ao baixar da nuvem.');
     }
@@ -588,25 +619,9 @@ export default function App() {
         (stateRef.current.expenses && stateRef.current.expenses.length > 0);
       if (cloudIsEmpty && localHasData) return; // nuvem vazia não apaga dados locais
 
-      const merged: LocalDb = {
-        products: cloud.products || [],
-        categories: cloud.categories || [],
-        sales: cloud.sales || [],
-        orders: cloud.orders || [],
-        customers: cloud.customers || [],
-        suppliers: cloud.suppliers || [],
-        purchases: cloud.purchases || [],
-        cashSessions: cloud.cashSessions || [],
-        loans: cloud.loans || [],
-        expenses: cloud.expenses || [],
-        leads: cloud.leads || [],
-        leadJobs: cloud.leadJobs || [],
-        whatsappInstances: cloud.whatsappInstances || [],
-        aiAgents: cloud.aiAgents || [],
-        opportunities: cloud.opportunities || [],
-        storeInfo: cloud.storeInfo ?? null,
-        initialized: true,
-      };
+      // MERGE por id (não replace): local prevalece se mais recente; dados
+      // exclusivos da nuvem são preservados. Garante fidelidade sem "inflar".
+      const merged: LocalDb = mergeLocalDb(stateRef.current, cloud);
       // Comparação estável (ignora `initialized` e ordem de chaves) para saber
       // se realmente há novidade antes de reescrever o estado/localStorage.
       const sig = (db: Partial<LocalDb>) => JSON.stringify([
