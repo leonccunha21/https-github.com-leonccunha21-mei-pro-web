@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from './types';
 import { emptyDb, loadMounjaroDb, saveMounjaroDb, defaultConfig } from './localDb';
-import { loadMounjaroCloud, saveMounjaroCloud } from './dbSync';
+import { loadMounjaroCloud, saveMounjaroCloud, MounjaroScope, ClinicaDoc, criarClinica, buscarClinica } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
 import Doses from './pages/Doses';
@@ -48,6 +48,11 @@ export default function MounjaroApp() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('mounjaro_darkMode') === 'true');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [clinica, setClinica] = useState<ClinicaDoc | null>(() => {
+    const raw = localStorage.getItem('mounjaro_clinica');
+    return raw ? (JSON.parse(raw) as ClinicaDoc) : null;
+  });
+  const [showClinicaModal, setShowClinicaModal] = useState(false);
 
   const timerRef = useRef<number | null>(null);
   const [timerState, setTimerState] = useState<number | null>(null);
@@ -56,6 +61,13 @@ export default function MounjaroApp() {
   stateRef.current = db;
 
   // --- Persistência local (IndexedDB) + nuvem (Firebase) ---
+  const getScope = useCallback((): MounjaroScope | null => {
+    if (!cloudUser) return null;
+    return clinica
+      ? { tipo: 'clinica', clinicaId: clinica.id }
+      : { tipo: 'user', uid: cloudUser.uid };
+  }, [cloudUser, clinica]);
+
   const persist = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {
@@ -63,9 +75,10 @@ export default function MounjaroApp() {
       const data = { ...cur, initialized: true };
       saveMounjaroDb(data).catch(() => {});
       // Sincroniza com a nuvem (se logado)
-      if (cloudUser) {
+      const scope = getScope();
+      if (scope) {
         setSyncing(true);
-        saveMounjaroCloud(cloudUser.uid, data)
+        saveMounjaroCloud(scope, data)
           .then(() => { setLastSync(new Date().toISOString()); })
           .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); })
           .finally(() => setSyncing(false));
@@ -74,7 +87,7 @@ export default function MounjaroApp() {
       setTimerState(null);
     }, 400);
     setTimerState(timerRef.current);
-  }, [cloudUser]);
+  }, [getScope]);
 
   useEffect(() => { document.documentElement.classList.toggle('dark', darkMode); }, []);
 
@@ -93,27 +106,27 @@ export default function MounjaroApp() {
     return () => { cancelled = true; if (unsub) unsub(); };
   }, []);
 
-  // Remove registros órfãos (cliente excluído em outro aparelho) para manter
-  // todas as entidades referências consistentes entre si.
+  // Remove registros órfãos APENAS quando não há nenhum cliente (banco vazio de
+  // referência). Não apaga dados de cliente existente em nenhuma circunstância,
+  // para evitar perda acidental de pagamentos/doses/fotos.
   const sanitizar = useCallback((dbIn: MounjaroDb): MounjaroDb => {
-    const ids = new Set(dbIn.clientes.map((c) => c.id));
-    if (ids.size === 0) return dbIn;
-    const tem = (id?: string) => !!id && ids.has(id);
-    return {
-      ...dbIn,
-      pesagens: dbIn.pesagens.filter((p) => tem(p.clienteId)),
-      doses: dbIn.doses.filter((d) => tem(d.clienteId)),
-      pagamentos: dbIn.pagamentos.filter((p) => tem(p.clienteId)),
-      fotos: dbIn.fotos.filter((f) => tem(f.clienteId)),
-      auditoria: dbIn.auditoria.filter((a) => tem(a.clienteId)),
-      initialized: true,
-    };
+    if (dbIn.clientes.length > 0) return { ...dbIn, initialized: true };
+    return { ...emptyDb(), initialized: true };
   }, []);
+
+  const mergePorId = <T extends { id: string }>(a: T[], b: T[]): T[] => {
+    const map = new Map<string, T>();
+    for (const x of a) map.set(x.id, x);
+    for (const x of b) map.set(x.id, x); // nuvem prevalece em conflito de id
+    return Array.from(map.values());
+  };
 
   // Carrega dados (local + nuvem) quando o usuário está logado
   useEffect(() => {
     if (!authReady) return;
     if (!cloudUser) { setLoading(false); return; }
+    const scope = getScope();
+    if (!scope) { setLoading(false); return; }
     (async () => {
       try {
         // 1. Local primeiro (rápido)
@@ -122,30 +135,28 @@ export default function MounjaroApp() {
         if (local.clientes.length || local.doses.length || local.pesagens.length || local.pagamentos.length) {
           setDb(local);
         }
-        // 2. Nuvem (fonte da verdade entre aparelhos)
-        const cloud = await loadMounjaroCloud(cloudUser.uid);
-        if (cloud.clientes || cloud.doses || cloud.pesagens || cloud.pagamentos || cloud.fotos || cloud.auditoria) {
-          const merged = sanitizar({
-            clientes: cloud.clientes || [],
-            pesagens: cloud.pesagens || [],
-            doses: cloud.doses || [],
-            pagamentos: cloud.pagamentos || [],
-            fotos: cloud.fotos || [],
-            auditoria: cloud.auditoria || [],
-            config: { ...defaultConfig(), ...(cloud.config || {}) },
-            initialized: true,
-          });
-          setDb(merged);
-          saveMounjaroDb(merged).catch(() => {});
-          setLastSync(new Date().toISOString());
-        }
+        // 2. Nuvem (fonte da verdade entre aparelhos) — faz MERGE por id
+        const cloud = await loadMounjaroCloud(scope);
+        const merged: MounjaroDb = {
+          clientes: mergePorId(local.clientes, cloud.clientes || []),
+          pesagens: mergePorId(local.pesagens, cloud.pesagens || []),
+          doses: mergePorId(local.doses, cloud.doses || []),
+          pagamentos: mergePorId(local.pagamentos, cloud.pagamentos || []),
+          fotos: mergePorId(local.fotos, cloud.fotos || []),
+          auditoria: mergePorId(local.auditoria, cloud.auditoria || []),
+          config: { ...defaultConfig(), ...(cloud.config || {}), ...(local.config || {}) },
+          initialized: true,
+        };
+        setDb(merged);
+        saveMounjaroDb(merged).catch(() => {});
+        setLastSync(new Date().toISOString());
       } catch (e) {
         console.error(e);
       } finally {
         setLoading(false);
       }
     })();
-  }, [authReady, cloudUser]);
+  }, [authReady, cloudUser, getScope, sanitizar]);
 
   // Re-sync entre abas
   useEffect(() => {
@@ -181,6 +192,87 @@ export default function MounjaroApp() {
     setCloudUser(null);
     setLastSync(null);
     setCloudError(null);
+  };
+
+  // --- Gestão de clínica (espaço compartilhado da equipe) ---
+  const [clinicaLoading, setClinicaLoading] = useState(false);
+
+  const entrarClinica = async (codigo: string) => {
+    if (!cloudUser) return;
+    setClinicaLoading(true);
+    try {
+      const doc = await buscarClinica(codigo);
+      if (!doc) { toast.error('Clínica não encontrada para este código.'); return; }
+      setClinica(doc);
+      localStorage.setItem('mounjaro_clinica', JSON.stringify(doc));
+      toast.success(`Entrou na clínica "${doc.nome}".`);
+      setShowClinicaModal(false);
+      // recarrega dados da nova clínica
+      setLoading(true);
+      const cloud = await loadMounjaroCloud({ tipo: 'clinica', clinicaId: doc.id });
+      const localRaw = await loadMounjaroDb();
+      const merged: MounjaroDb = {
+        clientes: mergePorId(localRaw.clientes, cloud.clientes || []),
+        pesagens: mergePorId(localRaw.pesagens, cloud.pesagens || []),
+        doses: mergePorId(localRaw.doses, cloud.doses || []),
+        pagamentos: mergePorId(localRaw.pagamentos, cloud.pagamentos || []),
+        fotos: mergePorId(localRaw.fotos, cloud.fotos || []),
+        auditoria: mergePorId(localRaw.auditoria, cloud.auditoria || []),
+        config: { ...defaultConfig(), ...(cloud.config || {}), ...(localRaw.config || {}) },
+        initialized: true,
+      };
+      setDb(merged);
+      saveMounjaroDb(merged).catch(() => {});
+      setLoading(false);
+    } catch (e) {
+      toast.error('Erro ao entrar na clínica.');
+    } finally {
+      setClinicaLoading(false);
+    }
+  };
+
+  const criarNovaClinica = async (nome: string) => {
+    if (!cloudUser) return;
+    setClinicaLoading(true);
+    try {
+      const doc = await criarClinica(nome, cloudUser.uid);
+      setClinica(doc);
+      localStorage.setItem('mounjaro_clinica', JSON.stringify(doc));
+      toast.success(`Clínica "${doc.nome}" criada. Código: ${doc.codigo}`);
+      setShowClinicaModal(false);
+    } catch (e) {
+      toast.error('Erro ao criar clínica.');
+    } finally {
+      setClinicaLoading(false);
+    }
+  };
+
+  const sairClinica = () => {
+    setClinica(null);
+    localStorage.removeItem('mounjaro_clinica');
+    toast('Saiu do espaço compartilhado. Voltou ao seu armazenamento pessoal.');
+    if (cloudUser) {
+      setLoading(true);
+      const scope: MounjaroScope = { tipo: 'user', uid: cloudUser.uid };
+      loadMounjaroCloud(scope).then((cloud) => {
+        const localRaw = loadMounjaroDb();
+        localRaw.then((local) => {
+          const merged: MounjaroDb = {
+            clientes: mergePorId(local.clientes, cloud.clientes || []),
+            pesagens: mergePorId(local.pesagens, cloud.pesagens || []),
+            doses: mergePorId(local.doses, cloud.doses || []),
+            pagamentos: mergePorId(local.pagamentos, cloud.pagamentos || []),
+            fotos: mergePorId(local.fotos, cloud.fotos || []),
+            auditoria: mergePorId(local.auditoria, cloud.auditoria || []),
+            config: { ...defaultConfig(), ...(cloud.config || {}), ...(local.config || {}) },
+            initialized: true,
+          };
+          setDb(merged);
+          saveMounjaroDb(merged).catch(() => {});
+          setLoading(false);
+        });
+      }).catch(() => setLoading(false));
+    }
   };
 
   // --- Setters por entidade ---
@@ -321,6 +413,14 @@ export default function MounjaroApp() {
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {clinica ? (
+              <span className="hidden md:flex items-center gap-1 text-xs font-medium text-cyan-600 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-1 rounded-lg" title={`Espaço compartilhado: ${clinica.nome} (código ${clinica.codigo})`}>
+                <Users size={13} /> {clinica.nome}
+              </span>
+            ) : null}
+            <button onClick={() => setShowClinicaModal(true)} title="Espaço da equipe" className="flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1 border border-slate-200 dark:border-slate-700 rounded-lg">
+              <Users size={14} /> {clinica ? 'Equipe' : 'Entrar na equipe'}
+            </button>
             <span className="hidden sm:flex items-center gap-1 text-xs text-slate-400" title={lastSync ? `Sincronizado ${new Date(lastSync).toLocaleString('pt-BR')}` : 'Sincronizando...'}>
               {syncing ? <CloudOff size={14} className="text-amber-500" /> : <Cloud size={14} className="text-emerald-500" />}
             </span>
@@ -421,6 +521,112 @@ export default function MounjaroApp() {
         Mounjaro PRO é uma ferramenta de organização e acompanhamento. Não substitui avaliação,
         prescrição ou acompanhamento médico profissional. Sempre consulte um médico habilitado.
       </footer>
+
+      {/* Modal: Espaço da equipe (clínica compartilhada) */}
+      <ClinicaModal
+        open={showClinicaModal}
+        clinica={clinica}
+        onClose={() => setShowClinicaModal(false)}
+        onEntrar={entrarClinica}
+        onCriar={criarNovaClinica}
+        onSair={sairClinica}
+        loading={clinicaLoading}
+      />
+    </div>
+  );
+}
+
+function ClinicaModal({
+  open, clinica, onClose, onEntrar, onCriar, onSair, loading,
+}: {
+  open: boolean;
+  clinica: ClinicaDoc | null;
+  onClose: () => void;
+  onEntrar: (codigo: string) => void;
+  onCriar: (nome: string) => void;
+  onSair: () => void;
+  loading: boolean;
+}) {
+  const [modo, setModo] = useState<'menu' | 'entrar' | 'criar'>(clinica ? 'menu' : 'menu');
+  const [codigo, setCodigo] = useState('');
+  const [nome, setNome] = useState('');
+
+  useEffect(() => { if (open) { setModo('menu'); setCodigo(''); setNome(''); } }, [open]);
+
+  if (!open) return null;
+  return (
+    <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4" onClick={onClose}>
+      <div className="w-full max-w-sm bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-bold flex items-center gap-2"><Users size={20} className="text-cyan-600" /> Espaço da equipe</h3>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">✕</button>
+        </div>
+
+        {modo === 'menu' && (
+          <div className="space-y-3">
+            {clinica ? (
+              <div className="rounded-xl border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 p-4">
+                <p className="text-sm font-semibold text-cyan-700 dark:text-cyan-300">{clinica.nome}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Código de acesso: <span className="font-mono font-bold text-slate-700 dark:text-slate-200">{clinica.codigo}</span></p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Compartilhe este código com a equipe para que todos vejam os mesmos dados.</p>
+                <button onClick={onSair} className="mt-3 w-full text-sm font-medium text-rose-600 border border-rose-200 dark:border-rose-800 rounded-lg py-2 hover:bg-rose-50 dark:hover:bg-rose-950/40">
+                  Sair deste espaço
+                </button>
+              </div>
+            ) : (
+              <p className="text-sm text-slate-500 dark:text-slate-400">Você está no armazenamento pessoal. Crie um espaço de equipe ou entre com um código para compartilhar os dados com colegas.</p>
+            )}
+            <div className="grid grid-cols-2 gap-2">
+              {!clinica && (
+                <button onClick={() => setModo('criar')} className="text-sm font-semibold text-white bg-cyan-600 rounded-lg py-2.5 hover:bg-cyan-700">
+                  Criar espaço
+                </button>
+              )}
+              <button onClick={() => setModo('entrar')} className={`text-sm font-semibold rounded-lg py-2.5 border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 ${clinica ? 'col-span-2' : ''}`}>
+                Entrar com código
+              </button>
+            </div>
+          </div>
+        )}
+
+        {modo === 'entrar' && (
+          <div className="space-y-3">
+            <label className="text-sm text-slate-600 dark:text-slate-300">Código da clínica</label>
+            <input
+              value={codigo}
+              onChange={(e) => setCodigo(e.target.value.toUpperCase())}
+              placeholder="ABC123"
+              className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 px-3 py-2.5 text-sm uppercase tracking-widest outline-none focus:ring-2 focus:ring-cyan-500"
+              maxLength={6}
+            />
+            <div className="flex gap-2">
+              <button onClick={() => setModo('menu')} className="flex-1 text-sm py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700">Voltar</button>
+              <button onClick={() => onEntrar(codigo)} disabled={loading || codigo.length < 4} className="flex-1 text-sm font-semibold text-white bg-cyan-600 rounded-lg py-2.5 hover:bg-cyan-700 disabled:opacity-50">
+                {loading ? 'Entrando...' : 'Entrar'}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {modo === 'criar' && (
+          <div className="space-y-3">
+            <label className="text-sm text-slate-600 dark:text-slate-300">Nome do espaço (clínica)</label>
+            <input
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              placeholder="Ex.: Clínica Saúde+"
+              className="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-cyan-500"
+            />
+            <div className="flex gap-2">
+              <button onClick={() => setModo('menu')} className="flex-1 text-sm py-2.5 rounded-lg border border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700">Voltar</button>
+              <button onClick={() => onCriar(nome)} disabled={loading} className="flex-1 text-sm font-semibold text-white bg-cyan-600 rounded-lg py-2.5 hover:bg-cyan-700 disabled:opacity-50">
+                {loading ? 'Criando...' : 'Criar'}
+              </button>
+            </div>
+            <p className="text-xs text-slate-400">Um código será gerado automaticamente para você compartilhar com a equipe.</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
