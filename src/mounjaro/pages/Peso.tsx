@@ -5,7 +5,7 @@ import { Card, Button, Field, SelectField, Modal, Badge, StatCard } from '../ui'
 import { newId } from '../localDb';
 import {
   pesoAtual, pesoBase, pesoPerdido, perdaMediaPorDose, calcIMC, classificacaoIMC,
-  formatarDataCurta, formatarMoeda,
+  formatarDataCurta, formatarMoeda, LogAuditoriaFn,
 } from '../lib';
 
 interface Props {
@@ -13,11 +13,13 @@ interface Props {
   pesagens: PesagemMounjaro[];
   doses: DoseMounjaro[];
   setPesagens: (p: PesagemMounjaro[]) => void;
+  logAuditoria: LogAuditoriaFn;
 }
 
-export default function Peso({ clientes, pesagens, doses, setPesagens }: Props) {
+export default function Peso({ clientes, pesagens, doses, setPesagens, logAuditoria }: Props) {
   const [clienteSel, setClienteSel] = useState<string>('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [editandoId, setEditandoId] = useState<string | null>(null);
   const [form, setForm] = useState<Partial<PesagemMounjaro>>({ peso: 0 });
 
   const clientesAtivos = clientes.filter((c) => c.ativo);
@@ -25,27 +27,45 @@ export default function Peso({ clientes, pesagens, doses, setPesagens }: Props) 
   const cliente = clientes.find((c) => c.id === clienteId);
 
   const abrirNovo = (cid?: string) => {
+    setEditandoId(null);
     setForm({ clienteId: cid || clienteId, data: new Date().toISOString().slice(0, 10), peso: 0 });
+    setModalOpen(true);
+  };
+
+  const abrirEditar = (p: PesagemMounjaro) => {
+    setEditandoId(p.id);
+    setForm({ ...p });
     setModalOpen(true);
   };
 
   const salvar = () => {
     if (!form.clienteId || !form.data || !form.peso) return;
-    const nova: PesagemMounjaro = {
-      id: newId('peso'),
-      clienteId: form.clienteId,
-      data: form.data,
-      peso: Number(form.peso),
-      observacoes: form.observacoes,
-      createdAt: new Date().toISOString(),
-    };
-    setPesagens([...pesagens, nova]);
+    const cli = clientes.find((c) => c.id === form.clienteId);
+    if (editandoId) {
+      const atualizada: PesagemMounjaro = { ...(pesagens.find((p) => p.id === editandoId) as PesagemMounjaro), ...form, peso: Number(form.peso) } as PesagemMounjaro;
+      setPesagens(pesagens.map((p) => (p.id === editandoId ? atualizada : p)));
+      logAuditoria({ entidade: 'pesagem', acao: 'editar', resumo: `Pesagem ${atualizada.peso} kg de ${cli?.nome || '—'}`, clienteId: form.clienteId, refId: editandoId });
+    } else {
+      const nova: PesagemMounjaro = {
+        id: newId('peso'),
+        clienteId: form.clienteId,
+        data: form.data,
+        peso: Number(form.peso),
+        observacoes: form.observacoes,
+        createdAt: new Date().toISOString(),
+      };
+      setPesagens([...pesagens, nova]);
+      logAuditoria({ entidade: 'pesagem', acao: 'criar', resumo: `Pesagem ${nova.peso} kg de ${cli?.nome || '—'}`, clienteId: form.clienteId, refId: nova.id });
+    }
     setModalOpen(false);
+    setEditandoId(null);
   };
 
   const excluir = (p: PesagemMounjaro) => {
     if (!window.confirm('Excluir esta pesagem?')) return;
+    const cli = clientes.find((c) => c.id === p.clienteId);
     setPesagens(pesagens.filter((x) => x.id !== p.id));
+    logAuditoria({ entidade: 'pesagem', acao: 'excluir', resumo: `Pesagem ${p.peso} kg de ${cli?.nome || '—'}`, clienteId: p.clienteId, refId: p.id });
   };
 
   // Dados do gráfico para o cliente selecionado
@@ -152,7 +172,10 @@ export default function Peso({ clientes, pesagens, doses, setPesagens }: Props) 
                     <p className="font-medium">{p.peso} kg</p>
                     <p className="text-xs text-slate-400">{formatarDataCurta(p.data)}{p.observacoes ? ` · ${p.observacoes}` : ''}</p>
                   </div>
-                  <button onClick={() => excluir(p)} className="text-rose-500 text-sm">✕</button>
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => abrirEditar(p)} className="text-cyan-600 hover:text-cyan-800 text-sm" title="Editar">✎</button>
+                    <button onClick={() => excluir(p)} className="text-rose-500 text-sm">✕</button>
+                  </div>
                 </div>
               ))}
               {serie.length === 0 && <p className="text-sm text-slate-500">Sem registros.</p>}
@@ -163,7 +186,7 @@ export default function Peso({ clientes, pesagens, doses, setPesagens }: Props) 
 
       <Modal
         open={modalOpen}
-        title="Registrar pesagem"
+        title={editandoId ? 'Editar pesagem' : 'Registrar pesagem'}
         onClose={() => setModalOpen(false)}
         footer={
           <>

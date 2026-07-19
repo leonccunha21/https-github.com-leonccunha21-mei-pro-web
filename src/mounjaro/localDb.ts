@@ -1,4 +1,4 @@
-import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from './types';
+import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao, RegistroAuditoria } from './types';
 
 // Banco local do subsite Mounjaro. IndexedDB como armazenamento primário
 // (igual ao app principal), para funcionar como site estático (Vercel/GitHub).
@@ -52,7 +52,7 @@ async function idbPut(value: MounjaroDb): Promise<void> {
 }
 
 export function emptyDb(): MounjaroDb {
-  return { clientes: [], pesagens: [], doses: [], pagamentos: [], fotos: [], initialized: true };
+  return { clientes: [], pesagens: [], doses: [], pagamentos: [], fotos: [], auditoria: [], initialized: true };
 }
 
 export async function loadMounjaroDb(): Promise<MounjaroDb> {
@@ -65,6 +65,7 @@ export async function loadMounjaroDb(): Promise<MounjaroDb> {
         doses: local.doses || [],
         pagamentos: local.pagamentos || [],
         fotos: local.fotos || [],
+        auditoria: local.auditoria || [],
         initialized: true,
       };
     }

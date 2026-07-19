@@ -3,7 +3,7 @@ import { Plus, Wallet, Search, AlertTriangle, CheckCircle2, Clock } from 'lucide
 import { ClienteMounjaro, PagamentoMounjaro, DoseMounjaro } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge, StatCard } from '../ui';
 import { newId } from '../localDb';
-import { calcularScore, formatarMoeda, formatarDataCurta, diasEntre } from '../lib';
+import { calcularScore, formatarMoeda, formatarDataCurta, diasEntre, LogAuditoriaFn } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
@@ -11,12 +11,14 @@ interface Props {
   doses: DoseMounjaro[];
   setPagamentos: (p: PagamentoMounjaro[]) => void;
   setDoses: (d: DoseMounjaro[]) => void;
+  logAuditoria: LogAuditoriaFn;
 }
 
-export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos, setDoses }: Props) {
+export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos, setDoses, logAuditoria }: Props) {
   const [busca, setBusca] = useState('');
   const [filtroStatus, setFiltroStatus] = useState<'todos' | 'aberto' | 'pago'>('todos');
   const [modalOpen, setModalOpen] = useState(false);
+  const [editandoId, setEditandoId] = useState<string | null>(null);
   const [form, setForm] = useState<Partial<PagamentoMounjaro>>({});
 
   const clientesAtivos = clientes.filter((c) => c.ativo);
@@ -26,6 +28,7 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
     const ultimaDoseNaoPaga = clientePre
       ? doses.filter((d) => d.clienteId === clientePre.id && !d.pago).sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0]
       : undefined;
+    setEditandoId(null);
     setForm({
       clienteId: clientePre?.id,
       dataVencimento: new Date().toISOString().slice(0, 10),
@@ -37,28 +40,49 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
     setModalOpen(true);
   };
 
+  const abrirEditar = (p: PagamentoMounjaro) => {
+    setEditandoId(p.id);
+    setForm({ ...p });
+    setModalOpen(true);
+  };
+
   const salvar = () => {
     if (!form.clienteId || !form.dataVencimento || !form.valor) return;
-    const novo: PagamentoMounjaro = {
-      id: newId('pag'),
-      clienteId: form.clienteId,
-      dataVencimento: form.dataVencimento,
-      dataPagamento: form.status === 'pago' ? (form.dataPagamento || new Date().toISOString().slice(0, 10)) : undefined,
-      descricao: form.descricao || '',
-      valor: Number(form.valor),
-      status: form.status || 'pendente',
-      metodo: form.metodo,
-      referenciaDoseId: form.referenciaDoseId,
-      observacoes: form.observacoes,
-      createdAt: new Date().toISOString(),
-    };
-    setPagamentos([novo, ...pagamentos]);
+    if (editandoId) {
+      const atualizado: PagamentoMounjaro = { ...(pagamentos.find((p) => p.id === editandoId) as PagamentoMounjaro), ...form,
+        valor: Number(form.valor),
+        status: form.status || 'pendente',
+        dataPagamento: form.status === 'pago' ? (form.dataPagamento || new Date().toISOString().slice(0, 10)) : undefined,
+      } as PagamentoMounjaro;
+      setPagamentos(pagamentos.map((p) => (p.id === editandoId ? atualizado : p)));
+      logAuditoria({ entidade: 'pagamento', acao: 'editar', resumo: `Pagamento ${formatarMoeda(atualizado.valor)} de ${nomeCliente(atualizado.clienteId)}`, clienteId: atualizado.clienteId, refId: editandoId });
+      if (atualizado.referenciaDoseId && atualizado.status === 'pago') {
+        setDoses(doses.map((d) => (d.id === atualizado.referenciaDoseId ? { ...d, pago: true } : d)));
+      }
+    } else {
+      const novo: PagamentoMounjaro = {
+        id: newId('pag'),
+        clienteId: form.clienteId,
+        dataVencimento: form.dataVencimento,
+        dataPagamento: form.status === 'pago' ? (form.dataPagamento || new Date().toISOString().slice(0, 10)) : undefined,
+        descricao: form.descricao || '',
+        valor: Number(form.valor),
+        status: form.status || 'pendente',
+        metodo: form.metodo,
+        referenciaDoseId: form.referenciaDoseId,
+        observacoes: form.observacoes,
+        createdAt: new Date().toISOString(),
+      };
+      setPagamentos([novo, ...pagamentos]);
+      logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento ${formatarMoeda(novo.valor)} de ${nomeCliente(novo.clienteId)}`, clienteId: novo.clienteId, refId: novo.id });
 
-    // Marca a dose vinculada como paga
-    if (novo.referenciaDoseId && novo.status === 'pago') {
-      setDoses(doses.map((d) => (d.id === novo.referenciaDoseId ? { ...d, pago: true } : d)));
+      // Marca a dose vinculada como paga
+      if (novo.referenciaDoseId && novo.status === 'pago') {
+        setDoses(doses.map((d) => (d.id === novo.referenciaDoseId ? { ...d, pago: true } : d)));
+      }
     }
     setModalOpen(false);
+    setEditandoId(null);
   };
 
   const marcarPago = (p: PagamentoMounjaro) => {
@@ -71,11 +95,13 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
     if (p.referenciaDoseId) {
       setDoses(doses.map((d) => (d.id === p.referenciaDoseId ? { ...d, pago: true } : d)));
     }
+    logAuditoria({ entidade: 'pagamento', acao: 'editar', resumo: `Marcou como pago ${formatarMoeda(atualizado.valor)} de ${nomeCliente(p.clienteId)}`, clienteId: p.clienteId, refId: p.id });
   };
 
   const excluir = (p: PagamentoMounjaro) => {
     if (!window.confirm('Excluir este registro de pagamento?')) return;
     setPagamentos(pagamentos.filter((x) => x.id !== p.id));
+    logAuditoria({ entidade: 'pagamento', acao: 'excluir', resumo: `Pagamento ${formatarMoeda(p.valor)} de ${nomeCliente(p.clienteId)}`, clienteId: p.clienteId, refId: p.id });
   };
 
   const resumo = useMemo(() => {
@@ -199,6 +225,7 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
                 {p.status !== 'pago' && p.status !== 'cancelado' && (
                   <button onClick={() => marcarPago(p)} className="text-emerald-600 hover:text-emerald-700 text-xs font-medium">pagar</button>
                 )}
+                <button onClick={() => abrirEditar(p)} className="text-cyan-600 hover:text-cyan-800 text-sm" title="Editar">✎</button>
                 <button onClick={() => excluir(p)} className="text-rose-500 text-sm">✕</button>
               </div>
             </Card>
@@ -209,7 +236,7 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
 
       <Modal
         open={modalOpen}
-        title="Novo pagamento"
+        title={editandoId ? 'Editar pagamento' : 'Novo pagamento'}
         onClose={() => setModalOpen(false)}
         footer={
           <>

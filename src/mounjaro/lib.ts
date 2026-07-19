@@ -1,4 +1,4 @@
-import { ClienteMounjaro, DoseMounjaro, MounjaroDb, PagamentoMounjaro, PesagemMounjaro, ScorePagamento, DoseLevel } from './types';
+import { ClienteMounjaro, DoseMounjaro, MounjaroDb, PagamentoMounjaro, PesagemMounjaro, ScorePagamento, DoseLevel, RegistroAuditoria } from './types';
 
 export function calcIMC(pesoKg: number, alturaCm: number): number {
   if (!pesoKg || !alturaCm) return 0;
@@ -326,5 +326,35 @@ export function mensagemCobranca(c: CobrancaPendente): string {
     return `Olá ${nome}! Passando para lembrar sobre o pagamento de ${v} (${c.pagamento.descricao}) que está vencido. Pode nos enviar assim que possível? Obrigado!`;
   }
   return `Olá ${nome}! Lembrando que o pagamento de ${v} (${c.pagamento.descricao}) vence em ${formatarDataCurta(c.pagamento.dataVencimento)}. Obrigado!`;
+}
+
+export interface LogAuditoriaParams {
+  usuario: string;
+  entidade: 'cliente' | 'dose' | 'pagamento' | 'pesagem' | 'foto';
+  acao: 'criar' | 'editar' | 'excluir';
+  resumo: string;
+  clienteId?: string;
+  refId?: string;
+  agora?: string;
+}
+
+export type LogAuditoriaFn = (params: Pick<LogAuditoriaParams, 'entidade' | 'acao' | 'resumo' | 'clienteId' | 'refId'>) => void;
+
+// Cria um registro de auditoria. Mantém no máximo 500 registros (FIFO).
+export function criarRegistroAuditoria(params: LogAuditoriaParams, historico: RegistroAuditoria[]): RegistroAuditoria[] {
+  const agora = params.agora || new Date().toISOString();
+  const registro: RegistroAuditoria = {
+    id: `aud_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    data: agora,
+    usuario: params.usuario,
+    entidade: params.entidade,
+    acao: params.acao,
+    resumo: params.resumo,
+    clienteId: params.clienteId,
+    refId: params.refId,
+  };
+  const next = [...historico, registro];
+  // Limita o histórico para não crescer indefinidamente.
+  return next.length > 500 ? next.slice(next.length - 500) : next;
 }
 

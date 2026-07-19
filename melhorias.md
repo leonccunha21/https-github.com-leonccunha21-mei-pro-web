@@ -134,5 +134,7 @@ tratamento com **tirzepatida (Mounjaro®)**. Informações clínicas baseadas na
   sincronizando na nuvem como as demais entidades (`FotoEvolucao` em `fotos`, `image.ts`, `Fotos.tsx`).
   Inclui galeria, legenda/data, visualização em tela cheia (setas/Esc) e **comparar início vs. atual**.
   Miniaturas também aparecem na ficha do cliente.
-- [ ] **Auditoria**: histórico de quem alterou dose/pagamento (útil para a cliente).
+- [x] **Auditoria**: nova aba "Auditoria" registra histórico de alterações críticas
+  (criar/editar/excluir de clientes, doses, pagamentos, pesagens e fotos) com usuário, data/hora e resumo.
+  Os registros sincronizam na nuvem e ficam limitados aos últimos 500 eventos (`RegistroAuditoria`, `Auditoria.tsx`, `criarRegistroAuditoria` em `lib.ts`).
 

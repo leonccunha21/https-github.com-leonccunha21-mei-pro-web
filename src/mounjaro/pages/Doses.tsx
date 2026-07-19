@@ -3,17 +3,19 @@ import { Plus, Syringe, Search, CalendarClock } from 'lucide-react';
 import { ClienteMounjaro, DoseMounjaro } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge } from '../ui';
 import { newId } from '../localDb';
-import { DOSES_DISPONIVEIS, formatarDataCurta, proximaDose, statusDose, diasEntre, sugerirProximaDose } from '../lib';
+import { DOSES_DISPONIVEIS, formatarDataCurta, proximaDose, statusDose, diasEntre, sugerirProximaDose, LogAuditoriaFn } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
   doses: DoseMounjaro[];
   setDoses: (d: DoseMounjaro[]) => void;
+  logAuditoria: LogAuditoriaFn;
 }
 
-export default function Doses({ clientes, doses, setDoses }: Props) {
+export default function Doses({ clientes, doses, setDoses, logAuditoria }: Props) {
   const [busca, setBusca] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [editandoId, setEditandoId] = useState<string | null>(null);
   const [form, setForm] = useState<Partial<DoseMounjaro>>({});
 
   const clientesAtivos = clientes.filter((c) => c.ativo);
@@ -23,6 +25,7 @@ export default function Doses({ clientes, doses, setDoses }: Props) {
       ? doses.filter((d) => d.clienteId === clientePre.id).sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0]
       : undefined;
     const sugestao = sugerirProximaDose(ultima);
+    setEditandoId(null);
     setForm({
       clienteId: clientePre?.id,
       dataAplicacao: new Date().toISOString().slice(0, 10),
@@ -34,30 +37,53 @@ export default function Doses({ clientes, doses, setDoses }: Props) {
     setModalOpen(true);
   };
 
+  const abrirEditar = (d: DoseMounjaro) => {
+    setEditandoId(d.id);
+    setForm({ ...d });
+    setModalOpen(true);
+  };
+
   const salvar = () => {
     if (!form.clienteId || !form.dataAplicacao) return;
-    const nova: DoseMounjaro = {
-      id: newId('dose'),
-      clienteId: form.clienteId,
-      dataAplicacao: form.dataAplicacao,
-      dose: Number(form.dose) as DoseMounjaro['dose'],
-      intervaloDias: Number(form.intervaloDias) || 7,
-      localAplicacao: form.localAplicacao,
-      lote: form.lote,
-      observacoes: form.observacoes,
-      efeitosColaterais: form.efeitosColaterais,
-      pesoAplicacao: Number(form.pesoAplicacao) || undefined,
-      pago: form.pago === true,
-      valorDose: Number(form.valorDose) || undefined,
-      createdAt: new Date().toISOString(),
-    };
-    setDoses([nova, ...doses]);
+    const cliente = clientes.find((c) => c.id === form.clienteId);
+    if (editandoId) {
+      const atualizada: DoseMounjaro = { ...(doses.find((d) => d.id === editandoId) as DoseMounjaro), ...form,
+        dose: Number(form.dose) as DoseMounjaro['dose'],
+        intervaloDias: Number(form.intervaloDias) || 7,
+        pesoAplicacao: Number(form.pesoAplicacao) || undefined,
+        valorDose: Number(form.valorDose) || undefined,
+        pago: form.pago === true,
+      } as DoseMounjaro;
+      setDoses(doses.map((d) => (d.id === editandoId ? atualizada : d)));
+      logAuditoria({ entidade: 'dose', acao: 'editar', resumo: `Dose ${atualizada.dose} mg de ${cliente?.nome || '—'}`, clienteId: form.clienteId, refId: editandoId });
+    } else {
+      const nova: DoseMounjaro = {
+        id: newId('dose'),
+        clienteId: form.clienteId,
+        dataAplicacao: form.dataAplicacao,
+        dose: Number(form.dose) as DoseMounjaro['dose'],
+        intervaloDias: Number(form.intervaloDias) || 7,
+        localAplicacao: form.localAplicacao,
+        lote: form.lote,
+        observacoes: form.observacoes,
+        efeitosColaterais: form.efeitosColaterais,
+        pesoAplicacao: Number(form.pesoAplicacao) || undefined,
+        pago: form.pago === true,
+        valorDose: Number(form.valorDose) || undefined,
+        createdAt: new Date().toISOString(),
+      };
+      setDoses([nova, ...doses]);
+      logAuditoria({ entidade: 'dose', acao: 'criar', resumo: `Dose ${nova.dose} mg de ${cliente?.nome || '—'}`, clienteId: form.clienteId, refId: nova.id });
+    }
     setModalOpen(false);
+    setEditandoId(null);
   };
 
   const excluir = (d: DoseMounjaro) => {
     if (!window.confirm('Excluir esta dose?')) return;
+    const cliente = clientes.find((c) => c.id === d.clienteId);
     setDoses(doses.filter((x) => x.id !== d.id));
+    logAuditoria({ entidade: 'dose', acao: 'excluir', resumo: `Dose ${d.dose} mg de ${cliente?.nome || '—'}`, clienteId: d.clienteId, refId: d.id });
   };
 
   const nomeCliente = (id: string) => clientes.find((c) => c.id === id)?.nome || 'Desconhecido';
@@ -148,6 +174,7 @@ export default function Doses({ clientes, doses, setDoses }: Props) {
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {d.pago ? <Badge tone="green">pago</Badge> : <Badge tone="amber">não pago</Badge>}
+              <button onClick={() => abrirEditar(d)} className="text-cyan-600 hover:text-cyan-800 text-sm" title="Editar">✎</button>
               <button onClick={() => excluir(d)} className="text-rose-500 hover:text-rose-700 text-sm">✕</button>
             </div>
           </Card>

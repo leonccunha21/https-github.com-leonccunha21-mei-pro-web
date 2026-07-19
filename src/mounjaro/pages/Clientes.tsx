@@ -3,7 +3,7 @@ import { Plus, Pencil, Trash2, UserPlus, Search, Scale, Syringe, Wallet } from '
 import { ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge, StatCard } from '../ui';
 import { newId } from '../localDb';
-import { calcIMC, classificacaoIMC, pesoAtual, pesoPerdido, calcularScore, formatarMoeda } from '../lib';
+import { calcIMC, classificacaoIMC, pesoAtual, pesoPerdido, calcularScore, formatarMoeda, LogAuditoriaFn } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
@@ -13,9 +13,10 @@ interface Props {
   fotos: FotoEvolucao[];
   setClientes: (c: ClienteMounjaro[]) => void;
   setPesagens: (p: PesagemMounjaro[]) => void;
+  logAuditoria: LogAuditoriaFn;
 }
 
-export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos, setClientes, setPesagens }: Props) {
+export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos, setClientes, setPesagens, logAuditoria }: Props) {
   const [busca, setBusca] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editando, setEditando] = useState<ClienteMounjaro | null>(null);
@@ -54,6 +55,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
         updatedAt: agora,
       } as ClienteMounjaro;
       setClientes(clientes.map((c) => (c.id === editando.id ? atualizado : c)));
+      logAuditoria({ entidade: 'cliente', acao: 'editar', resumo: `Cliente ${atualizado.nome}`, clienteId: atualizado.id, refId: atualizado.id });
       // Se alterou o peso inicial, atualiza a pesagem-base (data de início) do paciente.
       if (pesoInicial) {
         const existente = pesagens.find((p) => p.clienteId === editando.id && p.observacoes === 'Peso inicial (cadastro)');
@@ -88,6 +90,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
         updatedAt: agora,
       };
       setClientes([novo, ...clientes]);
+      logAuditoria({ entidade: 'cliente', acao: 'criar', resumo: `Cliente ${novo.nome}`, clienteId: novo.id, refId: novo.id });
       // Cria a pesagem inicial automaticamente para que os cálculos de evolução
       // e o gráfico de peso comecem a partir do peso informado no cadastro.
       if (pesoInicial) {
@@ -109,6 +112,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
     if (!window.confirm(`Excluir ${c.nome}? Isso também remove pesagens e doses vinculadas.`)) return;
     setClientes(clientes.filter((x) => x.id !== c.id));
     setPesagens(pesagens.filter((p) => p.clienteId !== c.id));
+    logAuditoria({ entidade: 'cliente', acao: 'excluir', resumo: `Cliente ${c.nome}`, clienteId: c.id, refId: c.id });
     setDetalhe(null);
   };
 

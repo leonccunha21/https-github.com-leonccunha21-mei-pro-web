@@ -4,15 +4,16 @@ import { ClienteMounjaro, FotoEvolucao } from '../types';
 import { Card, Button, Field, SelectField, Modal } from '../ui';
 import { newId } from '../localDb';
 import { compactarImagem } from '../image';
-import { formatarDataCurta } from '../lib';
+import { formatarDataCurta, LogAuditoriaFn } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
   fotos: FotoEvolucao[];
   setFotos: (f: FotoEvolucao[]) => void;
+  logAuditoria: LogAuditoriaFn;
 }
 
-export default function Fotos({ clientes, fotos, setFotos }: Props) {
+export default function Fotos({ clientes, fotos, setFotos, logAuditoria }: Props) {
   const [clienteId, setClienteId] = useState('');
   const [busca, setBusca] = useState('');
   const [modalAberto, setModalAberto] = useState(false);
@@ -66,6 +67,8 @@ export default function Fotos({ clientes, fotos, setFotos }: Props) {
       createdAt: agora,
     };
     setFotos([...fotos, foto]);
+    const cli = clientes.find((c) => c.id === clienteId);
+    logAuditoria({ entidade: 'foto', acao: 'criar', resumo: `Foto de ${cli?.nome || '—'}${legenda.trim() ? ` (${legenda.trim()})` : ''}`, clienteId, refId: foto.id });
     setModalAberto(false);
     setPreview(null);
     setClienteId('');
@@ -73,7 +76,9 @@ export default function Fotos({ clientes, fotos, setFotos }: Props) {
 
   const excluir = (f: FotoEvolucao) => {
     if (!window.confirm('Excluir esta foto?')) return;
+    const cli = clientes.find((c) => c.id === f.clienteId);
     setFotos(fotos.filter((x) => x.id !== f.id));
+    logAuditoria({ entidade: 'foto', acao: 'excluir', resumo: `Foto de ${cli?.nome || '—'}`, clienteId: f.clienteId, refId: f.id });
   };
 
   const abrirVer = (f: FotoEvolucao) => {

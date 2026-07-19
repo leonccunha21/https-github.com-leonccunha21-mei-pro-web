@@ -92,6 +92,7 @@ export interface MounjaroDb {
   doses: DoseMounjaro[];
   pagamentos: PagamentoMounjaro[];
   fotos: FotoEvolucao[];
+  auditoria: RegistroAuditoria[];
   initialized?: boolean;
 }
 
@@ -103,4 +104,16 @@ export interface FotoEvolucao {
   // Imagem compactada em base64 (data URL). Armazenada junto no sync da nuvem.
   imagem: string;
   createdAt: string;
+}
+
+// Registro de auditoria: histórico de alterações críticas (doses, pagamentos, clientes).
+export interface RegistroAuditoria {
+  id: string;
+  data: string; // ISO completo
+  usuario: string; // e-mail/nome do usuário logado (ou "local")
+  entidade: 'cliente' | 'dose' | 'pagamento' | 'pesagem' | 'foto';
+  acao: 'criar' | 'editar' | 'excluir';
+  resumo: string; // texto legível (ex.: "Dose 5 mg de Maria")
+  clienteId?: string;
+  refId?: string; // id do registro afetado
 }
