@@ -120,7 +120,9 @@ tratamento com **tirzepatida (Mounjaro®)**. Informações clínicas baseadas na
   (snapshot incremental); `gerarSnapshot` disponível para exportação manual.
 - [ ] **Multiúsuario por clínica**: hoje cada conta Google tem seus próprios pacientes;
   se a cliente quiser equipe, adicionar `clinicaId` e regras de acesso compartilhado.
-- [ ] **Relatórios/exportação**: exportar relatório de pacientes (PDF/Excel) com evolução de peso e financeiro.
+- [x] **Relatórios/exportação**: nova aba "Relatório" gera resumo por paciente (dados, evolução de peso
+  com Δ e IMC, doses aplicadas e financeiro) com botão **Imprimir/PDF** (estilo de impressão limpo) e
+  exportação JSON (`Relatorio.tsx`).
 - [ ] **Notificação push/e-mail**: além do banner no app, avisar o paciente quando a dose estiver próxima.
 - [ ] **Foto de evolução**: anexar fotos do paciente por etapa do tratamento.
 - [ ] **Auditoria**: histórico de quem alterou dose/pagamento (útil para a cliente).

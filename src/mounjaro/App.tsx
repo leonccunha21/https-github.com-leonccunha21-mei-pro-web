@@ -3,7 +3,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   LayoutDashboard, Users, Syringe, Scale, Wallet, ArrowLeft, Sun, Moon, Info,
-  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle,
+  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle, FileText,
 } from 'lucide-react';
 import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro } from './types';
 import { emptyDb, loadMounjaroDb, saveMounjaroDb } from './localDb';
@@ -14,10 +14,11 @@ import Doses from './pages/Doses';
 import Peso from './pages/Peso';
 import Pagamentos from './pages/Pagamentos';
 import Referencia from './pages/Referencia';
+import Relatorio from './pages/Relatorio';
 import { initAuth, googleSignIn, logoutUser } from '../lib/firebase';
 import type { User } from 'firebase/auth';
 
-export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'referencia';
+export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'relatorio' | 'referencia';
 
 const NAV: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
@@ -25,6 +26,7 @@ const NAV: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: 'doses', label: 'Doses', icon: <Syringe size={20} /> },
   { id: 'peso', label: 'Peso', icon: <Scale size={20} /> },
   { id: 'pagamentos', label: 'Pagamentos', icon: <Wallet size={20} /> },
+  { id: 'relatorio', label: 'Relatório', icon: <FileText size={20} /> },
   { id: 'referencia', label: 'Referência', icon: <Info size={20} /> },
 ];
 
@@ -342,6 +344,7 @@ export default function MounjaroApp() {
             {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} setDoses={setDoses} />}
             {activeTab === 'peso' && <Peso clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} setPesagens={setPesagens} />}
             {activeTab === 'pagamentos' && <Pagamentos clientes={db.clientes} pagamentos={db.pagamentos} doses={db.doses} setPagamentos={setPagamentos} setDoses={setDoses} />}
+            {activeTab === 'relatorio' && <Relatorio clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} />}
             {activeTab === 'referencia' && <Referencia />}
           </motion.div>
         </AnimatePresence>
