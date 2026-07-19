@@ -270,3 +270,61 @@ export function lembrarDoses(clientes: ClienteMounjaro[], doses: DoseMounjaro[])
 export function gerarSnapshot(db: MounjaroDb): string {
   return JSON.stringify({ ...db, initialized: true, _snapshotAt: new Date().toISOString() }, null, 2);
 }
+
+// Cobranças pendentes/atrasadas que merecem lembrete ao cliente.
+export interface CobrancaPendente {
+  pagamento: PagamentoMounjaro;
+  cliente: ClienteMounjaro;
+  vencida: boolean;
+  dias: number; // negativo se vencida, positivo se vence em N dias
+}
+
+export function cobrancasPendentes(
+  clientes: ClienteMounjaro[],
+  pagamentos: PagamentoMounjaro[],
+  hoje: string = new Date().toISOString().slice(0, 10)
+): CobrancaPendente[] {
+  const porId = new Map(clientes.map((c) => [c.id, c]));
+  return pagamentos
+    .filter((p) => p.status === 'pendente' || p.status === 'atrasado')
+    .map((p) => {
+      const cliente = porId.get(p.clienteId);
+      if (!cliente) return null;
+      const diff = diasEntre(hoje, p.dataVencimento); // >0 vence no futuro, <0 vencida
+      return { pagamento: p, cliente, vencida: diff < 0, dias: diff };
+    })
+    .filter((x): x is CobrancaPendente => x !== null)
+    .sort((a, b) => a.dias - b.dias); // mais urgentes (mais negativas) primeiro
+}
+
+// Gera um link de WhatsApp (wa.me) com mensagem pronta para avisar o cliente.
+export function linkWhatsapp(telefone: string | undefined, mensagem: string): string | null {
+  if (!telefone) return null;
+  const num = telefone.replace(/\D/g, '');
+  if (num.length < 10) return null;
+  return `https://wa.me/${num}?text=${encodeURIComponent(mensagem)}`;
+}
+
+// Monta a mensagem de lembrete de dose para o paciente.
+export function mensagemLembreteDose(cliente: ClienteMounjaro, proxima: string | null, status: LembreteDose['status']): string {
+  const nome = cliente.nome.split(' ')[0];
+  const data = proxima ? formatarDataCurta(proxima) : 'em breve';
+  if (status === 'atrasada') {
+    return `Olá ${nome}! Notei que sua aplicação de Mounjaro está atrasada. Por favor, agende sua dose o quanto antes. Qualquer dúvida, estou à disposição.`;
+  }
+  if (status === 'hoje') {
+    return `Olá ${nome}! Lembrando que hoje é o dia da sua aplicação de Mounjaro. Não esqueça! 💉`;
+  }
+  return `Olá ${nome}! Sua próxima aplicação de Mounjaro está prevista para ${data}. Vamos nos preparar? Qualquer dúvida, estou à disposição.`;
+}
+
+// Monta a mensagem de cobrança para o paciente.
+export function mensagemCobranca(c: CobrancaPendente): string {
+  const nome = c.cliente.nome.split(' ')[0];
+  const v = formatarMoeda(c.pagamento.valor);
+  if (c.vencida) {
+    return `Olá ${nome}! Passando para lembrar sobre o pagamento de ${v} (${c.pagamento.descricao}) que está vencido. Pode nos enviar assim que possível? Obrigado!`;
+  }
+  return `Olá ${nome}! Lembrando que o pagamento de ${v} (${c.pagamento.descricao}) vence em ${formatarDataCurta(c.pagamento.dataVencimento)}. Obrigado!`;
+}
+

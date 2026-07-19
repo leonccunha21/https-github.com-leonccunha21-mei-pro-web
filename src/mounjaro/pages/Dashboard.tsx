@@ -1,15 +1,21 @@
-import React, { useMemo } from 'react';
-import { Users, Syringe, Scale, Wallet, TrendingDown, AlertTriangle, CheckCircle2, Clock } from 'lucide-react';
+import React, { useMemo, useEffect } from 'react';
+import { Users, Syringe, Scale, Wallet, TrendingDown, AlertTriangle, CheckCircle2, Clock, MessageCircle, Bell } from 'lucide-react';
 import { MounjaroDb } from '../types';
 import { StatCard, Card, Badge } from '../ui';
 import {
   calcularScore, pesoAtual, pesoPerdido, statusDose, proximaDose, formatarMoeda, formatarDataCurta,
-  lembrarDoses,
+  lembrarDoses, cobrancasPendentes, linkWhatsapp, mensagemLembreteDose, mensagemCobranca,
 } from '../lib';
 import type { Tab } from '../App';
 
 export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNavigate: (t: Tab) => void }) {
   const { clientes, doses, pesagens, pagamentos } = db;
+
+  const abrirWhatsapp = (telefone: string | undefined, msg: string) => {
+    const url = linkWhatsapp(telefone, msg);
+    if (!url) { alert('Paciente sem telefone cadastrado para envio de lembrete.'); return; }
+    window.open(url, '_blank');
+  };
 
   const metricas = useMemo(() => {
     const ativos = clientes.filter((c) => c.ativo);
@@ -50,6 +56,24 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
   const lembretes = useMemo(() => lembrarDoses(clientes, doses), [clientes, doses]);
   const lembretesUrgentes = lembretes.filter((l) => l.status === 'atrasada' || l.status === 'hoje' || l.status === 'amanha');
 
+  const cobrancas = useMemo(() => cobrancasPendentes(clientes, pagamentos), [clientes, pagamentos]);
+  const cobrancasUrgentes = cobrancas.filter((c) => c.vencida || c.dias <= 3);
+
+  // Notificação do navegador (lembrete local ao próprio profissional).
+  useEffect(() => {
+    if (typeof Notification === 'undefined') return;
+    if (Notification.permission !== 'granted') return;
+    const atrasadas = lembretes.filter((l) => l.status === 'atrasada').length;
+    const vencidas = cobrancas.filter((c) => c.vencida).length;
+    if (atrasadas > 0) {
+      new Notification('Mounjaro PRO', { body: `${atrasadas} dose(s) de aplicação em atraso.` });
+    }
+    if (vencidas > 0) {
+      new Notification('Mounjaro PRO', { body: `${vencidas} cobrança(s) vencida(s).` });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="space-y-5">
       <div>
@@ -73,9 +97,44 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
                   <span className="text-sm font-medium truncate">{l.cliente.nome}</span>
                   <span className="text-xs opacity-80">{txt}</span>
                 </div>
-                <button onClick={() => onNavigate('doses')} className="text-xs font-semibold underline shrink-0 ml-2">
-                  registrar dose
-                </button>
+                <div className="flex items-center gap-2 shrink-0 ml-2">
+                  <button onClick={() => abrirWhatsapp(l.cliente.telefone, mensagemLembreteDose(l.cliente, l.proxima, l.status))}
+                    title="Avisar paciente no WhatsApp" className="text-cyan-700 dark:text-cyan-300 hover:scale-110 transition">
+                    <MessageCircle size={16} />
+                  </button>
+                  <button onClick={() => onNavigate('doses')} className="text-xs font-semibold underline">
+                    registrar dose
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Lembretes de cobrança (banner proativo) */}
+      {cobrancasUrgentes.length > 0 && (
+        <div className="space-y-2">
+          {cobrancasUrgentes.slice(0, 5).map((c) => {
+            const tom = c.vencida ? 'border-rose-300 dark:border-rose-700 bg-rose-50 dark:bg-rose-950/30'
+              : 'border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30';
+            const txt = c.vencida ? `${Math.abs(c.dias)} dia(s) em atraso` : `vence em ${c.dias} dia(s)`;
+            return (
+              <div key={c.pagamento.id} className={`flex items-center justify-between rounded-xl border px-4 py-2.5 ${tom}`}>
+                <div className="flex items-center gap-2 min-w-0">
+                  <Wallet size={16} className="shrink-0" />
+                  <span className="text-sm font-medium truncate">{c.cliente.nome}</span>
+                  <span className="text-xs opacity-80">{formatarMoeda(c.pagamento.valor)} · {txt}</span>
+                </div>
+                <div className="flex items-center gap-2 shrink-0 ml-2">
+                  <button onClick={() => abrirWhatsapp(c.cliente.telefone, mensagemCobranca(c))}
+                    title="Avisar paciente no WhatsApp" className="text-cyan-700 dark:text-cyan-300 hover:scale-110 transition">
+                    <MessageCircle size={16} />
+                  </button>
+                  <button onClick={() => onNavigate('pagamentos')} className="text-xs font-semibold underline">
+                    ver
+                  </button>
+                </div>
               </div>
             );
           })}

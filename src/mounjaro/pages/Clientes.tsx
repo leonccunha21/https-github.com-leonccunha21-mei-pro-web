@@ -40,17 +40,28 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, setCli
     if (!form.nome?.trim()) return;
     const agora = new Date().toISOString();
     const imc = calcIMC(Number(form.pesoInicial) || 0, Number(form.alturaCm) || 0);
+    const pesoInicial = Number(form.pesoInicial) || undefined;
+    const dataBase = form.dataInicioTratamento || agora.slice(0, 10);
 
     if (editando) {
       const atualizado: ClienteMounjaro = {
         ...editando,
         ...form,
         alturaCm: Number(form.alturaCm) || undefined,
-        pesoInicial: Number(form.pesoInicial) || undefined,
+        pesoInicial: pesoInicial,
         imcInicial: imc || undefined,
         updatedAt: agora,
       } as ClienteMounjaro;
       setClientes(clientes.map((c) => (c.id === editando.id ? atualizado : c)));
+      // Se alterou o peso inicial, atualiza a pesagem-base (data de início) do paciente.
+      if (pesoInicial) {
+        const existente = pesagens.find((p) => p.clienteId === editando.id && p.observacoes === 'Peso inicial (cadastro)');
+        if (existente) {
+          setPesagens(pesagens.map((p) => (p.id === existente.id ? { ...p, peso: pesoInicial, data: dataBase } : p)));
+        } else {
+          setPesagens([{ id: newId('pes'), clienteId: editando.id, data: dataBase, peso: pesoInicial, observacoes: 'Peso inicial (cadastro)', createdAt: agora }, ...pesagens]);
+        }
+      }
     } else {
       const novo: ClienteMounjaro = {
         id: newId('cl'),
@@ -64,7 +75,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, setCli
         estado: form.estado,
         cpf: form.cpf,
         alturaCm: Number(form.alturaCm) || undefined,
-        pesoInicial: Number(form.pesoInicial) || undefined,
+        pesoInicial: pesoInicial,
         imcInicial: imc || undefined,
         comorbidades: form.comorbidades,
         objetivoPeso: Number(form.objetivoPeso) || undefined,
@@ -76,6 +87,19 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, setCli
         updatedAt: agora,
       };
       setClientes([novo, ...clientes]);
+      // Cria a pesagem inicial automaticamente para que os cálculos de evolução
+      // e o gráfico de peso comecem a partir do peso informado no cadastro.
+      if (pesoInicial) {
+        const pInicial: PesagemMounjaro = {
+          id: newId('pes'),
+          clienteId: novo.id,
+          data: dataBase,
+          peso: pesoInicial,
+          observacoes: 'Peso inicial (cadastro)',
+          createdAt: agora,
+        };
+        setPesagens([pInicial, ...pesagens]);
+      }
     }
     setModalOpen(false);
   };

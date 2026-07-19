@@ -123,7 +123,12 @@ tratamento com **tirzepatida (Mounjaro®)**. Informações clínicas baseadas na
 - [x] **Relatórios/exportação**: nova aba "Relatório" gera resumo por paciente (dados, evolução de peso
   com Δ e IMC, doses aplicadas e financeiro) com botão **Imprimir/PDF** (estilo de impressão limpo) e
   exportação JSON (`Relatorio.tsx`).
-- [ ] **Notificação push/e-mail**: além do banner no app, avisar o paciente quando a dose estiver próxima.
+- [x] **Lembretes/avisos ao paciente**: botão "avisar no WhatsApp" nos lembretes de dose (atrasada/hoje/amanhã)
+  e nas cobranças pendentes/atrasadas no Painel (`linkWhatsapp`, `mensagemLembreteDose`, `mensagemCobranca` em `lib.ts`).
+  Notificações do navegador (opt-in no header) alertam o profissional ao abrir o app.
+- [x] **Correção de cadastro/peso**: ao cadastrar (ou editar) cliente com peso inicial, o app agora cria
+  automaticamente a **pesagem inicial** (data = início do tratamento), corrigindo os cálculos de peso base,
+  perda e gráfico de evolução (`Clientes.tsx`).
 - [ ] **Foto de evolução**: anexar fotos do paciente por etapa do tratamento.
 - [ ] **Auditoria**: histórico de quem alterou dose/pagamento (útil para a cliente).
 

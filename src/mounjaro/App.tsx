@@ -3,7 +3,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   LayoutDashboard, Users, Syringe, Scale, Wallet, ArrowLeft, Sun, Moon, Info,
-  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle, FileText,
+  Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle, FileText, Bell,
 } from 'lucide-react';
 import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro } from './types';
 import { emptyDb, loadMounjaroDb, saveMounjaroDb } from './localDb';
@@ -293,6 +293,24 @@ export default function MounjaroApp() {
             </button>
             <button onClick={toggleDarkMode} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <button
+              onClick={async () => {
+                try {
+                  if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
+                    await Notification.requestPermission();
+                    toast.success('Notificações ativadas!');
+                  } else if (typeof Notification !== 'undefined' && Notification.permission === 'denied') {
+                    toast.error('Notificações bloqueadas no navegador.');
+                  } else {
+                    toast('Notificações já estão ativas.');
+                  }
+                } catch { /* ignore */ }
+              }}
+              title="Ativar notificações de lembrete"
+              className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700"
+            >
+              <Bell size={18} />
             </button>
           </div>
         </div>
