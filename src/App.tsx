@@ -96,9 +96,11 @@ function timeAgo(iso: string): string {
 import type { User } from 'firebase/auth';
 
 // Sincronização com a nuvem está ATIVADA (Firebase/Firestore).
-// Dados são enviados de forma incremental a cada alteração (debounce 2s)
-// e baixados automaticamente a cada 30s quando o usuário estiver logado.
-const SYNC_ENABLED = true;
+// App 100% LOCAL: os dados vivem no IndexedDB do navegador e são movidos entre
+// dispositivos via backup/restauração por arquivo (botões em Configurações).
+// A sincronização com a nuvem (Firebase) foi desativada definitivamente para
+// acabar com a corrupção/inconsistência de dados entre aparelhos.
+const SYNC_ENABLED = false;
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
 

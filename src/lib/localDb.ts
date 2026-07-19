@@ -76,16 +76,43 @@ async function idbPut(value: LocalDb): Promise<void> {
     tx.onerror = () => reject(tx.error);
   });
 }
+// Remove duplicatas por `id` de uma coleção (a sincronização antiga do Firebase
+// podia inserir a mesma venda duas vezes com timestamps diferentes, fazendo
+// "1+1=3" nos totais). Mantém a última ocorrência de cada id.
+function dedupeById<T extends { id?: string }>(items?: T[]): T[] | undefined {
+  if (!items || !Array.isArray(items)) return items;
+  const seen = new Map<string, T>();
+  for (const it of items) {
+    if (it && it.id) seen.set(it.id, it); // último vence
+    else seen.set('__no_id_' + seen.size, it); // sem id: mantém
+  }
+  return Array.from(seen.values());
+}
+
 export async function loadDb(): Promise<Partial<LocalDb> | null> {
-  // FONTE ÚNICA DE VERDADE: IndexedDB do navegador.
-  // O arquivo data/local-db.json (servidor) NUNCA é lido como fonte de dados,
-  // apenas espelhado na escrita (saveDb) como backup. Isso evita que dados
-  // antigos/estranhos do JSON contaminem o app (ex.: vendas de testes que
-  // aparecem nos cálculos mas não na lista de vendas).
+  // FONTE ÚNICA DE VERDADE: IndexedDB do navegador. 100% LOCAL, sem nuvem.
   try {
     const local = await idbGet();
     if (local && (Array.isArray(local.sales) || Array.isArray(local.products))) {
-      return local;
+      // Deduplica todas as coleções por id para garantir cálculo absoluto.
+      return {
+        ...local,
+        products: dedupeById(local.products) as LocalDb['products'],
+        sales: dedupeById(local.sales) as LocalDb['sales'],
+        categories: dedupeById(local.categories) as LocalDb['categories'],
+        expenses: dedupeById(local.expenses) as LocalDb['expenses'],
+        orders: dedupeById(local.orders) as LocalDb['orders'],
+        customers: dedupeById(local.customers) as LocalDb['customers'],
+        suppliers: dedupeById(local.suppliers) as LocalDb['suppliers'],
+        purchases: dedupeById(local.purchases) as LocalDb['purchases'],
+        cashSessions: dedupeById(local.cashSessions) as LocalDb['cashSessions'],
+        loans: dedupeById(local.loans) as LocalDb['loans'],
+        leads: dedupeById(local.leads) as LocalDb['leads'],
+        leadJobs: dedupeById(local.leadJobs) as LocalDb['leadJobs'],
+        whatsappInstances: dedupeById(local.whatsappInstances) as LocalDb['whatsappInstances'],
+        aiAgents: dedupeById(local.aiAgents) as LocalDb['aiAgents'],
+        opportunities: dedupeById(local.opportunities) as LocalDb['opportunities'],
+      };
     }
   } catch { /* ignore */ }
 
