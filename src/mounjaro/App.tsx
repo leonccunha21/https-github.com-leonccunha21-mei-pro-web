@@ -72,10 +72,16 @@ export default function MounjaroApp() {
     const scope = getScope();
     if (!scope) return;
     setSyncing(true);
-    saveMounjaroCloud(scope, { ...stateRef.current, initialized: true })
-      .then(() => { setLastSync(new Date().toISOString()); toast.success('Dados sincronizados com a nuvem.'); })
-      .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); toast.error('Falha ao sincronizar com a nuvem.'); })
-      .finally(() => setSyncing(false));
+    import('./dbSync').then(({ syncMounjaroThrottled }) =>
+      syncMounjaroThrottled(scope, { ...stateRef.current, initialized: true })
+    ).then((res) => {
+      setLastSync(new Date().toISOString());
+      if (res.finished) toast.success(`Sincronizado: ${res.uploaded} registros enviados à nuvem.`);
+      else toast(`Enviados ${res.uploaded} hoje. Cota diária atingida — o resto continua amanhã.`);
+    }).catch((e) => {
+      console.error('Falha ao sincronizar Mounjaro:', e);
+      toast.error('Falha ao sincronizar com a nuvem.');
+    }).finally(() => setSyncing(false));
   }, [getScope]);
 
   const persist = useCallback(() => {
@@ -84,12 +90,15 @@ export default function MounjaroApp() {
       const cur = stateRef.current;
       const data = { ...cur, initialized: true };
       saveMounjaroDb(data).catch(() => {});
-      // Sincroniza com a nuvem (se logado)
+      // Sincroniza com a nuvem em lotes (se logado) — respeita a cota diária.
       const scope = getScope();
       if (scope) {
         setSyncing(true);
-        saveMounjaroCloud(scope, data)
-          .then(() => { setLastSync(new Date().toISOString()); })
+        import('./dbSync').then(({ syncMounjaroThrottled }) => syncMounjaroThrottled(scope, data))
+          .then((res) => {
+            setLastSync(new Date().toISOString());
+            if (!res.finished) console.warn('Sincronização Mounjaro pausou por cota diária; retoma amanhã.');
+          })
           .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); toast.error('Falha ao sincronizar com a nuvem.'); })
           .finally(() => setSyncing(false));
       }

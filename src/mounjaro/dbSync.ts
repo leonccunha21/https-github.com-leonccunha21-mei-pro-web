@@ -9,7 +9,7 @@ import {
 } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { MounjaroDb } from './types';
-import { recordWrites } from '../lib/quota';
+import { recordWrites, getDailyWrites } from '../lib/quota';
 
 // Sincronização do subsite Mounjaro PRO com o Firebase/Firestore.
 // Modo "usuário": `users/{uid}/mounjaro/{colecao}` (isolado por conta).
@@ -181,4 +181,158 @@ export async function buscarClinica(codigo: string): Promise<ClinicaDoc | null> 
     handleFirestoreError(error, OperationType.GET, 'clinicas/' + codigo);
   }
   return null;
+}
+
+// ---- Sincronização em lotes (anti-estouro de cota) ----
+
+const SYNC_BATCH = 100;
+const MOUNJARO_SYNC_BUDGET = 1500; // folga diária para o Mounjaro
+const MOUNJARO_PROGRESS_PREFIX = 'mounjaro_cloud_progress_';
+
+type MProgress = { done: Record<string, Record<string, true>>; config?: boolean };
+
+function scopeKey(scope: MounjaroScope): string {
+  return scope.tipo === 'user' ? `u_${scope.uid}` : `c_${scope.clinicaId}`;
+}
+
+function getMProgress(scope: MounjaroScope): MProgress {
+  try {
+    const raw = localStorage.getItem(MOUNJARO_PROGRESS_PREFIX + scopeKey(scope));
+    if (raw) return JSON.parse(raw) as MProgress;
+  } catch { /* ignore */ }
+  return { done: {} };
+}
+
+function setMProgress(scope: MounjaroScope, p: MProgress): void {
+  try { localStorage.setItem(MOUNJARO_PROGRESS_PREFIX + scopeKey(scope), JSON.stringify(p)); } catch { /* ignore */ }
+}
+
+export function clearMounjaroSyncProgress(scope: MounjaroScope): void {
+  try { localStorage.removeItem(MOUNJARO_PROGRESS_PREFIX + scopeKey(scope)); } catch { /* ignore */ }
+}
+
+// Campos de data para agrupar por ano por coleção.
+const DATE_FIELDS: Partial<Record<keyof MounjaroDb, string>> = {
+  clientes: 'createdAt',
+  pesagens: 'data',
+  doses: 'dataAplicacao',
+  pagamentos: 'dataVencimento',
+  fotos: 'createdAt',
+  auditoria: 'createdAt',
+};
+
+function yearOf(item: any, dateField?: string): string {
+  const v = dateField ? item?.[dateField] : null;
+  if (!v) return '__nodate__';
+  const d = typeof v === 'number' ? new Date(v) : new Date(v);
+  if (isNaN(d.getTime())) return '__nodate__';
+  return String(d.getFullYear());
+}
+
+async function writeMItems(scope: MounjaroScope, name: string, items: any[]): Promise<number> {
+  if (!items.length) return 0;
+  const path = scopePath(scope, name);
+  let written = 0;
+  try {
+    for (let i = 0; i < items.length; i += SYNC_BATCH) {
+      const chunk = items.slice(i, i + SYNC_BATCH);
+      const batch = writeBatch(db);
+      for (const item of chunk) batch.set(doc(db, path, item.id), cleanForFirestore(item));
+      await batch.commit();
+      written += chunk.length;
+      recordWrites(chunk.length);
+    }
+  } catch (error) {
+    handleFirestoreError(error, OperationType.WRITE, path);
+  }
+  return written;
+}
+
+export interface MounjaroSyncResult {
+  uploaded: number;
+  finished: boolean;
+  stoppedByBudget: boolean;
+  nextCollection?: string;
+  nextYear?: string;
+}
+
+/**
+ * Envia o banco Mounjaro para a nuvem em lotes pequenos (100 docs), agrupados
+ * por ano, respeitando a cota diária. Se a cota do dia esgota, para e retoma
+ * no dia seguinte (progresso salvo em localStorage). Não reenvia anos concluídos.
+ */
+export async function syncMounjaroThrottled(
+  scope: MounjaroScope,
+  data: MounjaroDb,
+  opts?: { reset?: boolean },
+): Promise<MounjaroSyncResult> {
+  if (opts?.reset) clearMounjaroSyncProgress(scope);
+  const progress = getMProgress(scope);
+
+  const COLLECTIONS: (keyof MounjaroDb)[] = ['clientes', 'pesagens', 'doses', 'pagamentos', 'fotos', 'auditoria'];
+  let uploaded = 0;
+  let stoppedByBudget = false;
+  let nextCollection: string | undefined;
+  let nextYear: string | undefined;
+  const remainingBudget = () => Math.max(0, MOUNJARO_SYNC_BUDGET - getDailyWrites().count);
+
+  for (const name of COLLECTIONS) {
+    if (stoppedByBudget) { nextCollection = name; break; }
+    const items = (data[name] as Array<{ id?: string }>) || [];
+    const dateField = DATE_FIELDS[name];
+    const byYear = new Map<string, any[]>();
+    for (const it of items) {
+      if (!it || !it.id) continue;
+      const y = yearOf(it, dateField);
+      if (!byYear.has(y)) byYear.set(y, []);
+      byYear.get(y)!.push(it);
+    }
+    const years = Array.from(byYear.keys()).sort();
+    const doneYears = progress.done[name] || {};
+    const currentYear = String(new Date().getFullYear());
+    for (const year of years) {
+      if (stoppedByBudget) { nextYear = year; break; }
+      // Ano corrente é sempre reenviado (para capturar edições recentes);
+      // anos anteriores são enviados uma vez e marcados como concluídos.
+      const isCurrent = year === currentYear;
+      if (!isCurrent && doneYears[year]) continue;
+      let startIdx = (doneYears as any)['_partial_' + year] || 0;
+      let chunk = byYear.get(year)!.slice(startIdx);
+      if (remainingBudget() < chunk.length) {
+        chunk = chunk.slice(0, remainingBudget());
+        stoppedByBudget = true;
+      }
+      const w = await writeMItems(scope, name, chunk);
+      uploaded += w;
+      if (stoppedByBudget) {
+        const sent = progress.done[name] || {};
+        (sent as any)['_partial_' + year] = startIdx + w;
+        progress.done[name] = sent;
+        nextYear = year;
+        break;
+      }
+      if (!isCurrent) {
+        doneYears[year] = true;
+        delete (doneYears as any)['_partial_' + year];
+      }
+    }
+    progress.done[name] = doneYears;
+  }
+
+  // Config (documento único)
+  if (!stoppedByBudget && !progress.config) {
+    if (remainingBudget() >= 1) {
+      try {
+        await setDoc(doc(db, scopePath(scope, 'config'), 'main'), cleanForFirestore({ ...(data.config || {}), id: 'main' }));
+        recordWrites(1);
+        progress.config = true;
+        uploaded++;
+      } catch (error) {
+        handleFirestoreError(error, OperationType.WRITE, scopePath(scope, 'config'));
+      }
+    } else stoppedByBudget = true;
+  }
+
+  setMProgress(scope, progress);
+  return { uploaded, finished: !stoppedByBudget, stoppedByBudget, nextCollection, nextYear };
 }
