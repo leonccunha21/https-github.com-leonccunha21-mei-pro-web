@@ -550,6 +550,21 @@ export default function App() {
     return () => ch.close();
   }, []);
 
+  // No primeiro carregamento com usuário JÁ logado (ex.: recarregar a página no
+  // computador onde os dados vivem), faz um envio COMPLETO à nuvem uma única vez.
+  // Assim os dados existentes vão para o Firebase sem depender de uma edição.
+  const initialUploadDone = React.useRef(false);
+  React.useEffect(() => {
+    if (!authReady || !cloudUser || initialUploadDone.current) return;
+    initialUploadDone.current = true;
+    if (!SYNC_ENABLED || isCloudSyncPaused()) return;
+    window.setTimeout(() => {
+      if (!cloudPushing.current && !cloudSyncing) {
+        pushToCloud(stateRef.current as LocalDb, { forceFull: true }).catch(() => {});
+      }
+    }, 2500);
+  }, [authReady, cloudUser]);
+
   // Ao entrar na nuvem (login) autentica e agenda o PULL automático: a cada 30s
   // o app baixa da nuvem (se houver novidade) para manter os aparelhos em dia.
   // O merge por id preserva dados locais e da nuvem, sem apagar nada.
@@ -566,13 +581,36 @@ export default function App() {
     if (SYNC_ENABLED && !isCloudSyncPaused()) {
       window.setTimeout(() => pullFromCloudRef.current(), 1500);
     }
-    return () => window.clearInterval(id);
+    // Puxa ao voltar a focar a aba (trocar de janela/aparelho) para manter em dia.
+    const onVisible = () => { if (document.visibilityState === 'visible') pullFromCloudRef.current(); };
+    document.addEventListener('visibilitychange', onVisible);
+    return () => {
+      window.clearInterval(id);
+      document.removeEventListener('visibilitychange', onVisible);
+    };
   }, [cloudUser]);
 
   const handleCloudSignIn = async () => {
     try {
       const { googleSignIn } = await import('./lib/firebase');
       await googleSignIn();
+      showToast('Entrou na nuvem. Baixando seus dados...');
+      // Baixa imediatamente os dados da nuvem para este aparelho (merge por id).
+      try {
+        const { loadUserDb } = await import('./lib/dbSync');
+        const cloud = await loadUserDb((await import('./lib/firebase')).getCurrentUser()?.uid || '');
+        if (cloud) {
+          const merged = mergeLocalDb(stateRef.current, cloud);
+          await applyLoadedDb(merged);
+          persist(merged);
+          // Sobe o resultado para a nuvem ficar idêntica e garantir que nada
+          // fique só local.
+          pushToCloud(merged).catch(() => {});
+          showToast('Dados da nuvem carregados com sucesso.');
+        }
+      } catch (e: unknown) {
+        showToast(e instanceof Error ? e.message : 'Falha ao baixar da nuvem.');
+      }
     } catch (e: unknown) {
       setCloudError(e instanceof Error ? e.message : 'Falha ao entrar com o Google');
     }
