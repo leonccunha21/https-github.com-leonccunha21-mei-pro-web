@@ -4,6 +4,7 @@ import { MounjaroDb } from '../types';
 import { StatCard, Card, Badge } from '../ui';
 import {
   calcularScore, pesoAtual, pesoPerdido, statusDose, proximaDose, formatarMoeda, formatarDataCurta,
+  lembrarDoses,
 } from '../lib';
 import type { Tab } from '../App';
 
@@ -46,12 +47,40 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
     [scores]
   );
 
+  const lembretes = useMemo(() => lembrarDoses(clientes, doses), [clientes, doses]);
+  const lembretesUrgentes = lembretes.filter((l) => l.status === 'atrasada' || l.status === 'hoje' || l.status === 'amanha');
+
   return (
     <div className="space-y-5">
       <div>
         <h2 className="text-xl font-bold">Painel de Controle</h2>
         <p className="text-sm text-slate-500 dark:text-slate-400">Visão geral do acompanhamento de tirzepatida</p>
       </div>
+
+      {/* Lembretes de dose (banner proativo) */}
+      {lembretesUrgentes.length > 0 && (
+        <div className="space-y-2">
+          {lembretesUrgentes.slice(0, 5).map((l) => {
+            const tom = l.status === 'atrasada' ? 'border-rose-300 dark:border-rose-700 bg-rose-50 dark:bg-rose-950/30'
+              : l.status === 'hoje' ? 'border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/30'
+              : 'border-cyan-300 dark:border-cyan-700 bg-cyan-50 dark:bg-cyan-950/30';
+            const txt = l.status === 'atrasada' ? `${Math.abs(l.diasRestantes)} dia(s) de atraso`
+              : l.status === 'hoje' ? 'vence hoje' : 'vence amanhã';
+            return (
+              <div key={l.cliente.id} className={`flex items-center justify-between rounded-xl border px-4 py-2.5 ${tom}`}>
+                <div className="flex items-center gap-2 min-w-0">
+                  <Clock size={16} className="shrink-0" />
+                  <span className="text-sm font-medium truncate">{l.cliente.nome}</span>
+                  <span className="text-xs opacity-80">{txt}</span>
+                </div>
+                <button onClick={() => onNavigate('doses')} className="text-xs font-semibold underline shrink-0 ml-2">
+                  registrar dose
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         <StatCard label="Ativos" title="Clientes" value={metricas.ativos.length}

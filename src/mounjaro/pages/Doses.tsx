@@ -3,7 +3,7 @@ import { Plus, Syringe, Search, CalendarClock } from 'lucide-react';
 import { ClienteMounjaro, DoseMounjaro } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge } from '../ui';
 import { newId } from '../localDb';
-import { DOSES_DISPONIVEIS, formatarDataCurta, proximaDose, statusDose, diasEntre } from '../lib';
+import { DOSES_DISPONIVEIS, formatarDataCurta, proximaDose, statusDose, diasEntre, sugerirProximaDose } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
@@ -22,10 +22,11 @@ export default function Doses({ clientes, doses, setDoses }: Props) {
     const ultima = clientePre
       ? doses.filter((d) => d.clienteId === clientePre.id).sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0]
       : undefined;
+    const sugestao = sugerirProximaDose(ultima);
     setForm({
       clienteId: clientePre?.id,
       dataAplicacao: new Date().toISOString().slice(0, 10),
-      dose: ultima?.dose ?? 2.5,
+      dose: sugestao?.dose ?? ultima?.dose ?? 2.5,
       intervaloDias: ultima?.intervaloDias ?? 7,
       localAplicacao: 'abdomen',
       pago: false,
@@ -172,6 +173,17 @@ export default function Doses({ clientes, doses, setDoses }: Props) {
           <SelectField label="Dose (mg)" value={String(form.dose ?? 2.5)} onChange={(v) => setForm({ ...form, dose: Number(v) as any })}
             options={DOSES_DISPONIVEIS.map((d) => ({ value: String(d), label: `${d} mg` }))} />
         </div>
+        {(() => {
+          const cli = clientes.find((c) => c.id === form.clienteId);
+          const ult = cli ? doses.filter((d) => d.clienteId === cli.id).sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0] : undefined;
+          const sug = sugerirProximaDose(ult);
+          if (!sug) return null;
+          return (
+            <div className="rounded-lg bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800 px-3 py-2 text-xs text-cyan-800 dark:text-cyan-200">
+              <b>Dose sugerida:</b> {sug.dose} mg — {sug.motivo} <span className="opacity-70">(apoio, decisão final é do médico)</span>
+            </div>
+          );
+        })()}
         <div className="grid grid-cols-2 gap-3">
           <Field label="Intervalo (dias)" type="number" value={form.intervaloDias || 7} onChange={(v) => setForm({ ...form, intervaloDias: Number(v) })} />
           <SelectField label="Local" value={form.localAplicacao || 'abdomen'} onChange={(v) => setForm({ ...form, localAplicacao: v as any })}

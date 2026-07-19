@@ -1,4 +1,4 @@
-import { ClienteMounjaro, DoseMounjaro, PagamentoMounjaro, PesagemMounjaro, ScorePagamento, DoseLevel } from './types';
+import { ClienteMounjaro, DoseMounjaro, MounjaroDb, PagamentoMounjaro, PesagemMounjaro, ScorePagamento, DoseLevel } from './types';
 
 export function calcIMC(pesoKg: number, alturaCm: number): number {
   if (!pesoKg || !alturaCm) return 0;
@@ -187,3 +187,86 @@ export const ESCALA_REFERENCIA = [
   { fase: 'Ajuste', dose: '12,5 mg', duracao: 'conforme tolerância', obs: 'Aumento de 2,5 mg se necessário' },
   { fase: 'Máxima', dose: '15 mg', duracao: 'manutenção', obs: 'Dose máxima recomendada' },
 ];
+
+export interface DoseSugerida {
+  dose: DoseLevel;
+  motivo: string;
+  podeAumentar: boolean;
+  naMaxima: boolean;
+}
+
+// Sugere a próxima dose com base na última aplicação e nos efeitos colaterais
+// relatados (lógica de apoio, não substitui decisão médica).
+export function sugerirProximaDose(ultima: DoseMounjaro | undefined): DoseSugerida | null {
+  if (!ultima) {
+    return { dose: 2.5, motivo: 'Dose inicial de adaptação (bula).', podeAumentar: false, naMaxima: false };
+  }
+  const ordem: DoseLevel[] = [2.5, 5, 7.5, 10, 12.5, 15];
+  const idx = ordem.indexOf(ultima.dose);
+  const temEfeito = !!ultima.efeitosColaterais && ultima.efeitosColaterais.trim().length > 0;
+
+  // Se ainda está na dose inicial de adaptação, sobe para 5 mg.
+  if (ultima.dose === 2.5) {
+    return { dose: 5, motivo: 'Após 4 semanas de adaptação, subir para 5 mg (bula).', podeAumentar: true, naMaxima: false };
+  }
+
+  // Efeitos colaterais significativos -> manter a dose atual.
+  if (temEfeito) {
+    return {
+      dose: ultima.dose,
+      motivo: 'Efeitos colaterais relatados: manter a dose atual até melhorar a tolerância (avaliação médica).',
+      podeAumentar: false,
+      naMaxima: ultima.dose === 15,
+    };
+  }
+
+  // Tolerância boa e abaixo do máximo -> sugere aumento de 2,5 mg.
+  if (idx >= 0 && idx < ordem.length - 1) {
+    const prox = ordem[idx + 1];
+    return {
+      dose: prox,
+      motivo: `Boa tolerância: pode aumentar para ${prox} mg (incremento de 2,5 mg conforme bula).`,
+      podeAumentar: true,
+      naMaxima: false,
+    };
+  }
+
+  // Já na dose máxima.
+  return { dose: 15, motivo: 'Na dose máxima recomendada (15 mg). Manter.', podeAumentar: false, naMaxima: true };
+}
+
+// Lembretes de dose: retorna alertas para clientes ativos.
+export interface LembreteDose {
+  cliente: ClienteMounjaro;
+  ultima: DoseMounjaro;
+  proxima: string | null;
+  status: 'atrasada' | 'hoje' | 'amanha' | 'ok';
+  diasRestantes: number;
+}
+
+export function lembrarDoses(clientes: ClienteMounjaro[], doses: DoseMounjaro[]): LembreteDose[] {
+  const hoje = new Date().toISOString().slice(0, 10);
+  const result: LembreteDose[] = [];
+  for (const c of clientes.filter((x) => x.ativo)) {
+    const ultima = doses
+      .filter((d) => d.clienteId === c.id)
+      .sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0];
+    if (!ultima) continue;
+    const st = statusDose(ultima.dataAplicacao, ultima.intervaloDias);
+    const prox = proximaDose(ultima);
+    let status: LembreteDose['status'] = 'ok';
+    if (st.status === 'atrasada') status = 'atrasada';
+    else if (st.status === 'hoje') status = 'hoje';
+    else if (st.diasRestantes === 1) status = 'amanha';
+    result.push({ cliente: c, ultima, proxima: prox, status, diasRestantes: st.diasRestantes });
+  }
+  // Ordena: atrasadas, hoje, amanhã, depois.
+  const ordem: Record<LembreteDose['status'], number> = { atrasada: 0, hoje: 1, amanha: 2, ok: 3 };
+  return result.sort((a, b) => ordem[a.status] - ordem[b.status] || (a.proxima || '').localeCompare(b.proxima || ''));
+}
+
+// Backup automático: gera um snapshot JSON (já é feito incremental na nuvem,
+// esta função serve para exportação manual/agendada).
+export function gerarSnapshot(db: MounjaroDb): string {
+  return JSON.stringify({ ...db, initialized: true, _snapshotAt: new Date().toISOString() }, null, 2);
+}

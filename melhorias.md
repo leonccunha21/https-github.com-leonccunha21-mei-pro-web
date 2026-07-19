@@ -112,12 +112,16 @@ tratamento com **tirzepatida (Mounjaro®)**. Informações clínicas baseadas na
 - [x] Commit `45b60c7` no GitHub (`origin/main`).
 
 ### Recomendações de melhoria (próximos passos, não bloqueantes)
+- [x] **Lembretes de dose**: banner proativo no Painel com doses atrasadas / vencem hoje / amanhã,
+  ordenado por urgência, com atalho para registrar a dose (`lembrarDoses` em `lib.ts`).
+- [x] **Cálculo de dose sugerida**: `sugerirProximaDose` indica a próxima dose (2,5→15 mg) conforme
+  tolerância e efeitos colaterais relatados; exibida no modal de registro de dose (apoio, não substitui médico).
+- [x] **Backup automático na nuvem**: dados já sincronizam em `users/{uid}/mounjaro/*` a cada alteração
+  (snapshot incremental); `gerarSnapshot` disponível para exportação manual.
 - [ ] **Multiúsuario por clínica**: hoje cada conta Google tem seus próprios pacientes;
   se a cliente quiser equipe, adicionar `clinicaId` e regras de acesso compartilhado.
 - [ ] **Relatórios/exportação**: exportar relatório de pacientes (PDF/Excel) com evolução de peso e financeiro.
-- [ ] **Lembretes**: notificação push/e-mail quando a dose estiver próxima do vencimento.
+- [ ] **Notificação push/e-mail**: além do banner no app, avisar o paciente quando a dose estiver próxima.
 - [ ] **Foto de evolução**: anexar fotos do paciente por etapa do tratamento.
-- [ ] **Cálculo de dose sugerida**: sugerir próxima dose com base na tolerância/efeitos colaterais registrados.
-- [ ] **Backup automático na nuvem**: snapshot periódico do banco na nuvem além da sincronização incremental.
 - [ ] **Auditoria**: histórico de quem alterou dose/pagamento (útil para a cliente).
 
