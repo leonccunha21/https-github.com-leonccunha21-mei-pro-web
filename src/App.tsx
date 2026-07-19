@@ -98,7 +98,7 @@ import type { User } from 'firebase/auth';
 // Sincronização com a nuvem está ATIVADA (Firebase/Firestore).
 // Dados são enviados de forma incremental a cada alteração (debounce 2s)
 // e baixados automaticamente a cada 30s quando o usuário estiver logado.
-const SYNC_ENABLED = false;
+const SYNC_ENABLED = true;
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
 
@@ -725,6 +725,36 @@ export default function App() {
     } catch {
       setCloudSyncing(false);
       showToast('Falha ao sincronizar. Verifique a conexão e a cota do projeto Firebase.');
+    }
+  };
+
+  // Envia TODOS os dados deste aparelho para a nuvem de uma vez (forceFull),
+  // ignorando o cache incremental. Garante que nada fique preso só localmente.
+  const handleCloudPushAll = async () => {
+    if (!SYNC_ENABLED || !cloudUser) { showToast('Sincronização desativada (modo local).'); return; }
+    if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
+    const db = stateRef.current as LocalDb;
+    showToast('Enviando TODOS os dados para a nuvem...');
+    try {
+      const { clearSyncCache } = await import('./lib/dbSync');
+      const { clearSyncProgress } = await import('./lib/throttledSync');
+      clearSyncCache(cloudUser.uid);
+      clearSyncProgress(cloudUser.uid);
+      setCloudSyncing(true);
+      setCloudError(null);
+      const res = await pushToCloud(db, { forceFull: true });
+      setCloudLastSync(new Date().toISOString());
+      setCloudSyncing(false);
+      setCloudPending(false);
+      setDailyWrites(getDailyWrites().count);
+      if (res && res.uploaded === 0 && res.deleted === 0) {
+        showToast('Nuvem já está atualizada (sem alterações para enviar).');
+      } else {
+        showToast(`✅ Envio completo: ${res?.uploaded ?? 0} documentos na nuvem.`);
+      }
+    } catch {
+      setCloudSyncing(false);
+      showToast('Falha ao enviar tudo. Verifique a conexão e a cota do Firebase.');
     }
   };
 
@@ -1902,6 +1932,15 @@ export default function App() {
                     {dailyWrites.toLocaleString('pt-BR')} / {DAILY_WRITE_LIMIT.toLocaleString('pt-BR')} ops hoje
                   </span>
                 </div>
+              )}
+              {cloudUser && (
+                <button
+                  onClick={handleCloudPushAll}
+                  disabled={cloudSyncing}
+                  className="mt-2 w-full text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 border border-indigo-200 dark:border-indigo-800 rounded-lg py-1.5 transition-colors disabled:opacity-50"
+                >
+                  {cloudSyncing ? 'Enviando…' : '☁ Enviar TUDO para a nuvem'}
+                </button>
               )}
             </div>
           </div>
