@@ -435,12 +435,12 @@ export default function App() {
     } catch { /* ignore */ }
   }
 
-  // Pausa por padrão assim que o app sobe, já que a cota costuma estar estourada
-  // no fim do dia. O usuário libera manualmente no dia seguinte.
+  // A pausa de cota NÃO é ativada automaticamente: com o limite de 20.000
+  // operações/dia do plano Spark, a sincronização deve funcionar sempre que
+  // estiver ativada e o usuário logado. A pausa só ocorre se a cota realmente
+  // estourar (tratado em catch de erro de cota), e o usuário libera manualmente.
   React.useEffect(() => {
-    if (!localStorage.getItem(QUOTA_PAUSE_KEY)) {
-      pauseCloudSync();
-    }
+    resumeCloudSyncNow();
   }, []);
 
   // --- Nuvem: envia para o Firestore de forma incremental (economiza cota) ---
@@ -498,6 +498,18 @@ export default function App() {
       });
     }, 250);
     lastLocalChangeRef.current = Date.now();
+
+    // Envio automático para a nuvem (debounce 2s) a cada alteração local.
+    // Garante que tudo que é salvo no dispositivo também vai para o Firebase,
+    // sem necessidade de clicar manualmente em "Sincronizar".
+    if (SYNC_ENABLED && cloudUser && !isCloudSyncPaused()) {
+      if (cloudPushTimer.current) clearTimeout(cloudPushTimer.current);
+      cloudPushTimer.current = window.setTimeout(() => {
+        cloudPushTimer.current = null;
+        if (cloudPushing.current || cloudSyncing) return;
+        pushToCloud(stateRef.current as LocalDb).catch(() => {});
+      }, 2000);
+    }
   };
 
   // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)
@@ -538,16 +550,23 @@ export default function App() {
     return () => ch.close();
   }, []);
 
-  // Ao entrar na nuvem (login) apenas autentica. NÃO enviamos nem baixamos
-  // dados automaticamente no login: o app é por-aparelho (localStorage) e um
-  // push automático de um aparelho vazio/divergente apagaria os dados do outro
-  // na nuvem (a sincronização incremental remove da nuvem o que não existe
-  // localmente). O usuário decide: "Sincronizar Agora" (sobe) ou
-  // "Baixar da nuvem" (desce) — ambos explícitos.
+  // Ao entrar na nuvem (login) autentica e agenda o PULL automático: a cada 30s
+  // o app baixa da nuvem (se houver novidade) para manter os aparelhos em dia.
+  // O merge por id preserva dados locais e da nuvem, sem apagar nada.
   useEffect(() => {
     if (!cloudUser) return;
     setCloudError(null);
     setDailyWrites(getDailyWrites().count);
+    const id = window.setInterval(() => {
+      if (SYNC_ENABLED && cloudUser && !isCloudSyncPaused() && !cloudPushing.current && !cloudSyncing) {
+        pullFromCloudRef.current();
+      }
+    }, 30000);
+    // Puxa logo ao entrar, para refletir dados de outros aparelhos imediatamente.
+    if (SYNC_ENABLED && !isCloudSyncPaused()) {
+      window.setTimeout(() => pullFromCloudRef.current(), 1500);
+    }
+    return () => window.clearInterval(id);
   }, [cloudUser]);
 
   const handleCloudSignIn = async () => {
