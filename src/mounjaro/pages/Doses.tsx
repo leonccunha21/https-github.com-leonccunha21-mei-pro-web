@@ -3,7 +3,7 @@ import { Plus, Syringe, Search, CalendarClock } from 'lucide-react';
 import { ClienteMounjaro, DoseMounjaro, PagamentoMounjaro } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge } from '../ui';
 import { newId } from '../localDb';
-import { DOSES_DISPONIVEIS, formatarDataCurta, proximaDose, statusDose, diasEntre, sugerirProximaDose, LogAuditoriaFn } from '../lib';
+import { DOSES_DISPONIVEIS, formatarDataCurta, formatarMoeda, proximaDose, statusDose, diasEntre, sugerirProximaDose, LogAuditoriaFn } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
@@ -94,6 +94,29 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
     logAuditoria({ entidade: 'dose', acao: 'excluir', resumo: `Dose ${d.dose} mg de ${cliente?.nome || '—'}`, clienteId: d.clienteId, refId: d.id });
   };
 
+  const jaTemPagamento = (d: DoseMounjaro) => pagamentos.some((p) => p.referenciaDoseId === d.id);
+
+  const cobrar = (d: DoseMounjaro) => {
+    const cliente = clientes.find((c) => c.id === d.clienteId);
+    if (!cliente) return;
+    // Cria o pagamento vinculado à dose e já marca a dose como paga.
+    const novo: PagamentoMounjaro = {
+      id: newId('pag'),
+      clienteId: d.clienteId,
+      dataVencimento: d.dataAplicacao,
+      dataPagamento: new Date().toISOString().slice(0, 10),
+      descricao: `Dose ${d.dose} mg`,
+      valor: Number(d.valorDose) || 0,
+      status: 'pago',
+      metodo: 'dinheiro',
+      referenciaDoseId: d.id,
+      createdAt: new Date().toISOString(),
+    };
+    setPagamentos([novo, ...pagamentos]);
+    setDoses(doses.map((x) => (x.id === d.id ? { ...x, pago: true } : x)));
+    logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento ${formatarMoeda(novo.valor)} de ${cliente.nome} (dose ${d.dose} mg)`, clienteId: d.clienteId, refId: novo.id });
+  };
+
   const nomeCliente = (id: string) => clientes.find((c) => c.id === id)?.nome || 'Desconhecido';
 
   const filtradas = useMemo(() => {
@@ -177,11 +200,15 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
                   {d.dose} mg · {formatarDataCurta(d.dataAplicacao)} · intervalo {d.intervaloDias}d
                   {d.localAplicacao && ` · ${d.localAplicacao}`}
                 </p>
+                {d.valorDose ? <p className="text-xs font-semibold text-emerald-600">{formatarMoeda(d.valorDose)}</p> : null}
                 {d.efeitosColaterais && <p className="text-xs text-amber-600">⚠ {d.efeitosColaterais}</p>}
               </div>
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {d.pago ? <Badge tone="green">pago</Badge> : <Badge tone="amber">não pago</Badge>}
+              {d.valorDose && !jaTemPagamento(d) && (
+                <button onClick={() => cobrar(d)} className="text-emerald-600 hover:text-emerald-700 text-xs font-medium" title="Registrar pagamento desta dose">cobrar</button>
+              )}
               <button onClick={() => abrirEditar(d)} className="text-cyan-600 hover:text-cyan-800 text-sm" title="Editar">✎</button>
               <button onClick={() => excluir(d)} className="text-rose-500 hover:text-rose-700 text-sm">✕</button>
             </div>
