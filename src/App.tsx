@@ -232,6 +232,26 @@ export default function App() {
     initialized: true,
   });
 
+  // Corrige vendas com data NO FUTURO (ex.: dez/2026 quando hoje é 19/07/2026).
+  // Causa raiz: bug de fuso UTC antigo que empurrava a data para o ano seguinte.
+  // Qualquer venda com data acima de hoje é travada em "agora" (data atual).
+  // Roda em toda carga (local e nuvem), então o erro some definitivamente.
+  const normalizeSaleDates = (salesIn: Sale[]): Sale[] => {
+    const now = new Date();
+    const todayMs = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime();
+    let changed = false;
+    const out = (salesIn || []).map((sa) => {
+      if (!sa || !sa.date) return sa;
+      const t = new Date(sa.date).getTime();
+      if (!isNaN(t) && t > todayMs) {
+        changed = true;
+        return { ...sa, date: localNowISO() };
+      }
+      return sa;
+    });
+    return changed ? out : salesIn;
+  };
+
   const applyLoadedDb = async (db: Partial<LocalDb> | null): Promise<{
     hasDb: boolean;
     seededProducts: Product[];
@@ -245,7 +265,12 @@ export default function App() {
     let p: Product[], s: Sale[], e: Expense[], c: Category[];
     if (hasDb && Array.isArray(dbData.products) && Array.isArray(dbData.sales) && Array.isArray(dbData.expenses) && Array.isArray(dbData.categories)) {
       p = dbData.products!;
-      s = dbData.sales!;
+      s = normalizeSaleDates(dbData.sales!);
+      if (s !== dbData.sales) {
+        // Datas corrigidas: persiste de volta para não repetir a correção.
+        const fixed = { ...(dbData as LocalDb), sales: s };
+        setTimeout(() => persist(fixed), 0);
+      }
       e = dbData.expenses!;
       c = dbData.categories!;
     } else {
