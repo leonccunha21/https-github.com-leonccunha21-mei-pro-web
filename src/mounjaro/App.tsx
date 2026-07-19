@@ -68,6 +68,16 @@ export default function MounjaroApp() {
       : { tipo: 'user', uid: cloudUser.uid };
   }, [cloudUser, clinica]);
 
+  const syncAgora = useCallback(() => {
+    const scope = getScope();
+    if (!scope) return;
+    setSyncing(true);
+    saveMounjaroCloud(scope, { ...stateRef.current, initialized: true })
+      .then(() => { setLastSync(new Date().toISOString()); toast.success('Dados sincronizados com a nuvem.'); })
+      .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); toast.error('Falha ao sincronizar com a nuvem.'); })
+      .finally(() => setSyncing(false));
+  }, [getScope]);
+
   const persist = useCallback(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {
@@ -80,7 +90,7 @@ export default function MounjaroApp() {
         setSyncing(true);
         saveMounjaroCloud(scope, data)
           .then(() => { setLastSync(new Date().toISOString()); })
-          .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); })
+          .catch((e) => { console.error('Falha ao sincronizar Mounjaro:', e); toast.error('Falha ao sincronizar com a nuvem.'); })
           .finally(() => setSyncing(false));
       }
       timerRef.current = null;
@@ -129,26 +139,31 @@ export default function MounjaroApp() {
     if (!scope) { setLoading(false); return; }
     (async () => {
       try {
-        // 1. Local primeiro (rápido)
+        // 1. Local (IndexedDB)
         const localRaw = await loadMounjaroDb();
         const local = sanitizar(localRaw);
-        if (local.clientes.length || local.doses.length || local.pesagens.length || local.pagamentos.length) {
-          setDb(local);
-        }
-        // 2. Nuvem (fonte da verdade entre aparelhos) — faz MERGE por id
+        // 2. Nuvem
         const cloud = await loadMounjaroCloud(scope);
+        // 3. Estado em memória (pode ter dados ainda não gravados no local/nuvem)
+        const mem = stateRef.current || emptyDb();
+        // Merge de 3 fontes por id (nuvem e memória prevalecem sobre local antigo)
         const merged: MounjaroDb = {
-          clientes: mergePorId(local.clientes, cloud.clientes || []),
-          pesagens: mergePorId(local.pesagens, cloud.pesagens || []),
-          doses: mergePorId(local.doses, cloud.doses || []),
-          pagamentos: mergePorId(local.pagamentos, cloud.pagamentos || []),
-          fotos: mergePorId(local.fotos, cloud.fotos || []),
-          auditoria: mergePorId(local.auditoria, cloud.auditoria || []),
-          config: { ...defaultConfig(), ...(cloud.config || {}), ...(local.config || {}) },
+          clientes: mergePorId(mergePorId(local.clientes, mem.clientes), cloud.clientes || []),
+          pesagens: mergePorId(mergePorId(local.pesagens, mem.pesagens), cloud.pesagens || []),
+          doses: mergePorId(mergePorId(local.doses, mem.doses), cloud.doses || []),
+          pagamentos: mergePorId(mergePorId(local.pagamentos, mem.pagamentos), cloud.pagamentos || []),
+          fotos: mergePorId(mergePorId(local.fotos, mem.fotos), cloud.fotos || []),
+          auditoria: mergePorId(mergePorId(local.auditoria, mem.auditoria), cloud.auditoria || []),
+          config: { ...defaultConfig(), ...(local.config || {}), ...(mem.config || {}), ...(cloud.config || {}) },
           initialized: true,
         };
-        setDb(merged);
-        saveMounjaroDb(merged).catch(() => {});
+        // Só sobrescreve o estado se houver dados; caso contrário mantém o que já está em memória.
+        const temDados =
+          merged.clientes.length || merged.doses.length || merged.pesagens.length ||
+          merged.pagamentos.length || merged.fotos.length || merged.auditoria.length;
+        setDb(temDados ? merged : mem);
+        // Persiste localmente o resultado do merge (sem disparar sincronização em loop)
+        saveMounjaroDb(temDados ? merged : mem).catch(() => {});
         setLastSync(new Date().toISOString());
       } catch (e) {
         console.error(e);
@@ -427,6 +442,9 @@ export default function MounjaroApp() {
             <button onClick={exportBackup} className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1">
               Exportar
             </button>
+            <button onClick={syncAgora} title="Forçar sincronização com a nuvem" className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1">
+              Sincronizar
+            </button>
             <label className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1 cursor-pointer">
               Importar
               <input type="file" accept="application/json" className="hidden" onChange={(e) => e.target.files?.[0] && importBackup(e.target.files[0])} />
@@ -492,6 +510,17 @@ export default function MounjaroApp() {
         ))}
         </div>
       </nav>
+
+      {clinica && (
+        <div className="max-w-6xl mx-auto px-4 pt-3">
+          <div className="rounded-xl border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 px-4 py-2.5 text-xs text-cyan-800 dark:text-cyan-200 flex items-center justify-between gap-3">
+            <span>
+              <b>Espaço compartilhado:</b> {clinica.nome} (código {clinica.codigo}). Os dados aqui são da equipe e ficam separados do seu armazenamento pessoal.
+            </span>
+            <button onClick={() => setShowClinicaModal(true)} className="shrink-0 font-semibold underline hover:no-underline">Gerenciar / sair</button>
+          </div>
+        </div>
+      )}
 
       <main className="max-w-6xl mx-auto px-4 py-5 pb-24 sm:pb-8">
         <AnimatePresence mode="wait">
