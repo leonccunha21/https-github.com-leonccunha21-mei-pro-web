@@ -143,7 +143,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         {filtrados.map((c) => {
-          const peso = pesoAtual(c, pesagens);
+          const peso = pesoAtual(c, pesagens, doses);
           const perdido = pesoPerdido(c, pesagens, doses);
           const score = calcularScore(c.id, pagamentos);
           const qtdDoses = doses.filter((d) => d.clienteId === c.id).length;
@@ -250,7 +250,7 @@ function DetalheCliente({
   pagamentos: PagamentoMounjaro[];
   fotos: FotoEvolucao[];
 }) {
-  const peso = pesoAtual(cliente, pesagens);
+  const peso = pesoAtual(cliente, pesagens, doses);
   const perdido = pesoPerdido(cliente, pesagens, doses);
   const score = calcularScore(cliente.id, pagamentos);
   const ultimaDose = doses.filter((d) => d.clienteId === cliente.id).sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0];

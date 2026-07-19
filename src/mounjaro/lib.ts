@@ -46,33 +46,43 @@ export function statusDose(dataAplicacao: string, intervaloDias: number): {
   return { status: 'ok', diasRestantes: diff };
 }
 
-// Última pesagem de um cliente (ou peso inicial).
-export function pesoAtual(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[]): number {
-  const lista = pesagens
+// Lista unificada de medições de peso de um cliente: pesagens + doses que
+// registraram peso na aplicação (pesoAplicacao). Ordenada por data crescente.
+// Isso garante que o peso informado na dosagem também conte na evolução.
+interface MedicaoPeso {
+  data: string;
+  peso: number;
+}
+function medicoesDePeso(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], doses: DoseMounjaro[] = []): MedicaoPeso[] {
+  const meds: MedicaoPeso[] = pesagens
     .filter(p => p.clienteId === cliente.id)
-    .sort((a, b) => b.data.localeCompare(a.data));
-  if (lista.length > 0) return lista[0].peso;
+    .map(p => ({ data: p.data, peso: p.peso }));
+  for (const d of doses) {
+    if (d.clienteId === cliente.id && d.pesoAplicacao) {
+      meds.push({ data: d.dataAplicacao, peso: d.pesoAplicacao });
+    }
+  }
+  return meds.sort((a, b) => a.data.localeCompare(b.data));
+}
+
+// Última medição de peso de um cliente (pesagem ou peso de aplicação), ou peso inicial.
+export function pesoAtual(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], doses: DoseMounjaro[] = []): number {
+  const meds = medicoesDePeso(cliente, pesagens, doses);
+  if (meds.length > 0) return meds[meds.length - 1].peso;
   return cliente.pesoInicial ?? 0;
 }
 
-// Peso registrado antes da primeira dose (linha de base).
+// Peso registrado como linha de base (mais antiga medição ou peso inicial).
 export function pesoBase(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], doses: DoseMounjaro[]): number {
-  const primeiraDose = doses
-    .filter(d => d.clienteId === cliente.id)
-    .sort((a, b) => a.dataAplicacao.localeCompare(b.dataAplicacao))[0];
-  if (primeiraDose?.pesoAplicacao) return primeiraDose.pesoAplicacao;
-  // pesagem mais antiga
-  const lista = pesagens
-    .filter(p => p.clienteId === cliente.id)
-    .sort((a, b) => a.data.localeCompare(b.data));
-  if (lista.length > 0) return lista[0].peso;
+  const meds = medicoesDePeso(cliente, pesagens, doses);
+  if (meds.length > 0) return meds[0].peso;
   return cliente.pesoInicial ?? 0;
 }
 
 // Peso perdido desde o início do tratamento.
 export function pesoPerdido(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], doses: DoseMounjaro[]): number {
   const base = pesoBase(cliente, pesagens, doses);
-  const atual = pesoAtual(cliente, pesagens);
+  const atual = pesoAtual(cliente, pesagens, doses);
   if (!base || !atual) return 0;
   return Math.round((base - atual) * 10) / 10;
 }

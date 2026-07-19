@@ -114,29 +114,29 @@ export default function Peso({ clientes, pesagens, doses, setPesagens, logAudito
       {cliente && (
         <>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-            <StatCard title="Peso atual" value={`${pesoAtual(cliente, pesagens)} kg`} icon={<Scale size={18} />} accent="cyan" />
+            <StatCard title="Peso atual" value={`${pesoAtual(cliente, pesagens, doses)} kg`} icon={<Scale size={18} />} accent="cyan" />
             <StatCard title="Peso base" value={`${pesoBase(cliente, pesagens, doses)} kg`} icon={<Scale size={18} />} accent="blue" />
             <StatCard title="Perda total" value={`${pesoPerdido(cliente, pesagens, doses)} kg`} icon={<TrendingDown size={18} />} accent="green" />
             <StatCard title="Média / dose" value={`${perdaMediaPorDose(cliente, pesagens, doses)} kg`} icon={<TrendingDown size={18} />} accent="violet" />
           </div>
 
           {/* IMC atual */}
-          {cliente.alturaCm && pesoAtual(cliente, pesagens) > 0 && (
+          {cliente.alturaCm && pesoAtual(cliente, pesagens, doses) > 0 && (
             <Card>
               <div className="flex items-center justify-between flex-wrap gap-2">
                 <div>
                   <p className="text-sm text-slate-500">IMC atual</p>
                   <p className="text-2xl font-bold">
-                    {calcIMC(pesoAtual(cliente, pesagens), cliente.alturaCm)}
+                    {calcIMC(pesoAtual(cliente, pesagens, doses), cliente.alturaCm)}
                   </p>
-                  <p className="text-xs text-slate-400">{classificacaoIMC(calcIMC(pesoAtual(cliente, pesagens), cliente.alturaCm))}</p>
+                  <p className="text-xs text-slate-400">{classificacaoIMC(calcIMC(pesoAtual(cliente, pesagens, doses), cliente.alturaCm))}</p>
                 </div>
                 {cliente.objetivoPeso && (
                   <div className="text-right">
                     <p className="text-sm text-slate-500">Meta</p>
                     <p className="text-xl font-bold text-emerald-600">{cliente.objetivoPeso} kg</p>
                     <p className="text-xs text-slate-400">
-                      faltam {Math.max(0, pesoAtual(cliente, pesagens) - cliente.objetivoPeso)} kg
+                      faltam {Math.max(0, pesoAtual(cliente, pesagens, doses) - cliente.objetivoPeso)} kg
                     </p>
                   </div>
                 )}
