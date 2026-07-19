@@ -180,8 +180,9 @@ export function calcularScore(
 // Faixas de dose padrão (bula): inicia 2,5mg, escalona de 2,5 em 2,5.
 export const DOSES_DISPONIVEIS: DoseLevel[] = [2.5, 5, 7.5, 10, 12.5, 15];
 
-export function formatarMoeda(v: number): string {
-  return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+export function formatarMoeda(v: number | undefined | null): string {
+  const n = typeof v === 'number' && !isNaN(v) ? v : 0;
+  return n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
 export function formatarDataCurta(iso: string): string {

@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { toast } from 'react-hot-toast';
 import { Plus, Syringe, Search, CalendarClock } from 'lucide-react';
 import { ClienteMounjaro, DoseMounjaro, PagamentoMounjaro } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge } from '../ui';
@@ -99,6 +100,11 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
   const cobrar = (d: DoseMounjaro) => {
     const cliente = clientes.find((c) => c.id === d.clienteId);
     if (!cliente) return;
+    const valor = Number(d.valorDose) || 0;
+    if (valor <= 0) {
+      toast.error('Informe o Valor (R$) na dose antes de cobrar, ou crie o pagamento manualmente.');
+      return;
+    }
     // Cria o pagamento vinculado à dose e já marca a dose como paga.
     const novo: PagamentoMounjaro = {
       id: newId('pag'),
@@ -106,7 +112,7 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
       dataVencimento: d.dataAplicacao,
       dataPagamento: new Date().toISOString().slice(0, 10),
       descricao: `Dose ${d.dose} mg`,
-      valor: Number(d.valorDose) || 0,
+      valor,
       status: 'pago',
       metodo: 'dinheiro',
       referenciaDoseId: d.id,
@@ -115,6 +121,7 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
     setPagamentos([novo, ...pagamentos]);
     setDoses(doses.map((x) => (x.id === d.id ? { ...x, pago: true } : x)));
     logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento ${formatarMoeda(novo.valor)} de ${cliente.nome} (dose ${d.dose} mg)`, clienteId: d.clienteId, refId: novo.id });
+    toast.success(`Pagamento de ${formatarMoeda(valor)} registrado.`);
   };
 
   const nomeCliente = (id: string) => clientes.find((c) => c.id === id)?.nome || 'Desconhecido';
