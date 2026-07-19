@@ -13,13 +13,16 @@ import { recordWrites } from './quota';
 
 const BATCH_SIZE = 500;
 
-async function loadCollection<T>(userId: string, name: string): Promise<T[]> {
+async function loadCollection<T extends { id?: string }>(userId: string, name: string): Promise<T[]> {
   const path = `users/${userId}/${name}`;
   try {
     const snap = await getDocs(collection(db, path));
-    const items: T[] = [];
-    snap.forEach((d) => items.push(d.data() as T));
-    return items;
+    const seen = new Map<string, T>();
+    snap.forEach((d) => {
+      const item = d.data() as T;
+      if (item.id) seen.set(item.id, item);
+    });
+    return [...seen.values()];
   } catch (error) {
     handleFirestoreError(error, OperationType.GET, path);
     return [];

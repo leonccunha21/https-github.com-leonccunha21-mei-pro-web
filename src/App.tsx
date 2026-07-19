@@ -95,12 +95,12 @@ function timeAgo(iso: string): string {
 // penalizar o carregamento inicial do app.
 import type { User } from 'firebase/auth';
 
-// Sincronização com a nuvem está ATIVADA (Firebase/Firestore).
-// App 100% LOCAL: os dados vivem no IndexedDB do navegador e são movidos entre
-// dispositivos via backup/restauração por arquivo (botões em Configurações).
-// A sincronização com a nuvem (Firebase) foi desativada definitivamente para
-// acabar com a corrupção/inconsistência de dados entre aparelhos.
-const SYNC_ENABLED = false;
+// Sincronização com a nuvem ATIVADA (Firebase/Firestore).
+// Agora usa setDoc com IDs fixos (não addDoc), eliminando duplicatas.
+// Toda escrita sobrescreve o documento existente com o mesmo ID.
+// Recomendado: usar "Enviar TUDO para a nuvem" na primeira vez para
+// limpar dados antigos e subir o banco limpo do zero.
+const SYNC_ENABLED = true;
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
 
