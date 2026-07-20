@@ -245,21 +245,24 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
           </>
         }
       >
-        {detalhe && <DetalheCliente cliente={detalhe} pesagens={pesagens} doses={doses} pagamentos={pagamentos} fotos={fotos} />}
+        {detalhe && <DetalheCliente cliente={detalhe} pesagens={pesagens} doses={doses} pagamentos={pagamentos} fotos={fotos} onUpdateCliente={(c) => { setClientes(clientes.map(x => x.id === c.id ? c : x)); setDetalhe(c); }} />}
       </Modal>
     </div>
   );
 }
 
 function DetalheCliente({
-  cliente, pesagens, doses, pagamentos, fotos,
+  cliente, pesagens, doses, pagamentos, fotos, onUpdateCliente,
 }: {
   cliente: ClienteMounjaro;
   pesagens: PesagemMounjaro[];
   doses: DoseMounjaro[];
   pagamentos: PagamentoMounjaro[];
   fotos: FotoEvolucao[];
+  onUpdateCliente?: (c: ClienteMounjaro) => void;
 }) {
+  const [editAnotacoes, setEditAnotacoes] = useState(false);
+  const [anotacoes, setAnotacoes] = useState(cliente.observacoes || '');
   const peso = pesoAtual(cliente, pesagens, doses);
   const base = pesoBase(cliente, pesagens, doses);
   const perdido = pesoPerdido(cliente, pesagens, doses);
@@ -308,6 +311,36 @@ function DetalheCliente({
           Pago: <b className="text-emerald-600">{formatarMoeda(score.valorTotalPago)}</b> · Em aberto: <b className="text-rose-600">{formatarMoeda(score.valorEmAberto)}</b>
           {score.atrasoMedioDias > 0 && <> · Atraso médio: {score.atrasoMedioDias} dias</>}
         </p>
+      </div>
+
+      {/* Anotações de consulta */}
+      <div className="border-t border-slate-200 dark:border-slate-700 pt-3">
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-sm font-semibold">Anotações de Consulta</p>
+          <button
+            onClick={() => {
+              if (editAnotacoes) {
+                const updated = { ...cliente, observacoes: anotacoes, updatedAt: new Date().toISOString() };
+                onUpdateCliente?.(updated);
+              }
+              setEditAnotacoes(!editAnotacoes);
+            }}
+            className="text-xs font-semibold text-cyan-600 hover:text-cyan-700 transition-colors cursor-pointer"
+          >
+            {editAnotacoes ? 'Salvar' : 'Editar'}
+          </button>
+        </div>
+        {editAnotacoes ? (
+          <textarea
+            value={anotacoes}
+            onChange={(e) => setAnotacoes(e.target.value)}
+            rows={4}
+            className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 outline-hidden focus:ring-2 focus:ring-cyan-500/20 resize-none"
+            placeholder="Registre observações sobre a consulta, evolução do paciente, ajustes de dose..."
+          />
+        ) : (
+          <p className="text-sm text-slate-600 dark:text-slate-300 whitespace-pre-wrap">{anotacoes || 'Nenhuma anotação registrada.'}</p>
+        )}
       </div>
     </div>
   );

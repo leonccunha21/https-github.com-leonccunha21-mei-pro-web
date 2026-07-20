@@ -74,7 +74,7 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [ ] **Limite de 5 conexões / 3 agentes** do plano Pro não está implementado (sem trava de quantidade).
 - [ ] **Redrive 360º / Atendimento omnichannel** (e-mail, Instagram DM) não foi iniciado.
 
-**V2.12.0 — Orçamento → Venda, gráfico com meta, taxa de adesão:**
+**V2.13.0 — Anotações de consulta Mounjaro, cupom fiscal PDV:**
 - [x] **OS/Orçamento**: botão "Converter em Venda" no detalhe do orçamento (cria venda pendente com itens)
 - [x] **Mounjaro — Gráfico**: linha tracejada da meta de peso (`objetivoPeso`) no SVG
 - [x] **Mounjaro — Adesão**: tabela de taxa de adesão (% doses no prazo) no Dashboard
@@ -84,6 +84,8 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [x] **Fluxo de Caixa**: cenários otimista (+30%), realista, pessimista (-30%)
 - [x] **Fluxo de Caixa**: despesas por categoria com barra proporcional
 - [x] **Produtos**: barra de progresso stock vs. minStock + indicador "min: N"
+- [x] **PDV**: cupom fiscal com logo, dados da loja, itens, total e forma de pagamento
+- [x] **Mounjaro**: anotações de consulta editáveis no detalhe do paciente
 
 **Status atual:** tudo que é possível no frontend está feito e funcionando (modo local + VPS stub testado end-to-end). O app compila (`npm run build`) e passa no lint (`npm run lint`) sem erros.
 
@@ -221,7 +223,7 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [x] **Gráfico de evolução com meta** — linha do peso real vs. meta com projeção no SVG
 - [x] **Taxa de adesão** — % de doses tomadas no prazo vs. atrasadas, por paciente no Dashboard
 - [ ] **PDF do relatório do paciente** — gerar relatório médico completo para impressão/WhatsApp
-- [ ] **Anotações de consulta** — campo livre por paciente para registrar observações
+- [x] **Anotações de consulta** — campo editável no detalhe do paciente para registrar observações
 - [ ] **Exportar dados para Excel** — download de pacientes, doses, pagamentos em CSV
 - [ ] **Comparação de fotos lado a lado** — overlay "antes vs. agora"
 
