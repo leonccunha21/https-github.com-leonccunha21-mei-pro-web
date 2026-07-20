@@ -1,3 +1,10 @@
+export interface PriceHistoryEntry {
+  date: string;
+  field: 'costPrice' | 'salePrice';
+  oldValue: number;
+  newValue: number;
+}
+
 export interface Product {
   id: string;
   code: string; // SKU / Código
@@ -12,6 +19,7 @@ export interface Product {
   createdAt: string;
   archived?: boolean;
   archivedAt?: string;
+  priceHistory?: PriceHistoryEntry[];
 }
 
 export interface SaleItem {

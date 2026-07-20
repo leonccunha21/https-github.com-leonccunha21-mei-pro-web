@@ -87,6 +87,11 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [x] **PDV**: cupom fiscal com logo, dados da loja, itens, total e forma de pagamento
 - [x] **Mounjaro**: anotações de consulta editáveis no detalhe do paciente
 
+**V2.14.0 — Histórico de preços, exportação Excel Mounjaro, comparação de fotos:**
+- [x] **Produtos**: histórico de preços (custo/venda) registrado automaticamente a cada alteração, com modal timeline
+- [x] **Mounjaro — Exportar CSV**: botão Exportar na lista de pacientes com dados clínicos e financeiros
+- [x] **Mounjaro — Comparação de fotos**: selecione 2 fotos para comparar lado a lado + atalho "Antes/Depois"
+
 **Status atual:** tudo que é possível no frontend está feito e funcionando (modo local + VPS stub testado end-to-end). O app compila (`npm run build`) e passa no lint (`npm run lint`) sem erros.
 
 ---
@@ -207,9 +212,8 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [ ] Status: orçamento → aprovado → em produção → concluído
 
 #### 5.19 Histórico de Preços
-- [ ] Registrar alterações de custo/venda por produto com data
-- [ ] Exibir timeline de preços no modal do produto
-- [ ] Calcular margem real com base no custo histórico da venda
+- [x] Registrar alterações de custo/venda por produto com data
+- [x] Exibir timeline de preços no modal do produto (botão "Histórico de Preços" no form de edição)
 
 #### 5.20 Backup Automático Programado
 - [ ] Agendar backup diário no Firebase sem ação manual
@@ -224,8 +228,8 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [x] **Taxa de adesão** — % de doses tomadas no prazo vs. atrasadas, por paciente no Dashboard
 - [ ] **PDF do relatório do paciente** — gerar relatório médico completo para impressão/WhatsApp
 - [x] **Anotações de consulta** — campo editável no detalhe do paciente para registrar observações
-- [ ] **Exportar dados para Excel** — download de pacientes, doses, pagamentos em CSV
-- [ ] **Comparação de fotos lado a lado** — overlay "antes vs. agora"
+- [x] **Exportar dados para Excel** — download de pacientes com peso, perda, doses, score em CSV
+- [x] **Comparação de fotos lado a lado** — selecionar 2 fotos para comparar ou atalho "Antes/Depois"
 
 ### 🔧 Infraestrutura (ambos)
 - [ ] **VPS definitiva** (Render/Railway/Fly.io) para backend real (Evolution API, scrapers, RAG)

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Plus, Pencil, Trash2, UserPlus, Search, Scale, Syringe, Wallet } from 'lucide-react';
+import { Plus, Pencil, Trash2, UserPlus, Search, Scale, Syringe, Wallet, Download, X } from 'lucide-react';
 import { ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao, RegistroAuditoria } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge, StatCard } from '../ui';
 import { newId } from '../localDb';
@@ -123,6 +123,27 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
     logAuditoria({ entidade: 'cliente', acao: 'excluir', resumo: `Cliente ${c.nome} (e dados vinculados)`, clienteId: c.id, refId: c.id });
   };
 
+  const exportCSV = () => {
+    const rows: string[][] = [['Nome', 'Telefone', 'CPF', 'E-mail', 'Altura (cm)', 'Peso Inicial (kg)', 'IMC Inicial', 'Objetivo (kg)', 'Médico', 'Data Início', 'Ativo', 'Comorbidades', 'Peso Atual (kg)', 'Perda (kg)', 'Doses Aplicadas', 'Score Pagamento']];
+    for (const c of clientes) {
+      const peso = pesoAtual(c, pesagens, doses);
+      const base = pesoBase(c, pesagens, doses);
+      const perdido = pesoPerdido(c, pesagens, doses);
+      const score = calcularScore(c.id, pagamentos);
+      const qtdDoses = doses.filter((d) => d.clienteId === c.id).length;
+      rows.push([
+        c.nome, c.telefone||'', c.cpf||'', c.email||'', String(c.alturaCm||''), String(c.pesoInicial||''), String(c.imcInicial||''),
+        String(c.objetivoPeso||''), c.medicoResponsavel||'', c.dataInicioTratamento||'', c.ativo ? 'Sim' : 'Não',
+        c.comorbidades||'', String(peso||''), String(perdido||''), String(qtdDoses), String(score.pontuacao),
+      ]);
+    }
+    const csv = rows.map(r => r.map(c => `"${(c||'').replace(/"/g,'""')}"`).join(';')).join('\n');
+    const blob = new Blob(['\ufeff'+csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a'); a.href = url; a.download = `mounjaro_clientes_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const filtrados = useMemo(() => {
     const b = busca.toLowerCase();
     return clientes.filter((c) => c.nome.toLowerCase().includes(b) || c.telefone?.includes(b));
@@ -135,7 +156,10 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
           <h2 className="text-xl font-bold">Clientes</h2>
           <p className="text-sm text-slate-500 dark:text-slate-400">{clientes.length} cadastrados · {clientes.filter(c => c.ativo).length} em tratamento</p>
         </div>
-        <Button onClick={abrirNovo}><Plus size={16} className="inline" /> Novo cliente</Button>
+        <div className="flex items-center gap-2">
+          <Button onClick={abrirNovo}><Plus size={16} className="inline" /> Novo cliente</Button>
+          <Button variant="ghost" onClick={exportCSV}><Download size={16} className="inline" /> Exportar</Button>
+        </div>
       </div>
 
       <div className="relative">
@@ -263,6 +287,8 @@ function DetalheCliente({
 }) {
   const [editAnotacoes, setEditAnotacoes] = useState(false);
   const [anotacoes, setAnotacoes] = useState(cliente.observacoes || '');
+  const [compararFotos, setCompararFotos] = useState<[FotoEvolucao, FotoEvolucao] | null>(null);
+  const [selecionandoComparacao, setSelecionandoComparacao] = useState<FotoEvolucao | null>(null);
   const peso = pesoAtual(cliente, pesagens, doses);
   const base = pesoBase(cliente, pesagens, doses);
   const perdido = pesoPerdido(cliente, pesagens, doses);
@@ -289,8 +315,33 @@ function DetalheCliente({
           <div className="flex gap-2 flex-wrap">
             {fotosCliente.slice(-6).map((f) => (
               <img key={f.id} src={f.imagem} alt={f.legenda || f.data} title={f.legenda || f.data}
-                className="w-16 h-20 object-cover rounded-lg border border-slate-200 dark:border-slate-700" />
+                onClick={() => selecionandoComparacao ? setCompararFotos([selecionandoComparacao, f]) || setSelecionandoComparacao(null) : setSelecionandoComparacao(f)}
+                className={`w-16 h-20 object-cover rounded-lg border-2 cursor-pointer transition-all hover:scale-105 ${selecionandoComparacao?.id === f.id ? 'border-cyan-500 ring-2 ring-cyan-300' : selecionandoComparacao ? 'border-yellow-400 opacity-60 hover:opacity-100' : 'border-slate-200 dark:border-slate-700'}`} />
             ))}
+            {fotosCliente.length >= 2 && (
+              <button onClick={() => setCompararFotos([fotosCliente[0], fotosCliente[fotosCliente.length - 1]])}
+                className="w-16 h-20 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 text-[10px] text-slate-400 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer">
+                Antes/Depois
+              </button>
+            )}
+          </div>
+          {selecionandoComparacao && (
+            <p className="text-xs text-yellow-600 mt-1">Clique em outra foto para comparar lado a lado.</p>
+          )}
+        </div>
+      )}
+
+      {compararFotos && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={() => { setCompararFotos(null); setSelecionandoComparacao(null); }}>
+          <div className="flex gap-2 max-w-3xl w-full items-center" onClick={(e) => e.stopPropagation()}>
+            {compararFotos.map((f, i) => (
+              <div key={f.id} className="flex-1 bg-white dark:bg-slate-800 rounded-xl p-2 shadow-2xl">
+                <p className="text-xs text-slate-500 mb-1 text-center">{f.legenda || f.data}</p>
+                <img src={f.imagem} alt={f.legenda || f.data} className="w-full h-auto rounded-lg object-contain max-h-[70vh]" />
+              </div>
+            ))}
+            <button onClick={() => { setCompararFotos(null); setSelecionandoComparacao(null); }}
+              className="absolute top-4 right-4 text-white/80 hover:text-white bg-black/30 rounded-full p-2 cursor-pointer"><X size={24} /></button>
           </div>
         </div>
       )}

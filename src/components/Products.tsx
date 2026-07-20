@@ -1,5 +1,5 @@
 ﻿import React, { useState, useMemo } from 'react';
-import { Product, Category, Sale } from '../types';
+import { Product, Category, Sale, PriceHistoryEntry } from '../types';
 import { categorizeProduct } from '../lib/categorize';
 import { 
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
@@ -48,6 +48,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const [showStockCheck, setShowStockCheck] = useState(false);
   const [missingProducts, setMissingProducts] = useState<{ name: string; productId: string; qty: number; costPrice: number; salePrice: number; suggestedCategory: string }[]>([]);
 
+  const [showPriceHistory, setShowPriceHistory] = useState<Product | null>(null);
   const [formCode, setFormCode] = useState('');
   const [formName, setFormName] = useState('');
   const [formCategory, setFormCategory] = useState('');
@@ -81,9 +82,55 @@ export default function Products({ products, categories, sales, onAddProduct, on
     if (!formName.trim() || !formCategory) return;
     const isService = /^servi/i.test(formCategory);
     const data = { code: formCode.trim() || generateSKU(formCategory), name: formName.trim(), category: formCategory, costPrice: Number(formCostPrice), salePrice: Number(formSalePrice), stock: isService ? 0 : Number(formStock), minStock: isService ? 0 : Number(formMinStock), status: formStatus, description: formDescription.trim() || undefined };
-    editingProduct ? onUpdateProduct({ ...editingProduct, ...data }) : onAddProduct(data);
+    if (editingProduct) {
+      const history: PriceHistoryEntry[] = [...(editingProduct.priceHistory || [])];
+      const now = new Date().toISOString();
+      if (editingProduct.costPrice !== data.costPrice) {
+        history.push({ date: now, field: 'costPrice', oldValue: editingProduct.costPrice, newValue: data.costPrice });
+      }
+      if (editingProduct.salePrice !== data.salePrice) {
+        history.push({ date: now, field: 'salePrice', oldValue: editingProduct.salePrice, newValue: data.salePrice });
+      }
+      onUpdateProduct({ ...editingProduct, ...data, priceHistory: history });
+    } else {
+      onAddProduct(data);
+    }
     setIsModalOpen(false);
   };
+  function PriceHistoryModal({ product, onClose }: { product: Product; onClose: () => void }) {
+    const history = product.priceHistory || [];
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={onClose}>
+        <div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl w-full max-w-md max-h-[80vh] overflow-y-auto p-6 space-y-4" onClick={(e) => e.stopPropagation()}>
+          <div className="flex items-center justify-between">
+            <h3 className="font-bold text-lg">Histórico de Preços</h3>
+            <button onClick={onClose} className="text-slate-400 hover:text-slate-600 cursor-pointer"><X size={20} /></button>
+          </div>
+          <p className="text-sm text-slate-500">{product.name} ({product.code})</p>
+          {history.length === 0 ? (
+            <p className="text-sm text-slate-400 italic">Nenhuma alteração de preço registrada.</p>
+          ) : (
+            <div className="space-y-2">
+              {[...history].reverse().map((h, i) => (
+                <div key={i} className="text-sm bg-slate-50 dark:bg-slate-700/50 rounded-lg p-3 border border-slate-200 dark:border-slate-700">
+                  <div className="flex items-center justify-between text-xs text-slate-400 mb-1">
+                    <span>{new Date(h.date).toLocaleString('pt-BR')}</span>
+                    <span className="font-semibold uppercase text-[10px]">{h.field === 'costPrice' ? 'Custo' : 'Venda'}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <span className="text-rose-500 line-through">R$ {h.oldValue.toFixed(2)}</span>
+                    <ArrowUpRight size={14} className="text-slate-400" />
+                    <span className="text-emerald-600 font-semibold">R$ {h.newValue.toFixed(2)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          <button onClick={onClose} className="w-full py-2 text-sm font-semibold text-slate-500 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors cursor-pointer">Fechar</button>
+        </div>
+      </div>
+    );
+  }
 
   const handleAddCategorySubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -677,6 +724,11 @@ export default function Products({ products, categories, sales, onAddProduct, on
                   <input type="number" step="0.01" min="0" required value={formSalePrice || ''} onChange={e => setFormSalePrice(Number(e.target.value))} className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400 font-mono" />
                 </div>
               </div>
+              {editingProduct && (
+                <button type="button" onClick={() => setShowPriceHistory(editingProduct)} className="text-xs font-semibold text-indigo-600 hover:text-indigo-700 transition-colors cursor-pointer">
+                  Histórico de Preços
+                </button>
+              )}
               {formSalePrice > 0 && (
                 <div className="p-2.5 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between text-xs">
                   <span className="text-slate-500">Margem:</span>
@@ -806,6 +858,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
           </div>
         </div>
       )}
+      {showPriceHistory && <PriceHistoryModal product={showPriceHistory} onClose={() => setShowPriceHistory(null)} />}
     </div>
   );
 }
