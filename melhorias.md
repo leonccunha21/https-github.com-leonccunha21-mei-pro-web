@@ -74,13 +74,16 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [ ] **Limite de 5 conexões / 3 agentes** do plano Pro não está implementado (sem trava de quantidade).
 - [ ] **Redrive 360º / Atendimento omnichannel** (e-mail, Instagram DM) não foi iniciado.
 
-**V2.11.0 — DRE filtro mensal, despesas por categoria, gráfico de barras:**
-- [x] **DRE**: filtro por período (mês inicial/final) além do ano
-- [x] **DRE**: tabela comparativa anual year-over-year com evolução % de receita e margem
-- [x] **DRE**: botão "Imprimir/PDF" que abre o diálogo de impressão do navegador
-- [x] **Fluxo de Caixa**: cenários otimista (+30% receitas), realista e pessimista (-30%)
-- [x] **Fluxo de Caixa**: gráfico de despesas por categoria com barra proporcional
-- [x] **Produtos**: barra de progresso stock vs. minStock + indicador "min: N" no grid
+**V2.12.0 — Orçamento → Venda, gráfico com meta, taxa de adesão:**
+- [x] **OS/Orçamento**: botão "Converter em Venda" no detalhe do orçamento (cria venda pendente com itens)
+- [x] **Mounjaro — Gráfico**: linha tracejada da meta de peso (`objetivoPeso`) no SVG
+- [x] **Mounjaro — Adesão**: tabela de taxa de adesão (% doses no prazo) no Dashboard
+- [x] **DRE**: filtro por período (mês inicial/final)
+- [x] **DRE**: tabela comparativa anual year-over-year com evolução %
+- [x] **DRE**: botão Imprimir/PDF
+- [x] **Fluxo de Caixa**: cenários otimista (+30%), realista, pessimista (-30%)
+- [x] **Fluxo de Caixa**: despesas por categoria com barra proporcional
+- [x] **Produtos**: barra de progresso stock vs. minStock + indicador "min: N"
 
 **Status atual:** tudo que é possível no frontend está feito e funcionando (modo local + VPS stub testado end-to-end). O app compila (`npm run build`) e passa no lint (`npm run lint`) sem erros.
 
@@ -189,6 +192,43 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [x] Parser de arquivos OFX/QFX (`src/lib/ofxParser.ts`)
 - [x] Interface de conciliação: transações do banco vs. vendas/despesas (`BankConciliation.tsx`)
 - [x] Matching automático por valor entre extrato e vendas/despesas
+
+#### 5.17 Multi-usuário com Perfis
+- [ ] Perfil de vendedor (só PDV e consulta)
+- [ ] Perfil de gerente (tudo exceto config)
+- [ ] Perfil de admin (tudo)
+- [ ] Autenticação por senha local ou Google
+
+#### 5.18 Orçamentos (a partir de OS)
+- [x] Botão "Converter em Venda" no orçamento com 1 clique (cria venda pendente a partir dos itens)
+- [ ] Transformar ServiceOrder em orçamento/proposta comercial completa
+- [ ] Status: orçamento → aprovado → em produção → concluído
+
+#### 5.19 Histórico de Preços
+- [ ] Registrar alterações de custo/venda por produto com data
+- [ ] Exibir timeline de preços no modal do produto
+- [ ] Calcular margem real com base no custo histórico da venda
+
+#### 5.20 Backup Automático Programado
+- [ ] Agendar backup diário no Firebase sem ação manual
+- [ ] Notificar quando backup for concluído
+
+#### 5.21 Cupom Fiscal Simplificado
+- [ ] Botão "Imprimir Cupom" no PDV
+- [ ] Layout de cupom não-fiscal simplificado
+
+### 📱 Mounjaro PRO — Melhorias Futuras
+- [x] **Gráfico de evolução com meta** — linha do peso real vs. meta com projeção no SVG
+- [x] **Taxa de adesão** — % de doses tomadas no prazo vs. atrasadas, por paciente no Dashboard
+- [ ] **PDF do relatório do paciente** — gerar relatório médico completo para impressão/WhatsApp
+- [ ] **Anotações de consulta** — campo livre por paciente para registrar observações
+- [ ] **Exportar dados para Excel** — download de pacientes, doses, pagamentos em CSV
+- [ ] **Comparação de fotos lado a lado** — overlay "antes vs. agora"
+
+### 🔧 Infraestrutura (ambos)
+- [ ] **VPS definitiva** (Render/Railway/Fly.io) para backend real (Evolution API, scrapers, RAG)
+- [ ] **Domínio próprio** (`minhaloja.com.br`)
+- [ ] **CI/CD ativo** (configurar `VERCEL_TOKEN` nos secrets do GitHub)
 
 **Status atual do plano competitivo:** melhorias em andamento. Cada item marcado com `[x]` foi concluído.
 

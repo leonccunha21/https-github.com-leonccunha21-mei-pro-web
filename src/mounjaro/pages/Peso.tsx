@@ -76,7 +76,7 @@ export default function Peso({ clientes, pesagens, doses, setPesagens, logAudito
       .sort((a, b) => a.data.localeCompare(b.data));
   }, [pesagens, clienteId]);
 
-  const svg = useMemo(() => buildChart(serie.map((s) => s.peso)), [serie]);
+  const svg = useMemo(() => buildChart(serie.map((s) => s.peso), cliente?.objetivoPeso), [serie, cliente?.objetivoPeso]);
 
   if (clientesAtivos.length === 0) {
     return (
@@ -208,15 +208,18 @@ export default function Peso({ clientes, pesagens, doses, setPesagens, logAudito
 }
 
 // Gera um polyline SVG simples da evolução de peso.
-function buildChart(valores: number[]): React.ReactNode {
+function buildChart(valores: number[], metaPeso?: number): React.ReactNode {
   if (valores.length < 2) {
     if (valores.length === 1) {
       return <circle cx={150} cy={60} r={4} className="fill-cyan-500" />;
     }
-    return null;
+    return metaPeso ? (
+      <line x1={10} y1={60} x2={290} y2={60} className="stroke-amber-400" strokeWidth={1.5} strokeDasharray="4 3" />
+    ) : null;
   }
-  const min = Math.min(...valores);
-  const max = Math.max(...valores);
+  const allVals = metaPeso !== undefined ? [...valores, metaPeso] : valores;
+  const min = Math.min(...allVals);
+  const max = Math.max(...allVals);
   const range = max - min || 1;
   const w = 300, h = 120, pad = 10;
   const pts = valores.map((v, i) => {
@@ -226,11 +229,18 @@ function buildChart(valores: number[]): React.ReactNode {
   });
   const path = pts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
   const area = `${path} L${pts[pts.length - 1][0].toFixed(1)},${h - pad} L${pts[0][0].toFixed(1)},${h - pad} Z`;
+  const metaY = metaPeso !== undefined ? pad + (1 - (metaPeso - min) / range) * (h - pad * 2) : null;
   return (
     <>
       <path d={area} className="fill-cyan-500/15" />
       <path d={path} className="stroke-cyan-500" strokeWidth={2} fill="none" />
       {pts.map((p, i) => <circle key={i} cx={p[0]} cy={p[1]} r={2.5} className="fill-cyan-500" />)}
+      {metaY !== null && (
+        <>
+          <line x1={pad} y1={metaY} x2={w - pad} y2={metaY} className="stroke-amber-400" strokeWidth={1.5} strokeDasharray="4 3" />
+          <text x={w - pad} y={metaY - 3} textAnchor="end" className="fill-amber-500 text-[8px]" dominantBaseline="auto">Meta: {metaPeso}kg</text>
+        </>
+      )}
     </>
   );
 }

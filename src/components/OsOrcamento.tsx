@@ -17,6 +17,7 @@ interface OsOrcamentoProps {
   storeInfo: StoreInfo;
   orders: ServiceOrder[];
   onOrdersChange: (orders: ServiceOrder[]) => void;
+  onConvertToSale?: (order: ServiceOrder) => void;
 }
 
 const generateId = () => `os_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
@@ -34,7 +35,7 @@ const statusLabels: Record<string, { label: string; color: string }> = {
   rejeitada: { label: 'Rejeitada', color: 'bg-rose-100 text-rose-700' }
 };
 
-export default function OsOrcamento({ products, storeInfo, orders: initialOrders, onOrdersChange }: OsOrcamentoProps) {
+export default function OsOrcamento({ products, storeInfo, orders: initialOrders, onOrdersChange, onConvertToSale }: OsOrcamentoProps) {
   const [orders, setOrders] = useState<ServiceOrder[]>(initialOrders);
   useEffect(() => { setOrders(initialOrders); }, [initialOrders]);
   const [activeView, setActiveView] = useState<'list' | 'form' | 'detail'>('list');
@@ -546,6 +547,14 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
               <button onClick={() => handleStatusChange(order.id, 'aprovada')} className="py-1.5 px-3 bg-emerald-100 hover:bg-emerald-200 text-emerald-800 rounded-lg text-[11px] font-bold transition-colors cursor-pointer">Aprovar</button>
               <button onClick={() => handleStatusChange(order.id, 'rejeitada')} className="py-1.5 px-3 bg-rose-100 hover:bg-rose-200 text-rose-800 rounded-lg text-[11px] font-bold transition-colors cursor-pointer">Rejeitar</button>
             </>
+          )}
+          {(order.type === 'orcamento' && (order.status === 'aprovada' || order.status === 'aberta')) && (
+            <button
+              onClick={() => onConvertToSale?.(order)}
+              className="py-1.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-[11px] font-bold transition-colors cursor-pointer flex items-center gap-1.5"
+            >
+              <CheckCircle2 className="h-3.5 w-3.5" /> Converter em Venda
+            </button>
           )}
         </div>
 

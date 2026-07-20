@@ -235,6 +235,55 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
         )}
       </Card>
 
+      {/* Taxa de adesão */}
+      <Card>
+        <div className="flex items-center gap-2 mb-3">
+          <CheckCircle2 size={18} className="text-emerald-600" />
+          <h3 className="font-semibold">Taxa de Adesão</h3>
+        </div>
+        {metricas.ativos.length === 0 ? (
+          <p className="text-sm text-slate-500">Nenhum cliente ativo.</p>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead className="text-slate-500 dark:text-slate-400 text-left">
+                <tr>
+                  <th className="py-2 pr-2">Cliente</th>
+                  <th className="py-2 pr-2">Doses no prazo</th>
+                  <th className="py-2 pr-2">Atrasadas</th>
+                  <th className="py-2 pr-2">Adesão</th>
+                </tr>
+              </thead>
+              <tbody>
+                {metricas.ativos.map((cli) => {
+                  const dosesCli = doses.filter((d) => d.clienteId === cli.id);
+                  const total = dosesCli.length;
+                  if (total === 0) return null;
+                  const noPrazo = dosesCli.filter((d) => {
+                    const ordem = [...dosesCli].sort((a, b) => a.dataAplicacao.localeCompare(b.dataAplicacao));
+                    const idx = ordem.findIndex((o) => o.id === d.id);
+                    if (idx === 0) return true;
+                    const ant = ordem[idx - 1];
+                    const diff = (new Date(d.dataAplicacao).getTime() - new Date(ant.dataAplicacao).getTime()) / 86400000;
+                    return diff <= ant.intervaloDias + 2;
+                  }).length;
+                  const adesao = Math.round((noPrazo / total) * 100);
+                  const cor = adesao >= 80 ? 'text-emerald-600' : adesao >= 60 ? 'text-amber-600' : 'text-rose-600';
+                  return (
+                    <tr key={cli.id} className="border-t border-slate-100 dark:border-slate-700">
+                      <td className="py-2 pr-2 font-medium truncate max-w-[140px]">{cli.nome}</td>
+                      <td className="py-2 pr-2">{noPrazo}/{total}</td>
+                      <td className="py-2 pr-2">{total - noPrazo}</td>
+                      <td className={`py-2 pr-2 font-bold ${cor}`}>{adesao}%</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </Card>
+
       {/* Score de pagamento */}
       <Card>
         <div className="flex items-center gap-2 mb-3">

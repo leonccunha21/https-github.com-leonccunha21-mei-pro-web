@@ -2168,11 +2168,45 @@ export default function App() {
             )}
 
             {activeTab === 'os' && (
-              <OsOrcamento 
+              <OsOrcamento
                 products={products}
                 storeInfo={storeInfo as StoreInfo}
                 orders={orders}
                 onOrdersChange={saveOrdersToStorage}
+                onConvertToSale={(order) => {
+                  const items: SaleItem[] = order.items.map(item => {
+                    const product = products.find(p =>
+                      p.name.toLowerCase() === item.description.toLowerCase()
+                    );
+                    return {
+                      productId: product?.id || `conv_${item.id}`,
+                      productName: item.description,
+                      quantity: item.quantity,
+                      costPrice: product?.costPrice || 0,
+                      salePrice: item.unitPrice,
+                      total: item.total,
+                    };
+                  });
+                  const total = items.reduce((a, i) => a + i.total, 0);
+                  const totalCost = items.reduce((a, i) => a + i.costPrice * i.quantity, 0);
+                  const newSale: Sale = {
+                    id: `sale_${Date.now()}`,
+                    date: new Date().toISOString(),
+                    items,
+                    clientName: order.clientName || undefined,
+                    clientPhone: order.clientPhone || undefined,
+                    paymentMethod: 'money',
+                    total,
+                    totalCost,
+                    profit: total - totalCost,
+                    status: 'pending',
+                    saleType: 'CPF',
+                    notes: `Convertido do orçamento Nº ${order.number}`,
+                  };
+                  setSales(prev => [newSale, ...prev]);
+                  persist({ sales: [newSale, ...sales] });
+                  showToast('Orçamento convertido em venda com sucesso!');
+                }}
               />
             )}
 
