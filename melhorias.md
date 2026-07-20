@@ -87,6 +87,11 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [x] **PDV**: cupom fiscal com logo, dados da loja, itens, total e forma de pagamento
 - [x] **Mounjaro**: anotações de consulta editáveis no detalhe do paciente
 
+**V2.15.0 — Backup automático programado:**
+- [x] **Backup automático**: configuração de frequência (diário/semanal/desligado) e horário no Settings
+- [x] **Notificação**: alerta no navegador quando o backup for executado automaticamente
+- [x] **Botão "Executar agora"**: backup manual com registro da data
+
 **V2.14.0 — Histórico de preços, exportação Excel Mounjaro, comparação de fotos:**
 - [x] **Produtos**: histórico de preços (custo/venda) registrado automaticamente a cada alteração, com modal timeline
 - [x] **Mounjaro — Exportar CSV**: botão Exportar na lista de pacientes com dados clínicos e financeiros
@@ -216,8 +221,8 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [x] Exibir timeline de preços no modal do produto (botão "Histórico de Preços" no form de edição)
 
 #### 5.20 Backup Automático Programado
-- [ ] Agendar backup diário no Firebase sem ação manual
-- [ ] Notificar quando backup for concluído
+- [x] Agendar backup diário/semanal com horário configurável (Settings → Backup Automático)
+- [x] Notificar quando backup for concluído (notificação no navegador)
 
 #### 5.21 Cupom Fiscal Simplificado
 - [ ] Botão "Imprimir Cupom" no PDV

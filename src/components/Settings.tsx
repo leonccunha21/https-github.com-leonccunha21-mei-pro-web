@@ -36,6 +36,7 @@ import {
   Bell,
 } from 'lucide-react';
 import { getPrefs, savePrefs, requestPermission, sendNotification, NotificationPrefs } from '../lib/notifications';
+import { getBackupSchedule, saveBackupSchedule, BackupSchedulePrefs } from '../lib/backupScheduler';
 
 const defaultStoreInfo: StoreInfo = {
   name: 'ZM Store',
@@ -66,6 +67,7 @@ interface SettingsProps {
   onImportDatabase: (data: { products: Product[]; sales: Sale[]; categories: Category[]; expenses: Expense[]; loans?: Loan[]; orders?: ServiceOrder[]; customers?: Customer[]; suppliers?: Supplier[]; purchases?: Purchase[]; cashSessions?: CashSession[] }) => void;
   onExportBackup: () => void;
   onImportBackup: (file: File) => void;
+  onRunScheduledBackup: () => void;
   onResetDatabase: () => void;
   cloudUser: User | null;
   cloudSyncing: boolean;
@@ -182,7 +184,8 @@ export default function Settings({
   onDownloadFromCloud,
   onClearCloud,
   clearingCloud,
-  syncEnabled
+  syncEnabled,
+  onRunScheduledBackup,
 }: SettingsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showExcelUploader, setShowExcelUploader] = useState(false);
@@ -827,6 +830,18 @@ export default function Settings({
             </div>
           </div>
 
+          {/* Backup Automático */}
+          <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+            <div className="border-b border-slate-200 pb-3">
+              <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Clock className="h-5 w-5 text-slate-500" />
+                Backup Automático
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">Agende backups automáticos para não perder dados.</p>
+            </div>
+            <BackupScheduler onRunNow={onRunScheduledBackup} />
+          </div>
+
           <NotificationSettings />
 
           {/* Sincronização na Nuvem */}
@@ -961,6 +976,49 @@ export default function Settings({
           </div>
 
       </div>
+    </div>
+  );
+}
+
+function BackupScheduler({ onRunNow }: { onRunNow: () => void }) {
+  const [prefs, setPrefs] = useState(getBackupSchedule);
+  const update = (patch: Partial<BackupSchedulePrefs>) => {
+    const next = { ...prefs, ...patch };
+    setPrefs(next);
+    saveBackupSchedule(next);
+  };
+  const hours = Array.from({ length: 24 }, (_, i) => i);
+  return (
+    <div className="space-y-3">
+      <div>
+        <p className="text-xs font-bold text-slate-500 uppercase mb-1.5">Frequência</p>
+        <div className="flex gap-2">
+          {(['never', 'daily', 'weekly'] as const).map((f) => (
+            <button key={f} onClick={() => update({ frequency: f })}
+              className={`flex-1 py-2 rounded-lg text-xs font-bold transition-colors cursor-pointer border ${prefs.frequency === f ? 'bg-primary text-white border-primary' : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'}`}>
+              {f === 'never' ? 'Desligado' : f === 'daily' ? 'Diário' : 'Semanal'}
+            </button>
+          ))}
+        </div>
+      </div>
+      {prefs.frequency !== 'never' && (
+        <div>
+          <p className="text-xs font-bold text-slate-500 uppercase mb-1.5">Horário</p>
+          <select value={prefs.hour} onChange={(e) => update({ hour: Number(e.target.value) })}
+            className="w-full py-2 px-3 text-sm border border-slate-200 rounded-lg bg-white">
+            {hours.map((h) => (
+              <option key={h} value={h}>{h.toString().padStart(2, '0')}:00</option>
+            ))}
+          </select>
+        </div>
+      )}
+      {prefs.lastBackup && (
+        <p className="text-xs text-slate-400">Último backup: {new Date(prefs.lastBackup).toLocaleString('pt-BR')}</p>
+      )}
+      <button onClick={() => { onRunNow(); update({ lastBackup: new Date().toISOString() }); }}
+        className="w-full py-2 px-3 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer">
+        <Download className="h-3.5 w-3.5 text-slate-400" /> Executar backup agora
+      </button>
     </div>
   );
 }

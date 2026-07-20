@@ -83,6 +83,7 @@ import { roundCurrency } from './lib/currency';
 import { localNowISO } from './lib/datetime';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 import { getDailyWrites, DAILY_WRITE_LIMIT } from './lib/quota';
+import { getBackupSchedule, shouldRunBackup, saveBackupSchedule } from './lib/backupScheduler';
 
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
@@ -1290,6 +1291,24 @@ export default function App() {
     URL.revokeObjectURL(url);
   }, [products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans]);
 
+  const handleRunScheduledBackup = useCallback(() => {
+    handleExportBackup();
+    saveBackupSchedule({ ...getBackupSchedule(), lastBackup: new Date().toISOString() });
+    if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
+      new Notification('Gestão.PRO', { body: 'Backup automático concluído!' });
+    }
+  }, [handleExportBackup]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const prefs = getBackupSchedule();
+      if (shouldRunBackup(prefs)) {
+        handleRunScheduledBackup();
+      }
+    }, 60000);
+    return () => clearInterval(interval);
+  }, [handleRunScheduledBackup]);
+
   const handleImportBackup = useCallback((file: File) => {
     const reader = new FileReader();
     reader.onload = () => {
@@ -2305,6 +2324,7 @@ export default function App() {
                 onImportDatabase={handleImportDatabase}
                 onExportBackup={handleExportBackup}
                 onImportBackup={handleImportBackup}
+                onRunScheduledBackup={handleRunScheduledBackup}
                 onResetDatabase={handleResetDatabase}
                 cloudUser={cloudUser}
                 cloudSyncing={cloudSyncing}
