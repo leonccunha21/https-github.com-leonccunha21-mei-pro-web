@@ -5,6 +5,16 @@ export interface PriceHistoryEntry {
   newValue: number;
 }
 
+export type UserRole = 'admin' | 'gerente' | 'vendedor';
+
+export interface AppUser {
+  uid: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  createdAt: string;
+}
+
 export interface Product {
   id: string;
   code: string; // SKU / Código
@@ -161,6 +171,7 @@ export interface StoreInfo {
   notes: string;
   logoUrl: string;
   primaryColor?: string;
+  pixKey?: string;
 }
 
 export interface OsItem {

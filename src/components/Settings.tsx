@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import type { User } from 'firebase/auth';
-import { Product, Sale, Category, SaleItem, StoreInfo, Expense, Loan, ServiceOrder, Customer, Supplier, Purchase, CashSession } from '../types';
+import { Product, Sale, Category, SaleItem, StoreInfo, Expense, Loan, ServiceOrder, Customer, Supplier, Purchase, CashSession, AppUser, UserRole } from '../types';
 import {
   stripAccents,
   parseProductsSheet,
@@ -83,6 +83,10 @@ interface SettingsProps {
   onClearCloud: () => void;
   clearingCloud: boolean;
   syncEnabled: boolean;
+  appUsers: AppUser[];
+  currentUserRole: UserRole;
+  onAppUsersChange: (users: AppUser[]) => void;
+  onCurrentUserRoleChange: (role: UserRole) => void;
 }
 
 import ExcelUploader from '../components/ExcelUploader';
@@ -186,6 +190,10 @@ export default function Settings({
   clearingCloud,
   syncEnabled,
   onRunScheduledBackup,
+  appUsers,
+  currentUserRole,
+  onAppUsersChange,
+  onCurrentUserRoleChange,
 }: SettingsProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showExcelUploader, setShowExcelUploader] = useState(false);
@@ -206,6 +214,27 @@ export default function Settings({
   const [importSuccessMsg, setImportSuccessMsg] = useState<string | null>(null);
   const [importError, setImportError] = useState<string | null>(null);
   const [importingExcel, setImportingExcel] = useState(false);
+
+  const [newUserName, setNewUserName] = useState('');
+  const [newUserEmail, setNewUserEmail] = useState('');
+  const [newUserRole, setNewUserRole] = useState<UserRole>('vendedor');
+
+  const handleAddUser = () => {
+    if (!newUserName.trim() || !newUserEmail.trim()) return;
+    const exists = appUsers.some(u => u.email.toLowerCase() === newUserEmail.trim().toLowerCase());
+    if (exists) { alert('Este email já está cadastrado.'); return; }
+    const newUser: AppUser = {
+      uid: `u_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+      name: newUserName.trim(),
+      email: newUserEmail.trim(),
+      role: newUserRole,
+      createdAt: new Date().toISOString(),
+    };
+    onAppUsersChange([...appUsers, newUser]);
+    setNewUserName('');
+    setNewUserEmail('');
+    setNewUserRole('vendedor');
+  };
 
   const handleImportDatabase = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -655,6 +684,10 @@ export default function Settings({
             <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">E-mail</label>
             <input type="email" value={storeInfo.email} onChange={e => setStoreInfo({ ...storeInfo, email: e.target.value })} placeholder="contato@zmstore.com.br" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
           </div>
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Chave PIX</label>
+            <input type="text" value={storeInfo.pixKey || ''} onChange={e => setStoreInfo({ ...storeInfo, pixKey: e.target.value })} placeholder="CPF, CNPJ, email, celular ou chave aleatória" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
+          </div>
           <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Endereço</label>
             <input type="text" value={storeInfo.address} onChange={e => setStoreInfo({ ...storeInfo, address: e.target.value })} placeholder="Rua, número, bairro" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400" />
@@ -959,6 +992,86 @@ export default function Settings({
               </button>
             )}
           </div>
+
+          {/* Usuários */}
+          {currentUserRole === 'admin' && (
+            <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+              <div className="border-b border-slate-200 pb-3">
+                <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <UserIcon className="h-5 w-5 text-primary" />
+                  Usuários
+                </h2>
+                <p className="text-xs text-slate-400 mt-0.5">Gerencie os usuários e suas permissões.</p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="text"
+                  placeholder="Nome"
+                  value={newUserName}
+                  onChange={e => setNewUserName(e.target.value)}
+                  className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400"
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={newUserEmail}
+                  onChange={e => setNewUserEmail(e.target.value)}
+                  className="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400"
+                />
+                <select
+                  value={newUserRole}
+                  onChange={e => setNewUserRole(e.target.value as UserRole)}
+                  className="px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400"
+                >
+                  <option value="admin">Admin</option>
+                  <option value="gerente">Gerente</option>
+                  <option value="vendedor">Vendedor</option>
+                </select>
+                <button onClick={handleAddUser} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer shrink-0">
+                  Adicionar
+                </button>
+              </div>
+
+              <div className="space-y-2 max-h-60 overflow-y-auto">
+                {appUsers.map(user => (
+                  <div key={user.uid} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-100">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-slate-700 truncate">{user.name}</p>
+                      <p className="text-xs text-slate-400 truncate">{user.email}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0 ml-2">
+                      <select
+                        value={user.role}
+                        onChange={e => {
+                          const updated = appUsers.map(u => u.uid === user.uid ? { ...u, role: e.target.value as UserRole } : u);
+                          onAppUsersChange(updated);
+                        }}
+                        className="text-xs border border-slate-200 rounded px-1 py-0.5"
+                      >
+                        <option value="admin">Admin</option>
+                        <option value="gerente">Gerente</option>
+                        <option value="vendedor">Vendedor</option>
+                      </select>
+                      <button
+                        onClick={() => {
+                          if (window.confirm(`Remover usuário ${user.name}?`)) {
+                            onAppUsersChange(appUsers.filter(u => u.uid !== user.uid));
+                          }
+                        }}
+                        className="p-1.5 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+                {appUsers.length === 0 && (
+                  <p className="text-xs text-slate-400 text-center py-4">Nenhum usuário cadastrado.</p>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Danger Zone */}
           <div className="bg-white p-5 rounded-xl border border-rose-200 shadow-sm space-y-3">

@@ -87,6 +87,12 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [x] **PDV**: cupom fiscal com logo, dados da loja, itens, total e forma de pagamento
 - [x] **Mounjaro**: anotações de consulta editáveis no detalhe do paciente
 
+**V2.16.0 — Multi-usuário com perfis + PIX no PDV:**
+- [x] **Multi-usuário**: 3 perfis (admin/gerente/vendedor) com permissões por feature
+- [x] **Usuários**: painel de gestão de usuários (criar, atribuir role, deletar) em Configurações
+- [x] **PIX no PDV**: geração de QR Code PIX (BRCode) + payload copiável ao selecionar forma de pagamento PIX
+- [x] **Chave PIX**: campo no Perfil da Loja para cadastrar a chave
+
 **V2.15.0 — Backup automático programado:**
 - [x] **Backup automático**: configuração de frequência (diário/semanal/desligado) e horário no Settings
 - [x] **Notificação**: alerta no navegador quando o backup for executado automaticamente
@@ -127,6 +133,7 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [ ] Status de pagamento do boleto (pendente/pago/vencido)
 
 #### 5.4 Gateway de Pagamento no PDV
+- [x] QR Code PIX estático no PDV (chave PIX configurável, payload BRCode, QR code gerado via `qrcode` lib)
 - [ ] Gerar QR Code PIX dinâmico no PDV (Asaas, GerenciaNet, Mercado Pago)
 - [ ] Link com maquininha (Stone, Cielo, Rede) — ao menos integração por link de pagamento
 - [ ] Status de confirmação do pagamento em tempo real
@@ -157,9 +164,10 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 ### 🛠️ Produto & Experiência
 
 #### 5.9 Multi-usuário com Permissões
-- [ ] Perfil de vendedor (só PDV e consulta)
-- [ ] Perfil de gerente (tudo exceto config)
-- [ ] Perfil de admin (tudo)
+- [x] Perfil de vendedor (só PDV e consulta)
+- [x] Perfil de gerente (tudo exceto config)
+- [x] Perfil de admin (tudo)
+- [x] Seletor de papel no sidebar + tela de gestão de usuários em Configurações
 
 #### 5.10 White-label / Personalização da Marca
 - [x] Melhorar uso do `StoreInfo` no header e sidebar (nome da loja, logo, cores)

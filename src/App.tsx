@@ -18,7 +18,9 @@ import {
   LeadExtractionJob,
   WhatsAppInstance,
   AIAgent,
-  Opportunity
+  Opportunity,
+  UserRole,
+  AppUser
 } from './types';
 // Nenhum seed automático: contas novas começam com 0 dados. A entrada de dados
 // ocorre apenas via importação manual de planilha Excel (ver tela de Configurações).
@@ -81,6 +83,7 @@ import { categorizeProduct } from './lib/categorize';
 import { normalizeName, normalizeChannel } from './lib/normalize';
 import { roundCurrency } from './lib/currency';
 import { localNowISO } from './lib/datetime';
+import { canAccess } from './lib/permissions';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 import { getDailyWrites, DAILY_WRITE_LIMIT } from './lib/quota';
 import { getBackupSchedule, shouldRunBackup, saveBackupSchedule } from './lib/backupScheduler';
@@ -138,6 +141,14 @@ export default function App() {
   const [whatsappInstances, setWhatsappInstances] = useState<WhatsAppInstance[]>([]);
   const [aiAgents, setAiAgents] = useState<AIAgent[]>([]);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+
+  const [appUsers, setAppUsers] = useState<AppUser[]>(() => {
+    try { return JSON.parse(localStorage.getItem('zm_users') || '[]'); }
+    catch { return []; }
+  });
+  const [currentUserRole, setCurrentUserRole] = useState<UserRole>(() => {
+    return (localStorage.getItem('zm_current_role') as UserRole) || 'admin';
+  });
 
   // Estado de resolução da autenticação (Firebase). Só revela a tela principal
   // após saber se há usuário logado. Usuário não logado => 0 dados.
@@ -1011,6 +1022,9 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => { localStorage.setItem('zm_users', JSON.stringify(appUsers)); }, [appUsers]);
+  useEffect(() => { localStorage.setItem('zm_current_role', currentUserRole); }, [currentUserRole]);
+
   // --- ACTIONS ---
 
   // Add Product
@@ -1764,6 +1778,7 @@ export default function App() {
               Painel Geral
             </button>
 
+            {canAccess('products', currentUserRole) && (<>
             {/* Tab 2: Products */}
             <button
               id="nav-products"
@@ -1777,8 +1792,8 @@ export default function App() {
               <Package className="h-4 w-4" />
               Estoque
             </button>
-
-            {/* Tab 3: Sales (POS) */}
+            </>)}
+            {canAccess('pdv', currentUserRole) && (<>
             <button
               id="nav-pos"
               onClick={() => setActiveTab('pos')}
@@ -1791,6 +1806,7 @@ export default function App() {
               <ShoppingCart className="h-4 w-4" />
               Frente de Caixa
             </button>
+            </>)}
 
             {/* Tab 4: Sales History (com submenu Devedores) */}
             <div>
@@ -1832,6 +1848,7 @@ export default function App() {
               </button>
             </div>
 
+            {canAccess('reports', currentUserRole) && (<>
             {/* Tab 5: Reports */}
             <button
               id="nav-reports"
@@ -1845,7 +1862,9 @@ export default function App() {
               <BarChart3 className="h-4 w-4" />
               Relatórios
             </button>
+            </>)}
 
+            {canAccess('dre', currentUserRole) && (<>
             {/* Tab: DRE */}
             <button
               id="nav-dre"
@@ -1859,7 +1878,9 @@ export default function App() {
               <FileText className="h-4 w-4" />
               DRE
             </button>
+            </>)}
 
+            {canAccess('cash_flow', currentUserRole) && (<>
             {/* Tab: Fluxo de Caixa */}
             <button
               id="nav-cashflow"
@@ -1873,7 +1894,9 @@ export default function App() {
               <DollarSign className="h-4 w-4" />
               Fluxo de Caixa
             </button>
+            </>)}
 
+            {canAccess('cash_closing', currentUserRole) && (<>
             {/* Tab: Fechamento de Caixa */}
             <button
               id="nav-cashclosing"
@@ -1887,7 +1910,9 @@ export default function App() {
               <Wallet className="h-4 w-4" />
               Fechamento de Caixa
             </button>
+            </>)}
 
+            {canAccess('os_orcamento', currentUserRole) && (<>
             {/* Tab 6: OS & Orçamentos */}
             <button
               id="nav-os"
@@ -1901,7 +1926,9 @@ export default function App() {
               <ClipboardList className="h-4 w-4" />
               OS / Orçamento
             </button>
+            </>)}
 
+            {canAccess('settings', currentUserRole) && (<>
             {/* Tab: Configurações */}
             <button
               id="nav-settings"
@@ -1915,12 +1942,14 @@ export default function App() {
               <SettingsIcon className="h-4 w-4" />
               Configurações
             </button>
+            </>)}
 
             {/* Separator: Módulos Avançados */}
             <div className="pt-3 pb-1">
               <span className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-widest px-3">Módulos Avançados</span>
             </div>
 
+            {canAccess('leads', currentUserRole) && (<>
             {/* Tab: Leads */}
             <button
               id="nav-leads"
@@ -1934,7 +1963,9 @@ export default function App() {
               <Target className="h-4 w-4" />
               Leads
             </button>
+            </>)}
 
+            {canAccess('funnel', currentUserRole) && (<>
             {/* Tab: Funil de Vendas */}
             <button
               id="nav-funnel"
@@ -1948,7 +1979,9 @@ export default function App() {
               <KanbanSquare className="h-4 w-4" />
               Funil de Vendas
             </button>
+            </>)}
 
+            {canAccess('whatsapp', currentUserRole) && (<>
             {/* Tab: WhatsApp */}
             <button
               id="nav-whatsapp"
@@ -1962,7 +1995,9 @@ export default function App() {
               <MessageSquare className="h-4 w-4" />
               WhatsApp
             </button>
+            </>)}
 
+            {canAccess('ai', currentUserRole) && (<>
             {/* Tab: IA */}
             <button
               id="nav-ai"
@@ -1976,7 +2011,9 @@ export default function App() {
               <Brain className="h-4 w-4" />
               Inteligência Artificial
             </button>
+            </>)}
 
+            {canAccess('bank_conciliation', currentUserRole) && (<>
             {/* Tab: Conciliação Bancária */}
             <button
               id="nav-conciliation"
@@ -1990,6 +2027,7 @@ export default function App() {
               <Building2 className="h-4 w-4" />
               Conciliação
             </button>
+            </>)}
 
             {/* Subsite Mounjaro PRO */}
             <button
@@ -2087,6 +2125,24 @@ export default function App() {
                   {cloudSyncing ? 'Enviando…' : '☁ Enviar TUDO para a nuvem'}
                 </button>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Role Selector */}
+        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
+          <div className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">Função</span>
+              <select
+                value={currentUserRole}
+                onChange={e => setCurrentUserRole(e.target.value as UserRole)}
+                className="text-xs bg-transparent border border-slate-200 dark:border-slate-600 rounded px-1 py-0.5 text-slate-700 dark:text-slate-300"
+              >
+                <option value="admin">Admin</option>
+                <option value="gerente">Gerente</option>
+                <option value="vendedor">Vendedor</option>
+              </select>
             </div>
           </div>
         </div>
@@ -2340,6 +2396,10 @@ export default function App() {
                 onClearCloud={handleClearCloud}
                 clearingCloud={clearingCloud}
                 syncEnabled={SYNC_ENABLED}
+                appUsers={appUsers}
+                currentUserRole={currentUserRole}
+                onAppUsersChange={setAppUsers}
+                onCurrentUserRoleChange={setCurrentUserRole}
               />
             )}
             </React.Suspense>
