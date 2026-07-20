@@ -388,9 +388,31 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
                     </div>
                   ))}
                 </div>
+                {/* Scenarios */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  {(() => {
+                    const totalRec = projMeses.reduce((a, m) => a + m.receber, 0);
+                    const totalPag = projMeses.reduce((a, m) => a + m.pagar, 0);
+                    const scenarios = [
+                      { label: 'Otimista', pct: 1.3, color: 'bg-emerald-50 border-emerald-200 text-emerald-800' },
+                      { label: 'Realista', pct: 1.0, color: 'bg-primary-50 border-primary-200 text-primary-800' },
+                      { label: 'Pessimista', pct: 0.7, color: 'bg-rose-50 border-rose-200 text-rose-800' },
+                    ];
+                    return scenarios.map(s => {
+                      const saldo = totalRec * s.pct - totalPag;
+                      return (
+                        <div key={s.label} className={`rounded-xl p-3 border ${s.color}`}>
+                          <p className="text-xs font-bold uppercase tracking-wider">{s.label}</p>
+                          <p className="text-lg font-bold font-mono mt-1">R$ {saldo.toFixed(2)}</p>
+                          <p className="text-[10px] mt-0.5 opacity-70">Receita: R$ {(totalRec * s.pct).toFixed(2)} | Despesas: R$ {totalPag.toFixed(2)}</p>
+                        </div>
+                      );
+                    });
+                  })()}
+                </div>
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2 text-xs text-amber-800">
                   <Calendar className="h-4 w-4 shrink-0 mt-0.5 text-amber-600" />
-                  <span>Projeção baseada em <b>{receber.length} venda(s) pendente(s)</b> e <b>{pagar.length} despesa(s) pendente(s)</b>. Atualize os status conforme os pagamentos forem realizados.</span>
+                  <span>Projeção baseada em <b>{receber.length} venda(s) pendente(s)</b> e <b>{pagar.length} despesa(s) pendente(s)</b>. Cenários: otimista (+30% receitas), realista (atual), pessimista (-30% receitas).</span>
                 </div>
               </div>
             );

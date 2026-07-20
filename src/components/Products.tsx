@@ -574,9 +574,21 @@ export default function Products({ products, categories, sales, onAddProduct, on
                         <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
                           <div className="inline-flex items-center gap-1">
                             <button onClick={() => handleQuickStockAdjust(p, -1)} disabled={p.stock === 0 || isIndisponivel} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 disabled:opacity-30 border border-slate-200/50"><Minus className="h-3 w-3" /></button>
-                            <span className={`font-bold font-mono text-xs w-10 text-center ${isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : isIndisponivel ? 'text-slate-400' : 'text-slate-800'}`}>{p.stock}</span>
+                            <div className="flex flex-col items-center">
+                              <span className={`font-bold font-mono text-xs w-10 text-center ${isOut ? 'text-rose-600' : isLow ? 'text-amber-600' : isIndisponivel ? 'text-slate-400' : 'text-slate-800'}`}>{p.stock}</span>
+                              {p.minStock > 0 && !isIndisponivel && (
+                                <span className={`text-[8px] font-mono ${isLow ? 'text-amber-500' : 'text-slate-400'}`}>min: {p.minStock}</span>
+                              )}
+                            </div>
                             <button onClick={() => handleQuickStockAdjust(p, 1)} className="p-0.5 rounded bg-slate-100 hover:bg-slate-200 border border-slate-200/50"><Plus className="h-3 w-3" /></button>
                           </div>
+                          {!isIndisponivel && p.minStock > 0 && (
+                            <div className="w-16 mx-auto mt-1 h-1 bg-slate-100 rounded-full overflow-hidden">
+                              <div className={`h-full rounded-full transition-all ${p.stock <= 0 ? 'bg-rose-500' : p.stock <= p.minStock ? 'bg-amber-500' : 'bg-emerald-400'}`}
+                                style={{ width: `${Math.min(100, (p.stock / Math.max(p.minStock, 1)) * 100)}%` }}
+                              />
+                            </div>
+                          )}
                         </td>
                         <td className="px-4 py-3 border-b border-slate-100 align-middle text-right">
                           <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full ${margin >= 50 ? 'bg-emerald-50 text-emerald-700' : margin >= 30 ? 'bg-indigo-50 text-indigo-700' : 'bg-amber-50 text-amber-700'}`}>

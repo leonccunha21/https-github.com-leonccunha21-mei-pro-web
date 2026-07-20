@@ -74,12 +74,11 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [ ] **Limite de 5 conexões / 3 agentes** do plano Pro não está implementado (sem trava de quantidade).
 - [ ] **Redrive 360º / Atendimento omnichannel** (e-mail, Instagram DM) não foi iniciado.
 
-**V2.9.0 — Chat RAG, Tema Dinâmico, Fluxo Projetado, Notificações, +3 testes:**
-- [x] **Chat RAG**: interface de conversa com agente via `rag.ask` integrada ao painel de cada agente
-- [x] **Tema dinâmico**: `--color-primary` como CSS variable + paleta `primary-50..900` no Tailwind v4
-- [x] **Fluxo de caixa projetado**: contas a receber (vendas pendentes) vs. a pagar (despesas) nos próximos 3 meses
-- [x] **Notificações**: painel de preferências em Configurações, lembrete de contas a receber e estoque baixo no Dashboard
-- [x] **25 testes unitários** (DRE, parsers, OFX, notificações) — `npm test` passa limpo
+**V2.10.0 — DRE comparativo anual, cenários fluxo caixa, indicador minStock, impressão/PDF:**
+- [x] **DRE**: tabela comparativa anual year-over-year com evolução % de receita e margem
+- [x] **DRE**: botão "Imprimir/PDF" que abre o diálogo de impressão do navegador
+- [x] **Fluxo de Caixa**: cenários otimista (+30% receitas), realista e pessimista (-30%)
+- [x] **Produtos**: barra de progresso stock vs. minStock + indicador "min: N" no grid
 
 **Status atual:** tudo que é possível no frontend está feito e funcionando (modo local + VPS stub testado end-to-end). O app compila (`npm run build`) e passa no lint (`npm run lint`) sem erros.
 
@@ -131,12 +130,12 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 #### 5.7 Relatório DRE (Demonstração do Resultado do Exercício)
 - [x] Criar relatório DRE completo: Receita Bruta → Deduções → Receita Líquida → CMV → Margem → Despesas → Resultado (componente `DRE.tsx`)
 - [x] Testes unitários para cálculos do DRE
-- [ ] Comparativo mensal e anual
-- [ ] Exportação em PDF/Excel
+- [x] Comparativo anual (year-over-year com evolução %)
+- [x] Exportação em CSV + impressão/PDF via browser
 
 #### 5.8 Fluxo de Caixa Projetado
 - [x] Fluxo de caixa futuro com base em contas a receber (vendas pendentes) e a pagar (despesas) (`CashFlow.tsx`)
-- [ ] Cenários otimista/pessimista
+- [x] Cenários otimista (+30%), realista e pessimista (-30%) no Fluxo Projetado
 
 ### 🛠️ Produto & Experiência
 

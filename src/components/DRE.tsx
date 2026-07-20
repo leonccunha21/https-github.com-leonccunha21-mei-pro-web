@@ -1,9 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Sale, Expense } from '../types';
 import { 
   TrendingUp, TrendingDown, DollarSign, ShoppingCart, 
   CreditCard, FileText, Download, Calendar, Filter,
-  ChevronDown, ChevronUp
+  ChevronDown, ChevronUp, Printer, BarChart3
 } from 'lucide-react';
 
 interface DREProps {
@@ -71,6 +71,28 @@ export default function DRE({ sales, expenses }: DREProps) {
     });
   };
 
+  const yearlyComparison = useMemo(() => {
+    const byYear = new Map<number, { rec: number; cmv: number; desp: number; vendas: number }>();
+    sales.filter(s => s.status === 'completed').forEach(s => {
+      const y = new Date(s.date).getFullYear();
+      if (!byYear.has(y)) byYear.set(y, { rec: 0, cmv: 0, desp: 0, vendas: 0 });
+      const d = byYear.get(y)!;
+      d.rec += s.total;
+      d.cmv += s.totalCost;
+      d.vendas++;
+    });
+    expenses.filter(e => e.status === 'paid').forEach(e => {
+      const y = new Date(e.date).getFullYear();
+      if (!byYear.has(y)) byYear.set(y, { rec: 0, cmv: 0, desp: 0, vendas: 0 });
+      byYear.get(y)!.desp += e.amount;
+    });
+    return Array.from(byYear.entries()).sort((a, b) => b[0] - a[0]);
+  }, [sales, expenses]);
+
+  const exportPrint = () => {
+    window.print();
+  };
+
   const exportDRE = () => {
     const rows = [
       ['Demonstração do Resultado do Exercício (DRE)'],
@@ -121,7 +143,11 @@ export default function DRE({ sales, expenses }: DREProps) {
               {years.map(y => <option key={y} value={y}>{y}</option>)}
             </select>
           </div>
-          <button onClick={exportDRE} className="flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer">
+          <button onClick={exportPrint} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition-colors cursor-pointer">
+            <Printer className="h-3.5 w-3.5" />
+            Imprimir/PDF
+          </button>
+          <button onClick={exportDRE} className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-bold transition-colors cursor-pointer">
             <Download className="h-3.5 w-3.5" />
             Exportar CSV
           </button>
@@ -207,6 +233,58 @@ export default function DRE({ sales, expenses }: DREProps) {
           </div>
         </div>
       </div>
+
+      {/* Year-over-Year Comparison */}
+      {yearlyComparison.length > 1 && (
+        <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden print:shadow-none">
+          <div className="px-6 py-4 border-b border-slate-100 dark:border-slate-700">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <BarChart3 className="h-4 w-4 text-primary" /> Comparativo Anual
+            </h3>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-slate-50 dark:bg-slate-800/50">
+                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-700">Ano</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-700">Vendas</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-700">Receita</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-700">CMV</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-700">Despesas</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-700">Resultado</th>
+                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-200 dark:border-slate-700">Margem</th>
+                </tr>
+              </thead>
+              <tbody>
+                {yearlyComparison.map(([year, data], idx) => {
+                  const lucro = data.rec - data.cmv - data.desp;
+                  const margem = data.rec > 0 ? (lucro / data.rec) * 100 : 0;
+                  const prev = idx < yearlyComparison.length - 1 ? yearlyComparison[idx + 1][1] : null;
+                  const evolRec = prev ? ((data.rec - prev.rec) / prev.rec) * 100 : null;
+                  return (
+                    <tr key={year} className="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
+                      <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-700/50 font-bold text-slate-700 dark:text-slate-300">{year}</td>
+                      <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-700/50 text-right text-slate-600">{data.vendas}</td>
+                      <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-700/50 text-right font-mono text-emerald-600">{fmt(data.rec)}</td>
+                      <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-700/50 text-right font-mono text-rose-500">{fmt(data.cmv)}</td>
+                      <td className="px-4 py-3 border-b border-slate-100 dark:border-slate-700/50 text-right font-mono text-orange-500">{fmt(data.desp)}</td>
+                      <td className={`px-4 py-3 border-b border-slate-100 dark:border-slate-700/50 text-right font-mono font-bold ${lucro >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>{fmt(lucro)}</td>
+                      <td className={`px-4 py-3 border-b border-slate-100 dark:border-slate-700/50 text-right font-mono font-bold ${margem >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {margem.toFixed(1)}%
+                        {evolRec !== null && (
+                          <span className={`ml-1 text-[10px] ${evolRec >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>
+                            ({evolRec >= 0 ? '+' : ''}{evolRec.toFixed(1)}%)
+                          </span>
+                        )}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Monthly Breakdown */}
       <div className="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden">
