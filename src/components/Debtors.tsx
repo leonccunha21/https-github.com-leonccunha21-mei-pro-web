@@ -248,6 +248,25 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
     return Math.floor((Date.now() - new Date(l.dueDate).getTime()) / (1000 * 60 * 60 * 24));
   };
 
+  const buildDebtWhatsAppMessage = (sale: Sale) => {
+    const days = daysSince(sale.date);
+    const firstName = (sale.clientName || '').trim().split(' ')[0] || 'Cliente';
+    const head = `Olá ${firstName}, tudo bem?`;
+    const remaining = Math.max(0, sale.total - (sale.paidAmount || 0));
+    const body = days > 0
+      ? `Passando para lembrar que o pagamento de *${formatCurrency(remaining)}* referente à sua compra do dia ${formatDate(sale.date)} está pendente há ${days} dia(s).`
+      : `Passando para lembrar que o pagamento de *${formatCurrency(remaining)}* referente à sua compra de hoje ainda está pendente.`;
+    return `${head}\n${body}\nAgradeço se puder acertar o valor o quanto antes. Obrigado!`;
+  };
+
+  const openDebtWhatsApp = (sale: Sale) => {
+    let phone = (sale.clientPhone || '').replace(/\D/g, '');
+    if (phone && !phone.startsWith('55')) phone = '55' + phone;
+    const text = encodeURIComponent(buildDebtWhatsAppMessage(sale));
+    const url = phone ? `https://wa.me/${phone}?text=${text}` : `https://wa.me/?text=${text}`;
+    window.open(url, '_blank');
+  };
+
   const buildLoanWhatsAppMessage = (l: Loan) => {
     const overdue = loanDaysOverdue(l);
     const remaining = loanRemaining(l);
@@ -536,6 +555,13 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                               <Check className="h-4 w-4" />
                             </button>
                           )}
+                          <button
+                            onClick={() => openDebtWhatsApp(sale)}
+                            className="p-1.5 hover:bg-emerald-50 text-emerald-600 rounded-lg transition-colors"
+                            title="Enviar cobrança no WhatsApp"
+                          >
+                            <MessageCircle className="h-4 w-4" />
+                          </button>
                         </div>
                       </td>
                     </tr>
@@ -712,6 +738,13 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                     >
                       <Check className="h-3.5 w-3.5" />
                       Confirmar Pagamento
+                    </button>
+                    <button
+                      onClick={() => openDebtWhatsApp(selectedSale)}
+                      className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                    >
+                      <MessageCircle className="h-3.5 w-3.5" />
+                      Cobrar WhatsApp
                     </button>
                   </>
                 )}

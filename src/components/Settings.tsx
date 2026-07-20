@@ -32,8 +32,10 @@ import {
   CloudDownload,
   Clock,
   Trash2,
-  LogOut
+  LogOut,
+  Bell,
 } from 'lucide-react';
+import { getPrefs, savePrefs, requestPermission, sendNotification, NotificationPrefs } from '../lib/notifications';
 
 const defaultStoreInfo: StoreInfo = {
   name: 'ZM Store',
@@ -82,6 +84,73 @@ interface SettingsProps {
 }
 
 import ExcelUploader from '../components/ExcelUploader';
+
+function NotificationSettings() {
+  const [prefs, setPrefs] = useState(getPrefs);
+  const [perm, setPerm] = useState<'default' | 'granted' | 'denied' | 'unavailable'>('default');
+  useEffect(() => {
+    if (typeof Notification === 'undefined') setPerm('unavailable');
+    else setPerm(Notification.permission as any);
+  }, []);
+  const toggle = (key: keyof NotificationPrefs) => {
+    const next = { ...prefs, [key]: !prefs[key] };
+    setPrefs(next);
+    savePrefs(next);
+  };
+  const request = async () => {
+    const ok = await requestPermission();
+    setPerm(ok ? 'granted' : 'denied');
+  };
+  const test = () => sendNotification('Gestão.PRO', 'Notificação de teste funcionando! 🎉');
+  const items = [
+    { key: 'debtReminder' as const, label: 'Lembrete de Contas a Receber', desc: 'Notifica quando houver vendas pendentes' },
+    { key: 'lowStockAlert' as const, label: 'Alerta de Estoque Baixo', desc: 'Notifica quando produtos estiverem abaixo do mínimo' },
+    { key: 'dailySummary' as const, label: 'Resumo Diário', desc: 'Resumo das vendas e despesas do dia' },
+  ];
+  return (
+    <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+      <div className="border-b border-slate-200 pb-3">
+        <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+          <Bell className="h-5 w-5 text-primary" />
+          Notificações
+        </h2>
+        <p className="text-xs text-slate-400 mt-0.5">Lembretes automáticos no navegador.</p>
+      </div>
+      <div className="space-y-4">
+        {perm !== 'granted' && perm !== 'unavailable' && (
+          <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl p-3">
+            <span className="text-xs text-amber-800">Permissão de notificação necessária</span>
+            <button onClick={request} className="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer">Permitir</button>
+          </div>
+        )}
+        {perm === 'unavailable' && (
+          <div className="bg-slate-50 border border-slate-200 rounded-xl p-3 text-xs text-slate-500">
+            Notificações não são suportadas neste navegador.
+          </div>
+        )}
+        {items.map(item => (
+          <div key={item.key} className="flex items-center justify-between">
+            <div>
+              <p className="text-sm font-semibold text-slate-700">{item.label}</p>
+              <p className="text-xs text-slate-400">{item.desc}</p>
+            </div>
+            <button
+              onClick={() => toggle(item.key)}
+              className={`w-10 h-6 rounded-full transition-colors cursor-pointer shrink-0 ml-3 ${prefs[item.key] ? 'bg-primary' : 'bg-slate-300'}`}
+            >
+              <div className={`w-4 h-4 bg-white rounded-full shadow-sm transition-transform mx-0.5 ${prefs[item.key] ? 'translate-x-4' : ''}`} />
+            </button>
+          </div>
+        ))}
+        {perm === 'granted' && (
+          <button onClick={test} className="w-full py-2 px-3 border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <Bell className="h-3.5 w-3.5" /> Testar Notificação
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function Settings({
   products,
@@ -603,6 +672,18 @@ export default function Settings({
             <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Observações (aparece no recibo)</label>
             <textarea value={storeInfo.notes} onChange={e => setStoreInfo({ ...storeInfo, notes: e.target.value })} rows={2} placeholder="Obrigado pela preferência!" className="w-full px-3 py-2 border border-slate-200 rounded-lg text-xs font-medium focus:outline-none focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400 resize-none" />
           </div>
+          <div>
+            <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Cor Primária (tema)</label>
+            <div className="flex items-center gap-2">
+              <input
+                type="color"
+                value={storeInfo.primaryColor || '#4f46e5'}
+                onChange={e => setStoreInfo({ ...storeInfo, primaryColor: e.target.value })}
+                className="w-10 h-10 rounded-lg border border-slate-200 cursor-pointer"
+              />
+              <span className="text-[11px] text-slate-400 font-mono">{storeInfo.primaryColor || '#4f46e5'}</span>
+            </div>
+          </div>
           <div className="md:col-span-2">
             <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Logo da Loja (aparece no site, recibos e OS)</label>
             <div className="flex items-center gap-4">
@@ -745,6 +826,8 @@ export default function Settings({
               </div>
             </div>
           </div>
+
+          <NotificationSettings />
 
           {/* Sincronização na Nuvem */}
           <div className="bg-white p-5 rounded-xl border border-indigo-200 shadow-sm space-y-3">

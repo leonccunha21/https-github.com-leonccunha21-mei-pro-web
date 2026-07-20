@@ -1,7 +1,14 @@
-import { useState, useEffect } from 'react';
-import { Bot, Plus, Trash2, Brain, X, Sparkles, BookOpen, FileText, ChevronDown, ChevronUp, RefreshCw, Upload, Loader2, AlertTriangle } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Bot, Plus, Trash2, Brain, X, Sparkles, BookOpen, FileText, ChevronDown, ChevronUp, RefreshCw, Upload, Loader2, AlertTriangle, MessageSquare, Send, User } from 'lucide-react';
 import type { AIAgent } from '../types';
 import { rag, vpsHealth, VpsKnowledgeDoc, VPS_API_URL } from '../lib/vps';
+
+interface ChatMessage {
+  id: string;
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: number;
+}
 
 interface AIModuleProps {
   agents: AIAgent[];
@@ -55,6 +62,36 @@ export default function AIModule({ agents, onSaveAgents }: AIModuleProps) {
   const [docsByAgent, setDocsByAgent] = useState<Record<string, VpsKnowledgeDoc[]>>({});
   const [uploadingId, setUploadingId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+
+  // Chat RAG state
+  const [chatAgentId, setChatAgentId] = useState<string | null>(null);
+  const [chats, setChats] = useState<Record<string, ChatMessage[]>>({});
+  const [chatInput, setChatInput] = useState('');
+  const [chatLoading, setChatLoading] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [chats, chatAgentId]);
+
+  const handleSendMessage = async () => {
+    if (!chatAgentId || !chatInput.trim() || chatLoading || !vpsOnline) return;
+    const question = chatInput.trim();
+    setChatInput('');
+    const userMsg: ChatMessage = { id: `msg_${Date.now()}`, role: 'user', content: question, timestamp: Date.now() };
+    setChats(prev => ({ ...prev, [chatAgentId]: [...(prev[chatAgentId] || []), userMsg] }));
+    setChatLoading(true);
+    try {
+      const res = await rag.ask(chatAgentId, question);
+      const asstMsg: ChatMessage = { id: `msg_${Date.now()}_r`, role: 'assistant', content: res.answer, timestamp: Date.now() };
+      setChats(prev => ({ ...prev, [chatAgentId]: [...(prev[chatAgentId] || []), asstMsg] }));
+    } catch (e: any) {
+      const errMsg: ChatMessage = { id: `msg_${Date.now()}_e`, role: 'assistant', content: `Erro: ${e.message}. Verifique se o backend RAG está ativo.`, timestamp: Date.now() };
+      setChats(prev => ({ ...prev, [chatAgentId]: [...(prev[chatAgentId] || []), errMsg] }));
+    } finally {
+      setChatLoading(false);
+    }
+  };
 
   useEffect(() => { vpsHealth().then(h => setVpsOnline(h.ok)); }, []);
 
@@ -181,9 +218,77 @@ export default function AIModule({ agents, onSaveAgents }: AIModuleProps) {
                     {expandedAgent === agent.id ? <ChevronUp className="h-4 w-4 text-slate-400 shrink-0" /> : <ChevronDown className="h-4 w-4 text-slate-400 shrink-0" />}
                   </div>
                   {expandedAgent === agent.id && (
-                    <div className="border-t border-slate-100 px-4 py-4 bg-slate-50">
-                      <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Prompt de Comportamento</p>
-                      <pre className="text-xs text-slate-700 whitespace-pre-wrap bg-white border border-slate-200 rounded-lg p-3 max-h-40 overflow-y-auto font-sans">{agent.prompt}</pre>
+                    <div className="border-t border-slate-100">
+                      <div className="px-4 py-4 bg-slate-50">
+                        <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Prompt de Comportamento</p>
+                        <pre className="text-xs text-slate-700 whitespace-pre-wrap bg-white border border-slate-200 rounded-lg p-3 max-h-40 overflow-y-auto font-sans">{agent.prompt}</pre>
+                      </div>
+
+                      {/* Chat RAG */}
+                      <div className="border-t border-slate-100">
+                        <button
+                          onClick={() => setChatAgentId(chatAgentId === agent.id ? null : agent.id)}
+                          className="w-full flex items-center gap-2 px-4 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer"
+                        >
+                          <MessageSquare className="h-4 w-4 text-violet-500" />
+                          {chatAgentId === agent.id ? 'Fechar Chat' : 'Abrir Chat RAG'}
+                        </button>
+                        {chatAgentId === agent.id && (
+                          <div className="border-t border-slate-100">
+                            <div className="h-64 overflow-y-auto p-3 space-y-2 bg-white">
+                              {(!chats[agent.id] || chats[agent.id].length === 0) ? (
+                                <div className="flex items-center justify-center h-full text-xs text-slate-400">
+                                  {vpsOnline ? 'Faça uma pergunta ao agente' : 'Backend offline — o chat requer VPS ativa'}
+                                </div>
+                              ) : (
+                                chats[agent.id].map(msg => (
+                                  <div key={msg.id} className={`flex gap-2 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                                    <div className={`max-w-[80%] rounded-xl px-3 py-2 text-xs leading-relaxed ${msg.role === 'user' ? 'bg-violet-600 text-white' : 'bg-slate-100 text-slate-700'}`}>
+                                      <div className="flex items-center gap-1.5 mb-1">
+                                        {msg.role === 'assistant' ? <Bot className="h-3 w-3" /> : <User className="h-3 w-3" />}
+                                        <span className="font-bold opacity-70">{msg.role === 'user' ? 'Você' : agent.name}</span>
+                                      </div>
+                                      <p className="whitespace-pre-wrap">{msg.content}</p>
+                                    </div>
+                                  </div>
+                                ))
+                              )}
+                              {chatLoading && (
+                                <div className="flex gap-2 justify-start">
+                                  <div className="max-w-[80%] rounded-xl px-3 py-2 bg-slate-100 text-xs">
+                                    <div className="flex items-center gap-1.5 mb-1">
+                                      <Bot className="h-3 w-3 text-slate-500" />
+                                      <span className="font-bold text-slate-500">{agent.name}</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                      <Loader2 className="h-3 w-3 animate-spin text-slate-400" />
+                                      <span className="text-slate-400">Pensando...</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
+                              <div ref={chatEndRef} />
+                            </div>
+                            <div className="border-t border-slate-100 p-3 flex gap-2 bg-slate-50">
+                              <input
+                                value={chatInput}
+                                onChange={e => setChatInput(e.target.value)}
+                                onKeyDown={e => e.key === 'Enter' && handleSendMessage()}
+                                placeholder="Digite sua pergunta..."
+                                disabled={!vpsOnline || chatLoading}
+                                className="flex-1 px-3 py-2 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white disabled:opacity-50"
+                              />
+                              <button
+                                onClick={handleSendMessage}
+                                disabled={!chatInput.trim() || chatLoading || !vpsOnline}
+                                className="p-2 bg-violet-600 hover:bg-violet-700 text-white rounded-lg transition-colors disabled:opacity-50 cursor-pointer"
+                              >
+                                <Send className="h-4 w-4" />
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
                 </div>

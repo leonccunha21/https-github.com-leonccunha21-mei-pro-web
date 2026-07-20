@@ -1,8 +1,34 @@
-// Service Worker intencionalmente desativado (no-op).
-// Existia um SW que cacheava os modulos /src/* em desenvolvimento, causando
-// um loop de recarregamentos com o HMR do Vite. Este SW nao intercepta nem
-// cacheia nenhuma requisicao; serve apenas para substituir o SW antigo e
-// permitir que o main.tsx o desregistre de forma limpa.
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', (event) => event.waitUntil(self.clients.claim()));
-// Sem handler de 'fetch': o navegador usa a rede diretamente.
+const CACHE = 'zmstore-v1';
+const ASSETS = [
+  '/',
+  '/index.html',
+  '/manifest.webmanifest',
+  '/icon.svg',
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE).then((cache) => cache.addAll(ASSETS))
+  );
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
+});
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+  event.respondWith(
+    caches.match(event.request).then((cached) => {
+      const fetchPromise = fetch(event.request).then((response) => {
+        if (response && response.status === 200) {
+          const clone = response.clone();
+          caches.open(CACHE).then((cache) => cache.put(event.request, clone));
+        }
+        return response;
+      }).catch(() => cached);
+      return cached || fetchPromise;
+    })
+  );
+});

@@ -1,7 +1,7 @@
 {
   "name": "react-example",
   "private": true,
-  "version": "2.6.16",
+  "version": "2.9.0",
   "type": "module",
   "scripts": {
     "dev": "concurrently -n server,web -c green,cyan \"npm:server\" \"npm:web\"",
@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
-    "test": "node --import tsx --test src/lib/parsers.test.ts"
+    "test": "node --import tsx --test src/lib/parsers.test.ts src/lib/dre.test.ts src/lib/ofxParser.test.ts src/lib/notifications.test.ts"
   },
   "dependencies": {
     "@google/genai": "^2.4.0",

@@ -43,6 +43,8 @@ const WhatsAppPage = lazy(() => import('./components/WhatsApp'));
 const AIModulePage = lazy(() => import('./components/AIModule'));
 const FunnelPage = lazy(() => import('./components/Funnel'));
 const SystemChooser = lazy(() => import('./components/SystemChooser'));
+const DRE = lazy(() => import('./components/DRE'));
+const BankConciliationPage = lazy(() => import('./components/BankConciliation'));
 import { 
   LayoutDashboard, 
   Package, 
@@ -67,7 +69,9 @@ import {
   MessageSquare,
   Brain,
   KanbanSquare,
-  Stethoscope
+  Stethoscope,
+  FileText,
+  Building2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
@@ -184,6 +188,11 @@ export default function App() {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
   }, []);
+
+  useEffect(() => {
+    const color = storeInfo.primaryColor || '#4f46e5';
+    document.documentElement.style.setProperty('--color-primary', color);
+  }, [storeInfo.primaryColor]);
 
   // Load all data. The store is IndexedDB-backed (works on the static site);
   // an optional local server is used only when available.
@@ -1586,17 +1595,17 @@ export default function App() {
         {storeInfo.logoUrl ? (
           <img src={storeInfo.logoUrl} alt="Logo" className="w-8 h-8 rounded-lg object-contain shrink-0" />
         ) : (
-          <div className="w-8 h-8 bg-indigo-600 rounded-lg flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shrink-0">
             <div className="w-4 h-4 border-2 border-white"></div>
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h2 className="font-bold text-sm tracking-tight text-slate-950 dark:text-slate-100 truncate">ZM Store</h2>
-          <span className="text-[9px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
+          <h2 className="font-bold text-sm tracking-tight text-slate-950 dark:text-slate-100 truncate">{storeInfo.name || 'ZM Store'}</h2>
+          <span className="text-[9px] text-primary font-bold uppercase tracking-wider">Gestão Comercial</span>
         </div>
         <button
           onClick={() => setShowVendasEstoque(true)}
-          className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors cursor-pointer"
+          className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
           title="Verificar Vendas x Estoque"
           aria-label="Verificar Vendas x Estoque"
         >
@@ -1631,11 +1640,11 @@ export default function App() {
               onClick={() => isMenu ? setMobileMenuOpen(!mobileMenuOpen) : setActiveTab(item.tab)}
               className={`flex-1 flex flex-col items-center justify-center gap-1 py-2.5 px-1 transition-all cursor-pointer relative ${
                 isActive
-                  ? 'text-indigo-600 dark:text-indigo-400'
+                  ? 'text-primary'
                   : 'text-slate-400 dark:text-slate-500 active:text-slate-600'
               }`}
             >
-              {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-indigo-600 dark:bg-indigo-400 rounded-full" />}
+              {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-primary rounded-full" />}
               <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 2} />
               <span className="text-[10px] font-bold leading-none">{item.label}</span>
             </button>
@@ -1655,6 +1664,7 @@ export default function App() {
             <div className="grid grid-cols-3 gap-3">
               {([
                 { tab: 'reports', label: 'Relatórios', icon: BarChart3 },
+                { tab: 'dre', label: 'DRE', icon: FileText },
                 { tab: 'cashflow', label: 'Fluxo de Caixa', icon: DollarSign },
                 { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList },
                 { tab: 'debtors', label: 'Devedores', icon: Users },
@@ -1663,6 +1673,7 @@ export default function App() {
                 { tab: 'leads', label: 'Leads', icon: Target },
                 { tab: 'whatsapp', label: 'WhatsApp', icon: MessageSquare },
                 { tab: 'ai', label: 'Inteligência Artificial', icon: Brain },
+                { tab: 'conciliation', label: 'Conciliação', icon: Building2 },
                 { tab: 'mounjaro', label: 'Mounjaro PRO', icon: Stethoscope },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
@@ -1676,7 +1687,7 @@ export default function App() {
                    }}
                     className="flex flex-col items-center gap-2 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                   >
-                    <Icon className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+                    <Icon className="h-6 w-6 text-primary" />
                     <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{item.label}</span>
                   </button>
                 );
@@ -1694,13 +1705,13 @@ export default function App() {
             {storeInfo.logoUrl ? (
               <img src={storeInfo.logoUrl} alt="Logo" className="w-8 h-8 rounded object-contain shrink-0" />
             ) : (
-              <div className="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center shrink-0">
+              <div className="w-8 h-8 bg-primary rounded flex items-center justify-center shrink-0">
                 <div className="w-4 h-4 border-2 border-white"></div>
               </div>
             )}
             <div className="flex-1">
-              <h2 className="font-bold text-base tracking-tight text-slate-950 dark:text-slate-100">ZM Store</h2>
-              <span className="text-[10px] text-indigo-600 font-bold uppercase tracking-wider">Gestão Comercial</span>
+              <h2 className="font-bold text-base tracking-tight text-slate-950 dark:text-slate-100">{storeInfo.name || 'ZM Store'}</h2>
+              <span className="text-[10px] text-primary font-bold uppercase tracking-wider">Gestão Comercial</span>
             </div>
             <button
               onClick={toggleDarkMode}
@@ -1711,7 +1722,7 @@ export default function App() {
             </button>
             <button
               onClick={() => setShowVendasEstoque(true)}
-              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors cursor-pointer"
+              className="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:text-primary hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors cursor-pointer"
               title="Verificar Vendas x Estoque"
             >
               <PackageSearch className="h-4 w-4" />
@@ -1726,7 +1737,7 @@ export default function App() {
               onClick={() => setActiveTab('dashboard')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'dashboard' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1740,7 +1751,7 @@ export default function App() {
               onClick={() => setActiveTab('products')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'products' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1754,7 +1765,7 @@ export default function App() {
               onClick={() => setActiveTab('pos')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'pos' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1769,7 +1780,7 @@ export default function App() {
                 onClick={() => setActiveTab('sales')}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                   activeTab === 'sales' 
-                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                    ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
@@ -1781,7 +1792,7 @@ export default function App() {
                 onClick={() => setActiveTab('debtors')}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer mt-0.5 pl-9 ${
                   activeTab === 'debtors' 
-                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                    ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
@@ -1793,7 +1804,7 @@ export default function App() {
                 onClick={() => setActiveTab('customers')}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer mt-0.5 pl-9 ${
                   activeTab === 'customers' 
-                    ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                    ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
                 }`}
               >
@@ -1808,12 +1819,26 @@ export default function App() {
               onClick={() => setActiveTab('reports')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'reports' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
               <BarChart3 className="h-4 w-4" />
               Relatórios
+            </button>
+
+            {/* Tab: DRE */}
+            <button
+              id="nav-dre"
+              onClick={() => setActiveTab('dre')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'dre' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <FileText className="h-4 w-4" />
+              DRE
             </button>
 
             {/* Tab: Fluxo de Caixa */}
@@ -1822,7 +1847,7 @@ export default function App() {
               onClick={() => setActiveTab('cashflow')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'cashflow' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1836,7 +1861,7 @@ export default function App() {
               onClick={() => setActiveTab('cashclosing')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'cashclosing' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1850,7 +1875,7 @@ export default function App() {
               onClick={() => setActiveTab('os')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'os' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1864,7 +1889,7 @@ export default function App() {
               onClick={() => setActiveTab('settings')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'settings' 
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold' 
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1883,7 +1908,7 @@ export default function App() {
               onClick={() => setActiveTab('leads')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'leads'
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold'
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1897,7 +1922,7 @@ export default function App() {
               onClick={() => setActiveTab('funnel')}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                 activeTab === 'funnel'
-                  ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-400 font-bold'
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
                   : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
               }`}
             >
@@ -1931,6 +1956,20 @@ export default function App() {
             >
               <Brain className="h-4 w-4" />
               Inteligência Artificial
+            </button>
+
+            {/* Tab: Conciliação Bancária */}
+            <button
+              id="nav-conciliation"
+              onClick={() => setActiveTab('conciliation')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'conciliation'
+                  ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Building2 className="h-4 w-4" />
+              Conciliação
             </button>
 
             {/* Subsite Mounjaro PRO */}
@@ -1970,7 +2009,7 @@ export default function App() {
                 : cloudError
                 ? 'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800 hover:bg-rose-100'
                 : cloudSyncing
-                ? 'bg-indigo-50 dark:bg-indigo-900/20 border-indigo-200 dark:border-indigo-800'
+                ? 'bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800'
                 : cloudPending
                 ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800'
                 : 'bg-emerald-50/60 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800 hover:bg-emerald-100'
@@ -1980,7 +2019,7 @@ export default function App() {
             <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white shrink-0 ${
               !cloudUser ? 'bg-slate-400'
                 : cloudError ? 'bg-rose-500'
-                : cloudSyncing ? 'bg-indigo-600'
+                : cloudSyncing ? 'bg-primary'
                 : cloudPending ? 'bg-amber-500'
                 : 'bg-emerald-600'
             }`}>
@@ -2024,7 +2063,7 @@ export default function App() {
                 <button
                   onClick={handleCloudPushAll}
                   disabled={cloudSyncing}
-                  className="mt-2 w-full text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 border border-indigo-200 dark:border-indigo-800 rounded-lg py-1.5 transition-colors disabled:opacity-50"
+                  className="mt-2 w-full text-[11px] font-semibold text-primary bg-primary-50 dark:bg-primary-950/40 hover:bg-primary-100 dark:hover:bg-primary-900/40 border border-primary-200 dark:border-primary-800 rounded-lg py-1.5 transition-colors disabled:opacity-50"
                 >
                   {cloudSyncing ? 'Enviando…' : '☁ Enviar TUDO para a nuvem'}
                 </button>
@@ -2036,7 +2075,7 @@ export default function App() {
         {/* Footer info box (time, date and version) */}
         <div className="p-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50 text-xs text-slate-500 dark:text-slate-400 space-y-1.5 hidden md:block m-4 rounded-xl border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2">
-            <Clock className="h-3.5 w-3.5 text-indigo-600" />
+            <Clock className="h-3.5 w-3.5 text-primary" />
             <span className="font-semibold font-mono text-slate-800 dark:text-slate-200">{currentTime || '12:00'}</span>
           </div>
           <p className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">
@@ -2121,6 +2160,13 @@ export default function App() {
               />
             )}
 
+            {activeTab === 'dre' && (
+              <DRE
+                sales={sales}
+                expenses={expenses}
+              />
+            )}
+
             {activeTab === 'os' && (
               <OsOrcamento 
                 products={products}
@@ -2198,6 +2244,13 @@ export default function App() {
                 opportunities={opportunities}
                 leads={leads}
                 onSaveOpportunities={o => { setOpportunities(o); persist({ opportunities: o }); }}
+              />
+            )}
+
+            {activeTab === 'conciliation' && (
+              <BankConciliationPage
+                sales={sales}
+                expenses={expenses}
               />
             )}
 

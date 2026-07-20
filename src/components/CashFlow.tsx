@@ -343,6 +343,60 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
           </div>
         </div>
       )}
+
+      {/* Cash Flow Projection */}
+      <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div className="border-b border-slate-100 pb-3 mb-4 px-5 pt-5">
+          <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-primary" /> Fluxo de Caixa Projetado
+          </h2>
+          <p className="text-xs text-slate-400 mt-0.5">Contas a receber e a pagar nos próximos meses.</p>
+        </div>
+        <div className="px-5 pb-5">
+          {(() => {
+            const now = new Date();
+            const receber = sales.filter(s => s.status === 'pending');
+            const pagar = expenses.filter(e => e.status === 'pending');
+            const projMeses: { label: string; receber: number; pagar: number; saldo: number }[] = [];
+            for (let i = 0; i < 3; i++) {
+              const m = (now.getMonth() + i) % 12;
+              const y = now.getFullYear() + Math.floor((now.getMonth() + i) / 12);
+              const rec = receber.filter(s => new Date(s.date).getMonth() === m && new Date(s.date).getFullYear() === y).reduce((a, s) => a + s.total, 0);
+              const pag = pagar.filter(e => new Date(e.date).getMonth() === m && new Date(e.date).getFullYear() === y).reduce((a, e) => a + e.amount, 0);
+              projMeses.push({ label: MONTHS[m], receber: rec, pagar: pag, saldo: rec - pag });
+            }
+            return (
+              <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {projMeses.map(m => (
+                    <div key={m.label} className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                      <p className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">{m.label}</p>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-emerald-600 font-semibold">A Receber</span>
+                          <span className="font-mono text-emerald-700">R$ {m.receber.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-rose-600 font-semibold">A Pagar</span>
+                          <span className="font-mono text-rose-700">R$ {m.pagar.toFixed(2)}</span>
+                        </div>
+                        <div className="border-t border-slate-200 pt-1.5 flex justify-between">
+                          <span className="font-bold text-slate-600">Saldo Projetado</span>
+                          <span className={`font-mono font-bold ${m.saldo >= 0 ? 'text-primary' : 'text-rose-600'}`}>R$ {m.saldo.toFixed(2)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex items-start gap-2 text-xs text-amber-800">
+                  <Calendar className="h-4 w-4 shrink-0 mt-0.5 text-amber-600" />
+                  <span>Projeção baseada em <b>{receber.length} venda(s) pendente(s)</b> e <b>{pagar.length} despesa(s) pendente(s)</b>. Atualize os status conforme os pagamentos forem realizados.</span>
+                </div>
+              </div>
+            );
+          })()}
+        </div>
+      </div>
     </div>
   );
 }

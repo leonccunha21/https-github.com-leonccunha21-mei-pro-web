@@ -65,7 +65,7 @@ export interface Expense {
   notes?: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel';
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'dre' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel' | 'conciliation';
 
 export interface Customer {
   id: string;
@@ -152,6 +152,7 @@ export interface StoreInfo {
   ownerName: string;
   notes: string;
   logoUrl: string;
+  primaryColor?: string;
 }
 
 export interface OsItem {

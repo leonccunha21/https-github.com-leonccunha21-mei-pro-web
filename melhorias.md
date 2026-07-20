@@ -68,17 +68,132 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [ ] Configurar `VITE_VPS_API_URL` em produção apontando para a VPS (hoje default `/api` + proxy local).
 
 **Frontend (melhorias possíveis, não bloqueantes):**
-- [ ] **Poll automático** do job de varredura: o `Leads.tsx` cria o job, mas ainda não puxa os leads gerados (`/api/scrape/:id/leads`) nem atualiza o status sozinho — hoje depende do backend popular.
+- [x] **Poll automático** do job de varredura: o `Leads.tsx` cria o job e puxa os leads gerados a cada 10s quando a VPS está online.
 - [ ] **WebSocket** no `WhatsApp.tsx` para mensagens/status em tempo real (hoje usa list/send por HTTP).
-- [ ] **`rag.ask`** ainda não tem UI de chat com o agente (só upload/list de documentos).
+- [x] **Chat RAG** — UI de chat com o agente via `rag.ask` integrada ao painel de cada agente.
 - [ ] **Limite de 5 conexões / 3 agentes** do plano Pro não está implementado (sem trava de quantidade).
 - [ ] **Redrive 360º / Atendimento omnichannel** (e-mail, Instagram DM) não foi iniciado.
+
+**V2.9.0 — Chat RAG, Tema Dinâmico, Fluxo Projetado, Notificações, +3 testes:**
+- [x] **Chat RAG**: interface de conversa com agente via `rag.ask` integrada ao painel de cada agente
+- [x] **Tema dinâmico**: `--color-primary` como CSS variable + paleta `primary-50..900` no Tailwind v4
+- [x] **Fluxo de caixa projetado**: contas a receber (vendas pendentes) vs. a pagar (despesas) nos próximos 3 meses
+- [x] **Notificações**: painel de preferências em Configurações, lembrete de contas a receber e estoque baixo no Dashboard
+- [x] **25 testes unitários** (DRE, parsers, OFX, notificações) — `npm test` passa limpo
 
 **Status atual:** tudo que é possível no frontend está feito e funcionando (modo local + VPS stub testado end-to-end). O app compila (`npm run build`) e passa no lint (`npm run lint`) sem erros.
 
 ---
 
-## 5. Subsite Mounjaro PRO (controle de medicamento) — [CONCLUÍDO]
+---
+
+## 5. Plano de Melhorias Competitivas (para接近 concorrentes como ContaAzul, Bling, Tiny, Nibo, Omie)
+
+À medida que formos avançando, marcaremos com `[x]` as tarefas concluídas.
+
+### 🏆 Prioridade Máxima (maior impacto competitivo)
+
+#### 5.1 Emissão de NF-e / NFC-e
+- [ ] Integrar com API de notas fiscais (Nuvem Fiscal, FocusNFe, TecnoSpeed)
+- [ ] Tela para emissão de NF-e a partir de vendas concluídas
+- [ ] Tela para emissão de NFC-e a partir do PDV
+- [ ] Dashboard de notas emitidas com status (autorizada/rejeitada/cancelada)
+- [ ] Download do XML e DANFE em PDF
+
+#### 5.2 Integração Bancária / Conciliação
+- [ ] Importar extratos bancários via arquivo OFX/OFX
+- [ ] Módulo de conciliação: matching automático entre extratos e vendas/despesas
+- [ ] Conexão Open Finance via Pluggy/Belvo para auto-import
+
+#### 5.3 Boletos Bancários
+- [ ] Emissão de boletos registrados via API (Asaas, PagSeguro, CobreBem, Kangu)
+- [ ] Link de boleto nas cobranças do módulo de devedores
+- [ ] Status de pagamento do boleto (pendente/pago/vencido)
+
+#### 5.4 Gateway de Pagamento no PDV
+- [ ] Gerar QR Code PIX dinâmico no PDV (Asaas, GerenciaNet, Mercado Pago)
+- [ ] Link com maquininha (Stone, Cielo, Rede) — ao menos integração por link de pagamento
+- [ ] Status de confirmação do pagamento em tempo real
+
+### 📢 Marketing & Relacionamento
+
+#### 5.5 Notificação Automática para Devedores
+- [x] Conectar módulo WhatsApp com cobranças de devedores (envio automático de msg para clientes em atraso)
+- [ ] Agendar lembretes automáticos (3 dias antes, 1 dia antes, vencido)
+- [ ] Link de pagamento (boleto/PIX) na mensagem
+
+#### 5.6 Automação de Marketing
+- [ ] Campanhas de e-mail/WhatsApp automáticas por aniversário, inatividade
+- [ ] Disparo em lote para clientes segmentados
+
+### 📊 Relatórios & Inteligência
+
+#### 5.7 Relatório DRE (Demonstração do Resultado do Exercício)
+- [x] Criar relatório DRE completo: Receita Bruta → Deduções → Receita Líquida → CMV → Margem → Despesas → Resultado (componente `DRE.tsx`)
+- [x] Testes unitários para cálculos do DRE
+- [ ] Comparativo mensal e anual
+- [ ] Exportação em PDF/Excel
+
+#### 5.8 Fluxo de Caixa Projetado
+- [x] Fluxo de caixa futuro com base em contas a receber (vendas pendentes) e a pagar (despesas) (`CashFlow.tsx`)
+- [ ] Cenários otimista/pessimista
+
+### 🛠️ Produto & Experiência
+
+#### 5.9 Multi-usuário com Permissões
+- [ ] Perfil de vendedor (só PDV e consulta)
+- [ ] Perfil de gerente (tudo exceto config)
+- [ ] Perfil de admin (tudo)
+
+#### 5.10 White-label / Personalização da Marca
+- [x] Melhorar uso do `StoreInfo` no header e sidebar (nome da loja, logo, cores)
+- [x] Cor primária customizável no Perfil da Loja
+- [x] Nome da loja dinâmico no header/sidebar (usa `storeInfo.name`)
+- [x] Tema de cores customizável (cor primária como CSS variable, paleta `primary-50` a `primary-900`)
+- [ ] Domínio próprio
+
+#### 5.11 Alertas de Estoque Baixo
+- [x] Banner no Dashboard com atalho para o estoque quando produtos estão abaixo do mínimo
+
+#### 5.12 PWA / App Mobile
+- [x] Layout responsivo mobile-first (já implementado)
+- [x] Navegação inferior mobile (já implementado)
+- [x] IndexedDB como fonte primária de dados (já implementado)
+- [x] Sincronização manual com a nuvem (já implementado)
+- [x] Service worker para cache de assets offline (`public/sw.js`)
+- [x] Manifest aprimorado com ícones e descrição (`public/manifest.webmanifest`)
+- [x] Push notifications configuráveis para lembretes de cobrança e estoque baixo (`src/lib/notifications.ts`)
+- [ ] Splash screen personalizada
+
+#### 5.13 API Pública
+- [ ] Endpoints REST públicos para integração de terceiros
+- [ ] Documentação via Swagger/OpenAPI
+- [ ] Autenticação via API Key
+
+### 🔧 Técnico & DevOps
+
+#### 5.14 CI/CD (GitHub Actions)
+- [x] Pipeline de CI: lint + test + build no push/PR (`.github/workflows/ci.yml`)
+- [x] Workflow de deploy Vercel (`.github/workflows/deploy.yml`, requer secrets configurados)
+
+#### 5.15 Testes Automatizados
+- [x] Testes unitários para cálculos financeiros (DRE, lucro, margem) (`src/lib/dre.test.ts`)
+- [x] Testes para o módulo de parsers de planilha (`src/lib/parsers.test.ts`)
+- [x] Testes para o parser OFX/QFX (`src/lib/ofxParser.test.ts`)
+- [x] Testes para o módulo de notificações (`src/lib/notifications.test.ts`)
+- [ ] Testes de integração para fluxos críticos (venda → estoque → devedor)
+- [ ] Testes E2E com Playwright/Cypress
+
+#### 5.16 Conciliação Bancária via OFX
+- [x] Parser de arquivos OFX/QFX (`src/lib/ofxParser.ts`)
+- [x] Interface de conciliação: transações do banco vs. vendas/despesas (`BankConciliation.tsx`)
+- [x] Matching automático por valor entre extrato e vendas/despesas
+
+**Status atual do plano competitivo:** melhorias em andamento. Cada item marcado com `[x]` foi concluído.
+
+---
+
+## 6. Subsite Mounjaro PRO (controle de medicamento) — [CONCLUÍDO]
 
 Sistema irmão da loja, no **mesmo endereço**, para acompanhamento de pacientes em
 tratamento com **tirzepatida (Mounjaro®)**. Informações clínicas baseadas na bula oficial

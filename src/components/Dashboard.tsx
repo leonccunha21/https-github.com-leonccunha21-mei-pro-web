@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Product, Sale } from '../types';
 import { normalizeName } from '../lib/normalize';
 import SalesChart from './SalesChart';
+import { getPrefs, sendNotification } from '../lib/notifications';
 import { 
   TrendingUp, 
   ArrowDownRight, 
@@ -151,6 +152,23 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   // Stock alerts
   const physicalProducts = products.filter(p => !isServiceProduct(p) && !p.archived);
   const lowStockProducts = physicalProducts.filter(p => p.status !== 'indisponivel' && p.minStock > 0 && p.stock <= p.minStock);
+
+  useEffect(() => {
+    const prefs = getPrefs();
+    if (prefs.lowStockAlert && lowStockProducts.length > 0) {
+      sendNotification('Estoque Baixo', `${lowStockProducts.length} produto(s) com estoque abaixo do mínimo: ${lowStockProducts.slice(0, 3).map(p => p.name).join(', ')}`);
+    }
+    if (prefs.debtReminder) {
+      try {
+        const allSales = JSON.parse(localStorage.getItem('zm_sales') || '[]') as any[];
+        const pending = allSales.filter((s: any) => s.status === 'pending');
+        if (pending.length > 0) {
+          const total = pending.reduce((a: number, s: any) => a + s.total, 0);
+          sendNotification('Contas a Receber', `${pending.length} venda(s) pendente(s) — R$ ${total.toFixed(2)}`);
+        }
+      } catch { /* */ }
+    }
+  }, []);
 
   // Últimas vendas (mais recentes primeiro), sempre mostrando as mais novas,
   // independentemente do filtro de ano do painel de métricas.
@@ -519,6 +537,27 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
         </div>
       </div>
 
+      {/* Low Stock Alert */}
+      {lowStockProducts.length > 0 && (
+        <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-4 flex items-start gap-3">
+          <div className="p-2 bg-amber-100 dark:bg-amber-900/40 rounded-lg shrink-0">
+            <AlertTriangle className="h-5 w-5 text-amber-600" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-amber-800 dark:text-amber-300">
+              {lowStockProducts.length} produto(s) com estoque baixo
+            </p>
+            <p className="text-xs text-amber-600 dark:text-amber-400 mt-1">
+              {lowStockProducts.slice(0, 5).map(p => p.name).join(', ')}
+              {lowStockProducts.length > 5 && ` e mais ${lowStockProducts.length - 5} produto(s)`}
+            </p>
+            <button onClick={() => onNavigate('products')} className="mt-2 text-xs font-bold text-amber-700 dark:text-amber-300 hover:underline flex items-center gap-1">
+              Ver estoque <ArrowRight className="h-3 w-3" />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Charts Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Sales Chart */}
@@ -665,25 +704,25 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       </div>
 
       {/* Stock Valuation Banner */}
-      <div id="stock-valuation-banner" className="bg-gradient-to-r from-indigo-700 to-indigo-900 p-6 rounded-xl text-white shadow-md relative overflow-hidden">
+      <div id="stock-valuation-banner" className="p-6 rounded-xl text-white shadow-md relative overflow-hidden" style={{ background: 'linear-gradient(to right, var(--color-primary), var(--color-primary-800))' }}>
         <div className="absolute right-0 top-0 bottom-0 opacity-10 pointer-events-none translate-x-12">
           <Package className="w-64 h-64" />
         </div>
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           <div>
-            <span className="text-[11px] font-bold text-indigo-200 uppercase tracking-widest">Avaliação de Estoque</span>
+            <span className="text-[11px] font-bold text-white/70 uppercase tracking-widest">Avaliação de Estoque</span>
             <h2 className="text-xl font-bold mt-1">Patrimônio Atual</h2>
           </div>
-          <div className="border-t border-indigo-500/30 md:border-t-0 md:border-l md:border-indigo-500/30 md:pl-6 pt-4 md:pt-0">
-            <span className="text-xs text-indigo-200 block">Peças em Estoque</span>
+          <div className="border-t border-white/20 md:border-t-0 md:border-l md:border-white/20 md:pl-6 pt-4 md:pt-0">
+            <span className="text-xs text-white/70 block">Peças em Estoque</span>
             <span className="text-2xl font-bold font-mono block mt-1">{totalInventoryQuantity} un</span>
           </div>
-          <div className="border-t border-indigo-500/30 md:border-t-0 md:border-l md:border-indigo-500/30 md:pl-6 pt-4 md:pt-0">
-            <span className="text-xs text-indigo-200 block">Valoração Estimada</span>
+          <div className="border-t border-white/20 md:border-t-0 md:border-l md:border-white/20 md:pl-6 pt-4 md:pt-0">
+            <span className="text-xs text-white/70 block">Valoração Estimada</span>
             <span className="text-2xl font-bold font-mono text-emerald-400 block mt-1">
               {money(totalInventoryRetailValue)}
             </span>
-            <span className="text-[11px] text-indigo-100">
+            <span className="text-[11px] text-white/60">
               Custo: {money(totalInventoryCostValue)}
             </span>
           </div>

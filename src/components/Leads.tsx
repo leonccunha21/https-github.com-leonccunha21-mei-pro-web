@@ -76,6 +76,24 @@ export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs, on
 
   useEffect(() => { vpsHealth().then(h => setVpsOnline(h.ok)); }, []);
 
+  // Poll automático: atualiza status de jobs pendentes/executando a cada 10s
+  useEffect(() => {
+    if (!vpsOnline) return;
+    const hasActiveJobs = leadJobs.some(j => j.status === 'PENDING' || j.status === 'RUNNING');
+    if (!hasActiveJobs) return;
+    const id = setInterval(async () => {
+      for (const job of leadJobs) {
+        if (job.status !== 'PENDING' && job.status !== 'RUNNING') continue;
+        try {
+          const res = await scrapers.status(job.id);
+          const updated = leadJobs.map(j => j.id === job.id ? { ...j, status: res.status as LeadExtractionJob['status'], totalFound: res.totalFound } : j);
+          onSaveLeadJobs(updated);
+        } catch { /* VPS pode estar offline, tenta de novo */ }
+      }
+    }, 10000);
+    return () => clearInterval(id);
+  }, [vpsOnline, leadJobs, onSaveLeadJobs]);
+
   const showToast = (msg: string) => {
     setToast(msg);
     window.setTimeout(() => setToast(null), 3500);
