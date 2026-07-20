@@ -113,6 +113,8 @@ export const logoutUser = async () => {
   }
 };
 
+export const getCurrentUser = () => auth.currentUser;
+
 // FIRESTORE ERROR HANDLING
 export enum OperationType {
   CREATE = 'create',

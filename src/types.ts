@@ -85,6 +85,11 @@ export interface Expense {
 
 export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'dre' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel' | 'conciliation';
 
+export const PRO_PLAN_LIMITS = {
+  WHATSAPP_CONNECTIONS: 5,
+  AI_AGENTS: 3,
+} as const;
+
 export interface Customer {
   id: string;
   name: string;

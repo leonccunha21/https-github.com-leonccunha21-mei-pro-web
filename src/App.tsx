@@ -28,6 +28,7 @@ import {
 // dados de vendas NÃO são enviados à nuvem (apenas as informações da loja).
 
 import { lazy } from 'react';
+import { ErrorBoundary, ErrorBoundaryFallback } from './components/ErrorBoundary';
 const Dashboard = lazy(() => import('./components/Dashboard'));
 const Products = lazy(() => import('./components/Products'));
 const Sales = lazy(() => import('./components/Sales'));
@@ -2203,14 +2204,19 @@ export default function App() {
             )}
 
             {activeTab === 'pos' && (
-              <Sales 
-                products={products} 
-                customers={customers}
-                onRegisterSale={handleRegisterSale}
-                onNavigate={(tab) => {
-                  if (tab === 'products') setActiveTab('products');
-                }}
-              />
+              <ErrorBoundary
+                fallback={ErrorBoundaryFallback}
+                onReset={() => {}}
+              >
+                <Sales 
+                  products={products} 
+                  customers={customers}
+                  onRegisterSale={handleRegisterSale}
+                  onNavigate={(tab) => {
+                    if (tab === 'products') setActiveTab('products');
+                  }}
+                />
+              </ErrorBoundary>
             )}
 
             {activeTab === 'sales' && (

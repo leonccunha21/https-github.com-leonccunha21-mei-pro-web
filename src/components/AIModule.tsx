@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Bot, Plus, Trash2, Brain, X, Sparkles, BookOpen, FileText, ChevronDown, ChevronUp, RefreshCw, Upload, Loader2, AlertTriangle, MessageSquare, Send, User } from 'lucide-react';
 import type { AIAgent } from '../types';
 import { rag, vpsHealth, VpsKnowledgeDoc, VPS_API_URL } from '../lib/vps';
+import { PRO_PLAN_LIMITS } from '../types';
 
 interface ChatMessage {
   id: string;
@@ -41,8 +42,20 @@ export default function AIModule({ agents, onSaveAgents }: AIModuleProps) {
     model: 'gpt-4o',
   });
 
+  const showToast = (msg: string) => {
+    setToast(msg);
+    window.setTimeout(() => setToast(null), 3500);
+  };
+
   const handleSave = () => {
     if (!form.name.trim() || !form.prompt.trim()) return;
+
+    // Limite do plano Pro: 3 agentes IA
+    if (agents.length >= PRO_PLAN_LIMITS.AI_AGENTS) {
+      showToast(`Limite do plano Pro atingido: máximo ${PRO_PLAN_LIMITS.AI_AGENTS} agentes de IA.`);
+      return;
+    }
+
     const newAgent: AIAgent = {
       ...form,
       id: `agent_${Date.now()}`,
@@ -94,11 +107,6 @@ export default function AIModule({ agents, onSaveAgents }: AIModuleProps) {
   };
 
   useEffect(() => { vpsHealth().then(h => setVpsOnline(h.ok)); }, []);
-
-  const showToast = (msg: string) => {
-    setToast(msg);
-    window.setTimeout(() => setToast(null), 3500);
-  };
 
   const loadDocs = async (agentId: string) => {
     if (!vpsOnline) return;

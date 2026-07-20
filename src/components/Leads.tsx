@@ -1,5 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Search, Plus, Trash2, Building2, Phone, Mail, Loader2, CheckCircle2, XCircle, Target, MapPin, X, ChevronRight, RefreshCw, UserPlus, AlertTriangle } from 'lucide-react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { Search, Plus, Trash2, Building2, Phone, Mail, Loader2, CheckCircle2, XCircle, Target, MapPin, X, ChevronRight, RefreshCw, UserPlus, AlertTriangle, RotateCcw } from 'lucide-react';
 import type { Lead, LeadExtractionJob } from '../types';
 import { scrapers, vpsHealth, VPS_API_URL } from '../lib/vps';
 
@@ -73,26 +73,54 @@ export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs, on
   const [vpsOnline, setVpsOnline] = useState<boolean | null>(null);
   const [jobBusy, setJobBusy] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const pollTimerRef = useRef<number | null>(null);
 
-  useEffect(() => { vpsHealth().then(h => setVpsOnline(h.ok)); }, []);
+useEffect(() => { vpsHealth().then(h => setVpsOnline(h.ok)); }, []);
 
-  // Poll automático: atualiza status de jobs pendentes/executando a cada 10s
+  // Poll automático para jobs RUNNING - busca status e leads quando concluído
   useEffect(() => {
-    if (!vpsOnline) return;
-    const hasActiveJobs = leadJobs.some(j => j.status === 'PENDING' || j.status === 'RUNNING');
-    if (!hasActiveJobs) return;
-    const id = setInterval(async () => {
-      for (const job of leadJobs) {
-        if (job.status !== 'PENDING' && job.status !== 'RUNNING') continue;
+    const runningJobs = leadJobs.filter(j => j.status === 'RUNNING');
+    if (!vpsOnline || runningJobs.length === 0) return;
+
+    const poll = async () => {
+      for (const job of runningJobs) {
         try {
-          const res = await scrapers.status(job.id);
-          const updated = leadJobs.map(j => j.id === job.id ? { ...j, status: res.status as LeadExtractionJob['status'], totalFound: res.totalFound } : j);
-          onSaveLeadJobs(updated);
-        } catch { /* VPS pode estar offline, tenta de novo */ }
+          const status = await scrapers.status(job.id);
+          if (status.status === 'COMPLETED' && status.totalFound > 0) {
+            // Busca os leads gerados
+            const leadsData = await fetch(`${VPS_API_URL}/scrape/${job.id}/leads`).then(r => r.json()).catch(() => []);
+            if (Array.isArray(leadsData) && leadsData.length > 0) {
+              const newLeads: Lead[] = leadsData.map((l: any) => ({
+                id: l.id || `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+                jobId: job.id,
+                name: l.name || l.company_name || 'Lead sem nome',
+                phone: l.phone,
+                email: l.email,
+                cnpj: l.cnpj,
+                source: l.source || 'GOOGLE_MAPS',
+                createdAt: new Date().toISOString(),
+              }));
+              onSaveLeads([...newLeads, ...leads]);
+              showToast(`${newLeads.length} leads importados da varredura "${job.keyword}"`);
+            }
+            // Atualiza status do job
+            onSaveLeadJobs(leadJobs.map(j => j.id === job.id ? { ...j, status: 'COMPLETED', totalFound: status.totalFound } : j));
+          } else if (status.status === 'FAILED') {
+            onSaveLeadJobs(leadJobs.map(j => j.id === job.id ? { ...j, status: 'FAILED' } : j));
+            showToast(`Varredura "${job.keyword}" falhou.`);
+          } else if (status.status === 'RUNNING') {
+            onSaveLeadJobs(leadJobs.map(j => j.id === job.id ? { ...j, status: 'RUNNING' } : j));
+          }
+        } catch (e) {
+          console.error('Poll error:', e);
+        }
       }
-    }, 10000);
-    return () => clearInterval(id);
-  }, [vpsOnline, leadJobs, onSaveLeadJobs]);
+    };
+
+    poll();
+    pollTimerRef.current = window.setInterval(poll, 5000);
+    return () => { if (pollTimerRef.current) clearInterval(pollTimerRef.current); };
+  }, [leadJobs, vpsOnline, onSaveLeadJobs, onSaveLeads, leads]);
 
   const showToast = (msg: string) => {
     setToast(msg);
@@ -193,6 +221,39 @@ export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs, on
     onSaveLeadJobs(leadJobs.filter(j => j.id !== id));
   };
 
+  const handleRefreshJob = async (job: LeadExtractionJob) => {
+    if (!vpsOnline) { showToast('Backend (VPS) offline.'); return; }
+    try {
+      const status = await scrapers.status(job.id);
+      if (status.status === 'COMPLETED' && status.totalFound > 0) {
+        const leadsData = await fetch(`${VPS_API_URL}/scrape/${job.id}/leads`).then(r => r.json()).catch(() => []);
+        if (Array.isArray(leadsData) && leadsData.length > 0) {
+          const newLeads: Lead[] = leadsData.map((l: any) => ({
+            id: l.id || `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+            jobId: job.id,
+            name: l.name || l.company_name || 'Lead sem nome',
+            phone: l.phone,
+            email: l.email,
+            cnpj: l.cnpj,
+            source: l.source || 'GOOGLE_MAPS',
+            createdAt: new Date().toISOString(),
+          }));
+          onSaveLeads([...newLeads, ...leads]);
+          showToast(`${newLeads.length} leads importados da varredura "${job.keyword}"`);
+        }
+        onSaveLeadJobs(leadJobs.map(j => j.id === job.id ? { ...j, status: 'COMPLETED', totalFound: status.totalFound } : j));
+      } else if (status.status === 'FAILED') {
+        onSaveLeadJobs(leadJobs.map(j => j.id === job.id ? { ...j, status: 'FAILED' } : j));
+        showToast(`Varredura "${job.keyword}" falhou.`);
+      } else {
+        onSaveLeadJobs(leadJobs.map(j => j.id === job.id ? { ...j, status: 'RUNNING' } : j));
+        showToast(`Varredura "${job.keyword}" em andamento...`);
+      }
+    } catch (e: any) {
+      showToast(`Erro ao consultar status: ${e.message}`);
+    }
+  };
+
   const modalClass = 'fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4';
   const cardClass = 'bg-white rounded-2xl shadow-2xl w-full max-w-lg border border-slate-200';
   const inputClass = 'w-full px-3 py-2.5 rounded-lg border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white';
@@ -252,6 +313,9 @@ export default function Leads({ leads, leadJobs, onSaveLeads, onSaveLeadJobs, on
                   {job.status === 'COMPLETED' && (
                     <span className="text-xs text-slate-400">{job.totalFound} encontrados</span>
                   )}
+                  <button onClick={() => handleRefreshJob(job)} className="p-1 text-slate-300 hover:text-indigo-500 transition-colors cursor-pointer" title="Atualizar status">
+                    <RefreshCw className="h-3.5 w-3.5" />
+                  </button>
                   <button onClick={() => handleDeleteJob(job.id)} className="p-1 text-slate-300 hover:text-rose-500 transition-colors cursor-pointer">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>

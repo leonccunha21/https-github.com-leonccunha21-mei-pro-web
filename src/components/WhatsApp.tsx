@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Plus, Smartphone, Wifi, WifiOff, Loader2, MessageSquare, X, QrCode, Trash2, RefreshCw, CheckCircle2, Clock, Send, AlertTriangle } from 'lucide-react';
+import { Plus, Smartphone, Wifi, WifiOff, Loader2, MessageSquare, X, QrCode, Trash2, RefreshCw, CheckCircle2, Clock, Send, AlertTriangle, AlertCircle } from 'lucide-react';
 import type { WhatsAppInstance } from '../types';
 import { whatsapp, vpsHealth, VpsWhatsAppInstance, VpsMessage, VPS_API_URL } from '../lib/vps';
+import { PRO_PLAN_LIMITS } from '../types';
 
 interface WhatsAppProps {
   instances: WhatsAppInstance[];
@@ -47,6 +48,14 @@ export default function WhatsApp({ instances, onSaveInstances }: WhatsAppProps) 
 
   const handleAddInstance = async () => {
     if (!instanceName.trim()) return;
+    
+    // Limite do plano Pro: 5 conexões WhatsApp
+    const connectedCount = instances.filter(i => i.status !== 'DISCONNECTED').length;
+    if (connectedCount >= PRO_PLAN_LIMITS.WHATSAPP_CONNECTIONS) {
+      showToast(`Limite do plano Pro atingido: máximo ${PRO_PLAN_LIMITS.WHATSAPP_CONNECTIONS} conexões WhatsApp ativas.`);
+      return;
+    }
+
     if (vpsOnline) {
       setBusy(true);
       try {
