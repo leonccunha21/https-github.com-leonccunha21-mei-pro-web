@@ -98,33 +98,6 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
     notes?: string;
   } | null>(null);
 
-  useEffect(() => {
-    if (paymentMethod === 'pix' && cartTotal > 0) {
-      let storeInfo: Record<string, string> = {};
-      try { storeInfo = JSON.parse(localStorage.getItem('zm_store_info') || '{}'); } catch {}
-      const pixKey = storeInfo.pixKey || '';
-      if (!pixKey) {
-        setPixQrCode(null);
-        setPixKeyMissing(true);
-        return;
-      }
-      setPixKeyMissing(false);
-      const payload = generatePixPayload({
-        pixKey,
-        merchantName: storeInfo.name || 'ZM Store',
-        merchantCity: storeInfo.city || 'Cidade',
-        amount: cartTotal,
-        transactionId: `PDV${Date.now().toString(36).toUpperCase()}`
-      });
-      QRCode.toDataURL(payload, { width: 300, margin: 2, color: { dark: '#1e293b', light: '#ffffff' } }).then(url => {
-        setPixQrCode(url);
-      });
-    } else {
-      setPixQrCode(null);
-      setPixKeyMissing(false);
-    }
-  }, [paymentMethod, cartTotal]);
-
   const paymentMethodLabels: Record<string, string> = {
     money: 'Dinheiro',
     card_credit: 'Cartão Crédito',
@@ -361,6 +334,34 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
   const discountAmount = roundCurrency((cartSubtotal * discountPercent) / 100);
   const cartTotal = Math.max(0, roundCurrency(cartSubtotal - discountAmount));
   const totalItemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+  // Generate PIX QR Code when payment method is PIX and cart total > 0
+  useEffect(() => {
+    if (paymentMethod === 'pix' && cartTotal > 0) {
+      let storeInfo: Record<string, string> = {};
+      try { storeInfo = JSON.parse(localStorage.getItem('zm_store_info') || '{}'); } catch {}
+      const pixKey = storeInfo.pixKey || '';
+      if (!pixKey) {
+        setPixQrCode(null);
+        setPixKeyMissing(true);
+        return;
+      }
+      setPixKeyMissing(false);
+      const payload = generatePixPayload({
+        pixKey,
+        merchantName: storeInfo.name || 'ZM Store',
+        merchantCity: storeInfo.city || 'Cidade',
+        amount: cartTotal,
+        transactionId: `PDV${Date.now().toString(36).toUpperCase()}`
+      });
+      QRCode.toDataURL(payload, { width: 300, margin: 2, color: { dark: '#1e293b', light: '#ffffff' } }).then(url => {
+        setPixQrCode(url);
+      });
+    } else {
+      setPixQrCode(null);
+      setPixKeyMissing(false);
+    }
+  }, [paymentMethod, cartTotal]);
 
   // Submit Sale Handler
   const handleCheckout = (e: React.FormEvent) => {
