@@ -74,10 +74,12 @@ O documento é extremamente maduro e as tecnologias recomendadas são padrão de
 - [ ] **Limite de 5 conexões / 3 agentes** do plano Pro não está implementado (sem trava de quantidade).
 - [ ] **Redrive 360º / Atendimento omnichannel** (e-mail, Instagram DM) não foi iniciado.
 
-**V2.10.0 — DRE comparativo anual, cenários fluxo caixa, indicador minStock, impressão/PDF:**
+**V2.11.0 — DRE filtro mensal, despesas por categoria, gráfico de barras:**
+- [x] **DRE**: filtro por período (mês inicial/final) além do ano
 - [x] **DRE**: tabela comparativa anual year-over-year com evolução % de receita e margem
 - [x] **DRE**: botão "Imprimir/PDF" que abre o diálogo de impressão do navegador
 - [x] **Fluxo de Caixa**: cenários otimista (+30% receitas), realista e pessimista (-30%)
+- [x] **Fluxo de Caixa**: gráfico de despesas por categoria com barra proporcional
 - [x] **Produtos**: barra de progresso stock vs. minStock + indicador "min: N" no grid
 
 **Status atual:** tudo que é possível no frontend está feito e funcionando (modo local + VPS stub testado end-to-end). O app compila (`npm run build`) e passa no lint (`npm run lint`) sem erros.

@@ -15,12 +15,14 @@ function fmt(v: number) { return v.toLocaleString('pt-BR', { style: 'currency', 
 function pct(v: number, base: number) { return base > 0 ? `${(v / base * 100).toFixed(1)}%` : '-'; }
 
 export default function DRE({ sales, expenses }: DREProps) {
+  const MONTHS_DRE = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   const [selectedYear, setSelectedYear] = useState<number | 'all'>(() => {
     const years = new Set<number>();
     sales.forEach(s => years.add(new Date(s.date).getFullYear()));
     const arr = Array.from(years).sort((a, b) => b - a);
     return arr.length ? arr[0] : new Date().getFullYear();
   });
+  const [monthRange, setMonthRange] = useState<[number, number]>([1, 12]);
   const [expandedMonths, setExpandedMonths] = useState<Set<string>>(new Set());
 
   const years = useMemo(() => {
@@ -30,12 +32,23 @@ export default function DRE({ sales, expenses }: DREProps) {
   }, [sales]);
 
   const filteredSales = useMemo(() => {
-    return sales.filter(s => s.status === 'completed' && (selectedYear === 'all' || new Date(s.date).getFullYear() === selectedYear));
-  }, [sales, selectedYear]);
+    return sales.filter(s => {
+      if (s.status !== 'completed') return false;
+      if (selectedYear !== 'all' && new Date(s.date).getFullYear() !== selectedYear) return false;
+      const m = new Date(s.date).getMonth() + 1;
+      if (m < monthRange[0] || m > monthRange[1]) return false;
+      return true;
+    });
+  }, [sales, selectedYear, monthRange]);
 
   const filteredExpenses = useMemo(() => {
-    return expenses.filter(e => selectedYear === 'all' || new Date(e.date).getFullYear() === selectedYear);
-  }, [expenses, selectedYear]);
+    return expenses.filter(e => {
+      if (selectedYear !== 'all' && new Date(e.date).getFullYear() !== selectedYear) return false;
+      const m = new Date(e.date).getMonth() + 1;
+      if (m < monthRange[0] || m > monthRange[1]) return false;
+      return true;
+    });
+  }, [expenses, selectedYear, monthRange]);
 
   const dre = useMemo(() => {
     const receitaBruta = filteredSales.reduce((a, s) => a + s.total, 0);
@@ -141,6 +154,22 @@ export default function DRE({ sales, expenses }: DREProps) {
             >
               <option value="all">Todos os anos</option>
               {years.map(y => <option key={y} value={y}>{y}</option>)}
+            </select>
+            <span className="text-slate-300 mx-1">|</span>
+            <select
+              value={monthRange[0]}
+              onChange={e => setMonthRange([Number(e.target.value), monthRange[1]])}
+              className="text-xs font-semibold bg-transparent border-none outline-none text-slate-700 dark:text-slate-300 cursor-pointer"
+            >
+              {MONTHS_DRE.map((m, i) => <option key={i} value={i + 1}>{m}</option>)}
+            </select>
+            <span className="text-slate-400 text-[10px]">até</span>
+            <select
+              value={monthRange[1]}
+              onChange={e => setMonthRange([monthRange[0], Number(e.target.value)])}
+              className="text-xs font-semibold bg-transparent border-none outline-none text-slate-700 dark:text-slate-300 cursor-pointer"
+            >
+              {MONTHS_DRE.map((m, i) => <option key={i} value={i + 1} disabled={i + 1 < monthRange[0]}>{m}</option>)}
             </select>
           </div>
           <button onClick={exportPrint} className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold transition-colors cursor-pointer">

@@ -344,6 +344,37 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
         </div>
       )}
 
+      {/* Expense by Category */}
+      {expenseByCategory.length > 0 && (
+        <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div className="px-5 pt-5 pb-3 border-b border-slate-100">
+            <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
+              <PieChart className="h-5 w-5 text-primary" /> Despesas por Categoria
+            </h2>
+            <p className="text-xs text-slate-400 mt-0.5">Distribuição das despesas em {selectedYear}.</p>
+          </div>
+          <div className="p-5 space-y-3">
+            {expenseByCategory.slice(0, 10).map(([cat, val]) => {
+              const pct = yearSummary.totalExpenses > 0 ? (val / yearSummary.totalExpenses) * 100 : 0;
+              return (
+                <div key={cat}>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="font-semibold text-slate-700">{cat}</span>
+                    <span className="font-mono text-slate-500">R$ {val.toFixed(2)} <span className="text-slate-400">({pct.toFixed(0)}%)</span></span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${pct}%` }} />
+                  </div>
+                </div>
+              );
+            })}
+            {expenseByCategory.length > 10 && (
+              <p className="text-xs text-slate-400 text-center pt-2">+ {expenseByCategory.length - 10} categorias</p>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Cash Flow Projection */}
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="border-b border-slate-100 pb-3 mb-4 px-5 pt-5">
