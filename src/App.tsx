@@ -591,8 +591,7 @@ export default function App() {
       return unified;
     })
       .then((res) => {
-        // Reflete o unificado localmente também (pode ter trazido itens da nuvem).
-        applyLoadedDb(res as LocalDb);
+        // Salva o merge localmente (dados de outros dispositivos vêm no merge).
         persist(res as LocalDb);
         setCloudLastSync(new Date().toISOString());
         return res;
@@ -672,15 +671,7 @@ export default function App() {
     }, 250);
     lastLocalChangeRef.current = Date.now();
 
-    // Envio automático para a nuvem (debounce 2s) a cada alteração local.
-    if (SYNC_ENABLED && cloudUser && !isCloudSyncPaused()) {
-      if (cloudPushTimer.current) clearTimeout(cloudPushTimer.current);
-      cloudPushTimer.current = window.setTimeout(() => {
-        cloudPushTimer.current = null;
-        if (cloudPushing.current || cloudSyncing) return;
-        pushToCloud(stateRef.current as LocalDb).catch(() => {});
-      }, 2000);
-    }
+    // Auto-sync removido para economizar cota do Firebase e evitar flicker.
   };
 
   // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)
@@ -743,22 +734,9 @@ export default function App() {
     if (!cloudUser) return;
     setCloudError(null);
     setDailyWrites(getDailyWrites().count);
-    const id = window.setInterval(() => {
-      if (SYNC_ENABLED && cloudUser && !isCloudSyncPaused() && !cloudPushing.current && !cloudSyncing) {
-        pullFromCloudRef.current();
-      }
-    }, 30000);
-    // Puxa logo ao entrar, para refletir dados de outros aparelhos imediatamente.
-    if (SYNC_ENABLED && !isCloudSyncPaused()) {
-      window.setTimeout(() => pullFromCloudRef.current(), 1500);
-    }
-    // Puxa ao voltar a focar a aba (trocar de janela/aparelho) para manter em dia.
-    const onVisible = () => { if (document.visibilityState === 'visible') pullFromCloudRef.current(); };
-    document.addEventListener('visibilitychange', onVisible);
-    return () => {
-      window.clearInterval(id);
-      document.removeEventListener('visibilitychange', onVisible);
-    };
+    // Auto-pull removido: baixa apenas manualmente (botão "Baixar da nuvem").
+    // Economiza cota do Firebase e evita sobrescrever dados locais sem querer.
+    return () => {};
   }, [cloudUser]);
 
   const handleCloudSignIn = async () => {
