@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { randomUUID } from 'crypto';
+import * as cheerio from 'cheerio';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.resolve(__dirname, 'data');
@@ -155,6 +156,65 @@ app.post('/api/whatsapp/:id/send', (req, res) => {
   list.unshift({ id: `m_${Date.now()}`, instanceId: id, from: 'você', preview: text, body: text, timestamp: Date.now() });
   wMessages.set(id, list);
   res.json({ ok: true });
+});
+
+// --- Rastreio Correios ---
+app.get('/api/tracking/:code', async (req, res) => {
+  const code = req.params.code.toUpperCase().trim();
+  if (!code || code.length < 8) {
+    return res.json({ code, status: null, events: [] });
+  }
+  try {
+    const response = await fetch(`https://rastreamento.correios.com.br/app/index.php?objeto=${encodeURIComponent(code)}`, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+        'Accept': 'text/html',
+      },
+    });
+    const html = await response.text();
+    const $ = cheerio.load(html);
+
+    // Tenta extrair o último evento da página
+    const events: { date: string; location: string; status: string }[] = [];
+    $('ul.linha_do_tempo li').each((_i, el) => {
+      const date = $(el).find('.data').text().trim();
+      const location = $(el).find('.local').text().trim();
+      const status = $(el).find('.status').text().trim();
+      if (status) events.push({ date, location, status });
+    });
+
+    // Fallback: procura em outra estrutura comum
+    if (events.length === 0) {
+      $('.tb-rodape, .tb-corpo, .evento, .card-body').each((_i, el) => {
+        const text = $(el).text().trim();
+        if (text) {
+          const lower = text.toLowerCase();
+          if (lower.includes('entregue')) events.push({ date: '', location: '', status: 'Entregue' });
+          else if (lower.includes('trânsito') || lower.includes('transito')) events.push({ date: '', location: '', status: 'Em trânsito' });
+          else if (lower.includes('saiu')) events.push({ date: '', location: '', status: 'Saiu para entrega' });
+        }
+      });
+    }
+
+    if (events.length === 0) {
+      return res.json({ code, status: null, events: [] });
+    }
+
+    const last = events[events.length - 1];
+    let statusKey = 'em_transito';
+    const lower = last.status.toLowerCase();
+    if (lower.includes('entregue')) statusKey = 'entregue';
+    else if (lower.includes('saiu') && lower.includes('entrega')) statusKey = 'saiu_entrega';
+    else if (lower.includes('aguardando') || lower.includes('retirada')) statusKey = 'aguardando_retirada';
+    else if (lower.includes('encaminhado')) statusKey = 'encaminhado';
+    else if (lower.includes('postado')) statusKey = 'postado';
+    else if (lower.includes('trânsito') || lower.includes('transito')) statusKey = 'em_transito';
+
+    res.json({ code, status: statusKey, events });
+  } catch (e: any) {
+    console.error('Erro ao consultar rastreio:', e.message);
+    res.json({ code, status: null, events: [] });
+  }
 });
 
 // --- Scrapers (varredura de leads) ---

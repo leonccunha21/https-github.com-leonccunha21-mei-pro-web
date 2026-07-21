@@ -29,20 +29,13 @@ export function statusLabel(status?: string): string {
   return STATUS_LABELS[status] || status;
 }
 
-export async function fetchTrackingStatus(code: string): Promise<string | null> {
+export async function fetchTrackingStatus(code: string): Promise<{ status: string | null; events: { date: string; location: string; status: string }[] }> {
   try {
-    const res = await fetch(`https://proxy.cors.sh/${CORREIOS_URL}?objeto=${encodeURIComponent(code)}`, {
-      headers: { 'x-cors-api-key': 'temp_' + Date.now() }
-    });
-    if (!res.ok) return null;
-    const html = await res.text();
-    if (html.includes('entregue') || html.includes('Entrega')) return 'entregue';
-    if (html.includes('trânsito') || html.includes('Transito')) return 'em_transito';
-    if (html.includes('saiu')) return 'saiu_entrega';
-    if (html.includes('encaminhado')) return 'encaminhado';
-    if (html.includes('postado')) return 'postado';
-    return null;
+    const base = (import.meta as any).env?.VITE_VPS_API_URL?.replace(/\/$/, '') || '/api';
+    const res = await fetch(`${base}/tracking/${encodeURIComponent(code)}`);
+    if (!res.ok) return { status: null, events: [] };
+    return await res.json();
   } catch {
-    return null;
+    return { status: null, events: [] };
   }
 }

@@ -21,7 +21,7 @@ import {
   Package,
   ExternalLink,
 } from 'lucide-react';
-import { trackingUrl, statusLabel, STATUS_COLORS } from '../lib/tracking';
+import { trackingUrl, statusLabel, STATUS_COLORS, fetchTrackingStatus } from '../lib/tracking';
 
 interface DebtorsProps {
   sales: Sale[];
@@ -41,6 +41,24 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
   useEffect(() => {
     localStorage.setItem('zmstore-debtors-view', view);
   }, [view]);
+
+  // Auto-verifica rastreio dos Correios ao entrar na aba marketplace
+  useEffect(() => {
+    if (view !== 'marketplace') return;
+    const untracked = sales.filter(s => s.trackingCode && !s.trackingStatus);
+    if (untracked.length === 0) return;
+    let cancelled = false;
+    (async () => {
+      for (const sale of untracked) {
+        if (cancelled) break;
+        const result = await fetchTrackingStatus(sale.trackingCode!);
+        if (cancelled || !result.status) continue;
+        onUpdateSale({ ...sale, trackingStatus: result.status, updatedAt: new Date().toISOString() });
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [view]);
+
   const [filterStatus, setFilterStatus] = useState<'all' | 'pending' | 'completed'>('pending');
   const [marketplaceFilter, setMarketplaceFilter] = useState<'pending' | 'received' | 'all'>('pending');
   const [partialAmount, setPartialAmount] = useState<string>('');
