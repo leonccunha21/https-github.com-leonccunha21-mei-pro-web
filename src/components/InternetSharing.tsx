@@ -222,11 +222,13 @@ export default function InternetSharing({ internetUsers, onSaveInternetUsers }: 
   const buildWhatsAppMessage = (user: InternetUser) => {
     const firstName = user.userName.split(' ')[0] || user.userName;
     const lastPayment = user.payments.sort((a, b) => b.referenceMonth.localeCompare(a.referenceMonth))[0];
-    const lastMonth = lastPayment ? getMonthLabel(lastPayment.referenceMonth) : 'nunca';
     const overdue = user.status === 'active' && (!lastPayment || lastPayment.referenceMonth < new Date().toISOString().slice(0, 7));
     const head = `Olá ${firstName}, tudo bem?`;
+    const lastPaymentInfo = lastPayment
+      ? ` Seu último pagamento foi em ${getMonthLabel(lastPayment.referenceMonth)}.`
+      : '';
     const body = overdue
-      ? `Passando para lembrar que a mensalidade da internet de ${formatCurrency(user.monthlyFee)} referente ao mês atual está pendente. Seu último pagamento foi em ${lastMonth}.`
+      ? `Passando para lembrar que a mensalidade da internet de ${formatCurrency(user.monthlyFee)} referente ao mês atual está pendente.${lastPaymentInfo}`
       : `Passando para lembrar que a mensalidade da internet de ${formatCurrency(user.monthlyFee)} vence em breve. Se possível, realize o pagamento para manter o serviço ativo.`;
     return `${head}\n${body}\nQualquer dúvida, estou à disposição. Obrigado!`;
   };
