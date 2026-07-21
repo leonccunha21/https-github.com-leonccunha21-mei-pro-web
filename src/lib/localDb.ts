@@ -1,4 +1,4 @@
-import { Product, Sale, Category, Expense, StoreInfo, ServiceOrder, Customer, Supplier, Purchase, CashSession, Loan, Lead, LeadExtractionJob, WhatsAppInstance, AIAgent, Opportunity } from '../types';
+import { Product, Sale, Category, Expense, StoreInfo, ServiceOrder, Customer, Supplier, Purchase, CashSession, Loan, Lead, LeadExtractionJob, WhatsAppInstance, AIAgent, Opportunity, Bill, InternetUser } from '../types';
 
 export interface LocalDb {
   products: Product[];
@@ -17,6 +17,8 @@ export interface LocalDb {
   whatsappInstances: WhatsAppInstance[];
   aiAgents: AIAgent[];
   opportunities: Opportunity[];
+  bills: Bill[];
+  internetUsers: InternetUser[];
   initialized?: boolean;
 }
 
@@ -112,6 +114,8 @@ export async function loadDb(): Promise<Partial<LocalDb> | null> {
         whatsappInstances: dedupeById(local.whatsappInstances) as LocalDb['whatsappInstances'],
         aiAgents: dedupeById(local.aiAgents) as LocalDb['aiAgents'],
         opportunities: dedupeById(local.opportunities) as LocalDb['opportunities'],
+        bills: dedupeById(local.bills) as LocalDb['bills'],
+        internetUsers: dedupeById(local.internetUsers) as LocalDb['internetUsers'],
       };
     }
   } catch { /* ignore */ }

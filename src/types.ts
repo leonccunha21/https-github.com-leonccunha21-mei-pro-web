@@ -90,7 +90,44 @@ export interface Expense {
   updatedAt: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'dre' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel' | 'conciliation';
+export interface Bill {
+  id: string;
+  name: string;
+  description?: string;
+  amount: number;
+  dueDate: string;
+  paymentDate?: string;
+  category: string;
+  recurrence: 'once' | 'weekly' | 'monthly' | 'yearly';
+  status: 'pending' | 'paid' | 'overdue';
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface InternetPayment {
+  id: string;
+  date: string;
+  amount: number;
+  paymentMethod: string;
+  referenceMonth: string;
+  notes?: string;
+}
+
+export interface InternetUser {
+  id: string;
+  userName: string;
+  contact?: string;
+  serviceStartDate: string;
+  monthlyFee: number;
+  status: 'active' | 'inactive' | 'suspended';
+  payments: InternetPayment[];
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'dre' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel' | 'conciliation' | 'bills' | 'internet';
 
 export const PRO_PLAN_LIMITS = {
   WHATSAPP_CONNECTIONS: 5,

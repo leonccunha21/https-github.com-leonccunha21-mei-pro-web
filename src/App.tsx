@@ -20,7 +20,9 @@ import {
   AIAgent,
   Opportunity,
   UserRole,
-  AppUser
+  AppUser,
+  Bill,
+  InternetUser,
 } from './types';
 // Nenhum seed automático: contas novas começam com 0 dados. A entrada de dados
 // ocorre apenas via importação manual de planilha Excel (ver tela de Configurações).
@@ -48,6 +50,8 @@ const FunnelPage = lazy(() => import('./components/Funnel'));
 const SystemChooser = lazy(() => import('./components/SystemChooser'));
 const DRE = lazy(() => import('./components/DRE'));
 const BankConciliationPage = lazy(() => import('./components/BankConciliation'));
+const BillsPage = lazy(() => import('./components/Bills'));
+const InternetSharingPage = lazy(() => import('./components/InternetSharing'));
 import { 
   LayoutDashboard, 
   Package, 
@@ -70,12 +74,15 @@ import {
   AlertTriangle,
   Target,
   MessageSquare,
+  MessageCircle,
   Brain,
   KanbanSquare,
   Stethoscope,
   FileText,
   Building2,
-  Activity
+  Activity,
+  Wifi,
+  Receipt
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
@@ -146,6 +153,8 @@ export default function App() {
   const [whatsappInstances, setWhatsappInstances] = useState<WhatsAppInstance[]>([]);
   const [aiAgents, setAiAgents] = useState<AIAgent[]>([]);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [bills, setBills] = useState<Bill[]>([]);
+  const [internetUsers, setInternetUsers] = useState<InternetUser[]>([]);
 
   const [appUsers, setAppUsers] = useState<AppUser[]>(() => {
     try { return JSON.parse(localStorage.getItem('zm_users') || '[]'); }
@@ -302,6 +311,8 @@ export default function App() {
     whatsappInstances: mergeById(local.whatsappInstances, cloud.whatsappInstances) as LocalDb['whatsappInstances'],
     aiAgents: mergeById(local.aiAgents, cloud.aiAgents) as LocalDb['aiAgents'],
     opportunities: mergeById(local.opportunities, cloud.opportunities) as LocalDb['opportunities'],
+    bills: mergeById(local.bills, cloud.bills) as LocalDb['bills'],
+    internetUsers: mergeById(local.internetUsers, cloud.internetUsers) as LocalDb['internetUsers'],
     storeInfo: cloud.storeInfo ?? local.storeInfo,
     initialized: true,
   });
@@ -369,6 +380,8 @@ export default function App() {
     setWhatsappInstances(hasDb && Array.isArray(dbData.whatsappInstances) ? dbData.whatsappInstances! : []);
     setAiAgents(hasDb && Array.isArray(dbData.aiAgents) ? dbData.aiAgents! : []);
     setOpportunities(hasDb && Array.isArray(dbData.opportunities) ? dbData.opportunities! : []);
+    setBills(hasDb && Array.isArray(dbData.bills) ? dbData.bills! : []);
+    setInternetUsers(hasDb && Array.isArray(dbData.internetUsers) ? dbData.internetUsers! : []);
 
     if (db && db.storeInfo) setStoreInfo(db.storeInfo);
     const seededCustomers = loadedCustomers.length === 0 ? seedCustomersFromSales(s) : loadedCustomers;
@@ -417,6 +430,8 @@ export default function App() {
             whatsappInstances: [],
             aiAgents: [],
             opportunities: [],
+            bills: [],
+            internetUsers: [],
             storeInfo: (db && db.storeInfo) || null,
             initialized: true,
           });
@@ -441,6 +456,8 @@ export default function App() {
           leadJobs: [],
           whatsappInstances: [],
           aiAgents: [],
+          bills: [],
+          internetUsers: [],
           storeInfo: null,
           initialized: true,
         });
@@ -489,9 +506,11 @@ export default function App() {
     whatsappInstances: WhatsAppInstance[];
     aiAgents: AIAgent[];
     opportunities: Opportunity[];
+    bills: Bill[];
+    internetUsers: InternetUser[];
     initialized?: boolean;
-  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [], loans: [], whatsappInstances: [], aiAgents: [], opportunities: [] });
-  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans, whatsappInstances, aiAgents, opportunities };
+  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [], loans: [], whatsappInstances: [], aiAgents: [], opportunities: [], bills: [], internetUsers: [] });
+  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans, whatsappInstances, aiAgents, opportunities, bills, internetUsers };
 
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
@@ -610,6 +629,8 @@ export default function App() {
       whatsappInstances: partial.whatsappInstances ?? prev.whatsappInstances ?? cur.whatsappInstances ?? [],
       aiAgents: partial.aiAgents ?? prev.aiAgents ?? cur.aiAgents ?? [],
       opportunities: partial.opportunities ?? prev.opportunities ?? cur.opportunities ?? [],
+      bills: partial.bills ?? prev.bills ?? cur.bills ?? [],
+      internetUsers: partial.internetUsers ?? prev.internetUsers ?? cur.internetUsers ?? [],
       initialized: true,
     };
     pendingRef.current = merged;
@@ -637,6 +658,8 @@ export default function App() {
       whatsappInstances: merged.whatsappInstances ?? [],
       aiAgents: merged.aiAgents ?? [],
       opportunities: merged.opportunities ?? [],
+      bills: merged.bills ?? [],
+      internetUsers: merged.internetUsers ?? [],
     };
     for (const [name, data] of Object.entries(collections)) {
       saveChecksum(name, computeChecksum(data));
@@ -1082,6 +1105,16 @@ export default function App() {
     persist({ loans: updatedLoans });
   };
 
+  const saveBillsToStorage = (updatedBills: Bill[]) => {
+    setBills(updatedBills);
+    persist({ bills: updatedBills });
+  };
+
+  const saveInternetUsersToStorage = (updatedUsers: InternetUser[]) => {
+    setInternetUsers(updatedUsers);
+    persist({ internetUsers: updatedUsers });
+  };
+
   const handleStoreInfoChange = (info: StoreInfo) => {
     setStoreInfo(info);
     persist({ storeInfo: info });
@@ -1391,6 +1424,7 @@ export default function App() {
       products, sales, categories, expenses, orders,
       storeInfo, customers, suppliers, purchases, cashSessions, loans,
       leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [], opportunities: [],
+      bills, internetUsers,
       initialized: true,
     };
     const blob = new Blob([JSON.stringify(db, null, 2)], { type: 'application/json' });
@@ -1450,6 +1484,8 @@ export default function App() {
           whatsappInstances: parsed.whatsappInstances || [],
           aiAgents: parsed.aiAgents || [],
           opportunities: parsed.opportunities || [],
+          bills: parsed.bills || [],
+          internetUsers: parsed.internetUsers || [],
           initialized: true,
         };
         setProducts(db.products);
@@ -1605,6 +1641,11 @@ export default function App() {
   }
 
   // --- VERIFICAR VENDAS X ESTOQUE ---
+  const billsAlertCount = useMemo(() => {
+    const threeDays = Date.now() + 259200000;
+    return bills.filter(b => b.status !== 'paid' && new Date(b.dueDate).getTime() <= threeDays).length;
+  }, [bills]);
+
   const missingProducts = useMemo(() => {
     if (!showVendasEstoque) return [];
     const productNamesLower = new Set(products.map(p => p.name.trim().toLowerCase()));
@@ -1808,6 +1849,8 @@ export default function App() {
                 { tab: 'whatsapp', label: 'WhatsApp', icon: MessageSquare },
                 { tab: 'ai', label: 'Inteligência Artificial', icon: Brain },
                 { tab: 'conciliation', label: 'Conciliação', icon: Building2 },
+                { tab: 'bills', label: 'Contas', icon: Receipt },
+                { tab: 'internet', label: 'Internet', icon: Wifi },
                 { tab: 'mounjaro', label: 'Mounjaro PRO', icon: Stethoscope },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
@@ -1818,11 +1861,16 @@ export default function App() {
                     onClick={() => {
                      if (item.tab === 'mounjaro') { setMobileMenuOpen(false); window.location.href = '/mounjaro'; return; }
                      setActiveTab(item.tab); setMobileMenuOpen(false);
-                   }}
-                    className="flex flex-col items-center gap-2 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                    }}
+                    className="flex flex-col items-center gap-2 p-4 rounded-xl bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors relative"
                   >
                     <Icon className="h-6 w-6 text-primary" />
                     <span className="text-[11px] font-bold text-slate-700 dark:text-slate-300">{item.label}</span>
+                    {item.tab === 'bills' && billsAlertCount > 0 && (
+                      <span className="absolute top-1 right-1 text-[9px] font-bold px-1 py-0.5 rounded-full bg-rose-500 text-white min-w-[16px] text-center leading-tight">
+                        {billsAlertCount > 99 ? '99+' : billsAlertCount}
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -2010,6 +2058,43 @@ export default function App() {
             >
               <Wallet className="h-4 w-4" />
               Fechamento de Caixa
+            </button>
+            </>)}
+
+            {canAccess('bills', currentUserRole) && (<>
+            {/* Tab: Contas */}
+            <button
+              id="nav-bills"
+              onClick={() => setActiveTab('bills')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'bills'
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Receipt className="h-4 w-4" />
+              <span className="flex-1 text-left">Contas</span>
+              {billsAlertCount > 0 && (
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-rose-500 text-white min-w-[18px] text-center leading-tight">
+                  {billsAlertCount > 99 ? '99+' : billsAlertCount}
+                </span>
+              )}
+            </button>
+            </>)}
+
+            {canAccess('internet_sharing', currentUserRole) && (<>
+            {/* Tab: Internet Compartilhada */}
+            <button
+              id="nav-internet"
+              onClick={() => setActiveTab('internet')}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                activeTab === 'internet'
+                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
+                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+              }`}
+            >
+              <Wifi className="h-4 w-4" />
+              Internet
             </button>
             </>)}
 
@@ -2526,6 +2611,20 @@ export default function App() {
               <BankConciliationPage
                 sales={sales}
                 expenses={expenses}
+              />
+            )}
+
+            {activeTab === 'bills' && (
+              <BillsPage
+                bills={bills}
+                onSaveBills={saveBillsToStorage}
+              />
+            )}
+
+            {activeTab === 'internet' && (
+              <InternetSharingPage
+                internetUsers={internetUsers}
+                onSaveInternetUsers={saveInternetUsersToStorage}
               />
             )}
 
