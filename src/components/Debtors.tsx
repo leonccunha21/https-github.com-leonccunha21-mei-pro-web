@@ -17,8 +17,11 @@ import {
   Plus,
   Trash2,
   ShoppingBag,
-  MessageCircle
+  MessageCircle,
+  Package,
+  ExternalLink,
 } from 'lucide-react';
+import { trackingUrl, statusLabel, STATUS_COLORS } from '../lib/tracking';
 
 interface DebtorsProps {
   sales: Sale[];
@@ -969,6 +972,7 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                       <th className="py-3 px-4">Produto</th>
                       <th className="py-3 px-4">Data</th>
                       <th className="py-3 px-4 text-right">Valor</th>
+                      <th className="py-3 px-4 text-center">Rastreio</th>
                       <th className="py-3 px-4 text-center">Status</th>
                       <th className="py-3 px-4 text-center">Acoes</th>
                     </tr>
@@ -1009,6 +1013,30 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
                           </td>
                           <td className="py-3 px-4 text-right">
                             <span className={`font-mono font-bold text-xs ${isPending ? 'text-rose-600' : 'text-emerald-600'}`}>{formatCurrency(s.total)}</span>
+                          </td>
+                          <td className="py-3 px-4 text-center">
+                            {s.trackingCode ? (
+                              <div className="flex flex-col items-center gap-0.5">
+                                <a
+                                  href={trackingUrl(s.trackingCode)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1 px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-bold rounded-sm border border-blue-200 hover:bg-blue-100 transition-colors"
+                                  title="Rastrear nos Correios"
+                                >
+                                  <Package className="h-3 w-3 shrink-0" />
+                                  {s.trackingCode}
+                                  <ExternalLink className="h-2.5 w-2.5 shrink-0" />
+                                </a>
+                                {s.trackingStatus && (
+                                  <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 text-[9px] font-bold rounded-sm border ${STATUS_COLORS[s.trackingStatus] || 'text-slate-500 bg-slate-50 border-slate-200'}`}>
+                                    {statusLabel(s.trackingStatus)}
+                                  </span>
+                                )}
+                              </div>
+                            ) : (
+                              <span className="text-[10px] text-slate-400">—</span>
+                            )}
                           </td>
                           <td className="py-3 px-4 text-center">
                             {isPending ? (

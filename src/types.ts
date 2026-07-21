@@ -61,6 +61,8 @@ export interface Sale {
   installments?: number;
   paidAmount?: number;
   ecommerceOrderId?: string; // ID do pedido Shopee/TikTok/etc
+  trackingCode?: string; // Código de rastreio dos Correios
+  trackingStatus?: string; // Status do rastreio (em_transito, entregue, etc)
   saleChannel?: string; // Canal de venda (Loja Física, Shopee, TikTok, OLX, ...)
   saleType: 'CPF' | 'CNPJ';
   notes?: string;

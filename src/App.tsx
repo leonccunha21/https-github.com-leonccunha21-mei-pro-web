@@ -1199,6 +1199,7 @@ export default function App() {
     paymentMethod: PaymentMethod;
     discount: number;
     ecommerceOrderId?: string;
+    trackingCode?: string;
     saleChannel?: string;
     saleType: 'CPF' | 'CNPJ';
     notes?: string;
@@ -1233,6 +1234,7 @@ export default function App() {
       profit,
       status: (isMarketplaceChannel || saleData.pending) ? 'pending' : 'completed',
       ecommerceOrderId: saleData.ecommerceOrderId,
+      trackingCode: saleData.trackingCode,
       saleChannel: saleChannelRaw || undefined,
       saleType: saleData.saleType,
       notes: saleData.notes,

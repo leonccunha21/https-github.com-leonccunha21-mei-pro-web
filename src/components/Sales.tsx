@@ -36,6 +36,7 @@ interface SalesProps {
     paymentMethod: PaymentMethod;
     discount: number;
     ecommerceOrderId?: string;
+    trackingCode?: string;
     saleChannel?: string;
     saleType: 'CPF' | 'CNPJ';
     notes?: string;
@@ -71,6 +72,7 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
   const [showMaxDiscountWarning, setShowMaxDiscountWarning] = useState<boolean>(false);
   const [saleNotes, setSaleNotes] = useState('');
   const [ecommerceOrderId, setEcommerceOrderId] = useState('');
+  const [trackingCode, setTrackingCode] = useState('');
   const [saleType, setSaleType] = useState<'CPF' | 'CNPJ'>('CPF');
   
   // Auto-set saleType based on channel
@@ -423,6 +425,7 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
       paymentMethod,
       discount: discountPercent,
       ecommerceOrderId: isEcommerceChannel(saleChannel) ? ecommerceOrderId.trim() || undefined : undefined,
+      trackingCode: isEcommerceChannel(saleChannel) ? trackingCode.trim() || undefined : undefined,
       saleChannel: saleChannel,
       saleType,
       notes: combinedNotes || undefined,
@@ -455,6 +458,7 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
     setShowMaxDiscountWarning(false);
     setSaleNotes('');
     setEcommerceOrderId('');
+    setTrackingCode('');
     setSaleType('CPF');
     setErrorMessage(null);
     setSuccessMessage(true);
@@ -880,7 +884,27 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
                     className="flex-1 px-3 py-1.5 text-xs bg-white border border-amber-300 rounded-lg outline-hidden focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 transition-all font-mono"
                   />
                 </div>
-                <p className="text-[10px] text-amber-600 mt-1">Código de rastreamento do pedido no {saleChannel}.</p>
+                <p className="text-[10px] text-amber-600 mt-1">ID do pedido no {saleChannel}.</p>
+              </div>
+            )}
+
+            {/* Tracking Code (only for e-commerce channels) */}
+            {isEcommerceChannel(saleChannel) && (
+              <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                <label className="block text-[10px] font-bold text-blue-700 uppercase mb-1">
+                  Código de Rastreio
+                </label>
+                <div className="flex items-center gap-2">
+                  <input
+                    id="tracking-code"
+                    type="text"
+                    placeholder="Ex: AA123456789BR"
+                    value={trackingCode}
+                    onChange={(e) => setTrackingCode(e.target.value.toUpperCase())}
+                    className="flex-1 px-3 py-1.5 text-xs bg-white border border-blue-300 rounded-lg outline-hidden focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all font-mono"
+                  />
+                </div>
+                <p className="text-[10px] text-blue-600 mt-1">Código dos Correios para rastrear o pedido.</p>
               </div>
             )}
 
