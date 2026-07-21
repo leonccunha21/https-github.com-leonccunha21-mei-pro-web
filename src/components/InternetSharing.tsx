@@ -20,6 +20,7 @@ import {
   ChevronDown,
   ChevronUp,
   MessageCircle,
+  Send,
 } from 'lucide-react';
 
 interface InternetSharingProps {
@@ -256,6 +257,26 @@ export default function InternetSharing({ internetUsers, onSaveInternetUsers }: 
     return { label: 'Em Dia', color: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: UserCheck };
   };
 
+  const chargeAllPending = () => {
+    const pending = internetUsers.filter(u => {
+      if (u.status !== 'active') return false;
+      const lastPayment = u.payments.sort((a, b) => b.referenceMonth.localeCompare(a.referenceMonth))[0];
+      return !lastPayment || lastPayment.referenceMonth < new Date().toISOString().slice(0, 7);
+    });
+    if (pending.length === 0) {
+      alert('Nenhum usuário pendente para cobrar.');
+      return;
+    }
+    if (!window.confirm(`Enviar cobrança via WhatsApp para ${pending.length} usuário(s) pendente(s)?`)) return;
+    for (const user of pending) {
+      const phone = (user.contact || '').replace(/\D/g, '');
+      if (!phone) continue;
+      const text = encodeURIComponent(buildWhatsAppMessage(user));
+      const url = `https://wa.me/${phone.startsWith('55') ? phone : '55' + phone}?text=${text}`;
+      window.open(url, '_blank');
+    }
+  };
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -267,12 +288,20 @@ export default function InternetSharing({ internetUsers, onSaveInternetUsers }: 
           </h1>
           <p className="text-sm text-slate-500 mt-1">Gerencie usuários, pagamentos e controle financeiro da internet compartilhada.</p>
         </div>
-        <button
-          onClick={openNewForm}
-          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
-        >
-          <Plus className="h-4 w-4" /> Novo Usuário
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={chargeAllPending}
+            className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
+          >
+            <Send className="h-4 w-4" /> Cobrar Pendentes
+          </button>
+          <button
+            onClick={openNewForm}
+            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-lg flex items-center gap-2 transition-colors cursor-pointer"
+          >
+            <Plus className="h-4 w-4" /> Novo Usuário
+          </button>
+        </div>
       </div>
 
       {/* KPI Cards */}
