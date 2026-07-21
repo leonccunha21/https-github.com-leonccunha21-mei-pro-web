@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Bill } from '../types';
 import {
   DollarSign,
@@ -128,22 +128,6 @@ export default function Bills({ bills, onSaveBills }: BillsProps) {
     onSaveBills(bills.filter(b => b.id !== id));
   };
 
-  const handleMarkPaid = (bill: Bill) => {
-    onSaveBills(bills.map(b =>
-      b.id === bill.id
-        ? { ...b, status: 'paid' as const, paymentDate: new Date().toISOString().slice(0, 10), updatedAt: new Date().toISOString() }
-        : b
-    ));
-  };
-
-  const handleMarkPending = (bill: Bill) => {
-    onSaveBills(bills.map(b =>
-      b.id === bill.id
-        ? { ...b, status: 'pending' as const, paymentDate: undefined, updatedAt: new Date().toISOString() }
-        : b
-    ));
-  };
-
   const filtered = useMemo(() => {
     return bills.filter(b => {
       if (filterStatus === 'pending' && b.status === 'paid') return false;
@@ -192,6 +176,66 @@ export default function Bills({ bills, onSaveBills }: BillsProps) {
 
   const isOverdue = (dueDate: string, status: string) =>
     status === 'pending' && new Date(dueDate) < new Date(new Date().toDateString());
+
+  // Marca como vencidas automaticamente ao carregar
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const updated = bills.map(b => {
+      if (b.status === 'pending' && b.dueDate < today) {
+        return { ...b, status: 'overdue' as const, updatedAt: new Date().toISOString() };
+      }
+      if (b.status === 'overdue' && b.dueDate >= today) {
+        return { ...b, status: 'pending' as const, updatedAt: new Date().toISOString() };
+      }
+      return b;
+    });
+    const hasChanges = updated.some((b, i) => b.status !== bills[i].status);
+    if (hasChanges) onSaveBills(updated);
+  }, []);
+
+  const calcNextDueDate = (currentDueDate: string, recurrence: string): string => {
+    const d = new Date(currentDueDate);
+    if (recurrence === 'weekly') d.setDate(d.getDate() + 7);
+    else if (recurrence === 'monthly') d.setMonth(d.getMonth() + 1);
+    else if (recurrence === 'yearly') d.setFullYear(d.getFullYear() + 1);
+    return d.toISOString().slice(0, 10);
+  };
+
+  const handleMarkPaid = (bill: Bill) => {
+    const now = new Date().toISOString();
+    const updated = bills.map(b =>
+      b.id === bill.id
+        ? { ...b, status: 'paid' as const, paymentDate: new Date().toISOString().slice(0, 10), updatedAt: now }
+        : b
+    );
+    if (bill.recurrence !== 'once') {
+      const nextDueDate = calcNextDueDate(bill.dueDate, bill.recurrence);
+      const nextBill: Bill = {
+        id: `bill_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+        name: bill.name,
+        description: bill.description,
+        amount: bill.amount,
+        dueDate: nextDueDate,
+        category: bill.category,
+        recurrence: bill.recurrence,
+        status: 'pending',
+        notes: bill.notes,
+        createdAt: now,
+        updatedAt: now,
+      };
+      onSaveBills([nextBill, ...updated]);
+    } else {
+      onSaveBills(updated);
+    }
+  };
+
+  const handleMarkPending = (bill: Bill) => {
+    onSaveBills(bills.map(b =>
+      b.id === bill.id
+        ? { ...b, status: 'pending' as const, paymentDate: undefined, updatedAt: new Date().toISOString() }
+        : b
+    ));
+  };
 
   return (
     <div className="space-y-6">
