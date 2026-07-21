@@ -4,8 +4,9 @@ import { roundCurrency } from '../lib/currency';
 import { normalizeName } from '../lib/normalize';
 import {
   Truck, Plus, Search, Pencil, Trash2, Package, DollarSign,
-  X, UserPlus, Building2
+  X, UserPlus, Building2, Calendar, Copy
 } from 'lucide-react';
+import { DateFilter } from './DateFilter';
 
 interface PurchasesProps {
   products: Product[];
@@ -18,6 +19,8 @@ interface PurchasesProps {
 export default function Purchases({ products, suppliers, purchases, onSaveSuppliers, onAddPurchase }: PurchasesProps) {
   const [tab, setTab] = useState<'compras' | 'fornecedores'>('compras');
   const [search, setSearch] = useState('');
+  const [dateStart, setDateStart] = useState<string | null>(null);
+  const [dateEnd, setDateEnd] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [showSupplier, setShowSupplier] = useState(false);
 
@@ -32,8 +35,10 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
     const q = normalizeName(search);
     return purchases
       .filter(p => !q || normalizeName(p.supplierName || '')?.includes(q) || normalizeName(p.notes || '')?.includes(q))
+      .filter(p => !dateStart || new Date(p.date) >= new Date(dateStart))
+      .filter(p => !dateEnd || new Date(p.date) <= new Date(dateEnd))
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [purchases, search]);
+  }, [purchases, search, dateStart, dateEnd]);
 
   const addItem = () => setItems([...items, { productName: '', quantity: 1, costPrice: 0, salePrice: 0 }]);
   const updateItem = (i: number, patch: Partial<PurchaseItem>) =>
@@ -49,10 +54,19 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
     setItems([{ productName: '', quantity: 1, costPrice: 0, salePrice: 0 }]);
   };
 
+  const handleDuplicatePurchase = (p: Purchase) => {
+    setSupplierId(p.supplierId || '');
+    setSupplierName(p.supplierName || '');
+    setNotes(p.notes || '');
+    setItems(p.items.map(it => ({ ...it })));
+    setShowForm(true);
+  };
+
   const savePurchase = () => {
     const valid = items.filter(it => (it.productName || '').trim() && (Number(it.quantity) || 0) > 0);
     if (valid.length === 0) return;
     const supplier = suppliers.find(s => s.id === supplierId);
+    const now = new Date().toISOString();
     const purchase: Purchase = {
       id: `cmp_${Date.now()}`,
       date: new Date().toISOString(),
@@ -66,7 +80,8 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
       })),
       total,
       notes: notes.trim() || undefined,
-      createdAt: new Date().toISOString(),
+      createdAt: now,
+      updatedAt: now,
     };
     onAddPurchase(purchase);
     resetForm();
@@ -75,10 +90,11 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
 
   const saveSupplier = () => {
     if (!supplierForm || !supplierForm.name.trim()) return;
+    const now = new Date().toISOString();
     if (supplierForm.id) {
-      onSaveSuppliers(suppliers.map(s => s.id === supplierForm.id ? supplierForm : s));
+      onSaveSuppliers(suppliers.map(s => s.id === supplierForm.id ? { ...supplierForm, updatedAt: now } : s));
     } else {
-      onSaveSuppliers([{ ...supplierForm, id: `f_${Date.now()}`, name: supplierForm.name.trim(), createdAt: new Date().toISOString() }, ...suppliers]);
+      onSaveSuppliers([{ ...supplierForm, id: `f_${Date.now()}`, name: supplierForm.name.trim(), createdAt: now, updatedAt: now }, ...suppliers]);
     }
     setShowSupplier(false);
     setSupplierForm(null);
@@ -115,6 +131,9 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
             <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar compra / fornecedor / nota"
               className="w-full pl-8 pr-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20" />
           </div>
+          <div className="mt-2">
+            <DateFilter onChange={(s, e) => { setDateStart(s); setDateEnd(e); }} />
+          </div>
 
           <div className="space-y-2">
             {filtered.map(p => (
@@ -127,7 +146,10 @@ export default function Purchases({ products, suppliers, purchases, onSaveSuppli
                     </p>
                     <p className="text-xs text-slate-400">{new Date(p.date).toLocaleDateString('pt-BR')} · {p.items.length} item(ns)</p>
                   </div>
-                  <span className="text-base font-bold text-slate-900 dark:text-slate-100">R$ {roundCurrency(p.total).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+                  <div className="flex items-center gap-2">
+                    <button onClick={() => handleDuplicatePurchase(p)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 rounded-lg transition-colors" title="Duplicar" aria-label="Duplicar"><Copy className="h-4 w-4" /></button>
+                    <span className="text-base font-bold text-slate-900 dark:text-slate-100">R$ {roundCurrency(p.total).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
+                  </div>
                 </div>
                 <div className="mt-2 flex flex-wrap gap-1.5">
                   {p.items.map((it, i) => (

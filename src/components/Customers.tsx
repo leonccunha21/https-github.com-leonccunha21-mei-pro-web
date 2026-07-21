@@ -4,8 +4,9 @@ import { roundCurrency } from '../lib/currency';
 import { normalizeName } from '../lib/normalize';
 import {
   Users, Plus, Search, Pencil, Trash2, Phone, Mail, MapPin,
-  DollarSign, ShoppingBag, ArrowLeft, CreditCard, X, UserPlus, Clock
+  DollarSign, ShoppingBag, ArrowLeft, CreditCard, X, UserPlus, Clock, Copy
 } from 'lucide-react';
+import { DateFilter } from './DateFilter';
 
 interface CustomersProps {
   customers: Customer[];
@@ -15,6 +16,8 @@ interface CustomersProps {
 
 export default function Customers({ customers, sales, onSaveCustomers }: CustomersProps) {
   const [search, setSearch] = useState('');
+  const [dateStart, setDateStart] = useState<string | null>(null);
+  const [dateEnd, setDateEnd] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<Customer | null>(null);
@@ -33,8 +36,11 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
 
   const filtered = useMemo(() => {
     const q = normalizeName(search);
-    return customers.filter(c => !q || normalizeName(c.name).includes(q) || (c.phone || '').includes(q));
-  }, [customers, search]);
+    return customers
+      .filter(c => !q || normalizeName(c.name).includes(q) || (c.phone || '').includes(q))
+      .filter(c => !dateStart || new Date(c.createdAt) >= new Date(dateStart))
+      .filter(c => !dateEnd || new Date(c.createdAt) <= new Date(dateEnd));
+  }, [customers, search, dateStart, dateEnd]);
 
   const selected = customers.find(c => c.id === selectedId) || null;
   const selectedSales = selected ? (salesByCustomer.get(normalizeName(selected.name)) || []) : [];
@@ -53,7 +59,14 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
   };
 
   const openNew = () => {
-    setForm({ id: '', name: '', phone: '', email: '', address: '', notes: '', createdAt: new Date().toISOString() });
+    const now = new Date().toISOString();
+    setForm({ id: '', name: '', phone: '', email: '', address: '', notes: '', createdAt: now, updatedAt: now });
+    setShowForm(true);
+  };
+
+  const openDuplicate = (c: Customer) => {
+    const now = new Date().toISOString();
+    setForm({ ...c, id: '', createdAt: now, updatedAt: now });
     setShowForm(true);
   };
 
@@ -66,10 +79,11 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
     if (!form) return;
     const name = form.name.trim();
     if (!name) return;
+    const now = new Date().toISOString();
     if (form.id) {
-      onSaveCustomers(customers.map(c => c.id === form.id ? { ...form, name } : c));
+      onSaveCustomers(customers.map(c => c.id === form.id ? { ...form, name, updatedAt: now } : c));
     } else {
-      onSaveCustomers([{ ...form, id: `c_${Date.now()}`, name, createdAt: new Date().toISOString() }, ...customers]);
+      onSaveCustomers([{ ...form, id: `c_${Date.now()}`, name, createdAt: now, updatedAt: now }, ...customers]);
     }
     setShowForm(false);
     setForm(null);
@@ -108,6 +122,7 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
               <ArrowLeft className="h-4 w-4" /> Voltar
             </button>
             <div className="flex flex-wrap items-center gap-2">
+              <button onClick={() => openDuplicate(selected)} className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer" title="Duplicar"><Copy className="h-4 w-4" /></button>
               <button onClick={() => openEdit(selected)} className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"><Pencil className="h-4 w-4" /></button>
               <button onClick={() => remove(selected.id)} className="p-2 rounded-lg border border-rose-200 dark:border-red-900/30 text-rose-600 hover:bg-rose-50 dark:hover:bg-red-900/30 transition-colors cursor-pointer"><Trash2 className="h-4 w-4" /></button>
             </div>
@@ -183,26 +198,30 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
               className="w-full pl-8 pr-3 py-2 text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20"
             />
           </div>
+          <div className="mt-2">
+            <DateFilter onChange={(s, e) => { setDateStart(s); setDateEnd(e); }} />
+          </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
             {filtered.map(c => {
               const st = statsFor(c);
               return (
-                <button
-                  key={c.id}
-                  onClick={() => setSelectedId(c.id)}
-                  className="text-left bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors cursor-pointer"
+                <div key={c.id}
+                  className="relative text-left bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-4 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors cursor-pointer"
                 >
-                  <div className="flex items-center justify-between">
+                  <button onClick={() => setSelectedId(c.id)} className="absolute inset-0 w-full h-full" />
+                  <div className="flex items-center justify-between relative pointer-events-none">
                     <span className="font-bold text-slate-900 dark:text-slate-100 truncate">{c.name}</span>
-                    {st.debts > 0 && <span className="text-[10px] font-bold text-red-600 bg-red-50 dark:bg-red-900/30 px-2 py-0.5 rounded-full">Devendo</span>}
+                    <div className="flex items-center gap-1 pointer-events-auto">
+                      <button onClick={() => openDuplicate(c)} className="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 rounded-lg transition-colors" title="Duplicar" aria-label="Duplicar"><Copy className="h-4 w-4" /></button>
+                    </div>
                   </div>
-                  {c.phone && <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-1"><Phone className="h-3 w-3" /> {c.phone}</p>}
-                  <div className="flex items-center gap-3 mt-3 text-xs text-slate-500 dark:text-slate-400">
+                  {c.phone && <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-1 relative pointer-events-none"><Phone className="h-3 w-3" /> {c.phone}</p>}
+                  <div className="flex items-center gap-3 mt-3 text-xs text-slate-500 dark:text-slate-400 relative pointer-events-none">
                     <span>{st.count} compras</span>
                     <span className="font-semibold text-slate-700 dark:text-slate-200">R$ {roundCurrency(st.totalSpent).toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}</span>
                   </div>
-                </button>
+                </div>
               );
             })}
             {filtered.length === 0 && (

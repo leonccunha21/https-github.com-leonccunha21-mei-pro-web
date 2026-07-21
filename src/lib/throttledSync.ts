@@ -27,7 +27,42 @@ const SYNC_PROGRESS_PREFIX = 'zm_cloud_progress_';
 
 // Orçamento diário de escritas reservado para a sincronização (deixamos uma
 // folga para as escritas normais da interface). Ajuste conforme necessário.
-export const SYNC_DAILY_BUDGET = 8000;
+// Aumentado para 15000 para garantir que vendas (prioritárias) passem mesmo
+// com muitos produtos/categorias.
+export const SYNC_DAILY_BUDGET = 15000;
+
+// Histórico de sincronizações (últimos 30)
+const SYNC_HISTORY_PREFIX = 'zm_sync_history_';
+const MAX_HISTORY = 30;
+
+export interface SyncHistoryEntry {
+  timestamp: string; // ISO
+  collections: Record<string, { uploaded: number; years: string[] }>;
+  totalUploaded: number;
+  durationMs: number;
+  stoppedByBudget: boolean;
+  nextYear?: string;
+}
+
+export function getSyncHistory(userId: string): SyncHistoryEntry[] {
+  try {
+    const raw = localStorage.getItem(SYNC_HISTORY_PREFIX + userId);
+    if (raw) return JSON.parse(raw) as SyncHistoryEntry[];
+  } catch { /* ignore */ }
+  return [];
+}
+
+function setSyncHistory(userId: string, history: SyncHistoryEntry[]): void {
+  try {
+    localStorage.setItem(SYNC_HISTORY_PREFIX + userId, JSON.stringify(history.slice(-MAX_HISTORY)));
+  } catch { /* ignore */ }
+}
+
+function recordSyncHistory(userId: string, entry: SyncHistoryEntry): void {
+  const history = getSyncHistory(userId);
+  history.push(entry);
+  setSyncHistory(userId, history);
+}
 
 type Progress = {
   // Coleção -> ano -> true (ano concluído)
@@ -37,8 +72,8 @@ type Progress = {
 };
 
 const SYNC_COLLECTIONS: (keyof LocalDb)[] = [
-  'products', 'categories', 'sales', 'orders', 'customers',
-  'suppliers', 'purchases', 'cashSessions', 'loans', 'expenses',
+  'sales', 'orders', 'expenses', 'purchases', 'loans', 'cashSessions',
+  'products', 'categories', 'customers', 'suppliers',
   'leads', 'leadJobs', 'whatsappInstances', 'aiAgents', 'opportunities',
 ];
 
@@ -146,6 +181,7 @@ export async function syncToCloudThrottled(
   dbData: LocalDb,
   opts?: { resetProgress?: boolean },
 ): Promise<ThrottledSyncResult> {
+  const startTime = Date.now();
   if (opts?.resetProgress) clearSyncProgress(userId);
   const progress = getSyncProgress(userId);
 
@@ -167,6 +203,11 @@ export async function syncToCloudThrottled(
 
     // Agrupa por ano
     const byYear = new Map<string, any[]>();
+
+    // Track collection stats
+    let collectionUploaded = 0;
+    const collectionYears: string[] = [];
+
     for (const item of items) {
       if (!item || !item.id) continue;
       const y = getYearOf(item, dateField);
@@ -194,6 +235,7 @@ export async function syncToCloudThrottled(
 
       const w = await writeItems(userId, name, chunk);
       uploaded += w;
+      collectionUploaded += w;
 
       if (stoppedByBudget) {
         // Ano parcialmente enviado: guarda quantos itens JÁ foram enviados
@@ -206,6 +248,7 @@ export async function syncToCloudThrottled(
       }
 
       doneYears[year] = true;
+      collectionYears.push(year);
       // Limpa eventual parcial anteriormente salva
       delete (doneYears as any)['_partial_' + year];
     }
@@ -229,6 +272,21 @@ export async function syncToCloudThrottled(
   }
 
   setSyncProgress(userId, progress);
+
+  // Record sync history
+  recordSyncHistory(userId, {
+    timestamp: new Date().toISOString(),
+    collections: Object.fromEntries(
+      Object.entries(progress.done).map(([col, years]) => [
+        col,
+        { uploaded: 0, years: Object.keys(years).filter(y => !y.startsWith('_partial_')) }
+      ])
+    ),
+    totalUploaded: uploaded,
+    durationMs: Date.now() - startTime,
+    stoppedByBudget,
+    nextYear,
+  });
 
   return {
     uploaded,

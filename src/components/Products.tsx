@@ -5,7 +5,7 @@ import {
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck,
-  Trash, Archive, RotateCcw, Boxes
+  Trash, Archive, RotateCcw, Boxes, Copy
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -66,6 +66,15 @@ export default function Products({ products, categories, sales, onAddProduct, on
     setFormCode(generateSKU(categories[0]?.name || ''));
     setFormName(''); setFormCategory(categories[0]?.name || '');
     setFormCostPrice(0); setFormSalePrice(0); setFormStock(0); setFormMinStock(3); setFormStatus('disponivel'); setFormDescription('');
+    setIsModalOpen(true);
+  };
+
+  const handleDuplicateProduct = (p: Product) => {
+    setEditingProduct(null);
+    setFormCode(generateSKU(p.category));
+    setFormName(p.name); setFormCategory(p.category);
+    setFormCostPrice(p.costPrice); setFormSalePrice(p.salePrice);
+    setFormStock(p.stock); setFormMinStock(p.minStock); setFormStatus(p.status); setFormDescription(p.description || '');
     setIsModalOpen(true);
   };
 
@@ -519,6 +528,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                       </div>
                     </div>
                     <div className="flex items-center gap-1 shrink-0">
+                      <button onClick={() => handleDuplicateProduct(p)} className="p-1.5 hover:bg-slate-100 text-slate-500 rounded-lg transition-colors" title="Duplicar" aria-label="Duplicar"><Copy className="h-4 w-4" /></button>
                       <button onClick={() => handleOpenEditModal(p)} className="p-1.5 hover:bg-indigo-50 text-indigo-600 rounded-lg transition-colors"><Edit2 className="h-4 w-4" /></button>
                       {p.archived ? (
                         <button onClick={() => onUnarchiveProduct(p.id)} className="p-1.5 hover:bg-emerald-50 text-emerald-600 rounded-lg transition-colors" title="Restaurar" aria-label="Restaurar"><RotateCcw className="h-4 w-4" /></button>
@@ -644,6 +654,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                         </td>
                         <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
                           <div className="flex items-center justify-center gap-0.5">
+                            <button onClick={() => handleDuplicateProduct(p)} className="p-1 hover:bg-slate-100 text-slate-500 rounded transition-colors" title="Duplicar" aria-label="Duplicar"><Copy className="h-3.5 w-3.5" /></button>
                             <button onClick={() => handleOpenEditModal(p)} className="p-1 hover:bg-indigo-50 text-indigo-600 rounded transition-colors" title="Editar" aria-label="Editar"><Edit2 className="h-3.5 w-3.5" /></button>
                             {p.archived ? (
                               <button onClick={() => onUnarchiveProduct(p.id)} className="p-1 hover:bg-emerald-50 text-emerald-600 rounded transition-colors" title="Restaurar" aria-label="Restaurar"><RotateCcw className="h-3.5 w-3.5" /></button>

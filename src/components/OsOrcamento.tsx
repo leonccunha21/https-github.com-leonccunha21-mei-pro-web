@@ -9,8 +9,10 @@ import {
   X,
   Printer,
   ClipboardList,
-  CheckCircle2
+  CheckCircle2,
+  Calendar
 } from 'lucide-react';
+import { DateFilter } from './DateFilter';
 
 interface OsOrcamentoProps {
   products: Product[];
@@ -43,6 +45,8 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
   const [filterType, setFilterType] = useState<'all' | 'os' | 'orcamento'>('all');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
+  const [dateStart, setDateStart] = useState<string | null>(null);
+  const [dateEnd, setDateEnd] = useState<string | null>(null);
 
   // Form state
   const [formType, setFormType] = useState<'os' | 'orcamento'>('os');
@@ -80,13 +84,15 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
     return orders.filter(o => {
       if (filterType !== 'all' && o.type !== filterType) return false;
       if (filterStatus !== 'all' && o.status !== filterStatus) return false;
+      if (dateStart && new Date(o.date) < new Date(dateStart)) return false;
+      if (dateEnd && new Date(o.date) > new Date(dateEnd)) return false;
       if (searchTerm) {
         const s = searchTerm.toLowerCase();
         return o.clientName.toLowerCase().includes(s) || o.number.toString().includes(s) || (o.device || '').toLowerCase().includes(s);
       }
       return true;
     }).sort((a, b) => b.number - a.number);
-  }, [orders, filterType, filterStatus, searchTerm]);
+  }, [orders, filterType, filterStatus, searchTerm, dateStart, dateEnd]);
 
   const resetForm = () => {
     setClientName('');
@@ -281,6 +287,7 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
             <option value="rejeitada">Rejeitada</option>
             <option value="cancelada">Cancelada</option>
           </select>
+          <DateFilter onChange={(s, e) => { setDateStart(s); setDateEnd(e); }} />
         </div>
 
         {/* Orders List */}

@@ -313,3 +313,45 @@ tratamento com **tirzepatida (Mounjaro®)**. Informações clínicas baseadas na
   (criar/editar/excluir de clientes, doses, pagamentos, pesagens e fotos) com usuário, data/hora e resumo.
   Os registros sincronizam na nuvem e ficam limitados aos últimos 500 eventos (`RegistroAuditoria`, `Auditoria.tsx`, `criarRegistroAuditoria` em `lib.ts`).
 
+---
+
+## 6. Melhorias de Sincronização, Conflitos e UX (Pós-v2.16.0)
+
+### 🔴 Prioridade Alta — Integridade de Dados & Multi-dispositivo
+
+| # | Item | Descrição | Esforço |
+|---|------|-----------|---------|
+| 6.1 | **Merge com `updatedAt` (last-write-wins)** | Adicionar `updatedAt` em todas as entidades (vendas, produtos, clientes, doses, etc.). No merge local↔nuvem, usar `updatedAt` como tie-breaker em vez de ordem fixa. Evita perda de edição simultânea no celular + PC. | Médio |
+| 6.2 | **Backup automático para Google Drive/OneDrive** | OAuth + export JSON semanal para pasta do usuário. Recuperação 1-clique se IndexedDB for limpo. | Médio |
+| 6.3 | **Tela "Histórico de Sincronização"** | Log visual: data, coleção, qtd enviada, cota usada, erros. Substitui toasts efêmeros. | Baixo | ✅ |
+| 6.4 | **Checksum de integridade por coleção** | Hash (FNV-1a) de cada coleção no localStorage. Job diário compara com nuvem → alerta se divergir. | Baixo | ✅ |
+
+### 🟡 Prioridade Média — UX & Produtividade
+
+| # | Item | Descrição | Esforço |
+|---|------|-----------|---------|
+| 6.5 | **Filtro por data em todas as listas** | Vendas, clientes, doses, pagamentos — seletor de período (mês/trimestre/custom). | Baixo | ✅ |
+| 6.6 | **Duplicar registro** | Botão "Duplicar" em venda/produto/cliente/dose → pré-preenche formulário. | Baixo | ✅ |
+| 6.7 | **Atalhos de teclado** | `N`=nova venda, `/`=busca, `S`=sync, `E`=config. Tooltip no header. | Baixo | ✅ |
+| 6.8 | **Badge "Offline" + fila visível** | Indicador vermelho "Offline" + contador de ops pendentes. Clique abre fila. | Médio | ✅ |
+
+### 🟢 Prioridade Baixa — Arquitetura Futura
+
+| # | Item | Descrição | Esforço |
+|---|------|-----------|---------|
+| 6.9 | **PWA completo (Workbox)** | Service Worker precache + runtime cache, update prompt, install prompt. | Médio |
+| 6.10 | **Firestore Bundles** | Pré-carregar produtos/categorias via CDN (economiza leituras). | Baixo |
+| 6.11 | **Cloud Functions para agregações** | DRE, comissões, estoque rodam no backend → cliente só lê resultado. | Alto |
+| 6.12 | **Multi-tenancy real (Security Rules)** | Isolamento por `clinicas/{id}` no Firestore + convite de usuários. | Alto |
+
+### ✅ Quick Wins (≤30 min cada)
+
+- [ ] Toast com progresso: "Enviando vendas 2026: 342/417 (82%)"
+- [ ] Modal "Ver progresso detalhado" por ano/coleção
+- [ ] `localStorage.setItem('zm_last_full_sync', Date.now())` + aviso se > 7 dias
+- [ ] Contador de cota diária no header (já tem `getDailyWrites`, só expor)
+
+---
+
+**Implementados:** 6.1 (merge updatedAt) → 6.3 (histórico sync) → 6.4 (checksum) → 6.5 (filtro data) → 6.6 (duplicar) → 6.7 (atalhos) → 6.8 (offline badge)
+

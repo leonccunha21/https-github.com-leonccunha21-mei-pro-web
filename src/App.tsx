@@ -74,7 +74,8 @@ import {
   KanbanSquare,
   Stethoscope,
   FileText,
-  Building2
+  Building2,
+  Activity
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
@@ -88,6 +89,8 @@ import { canAccess } from './lib/permissions';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 import { getDailyWrites, DAILY_WRITE_LIMIT } from './lib/quota';
 import { getBackupSchedule, shouldRunBackup, saveBackupSchedule } from './lib/backupScheduler';
+import { type SyncHistoryEntry, getSyncHistory } from './lib/throttledSync';
+import { computeChecksum, saveChecksum, verifyChecksum, getAllChecksums } from './lib/checksum';
 
 function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
@@ -126,6 +129,7 @@ export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [showVendasEstoque, setShowVendasEstoque] = useState(false);
+  const [showSyncHistory, setShowSyncHistory] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [orders, setOrders] = useState<ServiceOrder[]>([]);
 
@@ -177,6 +181,9 @@ export default function App() {
   const [cloudPending, setCloudPending] = useState(false);
   const [dailyWrites, setDailyWrites] = useState(0);
   const [clearingCloud, setClearingCloud] = useState(false);
+  const [checksumAlert, setChecksumAlert] = useState<string | null>(null);
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [showPendingQueue, setShowPendingQueue] = useState(false);
 
   const [storeInfo, setStoreInfo] = useState(() => {
     try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
@@ -201,6 +208,49 @@ export default function App() {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
   }, []);
+
+  // Monitora conectividade (6.8)
+  useEffect(() => {
+    const onOnline = () => setIsOnline(true);
+    const onOffline = () => setIsOnline(false);
+    window.addEventListener('online', onOnline);
+    window.addEventListener('offline', onOffline);
+    return () => {
+      window.removeEventListener('online', onOnline);
+      window.removeEventListener('offline', onOffline);
+    };
+  }, []);
+
+  // Atalhos de teclado (6.7)
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+      switch (e.key.toLowerCase()) {
+        case 'n':
+          e.preventDefault();
+          setActiveTab('sales');
+          break;
+        case '/':
+          e.preventDefault();
+          const searchInput = document.querySelector<HTMLInputElement>('input[type="text"], input[placeholder*="Buscar"], input[placeholder*="buscar"]');
+          searchInput?.focus();
+          break;
+        case 's':
+          e.preventDefault();
+          if (cloudUser) handleCloudSyncNow();
+          break;
+        case 'e':
+          e.preventDefault();
+          setActiveTab('settings');
+          break;
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [cloudUser]);
 
   useEffect(() => {
     const color = storeInfo.primaryColor || '#4f46e5';
@@ -333,6 +383,20 @@ export default function App() {
       try {
         const db = await loadDb();
         const res = await applyLoadedDb(db);
+
+        // Verifica integridade dos checksums
+        const collections: Record<string, unknown[]> = {
+          products, sales, categories, expenses, orders, customers,
+          suppliers, purchases, cashSessions, loans, leads, leadJobs,
+          whatsappInstances, aiAgents, opportunities,
+        };
+        for (const [name, data] of Object.entries(collections)) {
+          const { ok, saved, computed } = verifyChecksum(name, data);
+          if (!ok && saved !== null) {
+            setChecksumAlert(`Coleção "${name}" divergente (checksum: ${saved} → ${computed}). Possível corrupção de dados.`);
+            break;
+          }
+        }
         // First run: persist the seeded initial data and mark the DB as initialized
         // so a later "reset to empty" is respected (an empty DB is no longer
         // interpreted as "fresh install, reload defaults").
@@ -549,20 +613,43 @@ export default function App() {
       initialized: true,
     };
     pendingRef.current = merged;
+
+    // Salva LOCALMENTE AGORA (imediato) — não perde ao recarregar.
+    saveDb(merged).catch((e) => {
+      console.error('Erro ao salvar banco local:', e);
+      showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
+    });
+
+    // Atualiza checksums de integridade
+    const collections: Record<string, unknown[]> = {
+      products: merged.products,
+      sales: merged.sales,
+      categories: merged.categories,
+      expenses: merged.expenses,
+      orders: merged.orders,
+      customers: merged.customers,
+      suppliers: merged.suppliers,
+      purchases: merged.purchases,
+      cashSessions: merged.cashSessions,
+      loans: merged.loans,
+      leads: merged.leads ?? [],
+      leadJobs: merged.leadJobs ?? [],
+      whatsappInstances: merged.whatsappInstances ?? [],
+      aiAgents: merged.aiAgents ?? [],
+      opportunities: merged.opportunities ?? [],
+    };
+    for (const [name, data] of Object.entries(collections)) {
+      saveChecksum(name, computeChecksum(data));
+    }
+
+    // Debounce só para o timer de "pending" (evita múltiplos saves rápidos)
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
-      const db = pendingRef.current as LocalDb;
       pendingRef.current = {};
-      saveDb(db).catch((e) => {
-        console.error('Erro ao salvar banco local:', e);
-        showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
-      });
     }, 250);
     lastLocalChangeRef.current = Date.now();
 
     // Envio automático para a nuvem (debounce 2s) a cada alteração local.
-    // Garante que tudo que é salvo no dispositivo também vai para o Firebase,
-    // sem necessidade de clicar manualmente em "Sincronizar".
     if (SYNC_ENABLED && cloudUser && !isCloudSyncPaused()) {
       if (cloudPushTimer.current) clearTimeout(cloudPushTimer.current);
       cloudPushTimer.current = window.setTimeout(() => {
@@ -966,6 +1053,7 @@ export default function App() {
       email: lead.email,
       notes: lead.cnpj ? `CNPJ: ${lead.cnpj}` : '',
       createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
     const updated = [newCustomer, ...customers];
     setCustomers(updated);
@@ -1000,8 +1088,10 @@ export default function App() {
     window.dispatchEvent(new Event('storeInfoChanged'));
   };
 
-  const handleAddExpense = (expense: Expense) => {
-    saveExpensesToStorage([expense, ...expenses]);
+  const handleAddExpense = (expense: Omit<Expense, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const now = new Date().toISOString();
+    const newExpense: Expense = { ...expense, id: `e_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, createdAt: now, updatedAt: now };
+    saveExpensesToStorage([newExpense, ...expenses]);
   };
 
   const handleDeleteExpense = (id: string) => {
@@ -1009,7 +1099,7 @@ export default function App() {
   };
 
   const handleUpdateExpense = (updatedExpense: Expense) => {
-    saveExpensesToStorage(expenses.map(e => e.id === updatedExpense.id ? updatedExpense : e));
+    saveExpensesToStorage(expenses.map(e => e.id === updatedExpense.id ? { ...updatedExpense, updatedAt: new Date().toISOString() } : e));
   };
 
   // Clock tick
@@ -1029,11 +1119,13 @@ export default function App() {
   // --- ACTIONS ---
 
   // Add Product
-  const handleAddProduct = (newProductData: Omit<Product, 'id' | 'createdAt'>) => {
+  const handleAddProduct = (newProductData: Omit<Product, 'id' | 'createdAt' | 'updatedAt'>) => {
+    const now = new Date().toISOString();
     const newProduct: Product = {
       ...newProductData,
       id: `p_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      createdAt: new Date().toISOString()
+      createdAt: now,
+      updatedAt: now,
     };
     const updated = [newProduct, ...products];
     saveProductsToStorage(updated, newProduct).catch(() => {});
@@ -1041,7 +1133,7 @@ export default function App() {
 
   // Update Product
   const handleUpdateProduct = (updatedProduct: Product) => {
-    const updated = products.map(p => p.id === updatedProduct.id ? updatedProduct : p);
+    const updated = products.map(p => p.id === updatedProduct.id ? { ...updatedProduct, updatedAt: new Date().toISOString() } : p);
     saveProductsToStorage(updated, updatedProduct).catch(() => {});
   };
 
@@ -1077,9 +1169,12 @@ export default function App() {
 
   // Add Category
   const handleAddCategory = (categoryName: string) => {
+    const now = new Date().toISOString();
     const newCategory: Category = {
       id: `cat_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-      name: categoryName
+      name: categoryName,
+      createdAt: now,
+      updatedAt: now,
     };
     const updated = [...categories, newCategory];
     saveCategoriesToStorage(updated, newCategory);
@@ -1129,7 +1224,9 @@ export default function App() {
       ecommerceOrderId: saleData.ecommerceOrderId,
       saleChannel: saleChannelRaw || undefined,
       saleType: saleData.saleType,
-      notes: saleData.notes
+      notes: saleData.notes,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     // 3. Deduct stock quantities from inventory products
@@ -1157,7 +1254,8 @@ export default function App() {
       if (s.id === saleId) {
         return {
           ...s,
-          status: 'cancelled' as const
+          status: 'cancelled' as const,
+          updatedAt: new Date().toISOString(),
         };
       }
       return s;
@@ -1180,7 +1278,7 @@ export default function App() {
     });
 
     saveProductsToStorage(updatedProducts, undefined);
-    saveSalesToStorage(updatedSales, { ...cancelledSale, status: 'cancelled' });
+    saveSalesToStorage(updatedSales, { ...cancelledSale, status: 'cancelled', updatedAt: new Date().toISOString() });
   };
 
   // Exclui uma venda definitivamente do banco (não apenas cancela). Não restaura
@@ -1436,15 +1534,17 @@ export default function App() {
           stock: qty,
           minStock: 5,
           status: 'disponivel',
-          createdAt: new Date().toISOString()
-        };
+          createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+          };
         updatedProducts = [np, ...updatedProducts];
         byName.set(key, np);
       }
     }
 
     saveProductsToStorage(updatedProducts, undefined);
-    savePurchasesToStorage([purchase, ...purchases]);
+    const now = new Date().toISOString();
+    savePurchasesToStorage([{ ...purchase, createdAt: purchase.createdAt || now, updatedAt: now }, ...purchases]);
   };
 
   // --- STOCK CLEANUP ---
@@ -2041,20 +2141,47 @@ export default function App() {
           </nav>
         </div>
 
-        {/* Local mode indicator */}
-        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
-          <div className="bg-emerald-50/60 dark:bg-emerald-900/20 p-3 rounded-xl border border-emerald-100 dark:border-emerald-800 flex items-center gap-3">
-            <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white">
-              <HardDrive className="h-4 w-4" />
+        {/* Local mode indicator + Offline badge */}
+        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700 space-y-2">
+          <div className={`p-3 rounded-xl border flex items-center gap-3 ${
+            !isOnline
+              ? 'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800'
+              : 'bg-emerald-50/60 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800'
+          }`}>
+            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${
+              !isOnline ? 'bg-rose-500' : 'bg-emerald-600'
+            }`}>
+              {!isOnline ? <CloudOff className="h-4 w-4" /> : <HardDrive className="h-4 w-4" />}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate leading-snug">Modo Local</p>
-              <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
-                Banco de dados no seu PC
+              <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate leading-snug">
+                {!isOnline ? 'Offline' : 'Modo Local'}
+              </p>
+              <span className={`text-[10px] font-bold flex items-center gap-1 ${
+                !isOnline ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400'
+              }`}>
+                <span className={`w-1.5 h-1.5 rounded-full animate-pulse ${
+                  !isOnline ? 'bg-rose-500' : 'bg-emerald-500'
+                }`}></span>
+                {!isOnline ? 'Sem conexão com a internet' : 'Banco de dados no seu PC'}
               </span>
             </div>
           </div>
+
+          {cloudUser && cloudPending && (
+            <button
+              onClick={() => setShowPendingQueue(true)}
+              className="w-full p-2 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 flex items-center justify-between cursor-pointer hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors"
+            >
+              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5" />
+                Alterações pendentes
+              </span>
+              <span className="text-[10px] font-mono bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 px-1.5 py-0.5 rounded-full font-bold">
+                {Object.keys(pendingRef.current).length}
+              </span>
+            </button>
+          )}
         </div>
 
         {/* Cloud sync status */}
@@ -2117,6 +2244,14 @@ export default function App() {
                   </span>
                 </div>
               )}
+              {cloudUser && cloudSyncing && (
+                <div className="mt-1.5 text-[10px] font-mono text-primary">
+                  <div>Enviando vendas prioritárias primeiro…</div>
+                  <div className="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-1">
+                    <div className="h-full bg-primary animate-pulse rounded-full" style={{ width: '60%' }} />
+                  </div>
+                </div>
+              )}
               {cloudUser && (
                 <button
                   onClick={handleCloudPushAll}
@@ -2126,9 +2261,34 @@ export default function App() {
                   {cloudSyncing ? 'Enviando…' : '☁ Enviar TUDO para a nuvem'}
                 </button>
               )}
+              <button
+                onClick={() => setShowSyncHistory(true)}
+                className="mt-1 w-full text-[11px] font-semibold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 transition-colors"
+              >
+                <Activity className="h-3 w-3 inline mr-1" />Ver histórico
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Alerta de integridade */}
+        {checksumAlert && (
+          <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
+            <div className="p-3 rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 flex items-start gap-2">
+              <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+              <div className="min-w-0">
+                <p className="text-[11px] font-bold text-amber-800 dark:text-amber-300">Integridade</p>
+                <p className="text-[10px] text-amber-700 dark:text-amber-400">{checksumAlert}</p>
+                <button
+                  onClick={() => setChecksumAlert(null)}
+                  className="text-[10px] font-semibold text-amber-700 dark:text-amber-400 underline mt-1 cursor-pointer"
+                >
+                  Dispensar
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Role Selector */}
         <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
@@ -2515,7 +2675,144 @@ export default function App() {
         </div>
       )}
 
+      {/* MODAL: Sync History */}
+      {showSyncHistory && cloudUser && <SyncHistoryModal
+        userId={cloudUser.uid}
+        onClose={() => setShowSyncHistory(false)}
+      />}
+
+      {/* MODAL: Pending Queue */}
+      {showPendingQueue && <PendingQueueModal
+        pending={pendingRef.current}
+        onClose={() => setShowPendingQueue(false)}
+        onSyncNow={handleCloudSyncNow}
+        cloudSyncing={cloudSyncing}
+      />}
+
       <Toaster position="bottom-right" />
+    </div>
+  );
+}
+
+function SyncHistoryModal({ userId, onClose }: { userId: string; onClose: () => void }) {
+  const history = useMemo(() => getSyncHistory(userId), [userId]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 dark:border-slate-700">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+          <div className="flex items-center gap-3">
+            <Activity className="h-5 w-5 text-primary" />
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Histórico de Sincronização</h2>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6">
+          {history.length === 0 ? (
+            <div className="text-center py-12 text-slate-400">
+              <Activity className="h-12 w-12 mx-auto mb-3 opacity-30" />
+              <p className="font-semibold">Nenhuma sincronização registrada ainda</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {[...history].reverse().map((entry, idx) => (
+                <div key={idx} className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-mono text-slate-500">
+                      {new Date(entry.timestamp).toLocaleString('pt-BR')}
+                    </span>
+                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                      entry.stoppedByBudget
+                        ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
+                        : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
+                    }`}>
+                      {entry.stoppedByBudget ? 'Orçamento esgotado' : 'Completo'}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
+                    <span className="font-bold">{entry.totalUploaded} docs</span>
+                    <span className="text-slate-300">|</span>
+                    <span>{Math.round(entry.durationMs / 1000)}s</span>
+                    <span className="text-slate-300">|</span>
+                    <span className="font-mono">{Object.keys(entry.collections).length} coleções</span>
+                  </div>
+                  {entry.nextYear && (
+                    <div className="mt-1 text-[10px] text-amber-600 dark:text-amber-400">
+                      Próximo ano pendente: {entry.nextYear}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function PendingQueueModal({ pending, onClose, onSyncNow, cloudSyncing }: {
+  pending: Partial<LocalDb>;
+  onClose: () => void;
+  onSyncNow: () => void;
+  cloudSyncing: boolean;
+}) {
+  const entries = Object.entries(pending).filter(([key]) => key !== 'initialized' && key !== 'storeInfo');
+  const totalItems = entries.reduce((acc, [, val]) => acc + (Array.isArray(val) ? val.length : 0), 0);
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 dark:border-slate-700">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+          <div className="flex items-center gap-3">
+            <Clock className="h-5 w-5 text-amber-500" />
+            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Fila de Sincronização</h2>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
+          >
+            ✕
+          </button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-6">
+          {entries.length === 0 ? (
+            <div className="text-center py-12 text-slate-400">
+              <Cloud className="h-12 w-12 mx-auto mb-3 opacity-30" />
+              <p className="font-semibold">Nenhuma alteração pendente</p>
+              <p className="text-xs mt-1">Todas as alterações foram sincronizadas</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-sm">
+                <span className="font-bold text-slate-700 dark:text-slate-300">{entries.length} coleções com alterações</span>
+                <span className="font-mono text-xs text-slate-500">{totalItems} documentos</span>
+              </div>
+              {entries.map(([key, val]) => (
+                <div key={key} className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40 flex items-center justify-between">
+                  <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 capitalize">{key}</span>
+                  <span className="text-[11px] font-mono bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">
+                    {Array.isArray(val) ? val.length : 1} itens
+                  </span>
+                </div>
+              ))}
+              <button
+                onClick={() => { onSyncNow(); onClose(); }}
+                disabled={cloudSyncing}
+                className="w-full mt-4 px-4 py-3 bg-primary hover:bg-primary-dark text-white text-sm font-bold rounded-xl transition-colors disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
+              >
+                {cloudSyncing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Cloud className="h-4 w-4" />}
+                Sincronizar agora
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

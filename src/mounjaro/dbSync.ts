@@ -12,23 +12,28 @@ import { MounjaroDb } from './types';
 import { recordWrites, getDailyWrites } from '../lib/quota';
 
 // Sincronização do subsite Mounjaro PRO com o Firebase/Firestore.
-// Modo "usuário": `users/{uid}/mounjaro/{colecao}` (isolado por conta).
-// Modo "clínica": `clinicas/{clinicaId}/mounjaro/{colecao}` (compartilhado com a equipe).
+// Modo "usuário": `users/{uid}/mounjaro/data/{colecao}` (isolado por conta).
+// Modo "clínica": `clinicas/{clinicaId}/mounjaro/data/{colecao}` (compartilhado com a equipe).
+// Config: `users/{uid}/mounjaro/config` ou `clinicas/{clinicaId}/mounjaro/config` (4 segmentos, par).
 
 export type MounjaroScope =
   | { tipo: 'user'; uid: string }
   | { tipo: 'clinica'; clinicaId: string };
 
-// Caminho-base do escopo Mounjaro (3 segmentos, ímpar = coleção válida).
-// As coleções (clientes, doses, etc.) e o documento 'config' são adicionados
-// por cima desta base. IMPORTANTE: o Firestore exige número PAR de segmentos
-// num documento. Ex.: doc(base, 'clientes', id) => users/{uid}/mounjaro/clientes/{id}
-// (6 segmentos, par = documento válido). Antes, scopePath já incluía o nome da
-// coleção e doc(path, id) gerava 5 segmentos (ímpar) -> "Invalid document reference".
+// Caminho-base do escopo Mounjaro (4 segmentos, par = coleção válida).
+// Adicionamos 'data' para garantir que documentos fiquem em profundidade PAR
+// (ex.: users/{uid}/mounjaro/data/clientes/{id} = 6 segmentos).
+// O documento 'config' fica em users/{uid}/mounjaro/config (4 segmentos, par).
 function scopeBase(scope: MounjaroScope): string {
   return scope.tipo === 'user'
-    ? `users/${scope.uid}/mounjaro`
-    : `clinicas/${scope.clinicaId}/mounjaro`;
+    ? `users/${scope.uid}/mounjaro/data`
+    : `clinicas/${scope.clinicaId}/mounjaro/data`;
+}
+
+function configDocPath(scope: MounjaroScope): string {
+  return scope.tipo === 'user'
+    ? `users/${scope.uid}/mounjaro/config`
+    : `clinicas/${scope.clinicaId}/mounjaro/config`;
 }
 
 const BATCH_SIZE = 500;
@@ -102,7 +107,7 @@ export async function loadMounjaroCloud(scope: MounjaroScope): Promise<Partial<M
     loadCollection<MounjaroDb['pagamentos'][number]>(scope, 'pagamentos'),
     loadCollection<MounjaroDb['fotos'][number]>(scope, 'fotos'),
     loadCollection<MounjaroDb['auditoria'][number]>(scope, 'auditoria'),
-    getDoc(doc(db, scopeBase(scope), 'config')),
+    getDoc(doc(db, configDocPath(scope))),
   ]);
   const config = configSnap.exists() ? (configSnap.data() as MounjaroDb['config']) : undefined;
   return { clientes, pesagens, doses, pagamentos, fotos, auditoria, config, initialized: true };
@@ -118,8 +123,8 @@ export async function saveMounjaroCloud(scope: MounjaroScope, data: MounjaroDb):
     saveBatch(scope, 'fotos', data.fotos || []),
     saveBatch(scope, 'auditoria', data.auditoria || []),
   ]);
-  // Config é um documento único em users/{uid}/mounjaro/config (4 segmentos, par).
-  await setDoc(doc(db, scopeBase(scope), 'config'), cleanForFirestore(data.config || {}));
+  // Config em users/{uid}/mounjaro/config (4 segmentos, par).
+  await setDoc(doc(db, configDocPath(scope)), cleanForFirestore(data.config || {}));
 }
 
 /** Salva apenas uma coleção (uso incremental leve). */
@@ -198,7 +203,7 @@ export async function buscarClinica(codigo: string): Promise<ClinicaDoc | null> 
 // ---- Sincronização em lotes (anti-estouro de cota) ----
 
 const SYNC_BATCH = 100;
-const MOUNJARO_SYNC_BUDGET = 1500; // folga diária para o Mounjaro
+const MOUNJARO_SYNC_BUDGET = 5000; // folga diária para o Mounjaro
 const MOUNJARO_PROGRESS_PREFIX = 'mounjaro_cloud_progress_';
 
 type MProgress = { done: Record<string, Record<string, true>>; config?: boolean };
@@ -341,12 +346,12 @@ export async function syncMounjaroThrottled(
   if (!stoppedByBudget) {
     if (remainingBudget() >= 1) {
       try {
-        await setDoc(doc(db, scopeBase(scope), 'config'), cleanForFirestore(data.config || {}));
+        await setDoc(doc(db, configDocPath(scope)), cleanForFirestore(data.config || {}));
         recordWrites(1);
         progress.config = true;
         uploaded++;
       } catch (error) {
-        handleFirestoreError(error, OperationType.WRITE, `${scopeBase(scope)}/config`);
+        handleFirestoreError(error, OperationType.WRITE, configDocPath(scope));
       }
     } else stoppedByBudget = true;
   }

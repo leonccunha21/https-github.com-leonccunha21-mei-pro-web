@@ -114,11 +114,14 @@ export default function MounjaroApp() {
   }, [getScope]);
 
   const persist = useCallback(() => {
+    // Salva LOCALMENTE de forma IMEDIATA (sem debounce) para não perder
+    // dados ao recarregar a página. O envio à nuvem continua com debounce.
+    const cur = stateRef.current;
+    const data = { ...cur, initialized: true };
+    saveMounjaroDb(data).catch(() => {});
+
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {
-      const cur = stateRef.current;
-      const data = { ...cur, initialized: true };
-      saveMounjaroDb(data).catch(() => {});
       // Sincroniza com a nuvem em lotes (se logado) — respeita a cota diária.
       const scope = getScope();
       if (scope) {

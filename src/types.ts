@@ -27,6 +27,7 @@ export interface Product {
   status: 'disponivel' | 'indisponivel';
   description?: string;
   createdAt: string;
+  updatedAt: string;
   archived?: boolean;
   archivedAt?: string;
   priceHistory?: PriceHistoryEntry[];
@@ -63,6 +64,8 @@ export interface Sale {
   saleChannel?: string; // Canal de venda (Loja Física, Shopee, TikTok, OLX, ...)
   saleType: 'CPF' | 'CNPJ';
   notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Category {
@@ -70,6 +73,8 @@ export interface Category {
   name: string;
   color?: string;
   icon?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Expense {
@@ -81,6 +86,8 @@ export interface Expense {
   status: 'pending' | 'paid';
   paymentMethod?: string;
   notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'dre' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel' | 'conciliation';
@@ -99,6 +106,7 @@ export interface Customer {
   cnpj?: string;
   notes?: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface Supplier {
@@ -108,6 +116,7 @@ export interface Supplier {
   email?: string;
   notes?: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface PurchaseItem {
@@ -127,6 +136,7 @@ export interface Purchase {
   total: number;
   notes?: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface CashWithdrawal {
@@ -147,6 +157,8 @@ export interface CashSession {
   status: 'open' | 'closed';
   withdrawals: CashWithdrawal[];
   notes?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Loan {
@@ -162,6 +174,7 @@ export interface Loan {
   status: 'open' | 'paid';
   notes?: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface StoreInfo {
@@ -204,6 +217,7 @@ export interface ServiceOrder {
   status: 'aberta' | 'em_andamento' | 'concluida' | 'cancelada' | 'aprovada' | 'rejeitada';
   notes?: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface Lead {
@@ -215,6 +229,7 @@ export interface Lead {
   cnpj?: string;
   source: 'GOOGLE_MAPS' | 'SPREADSHEET' | 'INSTAGRAM' | 'MANUAL';
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface LeadExtractionJob {
@@ -224,6 +239,7 @@ export interface LeadExtractionJob {
   status: 'PENDING' | 'RUNNING' | 'COMPLETED' | 'FAILED';
   totalFound: number;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface WhatsAppInstance {
@@ -233,6 +249,7 @@ export interface WhatsAppInstance {
   status: 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING';
   qrCode?: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface AIAgent {
@@ -242,6 +259,7 @@ export interface AIAgent {
   prompt: string;
   model: 'gpt-4o' | 'gpt-3.5-turbo' | 'claude-3-opus' | 'claude-3-sonnet';
   createdAt: string;
+  updatedAt: string;
 }
 
 export type FunnelStage =
