@@ -82,7 +82,9 @@ import {
   Building2,
   Activity,
   Wifi,
-  Receipt
+  Receipt,
+  Keyboard,
+  X,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
@@ -1742,6 +1744,52 @@ export default function App() {
     return <LoginScreen onSignIn={handleCloudSignIn} error={cloudError} />;
   }
 
+  // --- Atalhos de teclado ---
+  const [showShortcuts, setShowShortcuts] = useState(false);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      if (e.key === '?' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        setShowShortcuts(p => !p);
+        return;
+      }
+
+      if (e.key === 'Escape') {
+        setShowShortcuts(false);
+        setShowVendasEstoque(false);
+        setShowSyncHistory(false);
+        setMobileMenuOpen(false);
+        return;
+      }
+
+      if (e.altKey) {
+        const map: Record<string, string> = {
+          '1': 'dashboard', '2': 'products', '3': 'pos', '4': 'sales',
+          '5': 'debtors', '6': 'customers', '7': 'reports', '8': 'bills',
+          '9': 'settings',
+        };
+        const tab = map[e.key];
+        if (tab) {
+          e.preventDefault();
+          setActiveTab(tab as ActiveTab);
+          return;
+        }
+      }
+
+      if ((e.ctrlKey || e.metaKey) && e.key === 'm') {
+        e.preventDefault();
+        toggleDarkMode();
+        return;
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
 
@@ -2767,6 +2815,38 @@ export default function App() {
         onSyncNow={handleCloudSyncNow}
         cloudSyncing={cloudSyncing}
       />}
+
+      {/* MODAL: Atalhos de Teclado */}
+      {showShortcuts && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={() => setShowShortcuts(false)}>
+          <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-md border border-slate-200 dark:border-slate-700 overflow-hidden" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+              <div className="flex items-center gap-3">
+                <Keyboard className="h-5 w-5 text-primary" />
+                <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Atalhos do Teclado</h2>
+              </div>
+              <button onClick={() => setShowShortcuts(false)} className="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-6 space-y-3">
+              {[
+                { keys: 'Alt + 1-9', desc: 'Navegar entre as abas' },
+                { keys: 'Ctrl/Cmd + M', desc: 'Alternar modo escuro' },
+                { keys: '?', desc: 'Abrir/fechar esta ajuda' },
+                { keys: 'Esc', desc: 'Fechar modais' },
+              ].map(item => (
+                <div key={item.keys} className="flex items-center justify-between py-2 border-b border-slate-100 dark:border-slate-800 last:border-0">
+                  <span className="text-sm text-slate-600 dark:text-slate-400">{item.desc}</span>
+                  <kbd className="px-2 py-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-mono font-bold rounded border border-slate-200 dark:border-slate-600">
+                    {item.keys}
+                  </kbd>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
 
       <Toaster position="bottom-right" />
     </div>
