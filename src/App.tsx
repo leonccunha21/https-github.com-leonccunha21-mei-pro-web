@@ -216,6 +216,52 @@ export default function App() {
     });
   };
 
+  // Atalhos de teclado globais
+  const [showShortcuts, setShowShortcuts] = useState(false);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+
+      if (e.key === '?' && !e.ctrlKey && !e.metaKey) {
+        e.preventDefault();
+        setShowShortcuts(p => !p);
+        return;
+      }
+
+      if (e.key === 'Escape') {
+        setShowShortcuts(false);
+        setShowVendasEstoque(false);
+        setShowSyncHistory(false);
+        setMobileMenuOpen(false);
+        return;
+      }
+
+      if (e.altKey) {
+        const map: Record<string, string> = {
+          '1': 'dashboard', '2': 'products', '3': 'pos', '4': 'sales',
+          '5': 'debtors', '6': 'customers', '7': 'reports', '8': 'bills',
+          '9': 'settings',
+        };
+        const tab = map[e.key];
+        if (tab) {
+          e.preventDefault();
+          setActiveTab(tab as ActiveTab);
+          return;
+        }
+      }
+
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'm') {
+        e.preventDefault();
+        toggleDarkMode();
+        return;
+      }
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, []);
+
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
   }, []);
@@ -1743,52 +1789,6 @@ export default function App() {
   if (!cloudUser) {
     return <LoginScreen onSignIn={handleCloudSignIn} error={cloudError} />;
   }
-
-  // --- Atalhos de teclado ---
-  const [showShortcuts, setShowShortcuts] = useState(false);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement)?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-
-      if (e.key === '?' && !e.ctrlKey && !e.metaKey) {
-        e.preventDefault();
-        setShowShortcuts(p => !p);
-        return;
-      }
-
-      if (e.key === 'Escape') {
-        setShowShortcuts(false);
-        setShowVendasEstoque(false);
-        setShowSyncHistory(false);
-        setMobileMenuOpen(false);
-        return;
-      }
-
-      if (e.altKey) {
-        const map: Record<string, string> = {
-          '1': 'dashboard', '2': 'products', '3': 'pos', '4': 'sales',
-          '5': 'debtors', '6': 'customers', '7': 'reports', '8': 'bills',
-          '9': 'settings',
-        };
-        const tab = map[e.key];
-        if (tab) {
-          e.preventDefault();
-          setActiveTab(tab as ActiveTab);
-          return;
-        }
-      }
-
-      if ((e.ctrlKey || e.metaKey) && e.key === 'm') {
-        e.preventDefault();
-        toggleDarkMode();
-        return;
-      }
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, []);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
