@@ -138,10 +138,16 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
   };
 
   const resumo = useMemo(() => {
-    const pago = pagamentos.filter((p) => p.status === 'pago').reduce((a, p) => a + p.valor, 0);
-    const pendente = pagamentos.filter((p) => p.status === 'pendente').reduce((a, p) => a + p.valor, 0);
-    const atrasado = pagamentos.filter((p) => p.status === 'atrasado').reduce((a, p) => a + p.valor, 0);
     const hoje = new Date().toISOString().slice(0, 10);
+    // BUG-FIX: pagamentos com status 'pendente' mas com dataVencimento < hoje são
+    // contabilizados como 'atrasado' nos StatCards (sem alterar o dado em si).
+    const pago = pagamentos.filter((p) => p.status === 'pago').reduce((a, p) => a + p.valor, 0);
+    const pendente = pagamentos
+      .filter((p) => p.status === 'pendente' && p.dataVencimento >= hoje)
+      .reduce((a, p) => a + p.valor, 0);
+    const atrasado = pagamentos
+      .filter((p) => p.status === 'atrasado' || (p.status === 'pendente' && p.dataVencimento < hoje))
+      .reduce((a, p) => a + p.valor, 0);
     const vencidos = pagamentos.filter((p) => (p.status === 'pendente' || p.status === 'atrasado') && p.dataVencimento < hoje);
     return { pago, pendente, atrasado, vencidos, total: pago + pendente + atrasado };
   }, [pagamentos]);

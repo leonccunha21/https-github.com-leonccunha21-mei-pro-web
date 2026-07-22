@@ -161,6 +161,7 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
     } else {
       const novo: AgendamentoManicure = {
         id: newId('agd'), clienteId: form.clienteId, clienteNome: cliente.nome,
+        telefoneCliente: cliente.telefone,
         servicoId: form.servicoId, servicoNome: servico.nome, valor: servico.preco,
         data: form.data, hora: form.hora, status: 'agendado',
         observacoes: form.observacoes, createdAt: new Date().toISOString(),

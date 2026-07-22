@@ -360,9 +360,13 @@ export default function MounjaroApp() {
 
   // Setter atômico: atualiza MÚLTIPLAS entidades de uma vez em um único persist.
   // Usado pela exclusão de cliente (que filtra clientes + pesagens + doses + pagamentos + fotos).
+  // BUG-FIX deleção: persist(patch) mesclava com stateRef.current ANTES do setDb atualizar
+  // o ref, então o sync enviava o estado antigo (com o cliente ainda existindo). Agora
+  // passamos o estado completo montado aqui, onde os dados já estão corretos.
   const setDbAtomico = (patch: Partial<MounjaroDb>) => {
-    setDb((d) => ({ ...d, ...patch }));
-    persist(patch);
+    const next: MounjaroDb = { ...stateRef.current, ...patch, initialized: true };
+    setDb(next);
+    persist(next);
   };
 
   // Registro de auditoria: histórico de alterações críticas.

@@ -54,9 +54,11 @@ export default function ManicureApp() {
 
   const persist = useCallback((newData?: Partial<ManicureDb>) => {
     const data: ManicureDb = { ...stateRef.current, ...newData, initialized: true };
+    // Salva imediatamente (sem debounce) para não perder dados ao fechar aba
+    saveManicureDb(data).catch(() => {});
+    // Debounce apenas para o sync de nuvem (não bloqueia a UI com chamadas excessivas)
     if (persistTimer.current) clearTimeout(persistTimer.current);
     persistTimer.current = setTimeout(() => {
-      saveManicureDb(data).catch(() => {});
       persistTimer.current = null;
     }, 200);
   }, []);
