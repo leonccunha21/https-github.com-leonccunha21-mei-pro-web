@@ -70,7 +70,6 @@ import {
   DollarSign,
   Wallet,
   CloudOff,
-  AlertTriangle,
   Target,
   MessageSquare,
   MessageCircle,
@@ -95,7 +94,7 @@ import { localNowISO } from './lib/datetime';
 import { canAccess } from './lib/permissions';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 import { getBackupSchedule, shouldRunBackup, saveBackupSchedule } from './lib/backupScheduler';
-import { computeChecksum, saveChecksum, verifyChecksum, getAllChecksums } from './lib/checksum';
+import { isSupabaseConfigured } from './lib/supabase';
 
 // Firebase Auth é importado dinamicamente (sob demanda) para não
 // penalizar o carregamento inicial do app.
@@ -163,7 +162,7 @@ export default function App() {
 
   // --- Sincronização na nuvem (Firebase Auth only) ---
   const [cloudUser, setCloudUser] = useState<User | null>(null);
-  const [checksumAlert, setChecksumAlert] = useState<string | null>(null);
+  const [supabaseConnected, setSupabaseConnected] = useState<boolean>(() => isSupabaseConfigured());
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
   const [storeInfo, setStoreInfo] = useState(() => {
@@ -362,20 +361,7 @@ export default function App() {
       try {
         const db = await loadDb();
         const res = await applyLoadedDb(db);
-
-        // Verifica integridade dos checksums
-        const collections: Record<string, unknown[]> = {
-          products, sales, categories, expenses, orders, customers,
-          suppliers, purchases, cashSessions, loans, leads, leadJobs,
-          whatsappInstances, aiAgents, opportunities,
-        };
-        for (const [name, data] of Object.entries(collections)) {
-          const { ok, saved, computed } = verifyChecksum(name, data);
-          if (!ok && saved !== null) {
-            setChecksumAlert(`Coleção "${name}" divergente (checksum: ${saved} → ${computed}). Possível corrupção de dados.`);
-            break;
-          }
-        }
+        setSupabaseConnected(isSupabaseConfigured());
         // First run: persist the seeded initial data and mark the DB as initialized
         // so a later "reset to empty" is respected (an empty DB is no longer
         // interpreted as "fresh install, reload defaults").
@@ -537,9 +523,6 @@ export default function App() {
       bills: merged.bills ?? [],
       internetUsers: merged.internetUsers ?? [],
     };
-    for (const [name, data] of Object.entries(collections)) {
-      saveChecksum(name, computeChecksum(data));
-    }
 
     // Debounce só para o timer de "pending" (evita múltiplos saves rápidos)
     if (saveTimer.current) clearTimeout(saveTimer.current);
@@ -1390,7 +1373,10 @@ export default function App() {
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h2 className="font-bold text-sm tracking-tight text-slate-950 dark:text-slate-100 truncate">{storeInfo.name || 'ZM Store'}</h2>
+          <div className="flex items-center gap-1.5">
+            <h2 className="font-bold text-sm tracking-tight text-slate-950 dark:text-slate-100 truncate">{storeInfo.name || 'ZM Store'}</h2>
+            <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${supabaseConnected ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`} title={supabaseConnected ? 'Supabase conectado' : 'Modo local'} />
+          </div>
           <span className="text-[9px] text-primary font-bold uppercase tracking-wider">Gestão Comercial</span>
         </div>
         <button
@@ -1870,24 +1856,20 @@ export default function App() {
 
         </div>
 
-        {/* Alerta de integridade */}
-        {checksumAlert && (
-          <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
-            <div className="p-3 rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 flex items-start gap-2">
-              <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
-              <div className="min-w-0">
-                <p className="text-[11px] font-bold text-amber-800 dark:text-amber-300">Integridade</p>
-                <p className="text-[10px] text-amber-700 dark:text-amber-400">{checksumAlert}</p>
-                <button
-                  onClick={() => setChecksumAlert(null)}
-                  className="text-[10px] font-semibold text-amber-700 dark:text-amber-400 underline mt-1 cursor-pointer"
-                >
-                  Dispensar
-                </button>
-              </div>
+        {/* Indicador de conexão Supabase */}
+        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
+          <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-50/60 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700">
+            <div className={`w-2 h-2 rounded-full shrink-0 ${supabaseConnected ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-600'}`} />
+            <div className="min-w-0 flex-1">
+              <p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase">
+                {supabaseConnected ? 'Supabase conectado' : 'Modo local'}
+              </p>
+              <p className="text-[9px] text-slate-400 dark:text-slate-500 truncate">
+                {supabaseConnected ? 'Dados sincronizados na nuvem' : 'Dados salvos apenas neste dispositivo'}
+              </p>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Role Selector */}
         <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
