@@ -38,8 +38,10 @@ const statusLabels: Record<string, { label: string; color: string }> = {
 };
 
 export default function OsOrcamento({ products, storeInfo, orders: initialOrders, onOrdersChange, onConvertToSale }: OsOrcamentoProps) {
-  const [orders, setOrders] = useState<ServiceOrder[]>(initialOrders);
-  useEffect(() => { setOrders(initialOrders); }, [initialOrders]);
+  // Não usa estado local derivado da prop — usa a prop diretamente para evitar
+  // dessincronização quando o pai atualiza os dados (ex: importação de backup).
+  const orders = initialOrders;
+  const setOrders = onOrdersChange;
   const [activeView, setActiveView] = useState<'list' | 'form' | 'detail'>('list');
   const [selectedOrder, setSelectedOrder] = useState<ServiceOrder | null>(null);
   const [filterType, setFilterType] = useState<'all' | 'os' | 'orcamento'>('all');
@@ -75,10 +77,7 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
     return () => window.removeEventListener('beforeunload', handler);
   }, [activeView, clientName, formItems]);
 
-  const saveOrders = (newOrders: ServiceOrder[]) => {
-    setOrders(newOrders);
-    onOrdersChange(newOrders);
-  };
+  const saveOrders = onOrdersChange;
 
   const filteredOrders = useMemo(() => {
     return orders.filter(o => {
