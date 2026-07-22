@@ -34,7 +34,7 @@ export async function parseExcel(file: File): Promise<ExcelData> {
       data.products = parsedProds.importedProducts;
     } else if (name.includes('cat') || rows[0][0]?.toString().toLowerCase().includes('nome da categoria')) {
       const parsedCats = parseCategoriesSheet(rows);
-      data.categories = parsedCats.map((cat, idx) => ({ id: `cat_${Date.now()}_${idx}`, name: cat }));
+      data.categories = parsedCats.map((cat, idx) => ({ id: `cat_${Date.now()}_${idx}`, name: cat, createdAt: new Date().toISOString() }));
     } else if (name.includes('vend') || rows[0][0]?.toString().toLowerCase().includes('id da venda')) {
       data.sales = parseSalesSheet(rows, data.products || []);
     } else if (name.includes('emprest') || name.includes('loan')) {

@@ -76,7 +76,8 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
       category: newExpense.category.trim(),
       description: newExpense.description.trim(),
       amount: newExpense.amount,
-      status: 'pending'
+      status: 'pending',
+      createdAt: new Date().toISOString(),
     };
     onAddExpense?.(expense);
     setNewExpense({ description: '', amount: 0, category: '', date: new Date().toISOString().substring(0, 10) });

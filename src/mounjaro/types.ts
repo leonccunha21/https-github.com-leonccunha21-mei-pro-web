@@ -28,7 +28,7 @@ export interface ClienteMounjaro {
   dataInicioTratamento?: string; // YYYY-MM-DD
   ativo: boolean; // cliente em tratamento ativo
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface PesagemMounjaro {
@@ -38,7 +38,7 @@ export interface PesagemMounjaro {
   peso: number; // kg
   observacoes?: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export interface DoseMounjaro {
@@ -55,7 +55,7 @@ export interface DoseMounjaro {
   pago: boolean; // esta dose foi paga?
   valorDose?: number; // valor cobrado pela dose
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 export type StatusPagamento = 'pago' | 'pendente' | 'atrasado' | 'cancelado';
@@ -72,7 +72,7 @@ export interface PagamentoMounjaro {
   referenciaDoseId?: string; // dose vinculada
   observacoes?: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 // Score de pagamento do cliente (0-100), derivado do histórico.
@@ -108,7 +108,7 @@ export interface FotoEvolucao {
   // Imagem compactada em base64 (data URL). Armazenada junto no sync da nuvem.
   imagem: string;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }
 
 // Registro de auditoria: histórico de alterações críticas (doses, pagamentos, clientes).

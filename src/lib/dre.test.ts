@@ -25,12 +25,12 @@ function calcDre(sales: Sale[], expenses: Expense[]) {
 
 test('calcDre: basic DRE calculation', () => {
   const sales: Sale[] = [
-    { id: 'v1', date: '2026-01-01T00:00:00.000Z', items: [], total: 1000, totalCost: 400, profit: 600, status: 'completed', paymentMethod: 'pix', saleType: 'CPF' },
-    { id: 'v2', date: '2026-01-02T00:00:00.000Z', items: [], total: 500, totalCost: 200, profit: 300, status: 'completed', paymentMethod: 'money', saleType: 'CPF' },
+    { id: 'v1', date: '2026-01-01T00:00:00.000Z', items: [], total: 1000, totalCost: 400, profit: 600, status: 'completed', paymentMethod: 'pix', saleType: 'CPF', createdAt: '2026-01-01T00:00:00.000Z' },
+    { id: 'v2', date: '2026-01-02T00:00:00.000Z', items: [], total: 500, totalCost: 200, profit: 300, status: 'completed', paymentMethod: 'money', saleType: 'CPF', createdAt: '2026-01-02T00:00:00.000Z' },
   ];
   const expenses: Expense[] = [
-    { id: 'e1', date: '2026-01-03T00:00:00.000Z', category: 'Aluguel', description: '', amount: 300, status: 'paid' },
-    { id: 'e2', date: '2026-01-04T00:00:00.000Z', category: 'Internet', description: '', amount: 100, status: 'paid' },
+    { id: 'e1', date: '2026-01-03T00:00:00.000Z', category: 'Aluguel', description: '', amount: 300, status: 'paid', createdAt: '2026-01-03T00:00:00.000Z' },
+    { id: 'e2', date: '2026-01-04T00:00:00.000Z', category: 'Internet', description: '', amount: 100, status: 'paid', createdAt: '2026-01-04T00:00:00.000Z' },
   ];
   const dre = calcDre(sales, expenses);
   assert.equal(dre.receitaBruta, 1500);
@@ -43,8 +43,8 @@ test('calcDre: basic DRE calculation', () => {
 
 test('calcDre: only completed sales', () => {
   const sales: Sale[] = [
-    { id: 'v1', date: '2026-01-01T00:00:00.000Z', items: [], total: 1000, totalCost: 400, profit: 600, status: 'completed', paymentMethod: 'pix', saleType: 'CPF' },
-    { id: 'v2', date: '2026-01-02T00:00:00.000Z', items: [], total: 500, totalCost: 200, profit: 300, status: 'pending', paymentMethod: 'pix', saleType: 'CPF' },
+    { id: 'v1', date: '2026-01-01T00:00:00.000Z', items: [], total: 1000, totalCost: 400, profit: 600, status: 'completed', paymentMethod: 'pix', saleType: 'CPF', createdAt: '2026-01-01T00:00:00.000Z' },
+    { id: 'v2', date: '2026-01-02T00:00:00.000Z', items: [], total: 500, totalCost: 200, profit: 300, status: 'pending', paymentMethod: 'pix', saleType: 'CPF', createdAt: '2026-01-02T00:00:00.000Z' },
   ];
   const dre = calcDre(sales, []);
   assert.equal(dre.receitaBruta, 1000);
@@ -60,11 +60,11 @@ test('calcDre: empty sales returns zeros', () => {
 
 test('calcDre: only paid expenses count', () => {
   const sales: Sale[] = [
-    { id: 'v1', date: '2026-01-01T00:00:00.000Z', items: [], total: 1000, totalCost: 400, profit: 600, status: 'completed', paymentMethod: 'pix', saleType: 'CPF' },
+    { id: 'v1', date: '2026-01-01T00:00:00.000Z', items: [], total: 1000, totalCost: 400, profit: 600, status: 'completed', paymentMethod: 'pix', saleType: 'CPF', createdAt: '2026-01-01T00:00:00.000Z' },
   ];
   const expenses: Expense[] = [
-    { id: 'e1', date: '2026-01-03T00:00:00.000Z', category: 'Aluguel', description: '', amount: 300, status: 'paid' },
-    { id: 'e2', date: '2026-01-04T00:00:00.000Z', category: 'Internet', description: '', amount: 100, status: 'pending' },
+    { id: 'e1', date: '2026-01-03T00:00:00.000Z', category: 'Aluguel', description: '', amount: 300, status: 'paid', createdAt: '2026-01-03T00:00:00.000Z' },
+    { id: 'e2', date: '2026-01-04T00:00:00.000Z', category: 'Internet', description: '', amount: 100, status: 'pending', createdAt: '2026-01-04T00:00:00.000Z' },
   ];
   const dre = calcDre(sales, expenses);
   assert.equal(dre.despesas, 300);

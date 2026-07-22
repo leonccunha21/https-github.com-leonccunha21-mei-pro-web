@@ -429,6 +429,7 @@ function parseCashSheet(rows: SheetRows): CashSession[] {
       status: (String(r[iSit] ?? '').trim().toLowerCase().includes('fech') ? 'closed' : 'open') as CashSession['status'],
       withdrawals: Array.isArray(w) ? w : [],
       notes: String(r[iObs] ?? '').trim(),
+      createdAt: new Date().toISOString(),
     });
   }
   return out;
@@ -633,7 +634,8 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
         saleType,
         ecommerceOrderId,
         saleChannel,
-        status: parseStatus(first)
+        status: parseStatus(first),
+        createdAt: new Date().toISOString(),
       });
     }
     return sales;
@@ -763,7 +765,8 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
       saleType,
       ecommerceOrderId,
       saleChannel,
-      status
+      status,
+      createdAt: new Date().toISOString(),
     });
   }
 

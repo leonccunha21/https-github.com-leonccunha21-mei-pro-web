@@ -4,6 +4,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { randomUUID } from 'crypto';
 import * as cheerio from 'cheerio';
+import { createClient } from '@supabase/supabase-js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.resolve(__dirname, 'data');
@@ -57,6 +58,57 @@ function writeDb(db: LocalDb): void {
 
 const app = express();
 app.use(express.json({ limit: '100mb' }));
+
+// Test Supabase connection status
+app.get('/api/supabase-status', async (_req, res) => {
+  try {
+    const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+
+    if (!supabaseUrl || !supabaseKey) {
+      return res.status(500).json({
+        status: 'supabase-not-configured',
+        message: 'SUPABASE_URL e SUPABASE_ANON_KEY nao estao configuradas no .env.local',
+      });
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    const { data: products, error: productsError } = await supabase
+      .from('products')
+      .select('*')
+      .limit(1);
+
+    if (productsError && productsError.code === 'PGRST116') {
+      return res.json({
+        status: 'supabase-ready',
+        message: 'Supabase client inicializado. Tabelas podem nao existir ainda.',
+        credentials: {
+          url: supabaseUrl.substring(0, 50) + '...',
+          hasKey: true,
+        }
+      });
+    }
+
+    return res.json({
+      status: 'supabase-connected',
+      message: 'Conexao com Supabase estabelecida com sucesso',
+      products: products || [],
+      credentials: {
+        url: supabaseUrl.substring(0, 50) + '...',
+        hasKey: true,
+      }
+    });
+
+  } catch (error) {
+    console.error('Erro ao conectar com Supabase:', error);
+    return res.status(500).json({
+      status: 'supabase-error',
+      message: 'Falha ao conectar com Supabase',
+      error: error instanceof Error ? error.message : 'Erro desconhecido',
+    });
+  }
+});
 
 app.get('/api/db', (_req, res) => {
   res.json(readDb());
@@ -208,7 +260,7 @@ app.get('/api/tracking/:code', async (req, res) => {
     else if (lower.includes('aguardando') || lower.includes('retirada')) statusKey = 'aguardando_retirada';
     else if (lower.includes('encaminhado')) statusKey = 'encaminhado';
     else if (lower.includes('postado')) statusKey = 'postado';
-    else if (lower.includes('trânsito') || lower.includes('transito')) statusKey = 'em_transito';
+    else if (lower.includes('trânsito') || lower.includes('transito')) statusKey = 'em_trânsito';
 
     res.json({ code, status: statusKey, events });
   } catch (e: any) {

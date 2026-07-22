@@ -364,7 +364,8 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
         saleType: saleType as 'CPF' | 'CNPJ',
         ecommerceOrderId,
         saleChannel,
-        status: parseStatus(first)
+        status: parseStatus(first),
+        createdAt: new Date().toISOString(),
       });
     }
     return sales;
@@ -500,7 +501,8 @@ function parseSalesSheet(rows: SheetRows, productsList: Product[]): Sale[] {
       saleType: saleType as 'CPF' | 'CNPJ',
       ecommerceOrderId,
       saleChannel,
-      status
+      status,
+      createdAt: new Date().toISOString(),
     });
   }
 

@@ -1,4 +1,5 @@
 import { Product, Sale, Category, Expense, StoreInfo, ServiceOrder, Customer, Supplier, Purchase, CashSession, Loan, Lead, LeadExtractionJob, WhatsAppInstance, AIAgent, Opportunity, Bill, InternetUser } from '../types';
+import { supabase, isSupabaseConfigured } from './supabase';
 
 export interface LocalDb {
   products: Product[];
@@ -22,18 +23,12 @@ export interface LocalDb {
   initialized?: boolean;
 }
 
-// Quando publicado como site estático (GitHub Pages) não há servidor; o
-// IndexedDB é o armazenamento primário para que os dados (vendas, empréstimos,
-// flags de marketplace etc.) sobrevivam aos reloads. O servidor opcional em
-// `server.ts` (rota `/api/db`) é usado apenas em ambiente local para
-// sincronização best-effort e nunca é obrigatório.
+// IndexedDB — armazenamento offline primário
 const DB_NAME = 'zmstore_local';
 const STORE = 'localdb';
 const KEY = 'main';
 
-// Notifica outras abas (mesma origem) quando o banco local é atualizado, para
-// manter o estado consistente entre elas (IndexedDB é compartilhado, mas o
-// estado em memória de cada aba precisa ser re-sincronizado).
+// Notifica outras abas quando o banco local é atualizado
 const syncChannel: BroadcastChannel | null =
   typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('zmstore-sync') : null;
 
@@ -78,25 +73,211 @@ async function idbPut(value: LocalDb): Promise<void> {
     tx.onerror = () => reject(tx.error);
   });
 }
-// Remove duplicatas por `id` de uma coleção (a sincronização antiga do Firebase
-// podia inserir a mesma venda duas vezes com timestamps diferentes, fazendo
-// "1+1=3" nos totais). Mantém a última ocorrência de cada id.
+
 function dedupeById<T extends { id?: string }>(items?: T[]): T[] | undefined {
   if (!items || !Array.isArray(items)) return items;
   const seen = new Map<string, T>();
   for (const it of items) {
-    if (it && it.id) seen.set(it.id, it); // último vence
-    else seen.set('__no_id_' + seen.size, it); // sem id: mantém
+    if (it && it.id) seen.set(it.id, it);
+    else seen.set('__no_id_' + seen.size, it);
   }
   return Array.from(seen.values());
 }
 
+// ============================================================
+// Supabase sync — push completo do LocalDb para o Supabase
+// ============================================================
+
+function parseJsonField<T>(value: unknown, fallback: T): T {
+  if (!value) return fallback
+  if (typeof value === 'string') {
+    try { return JSON.parse(value) as T } catch { return fallback }
+  }
+  return value as T
+}
+
+/** Tabela -> campo JSONB que precisa de serialização */
+const JSONB_FIELDS: Record<string, string[]> = {
+  products: ['priceHistory'],
+  sales: ['items'],
+  service_orders: ['items'],
+  purchases: ['items'],
+  cash_sessions: ['withdrawals'],
+  internet_users: ['payments'],
+};
+
+function prepareForSupabase(table: string, row: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  const jsonbFields = JSONB_FIELDS[table] || [];
+  for (const [key, val] of Object.entries(row)) {
+    if (val === undefined) continue;
+    if (jsonbFields.includes(key)) {
+      out[key] = val === null ? '[]' : JSON.stringify(val);
+    } else {
+      out[key] = val;
+    }
+  }
+  return out;
+}
+
+async function upsertBatch(table: string, rows: Record<string, unknown>[]): Promise<void> {
+  if (!rows.length || !isSupabaseConfigured()) return;
+  const prepared = rows.map(r => prepareForSupabase(table, r));
+  const { error } = await supabase.from(table).upsert(prepared, { onConflict: 'id', ignoreDuplicates: false });
+  if (error) console.error(`Supabase upsert ${table}:`, error.message);
+}
+
+async function upsertSingleton(table: string, row: Record<string, unknown>): Promise<void> {
+  if (!isSupabaseConfigured()) return;
+  const prepared = prepareForSupabase(table, row);
+  const { error } = await supabase.from(table).upsert({ ...prepared, id: 'singleton' }, { onConflict: 'id' });
+  if (error) console.error(`Supabase upsert ${table}:`, error.message);
+}
+
+/** Serializa todo o LocalDb para o Supabase (best-effort). */
+async function syncToSupabase(db: LocalDb): Promise<void> {
+  if (!isSupabaseConfigured()) return;
+
+  try {
+    await Promise.all([
+      upsertBatch('products', db.products as unknown as Record<string, unknown>[]),
+      upsertBatch('sales', db.sales as unknown as Record<string, unknown>[]),
+      upsertBatch('categories', db.categories as unknown as Record<string, unknown>[]),
+      upsertBatch('expenses', db.expenses as unknown as Record<string, unknown>[]),
+      upsertBatch('service_orders', db.orders as unknown as Record<string, unknown>[]),
+      upsertBatch('customers', db.customers as unknown as Record<string, unknown>[]),
+      upsertBatch('suppliers', db.suppliers as unknown as Record<string, unknown>[]),
+      upsertBatch('purchases', db.purchases as unknown as Record<string, unknown>[]),
+      upsertBatch('cash_sessions', db.cashSessions as unknown as Record<string, unknown>[]),
+      upsertBatch('loans', db.loans as unknown as Record<string, unknown>[]),
+      upsertBatch('leads', db.leads as unknown as Record<string, unknown>[]),
+      upsertBatch('opportunities', db.opportunities as unknown as Record<string, unknown>[]),
+      upsertBatch('bills', db.bills as unknown as Record<string, unknown>[]),
+      upsertBatch('internet_users', db.internetUsers as unknown as Record<string, unknown>[]),
+    ]);
+    if (db.storeInfo) {
+      await upsertSingleton('store_info', db.storeInfo as unknown as Record<string, unknown>);
+    }
+  } catch (e) {
+    console.error('Supabase sync error:', e);
+  }
+}
+
+// ============================================================
+// Supabase fetch — buscar dados do Supabase para hidratar o IndexedDB
+// ============================================================
+
+async function fetchFromSupabase(): Promise<LocalDb | null> {
+  if (!isSupabaseConfigured()) return null;
+
+  try {
+    const [
+      products, sales, categories, expenses, serviceOrders,
+      customers, suppliers, purchases, cashSessions, loans,
+      leads, opportunities, bills, internetUsers, storeInfo,
+    ] = await Promise.all([
+      supabase.from('products').select('*'),
+      supabase.from('sales').select('*'),
+      supabase.from('categories').select('*'),
+      supabase.from('expenses').select('*'),
+      supabase.from('service_orders').select('*'),
+      supabase.from('customers').select('*'),
+      supabase.from('suppliers').select('*'),
+      supabase.from('purchases').select('*'),
+      supabase.from('cash_sessions').select('*'),
+      supabase.from('loans').select('*'),
+      supabase.from('leads').select('*'),
+      supabase.from('opportunities').select('*'),
+      supabase.from('bills').select('*'),
+      supabase.from('internet_users').select('*'),
+      supabase.from('store_info').select('*').eq('id', 'singleton').maybeSingle(),
+    ]);
+
+    const hasError = [products, sales, categories, expenses, serviceOrders,
+      customers, suppliers, purchases, cashSessions, loans,
+      leads, opportunities, bills, internetUsers].some(r => r.error);
+
+    // Se alguma tabela não existe (PGRST116), retorna null para usar IndexedDB
+    if (hasError) return null;
+
+    return {
+      initialized: true,
+      products: (products.data || []).map((r: any) => ({
+        ...r,
+        priceHistory: parseJsonField(r.priceHistory, []),
+      })),
+      sales: (sales.data || []).map((r: any) => ({
+        ...r,
+        items: parseJsonField(r.items, []),
+      })),
+      categories: categories.data || [],
+      expenses: expenses.data || [],
+      orders: (serviceOrders.data || []).map((r: any) => ({
+        ...r,
+        items: parseJsonField(r.items, []),
+      })),
+      customers: customers.data || [],
+      suppliers: suppliers.data || [],
+      purchases: (purchases.data || []).map((r: any) => ({
+        ...r,
+        items: parseJsonField(r.items, []),
+      })),
+      cashSessions: (cashSessions.data || []).map((r: any) => ({
+        ...r,
+        withdrawals: parseJsonField(r.withdrawals, []),
+      })),
+      loans: loans.data || [],
+      leads: leads.data || [],
+      leadJobs: [],
+      whatsappInstances: [],
+      aiAgents: [],
+      opportunities: opportunities.data || [],
+      bills: bills.data || [],
+      internetUsers: (internetUsers.data || []).map((r: any) => ({
+        ...r,
+        payments: parseJsonField(r.payments, []),
+      })),
+      storeInfo: storeInfo.data || null,
+    };
+  } catch (e) {
+    console.error('Supabase fetch error:', e);
+    return null;
+  }
+}
+
+// ============================================================
+// API pública
+// ============================================================
+
 export async function loadDb(): Promise<Partial<LocalDb> | null> {
-  // FONTE ÚNICA DE VERDADE: IndexedDB do navegador. 100% LOCAL, sem nuvem.
+  // 1. Tenta buscar do Supabase (nuvem, acesso multi-dispositivo)
+  const cloud = await fetchFromSupabase();
+  if (cloud && (Array.isArray(cloud.sales) || Array.isArray(cloud.products))) {
+    // Salva no IndexedDB como cache offline
+    try { await idbPut(cloud as LocalDb); } catch { /* ignore */ }
+    return {
+      ...cloud,
+      products: dedupeById(cloud.products) as LocalDb['products'],
+      sales: dedupeById(cloud.sales) as LocalDb['sales'],
+      categories: dedupeById(cloud.categories) as LocalDb['categories'],
+      expenses: dedupeById(cloud.expenses) as LocalDb['expenses'],
+      orders: dedupeById(cloud.orders) as LocalDb['orders'],
+      customers: dedupeById(cloud.customers) as LocalDb['customers'],
+      suppliers: dedupeById(cloud.suppliers) as LocalDb['suppliers'],
+      purchases: dedupeById(cloud.purchases) as LocalDb['purchases'],
+      cashSessions: dedupeById(cloud.cashSessions) as LocalDb['cashSessions'],
+      loans: dedupeById(cloud.loans) as LocalDb['loans'],
+      leads: dedupeById(cloud.leads) as LocalDb['leads'],
+      opportunities: dedupeById(cloud.opportunities) as LocalDb['opportunities'],
+      bills: dedupeById(cloud.bills) as LocalDb['bills'],
+      internetUsers: dedupeById(cloud.internetUsers) as LocalDb['internetUsers'],
+    };
+  }
+
+  // 2. Fallback: IndexedDB (offline)
   try {
     const local = await idbGet();
     if (local && (Array.isArray(local.sales) || Array.isArray(local.products))) {
-      // Deduplica todas as coleções por id para garantir cálculo absoluto.
       return {
         ...local,
         products: dedupeById(local.products) as LocalDb['products'],
@@ -124,13 +305,19 @@ export async function loadDb(): Promise<Partial<LocalDb> | null> {
 }
 
 export async function saveDb(db: LocalDb): Promise<void> {
-  // 1. Always persist locally (IndexedDB)
+  // 1. Sempre salva localmente (IndexedDB) — rápido, offline-first
   try {
     await idbPut(db);
   } catch (e) {
     console.error('Erro ao salvar no IndexedDB:', e);
   }
-  // 2. Best-effort server sync (ignored on the static site)
+
+  // 2. Sync best-effort para Supabase (nuvem)
+  syncToSupabase(db).catch((e) => {
+    console.error('Supabase sync falhou:', e);
+  });
+
+  // 3. Best-effort server sync (ignorado no site estático)
   try {
     await fetch('/api/db', {
       method: 'PUT',
@@ -138,6 +325,7 @@ export async function saveDb(db: LocalDb): Promise<void> {
       body: JSON.stringify(db),
     });
   } catch { /* ignore */ }
+
   notifyDbUpdated();
 }
 

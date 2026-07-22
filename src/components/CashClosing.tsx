@@ -75,6 +75,7 @@ export default function CashClosing({ sales, sessions, onSaveSessions }: CashClo
       openingBalance: bal,
       status: 'open',
       withdrawals: [],
+      createdAt: new Date().toISOString(),
     };
     onSaveSessions([session, ...sessions]);
     setShowOpen(false);

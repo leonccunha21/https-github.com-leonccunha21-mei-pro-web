@@ -2556,6 +2556,7 @@ export default function App() {
                     status: 'pending',
                     saleType: 'CPF',
                     notes: `Convertido do orçamento Nº ${order.number}`,
+                    createdAt: new Date().toISOString(),
                   };
                   setSales(prev => [newSale, ...prev]);
                   persist({ sales: [newSale, ...sales] });
