@@ -105,7 +105,7 @@ export default function Relatorio({ clientes, pesagens, doses, pagamentos, confi
               <div><span className="text-slate-500 dark:text-slate-400">Início</span><div className="font-semibold">{cliente.dataInicioTratamento ? formatarDataCurta(cliente.dataInicioTratamento) : '—'}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Altura</span><div className="font-semibold">{cliente.alturaCm ? `${cliente.alturaCm} cm` : '—'}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Peso inicial</span><div className="font-semibold">{cliente.pesoInicial ? `${cliente.pesoInicial} kg` : '—'}</div></div>
-              <div><span className="text-slate-500 dark:text-slate-400">IMC inicial</span><div className="font-semibold">{cliente.imcInicial ? calcularImc(cliente.pesoInicial || 0, cliente.alturaCm || 0).toFixed(1) : '—'}</div></div>
+              <div><span className="text-slate-500 dark:text-slate-400">IMC inicial</span><div className="font-semibold">{(() => { const v = calcularImc(cliente.pesoInicial || 0, cliente.alturaCm || 0); return (!isNaN(v) && v > 0) ? v.toFixed(1) : '—'; })()}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Peso atual</span><div className="font-semibold">{pesoAtual(cliente, pesagens, doses) ? `${pesoAtual(cliente, pesagens, doses)} kg` : '—'}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Perda total</span><div className="font-semibold text-emerald-600">{pesoPerdido(cliente, pesagens, doses) ? `${pesoPerdido(cliente, pesagens, doses).toFixed(1)} kg` : '—'}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Objetivo</span><div className="font-semibold">{cliente.objetivoPeso ? `${cliente.objetivoPeso} kg` : '—'}</div></div>
@@ -142,7 +142,7 @@ export default function Relatorio({ clientes, pesagens, doses, pagamentos, confi
                       <tr key={x.id} className="border-b border-slate-100 dark:border-slate-800">
                         <td className="py-1.5">{formatarDataCurta(x.data)}</td>
                         <td>{x.peso.toFixed(1)}</td>
-                        <td className={delta != null && delta < 0 ? 'text-emerald-600' : 'text-rose-500'}>{delta != null ? `${delta > 0 ? '+' : ''}${delta.toFixed(1)}` : '—'}</td>
+                        <td className={delta != null ? (delta < 0 ? 'text-emerald-600' : delta > 0 ? 'text-rose-500' : 'text-slate-400') : ''}>{delta != null ? `${delta > 0 ? '+' : ''}${delta.toFixed(1)}` : '—'}</td>
                         <td>{imc ? imc.toFixed(1) : '—'}</td>
                       </tr>
                     );

@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Product, SaleItem, PaymentMethod, Customer } from '../types';
 import { roundCurrency } from '../lib/currency';
+import { normalizeName } from '../lib/normalize';
 import { generatePixPayload } from '../lib/pix';
 import QRCode from 'qrcode';
 import BarcodeScanner from './BarcodeScanner';
@@ -240,13 +241,14 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
   // Categories helper
   const categories = useMemo(() => {
     const list = new Set(products.map(p => p.category));
-    return Array.from(list);
+    return Array.from(list).sort();
   }, [products]);
 
   // Catalog products filter
   const filteredProducts = useMemo(() => {
+    const q = normalizeName(searchQuery);
     return products.filter(p => {
-      const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      const matchesSearch = normalizeName(p.name).includes(q) ||
                             p.code.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
       return matchesSearch && matchesCategory;
@@ -277,7 +279,7 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
 
     const existingItem = cart.find(item => item.product.id === product.id);
     if (existingItem) {
-      if (!isService && !allowNegativeStock && existingItem.quantity >= product.stock) {
+      if (!isService && !allowNegativeStock && existingItem.quantity + 1 > product.stock) {
         setErrorMessage(`Estoque máximo atingido para "${product.name}" (${product.stock} un disponíveis).`);
         setTimeout(() => setErrorMessage(null), 4000);
         return;

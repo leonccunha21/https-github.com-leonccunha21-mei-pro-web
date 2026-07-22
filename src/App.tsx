@@ -1116,11 +1116,13 @@ export default function App() {
         setPurchases(db.purchases);
         setCashSessions(db.cashSessions);
         setLoans(db.loans);
-        
         setLeads(db.leads);
         setLeadJobs(db.leadJobs);
         setWhatsappInstances(db.whatsappInstances);
         setAiAgents(db.aiAgents);
+        setOpportunities(db.opportunities);
+        setBills(db.bills);
+        setInternetUsers(db.internetUsers);
 
         persist(db);
       } catch {
@@ -1311,9 +1313,10 @@ export default function App() {
   };
 
   const handleAddMissingProducts = () => {
-    const newProducts: Product[] = missingProducts.map(item => ({
-      id: `p_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      code: `SKU-${Date.now()}_${Math.random().toString(36).substring(2, 4)}`,
+    const now = Date.now();
+    const newProducts: Product[] = missingProducts.map((item, idx) => ({
+      id: `p_${now}_${idx}_${Math.random().toString(36).substring(2, 6)}`,
+      code: `SKU-${now}_${idx}`,
       name: item.name,
       category: suggestCategory(item.name),
       costPrice: item.costPrice,
@@ -1321,7 +1324,7 @@ export default function App() {
       stock: 0,
       minStock: 5,
       status: 'disponivel',
-      createdAt: new Date().toISOString()
+      createdAt: new Date(now + idx).toISOString()
     }));
     const updated = [...newProducts, ...products];
     saveProductsToStorage(updated);

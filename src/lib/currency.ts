@@ -1,3 +1,4 @@
 export const roundCurrency = (value: number): number => {
-  return Math.round((value + Number.EPSILON) * 100) / 100;
+  const epsilon = value < 0 ? -Number.EPSILON : Number.EPSILON;
+  return Math.round((value + epsilon) * 100) / 100;
 };

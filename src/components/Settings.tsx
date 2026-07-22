@@ -175,6 +175,7 @@ export default function Settings({
   const handleSaveStoreInfo = async () => {
     localStorage.setItem('zm_store_info', JSON.stringify(storeInfo));
     onStoreInfoChange(storeInfo);
+    window.dispatchEvent(new Event('storeInfoChanged'));
     setStoreSaved(true);
     setTimeout(() => setStoreSaved(false), 3000);
   };
