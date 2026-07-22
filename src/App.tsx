@@ -910,7 +910,8 @@ export default function App() {
       if (refundedItem) {
         return {
           ...p,
-          stock: p.stock + refundedItem.quantity
+          stock: p.stock + refundedItem.quantity,
+          updatedAt: new Date().toISOString(),
         };
       }
       return p;

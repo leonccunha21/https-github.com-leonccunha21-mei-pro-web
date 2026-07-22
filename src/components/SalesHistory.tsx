@@ -196,7 +196,8 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
     const completed = filteredSales.filter(s => s.status === 'completed');
     return {
       totalRevenue: completed.reduce((acc, s) => acc + s.total, 0),
-      totalProfit: completed.reduce((acc, s) => acc + s.profit, 0),
+      // Recalcula em vez de usar sale.profit gravado — consistente se custo foi alterado depois
+      totalProfit: completed.reduce((acc, s) => acc + (s.total - s.totalCost), 0),
       totalCount: completed.length,
     };
   }, [filteredSales]);
@@ -238,7 +239,8 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
 
   const handleConfirmPayment = (sale: Sale) => {
     if (window.confirm(`Deseja confirmar o recebimento do pagamento desta venda?\n\nVenda: #${sale.id.substring(0, 8)}\nCliente: ${sale.clientName || 'Não informado'}\nValor: R$ ${sale.total.toLocaleString('pt-BR', {minimumFractionDigits:2,maximumFractionDigits:2})}`)) {
-      const updatedSale: Sale = { ...sale, status: 'completed' };
+      const now = new Date().toISOString();
+      const updatedSale: Sale = { ...sale, status: 'completed', paidAt: now, updatedAt: now };
       onUpdateSale?.(updatedSale);
     }
   };
@@ -351,7 +353,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
       'ID Pedido': sale.ecommerceOrderId || '',
       'Valor Pago (Custo)': sale.totalCost,
       'Valor Vendido': sale.total,
-      'Lucro': sale.status === 'cancelled' ? 0 : sale.profit,
+      'Lucro': sale.status === 'cancelled' ? 0 : sale.total - sale.totalCost,
       'Status': sale.status === 'completed' ? 'Concluída' : sale.status === 'cancelled' ? 'Cancelada' : 'Pendente',
     }));
 

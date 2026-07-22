@@ -130,12 +130,13 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
     const subtotal = formItems.reduce((s, i) => s + i.total, 0);
     const discountAmount = (subtotal * formDiscount) / 100;
     const total = Math.max(0, subtotal - discountAmount);
+    const now = new Date().toISOString();
 
     const order: ServiceOrder = {
       id: generateId(),
       type: formType,
       number: getNextNumber(orders),
-      date: new Date().toISOString(),
+      date: now,
       clientName: clientName.trim(),
       clientPhone: clientPhone.trim(),
       clientAddress: clientAddress.trim() || undefined,
@@ -147,7 +148,8 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
       total,
       status,
       notes: formNotes.trim() || undefined,
-      createdAt: new Date().toISOString()
+      createdAt: now,
+      updatedAt: now,
     };
 
     saveOrders([order, ...orders]);
@@ -156,7 +158,9 @@ export default function OsOrcamento({ products, storeInfo, orders: initialOrders
   };
 
   const handleStatusChange = (orderId: string, newStatus: string) => {
-    const updated = orders.map(o => o.id === orderId ? { ...o, status: newStatus as any } : o);
+    const updated = orders.map(o =>
+      o.id === orderId ? { ...o, status: newStatus as ServiceOrder['status'], updatedAt: new Date().toISOString() } : o
+    );
     saveOrders(updated);
     if (selectedOrder?.id === orderId) {
       setSelectedOrder({ ...selectedOrder, status: newStatus as any });
