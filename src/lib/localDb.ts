@@ -168,21 +168,28 @@ async function syncToSupabase(db: LocalDb): Promise<void> {
 // ============================================================
 
 async function restFetch<T>(table: string): Promise<{ data: T[] | null; error: any }> {
-  const url = `${supabaseUrl}/rest/v1/${table}?select=*&limit=10000`;
+  // Supabase Free limita 1000 rows por request — busca em páginas de 1000
+  const PAGE = 1000;
+  const all: T[] = [];
   try {
-    const res = await fetch(url, {
-      headers: {
-        apikey: supabaseAnonKey,
-        Authorization: `Bearer ${supabaseAnonKey}`,
-        Accept: 'application/json',
-      },
-    });
-    if (!res.ok) {
-      const body = await res.text();
-      return { data: null, error: new Error(`HTTP ${res.status}: ${body}`) };
+    for (let offset = 0; ; offset += PAGE) {
+      const url = `${supabaseUrl}/rest/v1/${table}?select=*&limit=${PAGE}&offset=${offset}`;
+      const res = await fetch(url, {
+        headers: {
+          apikey: supabaseAnonKey,
+          Authorization: `Bearer ${supabaseAnonKey}`,
+          Accept: 'application/json',
+        },
+      });
+      if (!res.ok) {
+        const body = await res.text();
+        return { data: null, error: new Error(`HTTP ${res.status}: ${body}`) };
+      }
+      const page: T[] = await res.json();
+      all.push(...page);
+      if (page.length < PAGE) break; // última página
     }
-    const data = await res.json();
-    return { data, error: null };
+    return { data: all, error: null };
   } catch (e) {
     return { data: null, error: e };
   }
