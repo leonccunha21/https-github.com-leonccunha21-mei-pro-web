@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ConfigManicure, ManicureDb } from '../types';
 import { loadManicureDb, saveManicureDb } from '../localDb';
 import { Settings as SettingsIcon, Save, Download, Upload, Loader2 } from 'lucide-react';
@@ -13,6 +13,11 @@ export default function Configuracoes({ config, setConfig }: Props) {
   const [form, setForm] = useState({ nomeSalao: config.nomeSalao, profissional: config.profissional, telefoneContato: config.telefoneContato || '', endereco: config.endereco || '' });
   const [exporting, setExporting] = useState(false);
   const [importing, setImporting] = useState(false);
+
+  // Sincroniza o formulário quando config muda externamente (ex: carregamento da nuvem)
+  useEffect(() => {
+    setForm({ nomeSalao: config.nomeSalao, profissional: config.profissional, telefoneContato: config.telefoneContato || '', endereco: config.endereco || '' });
+  }, [config]);
 
   const save = () => {
     setConfig({ nomeSalao: form.nomeSalao, profissional: form.profissional, telefoneContato: form.telefoneContato || undefined, endereco: form.endereco || undefined });

@@ -51,7 +51,7 @@ export function templatesPadrao(): MensagemTemplate[] {
     { id: 'tmp_1dia', nome: 'Lembrete 1 dia antes', tipo: 'lembrete_1dia', ativo: true,
       mensagem: 'Olá {{nome}}, passando para lembrar que seu horário na {{salao}} é amanhã ({{data}}) às {{hora}}. Confirme sua presença! 💅' },
     { id: 'tmp_1hora', nome: 'Lembrete 1 hora antes', tipo: 'lembrete_1hora', ativo: true,
-      mensagem: 'Olá {{nome}}, seu horário na {{salao}} é em aproximadamente 1 hora ({{hora}). Te esperamos! ✨' },
+      mensagem: 'Olá {{nome}}, seu horário na {{salao}} é em aproximadamente 1 hora ({{hora}}). Te esperamos! ✨' },
     { id: 'tmp_confirmacao', nome: 'Confirmação de agendamento', tipo: 'confirmacao', ativo: true,
       mensagem: 'Olá {{nome}}, seu agendamento na {{salao}} foi confirmado! 📅 {{data}} às {{hora}}. Qualquer dúvida é só chamar.' },
   ];
@@ -106,6 +106,12 @@ export async function saveManicureDb(db: ManicureDb): Promise<void> {
   try { await idbPut(db); } catch (e) { console.error('Erro ao salvar Manicure DB:', e); }
   saveManicureCloud(db).catch((e) => console.error('Manicure Supabase sync falhou:', e));
   notifyDbUpdated();
+}
+
+/** Salva APENAS no IndexedDB local, sem disparar sync com a nuvem.
+ *  Usado na carga inicial para não sobrescrever deleções pendentes. */
+export async function saveManicureDbLocalOnly(db: ManicureDb): Promise<void> {
+  try { await idbPut(db); } catch (e) { console.error('Erro ao salvar Manicure DB (local):', e); }
 }
 
 export function newId(prefix: string): string {

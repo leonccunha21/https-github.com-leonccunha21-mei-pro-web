@@ -1,0 +1,12 @@
+# Stripe CLI configuration for MEI PRO
+# Run: stripe listen --forward-to localhost:4000/api/stripe/webhook
+
+[webhooks]
+# Endpoint secret for local webhook forwarding
+# Generate with: stripe listen --print-secret
+webhook_secret = ""
+
+[mock]
+# Simulate subscription events during development
+# stripe trigger checkout.session.completed
+# stripe trigger customer.subscription.updated

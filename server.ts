@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 import { randomUUID } from 'crypto';
 import * as cheerio from 'cheerio';
 import { createClient } from '@supabase/supabase-js';
+import Stripe from 'stripe';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = path.resolve(__dirname, 'data');
@@ -58,6 +59,111 @@ function writeDb(db: LocalDb): void {
 
 const app = express();
 app.use(express.json({ limit: '100mb' }));
+
+// ---------------------------------------------------------------------------
+// Stripe + Supabase admin (assinaturas)
+// ---------------------------------------------------------------------------
+const stripeKey = process.env.STRIPE_SECRET_KEY || ''
+const stripeWebhookSecret = process.env.STRIPE_WEBHOOK_SECRET || ''
+const stripe = stripeKey ? new Stripe(stripeKey) : null
+
+const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || ''
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''
+const supabaseAdmin = (supabaseUrl && supabaseServiceKey)
+  ? createClient(supabaseUrl, supabaseServiceKey)
+  : null
+
+async function getSubscriptionByUid(uid: string) {
+  if (!supabaseAdmin) return null
+  const { data } = await supabaseAdmin
+    .from('subscriptions')
+    .select('*')
+    .eq('user_id', uid)
+    .maybeSingle()
+  return data
+}
+
+async function upsertSubscription(uid: string, email: string, stripeCustomerId: string, stripeSubscriptionId: string, status: string, planId: string, currentPeriodEnd: string | null) {
+  if (!supabaseAdmin) return
+  await supabaseAdmin.from('subscriptions').upsert({
+    user_id: uid,
+    email,
+    stripe_customer_id: stripeCustomerId,
+    stripe_subscription_id: stripeSubscriptionId,
+    status,
+    plan_id: planId,
+    current_period_end: currentPeriodEnd,
+  }, { onConflict: 'user_id' })
+}
+
+// Webhook precisa do body raw (sem JSON parser)
+// Registrado ANTES do express.json() para capturar o body cru
+app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  if (!stripe || !stripeWebhookSecret) {
+    return res.status(500).json({ error: 'Stripe não configurado' })
+  }
+  const sig = req.headers['stripe-signature'] as string
+  let event: Stripe.Event
+  try {
+    event = stripe.webhooks.constructEvent(req.body, sig, stripeWebhookSecret)
+  } catch (err: any) {
+    console.error('Stripe webhook signature error:', err.message)
+    return res.status(400).json({ error: 'Invalid signature' })
+  }
+
+  try {
+    switch (event.type) {
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session
+        const uid = session.metadata?.uid
+        const email = session.customer_email || session.metadata?.email || ''
+        const subId = session.subscription as string
+        const customerId = session.customer as string
+        if (uid && subId) {
+          const rawSub: any = await stripe.subscriptions.retrieve(subId)
+          await upsertSubscription(
+            uid, email, customerId, subId, rawSub.status,
+            rawSub.items?.data?.[0]?.price?.id || 'monthly',
+            rawSub.current_period_end ? new Date(rawSub.current_period_end * 1000).toISOString() : null
+          )
+        }
+        break
+      }
+      case 'customer.subscription.updated':
+      case 'customer.subscription.deleted': {
+        const rawSub: any = event.data.object
+        const customerId = rawSub.customer as string
+        if (!supabaseAdmin) break
+        const { data: existing } = await supabaseAdmin
+          .from('subscriptions')
+          .select('user_id')
+          .eq('stripe_customer_id', customerId)
+          .maybeSingle()
+        if (existing?.user_id) {
+          await supabaseAdmin.from('subscriptions').update({
+            status: rawSub.status,
+            stripe_subscription_id: rawSub.id,
+            plan_id: rawSub.items?.data?.[0]?.price?.id || 'monthly',
+            current_period_end: rawSub.current_period_end ? new Date(rawSub.current_period_end * 1000).toISOString() : null,
+            cancel_at_period_end: rawSub.cancel_at_period_end,
+          }).eq('user_id', existing.user_id)
+        }
+        break
+      }
+      case 'invoice.payment_failed': {
+        const invoice = event.data.object as Stripe.Invoice
+        const customerId = invoice.customer as string
+        if (!supabaseAdmin) break
+        await supabaseAdmin.from('subscriptions').update({ status: 'past_due' }).eq('stripe_customer_id', customerId)
+        break
+      }
+    }
+    res.json({ received: true })
+  } catch (err: any) {
+    console.error('Stripe webhook handler error:', err.message)
+    res.status(500).json({ error: 'Internal error' })
+  }
+});
 
 // Test Supabase connection status
 app.get('/api/supabase-status', async (_req, res) => {
@@ -328,6 +434,89 @@ app.post('/api/rag/ask', (req, res) => {
   const { question } = req.body || {};
   res.json({ answer: `[RAG stub] Não há backend real conectado. Pergunta recebida: "${question}". Implemente o pipeline PostgreSQL + pgvector na VPS para respostas baseadas em documentos.` });
 });
+
+// ---------------------------------------------------------------------------
+// Stripe API (checkout, portal, subscription status)
+// ---------------------------------------------------------------------------
+
+app.post('/api/stripe/create-checkout-session', async (req, res) => {
+  if (!stripe) return res.status(500).json({ error: 'Stripe não configurado' })
+  const { uid, email, priceId } = req.body || {}
+  if (!uid || !email || !priceId) return res.status(400).json({ error: 'uid, email e priceId são obrigatórios' })
+
+  try {
+    // Busca ou cria cliente Stripe
+    let customerId: string
+    const existing = await getSubscriptionByUid(uid)
+    if (existing?.stripe_customer_id) {
+      customerId = existing.stripe_customer_id
+    } else {
+      const customer = await stripe.customers.create({ email, metadata: { uid } })
+      customerId = customer.id
+    }
+
+    const coupon = (req.body?.coupon as string)?.trim() || ''
+
+    const sessionParams: any = {
+      customer: customerId,
+      mode: 'subscription',
+      line_items: [{ price: priceId, quantity: 1 }],
+      metadata: { uid, email },
+      subscription_data: {
+        trial_period_days: 30,
+        metadata: { uid },
+      },
+      success_url: `${req.headers.origin || process.env.APP_URL || 'http://localhost:5173'}/?checkout=success`,
+      cancel_url: `${req.headers.origin || process.env.APP_URL || 'http://localhost:5173'}/?checkout=canceled`,
+    }
+    if (coupon) {
+      sessionParams.discounts = [{ coupon }]
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams)
+
+    res.json({ url: session.url })
+  } catch (err: any) {
+    console.error('Stripe checkout error:', err.message)
+    res.status(500).json({ error: err.message })
+  }
+})
+
+app.post('/api/stripe/create-portal-session', async (req, res) => {
+  if (!stripe) return res.status(500).json({ error: 'Stripe não configurado' })
+  const { uid } = req.body || {}
+  if (!uid) return res.status(400).json({ error: 'uid é obrigatório' })
+
+  try {
+    const existing = await getSubscriptionByUid(uid)
+    const customerId = existing?.stripe_customer_id
+    if (!customerId) return res.status(404).json({ error: 'Cliente não encontrado' })
+
+    const session = await stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: `${req.headers.origin || process.env.APP_URL || 'http://localhost:5173'}/`,
+    })
+
+    res.json({ url: session.url })
+  } catch (err: any) {
+    console.error('Stripe portal error:', err.message)
+    res.status(500).json({ error: err.message })
+  }
+})
+
+app.get('/api/subscription', async (req, res) => {
+  const uid = req.query.uid as string
+  if (!uid) return res.status(400).json({ error: 'uid é obrigatório' })
+
+  try {
+    const existing = await getSubscriptionByUid(uid)
+    if (!existing) return res.json(null)
+    res.json(existing)
+  } catch (err: any) {
+    console.error('Subscription fetch error:', err.message)
+    res.status(500).json({ error: err.message })
+  }
+})
 
 const distDir = path.resolve(__dirname, 'dist');
 if (fs.existsSync(distDir)) {

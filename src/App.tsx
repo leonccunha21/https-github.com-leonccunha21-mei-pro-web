@@ -52,6 +52,7 @@ const DRE = lazy(() => import('./components/DRE'));
 const BankConciliationPage = lazy(() => import('./components/BankConciliation'));
 const BillsPage = lazy(() => import('./components/Bills'));
 const InternetSharingPage = lazy(() => import('./components/InternetSharing'));
+const PlansPage = lazy(() => import('./components/PlansPage'));
 import { 
   LayoutDashboard, 
   Package, 
@@ -96,6 +97,7 @@ import { canAccess } from './lib/permissions';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 import { getBackupSchedule, shouldRunBackup, saveBackupSchedule } from './lib/backupScheduler';
 import { isSupabaseConfigured } from './lib/supabase';
+import { getSubscription, isActive as subIsActive } from './lib/subscription';
 
 // Firebase Auth é importado dinamicamente (sob demanda) para não
 // penalizar o carregamento inicial do app.
@@ -163,6 +165,8 @@ export default function App() {
 
   // --- Sincronização na nuvem (Firebase Auth only) ---
   const [cloudUser, setCloudUser] = useState<User | null>(null);
+  const [subscriptionChecked, setSubscriptionChecked] = useState(false);
+  const [needsSubscription, setNeedsSubscription] = useState(false);
   const [supabaseConnected, setSupabaseConnected] = useState<boolean>(() => isSupabaseConfigured());
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
@@ -360,6 +364,15 @@ export default function App() {
     if (!cloudUser) { setLoading(false); return; }
     (async () => {
       try {
+        // Verifica assinatura
+        const sub = await getSubscription(cloudUser.uid)
+        if (!sub || !subIsActive(sub.status)) {
+          setNeedsSubscription(true)
+          setLoading(false)
+          return
+        }
+        setNeedsSubscription(false)
+
         const db = await loadDb();
         const res = await applyLoadedDb(db);
         setSupabaseConnected(isSupabaseConfigured());
@@ -409,12 +422,14 @@ export default function App() {
           leadJobs: [],
           whatsappInstances: [],
           aiAgents: [],
+          opportunities: [],
           bills: [],
           internetUsers: [],
           storeInfo: null,
           initialized: true,
         });
       } finally {
+        setSubscriptionChecked(true)
         setLoading(false);
       }
     })();
@@ -1406,7 +1421,27 @@ export default function App() {
   }
 
   if (!cloudUser) {
-    return <LoginScreen onSignIn={handleCloudSignIn} />;
+    return (
+      <React.Suspense fallback={
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+          <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+        </div>
+      }>
+        <LoginScreen onSignIn={handleCloudSignIn} />
+      </React.Suspense>
+    );
+  }
+
+  if (needsSubscription) {
+    return (
+      <React.Suspense fallback={
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600" />
+        </div>
+      }>
+        <PlansPage uid={cloudUser.uid} email={cloudUser.email || ''} onBack={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch {}; window.location.href = '/'; }} />
+      </React.Suspense>
+    );
   }
 
   return (

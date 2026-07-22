@@ -67,12 +67,10 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
     if (!ag.telefoneCliente) { toast.error('Cliente não possui telefone cadastrado.'); return; }
     setSendingWpp(ag.id);
     try {
-      const tmpl = tipo === 'confirmacao' && templateConfirmacao
-        ? templateConfirmacao
-        : { mensagem: `Olá ${ag.clienteNome.split(' ')[0]}, seu horário na ${ag.clienteNome} está confirmado para ${ag.data} às ${ag.hora.slice(0, 5)}.` };
+      const nomeCliente = ag.clienteNome.split(' ')[0];
       const msg = tipo === 'confirmacao' && templateConfirmacao
-        ? preencherTemplate(templateConfirmacao.mensagem, { nome: ag.clienteNome.split(' ')[0], salao: '', data: ag.data, hora: ag.hora.slice(0, 5) })
-        : `Olá ${ag.clienteNome.split(' ')[0]}, seu agendamento na ${ag.servicoNome} é dia ${ag.data} às ${ag.hora.slice(0, 5)}. Confirme sua presença! 💅`;
+        ? preencherTemplate(templateConfirmacao.mensagem, { nome: nomeCliente, salao: ag.servicoNome, data: ag.data, hora: ag.hora.slice(0, 5) })
+        : `Olá ${nomeCliente}, seu agendamento (${ag.servicoNome}) é dia ${ag.data} às ${ag.hora.slice(0, 5)}. Confirme sua presença! 💅`;
 
       const numero = ag.telefoneCliente.replace(/\D/g, '');
       const mod = await import('../../lib/vps');
@@ -302,7 +300,6 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
             <div className="flex items-center gap-4">
               <div className="flex flex-col items-center shrink-0 w-14">
                 <span className="text-lg font-bold text-slate-900 dark:text-slate-100 leading-tight">{ag.hora.slice(0, 5)}</span>
-                <span className="text-[10px] text-slate-400">{ag.hora.slice(0, 5) === ag.hora.slice(0, 5) ? '' : ''}</span>
               </div>
               <div className="w-0.5 h-10 bg-slate-200 dark:bg-slate-700 rounded-full shrink-0" />
               <div className="flex-1 min-w-0">

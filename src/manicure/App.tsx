@@ -6,7 +6,7 @@ import {
   Scissors, Sun, Moon, Sparkles, MessageCircle, X, ShoppingBag, Stethoscope,
 } from 'lucide-react';
 import { ManicureDb, ClienteManicure, ServicoManicure, AgendamentoManicure, MovimentoCaixa, ProdutoEstoque, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from './types';
-import { emptyDb, loadManicureDb, saveManicureDb, defaultConfig } from './localDb';
+import { emptyDb, loadManicureDb, saveManicureDb, saveManicureDbLocalOnly, defaultConfig } from './localDb';
 import { loadManicureCloud } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
@@ -65,28 +65,34 @@ export default function ManicureApp() {
     (async () => {
       try {
         const local = await loadManicureDb();
+        const localTemDados = !!(local.clientes.length || local.agendamentos.length ||
+          local.servicos.length || local.movimentos.length || local.produtos.length);
         const cloud = await loadManicureCloud();
         if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
+          // local PREVALECE em conflito; nuvem só adiciona IDs desconhecidos pelo local.
+          // BUG FIX: não salvar merged no IDB quando local já tinha dados —
+          // evita que a nuvem ressuscite registros deletados localmente.
           const mergeById = <T extends { id: string }>(a: T[], b: T[]): T[] => {
             const map = new Map<string, T>();
             for (const x of a) map.set(x.id, x);
-            for (const x of b) map.set(x.id, x);
+            for (const x of b) map.set(x.id, x); // b (local) prevalece
             return Array.from(map.values());
           };
           const merged: ManicureDb = {
             ...local,
-            clientes: mergeById(local.clientes, cloud.clientes || []),
-            servicos: mergeById(local.servicos, cloud.servicos || []),
-            agendamentos: mergeById(local.agendamentos, cloud.agendamentos || []),
-            movimentos: mergeById(local.movimentos, cloud.movimentos || []),
-            produtos: mergeById(local.produtos, cloud.produtos || []),
-            whatsappInstances: mergeById(local.whatsappInstances, cloud.whatsappInstances || []),
-            mensagemTemplates: mergeById(local.mensagemTemplates, cloud.mensagemTemplates || []),
-            mensagensEnviadas: mergeById(local.mensagensEnviadas, cloud.mensagensEnviadas || []),
+            clientes: mergeById(cloud.clientes || [], local.clientes),
+            servicos: mergeById(cloud.servicos || [], local.servicos),
+            agendamentos: mergeById(cloud.agendamentos || [], local.agendamentos),
+            movimentos: mergeById(cloud.movimentos || [], local.movimentos),
+            produtos: mergeById(cloud.produtos || [], local.produtos),
+            whatsappInstances: mergeById(cloud.whatsappInstances || [], local.whatsappInstances),
+            mensagemTemplates: mergeById(cloud.mensagemTemplates || [], local.mensagemTemplates),
+            mensagensEnviadas: mergeById(cloud.mensagensEnviadas || [], local.mensagensEnviadas),
             config: { ...defaultConfig(), ...(cloud.config || {}), ...(local.config || {}) },
           };
           setDb(merged);
-          saveManicureDb(merged).catch(() => {});
+          // Só persiste no IDB se o local estava vazio (primeira carga).
+          if (!localTemDados) saveManicureDbLocalOnly(merged).catch(() => {});
         } else {
           setDb(local);
         }
@@ -114,21 +120,21 @@ export default function ManicureApp() {
             const mergeById = <T extends { id: string }>(a: T[], b: T[]): T[] => {
               const map = new Map<string, T>();
               for (const x of a) map.set(x.id, x);
-              for (const x of b) map.set(x.id, x);
+              for (const x of b) map.set(x.id, x); // b (estado atual) prevalece
               return Array.from(map.values());
             };
             const cur = stateRef.current;
+            // local prevalece — não persiste no IDB para não sobrescrever deleções
             const merged: ManicureDb = {
               ...cur,
-              clientes: mergeById(cur.clientes, cloud.clientes || []),
-              servicos: mergeById(cur.servicos, cloud.servicos || []),
-              agendamentos: mergeById(cur.agendamentos, cloud.agendamentos || []),
-              movimentos: mergeById(cur.movimentos, cloud.movimentos || []),
-              produtos: mergeById(cur.produtos, cloud.produtos || []),
+              clientes: mergeById(cloud.clientes || [], cur.clientes),
+              servicos: mergeById(cloud.servicos || [], cur.servicos),
+              agendamentos: mergeById(cloud.agendamentos || [], cur.agendamentos),
+              movimentos: mergeById(cloud.movimentos || [], cur.movimentos),
+              produtos: mergeById(cloud.produtos || [], cur.produtos),
               config: { ...defaultConfig(), ...(cloud.config || {}), ...(cur.config || {}) },
             };
             setDb(merged);
-            saveManicureDb(merged).catch(() => {});
           }
         }).catch(() => {});
       }
@@ -153,7 +159,13 @@ export default function ManicureApp() {
   const setProdutos = (produtos: ProdutoEstoque[]) => { setDb((d) => ({ ...d, produtos })); persist({ produtos }); };
   const setWhatsAppInstances = (whatsappInstances: ManicureWhatsAppInstance[]) => { setDb((d) => ({ ...d, whatsappInstances })); persist({ whatsappInstances }); };
   const setMensagemTemplates = (mensagemTemplates: MensagemTemplate[]) => { setDb((d) => ({ ...d, mensagemTemplates })); persist({ mensagemTemplates }); };
-  const addMensagemEnviada = (m: MensagemEnviada) => { setDb((d) => ({ ...d, mensagensEnviadas: [...d.mensagensEnviadas, m] })); persist({ mensagensEnviadas: [...db.mensagensEnviadas, m] }); };
+  const addMensagemEnviada = (m: MensagemEnviada) => {
+    setDb((d) => {
+      const updated = [...d.mensagensEnviadas, m];
+      persist({ mensagensEnviadas: updated });
+      return { ...d, mensagensEnviadas: updated };
+    });
+  };
   const setConfig = (config: ManicureDb['config']) => { setDb((d) => ({ ...d, config })); persist({ config }); };
 
   useAppointmentScheduler({
@@ -236,7 +248,7 @@ export default function ManicureApp() {
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
             >
               <Stethoscope size={16} />
-              Mounjaro PRO
+              Saúde PRO
             </button>
           </div>
         </div>
@@ -261,7 +273,7 @@ export default function ManicureApp() {
               {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} setClientes={setClientes} />}
               {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} />}
               {activeTab === 'servicos' && <Servicos servicos={db.servicos} setServicos={setServicos} />}
-              {activeTab === 'caixa' && <Caixa movimentos={db.movimentos} />}
+              {activeTab === 'caixa' && <Caixa movimentos={db.movimentos} setMovimentos={setMovimentos} />}
               {activeTab === 'estoque' && <Estoque produtos={db.produtos} setProdutos={setProdutos} />}
               {activeTab === 'whatsapp' && <WhatsAppConfig instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onSaveInstances={setWhatsAppInstances} onSaveTemplates={setMensagemTemplates} />}
               {activeTab === 'configuracoes' && <Configuracoes config={db.config} setConfig={setConfig} />}
@@ -333,7 +345,7 @@ export default function ManicureApp() {
                   className="flex items-center gap-3 px-3 py-3 rounded-xl bg-cyan-50/50 dark:bg-cyan-900/20 text-cyan-700 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider"
                 >
                   <Stethoscope size={18} />
-                  Mounjaro PRO
+                  Saúde PRO
                 </button>
               </div>
             </div>
