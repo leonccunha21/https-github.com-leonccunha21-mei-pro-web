@@ -356,7 +356,7 @@ export async function saveDb(db: LocalDb): Promise<void> {
   // 2. Sync best-effort para Supabase (nuvem)
   syncToSupabase(db).catch((e) => {
     console.error('Supabase sync falhou:', e);
-  });\n
+  });
   notifyDbUpdated();
 }
 
