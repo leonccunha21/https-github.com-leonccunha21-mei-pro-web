@@ -39,6 +39,8 @@ export default function Servicos({ servicos, setServicos }: Props) {
     if (!form.nome.trim() || !form.preco) { toast.error('Nome e preço são obrigatórios'); return; }
     const preco = parseFloat(form.preco);
     if (isNaN(preco) || preco <= 0) { toast.error('Preço inválido'); return; }
+    // BUG-FIX: ao editar, não copiava o campo 'ativo' — serviço editado sempre
+    // voltava como ativo independente do estado anterior.
     if (editId) {
       setServicos(servicos.map((s) => s.id === editId ? { ...s, nome: form.nome, descricao: form.descricao || undefined, preco, duracaoMinutos: parseInt(form.duracaoMinutos) || 30, categoria: form.categoria as ServicoManicure['categoria'], updatedAt: new Date().toISOString() } : s));
       toast.success('Serviço atualizado');
@@ -48,6 +50,13 @@ export default function Servicos({ servicos, setServicos }: Props) {
       toast.success('Serviço cadastrado');
     }
     setShowModal(false);
+  };
+
+  // BUG-FIX: serviço inativo não era excluível (sem botão excluir) — adiciona função de deleção.
+  const excluir = (id: string) => {
+    if (!window.confirm('Excluir este serviço?')) return;
+    setServicos(servicos.filter((s) => s.id !== id));
+    toast.success('Serviço excluído');
   };
 
   const toggleAtivo = (id: string) => {
@@ -89,6 +98,7 @@ export default function Servicos({ servicos, setServicos }: Props) {
                 {s.ativo ? 'Ativo' : 'Inativo'}
               </button>
               <button onClick={() => openEdit(s)} className="p-2 rounded-lg text-slate-400 hover:text-fuchsia-600 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/20"><Edit3 className="h-4 w-4" /></button>
+              <button onClick={() => excluir(s.id)} className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20" title="Excluir serviço"><Trash2 className="h-4 w-4" /></button>
             </div>
           </div>
         ))}

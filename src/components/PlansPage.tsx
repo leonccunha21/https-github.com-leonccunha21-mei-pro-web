@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Sparkles, Stethoscope, ShoppingBag, Loader2, Check, ArrowLeft, Ticket } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Stethoscope, ShoppingBag, Loader2, Check, ArrowLeft, Ticket, Sparkles } from 'lucide-react';
 import { createCheckoutSession } from '../lib/subscription';
 
 interface PlansPageProps {
@@ -14,14 +14,20 @@ const PRICE_IDS = {
   annual: import.meta.env.VITE_STRIPE_PRICE_ANNUAL || '',
 }
 
-const TRIAL_DAYS = 30
-
 export default function PlansPage({ uid, email, currentPlan, onBack }: PlansPageProps) {
   const [busy, setBusy] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [coupon, setCoupon] = useState('')
   const [couponApplied, setCouponApplied] = useState(false)
   const [showCouponInput, setShowCouponInput] = useState(false)
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('checkout') === 'success') {
+      window.history.replaceState({}, '', window.location.pathname)
+      window.location.reload()
+    }
+  }, [])
 
   const handleCheckout = async (priceId: string, label: string) => {
     setBusy(label)
@@ -111,30 +117,7 @@ export default function PlansPage({ uid, email, currentPlan, onBack }: PlansPage
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-4xl mx-auto">
-          {/* Free Trial */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-6 flex flex-col">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600">
-                <Sparkles size={20} />
-              </div>
-              <div>
-                <h3 className="font-bold text-slate-900 dark:text-slate-100">Teste Grátis</h3>
-                <p className="text-xs text-slate-500">{TRIAL_DAYS} dias</p>
-              </div>
-            </div>
-            <p className="text-3xl font-bold text-slate-900 dark:text-slate-100 mb-1">R$ 0</p>
-            <p className="text-xs text-slate-500 mb-6">/{TRIAL_DAYS} dias</p>
-            <ul className="space-y-2 text-sm text-slate-600 dark:text-slate-300 flex-1 mb-6">
-              <li className="flex items-start gap-2"><Check size={16} className="text-emerald-500 shrink-0 mt-0.5" /> Todos os sistemas</li>
-              <li className="flex items-start gap-2"><Check size={16} className="text-emerald-500 shrink-0 mt-0.5" /> Sincronia na nuvem</li>
-              <li className="flex items-start gap-2"><Check size={16} className="text-emerald-500 shrink-0 mt-0.5" /> Sem cartão de crédito</li>
-            </ul>
-            <span className="block w-full text-center py-2.5 rounded-xl text-sm font-semibold bg-slate-100 dark:bg-slate-700 text-slate-400 dark:text-slate-500 cursor-default">
-              Atual
-            </span>
-          </div>
-
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-2xl mx-auto">
           {/* Monthly */}
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border-2 border-indigo-500 dark:border-indigo-400 p-6 flex flex-col relative">
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-indigo-600 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full">

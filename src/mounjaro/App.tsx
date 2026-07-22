@@ -582,7 +582,7 @@ export default function MounjaroApp() {
               <input type="file" accept="application/json" className="hidden" onChange={(e) => e.target.files?.[0] && importBackup(e.target.files[0])} />
             </label>
             <button onClick={() => setShowClinicaModal(true)} className="text-[10px] font-medium text-slate-500 hover:text-cyan-600 px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">
-              {clinica ? 'Equipe' : 'Equipe'}
+              {clinica ? 'Gerenciar equipe' : 'Criar / entrar equipe'}
             </button>
             <button
               onClick={async () => {
@@ -605,7 +605,7 @@ export default function MounjaroApp() {
               Sair
             </button>
           </div>
-          <p className="text-[9px] text-slate-400 px-1">Saúde PRO v1.0</p>
+          <p className="text-[9px] text-slate-400 px-1">Saúde PRO v2.24.7</p>
         </div>
       </aside>
 

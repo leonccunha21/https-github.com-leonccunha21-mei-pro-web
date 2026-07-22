@@ -256,7 +256,7 @@ export default function ManicureApp() {
         </div>
 
         <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-700">
-          <p className="text-[10px] text-slate-400 dark:text-slate-500">Manicure PRO v1.0</p>
+          <p className="text-[10px] text-slate-400 dark:text-slate-500">Manicure PRO v2.24.7</p>
         </div>
       </aside>
 

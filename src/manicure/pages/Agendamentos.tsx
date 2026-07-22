@@ -172,6 +172,12 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
     setShowModal(false);
   };
 
+  const excluirAgendamento = (id: string) => {
+    if (!window.confirm('Excluir este agendamento?')) return;
+    setAgendamentos(agendamentos.filter((a) => a.id !== id));
+    toast.success('Agendamento excluído');
+  };
+
   const mudarStatus = (id: string, novoStatus: StatusAgendamento) => {
     const ag = agendamentos.find((a) => a.id === id);
     if (!ag) return;
@@ -329,6 +335,11 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
                     title="Enviar WhatsApp"
                   >
                     {sendingWpp === ag.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
+                  </button>
+                )}
+                {ag.status === 'cancelado' && (
+                  <button onClick={() => excluirAgendamento(ag.id)} className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600" title="Excluir agendamento cancelado">
+                    <X className="h-3.5 w-3.5" />
                   </button>
                 )}
                 <button onClick={() => openEdit(ag)} className="p-1.5 rounded-lg text-slate-400 hover:text-fuchsia-600"><ChevronRightIcon className="h-4 w-4" /></button>

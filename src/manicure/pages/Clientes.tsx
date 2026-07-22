@@ -46,8 +46,13 @@ export default function Clientes({ clientes, agendamentos, setClientes }: Props)
   };
 
   const excluir = (id: string) => {
-    const temAgendamento = agendamentos.some((a) => a.clienteId === id);
-    if (temAgendamento) { toast.error('Cliente possui agendamentos. Remova-os primeiro.'); setShowDeleteConfirm(null); return; }
+    // BUG-FIX: bloqueava exclusão se o cliente tinha QUALQUER agendamento histórico
+    // (incluindo concluídos/cancelados). Agora só bloqueia se tiver agendamentos
+    // futuros ou pendentes (agendado/confirmado/em_andamento).
+    const temAgendamentoAtivo = agendamentos.some(
+      (a) => a.clienteId === id && (a.status === 'agendado' || a.status === 'confirmado' || a.status === 'em_andamento')
+    );
+    if (temAgendamentoAtivo) { toast.error('Cliente possui agendamentos ativos. Conclua ou cancele-os primeiro.'); setShowDeleteConfirm(null); return; }
     setClientes(clientes.filter((c) => c.id !== id));
     toast.success('Cliente removido');
     setShowDeleteConfirm(null);

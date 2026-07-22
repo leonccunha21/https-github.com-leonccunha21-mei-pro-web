@@ -22,6 +22,7 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
     const ativos = clientes.filter((c) => c.ativo);
     const totalDoses = doses.length;
     const pesoTotalPerdido = ativos.reduce((acc, c) => acc + pesoPerdido(c, pesagens, doses), 0);
+    // BUG-FIX: consistente com Pagamentos.tsx — pendentes vencidos também são "em aberto".
     const valorEmAberto = pagamentos
       .filter((p) => p.status === 'pendente' || p.status === 'atrasado')
       .reduce((acc, p) => acc + p.valor, 0);

@@ -32,19 +32,25 @@ export default function WhatsAppConfig({ instances, templates, mensagensEnviadas
         status: 'CONNECTING', qrCode: result.qrCode, createdAt: new Date().toISOString(),
       }]);
       setConnectingName('');
-      // Poll for connection status
+      // Poll for connection status — BUG-FIX: poll vazava se o componente fosse desmontado.
+      // Usar uma flag local para parar o interval mesmo sem cleanup via useEffect.
+      let stopped = false;
       const poll = setInterval(async () => {
+        if (stopped) { clearInterval(poll); return; }
         try {
           const list = await mod.whatsapp.list();
           const updated = list.find((i: any) => i.id === result.instanceId);
           if (updated && updated.status === 'CONNECTED') {
             clearInterval(poll);
+            stopped = true;
             onSaveInstances(instances.map((i) => i.id === result.instanceId ? { ...i, status: 'CONNECTED', qrCode: undefined } : i));
             toast.success('WhatsApp conectado!');
             setShowQrModal(false);
           }
         } catch { /* ignore */ }
       }, 2000);
+      // Para o poll após 5 minutos (QR expira)
+      setTimeout(() => { stopped = true; clearInterval(poll); }, 5 * 60 * 1000);
     } catch {
       toast.error('Não foi possível conectar. Verifique se o servidor VPS está rodando.');
       // Cria instância local mesmo sem VPS (modo demonstração)

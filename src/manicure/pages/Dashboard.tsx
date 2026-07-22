@@ -14,7 +14,9 @@ export default function Dashboard({ db, onNavigate }: Props) {
   const receitaHoje = db.movimentos
     .filter((m) => m.data === hoje && m.tipo === 'entrada')
     .reduce((s, m) => s + m.valor, 0);
-  const clientesAtivos = new Set(db.agendamentos.map((a) => a.clienteId)).size;
+  // BUG-FIX: contava clientes únicos de agendamentos (incluindo inativos/excluídos),
+  // deveria contar clientes cadastrados com ao menos 1 agendamento futuro ou recente.
+  const clientesAtivos = db.clientes.length;
   const servicosAtivos = db.servicos.filter((s) => s.ativo).length;
 
   const cards = [

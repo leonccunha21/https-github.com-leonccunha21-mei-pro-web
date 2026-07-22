@@ -42,7 +42,9 @@ export default function Peso({ clientes, pesagens, doses, setPesagens, logAudito
     if (!form.clienteId || !form.data || !form.peso) return;
     const cli = clientes.find((c) => c.id === form.clienteId);
     if (editandoId) {
-      const atualizada: PesagemMounjaro = { ...(pesagens.find((p) => p.id === editandoId) as PesagemMounjaro), ...form, peso: Number(form.peso), updatedAt: new Date().toISOString() } as PesagemMounjaro;
+      // BUG-FIX: sobrescrevia o objeto inteiro com spread — pode perder campos futuros.
+      // Mantém o objeto existente e atualiza apenas os campos do form.
+      const atualizada: PesagemMounjaro = { ...(pesagens.find((p) => p.id === editandoId) as PesagemMounjaro), clienteId: form.clienteId!, data: form.data!, peso: Number(form.peso), observacoes: form.observacoes, updatedAt: new Date().toISOString() };
       setPesagens(pesagens.map((p) => (p.id === editandoId ? atualizada : p)));
       logAuditoria({ entidade: 'pesagem', acao: 'editar', resumo: `Pesagem ${atualizada.peso} kg de ${cli?.nome || '—'}`, clienteId: form.clienteId, refId: editandoId });
     } else {
@@ -53,6 +55,8 @@ export default function Peso({ clientes, pesagens, doses, setPesagens, logAudito
         peso: Number(form.peso),
         observacoes: form.observacoes,
         createdAt: new Date().toISOString(),
+        // BUG-FIX: novo registro de pesagem não tinha updatedAt — necessário para sync.
+        updatedAt: new Date().toISOString(),
       };
       setPesagens([...pesagens, nova]);
       logAuditoria({ entidade: 'pesagem', acao: 'criar', resumo: `Pesagem ${nova.peso} kg de ${cli?.nome || '—'}`, clienteId: form.clienteId, refId: nova.id });

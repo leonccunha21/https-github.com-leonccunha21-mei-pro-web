@@ -34,7 +34,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       mode: 'subscription',
       line_items: [{ price: priceId, quantity: 1 }],
       metadata: { uid, email },
-      subscription_data: { trial_period_days: 30, metadata: { uid } },
+      subscription_data: { metadata: { uid } },
       success_url: `${req.headers.origin || 'https://mei-pro.vercel.app'}/?checkout=success`,
       cancel_url: `${req.headers.origin || 'https://mei-pro.vercel.app'}/?checkout=canceled`,
     };

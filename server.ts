@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
@@ -463,7 +464,6 @@ app.post('/api/stripe/create-checkout-session', async (req, res) => {
       line_items: [{ price: priceId, quantity: 1 }],
       metadata: { uid, email },
       subscription_data: {
-        trial_period_days: 30,
         metadata: { uid },
       },
       success_url: `${req.headers.origin || process.env.APP_URL || 'http://localhost:5173'}/?checkout=success`,
@@ -514,6 +514,36 @@ app.get('/api/subscription', async (req, res) => {
     res.json(existing)
   } catch (err: any) {
     console.error('Subscription fetch error:', err.message)
+    res.status(500).json({ error: err.message })
+  }
+})
+
+app.post('/api/subscription/start-trial', async (req, res) => {
+  const { uid, email } = req.body || {}
+  if (!uid || !email) return res.status(400).json({ error: 'uid e email são obrigatórios' })
+  if (!supabaseAdmin) return res.status(500).json({ error: 'Supabase não configurado' })
+
+  try {
+    const existing = await getSubscriptionByUid(uid)
+    if (existing) return res.json(existing)
+
+    const trialEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+    const { data, error } = await supabaseAdmin
+      .from('subscriptions')
+      .insert({
+        user_id: uid, email,
+        status: 'trialing',
+        plan_id: 'trial',
+        trial_end: trialEnd,
+        current_period_end: trialEnd,
+      })
+      .select()
+      .maybeSingle()
+
+    if (error) throw error
+    res.json(data)
+  } catch (err: any) {
+    console.error('Start trial error:', err.message)
     res.status(500).json({ error: err.message })
   }
 })

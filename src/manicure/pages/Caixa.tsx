@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { MovimentoCaixa } from '../types';
 import { newId } from '../localDb';
-import { DollarSign, TrendingUp, TrendingDown, Search, Plus, X } from 'lucide-react';
+import { DollarSign, TrendingUp, TrendingDown, Search, Plus, X, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -110,6 +110,16 @@ export default function Caixa({ movimentos, setMovimentos }: Props) {
             <p className={`text-sm font-bold ${m.tipo === 'entrada' ? 'text-emerald-600' : 'text-rose-600'}`}>
               {m.tipo === 'entrada' ? '+' : '-'}R$ {m.valor.toFixed(2)}
             </p>
+            {/* BUG-FIX: sem botão para excluir movimentos manuais — adicionado */}
+            {setMovimentos && !m.agendamentoId && (
+              <button
+                onClick={() => { if (window.confirm('Excluir este lançamento?')) setMovimentos(movimentos.filter((x) => x.id !== m.id)); }}
+                className="p-1.5 rounded-lg text-slate-300 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 shrink-0"
+                title="Excluir lançamento"
+              >
+                <Trash2 className="h-3.5 w-3.5" />
+              </button>
+            )}
           </div>
         ))}
         {filtered.length === 0 && (

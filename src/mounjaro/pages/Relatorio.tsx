@@ -2,13 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { FileText, Printer, Download } from 'lucide-react';
 import { ClienteMounjaro, DoseMounjaro, PagamentoMounjaro, PesagemMounjaro, ConfigMounjaro } from '../types';
 import { Card, Button, SelectField, StatCard } from '../ui';
-import { pesoAtual, pesoPerdido, formatarDataCurta, formatarMoeda, calcularScore } from '../lib';
-
-function calcularImc(peso: number, alturaCm?: number): number {
-  if (!peso || !alturaCm) return 0;
-  const m = alturaCm / 100;
-  return Math.round((peso / (m * m)) * 10) / 10;
-}
+// BUG-FIX: remover função calcularImc duplicada — usar calcIMC de lib.ts
+import { pesoAtual, pesoPerdido, formatarDataCurta, formatarMoeda, calcularScore, calcIMC } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
@@ -105,7 +100,7 @@ export default function Relatorio({ clientes, pesagens, doses, pagamentos, confi
               <div><span className="text-slate-500 dark:text-slate-400">Início</span><div className="font-semibold">{cliente.dataInicioTratamento ? formatarDataCurta(cliente.dataInicioTratamento) : '—'}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Altura</span><div className="font-semibold">{cliente.alturaCm ? `${cliente.alturaCm} cm` : '—'}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Peso inicial</span><div className="font-semibold">{cliente.pesoInicial ? `${cliente.pesoInicial} kg` : '—'}</div></div>
-              <div><span className="text-slate-500 dark:text-slate-400">IMC inicial</span><div className="font-semibold">{(() => { const v = calcularImc(cliente.pesoInicial || 0, cliente.alturaCm || 0); return (!isNaN(v) && v > 0) ? v.toFixed(1) : '—'; })()}</div></div>
+              <div><span className="text-slate-500 dark:text-slate-400">IMC inicial</span><div className="font-semibold">{(() => { const v = calcIMC(cliente.pesoInicial || 0, cliente.alturaCm || 0); return (!isNaN(v) && v > 0) ? v.toFixed(1) : '—'; })()}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Peso atual</span><div className="font-semibold">{(() => { const pa = pesoAtual(cliente, pesagens, doses); return pa > 0 ? `${pa} kg` : '—'; })()}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Perda total</span><div className={`font-semibold ${pesoPerdido(cliente, pesagens, doses) > 0 ? 'text-emerald-600' : pesoPerdido(cliente, pesagens, doses) < 0 ? 'text-rose-500' : ''}`}>{pesoPerdido(cliente, pesagens, doses) !== 0 ? `${pesoPerdido(cliente, pesagens, doses).toFixed(1)} kg` : '0,0 kg'}</div></div>
               <div><span className="text-slate-500 dark:text-slate-400">Objetivo</span><div className="font-semibold">{cliente.objetivoPeso ? `${cliente.objetivoPeso} kg` : '—'}</div></div>
@@ -137,7 +132,7 @@ export default function Relatorio({ clientes, pesagens, doses, pagamentos, confi
                   {rel.pesagens.map((x, i) => {
                     const prev = i > 0 ? rel.pesagens[i - 1].peso : cliente.pesoInicial;
                     const delta = prev != null ? x.peso - prev : null;
-                    const imc = cliente.alturaCm ? calcularImc(x.peso, cliente.alturaCm) : null;
+                    const imc = cliente.alturaCm ? calcIMC(x.peso, cliente.alturaCm) : null;
                     return (
                       <tr key={x.id} className="border-b border-slate-100 dark:border-slate-800">
                         <td className="py-1.5">{formatarDataCurta(x.data)}</td>

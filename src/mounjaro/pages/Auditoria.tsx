@@ -31,17 +31,19 @@ export default function Auditoria({ auditoria, clientes }: Props) {
   const nomeCliente = (id?: string) => (id ? clientes.find((c) => c.id === id)?.nome || '—' : '');
 
   const filtrados = useMemo(() => {
-    const b = busca.toLowerCase();
+    const termo = busca.toLowerCase();
+    // BUG-FIX: variável 'b' no sort shadow a variável outer 'b = busca.toLowerCase()'.
+    // Renomeado para 'termo' para eliminar a ambiguidade.
     return [...auditoria]
-      .sort((a, b) => b.data.localeCompare(a.data))
+      .sort((x, y) => y.data.localeCompare(x.data))
       .filter((r) => !entidade || r.entidade === entidade)
       .filter((r) => !acao || r.acao === acao)
       .filter((r) => {
-        if (!b) return true;
+        if (!termo) return true;
         return (
-          r.resumo.toLowerCase().includes(b) ||
-          r.usuario.toLowerCase().includes(b) ||
-          (r.clienteId ? nomeCliente(r.clienteId).toLowerCase().includes(b) : false)
+          r.resumo.toLowerCase().includes(termo) ||
+          r.usuario.toLowerCase().includes(termo) ||
+          (r.clienteId ? nomeCliente(r.clienteId).toLowerCase().includes(termo) : false)
         );
       });
   }, [auditoria, entidade, acao, busca, clientes]);
