@@ -41,7 +41,7 @@ export function parseOfx(content: string): OfxResult {
 
     if (!dtPosted || !trnAmt) continue;
 
-    const amount = parseFloat(trnAmt[1].trim());
+    const amount = parseOfxAmount(trnAmt[1].trim());
     const type = amount >= 0 ? 'CREDIT' : 'DEBIT';
 
     result.transactions.push({
@@ -54,6 +54,19 @@ export function parseOfx(content: string): OfxResult {
   }
 
   return result;
+}
+
+/** Converte string numérica no formato brasileiro (1.234,56) ou americano (1234.56) para número. */
+function parseOfxAmount(raw: string): number {
+  let s = raw.trim();
+  if (s.includes('.') && s.includes(',')) {
+    // BR: 1.234,56 → remove dots, replace comma with dot
+    s = s.replace(/\./g, '').replace(',', '.');
+  } else if (s.includes(',')) {
+    // BR sem separador de milhar: 1234,56 → replace comma
+    s = s.replace(',', '.');
+  }
+  return parseFloat(s);
 }
 
 function parseOfxDate(ofxDate: string): string {

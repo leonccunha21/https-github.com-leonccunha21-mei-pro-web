@@ -7,10 +7,14 @@
 export function localNowISO(): string {
   const d = new Date();
   const pad = (n: number) => String(n).padStart(2, '0');
+  const offset = -d.getTimezoneOffset();
+  const sign = offset >= 0 ? '+' : '-';
+  const abs = Math.abs(offset);
   return (
     `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}` +
     `T${pad(d.getHours())}:${pad(d.getMinutes())}:${pad(d.getSeconds())}` +
-    `.${String(d.getMilliseconds()).padStart(3, '0')}`
+    `.${String(d.getMilliseconds()).padStart(3, '0')}` +
+    `${sign}${pad(Math.floor(abs / 60))}:${pad(abs % 60)}`
   );
 }
 

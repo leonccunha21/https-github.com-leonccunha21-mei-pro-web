@@ -1,6 +1,5 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import type { SheetRows } from './parsers';
 import {
   stripAccents,
   parseProductsSheet,
@@ -8,6 +7,7 @@ import {
   parseSalesSheet,
   parseLoansSheet,
   parseCustomersSheet,
+  type SheetRows,
 } from './sheetParsers';
 
 test('stripAccents normalizes accents and case', () => {

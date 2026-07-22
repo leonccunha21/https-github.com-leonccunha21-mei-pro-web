@@ -9,7 +9,7 @@ import { getTrialDaysRemaining, getSubscription, startTrial, isActive as subIsAc
 
 const PlansPage = lazy(() => import('../components/PlansPage'));
 import { ManicureDb, ClienteManicure, ServicoManicure, AgendamentoManicure, MovimentoCaixa, ProdutoEstoque, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from './types';
-import { emptyDb, loadManicureDb, saveManicureDb, saveManicureDbLocalOnly, defaultConfig, addPendingDeletion, getSyncMeta, subscribeSyncMeta } from './localDb';
+import { emptyDb, loadManicureDb, saveManicureDb, saveManicureDbLocalOnly, defaultConfig, addPendingDeletion, getSyncMeta, subscribeSyncMeta, loadManicureCloudCached } from './localDb';
 import { loadManicureCloud } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
@@ -63,6 +63,54 @@ export default function ManicureApp() {
 
   useEffect(() => { document.documentElement.classList.toggle('dark', darkMode); }, [darkMode]);
 
+  // Subscription check independente (não depende do localStorage do app principal)
+  useEffect(() => {
+    const uid = (() => { try { return localStorage.getItem('zm_sub_uid'); } catch { return null; } })();
+    const email = (() => { try { return localStorage.getItem('zm_sub_email'); } catch { return ''; } })();
+    if (!uid) {
+      setNeedsSubscription(false);
+      return;
+    }
+    getSubscription(uid).then((sub) => {
+      if (!sub) {
+        startTrial(uid, email).then((created) => {
+          if (created) {
+            setTrialSub(created);
+            try { localStorage.setItem('zm_sub_trial', JSON.stringify(created)); } catch {}
+            try { localStorage.setItem('zm_sub_needed', 'false'); } catch {}
+          }
+        });
+        return;
+      }
+      if (!subIsActive(sub.status)) {
+        setNeedsSubscription(true);
+        try { localStorage.setItem('zm_sub_needed', 'true'); } catch {}
+        return;
+      }
+      if (sub.status === 'trialing') {
+        const daysLeft = getTrialDaysRemaining(sub.trialEnd);
+        if (daysLeft > 0) {
+          setTrialSub(sub);
+          try { localStorage.setItem('zm_sub_trial', JSON.stringify(sub)); } catch {}
+          try { localStorage.setItem('zm_sub_needed', 'false'); } catch {}
+        } else {
+          setNeedsSubscription(true);
+          try { localStorage.setItem('zm_sub_needed', 'true'); } catch {}
+          return;
+        }
+      }
+      setNeedsSubscription(false);
+      try { localStorage.setItem('zm_sub_needed', 'false'); } catch {}
+    }).catch(() => {
+      // Se falhar, usa o cache do localStorage
+      const cached = (() => { try { const raw = localStorage.getItem('zm_sub_trial'); return raw ? JSON.parse(raw) : null; } catch { return null; } })();
+      if (cached?.status === 'trialing' && getTrialDaysRemaining(cached.trialEnd) > 0) {
+        setTrialSub(cached);
+        setNeedsSubscription(false);
+      }
+    });
+  }, []);
+
   // Sync status
   useEffect(() => {
     getSyncMeta().then(m => setSyncStatus(m.lastSyncAt ? 'synced' : 'pending'));
@@ -111,7 +159,7 @@ export default function ManicureApp() {
         const local = await loadManicureDb();
         const localTemDados = !!(local.clientes.length || local.agendamentos.length ||
           local.servicos.length || local.movimentos.length || local.produtos.length);
-        const cloud = await loadManicureCloud();
+        const cloud = await loadManicureCloudCached();
         if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
           // Merge com resolução baseada em updatedAt — o registro mais recente vence
           const mergeById = <T extends { id: string; updatedAt?: string; createdAt?: string }>(a: T[], b: T[]): T[] => {

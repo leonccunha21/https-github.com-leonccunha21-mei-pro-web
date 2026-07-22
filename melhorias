@@ -13,7 +13,7 @@
 11. ✅ `src/lib/notifications.ts:43` — Lê vendas do localStorage em vez do IndexedDB → lembretes nunca disparam
 12. `server.ts:220-568` — Zero autenticação em TODOS endpoints da API
 13. ✅ `src/lib/localDb.ts:57-75` — Conexões IndexedDB nunca fechadas — vaza recursos em todo saveDb
-14. `src/lib/parsers.ts:todo` — Código morto: 512 linhas duplicadas em sheetParsers.ts
+14. ✅ `src/lib/parsers.ts:todo` — Código morto: 512 linhas duplicadas em sheetParsers.ts
 
 ## 🟠 ALTOS (causam bugs em produção)
 
@@ -27,8 +27,8 @@
 22. `src/lib/permissions.ts:24` — useCurrentRole lê de localStorage → usuário pode se tornar admin
 23. `server.ts:102-167` — Webhook Stripe sem idempotência → eventos duplicados
 24. `server.ts:224-242` — TOCTOU race condition no PUT /api/db
-25. `src/mounjaro/App.tsx:128` — saveMounjaroDb(data).catch(() => {}) falha de save 100% silenciosa
-26. `src/manicure/App.tsx:108-150, localDb.ts:164` — loadManicureCloud() chamada 2x na carga inicial
+25. ✅ `src/mounjaro/App.tsx:128` — saveMounjaroDb(data).catch(() => {}) falha de save 100% silenciosa
+26. ✅ `src/manicure/App.tsx:108-150, localDb.ts:164` — loadManicureCloud() chamada 2x na carga inicial
 27. `src/mounjaro/lib.ts:141` — Score duplica contagem de pendentes-passados como atrasados
 
 ## 🟡 MÉDIOS (qualidade/robustez)
@@ -38,8 +38,8 @@
 30. `src/App.tsx:371-395` — Se trial expirou, dados nunca carregam — precisa recarregar página
 31. `src/App.tsx:468` — Falha do Firebase SDK silenciosa → mostra login (que também falha)
 32. `src/lib/localDb.ts:227-246` — 15 tabelas em paralelo → exaustão do pool de conexões
-33. `src/lib/ofxParser.ts:44` — Parsing assume . decimal → falha em OFX brasileiro (notação ,)
-34. `src/lib/datetime.ts:7-14` — localNowISO() sem timezone → new Date() é browser-dependent
+33. ✅ `src/lib/ofxParser.ts:44` — Parsing assume . decimal → falha em OFX brasileiro (notação ,)
+34. ✅ `src/lib/datetime.ts:7-14` — localNowISO() sem timezone → new Date() é browser-dependent
 35. `src/lib/backupScheduler.ts:31` — Cálculo de dia não-safe para DST (usa 86400000ms)
 36. `src/mounjaro/image.ts:todo` — Fotos mantêm EXIF com geolocalização — sem stripping
 37. ✅ `src/manicure/dbSync.ts:195` — Erros em WA/templates/config ignorados (só 5/9 queries checadas)

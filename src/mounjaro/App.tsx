@@ -125,7 +125,7 @@ export default function MounjaroApp() {
     // Salva LOCALMENTE de forma IMEDIATA (sem debounce) para não perder
     // dados ao recarregar a página. O envio à nuvem continua com debounce.
     const data: MounjaroDb = { ...stateRef.current, ...newData, initialized: true };
-    saveMounjaroDb(data).catch(() => {});
+    saveMounjaroDb(data).catch((e) => console.error('saveMounjaroDb falhou:', e));
 
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {

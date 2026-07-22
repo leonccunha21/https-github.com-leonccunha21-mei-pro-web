@@ -1,5 +1,5 @@
 import { ManicureDb, MensagemTemplate } from './types';
-import { loadManicureCloud } from './dbSync';
+import type { ManicureDb as ManicureDbT } from './dbSync';
 
 const DB_NAME = 'manicure_local';
 const STORE = 'manicuredb';
@@ -162,7 +162,7 @@ export async function loadManicureDb(): Promise<ManicureDb> {
 
   // Sem cache local (primeira vez ou IndexedDB limpo): carrega da nuvem.
   try {
-    const cloud = await loadManicureCloud();
+    const cloud = await loadManicureCloudCached();
     if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
       const db: ManicureDb = {
         clientes: cloud.clientes || [], servicos: cloud.servicos || [],
@@ -179,6 +179,16 @@ export async function loadManicureDb(): Promise<ManicureDb> {
   } catch { /* ignore */ }
 
   return emptyDb();
+}
+
+let cloudCache: Partial<ManicureDb> | null | undefined;
+
+/** Wrapper com cache para evitar fetch duplicado da nuvem na carga inicial. */
+export async function loadManicureCloudCached(): Promise<Partial<ManicureDb>> {
+  if (cloudCache !== undefined) return cloudCache;
+  const { loadManicureCloud: fetch } = await import('./dbSync');
+  cloudCache = await fetch() || null;
+  return cloudCache || {};
 }
 
 function stampUpdated<T extends { updatedAt?: string }>(entity: T): T {

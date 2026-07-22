@@ -14,7 +14,10 @@ import type {
   PurchaseItem,
   CashWithdrawal,
 } from '../types';
-import type { Cell, SheetRows } from './parsers';
+
+/** A single spreadsheet cell (or a whole row) as produced by xlsx/json parsing. */
+export type Cell = string | number | null | undefined;
+export type SheetRows = Cell[][];
 
 /** Normaliza acentos e caixa para facilitar a comparação de cabeçalhos. */
 export function stripAccents(s: string): string {
