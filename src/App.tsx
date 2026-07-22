@@ -367,6 +367,9 @@ export default function App() {
     (async () => {
       try {
         let sub = await getSubscription(cloudUser.uid)
+        try { localStorage.setItem('zm_sub_uid', cloudUser.uid); } catch {}
+        try { localStorage.setItem('zm_sub_email', cloudUser.email ?? ''); } catch {}
+
         if (!sub) {
           setNeedsSubscription(true)
           setLoading(false)
@@ -391,6 +394,8 @@ export default function App() {
         }
         setNeedsSubscription(false)
         try { localStorage.setItem('zm_sub_needed', 'false'); } catch {}
+        try { localStorage.setItem('zm_sub_uid', cloudUser.uid); } catch {}
+        try { localStorage.setItem('zm_sub_email', cloudUser.email ?? ''); } catch {}
 
         const db = await loadDb();
         const res = await applyLoadedDb(db);

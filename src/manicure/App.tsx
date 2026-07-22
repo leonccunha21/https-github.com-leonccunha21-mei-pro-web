@@ -5,7 +5,7 @@ import {
   LayoutDashboard, Users, Calendar, DollarSign, Package, Settings as SettingsIcon,
   Scissors, Sun, Moon, Sparkles, MessageCircle, X, ShoppingBag, Stethoscope,
 } from 'lucide-react';
-import { getTrialDaysRemaining } from '../lib/subscription';
+import { getTrialDaysRemaining, getSubscription, startTrial, isActive as subIsActive } from '../lib/subscription';
 
 const PlansPage = lazy(() => import('../components/PlansPage'));
 import { ManicureDb, ClienteManicure, ServicoManicure, AgendamentoManicure, MovimentoCaixa, ProdutoEstoque, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from './types';
