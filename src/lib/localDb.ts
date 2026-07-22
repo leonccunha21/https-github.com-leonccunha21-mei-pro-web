@@ -122,9 +122,12 @@ function prepareForSupabase(table: string, row: Record<string, unknown>): Record
 
 async function upsertBatch(table: string, rows: Record<string, unknown>[]): Promise<void> {
   if (!rows.length || !isSupabaseConfigured()) return;
-  const prepared = rows.map(r => prepareForSupabase(table, r));
-  const { error } = await supabase.from(table).upsert(prepared, { onConflict: 'id', ignoreDuplicates: false });
-  if (error) console.error(`Supabase upsert ${table}:`, error.message);
+  const PAGE = 200; // Supabase REST tem limite de payload por request
+  for (let i = 0; i < rows.length; i += PAGE) {
+    const batch = rows.slice(i, i + PAGE).map(r => prepareForSupabase(table, r));
+    const { error } = await supabase.from(table).upsert(batch, { onConflict: 'id', ignoreDuplicates: false });
+    if (error) console.error(`Supabase upsert ${table} [${i}-${i + PAGE}]:`, error.message);
+  }
 }
 
 async function upsertSingleton(table: string, row: Record<string, unknown>): Promise<void> {

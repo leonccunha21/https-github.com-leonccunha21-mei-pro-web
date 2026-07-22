@@ -176,12 +176,12 @@ export async function loadMounjaroCloud(_scope?: MounjaroScope): Promise<Partial
 
   try {
     const [clientes, pesagens, doses, pagamentos, fotos, auditoria, config] = await Promise.all([
-      supabase.from('mounjaro_clientes').select('*'),
-      supabase.from('mounjaro_pesagens').select('*'),
-      supabase.from('mounjaro_doses').select('*'),
-      supabase.from('mounjaro_pagamentos').select('*'),
-      supabase.from('mounjaro_fotos').select('*'),
-      supabase.from('mounjaro_auditoria').select('*'),
+      supabase.from('mounjaro_clientes').select('*').limit(10000),
+      supabase.from('mounjaro_pesagens').select('*').limit(10000),
+      supabase.from('mounjaro_doses').select('*').limit(10000),
+      supabase.from('mounjaro_pagamentos').select('*').limit(10000),
+      supabase.from('mounjaro_fotos').select('*').limit(10000),
+      supabase.from('mounjaro_auditoria').select('*').limit(10000),
       supabase.from('mounjaro_config').select('*').eq('id', 'singleton').maybeSingle(),
     ]);
 

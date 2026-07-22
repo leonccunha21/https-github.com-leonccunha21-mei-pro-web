@@ -177,8 +177,9 @@ export default function Bills({ bills, onSaveBills }: BillsProps) {
   const isOverdue = (dueDate: string, status: string) =>
     status === 'pending' && new Date(dueDate) < new Date(new Date().toDateString());
 
-  // Marca como vencidas automaticamente ao carregar
+  // Marca como vencidas automaticamente ao carregar e sempre que bills mudar
   useEffect(() => {
+    if (!bills.length) return;
     const today = new Date().toISOString().slice(0, 10);
     const updated = bills.map(b => {
       if (b.status === 'pending' && b.dueDate < today) {
@@ -191,7 +192,8 @@ export default function Bills({ bills, onSaveBills }: BillsProps) {
     });
     const hasChanges = updated.some((b, i) => b.status !== bills[i].status);
     if (hasChanges) onSaveBills(updated);
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bills.length]);
 
   const calcNextDueDate = (currentDueDate: string, recurrence: string): string => {
     const d = new Date(currentDueDate);
@@ -227,6 +229,8 @@ export default function Bills({ bills, onSaveBills }: BillsProps) {
     } else {
       onSaveBills(updated);
     }
+    // Muda filtro para "all" brevemente para o usuário ver o feedback visual
+    setFilterStatus('all');
   };
 
   const handleMarkPending = (bill: Bill) => {

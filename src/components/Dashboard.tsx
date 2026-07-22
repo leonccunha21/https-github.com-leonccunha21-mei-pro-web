@@ -159,14 +159,11 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
       sendNotification('Estoque Baixo', `${lowStockProducts.length} produto(s) com estoque abaixo do mínimo: ${lowStockProducts.slice(0, 3).map(p => p.name).join(', ')}`);
     }
     if (prefs.debtReminder) {
-      try {
-        const allSales = JSON.parse(localStorage.getItem('zm_sales') || '[]') as any[];
-        const pending = allSales.filter((s: any) => s.status === 'pending');
-        if (pending.length > 0) {
-          const total = pending.reduce((a: number, s: any) => a + s.total, 0);
-          sendNotification('Contas a Receber', `${pending.length} venda(s) pendente(s) — R$ ${total.toFixed(2)}`);
-        }
-      } catch { /* */ }
+      const pending = sales.filter((s) => s.status === 'pending');
+      if (pending.length > 0) {
+        const total = pending.reduce((a, s) => a + s.total, 0);
+        sendNotification('Contas a Receber', `${pending.length} venda(s) pendente(s) — R$ ${total.toFixed(2)}`);
+      }
     }
   }, []);
 
