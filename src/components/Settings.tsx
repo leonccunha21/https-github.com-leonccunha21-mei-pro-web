@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import type { User } from 'firebase/auth';
 import { Product, Sale, Category, SaleItem, StoreInfo, Expense, Loan, ServiceOrder, Customer, Supplier, Purchase, CashSession, AppUser, UserRole } from '../types';
 import {
   stripAccents,
@@ -28,11 +27,8 @@ import {
   CheckCircle2,
   HardDrive,
   AlertTriangle,
-  Cloud,
-  CloudDownload,
   Clock,
   Trash2,
-  LogOut,
   Bell,
 } from 'lucide-react';
 import { getPrefs, savePrefs, requestPermission, sendNotification, NotificationPrefs } from '../lib/notifications';
@@ -69,20 +65,6 @@ interface SettingsProps {
   onImportBackup: (file: File) => void;
   onRunScheduledBackup: () => void;
   onResetDatabase: () => void;
-  cloudUser: User | null;
-  cloudSyncing: boolean;
-  cloudLastSync: string | null;
-  cloudError: string | null;
-  cloudPending: boolean;
-  dailyWrites: number;
-  dailyWriteLimit: number;
-  onCloudSignIn: () => void;
-  onCloudSignOut: () => void;
-  onCloudSyncNow: () => void;
-  onDownloadFromCloud: () => void;
-  onClearCloud: () => void;
-  clearingCloud: boolean;
-  syncEnabled: boolean;
   appUsers: AppUser[];
   currentUserRole: UserRole;
   onAppUsersChange: (users: AppUser[]) => void;
@@ -175,20 +157,6 @@ export default function Settings({
   onExportBackup,
   onImportBackup,
   onResetDatabase,
-  cloudUser,
-  cloudSyncing,
-  cloudLastSync,
-  cloudError,
-  cloudPending,
-  dailyWrites,
-  dailyWriteLimit,
-  onCloudSignIn,
-  onCloudSignOut,
-  onCloudSyncNow,
-  onDownloadFromCloud,
-  onClearCloud,
-  clearingCloud,
-  syncEnabled,
   onRunScheduledBackup,
   appUsers,
   currentUserRole,
@@ -876,122 +844,6 @@ export default function Settings({
           </div>
 
           <NotificationSettings />
-
-          {/* Sincronização na Nuvem */}
-          <div className="bg-white p-5 rounded-xl border border-indigo-200 shadow-sm space-y-3">
-            <div className="border-b border-indigo-100 pb-3">
-              <h2 className="text-base font-bold text-indigo-700 flex items-center gap-2">
-                <Cloud className="h-5 w-5" />
-                Sincronização na Nuvem
-              </h2>
-              <p className="text-xs text-slate-400 mt-0.5">Seus dados ficam salvos no Firebase e acessíveis em qualquer dispositivo conectado.</p>
-            </div>
-            {/* Sync button */}
-            <button onClick={onCloudSyncNow} className="w-full py-2 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-colors disabled:opacity-50"
-              disabled={!cloudUser || cloudSyncing}
-            >
-              {cloudSyncing ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Sincronizar agora'}
-            </button>
-
-            {!syncEnabled && (
-              <div className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3 flex items-start gap-2">
-                <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" />
-                <span><b>Sincronização desativada (modo local).</b> Nenhum dado está sendo enviado ou baixado da nuvem. Seus dados ficam salvos apenas neste aparelho/navegador.</span>
-              </div>
-            )}
-
-            {cloudUser ? (
-              <div className="space-y-3">
-                <div className="flex items-center gap-3">
-                  {cloudUser.photoURL ? (
-                    <img src={cloudUser.photoURL} alt="" className="h-9 w-9 rounded-full" />
-                  ) : (
-                    <div className="h-9 w-9 rounded-full bg-indigo-100 flex items-center justify-center">
-                      <UserIcon className="h-4 w-4 text-indigo-600" />
-                    </div>
-                  )}
-                  <div className="min-w-0">
-                    <p className="text-sm font-semibold text-slate-700 truncate">{cloudUser.displayName || cloudUser.email}</p>
-                    <p className="text-xs text-slate-400 truncate">{cloudUser.email}</p>
-                  </div>
-                </div>
-
-                <div className="text-xs text-slate-500">
-                  {cloudSyncing ? (
-                    <span className="flex items-center gap-1.5 text-indigo-600">
-                      <Loader2 className="h-3.5 w-3.5 animate-spin" /> Sincronizando...
-                    </span>
-                  ) : cloudPending ? (
-                    <span className="flex items-center gap-1.5 text-amber-600">
-                      <Clock className="h-3.5 w-3.5" /> Alterações pendentes (envio automático)
-                    </span>
-                  ) : cloudLastSync ? (
-                    <span>Última sincronização: {new Date(cloudLastSync).toLocaleString('pt-BR')}</span>
-                  ) : (
-                    <span>Não sincronizado ainda.</span>
-                  )}
-                </div>
-
-                {cloudError && (
-                  <p className="text-xs text-rose-600 bg-rose-50 border border-rose-200 rounded-lg p-2">{cloudError}</p>
-                )}
-
-                {/* Uso da cota diária do Firestore */}
-                <div>
-                  <div className="flex items-center justify-between text-[10px] text-slate-400 font-mono mb-1">
-                    <span>Operações hoje (Firebase)</span>
-                    <span className={dailyWrites / dailyWriteLimit > 0.9 ? 'text-rose-600 font-bold' : ''}>
-                      {dailyWrites.toLocaleString('pt-BR')} / {dailyWriteLimit.toLocaleString('pt-BR')}
-                    </span>
-                  </div>
-                  <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all ${
-                        dailyWrites / dailyWriteLimit > 0.9 ? 'bg-rose-500'
-                          : dailyWrites / dailyWriteLimit > 0.7 ? 'bg-amber-500'
-                          : 'bg-emerald-500'
-                      }`}
-                      style={{ width: `${Math.min(100, (dailyWrites / dailyWriteLimit) * 100)}%` }}
-                    />
-                  </div>
-                  <p className="text-[10px] text-slate-400 mt-1">
-                    A sincronização é incremental (só o que muda), então o consumo é mínimo.
-                  </p>
-                </div>
-
-                <p className="text-[11px] text-slate-400 leading-snug">
-                  A sincronização é <b>automática</b> e <b>incremental</b> (só o que muda). Toda alteração sobe para a nuvem em ~2s e cada aparelho baixa e mescla sozinho a cada 20s (e ao abrir/voltar à aba). Assim o celular e o computador ficam iguais. <b>Sincronizar Agora</b> força o envio imediato; <b>Baixar da Nuvem</b> substitui os dados deste aparelho pelos da nuvem.
-                </p>
-
-                <div className="flex gap-2">
-                  <button onClick={onCloudSyncNow} disabled={!syncEnabled} className="flex-1 py-2 px-3 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-                    <RefreshCcw className="h-3.5 w-3.5" /> Sincronizar Agora
-                  </button>
-                  <button onClick={onCloudSignOut} className="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-                    <LogOut className="h-3.5 w-3.5" /> Sair
-                  </button>
-                </div>
-
-                <button onClick={onDownloadFromCloud} disabled={!syncEnabled} className="w-full py-2 px-3 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-                  <CloudDownload className="h-3.5 w-3.5" /> Baixar da Nuvem (espelhar no celular)
-                </button>
-                <p className="text-[11px] text-slate-400 leading-snug">
-                  Baixa os dados salvos na nuvem (do computador) para ESTE aparelho. Use no celular depois de clicar <b>Sincronizar Agora</b> no computador, para deixar os dois iguais.
-                </p>
-
-                <button onClick={onClearCloud} disabled={clearingCloud} className="w-full py-2 px-3 bg-rose-600 hover:bg-rose-700 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-                  <Trash2 className="h-3.5 w-3.5" /> {clearingCloud ? 'Apagando...' : 'Limpar dados da nuvem'}
-                </button>
-                <p className="text-[11px] text-slate-400 leading-snug">
-                  Apaga TUDO da nuvem deste usuário. Use antes de reimportar um backup antigo para subir os dados corretos do zero.
-                </p>
-              </div>
-            ) : (
-              <button onClick={onCloudSignIn} className="w-full py-2.5 px-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer">
-                <Cloud className="h-3.5 w-3.5" /> Entrar com Google e Sincronizar
-              </button>
-            )}
-          </div>
 
           {/* Usuários */}
           {currentUserRole === 'admin' && (

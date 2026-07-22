@@ -69,7 +69,6 @@ import {
   Users,
   DollarSign,
   Wallet,
-  Cloud,
   CloudOff,
   AlertTriangle,
   Target,
@@ -80,7 +79,6 @@ import {
   Stethoscope,
   FileText,
   Building2,
-  Activity,
   Wifi,
   Receipt,
   Keyboard,
@@ -96,32 +94,12 @@ import { roundCurrency } from './lib/currency';
 import { localNowISO } from './lib/datetime';
 import { canAccess } from './lib/permissions';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
-import { getDailyWrites, DAILY_WRITE_LIMIT } from './lib/quota';
 import { getBackupSchedule, shouldRunBackup, saveBackupSchedule } from './lib/backupScheduler';
-import { type SyncHistoryEntry, getSyncHistory } from './lib/throttledSync';
 import { computeChecksum, saveChecksum, verifyChecksum, getAllChecksums } from './lib/checksum';
 
-function timeAgo(iso: string): string {
-  const diff = Date.now() - new Date(iso).getTime();
-  const s = Math.floor(diff / 1000);
-  if (s < 60) return `há ${s}s`;
-  const m = Math.floor(s / 60);
-  if (m < 60) return `há ${m}min`;
-  const h = Math.floor(m / 60);
-  if (h < 24) return `há ${h}h`;
-  const d = Math.floor(h / 24);
-  return `há ${d}d`;
-}
-// Firebase e dbSync são importados dinamicamente (sob demanda) para não
+// Firebase Auth é importado dinamicamente (sob demanda) para não
 // penalizar o carregamento inicial do app.
 import type { User } from 'firebase/auth';
-
-// Sincronização com a nuvem ATIVADA (Firebase/Firestore).
-// Agora usa setDoc com IDs fixos (não addDoc), eliminando duplicatas.
-// Toda escrita sobrescreve o documento existente com o mesmo ID.
-// Recomendado: usar "Enviar TUDO para a nuvem" na primeira vez para
-// limpar dados antigos e subir o banco limpo do zero.
-const SYNC_ENABLED = true;
 
 // Utility to fix floating point issues (e.g., 0.92999 → 0.93)
 
@@ -138,7 +116,6 @@ export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [showVendasEstoque, setShowVendasEstoque] = useState(false);
-  const [showSyncHistory, setShowSyncHistory] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [orders, setOrders] = useState<ServiceOrder[]>([]);
 
@@ -184,17 +161,10 @@ export default function App() {
     toastTimer.current = window.setTimeout(() => setToastMsg(null), 4000);
   };
 
-  // --- Sincronização na nuvem (Firebase/Firestore) ---
+  // --- Sincronização na nuvem (Firebase Auth only) ---
   const [cloudUser, setCloudUser] = useState<User | null>(null);
-  const [cloudSyncing, setCloudSyncing] = useState(false);
-  const [cloudLastSync, setCloudLastSync] = useState<string | null>(null);
-  const [cloudError, setCloudError] = useState<string | null>(null);
-  const [cloudPending, setCloudPending] = useState(false);
-  const [dailyWrites, setDailyWrites] = useState(0);
-  const [clearingCloud, setClearingCloud] = useState(false);
   const [checksumAlert, setChecksumAlert] = useState<string | null>(null);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [showPendingQueue, setShowPendingQueue] = useState(false);
 
   const [storeInfo, setStoreInfo] = useState(() => {
     try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
@@ -233,7 +203,6 @@ export default function App() {
       if (e.key === 'Escape') {
         setShowShortcuts(false);
         setShowVendasEstoque(false);
-        setShowSyncHistory(false);
         setMobileMenuOpen(false);
         return;
       }
@@ -295,10 +264,6 @@ export default function App() {
           const searchInput = document.querySelector<HTMLInputElement>('input[type="text"], input[placeholder*="Buscar"], input[placeholder*="buscar"]');
           searchInput?.focus();
           break;
-        case 's':
-          e.preventDefault();
-          if (cloudUser) handleCloudSyncNow();
-          break;
         case 'e':
           e.preventDefault();
           setActiveTab('settings');
@@ -318,53 +283,6 @@ export default function App() {
   // an optional local server is used only when available.
   // Aplica os dados carregados (IndexedDB/servidor/seed) no estado da aplicação.
   // ---------------------------------------------------------------------------
-  // MERGE por id entre dados locais e da nuvem.
-  // GARANTE FIDELIDADE: o que existe localmente vai para a nuvem exatamente
-  // como está, e o que existe só na nuvem (outro aparelho) é preservado.
-  // Em conflito de mesmo id, prevalece o registro com timestamp mais recente
-  // (updatedAt > createdAt > data do registro). Nunca soma nem "infla" valores.
-  // ---------------------------------------------------------------------------
-  const tsOf = (x: any): number => {
-    const v = x?.updatedAt ?? x?.createdAt ?? x?.date ?? x?.dataVenda ?? x?.loanDate ?? x?.openDate ?? x?.timestamp;
-    if (!v) return 0;
-    const t = typeof v === 'number' ? v : new Date(v).getTime();
-    return isNaN(t) ? 0 : t;
-  };
-
-  const mergeById = <T extends { id?: string }>(local: T[] | undefined, cloud: T[] | undefined): T[] => {
-    const map = new Map<string, T>();
-    for (const it of local || []) if (it?.id) map.set(it.id, it);
-    for (const it of cloud || []) {
-      if (!it?.id) continue;
-      const prev = map.get(it.id);
-      // local prevalece se for mais recente (ou empatado); nuvem só se não houver local ou for mais nova
-      if (!prev || tsOf(it) > tsOf(prev)) map.set(it.id, it);
-    }
-    return Array.from(map.values());
-  };
-
-  const mergeLocalDb = (local: LocalDb, cloud: Partial<LocalDb>): LocalDb => ({
-    products: mergeById(local.products, cloud.products) as LocalDb['products'],
-    categories: mergeById(local.categories, cloud.categories) as LocalDb['categories'],
-    sales: mergeById(local.sales, cloud.sales) as LocalDb['sales'],
-    orders: mergeById(local.orders, cloud.orders) as LocalDb['orders'],
-    customers: mergeById(local.customers, cloud.customers) as LocalDb['customers'],
-    suppliers: mergeById(local.suppliers, cloud.suppliers) as LocalDb['suppliers'],
-    purchases: mergeById(local.purchases, cloud.purchases) as LocalDb['purchases'],
-    cashSessions: mergeById(local.cashSessions, cloud.cashSessions) as LocalDb['cashSessions'],
-    loans: mergeById(local.loans, cloud.loans) as LocalDb['loans'],
-    expenses: mergeById(local.expenses, cloud.expenses) as LocalDb['expenses'],
-    leads: mergeById(local.leads, cloud.leads) as LocalDb['leads'],
-    leadJobs: mergeById(local.leadJobs, cloud.leadJobs) as LocalDb['leadJobs'],
-    whatsappInstances: mergeById(local.whatsappInstances, cloud.whatsappInstances) as LocalDb['whatsappInstances'],
-    aiAgents: mergeById(local.aiAgents, cloud.aiAgents) as LocalDb['aiAgents'],
-    opportunities: mergeById(local.opportunities, cloud.opportunities) as LocalDb['opportunities'],
-    bills: mergeById(local.bills, cloud.bills) as LocalDb['bills'],
-    internetUsers: mergeById(local.internetUsers, cloud.internetUsers) as LocalDb['internetUsers'],
-    storeInfo: cloud.storeInfo ?? local.storeInfo,
-    initialized: true,
-  });
-
   // Corrige vendas com data NO FUTURO (ex.: dez/2026 quando hoje é 19/07/2026).
   // Causa raiz: bug de fuso UTC antigo que empurrava a data para o ano seguinte.
   // Qualquer venda com data acima de hoje é travada em "agora" (data atual).
@@ -563,99 +481,10 @@ export default function App() {
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
 
-  // Auto-sync para a nuvem (incremental, com debounce)
-  const cloudPushTimer = React.useRef<number | null>(null);
-  const cloudDirty = React.useRef(false);
-  const cloudPushing = React.useRef(false);
-  const lastLocalChangeRef = React.useRef(0);
-
-  // -------------------------------------------------------------------------
-  // PAUSA DE COTA DO FIREBASE
-  //
-  // Quando a cota diária estoura, NÃO podemos enviar nem baixar nada da nuvem
-  // (escritas E leituras consomem cota). Este bloqueio impede qualquer acesso
-  // automático ou manual ao Firestore até a data de liberação (meia-noite de
-  // amanhã, por padrão). O usuário só retoma no dia seguinte, manualmente.
-  // -------------------------------------------------------------------------
-  const QUOTA_PAUSE_KEY = 'zm_quota_paused_until';
-
-  // Calcula a meia-noite (local) do dia seguinte.
-  function nextMidnight(): number {
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    d.setHours(0, 0, 0, 0);
-    return d.getTime();
-  }
-
-  // Retorna o timestamp até quando a nuvem está pausada. Se nada estiver
-  // salvo, assume a meia-noite de amanhã (pausa por segurança até o dia novo).
-  function quotaPausedUntil(): number {
-    try {
-      const raw = localStorage.getItem(QUOTA_PAUSE_KEY);
-      if (raw) return Number(raw) || 0;
-    } catch { /* ignore */ }
-    return nextMidnight();
-  }
-
-  function isCloudSyncPaused(): boolean {
-    return Date.now() < quotaPausedUntil();
-  }
-
-  // Pausa a nuvem até a meia-noite de amanhã (ou até `until` se informado).
-  function pauseCloudSync(until?: number): void {
-    try {
-      localStorage.setItem(QUOTA_PAUSE_KEY, String(until ?? nextMidnight()));
-    } catch { /* ignore */ }
-  }
-
-  // Libera a nuvem imediatamente (usado pelo botão "Liberar agora").
-  function resumeCloudSyncNow(): void {
-    try {
-      localStorage.removeItem(QUOTA_PAUSE_KEY);
-    } catch { /* ignore */ }
-  }
-
-  // A pausa de cota NÃO é ativada automaticamente: com o limite de 20.000
-  // operações/dia do plano Spark, a sincronização deve funcionar sempre que
-  // estiver ativada e o usuário logado. A pausa só ocorre se a cota realmente
-  // estourar (tratado em catch de erro de cota), e o usuário libera manualmente.
-  React.useEffect(() => {
-    resumeCloudSyncNow();
-  }, []);
-
   // --- Nuvem: envia o banco completo, SEM PERDER DADO de nenhum aparelho ---
   // Antes de subir, baixa a nuvem e faz UNIÃO por id (o mais recente vence por
   // id, mas nada é descartado). Assim os dados de OUTROS aparelhos nunca somem.
   // Depois sobe o resultado unificado. A nuvem passa a ter TUDO de todos.
-  const pushToCloud = (data: LocalDb, opts?: { forceFull?: boolean }) => {
-    if (!SYNC_ENABLED || !cloudUser) return Promise.resolve(null);
-    if (isCloudSyncPaused()) return Promise.resolve(null); // cota estourada: nada hoje
-    setCloudSyncing(true);
-    setCloudError(null);
-    return import('./lib/dbSync').then(async ({ saveUserDbIncremental, loadUserDb }) => {
-      const cloud = await loadUserDb(cloudUser.uid).catch(() => ({} as Partial<LocalDb>));
-      const unified = mergeLocalDb(data, cloud); // local como base; nuvem traz o que falta
-      await saveUserDbIncremental(cloudUser.uid, unified, opts);
-      return unified;
-    })
-      .then((res) => {
-        // Salva o merge localmente (dados de outros dispositivos vêm no merge).
-        persist(res as LocalDb);
-        setCloudLastSync(new Date().toISOString());
-        return res;
-      })
-      .catch((e: unknown) => {
-        const msg = e instanceof Error ? e.message : 'Falha ao enviar para a nuvem';
-        setCloudError(msg);
-        throw e;
-      })
-      .finally(() => {
-        setCloudSyncing(false);
-        setCloudPending(false);
-        setDailyWrites(getDailyWrites().count);
-      });
-  };
-
   const persist = (partial: Partial<LocalDb>) => {
     const cur = stateRef.current;
     const prev = pendingRef.current;
@@ -717,9 +546,6 @@ export default function App() {
     saveTimer.current = window.setTimeout(() => {
       pendingRef.current = {};
     }, 250);
-    lastLocalChangeRef.current = Date.now();
-
-    // Auto-sync removido para economizar cota do Firebase e evitar flicker.
   };
 
   // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)
@@ -760,56 +586,13 @@ export default function App() {
     return () => ch.close();
   }, []);
 
-  // No primeiro carregamento com usuário JÁ logado (ex.: recarregar a página no
-  // computador onde os dados vivem), faz um envio COMPLETO à nuvem uma única vez.
-  // Assim os dados existentes vão para o Firebase sem depender de uma edição.
-  const initialUploadDone = React.useRef(false);
-  React.useEffect(() => {
-    if (!authReady || !cloudUser || initialUploadDone.current) return;
-    initialUploadDone.current = true;
-    if (!SYNC_ENABLED || isCloudSyncPaused()) return;
-    window.setTimeout(() => {
-      if (!cloudPushing.current && !cloudSyncing) {
-        pushToCloud(stateRef.current as LocalDb, { forceFull: true }).catch(() => {});
-      }
-    }, 2500);
-  }, [authReady, cloudUser]);
-
-  // Ao entrar na nuvem (login) autentica e agenda o PULL automático: a cada 30s
-  // o app baixa da nuvem (se houver novidade) para manter os aparelhos em dia.
-  // O merge por id preserva dados locais e da nuvem, sem apagar nada.
-  useEffect(() => {
-    if (!cloudUser) return;
-    setCloudError(null);
-    setDailyWrites(getDailyWrites().count);
-    // Auto-pull removido: baixa apenas manualmente (botão "Baixar da nuvem").
-    // Economiza cota do Firebase e evita sobrescrever dados locais sem querer.
-    return () => {};
-  }, [cloudUser]);
-
   const handleCloudSignIn = async () => {
     try {
       const { googleSignIn } = await import('./lib/firebase');
       await googleSignIn();
-      showToast('Entrou na nuvem. Baixando seus dados...');
-      // Baixa imediatamente os dados da nuvem para este aparelho (merge por id).
-      try {
-        const { loadUserDb } = await import('./lib/dbSync');
-        const cloud = await loadUserDb((await import('./lib/firebase')).getCurrentUser()?.uid || '');
-        if (cloud) {
-          const merged = mergeLocalDb(stateRef.current, cloud);
-          await applyLoadedDb(merged);
-          persist(merged);
-          // Sobe o resultado para a nuvem ficar idêntica e garantir que nada
-          // fique só local.
-          pushToCloud(merged).catch(() => {});
-          showToast('Dados da nuvem carregados com sucesso.');
-        }
-      } catch (e: unknown) {
-        showToast(e instanceof Error ? e.message : 'Falha ao baixar da nuvem.');
-      }
+      showToast('Login realizado com sucesso!');
     } catch (e: unknown) {
-      setCloudError(e instanceof Error ? e.message : 'Falha ao entrar com o Google');
+      showToast(e instanceof Error ? e.message : 'Falha ao entrar com o Google');
     }
   };
 
@@ -819,202 +602,6 @@ export default function App() {
       await logoutUser();
     } catch { /* ignore */ }
     setCloudUser(null);
-    setCloudLastSync(null);
-    setCloudError(null);
-  };
-
-  // Baixa os dados da nuvem para ESTE aparelho, SUBSTITUINDO o conteúdo local.
-  // A nuvem é a fonte da verdade: o que está lá é o que aparece aqui.
-  const handleDownloadFromCloud = async () => {
-    if (!SYNC_ENABLED) { showToast('Sincronização desativada (modo local).'); return; }
-    if (!cloudUser) return;
-    try {
-      const { loadUserDb } = await import('./lib/dbSync');
-      showToast('Baixando todos os dados da nuvem...');
-      const cloud = await loadUserDb(cloudUser.uid);
-      await applyLoadedDb(cloud as LocalDb);
-      persist(cloud as LocalDb);
-      showToast('Dados da nuvem carregados neste aparelho.');
-    } catch (e: unknown) {
-      showToast(e instanceof Error ? e.message : 'Falha ao baixar da nuvem.');
-    }
-  };
-
-  // Baixa a nuvem e SUBSTITUI o local (a nuvem é a fonte da verdade). Assim,
-  // onde você for, vê EXATAMENTE os mesmos dados. Roda sozinho a cada 30s e ao
-  // focar/abrir a aba. Proteção: só pula se a nuvem estiver vazia E o local tiver
-  // dados (primeira sincronização de um aparelho novo, para não apagar o local).
-  const pullFromCloud = async () => {
-    if (!SYNC_ENABLED || !cloudUser) return;
-    if (document.visibilityState !== 'visible') return; // não gasta leitura em aba oculta
-    if (cloudPushing.current) return;                   // empurrão em andamento
-    if (Object.keys(pendingRef.current).length > 0) return; // edição local em curso
-    if (Date.now() - lastLocalChangeRef.current < 3000) return; // acabou de editar aqui
-    try {
-      const { loadUserDb } = await import('./lib/dbSync');
-      const cloud = await loadUserDb(cloudUser.uid);
-
-      const cloudIsEmpty =
-        (!cloud.products || cloud.products.length === 0) &&
-        (!cloud.sales || cloud.sales.length === 0) &&
-        (!cloud.expenses || cloud.expenses.length === 0) &&
-        (!cloud.orders || cloud.orders.length === 0);
-      const localHasData =
-        (stateRef.current.products && stateRef.current.products.length > 0) ||
-        (stateRef.current.sales && stateRef.current.sales.length > 0) ||
-        (stateRef.current.expenses && stateRef.current.expenses.length > 0);
-      if (cloudIsEmpty && localHasData) return; // nuvem vazia não apaga dados locais
-
-      // Substitui o local pela nuvem (fonte da verdade). Nada de merge frágil.
-      await applyLoadedDb(cloud as LocalDb);
-      persist(cloud as LocalDb);
-    } catch { /* ignora e tenta de novo no próximo ciclo */ }
-  };
-
-  // Sincronização AUTOMÁTICA DESATIVADA por enquanto (envio/baixa só manual).
-  // O app fica 100% local; o usuário decide quando enviar ("Sincronizar Agora")
-  // ou baixar ("Baixar da nuvem") para não consumir cota nem divergir dados
-  // antes de concluir o envio inicial completo.
-  const pullFromCloudRef = React.useRef<() => void>(() => {});
-  pullFromCloudRef.current = pullFromCloud;
-
-  // Retoma AUTOMÁTICA do envio em lotes DESATIVADA por enquanto (só manual).
-  // A retomada de lotes pendentes por cota será feita pelo usuário clicando em
-  // "Sincronizar Agora", que chama syncToCloudThrottled e continua de onde parou.
-  const resumeThrottledSync = React.useRef<() => void>(() => {});
-  resumeThrottledSync.current = async () => {
-    if (!SYNC_ENABLED || !cloudUser) return;
-    if (cloudPushing.current || cloudSyncing) return;
-    try {
-      const { getSyncProgress } = await import('./lib/throttledSync');
-      const p = getSyncProgress(cloudUser.uid);
-      // Há retomada pendente se alguma coleção tem um ano parcialmente enviado
-      // ou se o storeInfo ainda não foi enviado.
-      const inProgress = Object.values(p.done).some((c) =>
-        Object.keys(c).some((k) => k.startsWith('_partial_'))
-      ) || p.storeInfo === false;
-      if (!inProgress) return;
-      setCloudSyncing(true);
-      const { syncToCloudThrottled } = await import('./lib/throttledSync');
-      const res = await syncToCloudThrottled(cloudUser.uid, stateRef.current as LocalDb);
-      setCloudLastSync(new Date().toISOString());
-      setCloudSyncing(false);
-      setDailyWrites(getDailyWrites().count);
-      if (!res.finished) {
-        showToast(`📤 Continuando envio: +${res.uploaded} docs hoje. Resta para amanhã.`);
-      } else {
-        showToast(`✅ Envio à nuvem concluído (+${res.uploaded} docs hoje).`);
-      }
-    } catch {
-      setCloudSyncing(false);
-    }
-  };
-
-  const handleCloudSyncNow = async () => {
-    if (!SYNC_ENABLED || !cloudUser) { showToast('Sincronização desativada (modo local).'); return; }
-    if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
-    const db = stateRef.current as LocalDb;
-    showToast('Verificando alterações para sincronizar na nuvem...');
-    try {
-      // Verifica se a nuvem está vazia para decidir se precisa de reenvio completo
-      const { loadUserDb, clearSyncCache } = await import('./lib/dbSync');
-      const { syncToCloudThrottled } = await import('./lib/throttledSync');
-      const cloudData = await loadUserDb(cloudUser.uid);
-      const cloudIsEmpty =
-        (!cloudData.products || cloudData.products.length === 0) &&
-        (!cloudData.sales || cloudData.sales.length === 0) &&
-        (!cloudData.expenses || cloudData.expenses.length === 0);
-
-      const localHasData =
-        (db.products && db.products.length > 0) ||
-        (db.sales && db.sales.length > 0) ||
-        (db.expenses && db.expenses.length > 0);
-
-      // Se a nuvem está vazia mas temos dados locais → cache desatualizado:
-      // limpa o progresso e faz o reenvio em LOTES (ano a ano, com orçamento
-      // diário) em vez de mandar tudo de uma vez e estourar a cota.
-      if (cloudIsEmpty && localHasData) {
-        clearSyncCache(cloudUser.uid);
-        const { clearSyncProgress } = await import('./lib/throttledSync');
-        clearSyncProgress(cloudUser.uid);
-        showToast('Nuvem vazia detectada! Enviando os dados em lotes (ano a ano)...');
-        setCloudSyncing(true);
-        setCloudError(null);
-        const res = await syncToCloudThrottled(cloudUser.uid, db, { resetProgress: true });
-        setCloudLastSync(new Date().toISOString());
-        setCloudSyncing(false);
-        setCloudPending(false);
-        if (res.finished) {
-          showToast(`✅ Envio completo: ${res.uploaded} documentos na nuvem.`);
-        } else {
-          showToast(`📤 Enviados ${res.uploaded} docs hoje. Cota diária atingida — o resto continua amanhã.`);
-        }
-        setDailyWrites(getDailyWrites().count);
-        return;
-      }
-
-      const res = await pushToCloud(db);
-      if (res && res.uploaded === 0 && res.deleted === 0) {
-        showToast('Nuvem já está atualizada (sem alterações para enviar).');
-      } else {
-        showToast(`Nuvem sincronizada: ${res.uploaded} enviados, ${res.deleted} removidos.`);
-      }
-    } catch {
-      setCloudSyncing(false);
-      showToast('Falha ao sincronizar. Verifique a conexão e a cota do projeto Firebase.');
-    }
-  };
-
-  // Envia TODOS os dados deste aparelho para a nuvem de uma vez, fazendo uma
-  // LIMPEZA COMPLETA da nuvem antes (clearUserDb + saveUserDb). Resultado: a
-  // nuvem fica IDÊNTICA a este aparelho. Use quando a nuvem estiver errada/
-  // incompleta e este aparelho tiver os dados corretos. Depois, em qualquer
-  // outro lugar, basta logar que ele baixa tudo igual.
-  const handleCloudPushAll = async () => {
-    if (!SYNC_ENABLED || !cloudUser) { showToast('Sincronização desativada (modo local).'); return; }
-    if (cloudPushTimer.current) { clearTimeout(cloudPushTimer.current); cloudPushTimer.current = null; }
-    const db = stateRef.current as LocalDb;
-    if (!window.confirm('Isso vai SUBSTITUIR todos os dados da nuvem pelos deste aparelho.\n\nSó use se este aparelho tiver os dados CORRETOS e COMPLETOS. Depois, todos os outros aparelhos vão baixar exatamente estes dados.\n\nContinuar?')) return;
-    showToast('Enviando TODOS os dados para a nuvem (substituindo tudo)...');
-    try {
-      const { saveUserDb, clearUserDb, clearSyncCache } = await import('./lib/dbSync');
-      const { clearSyncProgress } = await import('./lib/throttledSync');
-      clearSyncCache(cloudUser.uid);
-      clearSyncProgress(cloudUser.uid);
-      setCloudSyncing(true);
-      setCloudError(null);
-      await clearUserDb(cloudUser.uid);   // apaga tudo da nuvem
-      await saveUserDb(cloudUser.uid, db); // reescreve idêntico ao local
-      setCloudLastSync(new Date().toISOString());
-      setCloudSyncing(false);
-      setCloudPending(false);
-      setDailyWrites(getDailyWrites().count);
-      showToast(`✅ Nuvem substituída: ${db.sales.length} vendas, ${db.products.length} produtos enviados.`);
-    } catch {
-      setCloudSyncing(false);
-      showToast('Falha ao enviar tudo. Verifique a conexão e a cota do Firebase.');
-    }
-  };
-
-  const handleClearCloud = async () => {
-    if (!cloudUser || clearingCloud) return;
-    if (!window.confirm('Apagar TODOS os dados deste usuário na nuvem? Esta ação não pode ser desfeita. Recomendado antes de reimportar um backup antigo.')) {
-      return;
-    }
-    setClearingCloud(true);
-    try {
-      const { clearUserDb, clearSyncCache } = await import('./lib/dbSync');
-      await clearUserDb(cloudUser.uid);
-      clearSyncCache(cloudUser.uid);
-      setCloudLastSync(null);
-      setCloudError(null);
-      showToast('Dados da nuvem apagados. Clique em "Sincronizar Agora" para reenviar tudo do zero.');
-    } catch (e: unknown) {
-      setCloudError(e instanceof Error ? e.message : 'Falha ao apagar a nuvem');
-      showToast('Falha ao apagar os dados da nuvem.');
-    } finally {
-      setClearingCloud(false);
-    }
   };
 
   const saveProductsToStorage = async (updatedProducts: Product[], _changedProduct?: Product, _isDeletedId?: string) => {
@@ -1787,7 +1374,7 @@ export default function App() {
   }
 
   if (!cloudUser) {
-    return <LoginScreen onSignIn={handleCloudSignIn} error={cloudError} />;
+    return <LoginScreen onSignIn={handleCloudSignIn} />;
   }
 
   return (
@@ -2281,107 +1868,6 @@ export default function App() {
             </div>
           </div>
 
-          {cloudUser && cloudPending && (
-            <button
-              onClick={() => setShowPendingQueue(true)}
-              className="w-full p-2 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20 flex items-center justify-between cursor-pointer hover:bg-amber-100 dark:hover:bg-amber-900/40 transition-colors"
-            >
-              <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
-                <Clock className="h-3.5 w-3.5" />
-                Alterações pendentes
-              </span>
-              <span className="text-[10px] font-mono bg-amber-200 dark:bg-amber-800 text-amber-800 dark:text-amber-200 px-1.5 py-0.5 rounded-full font-bold">
-                {Object.keys(pendingRef.current).length}
-              </span>
-            </button>
-          )}
-        </div>
-
-        {/* Cloud sync status */}
-        <div className="px-4 py-2 border-t border-slate-100 dark:border-slate-700">
-          <div
-            onClick={cloudUser ? handleCloudSyncNow : undefined}
-            className={`p-3 rounded-xl border flex items-center gap-3 transition-colors ${
-              !cloudUser
-                ? 'bg-slate-50 dark:bg-slate-800/40 border-slate-200 dark:border-slate-700'
-                : cloudError
-                ? 'bg-rose-50 dark:bg-rose-900/20 border-rose-200 dark:border-rose-800 hover:bg-rose-100'
-                : cloudSyncing
-                ? 'bg-primary-50 dark:bg-primary-900/20 border-primary-200 dark:border-primary-800'
-                : cloudPending
-                ? 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800'
-                : 'bg-emerald-50/60 dark:bg-emerald-900/20 border-emerald-100 dark:border-emerald-800 hover:bg-emerald-100'
-            } ${cloudUser ? 'cursor-pointer' : ''}`}
-            title={cloudUser ? 'Clique para sincronizar agora' : 'Entre com o Google em Configurações'}
-          >
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white shrink-0 ${
-              !cloudUser ? 'bg-slate-400'
-                : cloudError ? 'bg-rose-500'
-                : cloudSyncing ? 'bg-primary'
-                : cloudPending ? 'bg-amber-500'
-                : 'bg-emerald-600'
-            }`}>
-              {!cloudUser ? <CloudOff className="h-4 w-4" />
-                : cloudSyncing ? <Loader2 className="h-4 w-4 animate-spin" />
-                : cloudError ? <AlertTriangle className="h-4 w-4" />
-                : cloudPending ? <Clock className="h-4 w-4" />
-                : <Cloud className="h-4 w-4" />}
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-bold text-slate-900 dark:text-slate-200 truncate leading-snug">
-                {!cloudUser ? 'Nuvem desconectada'
-                  : cloudSyncing ? 'Sincronizando…'
-                  : cloudError ? 'Erro na nuvem'
-                  : cloudPending ? 'Alterações pendentes'
-                  : 'Nuvem em dia'}
-              </p>
-              <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">
-                {!cloudUser ? 'Entre em Configurações'
-                  : cloudError ? 'Clique para tentar de novo'
-                  : cloudLastSync ? `Última: ${timeAgo(cloudLastSync)}` : 'Não sincronizado ainda'}
-              </span>
-              {cloudUser && (
-                <div className="mt-1.5">
-                  <div className="h-1 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full transition-all ${
-                        dailyWrites / DAILY_WRITE_LIMIT > 0.9 ? 'bg-rose-500'
-                          : dailyWrites / DAILY_WRITE_LIMIT > 0.7 ? 'bg-amber-500'
-                          : 'bg-emerald-500'
-                      }`}
-                      style={{ width: `${Math.min(100, (dailyWrites / DAILY_WRITE_LIMIT) * 100)}%` }}
-                    />
-                  </div>
-                  <span className="text-[9px] text-slate-400 font-mono">
-                    {dailyWrites.toLocaleString('pt-BR')} / {DAILY_WRITE_LIMIT.toLocaleString('pt-BR')} ops hoje
-                  </span>
-                </div>
-              )}
-              {cloudUser && cloudSyncing && (
-                <div className="mt-1.5 text-[10px] font-mono text-primary">
-                  <div>Enviando vendas prioritárias primeiro…</div>
-                  <div className="h-1 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden mt-1">
-                    <div className="h-full bg-primary animate-pulse rounded-full" style={{ width: '60%' }} />
-                  </div>
-                </div>
-              )}
-              {cloudUser && (
-                <button
-                  onClick={handleCloudPushAll}
-                  disabled={cloudSyncing}
-                  className="mt-2 w-full text-[11px] font-semibold text-primary bg-primary-50 dark:bg-primary-950/40 hover:bg-primary-100 dark:hover:bg-primary-900/40 border border-primary-200 dark:border-primary-800 rounded-lg py-1.5 transition-colors disabled:opacity-50"
-                >
-                  {cloudSyncing ? 'Enviando…' : '☁ Enviar TUDO para a nuvem'}
-                </button>
-              )}
-              <button
-                onClick={() => setShowSyncHistory(true)}
-                className="mt-1 w-full text-[11px] font-semibold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 rounded-lg py-1.5 transition-colors"
-              >
-                <Activity className="h-3 w-3 inline mr-1" />Ver histórico
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Alerta de integridade */}
@@ -2677,19 +2163,8 @@ export default function App() {
                 onRunScheduledBackup={handleRunScheduledBackup}
                 onResetDatabase={handleResetDatabase}
                 cloudUser={cloudUser}
-                cloudSyncing={cloudSyncing}
-                cloudLastSync={cloudLastSync}
-                cloudError={cloudError}
-                cloudPending={cloudPending}
-                dailyWrites={dailyWrites}
-                dailyWriteLimit={DAILY_WRITE_LIMIT}
                 onCloudSignIn={handleCloudSignIn}
                 onCloudSignOut={handleCloudSignOut}
-                onCloudSyncNow={handleCloudSyncNow}
-                onDownloadFromCloud={handleDownloadFromCloud}
-                onClearCloud={handleClearCloud}
-                clearingCloud={clearingCloud}
-                syncEnabled={SYNC_ENABLED}
                 appUsers={appUsers}
                 currentUserRole={currentUserRole}
                 onAppUsersChange={setAppUsers}
@@ -2803,20 +2278,6 @@ export default function App() {
         </div>
       )}
 
-      {/* MODAL: Sync History */}
-      {showSyncHistory && cloudUser && <SyncHistoryModal
-        userId={cloudUser.uid}
-        onClose={() => setShowSyncHistory(false)}
-      />}
-
-      {/* MODAL: Pending Queue */}
-      {showPendingQueue && <PendingQueueModal
-        pending={pendingRef.current}
-        onClose={() => setShowPendingQueue(false)}
-        onSyncNow={handleCloudSyncNow}
-        cloudSyncing={cloudSyncing}
-      />}
-
       {/* MODAL: Atalhos de Teclado */}
       {showShortcuts && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4" onClick={() => setShowShortcuts(false)}>
@@ -2850,129 +2311,6 @@ export default function App() {
       )}
 
       <Toaster position="bottom-right" />
-    </div>
-  );
-}
-
-function SyncHistoryModal({ userId, onClose }: { userId: string; onClose: () => void }) {
-  const history = useMemo(() => getSyncHistory(userId), [userId]);
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 dark:border-slate-700">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
-          <div className="flex items-center gap-3">
-            <Activity className="h-5 w-5 text-primary" />
-            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Histórico de Sincronização</h2>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-          >
-            ✕
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-6">
-          {history.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <Activity className="h-12 w-12 mx-auto mb-3 opacity-30" />
-              <p className="font-semibold">Nenhuma sincronização registrada ainda</p>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {[...history].reverse().map((entry, idx) => (
-                <div key={idx} className="p-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-mono text-slate-500">
-                      {new Date(entry.timestamp).toLocaleString('pt-BR')}
-                    </span>
-                    <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                      entry.stoppedByBudget
-                        ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
-                        : 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400'
-                    }`}>
-                      {entry.stoppedByBudget ? 'Orçamento esgotado' : 'Completo'}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400">
-                    <span className="font-bold">{entry.totalUploaded} docs</span>
-                    <span className="text-slate-300">|</span>
-                    <span>{Math.round(entry.durationMs / 1000)}s</span>
-                    <span className="text-slate-300">|</span>
-                    <span className="font-mono">{Object.keys(entry.collections).length} coleções</span>
-                  </div>
-                  {entry.nextYear && (
-                    <div className="mt-1 text-[10px] text-amber-600 dark:text-amber-400">
-                      Próximo ano pendente: {entry.nextYear}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function PendingQueueModal({ pending, onClose, onSyncNow, cloudSyncing }: {
-  pending: Partial<LocalDb>;
-  onClose: () => void;
-  onSyncNow: () => void;
-  cloudSyncing: boolean;
-}) {
-  const entries = Object.entries(pending).filter(([key]) => key !== 'initialized' && key !== 'storeInfo');
-  const totalItems = entries.reduce((acc, [, val]) => acc + (Array.isArray(val) ? val.length : 0), 0);
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] flex flex-col overflow-hidden border border-slate-200 dark:border-slate-700">
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 dark:border-slate-700">
-          <div className="flex items-center gap-3">
-            <Clock className="h-5 w-5 text-amber-500" />
-            <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">Fila de Sincronização</h2>
-          </div>
-          <button
-            onClick={onClose}
-            className="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
-          >
-            ✕
-          </button>
-        </div>
-        <div className="flex-1 overflow-y-auto p-6">
-          {entries.length === 0 ? (
-            <div className="text-center py-12 text-slate-400">
-              <Cloud className="h-12 w-12 mx-auto mb-3 opacity-30" />
-              <p className="font-semibold">Nenhuma alteração pendente</p>
-              <p className="text-xs mt-1">Todas as alterações foram sincronizadas</p>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              <div className="flex items-center justify-between text-sm">
-                <span className="font-bold text-slate-700 dark:text-slate-300">{entries.length} coleções com alterações</span>
-                <span className="font-mono text-xs text-slate-500">{totalItems} documentos</span>
-              </div>
-              {entries.map(([key, val]) => (
-                <div key={key} className="p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50/60 dark:bg-slate-800/40 flex items-center justify-between">
-                  <span className="text-sm font-semibold text-slate-800 dark:text-slate-200 capitalize">{key}</span>
-                  <span className="text-[11px] font-mono bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full">
-                    {Array.isArray(val) ? val.length : 1} itens
-                  </span>
-                </div>
-              ))}
-              <button
-                onClick={() => { onSyncNow(); onClose(); }}
-                disabled={cloudSyncing}
-                className="w-full mt-4 px-4 py-3 bg-primary hover:bg-primary-dark text-white text-sm font-bold rounded-xl transition-colors disabled:opacity-50 cursor-pointer flex items-center justify-center gap-2"
-              >
-                {cloudSyncing ? <Loader2 className="h-4 w-4 animate-spin" /> : <Cloud className="h-4 w-4" />}
-                Sincronizar agora
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
     </div>
   );
 }

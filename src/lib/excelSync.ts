@@ -1,5 +1,3 @@
-import { getFirestore, collection, doc, setDoc, writeBatch, serverTimestamp } from 'firebase/firestore';
-import { db } from './firebase';
 import { parseProductsSheet, parseCategoriesSheet, parseSalesSheet, parseLoansSheet, parseOrdersSheet, parsePurchasesSheet, parseCustomersSheet, parseSuppliersSheet, parseCashSheet } from './sheetParsers';
 import type { Product, Category, Sale, Loan, ServiceOrder, Purchase, Customer, Supplier, CashSession, Expense } from '../types';
 
@@ -53,22 +51,4 @@ export async function parseExcel(file: File): Promise<ExcelData> {
   }
 
   return data as ExcelData;
-}
-
-/** Upload entire Excel data as a single backup document */
-export async function uploadAsSingleDoc(file: File, uid: string): Promise<void> {
-  const data = await parseExcel(file);
-  const backupRef = doc(collection(db, 'excelBackups'));
-  await setDoc(backupRef, { uid, timestamp: serverTimestamp(), data });
-}
-
-/** Upload data as regular collections using existing incremental logic */
-export async function uploadAsDocuments(file: File, uid: string): Promise<{ uploaded: number; deleted: number }> {
-  const { clearSyncCache, saveUserDbIncremental } = await import('./dbSync');
-  const data = await parseExcel(file);
-  // Clear local sync cache to force full write
-  clearSyncCache(uid);
-  // Force full write (writes all docs)
-  const result = await saveUserDbIncremental(uid, data as any, { forceFull: true });
-  return result;
 }
