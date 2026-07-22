@@ -505,27 +505,6 @@ export default function App() {
       showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
     });
 
-    // Atualiza checksums de integridade
-    const collections: Record<string, unknown[]> = {
-      products: merged.products,
-      sales: merged.sales,
-      categories: merged.categories,
-      expenses: merged.expenses,
-      orders: merged.orders,
-      customers: merged.customers,
-      suppliers: merged.suppliers,
-      purchases: merged.purchases,
-      cashSessions: merged.cashSessions,
-      loans: merged.loans,
-      leads: merged.leads ?? [],
-      leadJobs: merged.leadJobs ?? [],
-      whatsappInstances: merged.whatsappInstances ?? [],
-      aiAgents: merged.aiAgents ?? [],
-      opportunities: merged.opportunities ?? [],
-      bills: merged.bills ?? [],
-      internetUsers: merged.internetUsers ?? [],
-    };
-
     // Debounce só para o timer de "pending" (evita múltiplos saves rápidos)
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = window.setTimeout(() => {
