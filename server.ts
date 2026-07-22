@@ -440,7 +440,7 @@ app.post('/api/rag/ask', (req, res) => {
 // Stripe API (checkout, portal, subscription status)
 // ---------------------------------------------------------------------------
 
-app.post('/api/stripe/create-checkout-session', async (req, res) => {
+app.post('/api/create-checkout', async (req, res) => {
   if (!stripe) return res.status(500).json({ error: 'Stripe não configurado' })
   const { uid, email, priceId } = req.body || {}
   if (!uid || !email || !priceId) return res.status(400).json({ error: 'uid, email e priceId são obrigatórios' })
@@ -482,7 +482,7 @@ app.post('/api/stripe/create-checkout-session', async (req, res) => {
   }
 })
 
-app.post('/api/stripe/create-portal-session', async (req, res) => {
+app.post('/api/create-portal', async (req, res) => {
   if (!stripe) return res.status(500).json({ error: 'Stripe não configurado' })
   const { uid } = req.body || {}
   if (!uid) return res.status(400).json({ error: 'uid é obrigatório' })
@@ -536,7 +536,7 @@ function mapSubRow(row: any) {
   }
 }
 
-app.post('/api/subscription/start-trial', async (req, res) => {
+app.post('/api/subscription', async (req, res) => {
   const { uid, email } = req.body || {}
   if (!uid || !email) return res.status(400).json({ error: 'uid e email são obrigatórios' })
   if (!supabaseAdmin) return res.status(500).json({ error: 'Supabase não configurado' })

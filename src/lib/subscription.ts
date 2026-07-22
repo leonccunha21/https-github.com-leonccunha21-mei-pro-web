@@ -43,7 +43,7 @@ export async function createCheckoutSession(uid: string, email: string, priceId:
   try {
     const body: Record<string, string> = { uid, email, priceId }
     if (coupon) body.coupon = coupon
-    const res = await fetch(`${API_BASE}/api/stripe/create-checkout-session`, {
+    const res = await fetch(`${API_BASE}/api/create-checkout`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
@@ -65,7 +65,7 @@ export function getTrialDaysRemaining(trialEnd?: string): number {
 
 export async function startTrial(uid: string, email: string): Promise<Subscription | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/subscription/start-trial`, {
+    const res = await fetch(`${API_BASE}/api/subscription`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uid, email }),
@@ -79,7 +79,7 @@ export async function startTrial(uid: string, email: string): Promise<Subscripti
 
 export async function createPortalSession(uid: string): Promise<string | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/stripe/create-portal-session`, {
+    const res = await fetch(`${API_BASE}/api/create-portal`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uid }),
