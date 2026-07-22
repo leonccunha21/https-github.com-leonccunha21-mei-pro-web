@@ -365,6 +365,9 @@ export default function MounjaroApp() {
   // passamos o estado completo montado aqui, onde os dados já estão corretos.
   const setDbAtomico = (patch: Partial<MounjaroDb>) => {
     const next: MounjaroDb = { ...stateRef.current, ...patch, initialized: true };
+    // Atualiza o ref ANTES do persist para que logAuditoria (chamado logo após)
+    // veja o estado já com a deleção aplicada e não ressuscite o registro excluído.
+    stateRef.current = next;
     setDb(next);
     persist(next);
   };
@@ -373,9 +376,17 @@ export default function MounjaroApp() {
   const nomeUsuario = cloudUser?.displayName || cloudUser?.email || 'usuário';
   const logAuditoria = useCallback(
     (params: { entidade: 'cliente' | 'dose' | 'pagamento' | 'pesagem' | 'foto'; acao: 'criar' | 'editar' | 'excluir'; resumo: string; clienteId?: string; refId?: string }) => {
-      const auditoria = criarRegistroAuditoria({ ...params, usuario: nomeUsuario }, stateRef.current.auditoria);
-      setDb((d) => ({ ...d, auditoria }));
-      persist({ auditoria });
+      // Usa setDb com callback para ler o estado mais recente (pós-deleção/edição),
+      // depois persiste o estado completo — evita stale closure que ressuscitaria
+      // registros recém-deletados via logAuditoria chamado logo após setDbAtomico.
+      setDb((d) => {
+        const auditoria = criarRegistroAuditoria({ ...params, usuario: nomeUsuario }, d.auditoria);
+        const next = { ...d, auditoria };
+        // Atualiza o ref para que persist veja o estado correto
+        stateRef.current = next;
+        persist(next);
+        return next;
+      });
     },
     [nomeUsuario, persist]
   );

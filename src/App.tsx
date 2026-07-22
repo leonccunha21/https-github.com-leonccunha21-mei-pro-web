@@ -484,14 +484,16 @@ export default function App() {
     purchases: Purchase[];
     cashSessions: CashSession[];
     loans: Loan[];
+    leads: Lead[];
+    leadJobs: LeadExtractionJob[];
     whatsappInstances: WhatsAppInstance[];
     aiAgents: AIAgent[];
     opportunities: Opportunity[];
     bills: Bill[];
     internetUsers: InternetUser[];
     initialized?: boolean;
-  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [], loans: [], whatsappInstances: [], aiAgents: [], opportunities: [], bills: [], internetUsers: [] });
-  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans, whatsappInstances, aiAgents, opportunities, bills, internetUsers };
+  }>({ products: [], sales: [], categories: [], expenses: [], orders: [], storeInfo: null, customers: [], suppliers: [], purchases: [], cashSessions: [], loans: [], leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [], opportunities: [], bills: [], internetUsers: [] });
+  stateRef.current = { products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans, whatsappInstances, aiAgents, opportunities, bills, internetUsers, leads, leadJobs };
 
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
@@ -1059,6 +1061,11 @@ export default function App() {
     if (imported.suppliers) saveSuppliersToStorage(imported.suppliers);
     if (imported.purchases) savePurchasesToStorage(imported.purchases);
     if (imported.cashSessions) saveCashSessionsToStorage(imported.cashSessions);
+    if (imported.bills) saveBillsToStorage(imported.bills);
+    if (imported.internetUsers) saveInternetUsersToStorage(imported.internetUsers);
+    if (imported.opportunities) setOpportunities(imported.opportunities);
+    if (imported.leads) setLeads(imported.leads);
+    if (imported.leadJobs) setLeadJobs(imported.leadJobs);
     persist({ initialized: true });
   };
 
@@ -1079,9 +1086,12 @@ export default function App() {
     setOpportunities([]);
     setLeads([]);
     setLeadJobs([]);
+    setWhatsappInstances([]);
+    setAiAgents([]);
     persist({
       bills: [], internetUsers: [], opportunities: [],
-      leads: [], leadJobs: [], initialized: true,
+      leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [],
+      initialized: true,
     });
     setActiveTab('dashboard');
   };
@@ -1934,7 +1944,7 @@ export default function App() {
 
             {/* Subsite Manicure PRO */}
             <button
-              onClick={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch { /* ignore */ } setShowChooser(true); }}
+              onClick={() => window.location.href = '/manicure'}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-fuchsia-700 dark:text-fuchsia-400 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/30 bg-fuchsia-50/50 dark:bg-fuchsia-900/20"
             >
               <Sparkles className="h-4 w-4" />
@@ -1943,7 +1953,7 @@ export default function App() {
 
             {/* Subsite Saúde PRO */}
             <button
-              onClick={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch { /* ignore */ } setShowChooser(true); }}
+              onClick={() => window.location.href = '/mounjaro'}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
             >
               <Stethoscope className="h-4 w-4" />
