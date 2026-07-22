@@ -7,6 +7,23 @@ function getSupabase() {
   return (url && key) ? createClient(url, key) : null;
 }
 
+function mapSubRow(row: any) {
+  return {
+    id: row.id,
+    userId: row.user_id,
+    email: row.email,
+    stripeCustomerId: row.stripe_customer_id ?? undefined,
+    stripeSubscriptionId: row.stripe_subscription_id ?? undefined,
+    status: row.status,
+    planId: row.plan_id,
+    trialEnd: row.trial_end ?? undefined,
+    currentPeriodEnd: row.current_period_end ?? undefined,
+    cancelAtPeriodEnd: row.cancel_at_period_end ?? false,
+    createdAt: row.created_at ?? new Date().toISOString(),
+    updatedAt: row.updated_at ?? new Date().toISOString(),
+  }
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   const supabase = getSupabase();
   if (!supabase) return res.status(500).json({ error: 'Supabase não configurado' });
@@ -17,7 +34,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     try {
       const { data } = await supabase.from('subscriptions').select('*').eq('user_id', uid).maybeSingle();
-      return res.json(data || null);
+      return res.json(data ? mapSubRow(data) : null);
     } catch (err: any) {
       console.error('Subscription fetch error:', err.message);
       return res.status(500).json({ error: err.message });
@@ -30,7 +47,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     try {
       const { data: existing } = await supabase.from('subscriptions').select('*').eq('user_id', uid).maybeSingle();
-      if (existing) return res.json(existing);
+      if (existing) return res.json(mapSubRow(existing));
 
       const trialEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString();
       const { data, error } = await supabase
@@ -46,7 +63,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         .maybeSingle();
 
       if (error) throw error;
-      return res.json(data);
+      return res.json(data ? mapSubRow(data) : null);
     } catch (err: any) {
       console.error('Start trial error:', err.message);
       return res.status(500).json({ error: err.message });
