@@ -44,7 +44,7 @@ async function idbPut(value: MounjaroDb): Promise<void> {
 }
 
 export function defaultConfig(): MounjaroDb['config'] {
-  return { nomeClinica: 'Mounjaro PRO', profissional: '', telefoneContato: '', valorDosePadrao: 0, intervaloPadraoDias: 7 };
+  return { nomeClinica: 'Saúde PRO', profissional: '', telefoneContato: '', valorDosePadrao: 0, intervaloPadraoDias: 7 };
 }
 
 export function emptyDb(): MounjaroDb {
@@ -111,6 +111,13 @@ export async function saveMounjaroDb(db: MounjaroDb): Promise<void> {
   try { await idbPut(db); } catch (e) { console.error('Erro ao salvar Mounjaro DB:', e); }
   saveMounjaroCloud(db).catch((e) => console.error('Mounjaro Supabase sync falhou:', e));
   notifyDbUpdated();
+}
+
+/** Salva APENAS no IndexedDB local, sem disparar sync com a nuvem.
+ *  Usado pelo useEffect de carga para persistir o resultado do merge
+ *  sem sobrescrever deleções pendentes de envio à nuvem. */
+export async function saveMounjaroDbLocalOnly(db: MounjaroDb): Promise<void> {
+  try { await idbPut(db); } catch (e) { console.error('Erro ao salvar Mounjaro DB (local):', e); }
 }
 
 export function persistDebounced(

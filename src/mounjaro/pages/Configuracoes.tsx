@@ -87,7 +87,7 @@ export default function Configuracoes({ config, setConfig }: Props) {
         <div className="flex items-center gap-3">
           {form.logo && <img src={form.logo} alt="logo" className="w-10 h-10 object-contain" />}
           <div>
-            <p className="font-bold">{form.nomeClinica || 'Mounjaro PRO'}</p>
+            <p className="font-bold">{form.nomeClinica || 'Saúde PRO'}</p>
             <p className="text-xs text-slate-500">{form.profissional || 'Profissional responsável'}{form.telefoneContato ? ` · ${form.telefoneContato}` : ''}</p>
           </div>
         </div>

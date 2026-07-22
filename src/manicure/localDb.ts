@@ -1,4 +1,5 @@
 import { ManicureDb, MensagemTemplate } from './types';
+import { loadManicureCloud, saveManicureCloud } from './dbSync';
 
 const DB_NAME = 'manicure_local';
 const STORE = 'manicuredb';
@@ -67,7 +68,7 @@ export function emptyDb(): ManicureDb {
 export async function loadManicureDb(): Promise<ManicureDb> {
   try {
     const raw = await idbGet();
-    if (raw) {
+    if (raw && (raw.clientes?.length || raw.agendamentos?.length || raw.servicos?.length || raw.movimentos?.length || raw.produtos?.length)) {
       return {
         clientes: raw.clientes || [], servicos: raw.servicos || [],
         agendamentos: raw.agendamentos || [], movimentos: raw.movimentos || [],
@@ -79,11 +80,31 @@ export async function loadManicureDb(): Promise<ManicureDb> {
       };
     }
   } catch { /* ignore */ }
+
+  // Sem cache local (primeira vez ou IndexedDB limpo): carrega da nuvem.
+  try {
+    const cloud = await loadManicureCloud();
+    if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
+      const db: ManicureDb = {
+        clientes: cloud.clientes || [], servicos: cloud.servicos || [],
+        agendamentos: cloud.agendamentos || [], movimentos: cloud.movimentos || [],
+        produtos: cloud.produtos || [],
+        whatsappInstances: cloud.whatsappInstances || [],
+        mensagemTemplates: cloud.mensagemTemplates && cloud.mensagemTemplates.length > 0 ? cloud.mensagemTemplates : templatesPadrao(),
+        mensagensEnviadas: cloud.mensagensEnviadas || [],
+        config: { ...defaultConfig(), ...(cloud.config || {}) }, initialized: true,
+      };
+      try { await idbPut(db); } catch { /* ignore */ }
+      return db;
+    }
+  } catch { /* ignore */ }
+
   return emptyDb();
 }
 
 export async function saveManicureDb(db: ManicureDb): Promise<void> {
   try { await idbPut(db); } catch (e) { console.error('Erro ao salvar Manicure DB:', e); }
+  saveManicureCloud(db).catch((e) => console.error('Manicure Supabase sync falhou:', e));
   notifyDbUpdated();
 }
 

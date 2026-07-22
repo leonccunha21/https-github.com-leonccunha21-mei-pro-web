@@ -70,10 +70,10 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
     const atrasadas = lembretes.filter((l) => l.status === 'atrasada').length;
     const vencidas = cobrancas.filter((c) => c.vencida).length;
     if (atrasadas > 0) {
-      new Notification('Mounjaro PRO', { body: `${atrasadas} dose(s) de aplicação em atraso.` });
+      new Notification('Saúde PRO', { body: `${atrasadas} dose(s) de aplicação em atraso.` });
     }
     if (vencidas > 0) {
-      new Notification('Mounjaro PRO', { body: `${vencidas} cobrança(s) vencida(s).` });
+      new Notification('Saúde PRO', { body: `${vencidas} cobrança(s) vencida(s).` });
     }
     notifiedRef.current = true;
   }, [lembretes, cobrancas]);

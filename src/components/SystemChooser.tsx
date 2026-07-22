@@ -34,7 +34,7 @@ const SYSTEMS = [
   },
   {
     id: 'mounjaro' as const,
-    title: 'Mounjaro PRO',
+    title: 'Saúde PRO',
     subtitle: 'Controle de Tratamento',
     description: 'Doses, peso, pagamentos, fotos e relatórios',
     icon: Stethoscope,

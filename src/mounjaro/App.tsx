@@ -2,11 +2,12 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
-  LayoutDashboard, Users, Syringe, Scale, Wallet, ArrowLeft, Sun, Moon, Info,
+  LayoutDashboard, Users, Syringe, Scale, Wallet, Sun, Moon, Info,
   Stethoscope, LogOut, Cloud, CloudOff, AlertTriangle, FileText, Bell, Camera, History, Settings,
+  ShoppingBag, Sparkles,
 } from 'lucide-react';
 import { MounjaroDb, ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao } from './types';
-import { emptyDb, loadMounjaroDb, saveMounjaroDb, defaultConfig } from './localDb';
+import { emptyDb, loadMounjaroDb, saveMounjaroDb, saveMounjaroDbLocalOnly, defaultConfig } from './localDb';
 import { loadMounjaroCloud, saveMounjaroCloud, clearMounjaroSyncProgress, MounjaroScope, ClinicaDoc, criarClinica, buscarClinica } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
@@ -188,16 +189,17 @@ export default function MounjaroApp() {
     if (!scope) { setLoading(false); return; }
     (async () => {
       try {
-        // 1. Local (IndexedDB)
+        // 1. IndexedDB local — fonte de verdade primária (inclui deleções locais).
         const localRaw = await loadMounjaroDb();
         const local = sanitizar(localRaw);
+        const localTemDados = !!(local.clientes.length || local.doses.length || local.pesagens.length ||
+          local.pagamentos.length || local.fotos.length || local.auditoria.length);
         // 2. Nuvem
         const cloud = await loadMounjaroCloud(scope);
         // 3. Estado em memória (pode ter dados ainda não gravados no local/nuvem)
         const mem = stateRef.current || emptyDb();
-        // Merge de 3 fontes por id. Ordem: nuvem primeiro, local por último
-        // (prevalece). Assim o que está no dispositivo nunca é apagado por uma
-        // nuvem vazia/parcial, e a nuvem só preenche o que falta.
+        // Merge: local PREVALECE. A nuvem só contribui com IDs que o local não tem
+        // (novos registros criados em outro dispositivo). Nunca sobrescreve deleções locais.
         const merged: MounjaroDb = {
           clientes: mergePorId(mergePorId(cloud.clientes || [], mem.clientes), local.clientes),
           pesagens: mergePorId(mergePorId(cloud.pesagens || [], mem.pesagens), local.pesagens),
@@ -209,12 +211,16 @@ export default function MounjaroApp() {
           initialized: true,
         };
         // Só sobrescreve o estado se houver dados; caso contrário mantém o que já está em memória.
-        const temDados =
-          merged.clientes.length || merged.doses.length || merged.pesagens.length ||
-          merged.pagamentos.length || merged.fotos.length || merged.auditoria.length;
+        const temDados = !!(merged.clientes.length || merged.doses.length || merged.pesagens.length ||
+          merged.pagamentos.length || merged.fotos.length || merged.auditoria.length);
         setDb(temDados ? merged : mem);
-        // Persiste localmente o resultado do merge (sem disparar sincronização em loop)
-        saveMounjaroDb(temDados ? merged : mem).catch(() => {});
+        // FIX bug deleção: só persiste o merged no IndexedDB se o local estava vazio
+        // (primeira carga / IDB limpo). Se o local já tinha dados, o IDB já está
+        // correto (inclui as deleções) — NÃO sobreescrever evita que a nuvem
+        // ressuscite registros deletados localmente.
+        if (!localTemDados && temDados) {
+          saveMounjaroDbLocalOnly(merged).catch(() => {});
+        }
         setLastSync(new Date().toISOString());
       } catch (e) {
         console.error(e);
@@ -278,15 +284,15 @@ export default function MounjaroApp() {
       const cloud = await loadMounjaroCloud({ tipo: 'clinica', clinicaId: doc.id });
       const localRaw = await loadMounjaroDb();
       const merged: MounjaroDb = {
-        clientes: mergePorId(localRaw.clientes, cloud.clientes || []),
-        pesagens: mergePorId(localRaw.pesagens, cloud.pesagens || []),
-        doses: mergePorId(localRaw.doses, cloud.doses || []),
-        pagamentos: mergePorId(localRaw.pagamentos, cloud.pagamentos || []),
-        fotos: mergePorId(localRaw.fotos, cloud.fotos || []),
-        auditoria: mergePorId(localRaw.auditoria, cloud.auditoria || []),
-        config: { ...defaultConfig(), ...(cloud.config || {}), ...(localRaw.config || {}) },
-        initialized: true,
-      };
+          clientes: mergePorId(cloud.clientes || [], localRaw.clientes),
+          pesagens: mergePorId(cloud.pesagens || [], localRaw.pesagens),
+          doses: mergePorId(cloud.doses || [], localRaw.doses),
+          pagamentos: mergePorId(cloud.pagamentos || [], localRaw.pagamentos),
+          fotos: mergePorId(cloud.fotos || [], localRaw.fotos),
+          auditoria: mergePorId(cloud.auditoria || [], localRaw.auditoria),
+          config: { ...defaultConfig(), ...(cloud.config || {}), ...(localRaw.config || {}) },
+          initialized: true,
+        };
       setDb(merged);
       saveMounjaroDb(merged).catch(() => {});
       setLoading(false);
@@ -333,8 +339,10 @@ export default function MounjaroApp() {
             config: { ...defaultConfig(), ...(cloud.config || {}), ...(local.config || {}) },
             initialized: true,
           };
+          // local prevalece — mesma lógica do useEffect de carga: não sobrescreve IDB
+          // com o merged (que pode ter dados da nuvem mais antigos do que o local)
           setDb(merged);
-          saveMounjaroDb(merged).catch(() => {});
+          saveMounjaroDbLocalOnly(merged).catch(() => {});
         } catch { /* ignora — mantém o estado atual */ }
         finally { setLoading(false); }
       })();
@@ -384,7 +392,7 @@ export default function MounjaroApp() {
     reader.onload = () => {
       try {
         const parsed = JSON.parse(String(reader.result)) as Partial<MounjaroDb>;
-        if (!window.confirm('Importar este backup? Isso substituirá todos os dados atuais do Mounjaro PRO neste navegador e na nuvem.')) return;
+        if (!window.confirm('Importar este backup? Isso substituirá todos os dados atuais do Saúde PRO neste navegador e na nuvem.')) return;
         const merged: MounjaroDb = {
           clientes: parsed.clientes || [],
           pesagens: parsed.pesagens || [],
@@ -422,8 +430,8 @@ export default function MounjaroApp() {
             <Stethoscope className="h-7 w-7" />
           </div>
           <div className="text-center">
-            <h1 className="text-xl font-bold text-slate-950 dark:text-slate-100 tracking-tight">Mounjaro PRO</h1>
-            <p className="text-xs text-cyan-600 font-bold uppercase tracking-wider mt-0.5">Controle de Tratamento</p>
+            <h1 className="text-xl font-bold text-slate-950 dark:text-slate-100 tracking-tight">Saúde PRO</h1>
+              <p className="text-xs text-cyan-600 font-bold uppercase tracking-wider mt-0.5">Controle de Tratamento</p>
           </div>
           <div className="text-center text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
             Faça login com sua conta Google para acessar e sincronizar seus dados na nuvem.
@@ -462,61 +470,120 @@ export default function MounjaroApp() {
     );
   }
 
-  const goHome = () => {
-    try { localStorage.removeItem('mei_pro_system_choice'); } catch { /* ignore */ }
-    window.location.href = '/';
+  const MOBILE_MAIN: { id: Tab | 'menu'; label: string; icon: React.ReactNode }[] = [
+    { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
+    { id: 'clientes', label: 'Clientes', icon: <Users size={20} /> },
+    { id: 'doses', label: 'Doses', icon: <Syringe size={20} /> },
+    { id: 'peso', label: 'Peso', icon: <Scale size={20} /> },
+    { id: 'menu', label: 'Menu', icon: <Settings size={20} /> },
+  ];
+
+  const IconForNav = (id: string) => {
+    const found = NAV.find(n => n.id === id);
+    return found ? found.icon : <LayoutDashboard size={20} />;
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col md:flex-row text-slate-900 dark:text-slate-100">
       <Toaster position="top-center" />
 
-      {/* Header */}
-      <header className="sticky top-0 z-30 bg-white/80 dark:bg-slate-800/80 backdrop-blur border-b border-slate-200 dark:border-slate-700">
-        <div className="flex items-center justify-between px-4 py-3 max-w-6xl mx-auto">
-          <div className="flex items-center gap-2">
-            <button onClick={goHome} title="Trocar de sistema" className="flex items-center gap-1 text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400">
-              <ArrowLeft size={20} />
-              <span className="hidden sm:inline text-sm font-medium">Trocar</span>
+      {/* MOBILE TOP HEADER */}
+      <header className="md:hidden sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-3 shadow-sm">
+        <div className="p-1.5 rounded-lg bg-cyan-600 text-white shrink-0">
+          <Stethoscope size={18} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h2 className="font-bold text-sm tracking-tight leading-tight">Saúde PRO</h2>
+          <span className="text-[9px] text-cyan-600 font-bold uppercase tracking-wider">Controle de Tratamento</span>
+        </div>
+        <button onClick={toggleDarkMode} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+      </header>
+
+      {/* DESKTOP SIDEBAR */}
+      <aside className="hidden md:flex w-64 bg-white dark:bg-slate-900 shrink-0 border-r border-slate-200 dark:border-slate-700 flex-col justify-between z-10 py-2">
+        <div>
+          <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-xl bg-cyan-600 text-white shrink-0">
+              <Stethoscope size={22} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-bold text-base tracking-tight leading-tight">Saúde PRO</h2>
+              <span className="text-[10px] text-cyan-600 font-bold uppercase tracking-wider">Controle de Tratamento</span>
+            </div>
+            <button onClick={toggleDarkMode} className="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+              {darkMode ? <Sun size={16} /> : <Moon size={16} />}
             </button>
-            <div className="p-2 rounded-xl bg-cyan-600 text-white">
-              <Stethoscope size={20} />
-            </div>
-            <div>
-              <h1 className="text-base sm:text-lg font-bold leading-tight">Mounjaro PRO</h1>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">Controle de tratamento · Tirzepatida</p>
-            </div>
           </div>
-          <div className="flex items-center gap-2">
-            {clinica ? (
-              <span className="hidden md:flex items-center gap-1 text-xs font-medium text-cyan-600 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-1 rounded-lg" title={`Espaço compartilhado: ${clinica.nome} (código ${clinica.codigo})`}>
-                <Users size={13} /> {clinica.nome}
-              </span>
-            ) : null}
-            <button onClick={() => setShowClinicaModal(true)} title="Espaço da equipe" className="flex items-center gap-1 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1 border border-slate-200 dark:border-slate-700 rounded-lg">
-              <Users size={14} /> {clinica ? 'Equipe' : 'Entrar na equipe'}
+
+          <nav className="px-3 space-y-0.5">
+            {NAV.map((n) => (
+              <button
+                key={n.id}
+                onClick={() => setActiveTab(n.id)}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors ${
+                  activeTab === n.id
+                    ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                {n.icon}
+                {n.label}
+              </button>
+            ))}
+          </nav>
+
+          {/* System switching */}
+          <div className="border-t border-slate-100 dark:border-slate-700 mt-4 pt-4 px-3 space-y-0.5">
+            <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Outros Sistemas</p>
+            <button
+              onClick={() => window.location.href = '/'}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 bg-indigo-50/50 dark:bg-indigo-900/20"
+            >
+              <ShoppingBag size={16} />
+              ZM Store
             </button>
-            <span className="hidden sm:flex items-center gap-1 text-xs text-slate-400" title={lastSync ? `Sincronizado ${new Date(lastSync).toLocaleString('pt-BR')}` : 'Sincronizando...'}>
-              {syncing ? <CloudOff size={14} className="text-amber-500" /> : <Cloud size={14} className="text-emerald-500" />}
+            <button
+              onClick={() => window.location.href = '/manicure'}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider text-fuchsia-700 dark:text-fuchsia-400 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/30 bg-fuchsia-50/50 dark:bg-fuchsia-900/20"
+            >
+              <Sparkles size={16} />
+              Manicure PRO
+            </button>
+          </div>
+        </div>
+
+        {/* Sidebar footer: sync + tools */}
+        <div className="px-3 py-3 border-t border-slate-100 dark:border-slate-700 space-y-2">
+          {clinica ? (
+            <div className="px-3 py-2 rounded-lg bg-cyan-50/50 dark:bg-cyan-900/20 border border-cyan-100 dark:border-cyan-800">
+              <p className="text-[10px] font-bold text-cyan-700 dark:text-cyan-300 truncate">{clinica.nome}</p>
+              <p className="text-[9px] text-cyan-500">Espaço compartilhado</p>
+            </div>
+          ) : null}
+          <div className="flex items-center gap-2 px-1">
+            <span className="flex items-center gap-1 text-[10px] text-slate-400" title={lastSync ? `Sincronizado ${new Date(lastSync).toLocaleString('pt-BR')}` : 'Sincronizando...'}>
+              {syncing ? <CloudOff size={12} className="text-amber-500" /> : <Cloud size={12} className="text-emerald-500" />}
+              {syncing ? 'Sincronizando...' : 'Conectado'}
             </span>
-            <button onClick={exportBackup} className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1">
-              Exportar
-            </button>
-            <button onClick={syncAgora} title="Forçar sincronização com a nuvem" className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 text-center">
+          </div>
+          <div className="flex flex-wrap gap-1 px-1">
+            <button onClick={syncAgora} className="text-[10px] font-medium text-slate-500 hover:text-cyan-600 px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">
               Sincronizar
             </button>
-            <button onClick={syncTudoAgora} title="Enviar TODOS os dados à nuvem agora (recupera dados presos)" className="hidden sm:block text-xs font-semibold text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-1 rounded-lg">
+            <button onClick={syncTudoAgora} className="text-[10px] font-semibold text-cyan-700 dark:text-cyan-400 hover:text-cyan-800 px-2 py-1 rounded hover:bg-cyan-50 dark:hover:bg-cyan-950/40">
               Sincronizar tudo
             </button>
-            <label className="hidden sm:block text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-cyan-600 px-2 py-1 cursor-pointer">
+            <button onClick={exportBackup} className="text-[10px] font-medium text-slate-500 hover:text-cyan-600 px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">
+              Exportar
+            </button>
+            <label className="text-[10px] font-medium text-slate-500 hover:text-cyan-600 px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer">
               Importar
               <input type="file" accept="application/json" className="hidden" onChange={(e) => e.target.files?.[0] && importBackup(e.target.files[0])} />
             </label>
-            <button onClick={handleSignOut} title="Sair" className="text-slate-400 hover:text-rose-600 p-1">
-              <LogOut size={18} />
-            </button>
-            <button onClick={toggleDarkMode} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+            <button onClick={() => setShowClinicaModal(true)} className="text-[10px] font-medium text-slate-500 hover:text-cyan-600 px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800">
+              {clinica ? 'Equipe' : 'Equipe'}
             </button>
             <button
               onClick={async () => {
@@ -531,88 +598,169 @@ export default function MounjaroApp() {
                   }
                 } catch { /* ignore */ }
               }}
-              title="Ativar notificações de lembrete"
-              className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700"
+              className="text-[10px] font-medium text-slate-500 hover:text-cyan-600 px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800"
             >
-              <Bell size={18} />
+              Notificação
+            </button>
+            <button onClick={handleSignOut} className="text-[10px] font-medium text-rose-600 hover:text-rose-700 px-2 py-1 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40">
+              Sair
             </button>
           </div>
+          <p className="text-[9px] text-slate-400 px-1">Saúde PRO v1.0</p>
         </div>
-        {/* Tabs desktop */}
-        <nav className="hidden sm:flex gap-1 px-4 pb-2 max-w-6xl mx-auto overflow-x-auto no-scrollbar">
-          {NAV.map((n) => (
+      </aside>
+
+      {/* MAIN CONTENT */}
+      <div className="flex-1 flex flex-col min-h-0">
+        {clinica && (
+          <div className="max-w-6xl w-full mx-auto px-4 pt-3">
+            <div className="rounded-xl border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 px-4 py-2.5 text-xs text-cyan-800 dark:text-cyan-200 flex items-center justify-between gap-3">
+              <span>
+                <b>Espaço compartilhado:</b> {clinica.nome} (código {clinica.codigo}). Os dados aqui são da equipe e ficam separados do seu armazenamento pessoal.
+              </span>
+              <button onClick={() => setShowClinicaModal(true)} className="shrink-0 font-semibold underline hover:no-underline">Gerenciar / sair</button>
+            </div>
+          </div>
+        )}
+
+        <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-5 pb-24 md:pb-8">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.15 }}
+            >
+              {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
+              {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} fotos={db.fotos} auditoria={db.auditoria} setClientes={setClientes} setPesagens={setPesagens} setDoses={setDoses} setPagamentos={setPagamentos} setFotos={setFotos} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
+              {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} pagamentos={db.pagamentos} setDoses={setDoses} setPagamentos={setPagamentos} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
+              {activeTab === 'peso' && <Peso clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} setPesagens={setPesagens} logAuditoria={logAuditoria} />}
+              {activeTab === 'pagamentos' && <Pagamentos clientes={db.clientes} pagamentos={db.pagamentos} doses={db.doses} setPagamentos={setPagamentos} setDoses={setDoses} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
+              {activeTab === 'relatorio' && <Relatorio clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} config={db.config} />}
+              {activeTab === 'fotos' && <Fotos clientes={db.clientes} fotos={db.fotos} setFotos={setFotos} logAuditoria={logAuditoria} />}
+              {activeTab === 'auditoria' && <Auditoria auditoria={db.auditoria} clientes={db.clientes} />}
+              {activeTab === 'configuracoes' && <Configuracoes config={db.config} setConfig={setConfig} />}
+              {activeTab === 'referencia' && <Referencia />}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+
+        {/* Aviso de responsabilidade (disclaimer médico) */}
+        <footer className="max-w-6xl w-full mx-auto px-4 py-4 text-center text-[11px] leading-snug text-slate-400 dark:text-slate-500">
+          Saúde PRO é uma ferramenta de organização e acompanhamento. Não substitui avaliação,
+          prescrição ou acompanhamento médico profissional. Sempre consulte um médico habilitado.
+        </footer>
+      </div>
+
+      {/* MOBILE BOTTOM NAV */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-700 flex items-stretch justify-between px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+        {MOBILE_MAIN.map((item) => {
+          const isMenu = item.id === 'menu';
+          const isActive = activeTab === item.id && !mobileMenuOpen;
+          return (
             <button
-              key={n.id}
-              onClick={() => setActiveTab(n.id)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap ${
-                activeTab === n.id
-                  ? 'bg-cyan-600 text-white'
-                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+              key={item.id}
+              onClick={() => isMenu ? setMobileMenuOpen(!mobileMenuOpen) : setActiveTab(item.id)}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 py-2.5 px-1 transition-all ${
+                isActive ? 'text-cyan-600' : 'text-slate-400 dark:text-slate-500'
               }`}
             >
-              {n.icon}{n.label}
+              {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-cyan-600 rounded-full" />}
+              {item.icon}
+              <span className="text-[10px] font-bold leading-none">{item.label}</span>
             </button>
-          ))}
-        </nav>
-      </header>
-
-      {/* Bottom nav mobile */}
-      <nav className="sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 overflow-x-auto no-scrollbar">
-        <div className="flex min-w-max">
-        {NAV.map((n) => (
-          <button
-            key={n.id}
-            onClick={() => setActiveTab(n.id)}
-            className={`flex flex-col items-center justify-center py-2 px-4 text-[10px] gap-0.5 min-w-[64px] ${
-              activeTab === n.id ? 'text-cyan-600 dark:text-cyan-400' : 'text-slate-500 dark:text-slate-400'
-            }`}
-          >
-            {n.icon}
-            {n.label}
-          </button>
-        ))}
-        </div>
+          );
+        })}
       </nav>
 
-      {clinica && (
-        <div className="max-w-6xl mx-auto px-4 pt-3">
-          <div className="rounded-xl border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 px-4 py-2.5 text-xs text-cyan-800 dark:text-cyan-200 flex items-center justify-between gap-3">
-            <span>
-              <b>Espaço compartilhado:</b> {clinica.nome} (código {clinica.codigo}). Os dados aqui são da equipe e ficam separados do seu armazenamento pessoal.
-            </span>
-            <button onClick={() => setShowClinicaModal(true)} className="shrink-0 font-semibold underline hover:no-underline">Gerenciar / sair</button>
+      {/* MOBILE SLIDE-UP MENU */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)}>
+          <div className="absolute inset-0 bg-black/40" />
+          <div
+            className="absolute bottom-0 inset-x-0 bg-white dark:bg-slate-900 rounded-t-2xl shadow-2xl p-4 pb-[env(safe-area-inset-bottom)] animate-[slideUp_0.2s_ease-out]"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="w-10 h-1 bg-slate-300 dark:bg-slate-600 rounded-full mx-auto mb-4" />
+            <div className="grid grid-cols-3 gap-3">
+              {NAV.map((item) => {
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
+                    className={`flex flex-col items-center gap-2 p-4 rounded-xl transition-colors relative ${
+                      activeTab === item.id
+                        ? 'bg-cyan-50 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-400'
+                        : 'bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300'
+                    }`}
+                  >
+                    {item.icon}
+                    <span className="text-[11px] font-bold">{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="border-t border-slate-100 dark:border-slate-700 mt-4 pt-4">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-1">Outros Sistemas</p>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => window.location.href = '/'}
+                  className="flex items-center gap-3 px-3 py-3 rounded-xl bg-indigo-50/50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider"
+                >
+                  <ShoppingBag size={18} />
+                  ZM Store
+                </button>
+                <button
+                  onClick={() => window.location.href = '/manicure'}
+                  className="flex items-center gap-3 px-3 py-3 rounded-xl bg-fuchsia-50/50 dark:bg-fuchsia-900/20 text-fuchsia-700 dark:text-fuchsia-400 text-xs font-bold uppercase tracking-wider"
+                >
+                  <Sparkles size={18} />
+                  Manicure PRO
+                </button>
+              </div>
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-700 grid grid-cols-2 gap-2">
+                <button onClick={syncAgora} className="text-xs font-medium text-slate-600 dark:text-slate-300 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700">
+                  <Cloud size={14} className="inline mr-1" />Sincronizar
+                </button>
+                <button onClick={syncTudoAgora} className="text-xs font-medium text-cyan-700 dark:text-cyan-400 px-3 py-2 rounded-lg bg-cyan-50 dark:bg-cyan-950/40 hover:bg-cyan-100 dark:hover:bg-cyan-900/60">
+                  <Cloud size={14} className="inline mr-1" />Sinc. tudo
+                </button>
+                <button onClick={exportBackup} className="text-xs font-medium text-slate-600 dark:text-slate-300 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700">
+                  Exportar
+                </button>
+                <label className="text-xs font-medium text-slate-600 dark:text-slate-300 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer text-center">
+                  Importar
+                  <input type="file" accept="application/json" className="hidden" onChange={(e) => e.target.files?.[0] && importBackup(e.target.files[0])} />
+                </label>
+                <button onClick={() => setShowClinicaModal(true)} className="text-xs font-medium text-slate-600 dark:text-slate-300 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700">
+                  <Users size={14} className="inline mr-1" />{clinica ? 'Equipe' : 'Equipe'}
+                </button>
+                <button
+                  onClick={async () => {
+                    try {
+                      if (typeof Notification !== 'undefined' && Notification.permission === 'default') {
+                        await Notification.requestPermission();
+                        toast.success('Notificações ativadas!');
+                      } else if (typeof Notification !== 'undefined' && Notification.permission === 'denied') {
+                        toast.error('Notificações bloqueadas no navegador.');
+                      } else {
+                        toast('Notificações já estão ativas.');
+                      }
+                    } catch { /* ignore */ }
+                  }}
+                  className="text-xs font-medium text-slate-600 dark:text-slate-300 px-3 py-2 rounded-lg bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700"
+                >
+                  <Bell size={14} className="inline mr-1" />Notificação
+                </button>
+                <button onClick={handleSignOut} className="text-xs font-medium text-rose-600 px-3 py-2 rounded-lg bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-900/60 col-span-2">
+                  <LogOut size={14} className="inline mr-1" />Sair
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
-
-      <main className="max-w-6xl mx-auto px-4 py-5 pb-24 sm:pb-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.15 }}
-          >
-            {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
-            {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} fotos={db.fotos} auditoria={db.auditoria} setClientes={setClientes} setPesagens={setPesagens} setDoses={setDoses} setPagamentos={setPagamentos} setFotos={setFotos} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
-            {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} pagamentos={db.pagamentos} setDoses={setDoses} setPagamentos={setPagamentos} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
-            {activeTab === 'peso' && <Peso clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} setPesagens={setPesagens} logAuditoria={logAuditoria} />}
-            {activeTab === 'pagamentos' && <Pagamentos clientes={db.clientes} pagamentos={db.pagamentos} doses={db.doses} setPagamentos={setPagamentos} setDoses={setDoses} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
-            {activeTab === 'relatorio' && <Relatorio clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} config={db.config} />}
-            {activeTab === 'fotos' && <Fotos clientes={db.clientes} fotos={db.fotos} setFotos={setFotos} logAuditoria={logAuditoria} />}
-            {activeTab === 'auditoria' && <Auditoria auditoria={db.auditoria} clientes={db.clientes} />}
-            {activeTab === 'configuracoes' && <Configuracoes config={db.config} setConfig={setConfig} />}
-            {activeTab === 'referencia' && <Referencia />}
-          </motion.div>
-        </AnimatePresence>
-      </main>
-
-      {/* Aviso de responsabilidade (disclaimer médico) */}
-      <footer className="max-w-6xl mx-auto px-4 py-4 text-center text-[11px] leading-snug text-slate-400 dark:text-slate-500">
-        Mounjaro PRO é uma ferramenta de organização e acompanhamento. Não substitui avaliação,
-        prescrição ou acompanhamento médico profissional. Sempre consulte um médico habilitado.
-      </footer>
 
       {/* Modal: Espaço da equipe (clínica compartilhada) */}
       <ClinicaModal

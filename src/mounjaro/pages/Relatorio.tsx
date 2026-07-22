@@ -89,7 +89,7 @@ export default function Relatorio({ clientes, pesagens, doses, pagamentos, confi
               <div className="flex items-center gap-3 min-w-0">
                 {config.logo && <img src={config.logo} alt="logo" className="w-12 h-12 object-contain shrink-0" />}
                 <div className="min-w-0">
-                  <p className="text-xs font-semibold text-cyan-700 dark:text-cyan-400">{config.nomeClinica || 'Mounjaro PRO'}</p>
+                  <p className="text-xs font-semibold text-cyan-700 dark:text-cyan-400">{config.nomeClinica || 'Saúde PRO'}</p>
                   <h3 className="text-lg font-bold truncate">{cliente.nome}</h3>
                   <p className="text-xs text-slate-500 dark:text-slate-400">
                     {cliente.telefone || '—'} · {cliente.cidade ? `${cliente.cidade}/${cliente.estado || ''}` : '—'}
@@ -98,7 +98,7 @@ export default function Relatorio({ clientes, pesagens, doses, pagamentos, confi
               </div>
               <div className="text-right text-xs text-slate-500 dark:text-slate-400 shrink-0">
                 Emitido em {formatarDataCurta(new Date().toISOString().slice(0, 10))}<br />
-                {config.profissional ? `Dr(a). ${config.profissional}` : 'Mounjaro PRO'}
+                {config.profissional ? `Dr(a). ${config.profissional}` : 'Saúde PRO'}
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">

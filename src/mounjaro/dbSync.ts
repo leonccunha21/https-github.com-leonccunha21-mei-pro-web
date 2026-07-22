@@ -203,7 +203,7 @@ export async function loadMounjaroCloud(_scope?: MounjaroScope): Promise<Partial
         clienteId: r.cliente_id ?? undefined, refId: r.ref_id ?? undefined,
       })),
       config: config.data ? {
-        nomeClinica: config.data.nome_clinica ?? 'Mounjaro PRO',
+        nomeClinica: config.data.nome_clinica ?? 'Saúde PRO',
         profissional: config.data.profissional ?? '',
         telefoneContato: config.data.telefone_contato ?? '',
         valorDosePadrao: config.data.valor_dose_padrao ?? 0,
@@ -277,7 +277,7 @@ export async function saveMounjaroCloud(_scopeOrData: MounjaroScope | MounjaroDb
     if (data.config) {
       await supabase.from('mounjaro_config').upsert({
         id: 'singleton',
-        nome_clinica: data.config.nomeClinica ?? 'Mounjaro PRO',
+        nome_clinica: data.config.nomeClinica ?? 'Saúde PRO',
         profissional: data.config.profissional ?? '',
         telefone_contato: data.config.telefoneContato ?? '',
         valor_dose_padrao: data.config.valorDosePadrao ?? 0,

@@ -1502,7 +1502,7 @@ export default function App() {
                 { tab: 'bills', label: 'Contas', icon: Receipt },
                 { tab: 'internet', label: 'Internet', icon: Wifi },
                 { tab: 'manicure', label: 'Manicure PRO', icon: Sparkles },
-                { tab: 'mounjaro', label: 'Mounjaro PRO', icon: Stethoscope },
+                { tab: 'mounjaro', label: 'Saúde PRO', icon: Stethoscope },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
                 const Icon = item.icon;
@@ -1876,13 +1876,13 @@ export default function App() {
               Manicure PRO
             </button>
 
-            {/* Subsite Mounjaro PRO */}
+            {/* Subsite Saúde PRO */}
             <button
               onClick={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch { /* ignore */ } setShowChooser(true); }}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
             >
               <Stethoscope className="h-4 w-4" />
-              Mounjaro PRO
+              Saúde PRO
             </button>
           </nav>
         </div>

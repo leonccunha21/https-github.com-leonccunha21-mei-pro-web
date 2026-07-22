@@ -3,10 +3,11 @@ import { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   LayoutDashboard, Users, Calendar, DollarSign, Package, Settings as SettingsIcon,
-  Scissors, ArrowLeft, Sun, Moon, Sparkles, MessageCircle,
+  Scissors, Sun, Moon, Sparkles, MessageCircle, X, ShoppingBag, Stethoscope,
 } from 'lucide-react';
 import { ManicureDb, ClienteManicure, ServicoManicure, AgendamentoManicure, MovimentoCaixa, ProdutoEstoque, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from './types';
 import { emptyDb, loadManicureDb, saveManicureDb, defaultConfig } from './localDb';
+import { loadManicureCloud } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
 import Agendamentos from './pages/Agendamentos';
@@ -30,11 +31,20 @@ const NAV: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'configuracoes', label: 'Ajustes', icon: <SettingsIcon size={20} /> },
 ];
 
+const MOBILE_MAIN: { id: Tab | 'menu'; label: string; icon: ReactNode }[] = [
+  { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
+  { id: 'clientes', label: 'Clientes', icon: <Users size={20} /> },
+  { id: 'agendamentos', label: 'Agenda', icon: <Calendar size={20} /> },
+  { id: 'caixa', label: 'Caixa', icon: <DollarSign size={20} /> },
+  { id: 'menu', label: 'Menu', icon: <SettingsIcon size={20} /> },
+];
+
 export default function ManicureApp() {
   const [db, setDb] = useState<ManicureDb>(emptyDb());
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('manicure_darkMode') === 'true');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const persistTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const stateRef = useRef<ManicureDb>(db);
@@ -54,9 +64,33 @@ export default function ManicureApp() {
   useEffect(() => {
     (async () => {
       try {
-        const loaded = await loadManicureDb();
-        setDb(loaded);
-      } catch { /* ignore */ }
+        const local = await loadManicureDb();
+        const cloud = await loadManicureCloud();
+        if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
+          const mergeById = <T extends { id: string }>(a: T[], b: T[]): T[] => {
+            const map = new Map<string, T>();
+            for (const x of a) map.set(x.id, x);
+            for (const x of b) map.set(x.id, x);
+            return Array.from(map.values());
+          };
+          const merged: ManicureDb = {
+            ...local,
+            clientes: mergeById(local.clientes, cloud.clientes || []),
+            servicos: mergeById(local.servicos, cloud.servicos || []),
+            agendamentos: mergeById(local.agendamentos, cloud.agendamentos || []),
+            movimentos: mergeById(local.movimentos, cloud.movimentos || []),
+            produtos: mergeById(local.produtos, cloud.produtos || []),
+            whatsappInstances: mergeById(local.whatsappInstances, cloud.whatsappInstances || []),
+            mensagemTemplates: mergeById(local.mensagemTemplates, cloud.mensagemTemplates || []),
+            mensagensEnviadas: mergeById(local.mensagensEnviadas, cloud.mensagensEnviadas || []),
+            config: { ...defaultConfig(), ...(cloud.config || {}), ...(local.config || {}) },
+          };
+          setDb(merged);
+          saveManicureDb(merged).catch(() => {});
+        } else {
+          setDb(local);
+        }
+      } catch { setDb(await loadManicureDb()); }
       finally { setLoading(false); }
     })();
   }, []);
@@ -72,6 +106,37 @@ export default function ManicureApp() {
     return () => ch.close();
   }, []);
 
+  useEffect(() => {
+    const onVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        loadManicureCloud().then((cloud) => {
+          if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
+            const mergeById = <T extends { id: string }>(a: T[], b: T[]): T[] => {
+              const map = new Map<string, T>();
+              for (const x of a) map.set(x.id, x);
+              for (const x of b) map.set(x.id, x);
+              return Array.from(map.values());
+            };
+            const cur = stateRef.current;
+            const merged: ManicureDb = {
+              ...cur,
+              clientes: mergeById(cur.clientes, cloud.clientes || []),
+              servicos: mergeById(cur.servicos, cloud.servicos || []),
+              agendamentos: mergeById(cur.agendamentos, cloud.agendamentos || []),
+              movimentos: mergeById(cur.movimentos, cloud.movimentos || []),
+              produtos: mergeById(cur.produtos, cloud.produtos || []),
+              config: { ...defaultConfig(), ...(cloud.config || {}), ...(cur.config || {}) },
+            };
+            setDb(merged);
+            saveManicureDb(merged).catch(() => {});
+          }
+        }).catch(() => {});
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
+
   const toggleDarkMode = () => {
     setDarkMode((prev) => {
       const next = !prev;
@@ -79,11 +144,6 @@ export default function ManicureApp() {
       document.documentElement.classList.toggle('dark', next);
       return next;
     });
-  };
-
-  const goHome = () => {
-    try { localStorage.removeItem('mei_pro_system_choice'); } catch { /* ignore */ }
-    window.location.href = '/';
   };
 
   const setClientes = (clientes: ClienteManicure[]) => { setDb((d) => ({ ...d, clientes })); persist({ clientes }); };
@@ -110,85 +170,181 @@ export default function ManicureApp() {
     );
   }
 
+  const IconForNav = (id: string) => {
+    const found = NAV.find(n => n.id === id);
+    return found ? found.icon : <LayoutDashboard size={20} />;
+  };
+
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col md:flex-row text-slate-900 dark:text-slate-100">
       <Toaster position="top-center" />
 
-      <header className="sticky top-0 z-30 bg-white/80 dark:bg-slate-800/80 backdrop-blur border-b border-slate-200 dark:border-slate-700">
-        <div className="flex items-center justify-between px-4 py-3 max-w-6xl mx-auto">
-          <div className="flex items-center gap-2">
-            <button onClick={goHome} title="Trocar de sistema" className="flex items-center gap-1 text-slate-400 hover:text-fuchsia-600 dark:hover:text-fuchsia-400">
-              <ArrowLeft size={20} />
-              <span className="hidden sm:inline text-sm font-medium">Trocar</span>
-            </button>
-            <div className="p-2 rounded-xl bg-fuchsia-600 text-white">
-              <Sparkles size={20} />
-            </div>
-            <div>
-              <h1 className="text-base sm:text-lg font-bold leading-tight">Manicure PRO</h1>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400">Gestão de salão · agendamentos, caixa, clientes</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <button onClick={toggleDarkMode} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700">
-              {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-            </button>
-          </div>
+      {/* MOBILE TOP HEADER */}
+      <header className="md:hidden sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-3 shadow-sm">
+        <div className="p-1.5 rounded-lg bg-fuchsia-600 text-white shrink-0">
+          <Sparkles size={18} />
         </div>
-        <nav className="hidden sm:flex gap-1 px-4 pb-2 max-w-6xl mx-auto overflow-x-auto no-scrollbar">
-          {NAV.map((n) => (
-            <button
-              key={n.id}
-              onClick={() => setActiveTab(n.id)}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap ${
-                activeTab === n.id
-                  ? 'bg-fuchsia-600 text-white'
-                  : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
-              }`}
-            >
-              {n.icon}{n.label}
-            </button>
-          ))}
-        </nav>
+        <div className="flex-1 min-w-0">
+          <h2 className="font-bold text-sm tracking-tight leading-tight">Manicure PRO</h2>
+          <span className="text-[9px] text-fuchsia-600 font-bold uppercase tracking-wider">Gestão de Salão</span>
+        </div>
+        <button onClick={toggleDarkMode} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800">
+          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
       </header>
 
-      <nav className="sm:hidden fixed bottom-0 inset-x-0 z-30 bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 overflow-x-auto no-scrollbar">
-        <div className="flex min-w-max">
-        {NAV.map((n) => (
-          <button
-            key={n.id}
-            onClick={() => setActiveTab(n.id)}
-            className={`flex flex-col items-center justify-center py-2 px-4 text-[10px] gap-0.5 min-w-[64px] ${
-              activeTab === n.id ? 'text-fuchsia-600 dark:text-fuchsia-400' : 'text-slate-500 dark:text-slate-400'
-            }`}
-          >
-            {n.icon}
-            {n.label}
-          </button>
-        ))}
+      {/* DESKTOP SIDEBAR */}
+      <aside className="hidden md:flex w-64 bg-white dark:bg-slate-900 shrink-0 border-r border-slate-200 dark:border-slate-700 flex-col justify-between z-10 py-2">
+        <div>
+          <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-xl bg-fuchsia-600 text-white shrink-0">
+              <Sparkles size={22} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h2 className="font-bold text-base tracking-tight leading-tight">Manicure PRO</h2>
+              <span className="text-[10px] text-fuchsia-600 font-bold uppercase tracking-wider">Gestão de Salão</span>
+            </div>
+            <button onClick={toggleDarkMode} className="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800">
+              {darkMode ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+          </div>
+
+          <nav className="px-3 space-y-0.5">
+            {NAV.map((n) => (
+              <button
+                key={n.id}
+                onClick={() => setActiveTab(n.id)}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors ${
+                  activeTab === n.id
+                    ? 'bg-fuchsia-50 dark:bg-fuchsia-900/30 text-fuchsia-700 dark:text-fuchsia-400'
+                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                }`}
+              >
+                {n.icon}
+                {n.label}
+              </button>
+            ))}
+          </nav>
+
+          {/* System switching */}
+          <div className="border-t border-slate-100 dark:border-slate-700 mt-4 pt-4 px-3 space-y-0.5">
+            <p className="px-3 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Outros Sistemas</p>
+            <button
+              onClick={() => window.location.href = '/'}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider text-indigo-700 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 bg-indigo-50/50 dark:bg-indigo-900/20"
+            >
+              <ShoppingBag size={16} />
+              ZM Store
+            </button>
+            <button
+              onClick={() => window.location.href = '/mounjaro'}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
+            >
+              <Stethoscope size={16} />
+              Mounjaro PRO
+            </button>
+          </div>
         </div>
+
+        <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-700">
+          <p className="text-[10px] text-slate-400 dark:text-slate-500">Manicure PRO v1.0</p>
+        </div>
+      </aside>
+
+      {/* MAIN CONTENT */}
+      <div className="flex-1 flex flex-col min-h-0">
+        <main className="flex-1 max-w-6xl w-full mx-auto px-4 py-5 pb-24 md:pb-8">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.15 }}
+            >
+              {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
+              {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} setClientes={setClientes} />}
+              {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} />}
+              {activeTab === 'servicos' && <Servicos servicos={db.servicos} setServicos={setServicos} />}
+              {activeTab === 'caixa' && <Caixa movimentos={db.movimentos} />}
+              {activeTab === 'estoque' && <Estoque produtos={db.produtos} setProdutos={setProdutos} />}
+              {activeTab === 'whatsapp' && <WhatsAppConfig instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onSaveInstances={setWhatsAppInstances} onSaveTemplates={setMensagemTemplates} />}
+              {activeTab === 'configuracoes' && <Configuracoes config={db.config} setConfig={setConfig} />}
+            </motion.div>
+          </AnimatePresence>
+        </main>
+      </div>
+
+      {/* MOBILE BOTTOM NAV */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-700 flex items-stretch justify-between px-2 pb-[env(safe-area-inset-bottom)] shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+        {MOBILE_MAIN.map((item) => {
+          const isMenu = item.id === 'menu';
+          const isActive = activeTab === item.id && !mobileMenuOpen;
+          return (
+            <button
+              key={item.id}
+              onClick={() => isMenu ? setMobileMenuOpen(!mobileMenuOpen) : setActiveTab(item.id)}
+              className={`flex-1 flex flex-col items-center justify-center gap-1 py-2.5 px-1 transition-all ${
+                isActive ? 'text-fuchsia-600' : 'text-slate-400 dark:text-slate-500'
+              }`}
+            >
+              {isActive && <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-fuchsia-600 rounded-full" />}
+              {item.icon}
+              <span className="text-[10px] font-bold leading-none">{item.label}</span>
+            </button>
+          );
+        })}
       </nav>
 
-      <main className="max-w-6xl mx-auto px-4 py-5 pb-24 sm:pb-8">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.15 }}
+      {/* MOBILE SLIDE-UP MENU */}
+      {mobileMenuOpen && (
+        <div className="md:hidden fixed inset-0 z-40" onClick={() => setMobileMenuOpen(false)}>
+          <div className="absolute inset-0 bg-black/40" />
+          <div
+            className="absolute bottom-0 inset-x-0 bg-white dark:bg-slate-900 rounded-t-2xl shadow-2xl p-4 pb-[env(safe-area-inset-bottom)] animate-[slideUp_0.2s_ease-out]"
+            onClick={e => e.stopPropagation()}
           >
-            {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
-            {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} setClientes={setClientes} />}
-            {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} />}
-            {activeTab === 'servicos' && <Servicos servicos={db.servicos} setServicos={setServicos} />}
-            {activeTab === 'caixa' && <Caixa movimentos={db.movimentos} />}
-            {activeTab === 'estoque' && <Estoque produtos={db.produtos} setProdutos={setProdutos} />}
-            {activeTab === 'whatsapp' && <WhatsAppConfig instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onSaveInstances={setWhatsAppInstances} onSaveTemplates={setMensagemTemplates} />}
-            {activeTab === 'configuracoes' && <Configuracoes config={db.config} setConfig={setConfig} />}
-          </motion.div>
-        </AnimatePresence>
-      </main>
+            <div className="w-10 h-1 bg-slate-300 dark:bg-slate-600 rounded-full mx-auto mb-4" />
+            <div className="grid grid-cols-3 gap-3">
+              {NAV.map((item) => {
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => { setActiveTab(item.id); setMobileMenuOpen(false); }}
+                    className={`flex flex-col items-center gap-2 p-4 rounded-xl transition-colors relative ${
+                      activeTab === item.id
+                        ? 'bg-fuchsia-50 dark:bg-fuchsia-900/30 text-fuchsia-700 dark:text-fuchsia-400'
+                        : 'bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300'
+                    }`}
+                  >
+                    {item.icon}
+                    <span className="text-[11px] font-bold">{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <div className="border-t border-slate-100 dark:border-slate-700 mt-4 pt-4">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-2 px-1">Outros Sistemas</p>
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => window.location.href = '/'}
+                  className="flex items-center gap-3 px-3 py-3 rounded-xl bg-indigo-50/50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider"
+                >
+                  <ShoppingBag size={18} />
+                  ZM Store
+                </button>
+                <button
+                  onClick={() => window.location.href = '/mounjaro'}
+                  className="flex items-center gap-3 px-3 py-3 rounded-xl bg-cyan-50/50 dark:bg-cyan-900/20 text-cyan-700 dark:text-cyan-400 text-xs font-bold uppercase tracking-wider"
+                >
+                  <Stethoscope size={18} />
+                  Mounjaro PRO
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
