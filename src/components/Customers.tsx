@@ -52,8 +52,8 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
       .filter(s => s.status !== 'cancelled')
       .reduce((acc, s) => acc + (s.paidAmount ?? s.total), 0);
     const debts = list
-      .filter(s => s.status === 'pending' || (s.installments && (s.paidAmount ?? 0) < s.total))
-      .reduce((acc, s) => acc + Math.max(0, (s.total - (s.paidAmount ?? (s.status === 'pending' ? 0 : s.total)))), 0);
+      .filter(s => s.status === 'pending')
+      .reduce((acc, s) => acc + Math.max(0, s.total - (s.paidAmount ?? 0)), 0);
     const lastDate = list.length ? list.reduce((a, b) => (new Date(a.date) > new Date(b.date) ? a : b)).date : null;
     return { count: paid.length, totalSpent, debts, lastDate };
   };

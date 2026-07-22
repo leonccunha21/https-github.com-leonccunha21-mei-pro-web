@@ -76,7 +76,7 @@ function rowToCliente(r: any): MounjaroDb['clientes'][number] {
     observacoes: r.observacoes ?? undefined,
     dataInicioTratamento: r.data_inicio_tratamento ?? undefined,
     ativo: r.ativo ?? true,
-    createdAt: r.created_at ?? '',
+    createdAt: r.created_at ?? new Date().toISOString(),
     updatedAt: r.updated_at ?? undefined,
   };
 }
@@ -93,7 +93,7 @@ function rowToPesagem(r: any): MounjaroDb['pesagens'][number] {
   return {
     id: r.id, clienteId: r.cliente_id, data: r.data,
     peso: r.peso, observacoes: r.observacoes ?? undefined,
-    createdAt: r.created_at ?? '', updatedAt: r.updated_at ?? undefined,
+    createdAt: r.created_at ?? new Date().toISOString(), updatedAt: r.updated_at ?? undefined,
   };
 }
 
@@ -117,7 +117,7 @@ function rowToDose(r: any): MounjaroDb['doses'][number] {
     observacoes: r.observacoes ?? undefined, efeitosColaterais: r.efeitos_colaterais ?? undefined,
     pesoAplicacao: r.peso_aplicacao ?? undefined, pago: r.pago ?? false,
     valorDose: r.valor_dose ?? undefined,
-    createdAt: r.created_at ?? '', updatedAt: r.updated_at ?? undefined,
+    createdAt: r.created_at ?? new Date().toISOString(), updatedAt: r.updated_at ?? undefined,
   };
 }
 
@@ -137,7 +137,7 @@ function rowToPagamento(r: any): MounjaroDb['pagamentos'][number] {
     dataPagamento: r.data_pagamento ?? undefined, descricao: r.descricao,
     valor: r.valor, status: r.status, metodo: r.metodo ?? undefined,
     referenciaDoseId: r.referencia_dose_id ?? undefined, observacoes: r.observacoes ?? undefined,
-    createdAt: r.created_at ?? '', updatedAt: r.updated_at ?? undefined,
+    createdAt: r.created_at ?? new Date().toISOString(), updatedAt: r.updated_at ?? undefined,
   };
 }
 
@@ -153,7 +153,7 @@ function rowToFoto(r: any): MounjaroDb['fotos'][number] {
   return {
     id: r.id, clienteId: r.cliente_id, data: r.data,
     legenda: r.legenda ?? undefined, imagem: r.imagem ?? '',
-    createdAt: r.created_at ?? '', updatedAt: r.updated_at ?? undefined,
+    createdAt: r.created_at ?? new Date().toISOString(), updatedAt: r.updated_at ?? undefined,
   };
 }
 
@@ -162,7 +162,8 @@ function auditoriaToRow(a: MounjaroDb['auditoria'][number]): Record<string, unkn
     id: a.id, data: a.data, usuario: a.usuario ?? null,
     entidade: a.entidade, acao: a.acao, resumo: a.resumo ?? null,
     cliente_id: a.clienteId ?? null, ref_id: a.refId ?? null,
-    created_at: a.data ?? null,
+    // created_at é o momento do registo na BD, não a data do evento (a.data)
+    created_at: a.createdAt ?? new Date().toISOString(),
   });
 }
 

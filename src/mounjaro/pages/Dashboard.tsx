@@ -60,8 +60,11 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
   const cobrancas = useMemo(() => cobrancasPendentes(clientes, pagamentos), [clientes, pagamentos]);
   const cobrancasUrgentes = cobrancas.filter((c) => c.vencida || c.dias <= 3);
 
-  // Notificação do navegador (lembrete local ao próprio profissional).
+  // Notificação do navegador ao montar (uma vez por sessão — deps intencionalmente vazias).
+  // Usa ref para garantir que só dispara uma vez mesmo com re-renders do componente pai.
+  const notifiedRef = React.useRef(false);
   useEffect(() => {
+    if (notifiedRef.current) return;
     if (typeof Notification === 'undefined') return;
     if (Notification.permission !== 'granted') return;
     const atrasadas = lembretes.filter((l) => l.status === 'atrasada').length;
@@ -72,8 +75,8 @@ export default function Dashboard({ db, onNavigate }: { db: MounjaroDb; onNaviga
     if (vencidas > 0) {
       new Notification('Mounjaro PRO', { body: `${vencidas} cobrança(s) vencida(s).` });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    notifiedRef.current = true;
+  }, [lembretes, cobrancas]);
 
   return (
     <div className="space-y-5">

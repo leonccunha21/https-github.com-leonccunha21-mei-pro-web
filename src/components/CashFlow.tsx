@@ -70,14 +70,17 @@ export default function CashFlow({ sales, expenses, onAddExpense, onDeleteExpens
 
   const handleAddExpense = () => {
     if (!newExpense.description.trim() || !newExpense.amount || !newExpense.category.trim()) return;
+    const now = new Date().toISOString();
     const expense: Expense = {
       id: `exp_${Date.now()}`,
       date: new Date(newExpense.date).toISOString(),
       category: newExpense.category.trim(),
       description: newExpense.description.trim(),
       amount: newExpense.amount,
-      status: 'pending',
-      createdAt: new Date().toISOString(),
+      // Despesa criada no CashFlow assume-se já paga (é uma saída real de caixa)
+      status: 'paid',
+      createdAt: now,
+      updatedAt: now,
     };
     onAddExpense?.(expense);
     setNewExpense({ description: '', amount: 0, category: '', date: new Date().toISOString().substring(0, 10) });

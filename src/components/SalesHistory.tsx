@@ -357,7 +357,10 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
       'Status': sale.status === 'completed' ? 'Concluída' : sale.status === 'cancelled' ? 'Cancelada' : 'Pendente',
     }));
 
-    // Add summary row
+    // Add summary row — usa totalCost real em vez de fórmula derivada de profit
+    const completedRows = filteredSales.filter(s => s.status === 'completed');
+    const exportTotalCost = completedRows.reduce((acc, s) => acc + s.totalCost, 0);
+    const exportTotalRevenue = completedRows.reduce((acc, s) => acc + s.total, 0);
     rows.push({
       'Código': '',
       'Data': '',
@@ -367,9 +370,9 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
       'Produtos': '',
       'Pagamento': '',
       'Tipo': '',
-      'Valor Pago (Custo)': summaryTotals.totalRevenue - summaryTotals.totalProfit,
-      'Valor Vendido': summaryTotals.totalRevenue,
-      'Lucro': summaryTotals.totalProfit,
+      'Valor Pago (Custo)': exportTotalCost,
+      'Valor Vendido': exportTotalRevenue,
+      'Lucro': exportTotalRevenue - exportTotalCost,
       'Status': `${summaryTotals.totalCount} vendas`,
     } as any);
 

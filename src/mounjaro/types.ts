@@ -114,7 +114,8 @@ export interface FotoEvolucao {
 // Registro de auditoria: histórico de alterações críticas (doses, pagamentos, clientes).
 export interface RegistroAuditoria {
   id: string;
-  data: string; // ISO completo
+  data: string; // ISO completo — data/hora do evento
+  createdAt: string; // ISO — momento em que o registo foi gravado na BD
   usuario: string; // e-mail/nome do usuário logado (ou "local")
   entidade: 'cliente' | 'dose' | 'pagamento' | 'pesagem' | 'foto';
   acao: 'criar' | 'editar' | 'excluir';

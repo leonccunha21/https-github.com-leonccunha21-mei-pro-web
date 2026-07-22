@@ -361,6 +361,7 @@ export function criarRegistroAuditoria(params: LogAuditoriaParams, historico: Re
   const registro: RegistroAuditoria = {
     id: `aud_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
     data: agora,
+    createdAt: agora,
     usuario: params.usuario,
     entidade: params.entidade,
     acao: params.acao,

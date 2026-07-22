@@ -64,9 +64,9 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
       if (pesoInicial) {
         const existente = pesagens.find((p) => p.clienteId === editando.id && p.observacoes === 'Peso inicial (cadastro)');
         if (existente) {
-          setPesagens(pesagens.map((p) => (p.id === existente.id ? { ...p, peso: pesoInicial, data: dataBase } : p)));
+          setPesagens(pesagens.map((p) => (p.id === existente.id ? { ...p, peso: pesoInicial, data: dataBase, updatedAt: agora } : p)));
         } else {
-          setPesagens([{ id: newId('pes'), clienteId: editando.id, data: dataBase, peso: pesoInicial, observacoes: 'Peso inicial (cadastro)', createdAt: agora }, ...pesagens]);
+          setPesagens([{ id: newId('pes'), clienteId: editando.id, data: dataBase, peso: pesoInicial, observacoes: 'Peso inicial (cadastro)', createdAt: agora, updatedAt: agora }, ...pesagens]);
         }
       }
     } else {
@@ -105,6 +105,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
           peso: pesoInicial,
           observacoes: 'Peso inicial (cadastro)',
           createdAt: agora,
+          updatedAt: agora,
         };
         setPesagens([pInicial, ...pesagens]);
       }

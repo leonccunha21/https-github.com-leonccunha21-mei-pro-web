@@ -1038,7 +1038,7 @@ export default function App() {
     const db: LocalDb = {
       products, sales, categories, expenses, orders,
       storeInfo, customers, suppliers, purchases, cashSessions, loans,
-      leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [], opportunities: [],
+      leads, leadJobs, whatsappInstances, aiAgents, opportunities,
       bills, internetUsers,
       initialized: true,
     };

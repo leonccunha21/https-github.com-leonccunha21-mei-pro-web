@@ -42,7 +42,7 @@ export default function Peso({ clientes, pesagens, doses, setPesagens, logAudito
     if (!form.clienteId || !form.data || !form.peso) return;
     const cli = clientes.find((c) => c.id === form.clienteId);
     if (editandoId) {
-      const atualizada: PesagemMounjaro = { ...(pesagens.find((p) => p.id === editandoId) as PesagemMounjaro), ...form, peso: Number(form.peso) } as PesagemMounjaro;
+      const atualizada: PesagemMounjaro = { ...(pesagens.find((p) => p.id === editandoId) as PesagemMounjaro), ...form, peso: Number(form.peso), updatedAt: new Date().toISOString() } as PesagemMounjaro;
       setPesagens(pesagens.map((p) => (p.id === editandoId ? atualizada : p)));
       logAuditoria({ entidade: 'pesagem', acao: 'editar', resumo: `Pesagem ${atualizada.peso} kg de ${cli?.nome || '—'}`, clienteId: form.clienteId, refId: editandoId });
     } else {

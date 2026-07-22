@@ -193,10 +193,12 @@ export default function InternetSharing({ internetUsers, onSaveInternetUsers }: 
   const stats = useMemo(() => {
     const active = internetUsers.filter(u => u.status === 'active');
     const totalReceived = internetUsers.reduce((a, u) => a + u.payments.reduce((s, p) => s + p.amount, 0), 0);
+    const currentMonth = new Date().toISOString().slice(0, 7); // YYYY-MM local
     const pendingCount = active.filter(u => {
-      const lastPayment = u.payments.sort((a, b) => b.referenceMonth.localeCompare(a.referenceMonth))[0];
+      const lastPayment = [...u.payments].sort((a, b) => b.referenceMonth.localeCompare(a.referenceMonth))[0];
       if (!lastPayment) return true;
-      return lastPayment.referenceMonth < new Date().toISOString().slice(0, 7);
+      // Compara YYYY-MM strings — seguro pois formato é sempre YYYY-MM
+      return lastPayment.referenceMonth < currentMonth;
     }).length;
     const monthlyTotal = active.reduce((a, u) => a + u.monthlyFee, 0);
 
@@ -223,7 +225,8 @@ export default function InternetSharing({ internetUsers, onSaveInternetUsers }: 
   const buildWhatsAppMessage = (user: InternetUser) => {
     const firstName = user.userName.split(' ')[0] || user.userName;
     const lastPayment = user.payments.sort((a, b) => b.referenceMonth.localeCompare(a.referenceMonth))[0];
-    const overdue = user.status === 'active' && (!lastPayment || lastPayment.referenceMonth < new Date().toISOString().slice(0, 7));
+    const currentMonth = new Date().toISOString().slice(0, 7);
+    const overdue = user.status === 'active' && (!lastPayment || lastPayment.referenceMonth < currentMonth);
     const head = `Olá ${firstName}, tudo bem?`;
     const lastPaymentInfo = lastPayment
       ? ` Seu último pagamento foi em ${getMonthLabel(lastPayment.referenceMonth)}.`

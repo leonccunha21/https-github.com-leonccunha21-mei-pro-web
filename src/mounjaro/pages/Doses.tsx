@@ -56,10 +56,12 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
         pesoAplicacao: Number(form.pesoAplicacao) || undefined,
         valorDose: Number(form.valorDose) || undefined,
         pago: form.pago === true,
+        updatedAt: new Date().toISOString(),
       } as DoseMounjaro;
       setDoses(doses.map((d) => (d.id === editandoId ? atualizada : d)));
       logAuditoria({ entidade: 'dose', acao: 'editar', resumo: `Dose ${atualizada.dose} mg de ${cliente?.nome || '—'}`, clienteId: form.clienteId, refId: editandoId });
     } else {
+      const now = new Date().toISOString();
       const nova: DoseMounjaro = {
         id: newId('dose'),
         clienteId: form.clienteId,
@@ -73,7 +75,8 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
         pesoAplicacao: Number(form.pesoAplicacao) || undefined,
         pago: form.pago === true,
         valorDose: Number(form.valorDose) || undefined,
-        createdAt: new Date().toISOString(),
+        createdAt: now,
+        updatedAt: now,
       };
       setDoses([nova, ...doses]);
       logAuditoria({ entidade: 'dose', acao: 'criar', resumo: `Dose ${nova.dose} mg de ${cliente?.nome || '—'}`, clienteId: form.clienteId, refId: nova.id });

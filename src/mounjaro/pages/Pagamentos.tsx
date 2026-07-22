@@ -53,6 +53,7 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
         valor: Number(form.valor),
         status: form.status || 'pendente',
         dataPagamento: form.status === 'pago' ? (form.dataPagamento || new Date().toISOString().slice(0, 10)) : undefined,
+        updatedAt: new Date().toISOString(),
       } as PagamentoMounjaro;
       setPagamentos(pagamentos.map((p) => (p.id === editandoId ? atualizado : p)));
       logAuditoria({ entidade: 'pagamento', acao: 'editar', resumo: `Pagamento ${formatarMoeda(atualizado.valor)} de ${nomeCliente(atualizado.clienteId)}`, clienteId: atualizado.clienteId, refId: editandoId });
@@ -60,18 +61,20 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
         setDoses(doses.map((d) => (d.id === atualizado.referenciaDoseId ? { ...d, pago: true } : d)));
       }
     } else {
+      const now = new Date().toISOString();
       const novo: PagamentoMounjaro = {
         id: newId('pag'),
         clienteId: form.clienteId,
         dataVencimento: form.dataVencimento,
-        dataPagamento: form.status === 'pago' ? (form.dataPagamento || new Date().toISOString().slice(0, 10)) : undefined,
+        dataPagamento: form.status === 'pago' ? (form.dataPagamento || now.slice(0, 10)) : undefined,
         descricao: form.descricao || '',
         valor: Number(form.valor),
         status: form.status || 'pendente',
         metodo: form.metodo,
         referenciaDoseId: form.referenciaDoseId,
         observacoes: form.observacoes,
-        createdAt: new Date().toISOString(),
+        createdAt: now,
+        updatedAt: now,
       };
       setPagamentos([novo, ...pagamentos]);
       logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento ${formatarMoeda(novo.valor)} de ${nomeCliente(novo.clienteId)}`, clienteId: novo.clienteId, refId: novo.id });
@@ -86,10 +89,12 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
   };
 
   const marcarPago = (p: PagamentoMounjaro) => {
+    const now = new Date().toISOString();
     const atualizado: PagamentoMounjaro = {
       ...p,
       status: 'pago',
-      dataPagamento: new Date().toISOString().slice(0, 10),
+      dataPagamento: now.slice(0, 10),
+      updatedAt: now,
     };
     setPagamentos(pagamentos.map((x) => (x.id === p.id ? atualizado : x)));
     if (p.referenciaDoseId) {

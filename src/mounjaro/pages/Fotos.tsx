@@ -65,6 +65,7 @@ export default function Fotos({ clientes, fotos, setFotos, logAuditoria }: Props
       legenda: legenda.trim() || undefined,
       imagem: preview,
       createdAt: agora,
+      updatedAt: agora,
     };
     setFotos([...fotos, foto]);
     const cli = clientes.find((c) => c.id === clienteId);
