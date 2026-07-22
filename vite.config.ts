@@ -18,6 +18,7 @@ export default defineConfig(() => {
           input: {
             main: path.resolve(__dirname, 'index.html'),
             mounjaro: path.resolve(__dirname, 'mounjaro.html'),
+            manicure: path.resolve(__dirname, 'manicure.html'),
           },
           output: {
             manualChunks(id) {

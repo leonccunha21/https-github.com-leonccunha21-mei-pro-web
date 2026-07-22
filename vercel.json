@@ -5,6 +5,8 @@
   "rewrites": [
     { "source": "/mounjaro", "destination": "/mounjaro.html" },
     { "source": "/mounjaro(.*)", "destination": "/mounjaro.html" },
+    { "source": "/manicure", "destination": "/manicure.html" },
+    { "source": "/manicure(.*)", "destination": "/manicure.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

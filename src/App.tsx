@@ -76,6 +76,7 @@ import {
   Brain,
   KanbanSquare,
   Stethoscope,
+  Sparkles,
   FileText,
   Building2,
   Wifi,
@@ -1500,6 +1501,7 @@ export default function App() {
                 { tab: 'conciliation', label: 'Conciliação', icon: Building2 },
                 { tab: 'bills', label: 'Contas', icon: Receipt },
                 { tab: 'internet', label: 'Internet', icon: Wifi },
+                { tab: 'manicure', label: 'Manicure PRO', icon: Sparkles },
                 { tab: 'mounjaro', label: 'Mounjaro PRO', icon: Stethoscope },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
@@ -1508,6 +1510,7 @@ export default function App() {
                   <button
                     key={item.tab}
                     onClick={() => {
+                     if (item.tab === 'manicure') { setMobileMenuOpen(false); window.location.href = '/manicure'; return; }
                      if (item.tab === 'mounjaro') { setMobileMenuOpen(false); window.location.href = '/mounjaro'; return; }
                      setActiveTab(item.tab); setMobileMenuOpen(false);
                     }}
@@ -1863,6 +1866,15 @@ export default function App() {
               Conciliação
             </button>
             </>)}
+
+            {/* Subsite Manicure PRO */}
+            <button
+              onClick={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch { /* ignore */ } setShowChooser(true); }}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-fuchsia-700 dark:text-fuchsia-400 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/30 bg-fuchsia-50/50 dark:bg-fuchsia-900/20"
+            >
+              <Sparkles className="h-4 w-4" />
+              Manicure PRO
+            </button>
 
             {/* Subsite Mounjaro PRO */}
             <button
