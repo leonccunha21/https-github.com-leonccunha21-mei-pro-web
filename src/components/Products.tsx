@@ -1116,6 +1116,21 @@ export default function Products({ products, categories, sales, onAddProduct, on
                       ← Anterior
                     </button>
                   )}
+                  {/* Pular: avança sem mesclar, útil quando o grupo não é realmente duplicata */}
+                  <button onClick={() => {
+                    const next = mergeStep + 1;
+                    if (next < mergeGroups.length) {
+                      setMergeStep(next);
+                      const g = mergeGroups[next].products;
+                      const k = [...g].sort((a, b) => b.stock - a.stock)[0];
+                      setMergeKeepId(k.id); setMergeName(k.name);
+                      setMergeCostPrice(k.costPrice); setMergeSalePrice(k.salePrice);
+                    } else {
+                      setShowMergeModal(false);
+                    }
+                  }} className="px-4 py-2 text-sm font-semibold text-slate-500 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors">
+                    {mergeStep < mergeGroups.length - 1 ? 'Pular →' : 'Pular e fechar'}
+                  </button>
                   <button onClick={handleMergeConfirm} disabled={!mergeKeepId}
                     className="px-5 py-2 text-sm font-bold text-white bg-violet-600 hover:bg-violet-700 disabled:opacity-50 rounded-lg transition-colors flex items-center gap-2">
                     <Merge className="h-4 w-4" />

@@ -170,11 +170,6 @@ export default function ManicureApp() {
     );
   }
 
-  const IconForNav = (id: string) => {
-    const found = NAV.find(n => n.id === id);
-    return found ? found.icon : <LayoutDashboard size={20} />;
-  };
-
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col md:flex-row text-slate-900 dark:text-slate-100">
       <Toaster position="top-center" />
