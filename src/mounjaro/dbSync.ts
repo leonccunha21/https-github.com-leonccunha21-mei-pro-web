@@ -1,155 +1,285 @@
-import {
-  collection,
-  doc,
-  getDocs,
-  getDoc,
-  setDoc,
-  deleteDoc,
-  writeBatch,
-} from 'firebase/firestore';
-import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { MounjaroDb } from './types';
-import { recordWrites, getDailyWrites } from '../lib/quota';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
-// Sincronização do subsite Mounjaro PRO com o Firebase/Firestore.
-// Modo "usuário": `users/{uid}/mounjaro/data/{colecao}` (isolado por conta).
-// Modo "clínica": `clinicas/{clinicaId}/mounjaro/data/{colecao}` (compartilhado com a equipe).
-// Config: `users/{uid}/mounjaro/config` ou `clinicas/{clinicaId}/mounjaro/config` (4 segmentos, par).
+// Sincronização do subsite Mounjaro PRO com Supabase.
+// Todas as 6 coleções + config são sincronizadas automaticamente.
 
-export type MounjaroScope =
-  | { tipo: 'user'; uid: string }
-  | { tipo: 'clinica'; clinicaId: string };
+// ============================================================
+// Helpers
+// ============================================================
 
-// Caminho-base do escopo Mounjaro (4 segmentos, par = coleção válida).
-// Adicionamos 'data' para garantir que documentos fiquem em profundidade PAR
-// (ex.: users/{uid}/mounjaro/data/clientes/{id} = 6 segmentos).
-// O documento 'config' fica em users/{uid}/mounjaro/config (4 segmentos, par).
-function scopeBase(scope: MounjaroScope): string {
-  return scope.tipo === 'user'
-    ? `users/${scope.uid}/mounjaro/data`
-    : `clinicas/${scope.clinicaId}/mounjaro/data`;
-}
-
-function configDocPath(scope: MounjaroScope): string {
-  return scope.tipo === 'user'
-    ? `users/${scope.uid}/mounjaro/config`
-    : `clinicas/${scope.clinicaId}/mounjaro/config`;
-}
-
-const BATCH_SIZE = 500;
-
-function cleanForFirestore<T>(value: T): any {
-  if (value === undefined) return null;
-  if (value === null) return null;
-  // O SDK web do Firestore rejeita NaN/Infinity (diferente do Admin). Se fosse
-  // enviado, a escrita do lote inteiro falharia silenciosamente. Convertemos
-  // para null para preservar a gravação das demais coleções.
-  if (typeof value === 'number' && !Number.isFinite(value)) return null;
-  if (Array.isArray(value)) return value.map((v) => cleanForFirestore(v));
-  if (typeof value === 'object') {
-    const out: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
-      if (v !== undefined) out[k] = cleanForFirestore(v);
-    }
-    return out;
+function parseJsonField<T>(value: unknown, fallback: T): T {
+  if (!value) return fallback;
+  if (typeof value === 'string') {
+    try { return JSON.parse(value) as T; } catch { return fallback; }
   }
-  return value;
+  return value as T;
 }
 
-async function loadCollection<T>(scope: MounjaroScope, name: string): Promise<T[]> {
-  const base = scopeBase(scope);
+function prepareRow(row: Record<string, unknown>): Record<string, unknown> {
+  const out: Record<string, unknown> = {};
+  for (const [key, val] of Object.entries(row)) {
+    if (val === undefined) continue;
+    out[key] = val;
+  }
+  return out;
+}
+
+// ============================================================
+// Mapeamento de nomes (camelCase TypeScript -> snake_case Supabase)
+// ============================================================
+
+function clienteToRow(c: MounjaroDb['clientes'][number]): Record<string, unknown> {
+  return prepareRow({
+    id: c.id,
+    nome: c.nome,
+    telefone: c.telefone ?? null,
+    email: c.email ?? null,
+    data_nascimento: c.dataNascimento ?? null,
+    sexo: c.sexo ?? null,
+    endereco: c.endereco ?? null,
+    cidade: c.cidade ?? null,
+    estado: c.estado ?? null,
+    cpf: c.cpf ?? null,
+    altura_cm: c.alturaCm ?? null,
+    peso_inicial: c.pesoInicial ?? null,
+    imc_inicial: c.imcInicial ?? null,
+    comorbidades: c.comorbidades ?? null,
+    objetivo_peso: c.objetivoPeso ?? null,
+    medico_responsavel: c.medicoResponsavel ?? null,
+    observacoes: c.observacoes ?? null,
+    data_inicio_tratamento: c.dataInicioTratamento ?? null,
+    ativo: c.ativo ?? true,
+    created_at: c.createdAt ?? null,
+    updated_at: c.updatedAt ?? null,
+  });
+}
+
+function rowToCliente(r: any): MounjaroDb['clientes'][number] {
+  return {
+    id: r.id,
+    nome: r.nome,
+    telefone: r.telefone ?? undefined,
+    email: r.email ?? undefined,
+    dataNascimento: r.data_nascimento ?? undefined,
+    sexo: r.sexo ?? undefined,
+    endereco: r.endereco ?? undefined,
+    cidade: r.cidade ?? undefined,
+    estado: r.estado ?? undefined,
+    cpf: r.cpf ?? undefined,
+    alturaCm: r.altura_cm ?? undefined,
+    pesoInicial: r.peso_inicial ?? undefined,
+    imcInicial: r.imc_inicial ?? undefined,
+    comorbidades: r.comorbidades ?? undefined,
+    objetivoPeso: r.objetivo_peso ?? undefined,
+    medicoResponsavel: r.medico_responsavel ?? undefined,
+    observacoes: r.observacoes ?? undefined,
+    dataInicioTratamento: r.data_inicio_tratamento ?? undefined,
+    ativo: r.ativo ?? true,
+    createdAt: r.created_at ?? '',
+    updatedAt: r.updated_at ?? undefined,
+  };
+}
+
+function pesagemToRow(p: MounjaroDb['pesagens'][number]): Record<string, unknown> {
+  return prepareRow({
+    id: p.id, cliente_id: p.clienteId, data: p.data,
+    peso: p.peso, observacoes: p.observacoes ?? null,
+    created_at: p.createdAt ?? null, updated_at: p.updatedAt ?? null,
+  });
+}
+
+function rowToPesagem(r: any): MounjaroDb['pesagens'][number] {
+  return {
+    id: r.id, clienteId: r.cliente_id, data: r.data,
+    peso: r.peso, observacoes: r.observacoes ?? undefined,
+    createdAt: r.created_at ?? '', updatedAt: r.updated_at ?? undefined,
+  };
+}
+
+function doseToRow(d: MounjaroDb['doses'][number]): Record<string, unknown> {
+  return prepareRow({
+    id: d.id, cliente_id: d.clienteId, data_aplicacao: d.dataAplicacao,
+    dose: d.dose, intervalo_dias: d.intervaloDias,
+    local_aplicacao: d.localAplicacao ?? null, lote: d.lote ?? null,
+    observacoes: d.observacoes ?? null, efeitos_colaterais: d.efeitosColaterais ?? null,
+    peso_aplicacao: d.pesoAplicacao ?? null, pago: d.pago ?? false,
+    valor_dose: d.valorDose ?? null,
+    created_at: d.createdAt ?? null, updated_at: d.updatedAt ?? null,
+  });
+}
+
+function rowToDose(r: any): MounjaroDb['doses'][number] {
+  return {
+    id: r.id, clienteId: r.cliente_id, dataAplicacao: r.data_aplicacao,
+    dose: r.dose, intervaloDias: r.intervalo_dias,
+    localAplicacao: r.local_aplicacao ?? undefined, lote: r.lote ?? undefined,
+    observacoes: r.observacoes ?? undefined, efeitosColaterais: r.efeitos_colaterais ?? undefined,
+    pesoAplicacao: r.peso_aplicacao ?? undefined, pago: r.pago ?? false,
+    valorDose: r.valor_dose ?? undefined,
+    createdAt: r.created_at ?? '', updatedAt: r.updated_at ?? undefined,
+  };
+}
+
+function pagamentoToRow(p: MounjaroDb['pagamentos'][number]): Record<string, unknown> {
+  return prepareRow({
+    id: p.id, cliente_id: p.clienteId, data_vencimento: p.dataVencimento,
+    data_pagamento: p.dataPagamento ?? null, descricao: p.descricao,
+    valor: p.valor, status: p.status, metodo: p.metodo ?? null,
+    referencia_dose_id: p.referenciaDoseId ?? null, observacoes: p.observacoes ?? null,
+    created_at: p.createdAt ?? null, updated_at: p.updatedAt ?? null,
+  });
+}
+
+function rowToPagamento(r: any): MounjaroDb['pagamentos'][number] {
+  return {
+    id: r.id, clienteId: r.cliente_id, dataVencimento: r.data_vencimento,
+    dataPagamento: r.data_pagamento ?? undefined, descricao: r.descricao,
+    valor: r.valor, status: r.status, metodo: r.metodo ?? undefined,
+    referenciaDoseId: r.referencia_dose_id ?? undefined, observacoes: r.observacoes ?? undefined,
+    createdAt: r.created_at ?? '', updatedAt: r.updated_at ?? undefined,
+  };
+}
+
+function fotoToRow(f: MounjaroDb['fotos'][number]): Record<string, unknown> {
+  return prepareRow({
+    id: f.id, cliente_id: f.clienteId, data: f.data,
+    legenda: f.legenda ?? null, imagem: f.imagem ?? null,
+    created_at: f.createdAt ?? null, updated_at: f.updatedAt ?? null,
+  });
+}
+
+function rowToFoto(r: any): MounjaroDb['fotos'][number] {
+  return {
+    id: r.id, clienteId: r.cliente_id, data: r.data,
+    legenda: r.legenda ?? undefined, imagem: r.imagem ?? '',
+    createdAt: r.created_at ?? '', updatedAt: r.updated_at ?? undefined,
+  };
+}
+
+function auditoriaToRow(a: MounjaroDb['auditoria'][number]): Record<string, unknown> {
+  return prepareRow({
+    id: a.id, data: a.data, usuario: a.usuario ?? null,
+    entidade: a.entidade, acao: a.acao, resumo: a.resumo ?? null,
+    cliente_id: a.clienteId ?? null, ref_id: a.refId ?? null,
+    created_at: a.data ?? null,
+  });
+}
+
+// ============================================================
+// API pública
+// ============================================================
+
+/** Carrega o banco completo do Mounjaro do Supabase. */
+export async function loadMounjaroCloud(_scope?: MounjaroScope): Promise<Partial<MounjaroDb>> {
+  if (!isSupabaseConfigured()) return {};
+
   try {
-    const snap = await getDocs(collection(db, base, name));
-    const items: T[] = [];
-    snap.forEach((d) => items.push(d.data() as T));
-    return items;
-  } catch (error) {
-    handleFirestoreError(error, OperationType.GET, `${base}/${name}`);
-    return [];
+    const [clientes, pesagens, doses, pagamentos, fotos, auditoria, config] = await Promise.all([
+      supabase.from('mounjaro_clientes').select('*'),
+      supabase.from('mounjaro_pesagens').select('*'),
+      supabase.from('mounjaro_doses').select('*'),
+      supabase.from('mounjaro_pagamentos').select('*'),
+      supabase.from('mounjaro_fotos').select('*'),
+      supabase.from('mounjaro_auditoria').select('*'),
+      supabase.from('mounjaro_config').select('*').eq('id', 'singleton').maybeSingle(),
+    ]);
+
+    const hasError = [clientes, pesagens, doses, pagamentos, fotos, auditoria].some(r => r.error);
+    if (hasError) return {};
+
+    return {
+      initialized: true,
+      clientes: (clientes.data || []).map(rowToCliente),
+      pesagens: (pesagens.data || []).map(rowToPesagem),
+      doses: (doses.data || []).map(rowToDose),
+      pagamentos: (pagamentos.data || []).map(rowToPagamento),
+      fotos: (fotos.data || []).map(rowToFoto),
+      auditoria: (auditoria.data || []).map((r: any) => ({
+        id: r.id, data: r.data, usuario: r.usuario ?? '',
+        entidade: r.entidade, acao: r.acao, resumo: r.resumo ?? '',
+        clienteId: r.cliente_id ?? undefined, refId: r.ref_id ?? undefined,
+      })),
+      config: config.data ? {
+        nomeClinica: config.data.nome_clinica ?? 'Mounjaro PRO',
+        profissional: config.data.profissional ?? '',
+        telefoneContato: config.data.telefone_contato ?? '',
+        valorDosePadrao: config.data.valor_dose_padrao ?? 0,
+        intervaloPadraoDias: config.data.intervalo_padrao_dias ?? 7,
+        logo: config.data.logo ?? undefined,
+      } : undefined,
+    };
+  } catch (e) {
+    console.error('Mounjaro Supabase load error:', e);
+    return {};
   }
 }
 
-async function saveBatch<T extends { id: string }>(scope: MounjaroScope, name: string, items: T[]): Promise<void> {
-  const base = scopeBase(scope);
+/** Salva o banco completo do Mounjaro no Supabase. */
+export async function saveMounjaroCloud(_scopeOrData: MounjaroScope | MounjaroDb, maybeData?: MounjaroDb): Promise<void> {
+  const data = maybeData || (_scopeOrData as MounjaroDb);
+  if (!isSupabaseConfigured()) return;
+
   try {
-    for (let i = 0; i < items.length; i += BATCH_SIZE) {
-      const chunk = items.slice(i, i + BATCH_SIZE);
-      const batch = writeBatch(db);
-      for (const item of chunk) {
-        batch.set(doc(db, base, name, item.id), cleanForFirestore(item));
-      }
-      await batch.commit();
-      recordWrites(chunk.length);
+    await Promise.all([
+      data.clientes.length > 0
+        ? supabase.from('mounjaro_clientes').upsert(data.clientes.map(clienteToRow), { onConflict: 'id' })
+        : Promise.resolve(),
+      data.pesagens.length > 0
+        ? supabase.from('mounjaro_pesagens').upsert(data.pesagens.map(pesagemToRow), { onConflict: 'id' })
+        : Promise.resolve(),
+      data.doses.length > 0
+        ? supabase.from('mounjaro_doses').upsert(data.doses.map(doseToRow), { onConflict: 'id' })
+        : Promise.resolve(),
+      data.pagamentos.length > 0
+        ? supabase.from('mounjaro_pagamentos').upsert(data.pagamentos.map(pagamentoToRow), { onConflict: 'id' })
+        : Promise.resolve(),
+      data.fotos.length > 0
+        ? supabase.from('mounjaro_fotos').upsert(data.fotos.map(fotoToRow), { onConflict: 'id' })
+        : Promise.resolve(),
+      data.auditoria.length > 0
+        ? supabase.from('mounjaro_auditoria').upsert(data.auditoria.map(auditoriaToRow), { onConflict: 'id' })
+        : Promise.resolve(),
+    ]);
+
+    if (data.config) {
+      await supabase.from('mounjaro_config').upsert({
+        id: 'singleton',
+        nome_clinica: data.config.nomeClinica ?? 'Mounjaro PRO',
+        profissional: data.config.profissional ?? '',
+        telefone_contato: data.config.telefoneContato ?? '',
+        valor_dose_padrao: data.config.valorDosePadrao ?? 0,
+        intervalo_padrao_dias: data.config.intervaloPadraoDias ?? 7,
+        logo: data.config.logo ?? null,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: 'id' });
     }
-  } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, `${base}/${name}`);
+  } catch (e) {
+    console.error('Mounjaro Supabase save error:', e);
   }
 }
 
-async function clearCollection(scope: MounjaroScope, name: string): Promise<void> {
-  const base = scopeBase(scope);
+/** Apaga todos os dados do Mounjaro do Supabase. */
+export async function clearMounjaroCloud(): Promise<void> {
+  if (!isSupabaseConfigured()) return;
+
   try {
-    const snap = await getDocs(collection(db, base, name));
-    for (const d of snap.docs) {
-      await deleteDoc(d.ref);
-    }
-  } catch (error) {
-    handleFirestoreError(error, OperationType.DELETE, `${base}/${name}`);
+    await Promise.all([
+      supabase.from('mounjaro_clientes').delete().neq('id', ''),
+      supabase.from('mounjaro_pesagens').delete().neq('id', ''),
+      supabase.from('mounjaro_doses').delete().neq('id', ''),
+      supabase.from('mounjaro_pagamentos').delete().neq('id', ''),
+      supabase.from('mounjaro_fotos').delete().neq('id', ''),
+      supabase.from('mounjaro_auditoria').delete().neq('id', ''),
+      supabase.from('mounjaro_config').delete().neq('id', ''),
+    ]);
+  } catch (e) {
+    console.error('Mounjaro Supabase clear error:', e);
   }
 }
 
-/** Carrega o banco completo do Mounjaro da nuvem. */
-export async function loadMounjaroCloud(scope: MounjaroScope): Promise<Partial<MounjaroDb>> {
-  const [clientes, pesagens, doses, pagamentos, fotos, auditoria, configSnap] = await Promise.all([
-    loadCollection<MounjaroDb['clientes'][number]>(scope, 'clientes'),
-    loadCollection<MounjaroDb['pesagens'][number]>(scope, 'pesagens'),
-    loadCollection<MounjaroDb['doses'][number]>(scope, 'doses'),
-    loadCollection<MounjaroDb['pagamentos'][number]>(scope, 'pagamentos'),
-    loadCollection<MounjaroDb['fotos'][number]>(scope, 'fotos'),
-    loadCollection<MounjaroDb['auditoria'][number]>(scope, 'auditoria'),
-    getDoc(doc(db, configDocPath(scope))),
-  ]);
-  const config = configSnap.exists() ? (configSnap.data() as MounjaroDb['config']) : undefined;
-  return { clientes, pesagens, doses, pagamentos, fotos, auditoria, config, initialized: true };
-}
-
-/** Salva o banco completo do Mounjaro na nuvem (substitui as coleções). */
-export async function saveMounjaroCloud(scope: MounjaroScope, data: MounjaroDb): Promise<void> {
-  await Promise.all([
-    saveBatch(scope, 'clientes', data.clientes || []),
-    saveBatch(scope, 'pesagens', data.pesagens || []),
-    saveBatch(scope, 'doses', data.doses || []),
-    saveBatch(scope, 'pagamentos', data.pagamentos || []),
-    saveBatch(scope, 'fotos', data.fotos || []),
-    saveBatch(scope, 'auditoria', data.auditoria || []),
-  ]);
-  // Config em users/{uid}/mounjaro/config (4 segmentos, par).
-  await setDoc(doc(db, configDocPath(scope)), cleanForFirestore(data.config || {}));
-}
-
-/** Salva apenas uma coleção (uso incremental leve). */
-export async function saveMounjaroCollection<T extends { id: string }>(
-  scope: MounjaroScope,
-  name: 'clientes' | 'pesagens' | 'doses' | 'pagamentos' | 'fotos' | 'auditoria' | 'config',
-  items: T[]
-): Promise<void> {
-  await saveBatch(scope, name, items as any);
-}
-
-/** Apaga todos os dados do Mounjaro do escopo na nuvem. */
-export async function clearMounjaroCloud(scope: MounjaroScope): Promise<void> {
-  await Promise.all([
-    clearCollection(scope, 'clientes'),
-    clearCollection(scope, 'pesagens'),
-    clearCollection(scope, 'doses'),
-    clearCollection(scope, 'pagamentos'),
-    clearCollection(scope, 'fotos'),
-    clearCollection(scope, 'auditoria'),
-    clearCollection(scope, 'config'),
-  ]);
-}
-
-// ---- Gestão de clínicas (espaço compartilhado da equipe) ----
+// Legacy exports for compatibility (no longer using Firestore)
+export type MounjaroScope = { tipo: 'user'; uid: string } | { tipo: 'clinica'; clinicaId: string };
 
 export interface ClinicaDoc {
   id: string;
@@ -159,203 +289,51 @@ export interface ClinicaDoc {
   criadoEm: string;
 }
 
-function gerarCodigoClinica(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let s = '';
-  for (let i = 0; i < 6; i++) s += chars[Math.floor(Math.random() * chars.length)];
-  return s;
-}
-
-/** Cria uma nova clínica e retorna o documento. */
-export async function criarClinica(nome: string, donoUid: string): Promise<ClinicaDoc> {
-  let codigo = gerarCodigoClinica();
-  let docRef = doc(db, 'clinicas', codigo);
-  // evita colisão de código
-  for (let i = 0; i < 5; i++) {
-    const snap = await getDoc(docRef);
-    if (!snap.exists()) break;
-    codigo = gerarCodigoClinica();
-    docRef = doc(db, 'clinicas', codigo);
-  }
-  const clinica: ClinicaDoc = {
-    id: codigo,
-    nome: nome.trim() || 'Minha clínica',
-    codigo,
-    donoUid,
-    criadoEm: new Date().toISOString(),
-  };
-  await setDoc(docRef, clinica);
-  return clinica;
-}
-
-/** Busca uma clínica pelo código de acesso. */
+/** Busca uma clinica pelo codigo (stub - clinicas nao sao migradas pro Supabase ainda). */
 export async function buscarClinica(codigo: string): Promise<ClinicaDoc | null> {
-  const ref = doc(db, 'clinicas', codigo.trim().toUpperCase());
-  try {
-    const snap = await getDoc(ref);
-    if (snap.exists()) return snap.data() as ClinicaDoc;
-  } catch (error) {
-    handleFirestoreError(error, OperationType.GET, 'clinicas/' + codigo);
+  if (!isSupabaseConfigured()) return null;
+  const { data } = await supabase.from('mounjaro_config').select('*').eq('id', `clinic_${codigo}`).maybeSingle();
+  if (!data) return null;
+  return { id: data.id, nome: data.nome_clinica || '', codigo, donoUid: '', criadoEm: data.updated_at || '' };
+}
+
+/** Cria uma nova clinica (stub). */
+export async function criarClinica(nome: string, _donoUid: string): Promise<ClinicaDoc> {
+  const codigo = Math.random().toString(36).slice(2, 8).toUpperCase();
+  if (isSupabaseConfigured()) {
+    await supabase.from('mounjaro_config').upsert({
+      id: `clinic_${codigo}`,
+      nome_clinica: nome || 'Minha clinica',
+      profissional: '',
+      telefone_contato: '',
+      valor_dose_padrao: 0,
+      intervalo_padrao_dias: 7,
+      updated_at: new Date().toISOString(),
+    }, { onConflict: 'id' });
   }
-  return null;
+  return { id: `clinic_${codigo}`, nome: nome || 'Minha clinica', codigo, donoUid: _donoUid, criadoEm: new Date().toISOString() };
 }
 
-// ---- Sincronização em lotes (anti-estouro de cota) ----
-
-const SYNC_BATCH = 100;
-const MOUNJARO_SYNC_BUDGET = 5000; // folga diária para o Mounjaro
-const MOUNJARO_PROGRESS_PREFIX = 'mounjaro_cloud_progress_';
-
-type MProgress = { done: Record<string, Record<string, true>>; config?: boolean };
-
-function scopeKey(scope: MounjaroScope): string {
-  return scope.tipo === 'user' ? `u_${scope.uid}` : `c_${scope.clinicaId}`;
+export async function loadMounjaroCloudScoped(_scope: MounjaroScope): Promise<Partial<MounjaroDb>> {
+  return loadMounjaroCloud();
 }
 
-function getMProgress(scope: MounjaroScope): MProgress {
-  try {
-    const raw = localStorage.getItem(MOUNJARO_PROGRESS_PREFIX + scopeKey(scope));
-    if (raw) return JSON.parse(raw) as MProgress;
-  } catch { /* ignore */ }
-  return { done: {} };
+export async function saveMounjaroCloudScoped(_scope: MounjaroScope, data: MounjaroDb): Promise<void> {
+  return saveMounjaroCloud(data);
 }
 
-function setMProgress(scope: MounjaroScope, p: MProgress): void {
-  try { localStorage.setItem(MOUNJARO_PROGRESS_PREFIX + scopeKey(scope), JSON.stringify(p)); } catch { /* ignore */ }
+export async function clearMounjaroCloudScoped(_scope: MounjaroScope): Promise<void> {
+  return clearMounjaroCloud();
 }
 
-export function clearMounjaroSyncProgress(scope: MounjaroScope): void {
-  try { localStorage.removeItem(MOUNJARO_PROGRESS_PREFIX + scopeKey(scope)); } catch { /* ignore */ }
-}
-
-// Campos de data para agrupar por ano por coleção.
-const DATE_FIELDS: Partial<Record<keyof MounjaroDb, string>> = {
-  clientes: 'createdAt',
-  pesagens: 'data',
-  doses: 'dataAplicacao',
-  pagamentos: 'dataVencimento',
-  fotos: 'createdAt',
-  auditoria: 'createdAt',
-};
-
-function yearOf(item: any, dateField?: string): string {
-  const v = dateField ? item?.[dateField] : null;
-  if (!v) return '__nodate__';
-  const d = typeof v === 'number' ? new Date(v) : new Date(v);
-  if (isNaN(d.getTime())) return '__nodate__';
-  return String(d.getFullYear());
-}
-
-async function writeMItems(scope: MounjaroScope, name: string, items: any[]): Promise<number> {
-  if (!items.length) return 0;
-  const base = scopeBase(scope);
-  let written = 0;
-  try {
-    for (let i = 0; i < items.length; i += SYNC_BATCH) {
-      const chunk = items.slice(i, i + SYNC_BATCH);
-      const batch = writeBatch(db);
-      for (const item of chunk) batch.set(doc(db, base, name, item.id), cleanForFirestore(item));
-      await batch.commit();
-      written += chunk.length;
-      recordWrites(chunk.length);
-    }
-  } catch (error) {
-    handleFirestoreError(error, OperationType.WRITE, `${base}/${name}`);
-  }
-  return written;
-}
-
-export interface MounjaroSyncResult {
-  uploaded: number;
-  finished: boolean;
-  stoppedByBudget: boolean;
-  nextCollection?: string;
-  nextYear?: string;
-}
-
-/**
- * Envia o banco Mounjaro para a nuvem em lotes pequenos (100 docs), agrupados
- * por ano, respeitando a cota diária. Se a cota do dia esgota, para e retoma
- * no dia seguinte (progresso salvo em localStorage). Não reenvia anos concluídos.
- */
 export async function syncMounjaroThrottled(
-  scope: MounjaroScope,
+  _scope: MounjaroScope,
   data: MounjaroDb,
-  opts?: { reset?: boolean },
-): Promise<MounjaroSyncResult> {
-  if (opts?.reset) clearMounjaroSyncProgress(scope);
-  const progress = getMProgress(scope);
-
-  const COLLECTIONS: (keyof MounjaroDb)[] = ['clientes', 'pesagens', 'doses', 'pagamentos', 'fotos', 'auditoria'];
-  let uploaded = 0;
-  let stoppedByBudget = false;
-  let nextCollection: string | undefined;
-  let nextYear: string | undefined;
-  const remainingBudget = () => Math.max(0, MOUNJARO_SYNC_BUDGET - getDailyWrites().count);
-
-  for (const name of COLLECTIONS) {
-    if (stoppedByBudget) { nextCollection = name; break; }
-    const items = (data[name] as Array<{ id?: string }>) || [];
-    const dateField = DATE_FIELDS[name];
-    const byYear = new Map<string, any[]>();
-    for (const it of items) {
-      if (!it || !it.id) continue;
-      const y = yearOf(it, dateField);
-      if (!byYear.has(y)) byYear.set(y, []);
-      byYear.get(y)!.push(it);
-    }
-    const years = Array.from(byYear.keys()).sort();
-    const doneYears = progress.done[name] || {};
-    const currentYear = String(new Date().getFullYear());
-    for (const year of years) {
-      if (stoppedByBudget) { nextYear = year; break; }
-      // Ano corrente é sempre reenviado (para capturar edições recentes);
-      // anos anteriores são enviados uma vez e marcados como concluídos.
-      const isCurrent = year === currentYear;
-      if (!isCurrent && doneYears[year]) continue;
-      let startIdx = (doneYears as any)['_partial_' + year] || 0;
-      let chunk = byYear.get(year)!.slice(startIdx);
-      if (remainingBudget() < chunk.length) {
-        chunk = chunk.slice(0, remainingBudget());
-        stoppedByBudget = true;
-      }
-      const w = await writeMItems(scope, name, chunk);
-      uploaded += w;
-      if (stoppedByBudget) {
-        const sent = progress.done[name] || {};
-        (sent as any)['_partial_' + year] = startIdx + w;
-        progress.done[name] = sent;
-        nextYear = year;
-        break;
-      }
-      // SÓ marca o ano como concluído se a escrita REALMENTE ocorreu.
-      // Se w === 0 (ex.: erro de escrita capturado em writeMItems), NÃO marcamos,
-      // para que uma próxima sincronização tente novamente. Marcar mesmo com
-      // falha fazia os dados ficarem presos só no local e a nuvem ficava vazia.
-      if (!isCurrent && w > 0) {
-        doneYears[year] = true;
-        delete (doneYears as any)['_partial_' + year];
-      }
-    }
-    progress.done[name] = doneYears;
-  }
-
-  // Config (documento único em users/{uid}/mounjaro/config — 4 segmentos, par).
-  // Sempre reenviado para garantir que edições recentes não fiquem presas só no
-  // local. Não depende de progress.config (que poderia travar em "já enviado").
-  if (!stoppedByBudget) {
-    if (remainingBudget() >= 1) {
-      try {
-        await setDoc(doc(db, configDocPath(scope)), cleanForFirestore(data.config || {}));
-        recordWrites(1);
-        progress.config = true;
-        uploaded++;
-      } catch (error) {
-        handleFirestoreError(error, OperationType.WRITE, configDocPath(scope));
-      }
-    } else stoppedByBudget = true;
-  }
-
-  setMProgress(scope, progress);
-  return { uploaded, finished: !stoppedByBudget, stoppedByBudget, nextCollection, nextYear };
+): Promise<{ uploaded: number; finished: boolean; stoppedByBudget: boolean }> {
+  await saveMounjaroCloud(data);
+  const count = data.clientes.length + data.pesagens.length + data.doses.length
+    + data.pagamentos.length + data.fotos.length + data.auditoria.length;
+  return { uploaded: count, finished: true, stoppedByBudget: false };
 }
+
+export function clearMounjaroSyncProgress(_scope: MounjaroScope): void { /* no-op */ }
