@@ -44,6 +44,7 @@ interface SalesProps {
     saleType: 'CPF' | 'CNPJ';
     notes?: string;
     pending?: boolean;
+    allowNegativeStock?: boolean;
   }) => void;
   onNavigate: (tab: 'products') => void;
 }
@@ -443,7 +444,8 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
       saleChannel: saleChannel,
       saleType,
       notes: combinedNotes || undefined,
-      pending: creditSale
+      pending: creditSale,
+      allowNegativeStock,
     });
 
     // Save sale data for receipt generation before resetting
@@ -618,8 +620,12 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
                   key={product.id}
                   onClick={() => handleAddToCart(product)}
                   className={`bg-white p-2.5 sm:p-4 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all cursor-pointer flex flex-col justify-between relative group select-none ${
-                    isOut && !allowNegativeStock ? 'opacity-75 border-rose-250 bg-rose-50/10' : 'hover:border-indigo-500'
-                  }`}
+                        isOut
+                          ? allowNegativeStock
+                            ? 'border-amber-300 bg-amber-50/30 hover:border-amber-400'
+                            : 'opacity-75 border-rose-200 bg-rose-50/20 hover:border-rose-300'
+                          : 'hover:border-indigo-500'
+                      }`}
                 >
                   {/* Cart count badge */}
                   {inCartQty > 0 && (

@@ -1,28 +1,30 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Product, Sale } from '../types';
+import { Product, Sale, Bill } from '../types';
 import { normalizeName } from '../lib/normalize';
 import SalesChart from './SalesChart';
 import { getPrefs, sendNotification } from '../lib/notifications';
-import { 
-  TrendingUp, 
-  ArrowDownRight, 
-  DollarSign, 
-  Package, 
-  AlertTriangle, 
-  Percent, 
+import {
+  TrendingUp,
+  ArrowDownRight,
+  DollarSign,
+  Package,
+  AlertTriangle,
+  Percent,
   ShoppingBag,
   ArrowRight,
   Calendar,
   Layers,
   Eye,
   EyeOff,
-  LayoutDashboard
+  LayoutDashboard,
+  Bell
 } from 'lucide-react';
 
 interface DashboardProps {
   products: Product[];
   sales: Sale[];
-  onNavigate: (tab: 'products' | 'pos' | 'sales') => void;
+  bills?: Bill[];
+  onNavigate: (tab: 'products' | 'pos' | 'sales' | 'bills') => void;
 }
 
 function parseLocalDate(dateStr: string, defaultTime: string = '00:00:00'): Date {
@@ -85,7 +87,7 @@ function parseLocalDate(dateStr: string, defaultTime: string = '00:00:00'): Date
   return new Date();
 }
 
-export default function Dashboard({ products, sales, onNavigate }: DashboardProps) {
+export default function Dashboard({ products, sales, bills = [], onNavigate }: DashboardProps) {
   const [timeRange, setTimeRange] = useState<'all' | '1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('all');
   const [hideValues, setHideValues] = useState(false);
   const money = (v: number) =>
@@ -148,6 +150,13 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
   const averageMargin = totalRevenue > 0 ? (totalProfit / totalRevenue) * 100 : 0;
 
   const isServiceProduct = (p: Product) => /^servi/i.test(p.category);
+
+  // Contas vencidas (bills overdue + pending com dueDate passada)
+  const today = new Date().toISOString().slice(0, 10);
+  const overdueBills = useMemo(() => {
+    return bills.filter(b => b.status !== 'paid' && b.dueDate < today);
+  }, [bills, today]);
+  const overdueBillsTotal = overdueBills.reduce((acc, b) => acc + b.amount, 0);
 
   // Stock alerts
   const physicalProducts = products.filter(p => !isServiceProduct(p) && !p.archived);
@@ -389,6 +398,26 @@ export default function Dashboard({ products, sales, onNavigate }: DashboardProp
             </button>
           </div>
         </div>
+
+        {/* Banner de contas vencidas */}
+        {overdueBills.length > 0 && (
+          <button
+            onClick={() => onNavigate('bills')}
+            className="w-full flex items-center gap-3 px-4 py-3 bg-rose-50 border border-rose-200 rounded-xl text-left hover:bg-rose-100 transition-colors cursor-pointer"
+          >
+            <Bell className="h-5 w-5 text-rose-600 shrink-0" />
+            <span className="flex-1 text-sm font-semibold text-rose-800">
+              {overdueBills.length === 1
+                ? `Você tem 1 conta vencida`
+                : `Você tem ${overdueBills.length} contas vencidas`}
+              {' '}&mdash;{' '}
+              <span className="font-bold">
+                {overdueBillsTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
+              </span>
+            </span>
+            <span className="text-xs text-rose-600 font-semibold shrink-0">Ver contas →</span>
+          </button>
+        )}
 
         <div className="flex flex-wrap items-center gap-2">
         <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200/50 overflow-x-auto no-scrollbar">

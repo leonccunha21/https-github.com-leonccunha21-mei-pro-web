@@ -498,7 +498,9 @@ export default function App() {
     pendingRef.current = merged;
 
     // Salva LOCALMENTE AGORA (imediato) — não perde ao recarregar.
-    saveDb(merged).catch((e) => {
+    saveDb(merged, (cloudErr) => {
+      showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
+    }).catch((e) => {
       console.error('Erro ao salvar banco local:', e);
       showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
     });
@@ -541,7 +543,9 @@ export default function App() {
           clearTimeout(saveTimer.current);
           saveTimer.current = null;
         }
-        saveDb(db).catch((e) => {
+        saveDb(db, (cloudErr) => {
+          showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
+        }).catch((e) => {
           console.error('Erro ao salvar banco local:', e);
           showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
         });
@@ -822,6 +826,7 @@ export default function App() {
     saleType: 'CPF' | 'CNPJ';
     notes?: string;
     pending?: boolean;
+    allowNegativeStock?: boolean;
   }) => {
     // 1. Calculate costs and prices with floating point fix
     const subtotal = roundCurrency(saleData.items.reduce((acc, item) => acc + item.total, 0));
@@ -861,13 +866,16 @@ export default function App() {
     };
 
     // 3. Deduct stock quantities from inventory products
+    // Se allowNegativeStock=true o estoque pode ficar negativo (venda sem restrição).
     const changedProducts: Product[] = [];
     const updatedProducts = products.map(p => {
       const soldItem = saleData.items.find(item => item.productId === p.id);
       if (soldItem) {
+        const newStock = p.stock - soldItem.quantity;
         const updated = {
           ...p,
-          stock: Math.max(0, p.stock - soldItem.quantity)
+          stock: saleData.allowNegativeStock ? newStock : Math.max(0, newStock),
+          updatedAt: new Date().toISOString(),
         };
         changedProducts.push(updated);
         return updated;
@@ -1011,7 +1019,15 @@ export default function App() {
     savePurchasesToStorage([]);
     saveCashSessionsToStorage([]);
     saveLoansToStorage([]);
-    persist({ initialized: true });
+    saveBillsToStorage([]);
+    saveInternetUsersToStorage([]);
+    setOpportunities([]);
+    setLeads([]);
+    setLeadJobs([]);
+    persist({
+      bills: [], internetUsers: [], opportunities: [],
+      leads: [], leadJobs: [], initialized: true,
+    });
     setActiveTab('dashboard');
   };
 
@@ -1034,7 +1050,7 @@ export default function App() {
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
-  }, [products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans]);
+  }, [products, sales, categories, expenses, orders, storeInfo, customers, suppliers, purchases, cashSessions, loans, leads, leadJobs, whatsappInstances, aiAgents, opportunities, bills, internetUsers]);
 
   const handleRunScheduledBackup = useCallback(() => {
     handleExportBackup();
@@ -1044,13 +1060,15 @@ export default function App() {
     }
   }, [handleExportBackup]);
 
+  // Verifica backup ao abrir o app (funciona em Vercel/serverless onde setInterval não persiste).
+  // Também mantém um polling leve de 5 min para quem deixa a aba aberta o dia todo.
   useEffect(() => {
-    const interval = setInterval(() => {
+    const check = () => {
       const prefs = getBackupSchedule();
-      if (shouldRunBackup(prefs)) {
-        handleRunScheduledBackup();
-      }
-    }, 60000);
+      if (shouldRunBackup(prefs)) handleRunScheduledBackup();
+    };
+    check(); // verifica imediatamente ao montar
+    const interval = setInterval(check, 5 * 60 * 1000); // polling a cada 5 min
     return () => clearInterval(interval);
   }, [handleRunScheduledBackup]);
 
@@ -1918,13 +1936,15 @@ export default function App() {
               </div>
             }>
             {activeTab === 'dashboard' && (
-              <Dashboard 
-                products={products} 
-                sales={sales} 
+              <Dashboard
+                products={products}
+                sales={sales}
+                bills={bills}
                 onNavigate={(tab) => {
                   if (tab === 'products') setActiveTab('products');
                   if (tab === 'pos') setActiveTab('pos');
                   if (tab === 'sales') setActiveTab('sales');
+                  if (tab === 'bills') setActiveTab('bills');
                 }}
               />
             )}

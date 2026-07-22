@@ -126,7 +126,12 @@ async function upsertBatch(table: string, rows: Record<string, unknown>[]): Prom
   for (let i = 0; i < rows.length; i += PAGE) {
     const batch = rows.slice(i, i + PAGE).map(r => prepareForSupabase(table, r));
     const { error } = await supabase.from(table).upsert(batch, { onConflict: 'id', ignoreDuplicates: false });
-    if (error) console.error(`Supabase upsert ${table} [${i}-${i + PAGE}]:`, error.message);
+    if (error) {
+      console.error(`Supabase upsert ${table} [${i}-${i + PAGE}]:`, error.message);
+      // Marca falha para que a UI possa alertar o utilizador
+      try { localStorage.setItem('zm_supabase_last_error', JSON.stringify({ table, msg: error.message, at: new Date().toISOString() })); } catch { /* ignore */ }
+      throw new Error(`Falha ao salvar "${table}" na nuvem: ${error.message}`);
+    }
   }
 }
 
@@ -137,32 +142,28 @@ async function upsertSingleton(table: string, row: Record<string, unknown>): Pro
   if (error) console.error(`Supabase upsert ${table}:`, error.message);
 }
 
-/** Serializa todo o LocalDb para o Supabase (best-effort). */
+/** Serializa todo o LocalDb para o Supabase. Lança erro se algum upsert falhar. */
 async function syncToSupabase(db: LocalDb): Promise<void> {
   if (!isSupabaseConfigured()) return;
 
-  try {
-    await Promise.all([
-      upsertBatch('products', db.products as unknown as Record<string, unknown>[]),
-      upsertBatch('sales', db.sales as unknown as Record<string, unknown>[]),
-      upsertBatch('categories', db.categories as unknown as Record<string, unknown>[]),
-      upsertBatch('expenses', db.expenses as unknown as Record<string, unknown>[]),
-      upsertBatch('service_orders', db.orders as unknown as Record<string, unknown>[]),
-      upsertBatch('customers', db.customers as unknown as Record<string, unknown>[]),
-      upsertBatch('suppliers', db.suppliers as unknown as Record<string, unknown>[]),
-      upsertBatch('purchases', db.purchases as unknown as Record<string, unknown>[]),
-      upsertBatch('cash_sessions', db.cashSessions as unknown as Record<string, unknown>[]),
-      upsertBatch('loans', db.loans as unknown as Record<string, unknown>[]),
-      upsertBatch('leads', db.leads as unknown as Record<string, unknown>[]),
-      upsertBatch('opportunities', db.opportunities as unknown as Record<string, unknown>[]),
-      upsertBatch('bills', db.bills as unknown as Record<string, unknown>[]),
-      upsertBatch('internet_users', db.internetUsers as unknown as Record<string, unknown>[]),
-    ]);
-    if (db.storeInfo) {
-      await upsertSingleton('store_info', db.storeInfo as unknown as Record<string, unknown>);
-    }
-  } catch (e) {
-    console.error('Supabase sync error:', e);
+  await Promise.all([
+    upsertBatch('products', db.products as unknown as Record<string, unknown>[]),
+    upsertBatch('sales', db.sales as unknown as Record<string, unknown>[]),
+    upsertBatch('categories', db.categories as unknown as Record<string, unknown>[]),
+    upsertBatch('expenses', db.expenses as unknown as Record<string, unknown>[]),
+    upsertBatch('service_orders', db.orders as unknown as Record<string, unknown>[]),
+    upsertBatch('customers', db.customers as unknown as Record<string, unknown>[]),
+    upsertBatch('suppliers', db.suppliers as unknown as Record<string, unknown>[]),
+    upsertBatch('purchases', db.purchases as unknown as Record<string, unknown>[]),
+    upsertBatch('cash_sessions', db.cashSessions as unknown as Record<string, unknown>[]),
+    upsertBatch('loans', db.loans as unknown as Record<string, unknown>[]),
+    upsertBatch('leads', db.leads as unknown as Record<string, unknown>[]),
+    upsertBatch('opportunities', db.opportunities as unknown as Record<string, unknown>[]),
+    upsertBatch('bills', db.bills as unknown as Record<string, unknown>[]),
+    upsertBatch('internet_users', db.internetUsers as unknown as Record<string, unknown>[]),
+  ]);
+  if (db.storeInfo) {
+    await upsertSingleton('store_info', db.storeInfo as unknown as Record<string, unknown>);
   }
 }
 
@@ -355,7 +356,7 @@ export async function loadDb(): Promise<Partial<LocalDb> | null> {
   return null;
 }
 
-export async function saveDb(db: LocalDb): Promise<void> {
+export async function saveDb(db: LocalDb, onCloudError?: (msg: string) => void): Promise<void> {
   // 1. Sempre salva localmente (IndexedDB) — rápido, offline-first
   try {
     await idbPut(db);
@@ -364,8 +365,10 @@ export async function saveDb(db: LocalDb): Promise<void> {
   }
 
   // 2. Sync best-effort para Supabase (nuvem)
-  syncToSupabase(db).catch((e) => {
-    console.error('Supabase sync falhou:', e);
+  syncToSupabase(db).catch((e: unknown) => {
+    const msg = e instanceof Error ? e.message : 'Erro desconhecido ao sincronizar com a nuvem.';
+    console.error('Supabase sync falhou:', msg);
+    if (onCloudError) onCloudError(msg);
   });
   notifyDbUpdated();
 }
