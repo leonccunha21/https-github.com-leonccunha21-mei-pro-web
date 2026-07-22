@@ -1172,6 +1172,7 @@ export default function App() {
             stock: p.stock + qty,
             costPrice: item.costPrice || p.costPrice,
             salePrice: item.salePrice || p.salePrice,
+            updatedAt: new Date().toISOString(),
           };
         });
         if (!item.productId) byName.set(key, updatedProducts.find(p => p.id === existing.id)!);

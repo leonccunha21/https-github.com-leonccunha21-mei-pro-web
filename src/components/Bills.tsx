@@ -129,10 +129,13 @@ export default function Bills({ bills, onSaveBills }: BillsProps) {
   };
 
   const filtered = useMemo(() => {
+    const todayStr = new Date().toISOString().slice(0, 10);
     return bills.filter(b => {
       if (filterStatus === 'pending' && b.status === 'paid') return false;
       if (filterStatus === 'paid' && b.status !== 'paid') return false;
-      if (filterStatus === 'overdue' && b.status !== 'overdue') return false;
+      // "Vencidas" mostra overdue + pending que já passaram da data (dispositivos
+      // que não abriram Bills recentemente ainda têm status 'pending')
+      if (filterStatus === 'overdue' && b.status !== 'overdue' && !(b.status === 'pending' && b.dueDate < todayStr)) return false;
       if (filterCategory !== 'all' && b.category !== filterCategory) return false;
       if (search) {
         const q = search.toLowerCase();

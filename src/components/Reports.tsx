@@ -197,7 +197,9 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       const m = new Date(sale.date).getMonth() + 1;
       months[m].revenue += sale.total;
       months[m].cost += sale.totalCost;
-      months[m].profit += sale.profit;
+      // Recalcula em vez de usar sale.profit (gravado no momento da venda)
+      // para ficar consistente caso o custo do produto tenha sido alterado depois.
+      months[m].profit += sale.total - sale.totalCost;
       months[m].count++;
     });
 
@@ -227,7 +229,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       if (!years[y]) years[y] = { revenue: 0, cost: 0, profit: 0, count: 0 };
       years[y].revenue += sale.total;
       years[y].cost += sale.totalCost;
-      years[y].profit += sale.profit;
+      years[y].profit += sale.total - sale.totalCost;
       years[y].count++;
     });
 
@@ -269,7 +271,7 @@ export default function Reports({ products, sales, categories }: ReportsProps) {
       const m = new Date(s.date).getMonth() + 1;
       grid[y][m].revenue += s.total;
       grid[y][m].cost += s.totalCost;
-      grid[y][m].profit += s.profit;
+      grid[y][m].profit += s.total - s.totalCost;
       grid[y][m].count++;
     });
 
