@@ -37,18 +37,19 @@ export function sendNotification(title: string, body: string, icon?: string) {
   } catch { /* */ }
 }
 
-export function checkAndNotify(prefs: NotificationPrefs) {
-  if (prefs.debtReminder) {
-    try {
-      const sales = JSON.parse(localStorage.getItem('zm_sales') || '[]') as any[];
-      const pending = sales.filter((s: any) => s.status === 'pending');
-      if (pending.length > 0) {
-        const total = pending.reduce((a: number, s: any) => a + s.total, 0);
-        sendNotification(
-          'Contas a Receber',
-          `${pending.length} venda(s) pendente(s) — total de R$ ${total.toFixed(2)}`
-        );
-      }
-    } catch { /* */ }
-  }
+export async function checkAndNotify(prefs: NotificationPrefs) {
+  if (!prefs.debtReminder) return;
+  try {
+    const { loadDb } = await import('./localDb');
+    const db = await loadDb();
+    const sales = (db?.sales || []) as any[];
+    const pending = sales.filter((s: any) => s.status === 'pending');
+    if (pending.length > 0) {
+      const total = pending.reduce((a: number, s: any) => a + s.total, 0);
+      sendNotification(
+        'Contas a Receber',
+        `${pending.length} venda(s) pendente(s) — total de R$ ${total.toFixed(2)}`
+      );
+    }
+  } catch { /* */ }
 }

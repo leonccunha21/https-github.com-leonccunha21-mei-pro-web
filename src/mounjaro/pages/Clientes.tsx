@@ -42,6 +42,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
     setEditando(c);
     setForm({ ...c });
     setModalOpen(true);
+    setDetalhe(null);
   };
 
   const salvar = () => {

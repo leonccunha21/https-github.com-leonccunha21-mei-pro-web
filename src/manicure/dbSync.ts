@@ -1,5 +1,6 @@
 import { ManicureDb } from './types';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { getPendingDeletions, clearPendingDeletions, setLastSyncAt, getSyncMeta } from './localDb';
 
 function prepareRow(row: Record<string, unknown>): Record<string, unknown> {
   const out: Record<string, unknown> = {};
@@ -111,12 +112,14 @@ function waInstanceToRow(w: ManicureDb['whatsappInstances'][number]) {
   return prepareRow({
     id: w.id, name: w.name, status: w.status,
     qr_code: w.qrCode ?? null, created_at: w.createdAt,
+    updated_at: w.updatedAt ?? null,
   });
 }
 function rowToWaInstance(r: any): ManicureDb['whatsappInstances'][number] {
   return {
     id: r.id, name: r.name, status: r.status,
     qrCode: r.qr_code ?? undefined, createdAt: r.created_at ?? new Date().toISOString(),
+    updatedAt: r.updated_at ?? undefined,
   };
 }
 
@@ -125,12 +128,14 @@ function templateToRow(t: ManicureDb['mensagemTemplates'][number]) {
   return prepareRow({
     id: t.id, nome: t.nome, tipo: t.tipo,
     mensagem: t.mensagem, ativo: t.ativo,
+    updated_at: t.updatedAt ?? null,
   });
 }
 function rowToTemplate(r: any): ManicureDb['mensagemTemplates'][number] {
   return {
     id: r.id, nome: r.nome, tipo: r.tipo,
     mensagem: r.mensagem, ativo: r.ativo ?? true,
+    updatedAt: r.updated_at ?? undefined,
   };
 }
 
@@ -140,6 +145,7 @@ function enviadaToRow(e: ManicureDb['mensagensEnviadas'][number]) {
     id: e.id, agendamento_id: e.agendamentoId, cliente_id: e.clienteId,
     cliente_nome: e.clienteNome, tipo: e.tipo, mensagem: e.mensagem,
     status: e.status, data_envio: e.dataEnvio, erro: e.erro ?? null,
+    updated_at: e.updatedAt ?? null,
   });
 }
 function rowToEnviada(r: any): ManicureDb['mensagensEnviadas'][number] {
@@ -147,8 +153,24 @@ function rowToEnviada(r: any): ManicureDb['mensagensEnviadas'][number] {
     id: r.id, agendamentoId: r.agendamento_id, clienteId: r.cliente_id,
     clienteNome: r.cliente_nome, tipo: r.tipo, mensagem: r.mensagem,
     status: r.status, dataEnvio: r.data_envio, erro: r.erro ?? undefined,
+    updatedAt: r.updated_at ?? undefined,
   };
 }
+
+// ============================================================
+// Helpers
+// ============================================================
+
+const TABLES = [
+  { table: 'manicure_clientes', key: 'clientes' as const, toRow: clienteToRow },
+  { table: 'manicure_servicos', key: 'servicos' as const, toRow: servicoToRow },
+  { table: 'manicure_agendamentos', key: 'agendamentos' as const, toRow: agendamentoToRow },
+  { table: 'manicure_movimentos', key: 'movimentos' as const, toRow: movimentoToRow },
+  { table: 'manicure_produtos', key: 'produtos' as const, toRow: produtoToRow },
+  { table: 'manicure_whatsapp_instances', key: 'whatsappInstances' as const, toRow: waInstanceToRow },
+  { table: 'manicure_mensagem_templates', key: 'mensagemTemplates' as const, toRow: templateToRow },
+  { table: 'manicure_mensagens_enviadas', key: 'mensagensEnviadas' as const, toRow: enviadaToRow },
+] as const;
 
 // ============================================================
 // API pública
@@ -170,7 +192,7 @@ export async function loadManicureCloud(): Promise<Partial<ManicureDb>> {
       supabase.from('manicure_config').select('*').eq('id', 'singleton').maybeSingle(),
     ]);
 
-    const hasError = [clientes, servicos, agendamentos, movimentos, produtos].some(r => r.error);
+    const hasError = [clientes, servicos, agendamentos, movimentos, produtos, wa, templates, enviadas].some(r => r.error);
     if (hasError) return {};
 
     return {
@@ -191,74 +213,40 @@ export async function loadManicureCloud(): Promise<Partial<ManicureDb>> {
   }
 }
 
-export async function saveManicureCloud(data: ManicureDb): Promise<void> {
+export async function saveManicureCloudIncremental(data: ManicureDb): Promise<void> {
   if (!isSupabaseConfigured()) return;
 
   try {
-    async function syncDelete(table: string, localIds: string[]): Promise<void> {
-      if (localIds.length === 0) {
-        await supabase.from(table).delete().neq('id', '');
-        return;
-      }
-      const { data: rows } = await supabase.from(table).select('id');
-      if (!rows || rows.length === 0) return;
-      const localSet = new Set(localIds);
-      const toDelete = rows.map((r: any) => r.id as string).filter((id) => !localSet.has(id));
-      if (toDelete.length > 0) {
-        await supabase.from(table).delete().in('id', toDelete);
-      }
-    }
+    const meta = await getPendingDeletions();
+    const now = new Date().toISOString();
 
-    await Promise.all([
-      data.clientes.length > 0
-        ? supabase.from('manicure_clientes').upsert(data.clientes.map(clienteToRow), { onConflict: 'id' })
-        : supabase.from('manicure_clientes').delete().neq('id', ''),
-      data.servicos.length > 0
-        ? supabase.from('manicure_servicos').upsert(data.servicos.map(servicoToRow), { onConflict: 'id' })
-        : supabase.from('manicure_servicos').delete().neq('id', ''),
-      data.agendamentos.length > 0
-        ? supabase.from('manicure_agendamentos').upsert(data.agendamentos.map(agendamentoToRow), { onConflict: 'id' })
-        : supabase.from('manicure_agendamentos').delete().neq('id', ''),
-      data.movimentos.length > 0
-        ? supabase.from('manicure_movimentos').upsert(data.movimentos.map(movimentoToRow), { onConflict: 'id' })
-        : supabase.from('manicure_movimentos').delete().neq('id', ''),
-      data.produtos.length > 0
-        ? supabase.from('manicure_produtos').upsert(data.produtos.map(produtoToRow), { onConflict: 'id' })
-        : supabase.from('manicure_produtos').delete().neq('id', ''),
-      data.whatsappInstances.length > 0
-        ? supabase.from('manicure_whatsapp_instances').upsert(data.whatsappInstances.map(waInstanceToRow), { onConflict: 'id' })
-        : supabase.from('manicure_whatsapp_instances').delete().neq('id', ''),
-      data.mensagemTemplates.length > 0
-        ? supabase.from('manicure_mensagem_templates').upsert(data.mensagemTemplates.map(templateToRow), { onConflict: 'id' })
-        : supabase.from('manicure_mensagem_templates').delete().neq('id', ''),
-      data.mensagensEnviadas.length > 0
-        ? supabase.from('manicure_mensagens_enviadas').upsert(data.mensagensEnviadas.map(enviadaToRow), { onConflict: 'id' })
-        : supabase.from('manicure_mensagens_enviadas').delete().neq('id', ''),
-    ]);
+    // 1. Upsert only changed records (updatedAt > lastSyncAt)
+    // For first sync (no lastSyncAt), send everything
+    const syncMeta = await getSyncMeta();
+    const lastSyncRaw = syncMeta.lastSyncAt;
+    const upsertOps = TABLES.map(async ({ table, key, toRow }) => {
+      const items = data[key];
+      if (items.length === 0) return;
+      const changed = lastSyncRaw
+        ? items.filter(item => item.updatedAt && item.updatedAt >= lastSyncRaw)
+        : items;
+      if (changed.length === 0) return;
+      const { error } = await supabase.from(table).upsert(changed.map(toRow), { onConflict: 'id' });
+      if (error) throw new Error(`Upsert ${table}: ${error.message}`);
+    });
 
-    await Promise.all([
-      data.clientes.length > 0 ? syncDelete('manicure_clientes', data.clientes.map((c) => c.id)) : Promise.resolve(),
-      data.servicos.length > 0 ? syncDelete('manicure_servicos', data.servicos.map((s) => s.id)) : Promise.resolve(),
-      data.agendamentos.length > 0 ? syncDelete('manicure_agendamentos', data.agendamentos.map((a) => a.id)) : Promise.resolve(),
-      data.movimentos.length > 0 ? syncDelete('manicure_movimentos', data.movimentos.map((m) => m.id)) : Promise.resolve(),
-      data.produtos.length > 0 ? syncDelete('manicure_produtos', data.produtos.map((p) => p.id)) : Promise.resolve(),
-      data.whatsappInstances.length > 0 ? syncDelete('manicure_whatsapp_instances', data.whatsappInstances.map((w) => w.id)) : Promise.resolve(),
-      data.mensagemTemplates.length > 0 ? syncDelete('manicure_mensagem_templates', data.mensagemTemplates.map((t) => t.id)) : Promise.resolve(),
-      data.mensagensEnviadas.length > 0 ? syncDelete('manicure_mensagens_enviadas', data.mensagensEnviadas.map((e) => e.id)) : Promise.resolve(),
-    ]);
+    // 2. Process pending deletions
+    const deleteOps = Object.entries(meta).map(async ([table, ids]) => {
+      if (ids.length === 0) return;
+      const { error } = await supabase.from(table).delete().in('id', ids);
+      if (error) throw new Error(`Delete from ${table}: ${error.message}`);
+    });
 
-    if (data.config) {
-      await supabase.from('manicure_config').upsert({
-        id: 'singleton',
-        nome_salao: data.config.nomeSalao ?? 'Meu Salão',
-        profissional: data.config.profissional ?? '',
-        telefone_contato: data.config.telefoneContato ?? null,
-        endereco: data.config.endereco ?? null,
-        logo: data.config.logo ?? null,
-        whatsapp_instance_id: data.config.whatsAppInstanceId ?? null,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: 'id' });
-    }
+    await Promise.all([...upsertOps, ...deleteOps]);
+
+    // 3. Clear processed deletions and update last sync time
+    await clearPendingDeletions();
+    await setLastSyncAt(now);
   } catch (e) {
     console.error('Manicure Supabase save error:', e);
   }

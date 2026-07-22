@@ -56,22 +56,33 @@ function openDb(): Promise<IDBDatabase> {
 
 async function idbGet(): Promise<Partial<LocalDb> | null> {
   const db = await openDb();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE, 'readonly');
-    const req = tx.objectStore(STORE).get(KEY);
-    req.onsuccess = () => resolve((req.result as Partial<LocalDb>) || null);
-    req.onerror = () => reject(req.error);
-  });
+  try {
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readonly');
+      const req = tx.objectStore(STORE).get(KEY);
+      tx.oncomplete = () => db.close();
+      tx.onerror = () => { db.close(); reject(tx.error); };
+      req.onsuccess = () => resolve((req.result as Partial<LocalDb>) || null);
+    });
+  } catch (e) {
+    db.close();
+    throw e;
+  }
 }
 
 async function idbPut(value: LocalDb): Promise<void> {
   const db = await openDb();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE, 'readwrite');
-    tx.objectStore(STORE).put(value, KEY);
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-  });
+  try {
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).put(value, KEY);
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    });
+  } catch (e) {
+    db.close();
+    throw e;
+  }
 }
 
 function dedupeById<T extends { id?: string }>(items?: T[]): T[] | undefined {
@@ -373,14 +384,29 @@ export async function saveDb(db: LocalDb, onCloudError?: (msg: string) => void):
   notifyDbUpdated();
 }
 
+/** Best-effort: limpa dados do Supabase (útil após reset local). */
+export async function clearSupabaseDb(): Promise<void> {
+  if (!isSupabaseConfigured()) return;
+  const tables = [
+    'products', 'sales', 'categories', 'expenses', 'service_orders',
+    'customers', 'suppliers', 'purchases', 'cash_sessions', 'loans',
+    'leads', 'opportunities', 'bills', 'internet_users', 'store_info',
+  ];
+  await Promise.all(tables.map(t =>
+    supabase.from(t).delete().neq('id', '').then(({ error }) => {
+      if (error) console.warn(`Supabase clear ${t}: ${error.message}`);
+    })
+  ));
+}
+
 export async function resetDb(): Promise<void> {
   try {
     const db = await openDb();
     await new Promise<void>((resolve, reject) => {
       const tx = db.transaction(STORE, 'readwrite');
       tx.objectStore(STORE).delete(KEY);
-      tx.oncomplete = () => resolve();
-      tx.onerror = () => reject(tx.error);
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
     });
   } catch { /* ignore */ }
   try {

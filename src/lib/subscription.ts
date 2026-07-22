@@ -29,12 +29,14 @@ export function isActive(status: SubscriptionStatus): boolean {
   return status === 'active' || status === 'trialing'
 }
 
-export async function getSubscription(uid: string): Promise<Subscription | null> {
+export async function getSubscription(uid: string, signal?: AbortSignal): Promise<Subscription | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/subscription?uid=${encodeURIComponent(uid)}`)
-    if (!res.ok) return null
+    const res = await fetch(`${API_BASE}/api/subscription?uid=${encodeURIComponent(uid)}`, { signal })
+    if (!res.ok) { console.error('getSubscription HTTP', res.status); return null }
     return (await res.json()) as Subscription
-  } catch {
+  } catch (e) {
+    if (e instanceof DOMException && e.name === 'AbortError') throw e
+    console.error('getSubscription error:', e)
     return null
   }
 }
@@ -48,10 +50,11 @@ export async function createCheckoutSession(uid: string, email: string, priceId:
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
-    if (!res.ok) return null
+    if (!res.ok) { console.error('createCheckoutSession HTTP', res.status); return null }
     const data = await res.json()
     return data.url as string
-  } catch {
+  } catch (e) {
+    console.error('createCheckoutSession error:', e)
     return null
   }
 }
@@ -63,16 +66,19 @@ export function getTrialDaysRemaining(trialEnd?: string): number {
   return Math.max(0, Math.ceil((end - now) / (1000 * 60 * 60 * 24)))
 }
 
-export async function startTrial(uid: string, email: string): Promise<Subscription | null> {
+export async function startTrial(uid: string, email: string, signal?: AbortSignal): Promise<Subscription | null> {
   try {
     const res = await fetch(`${API_BASE}/api/subscription`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uid, email }),
+      signal,
     })
-    if (!res.ok) return null
+    if (!res.ok) { console.error('startTrial HTTP', res.status); return null }
     return (await res.json()) as Subscription
-  } catch {
+  } catch (e) {
+    if (e instanceof DOMException && e.name === 'AbortError') throw e
+    console.error('startTrial error:', e)
     return null
   }
 }
@@ -84,10 +90,11 @@ export async function createPortalSession(uid: string): Promise<string | null> {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uid }),
     })
-    if (!res.ok) return null
+    if (!res.ok) { console.error('createPortalSession HTTP', res.status); return null }
     const data = await res.json()
     return data.url as string
-  } catch {
+  } catch (e) {
+    console.error('createPortalSession error:', e)
     return null
   }
 }

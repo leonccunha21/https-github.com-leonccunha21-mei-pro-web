@@ -1,12 +1,15 @@
-import { useState, useEffect, useRef, useCallback, type ReactNode } from 'react';
-import { Toaster } from 'react-hot-toast';
+import { useState, useEffect, useRef, useCallback, lazy, type ReactNode } from 'react';
+import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   LayoutDashboard, Users, Calendar, DollarSign, Package, Settings as SettingsIcon,
   Scissors, Sun, Moon, Sparkles, MessageCircle, X, ShoppingBag, Stethoscope,
 } from 'lucide-react';
+import { getTrialDaysRemaining } from '../lib/subscription';
+
+const PlansPage = lazy(() => import('../components/PlansPage'));
 import { ManicureDb, ClienteManicure, ServicoManicure, AgendamentoManicure, MovimentoCaixa, ProdutoEstoque, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from './types';
-import { emptyDb, loadManicureDb, saveManicureDb, saveManicureDbLocalOnly, defaultConfig } from './localDb';
+import { emptyDb, loadManicureDb, saveManicureDb, saveManicureDbLocalOnly, defaultConfig, addPendingDeletion, getSyncMeta, subscribeSyncMeta } from './localDb';
 import { loadManicureCloud } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
@@ -45,6 +48,14 @@ export default function ManicureApp() {
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('manicure_darkMode') === 'true');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [syncStatus, setSyncStatus] = useState<'synced' | 'pending' | 'syncing'>('synced');
+  const [needsSubscription, setNeedsSubscription] = useState(() => {
+    try { return localStorage.getItem('zm_sub_needed') === 'true'; } catch { return false; }
+  });
+  const [trialSub, setTrialSub] = useState<{ trialEnd?: string; status: string } | null>(() => {
+    try { const raw = localStorage.getItem('zm_sub_trial'); return raw ? JSON.parse(raw) : null; } catch { return null; }
+  });
+
   const persistTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const stateRef = useRef<ManicureDb>(db);
@@ -52,15 +63,46 @@ export default function ManicureApp() {
 
   useEffect(() => { document.documentElement.classList.toggle('dark', darkMode); }, [darkMode]);
 
+  // Sync status
+  useEffect(() => {
+    getSyncMeta().then(m => setSyncStatus(m.lastSyncAt ? 'synced' : 'pending'));
+    return subscribeSyncMeta((m) => {
+      setSyncStatus(m.pendingDeletions && Object.values(m.pendingDeletions).some(v => v.length > 0) ? 'pending' : 'synced');
+    });
+  }, []);
+
   const persist = useCallback((newData?: Partial<ManicureDb>) => {
-    const data: ManicureDb = { ...stateRef.current, ...newData, initialized: true };
+    const prev = stateRef.current;
+    const data: ManicureDb = { ...prev, ...newData, initialized: true };
+
+    // Detecta deleções e adiciona à fila de sync
+    if (newData) {
+      for (const [key, newArr] of Object.entries(newData)) {
+        if (!Array.isArray(newArr)) continue;
+        const oldArr = (prev as any)[key] as any[] | undefined;
+        if (!oldArr) continue;
+        const tableMap: Record<string, string> = {
+          clientes: 'manicure_clientes', servicos: 'manicure_servicos',
+          agendamentos: 'manicure_agendamentos', movimentos: 'manicure_movimentos',
+          produtos: 'manicure_produtos', whatsappInstances: 'manicure_whatsapp_instances',
+          mensagemTemplates: 'manicure_mensagem_templates', mensagensEnviadas: 'manicure_mensagens_enviadas',
+        };
+        const table = tableMap[key];
+        if (!table) continue;
+        const newIds = new Set(newArr.map((x: any) => x.id));
+        for (const old of oldArr) {
+          if (!newIds.has(old.id)) {
+            addPendingDeletion(table, old.id);
+          }
+        }
+      }
+    }
+
     // Salva imediatamente (sem debounce) para não perder dados ao fechar aba
-    saveManicureDb(data).catch(() => {});
-    // Debounce apenas para o sync de nuvem (não bloqueia a UI com chamadas excessivas)
-    if (persistTimer.current) clearTimeout(persistTimer.current);
-    persistTimer.current = setTimeout(() => {
-      persistTimer.current = null;
-    }, 200);
+    saveManicureDb(data).catch((e) => {
+      console.error('Falha ao salvar Manicure DB:', e);
+      toast.error('Erro ao salvar dados localmente. Verifique o armazenamento.');
+    });
   }, []);
 
   useEffect(() => {
@@ -71,13 +113,17 @@ export default function ManicureApp() {
           local.servicos.length || local.movimentos.length || local.produtos.length);
         const cloud = await loadManicureCloud();
         if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
-          // local PREVALECE em conflito; nuvem só adiciona IDs desconhecidos pelo local.
-          // BUG FIX: não salvar merged no IDB quando local já tinha dados —
-          // evita que a nuvem ressuscite registros deletados localmente.
-          const mergeById = <T extends { id: string }>(a: T[], b: T[]): T[] => {
+          // Merge com resolução baseada em updatedAt — o registro mais recente vence
+          const mergeById = <T extends { id: string; updatedAt?: string; createdAt?: string }>(a: T[], b: T[]): T[] => {
             const map = new Map<string, T>();
+            const ts = (x: T) => x.updatedAt ?? x.createdAt ?? '';
             for (const x of a) map.set(x.id, x);
-            for (const x of b) map.set(x.id, x); // b (local) prevalece
+            for (const x of b) {
+              const existing = map.get(x.id);
+              if (!existing || ts(x) >= ts(existing)) {
+                map.set(x.id, x);
+              }
+            }
             return Array.from(map.values());
           };
           const merged: ManicureDb = {
@@ -119,21 +165,29 @@ export default function ManicureApp() {
       if (document.visibilityState === 'visible') {
         loadManicureCloud().then((cloud) => {
           if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
-            const mergeById = <T extends { id: string }>(a: T[], b: T[]): T[] => {
+            const mergeByIdTs = <T extends { id: string; updatedAt?: string; createdAt?: string }>(a: T[], b: T[]): T[] => {
               const map = new Map<string, T>();
+              const ts = (x: T) => x.updatedAt ?? x.createdAt ?? '';
               for (const x of a) map.set(x.id, x);
-              for (const x of b) map.set(x.id, x); // b (estado atual) prevalece
+              for (const x of b) {
+                const existing = map.get(x.id);
+                if (!existing || ts(x) >= ts(existing)) {
+                  map.set(x.id, x);
+                }
+              }
               return Array.from(map.values());
             };
             const cur = stateRef.current;
-            // local prevalece — não persiste no IDB para não sobrescrever deleções
             const merged: ManicureDb = {
               ...cur,
-              clientes: mergeById(cloud.clientes || [], cur.clientes),
-              servicos: mergeById(cloud.servicos || [], cur.servicos),
-              agendamentos: mergeById(cloud.agendamentos || [], cur.agendamentos),
-              movimentos: mergeById(cloud.movimentos || [], cur.movimentos),
-              produtos: mergeById(cloud.produtos || [], cur.produtos),
+              clientes: mergeByIdTs(cloud.clientes || [], cur.clientes),
+              servicos: mergeByIdTs(cloud.servicos || [], cur.servicos),
+              agendamentos: mergeByIdTs(cloud.agendamentos || [], cur.agendamentos),
+              movimentos: mergeByIdTs(cloud.movimentos || [], cur.movimentos),
+              produtos: mergeByIdTs(cloud.produtos || [], cur.produtos),
+              whatsappInstances: mergeByIdTs(cloud.whatsappInstances || [], cur.whatsappInstances),
+              mensagemTemplates: mergeByIdTs(cloud.mensagemTemplates || [], cur.mensagemTemplates),
+              mensagensEnviadas: mergeByIdTs(cloud.mensagensEnviadas || [], cur.mensagensEnviadas),
               config: { ...defaultConfig(), ...(cloud.config || {}), ...(cur.config || {}) },
             };
             setDb(merged);
@@ -176,6 +230,22 @@ export default function ManicureApp() {
     instances: db.whatsappInstances, onAddMensagem: addMensagemEnviada,
   });
 
+  if (needsSubscription) {
+    return (
+      <React.Suspense fallback={
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-fuchsia-600" />
+        </div>
+      }>
+        <PlansPage
+          uid={(() => { try { return localStorage.getItem('zm_sub_uid') || ''; } catch { return ''; } })()}
+          email={(() => { try { return localStorage.getItem('zm_sub_email') || ''; } catch { return ''; } })()}
+          onBack={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch {}; window.location.href = '/'; }}
+        />
+      </React.Suspense>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
@@ -184,9 +254,27 @@ export default function ManicureApp() {
     );
   }
 
+  const isTrialing = trialSub?.status === 'trialing';
+
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col md:flex-row text-slate-900 dark:text-slate-100">
+    <div className={`min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col md:flex-row text-slate-900 dark:text-slate-100 ${isTrialing ? 'pt-10' : ''}`}>
       <Toaster position="top-center" />
+
+      {isTrialing && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-fuchsia-500 to-indigo-500 text-white text-sm">
+          <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2">
+            <span>
+              Teste grátis — <strong>{getTrialDaysRemaining(trialSub.trialEnd)}</strong> dias restantes
+            </span>
+            <button
+              onClick={() => setNeedsSubscription(true)}
+              className="text-xs font-bold bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-colors shrink-0"
+            >
+              Ver planos
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* MOBILE TOP HEADER */}
       <header className="md:hidden sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-3 shadow-sm">
@@ -255,8 +343,20 @@ export default function ManicureApp() {
           </div>
         </div>
 
-        <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-700">
+        <div className="px-5 py-3 border-t border-slate-100 dark:border-slate-700 space-y-1">
           <p className="text-[10px] text-slate-400 dark:text-slate-500">Manicure PRO v2.24.7</p>
+          <div className="flex items-center gap-1.5">
+            <span className={`inline-block w-1.5 h-1.5 rounded-full ${
+              syncStatus === 'synced' ? 'bg-emerald-500' :
+              syncStatus === 'syncing' ? 'bg-amber-500 animate-pulse' :
+              'bg-amber-500'
+            }`} />
+            <span className="text-[9px] text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+              {syncStatus === 'synced' ? 'Sincronizado' :
+               syncStatus === 'syncing' ? 'Sincronizando...' :
+               'Alterações pendentes'}
+            </span>
+          </div>
         </div>
       </aside>
 

@@ -94,7 +94,7 @@ import { normalizeName, normalizeChannel } from './lib/normalize';
 import { roundCurrency } from './lib/currency';
 import { localNowISO } from './lib/datetime';
 import { canAccess } from './lib/permissions';
-import { loadDb, saveDb, type LocalDb } from './lib/localDb';
+import { loadDb, saveDb, clearSupabaseDb, type LocalDb } from './lib/localDb';
 import { getBackupSchedule, shouldRunBackup, saveBackupSchedule } from './lib/backupScheduler';
 import { isSupabaseConfigured } from './lib/supabase';
 import { getSubscription, startTrial, getTrialDaysRemaining, isActive as subIsActive } from './lib/subscription';
@@ -168,6 +168,7 @@ export default function App() {
   const [subscriptionChecked, setSubscriptionChecked] = useState(false);
   const [needsSubscription, setNeedsSubscription] = useState(false);
   const [trialSub, setTrialSub] = useState<{ trialEnd?: string; status: string } | null>(null);
+  const [showPlansFromTrial, setShowPlansFromTrial] = useState(false);
   const [supabaseConnected, setSupabaseConnected] = useState<boolean>(() => isSupabaseConfigured());
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
@@ -367,9 +368,11 @@ export default function App() {
       try {
         let sub = await getSubscription(cloudUser.uid)
         if (!sub) {
-          sub = await startTrial(cloudUser.uid, cloudUser.email || '')
+          setNeedsSubscription(true)
+          setLoading(false)
+          return
         }
-        if (!sub || !subIsActive(sub.status)) {
+        if (!subIsActive(sub.status)) {
           setNeedsSubscription(true)
           setLoading(false)
           return
@@ -378,13 +381,16 @@ export default function App() {
           const daysLeft = getTrialDaysRemaining(sub.trialEnd)
           if (daysLeft > 0) {
             setTrialSub(sub)
+            try { localStorage.setItem('zm_sub_trial', JSON.stringify(sub)); } catch {}
           } else {
             setNeedsSubscription(true)
+            try { localStorage.setItem('zm_sub_needed', 'true'); } catch {}
             setLoading(false)
             return
           }
         }
         setNeedsSubscription(false)
+        try { localStorage.setItem('zm_sub_needed', 'false'); } catch {}
 
         const db = await loadDb();
         const res = await applyLoadedDb(db);
@@ -602,10 +608,8 @@ export default function App() {
   };
 
   const saveProductsToStorage = async (updatedProducts: Product[], _changedProduct?: Product, _isDeletedId?: string) => {
-    // Automatically deduplicate on save to guarantee zero duplicate products exist
-    const cleaned = runStockCleanup(updatedProducts);
-    setProducts(cleaned);
-    persist({ products: cleaned });
+    setProducts(updatedProducts);
+    persist({ products: updatedProducts });
   };
 
   const saveSalesToStorage = async (updatedSales: Sale[], _changedSale?: Sale) => {
@@ -945,6 +949,10 @@ export default function App() {
 
   // Cancel/Refund Sale (and restore stock)
   const handleCancelSale = (saleId: string) => {
+    const sale = sales.find(s => s.id === saleId);
+    if (!sale) return;
+    if (sale.status === 'cancelled') return;
+
     const updatedSales = sales.map(s => {
       if (s.id === saleId) {
         return {
@@ -956,9 +964,7 @@ export default function App() {
       return s;
     });
 
-    // Find the cancelled sale to get quantities
-    const cancelledSale = sales.find(s => s.id === saleId);
-    if (!cancelledSale) return;
+    const cancelledSale = sale;
 
     // Restore stock quantities
     const updatedProducts = products.map(p => {
@@ -987,7 +993,7 @@ export default function App() {
   // Import whole database from external source (MERGE: preserves existing IDs,
   // links and data; updates products matched by code/SKU or name instead of
   // wiping the store and regenerating IDs, which previously corrupted sales).
-  const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[]; loans?: Loan[]; orders?: ServiceOrder[]; customers?: Customer[]; suppliers?: Supplier[]; purchases?: Purchase[]; cashSessions?: CashSession[] }) => {
+  const handleImportDatabase = (imported: { products: Product[]; sales: Sale[]; categories: Category[]; expenses?: Expense[]; loans?: Loan[]; orders?: ServiceOrder[]; customers?: Customer[]; suppliers?: Supplier[]; purchases?: Purchase[]; cashSessions?: CashSession[]; bills?: Bill[]; internetUsers?: InternetUser[]; opportunities?: Opportunity[]; leads?: Lead[]; leadJobs?: LeadExtractionJob[]; aiAgents?: AIAgent[]; whatsappInstances?: WhatsAppInstance[] }) => {
     // --- Merge products by code (SKU) then by normalized name ---
     const existingByCode = new Map<string, Product>(products.map(p => [(p.code || '').trim().toLowerCase(), p] as [string, Product]));
     const existingByName = new Map<string, Product>(products.map(p => [normalizeName(p.name), p] as [string, Product]));
@@ -1051,26 +1057,41 @@ export default function App() {
     }
     const mergedSales = Array.from(salesById.values());
 
-    saveProductsToStorage(mergedProducts);
-    saveSalesToStorage(mergedSales);
-    saveCategoriesToStorage(mergedCategories);
-    if (imported.expenses) saveExpensesToStorage(imported.expenses);
-    if (imported.loans) saveLoansToStorage(imported.loans);
-    if (imported.orders) saveOrdersToStorage(imported.orders);
-    if (imported.customers) saveCustomersToStorage(imported.customers);
-    if (imported.suppliers) saveSuppliersToStorage(imported.suppliers);
-    if (imported.purchases) savePurchasesToStorage(imported.purchases);
-    if (imported.cashSessions) saveCashSessionsToStorage(imported.cashSessions);
-    if (imported.bills) saveBillsToStorage(imported.bills);
-    if (imported.internetUsers) saveInternetUsersToStorage(imported.internetUsers);
-    if (imported.opportunities) setOpportunities(imported.opportunities);
-    if (imported.leads) setLeads(imported.leads);
-    if (imported.leadJobs) setLeadJobs(imported.leadJobs);
+    // Merge advanced entities by id (não substituir)
+    const mergeById = <T extends { id: string }>(existing: T[], incoming?: T[]): T[] => {
+      if (!incoming || incoming.length === 0) return existing;
+      const map = new Map(existing.map(x => [x.id, x]));
+      for (const x of incoming) map.set(x.id, x);
+      return Array.from(map.values());
+    };
+    const mergedOpportunities = mergeById(opportunities, imported.opportunities);
+    const mergedLeads = mergeById(leads, imported.leads);
+    const mergedLeadJobs = mergeById(leadJobs, imported.leadJobs);
+    const mergedAiAgents = mergeById(aiAgents, imported.aiAgents);
+    const mergedWhatsappInstances = mergeById(whatsappInstances, imported.whatsappInstances);
+
+    setProducts(mergedProducts);
+    setSales(mergedSales);
+    setCategories(mergedCategories);
+    setExpenses(imported.expenses ? mergeById(expenses, imported.expenses) : expenses);
+    setLoans(imported.loans ? mergeById(loans, imported.loans) : loans);
+    setOrders(imported.orders ? mergeById(orders, imported.orders) : orders);
+    setCustomers(imported.customers ? mergeById(customers, imported.customers) : customers);
+    setSuppliers(imported.suppliers ? mergeById(suppliers, imported.suppliers) : suppliers);
+    setPurchases(imported.purchases ? mergeById(purchases, imported.purchases) : purchases);
+    setCashSessions(imported.cashSessions ? mergeById(cashSessions, imported.cashSessions) : cashSessions);
+    setBills(imported.bills ? mergeById(bills, imported.bills) : bills);
+    setInternetUsers(imported.internetUsers ? mergeById(internetUsers, imported.internetUsers) : internetUsers);
+    setOpportunities(mergedOpportunities);
+    setLeads(mergedLeads);
+    setLeadJobs(mergedLeadJobs);
+    setAiAgents(mergedAiAgents);
+    setWhatsappInstances(mergedWhatsappInstances);
     persist({ initialized: true });
   };
 
   // Reset database to empty
-  const handleResetDatabase = () => {
+  const handleResetDatabase = async () => {
     saveProductsToStorage([]);
     saveSalesToStorage([]);
     saveCategoriesToStorage([]);
@@ -1088,11 +1109,14 @@ export default function App() {
     setLeadJobs([]);
     setWhatsappInstances([]);
     setAiAgents([]);
+    setStoreInfo({} as StoreInfo);
     persist({
       bills: [], internetUsers: [], opportunities: [],
       leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [],
+      storeInfo: null,
       initialized: true,
     });
+    clearSupabaseDb().catch((e) => console.error('Supabase clear error:', e));
     setActiveTab('dashboard');
   };
 
@@ -1478,7 +1502,7 @@ export default function App() {
               Teste grátis — <strong>{getTrialDaysRemaining(trialSub.trialEnd)}</strong> dias restantes
             </span>
             <button
-              onClick={() => setNeedsSubscription(true)}
+              onClick={() => setShowPlansFromTrial(true)}
               className="text-xs font-bold bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-colors shrink-0"
             >
               Ver planos
@@ -1944,7 +1968,7 @@ export default function App() {
 
             {/* Subsite Manicure PRO */}
             <button
-              onClick={() => window.location.href = '/manicure'}
+              onClick={() => setShowChooser(true)}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-fuchsia-700 dark:text-fuchsia-400 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/30 bg-fuchsia-50/50 dark:bg-fuchsia-900/20"
             >
               <Sparkles className="h-4 w-4" />
@@ -1953,7 +1977,7 @@ export default function App() {
 
             {/* Subsite Saúde PRO */}
             <button
-              onClick={() => window.location.href = '/mounjaro'}
+              onClick={() => setShowChooser(true)}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
             >
               <Stethoscope className="h-4 w-4" />
@@ -2388,6 +2412,19 @@ export default function App() {
               </div>
             )}
           </div>
+        </div>
+      )}
+
+      {/* PlansPage overlay from trial banner */}
+      {showPlansFromTrial && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-white dark:bg-slate-900">
+          <React.Suspense fallback={
+            <div className="min-h-screen flex items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+            </div>
+          }>
+            <PlansPage uid={cloudUser.uid} email={cloudUser.email || ''} onBack={() => setShowPlansFromTrial(false)} />
+          </React.Suspense>
         </div>
       )}
 

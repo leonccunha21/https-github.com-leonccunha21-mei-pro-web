@@ -21,6 +21,8 @@ import Auditoria from './pages/Auditoria';
 import Configuracoes from './pages/Configuracoes';
 import { initAuth, googleSignIn, logoutUser } from '../lib/firebase';
 import { criarRegistroAuditoria } from './lib';
+import { getSubscription, startTrial, getTrialDaysRemaining, isActive as subIsActive } from '../lib/subscription';
+import PlansPage from '../components/PlansPage';
 import type { User } from 'firebase/auth';
 
 export type Tab = 'dashboard' | 'clientes' | 'doses' | 'peso' | 'pagamentos' | 'relatorio' | 'fotos' | 'auditoria' | 'configuracoes' | 'referencia';
@@ -65,6 +67,10 @@ export default function MounjaroApp() {
     return raw ? (JSON.parse(raw) as ClinicaDoc) : null;
   });
   const [showClinicaModal, setShowClinicaModal] = useState(false);
+
+  const [needsSubscription, setNeedsSubscription] = useState(false);
+  const [trialSub, setTrialSub] = useState<{ trialEnd?: string; status: string } | null>(null);
+  const [subscriptionChecked, setSubscriptionChecked] = useState(false);
 
   const timerRef = useRef<number | null>(null);
   const [timerState, setTimerState] = useState<number | null>(null);
@@ -189,6 +195,31 @@ export default function MounjaroApp() {
     if (!scope) { setLoading(false); return; }
     (async () => {
       try {
+        // Verifica subscription antes de carregar dados
+        let sub = await getSubscription(cloudUser.uid);
+        if (!sub) {
+          sub = await startTrial(cloudUser.uid, cloudUser.email || '');
+        }
+        if (!sub || !subIsActive(sub.status)) {
+          setNeedsSubscription(true);
+          setSubscriptionChecked(true);
+          setLoading(false);
+          return;
+        }
+        if (sub.status === 'trialing') {
+          const daysLeft = getTrialDaysRemaining(sub.trialEnd);
+          if (daysLeft > 0) {
+            setTrialSub(sub);
+          } else {
+            setNeedsSubscription(true);
+            setSubscriptionChecked(true);
+            setLoading(false);
+            return;
+          }
+        }
+        setNeedsSubscription(false);
+        setSubscriptionChecked(true);
+
         // 1. IndexedDB local — fonte de verdade primária (inclui deleções locais).
         const localRaw = await loadMounjaroDb();
         const local = sanitizar(localRaw);
@@ -376,17 +407,15 @@ export default function MounjaroApp() {
   const nomeUsuario = cloudUser?.displayName || cloudUser?.email || 'usuário';
   const logAuditoria = useCallback(
     (params: { entidade: 'cliente' | 'dose' | 'pagamento' | 'pesagem' | 'foto'; acao: 'criar' | 'editar' | 'excluir'; resumo: string; clienteId?: string; refId?: string }) => {
-      // Usa setDb com callback para ler o estado mais recente (pós-deleção/edição),
-      // depois persiste o estado completo — evita stale closure que ressuscitaria
-      // registros recém-deletados via logAuditoria chamado logo após setDbAtomico.
-      setDb((d) => {
-        const auditoria = criarRegistroAuditoria({ ...params, usuario: nomeUsuario }, d.auditoria);
-        const next = { ...d, auditoria };
-        // Atualiza o ref para que persist veja o estado correto
-        stateRef.current = next;
-        persist(next);
-        return next;
-      });
+      // Usa stateRef.current diretamente em vez de setDb((d) => {...}) para evitar
+      // ler state stale do React batch quando chamado logo após setDbAtomico.
+      // BUG-FIX CRÍTICO: se usasse setDb callback, o estado podia ser o anterior
+      // à deleção, fazendo o persist ressuscitar o registro excluído.
+      const auditoria = criarRegistroAuditoria({ ...params, usuario: nomeUsuario }, stateRef.current.auditoria);
+      const next = { ...stateRef.current, auditoria };
+      stateRef.current = next;
+      setDb(next);
+      persist(next);
     },
     [nomeUsuario, persist]
   );
@@ -477,6 +506,18 @@ export default function MounjaroApp() {
     );
   }
 
+  if (needsSubscription) {
+    return (
+      <React.Suspense fallback={
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-cyan-600" />
+        </div>
+      }>
+        <PlansPage uid={cloudUser.uid} email={cloudUser.email || ''} onBack={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch {}; window.location.href = '/'; }} />
+      </React.Suspense>
+    );
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900">
@@ -493,9 +534,27 @@ export default function MounjaroApp() {
     { id: 'menu', label: 'Menu', icon: <Settings size={20} /> },
   ];
 
+  const isTrialing = trialSub?.status === 'trialing';
+
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col md:flex-row text-slate-900 dark:text-slate-100">
+    <div className={`min-h-screen bg-slate-50 dark:bg-slate-900 flex flex-col md:flex-row text-slate-900 dark:text-slate-100 ${isTrialing ? 'pt-10' : ''}`}>
       <Toaster position="top-center" />
+
+      {isTrialing && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-cyan-500 to-fuchsia-500 text-white text-sm">
+          <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2">
+            <span>
+              Teste grátis — <strong>{getTrialDaysRemaining(trialSub.trialEnd)}</strong> dias restantes
+            </span>
+            <button
+              onClick={() => setNeedsSubscription(true)}
+              className="text-xs font-bold bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-colors shrink-0"
+            >
+              Ver planos
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* MOBILE TOP HEADER */}
       <header className="md:hidden sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-3 shadow-sm">

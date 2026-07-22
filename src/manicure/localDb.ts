@@ -1,22 +1,44 @@
 import { ManicureDb, MensagemTemplate } from './types';
-import { loadManicureCloud, saveManicureCloud } from './dbSync';
+import { loadManicureCloud } from './dbSync';
 
 const DB_NAME = 'manicure_local';
 const STORE = 'manicuredb';
 const KEY = 'main';
+const META_KEY = 'sync_meta';
+
+export interface SyncMeta {
+  lastSyncAt: string | null;
+  pendingDeletions: Record<string, string[]>;
+}
 
 const syncChannel: BroadcastChannel | null =
   typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('manicure-sync') : null;
+
+type Listener = (meta: SyncMeta) => void;
+const listeners = new Set<Listener>();
+
+export function subscribeSyncMeta(fn: Listener): () => void {
+  listeners.add(fn);
+  return () => { listeners.delete(fn); };
+}
+
+function notifyListeners(meta: SyncMeta): void {
+  for (const fn of listeners) fn(meta);
+}
 
 function notifyDbUpdated(): void {
   try { syncChannel?.postMessage({ type: 'db-updated', at: Date.now() }); } catch { /* ignore */ }
 }
 
-function openDb(): Promise<IDBDatabase> {
+function openDb(version = 2): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     if (typeof indexedDB === 'undefined') { reject(new Error('IndexedDB indisponivel')); return; }
-    const req = indexedDB.open(DB_NAME, 1);
-    req.onupgradeneeded = () => { const db = req.result; if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE); };
+    const req = indexedDB.open(DB_NAME, version);
+    req.onupgradeneeded = () => {
+      const db = req.result;
+      if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE);
+      if (!db.objectStoreNames.contains('meta')) db.createObjectStore('meta');
+    };
     req.onsuccess = () => resolve(req.result);
     req.onerror = () => reject(req.error);
   });
@@ -40,6 +62,63 @@ async function idbPut(value: ManicureDb): Promise<void> {
     tx.oncomplete = () => resolve();
     tx.onerror = () => reject(tx.error);
   });
+}
+
+async function metaGet(): Promise<SyncMeta> {
+  const db = await openDb();
+  return new Promise((resolve) => {
+    const tx = db.transaction('meta', 'readonly');
+    const req = tx.objectStore('meta').get(META_KEY);
+    req.onsuccess = () => resolve(req.result || { lastSyncAt: null, pendingDeletions: {} });
+    req.onerror = () => resolve({ lastSyncAt: null, pendingDeletions: {} });
+  });
+}
+
+async function metaPut(meta: SyncMeta): Promise<void> {
+  const db = await openDb();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('meta', 'readwrite');
+    tx.objectStore('meta').put(meta, META_KEY);
+    tx.oncomplete = () => resolve();
+    tx.onerror = () => reject(tx.error);
+  });
+}
+
+export async function getSyncMeta(): Promise<SyncMeta> {
+  return metaGet();
+}
+
+export async function setLastSyncAt(iso: string): Promise<void> {
+  const meta = await metaGet();
+  meta.lastSyncAt = iso;
+  await metaPut(meta);
+  notifyListeners(meta);
+}
+
+export async function addPendingDeletion(table: string, id: string): Promise<void> {
+  const meta = await metaGet();
+  if (!meta.pendingDeletions[table]) meta.pendingDeletions[table] = [];
+  if (!meta.pendingDeletions[table].includes(id)) {
+    meta.pendingDeletions[table].push(id);
+  }
+  await metaPut(meta);
+  notifyListeners(meta);
+}
+
+export async function clearPendingDeletions(table?: string): Promise<void> {
+  const meta = await metaGet();
+  if (table) {
+    delete meta.pendingDeletions[table];
+  } else {
+    meta.pendingDeletions = {};
+  }
+  await metaPut(meta);
+  notifyListeners(meta);
+}
+
+export async function getPendingDeletions(): Promise<Record<string, string[]>> {
+  const meta = await metaGet();
+  return meta.pendingDeletions;
 }
 
 export function defaultConfig(): ManicureDb['config'] {
@@ -102,9 +181,28 @@ export async function loadManicureDb(): Promise<ManicureDb> {
   return emptyDb();
 }
 
+function stampUpdated<T extends { updatedAt?: string }>(entity: T): T {
+  return { ...entity, updatedAt: entity.updatedAt ?? new Date().toISOString() };
+}
+
 export async function saveManicureDb(db: ManicureDb): Promise<void> {
-  try { await idbPut(db); } catch (e) { console.error('Erro ao salvar Manicure DB:', e); }
-  saveManicureCloud(db).catch((e) => console.error('Manicure Supabase sync falhou:', e));
+  const now = new Date().toISOString();
+  const stamped: ManicureDb = {
+    ...db,
+    clientes: db.clientes.map(c => stampUpdated(c)),
+    servicos: db.servicos.map(s => stampUpdated(s)),
+    agendamentos: db.agendamentos.map(a => stampUpdated(a)),
+    movimentos: db.movimentos.map(m => stampUpdated(m)),
+    produtos: db.produtos.map(p => stampUpdated(p)),
+    whatsappInstances: db.whatsappInstances.map(w => stampUpdated(w)),
+    mensagemTemplates: db.mensagemTemplates.map(t => stampUpdated(t)),
+    mensagensEnviadas: db.mensagensEnviadas.map(e => stampUpdated(e)),
+    config: { ...db.config },
+  };
+  try { await idbPut(stamped); } catch (e) { console.error('Erro ao salvar Manicure DB:', e); }
+
+  const { saveManicureCloudIncremental } = await import('./dbSync');
+  saveManicureCloudIncremental(stamped).catch((e) => console.error('Manicure Supabase sync falhou:', e));
   notifyDbUpdated();
 }
 

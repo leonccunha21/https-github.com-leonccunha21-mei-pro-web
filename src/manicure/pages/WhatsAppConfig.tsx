@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ManicureWhatsAppInstance, MensagemTemplate, MensagemEnviada } from '../types';
 import { newId } from '../localDb';
 import { MessageCircle, Plus, QrCode, Trash2, Edit3, Power, PowerOff, Send, Check, X, Loader2, Smartphone } from 'lucide-react';
@@ -13,6 +13,8 @@ interface Props {
 }
 
 export default function WhatsAppConfig({ instances, templates, mensagensEnviadas, onSaveInstances, onSaveTemplates }: Props) {
+  const instancesRef = useRef(instances);
+  useEffect(() => { instancesRef.current = instances; }, [instances]);
   const [showQrModal, setShowQrModal] = useState(false);
   const [connectingName, setConnectingName] = useState('');
   const [qrCode, setQrCode] = useState('');
@@ -43,7 +45,7 @@ export default function WhatsAppConfig({ instances, templates, mensagensEnviadas
           if (updated && updated.status === 'CONNECTED') {
             clearInterval(poll);
             stopped = true;
-            onSaveInstances(instances.map((i) => i.id === result.instanceId ? { ...i, status: 'CONNECTED', qrCode: undefined } : i));
+            onSaveInstances(instancesRef.current.map((i) => i.id === result.instanceId ? { ...i, status: 'CONNECTED', qrCode: undefined } : i));
             toast.success('WhatsApp conectado!');
             setShowQrModal(false);
           }
@@ -142,7 +144,7 @@ export default function WhatsAppConfig({ instances, templates, mensagensEnviadas
                         try {
                           const mod = await import('../../lib/vps');
                           const result = await mod.whatsapp.connect(inst.name);
-                          onSaveInstances(instances.map((i) => i.id === inst.id ? { ...i, status: 'CONNECTING', qrCode: result.qrCode } : i));
+                          onSaveInstances(instancesRef.current.map((i) => i.id === inst.id ? { ...i, status: 'CONNECTING', qrCode: result.qrCode } : i));
                           setQrCode(result.qrCode);
                           setShowQrModal(true);
                         } catch { toast.error('Erro ao reconectar'); }

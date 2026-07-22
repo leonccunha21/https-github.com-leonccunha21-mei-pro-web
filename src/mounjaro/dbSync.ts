@@ -172,21 +172,29 @@ function auditoriaToRow(a: MounjaroDb['auditoria'][number]): Record<string, unkn
 // ============================================================
 
 /** Carrega o banco completo do Mounjaro do Supabase. */
-export async function loadMounjaroCloud(_scope?: MounjaroScope): Promise<Partial<MounjaroDb>> {
+export async function loadMounjaroCloud(scope?: MounjaroScope): Promise<Partial<MounjaroDb>> {
   if (!isSupabaseConfigured()) return {};
+
+  const uidFilter = scope?.tipo === 'user' ? { column: 'user_id', value: scope.uid } : null;
+
+  function scopedQuery(table: string) {
+    let query = supabase.from(table).select('*').limit(10000);
+    if (uidFilter) query = query.eq(uidFilter.column, uidFilter.value);
+    return query;
+  }
 
   try {
     const [clientes, pesagens, doses, pagamentos, fotos, auditoria, config] = await Promise.all([
-      supabase.from('mounjaro_clientes').select('*').limit(10000),
-      supabase.from('mounjaro_pesagens').select('*').limit(10000),
-      supabase.from('mounjaro_doses').select('*').limit(10000),
-      supabase.from('mounjaro_pagamentos').select('*').limit(10000),
-      supabase.from('mounjaro_fotos').select('*').limit(10000),
-      supabase.from('mounjaro_auditoria').select('*').limit(10000),
+      scopedQuery('mounjaro_clientes'),
+      scopedQuery('mounjaro_pesagens'),
+      scopedQuery('mounjaro_doses'),
+      scopedQuery('mounjaro_pagamentos'),
+      scopedQuery('mounjaro_fotos'),
+      scopedQuery('mounjaro_auditoria'),
       supabase.from('mounjaro_config').select('*').eq('id', 'singleton').maybeSingle(),
     ]);
 
-    const hasError = [clientes, pesagens, doses, pagamentos, fotos, auditoria].some(r => r.error);
+    const hasError = [clientes, pesagens, doses, pagamentos, fotos, auditoria, config].some(r => r.error);
     if (hasError) return {};
 
     return {
@@ -221,61 +229,70 @@ export async function loadMounjaroCloud(_scope?: MounjaroScope): Promise<Partial
  *  Estratégia: upsert dos registros locais + delete dos ids que existem na nuvem
  *  mas não estão mais no estado local (registros excluídos pelo usuário).
  */
-export async function saveMounjaroCloud(_scopeOrData: MounjaroScope | MounjaroDb, maybeData?: MounjaroDb): Promise<void> {
-  const data = maybeData || (_scopeOrData as MounjaroDb);
+export async function saveMounjaroCloud(scopeOrData: MounjaroScope | MounjaroDb, maybeData?: MounjaroDb): Promise<void> {
+  const data = maybeData || (scopeOrData as MounjaroDb);
+  const scope: MounjaroScope | undefined = maybeData ? (scopeOrData as MounjaroScope) : undefined;
   if (!isSupabaseConfigured()) return;
+
+  const uidFilter = scope?.tipo === 'user' ? { column: 'user_id', value: scope.uid } : null;
+
+  function scopedDelete(table: string, localIds: string[]) {
+    let query = supabase.from(table).delete();
+    if (localIds.length > 0) {
+      query = query.in('id', localIds);
+    } else {
+      query = query.neq('id', '');
+    }
+    if (uidFilter) query = query.eq(uidFilter.column, uidFilter.value);
+    return query;
+  }
 
   try {
     // Helper: apaga da nuvem os ids que não estão no conjunto local.
+    // Se localIds for vazio, apaga TUDO da tabela (todos os itens foram removidos).
     async function syncDelete(table: string, localIds: string[]): Promise<void> {
       if (localIds.length === 0) {
-        // Se não há registros locais, apaga TUDO da tabela
-        await supabase.from(table).delete().neq('id', '');
+        await scopedDelete(table, []);
         return;
       }
-      // Busca ids que existem na nuvem
-      const { data: rows } = await supabase.from(table).select('id');
+      let query = supabase.from(table).select('id');
+      if (uidFilter) query = query.eq(uidFilter.column, uidFilter.value);
+      const { data: rows } = await query;
       if (!rows || rows.length === 0) return;
       const localSet = new Set(localIds);
       const toDelete = rows.map((r: any) => r.id as string).filter((id) => !localSet.has(id));
       if (toDelete.length > 0) {
-        await supabase.from(table).delete().in('id', toDelete);
+        await scopedDelete(table, toDelete);
       }
     }
 
-    // Upsert de todos os registros locais em paralelo
-    await Promise.all([
-      data.clientes.length > 0
-        ? supabase.from('mounjaro_clientes').upsert(data.clientes.map(clienteToRow), { onConflict: 'id' })
-        : supabase.from('mounjaro_clientes').delete().neq('id', ''),
-      data.pesagens.length > 0
-        ? supabase.from('mounjaro_pesagens').upsert(data.pesagens.map(pesagemToRow), { onConflict: 'id' })
-        : supabase.from('mounjaro_pesagens').delete().neq('id', ''),
-      data.doses.length > 0
-        ? supabase.from('mounjaro_doses').upsert(data.doses.map(doseToRow), { onConflict: 'id' })
-        : supabase.from('mounjaro_doses').delete().neq('id', ''),
-      data.pagamentos.length > 0
-        ? supabase.from('mounjaro_pagamentos').upsert(data.pagamentos.map(pagamentoToRow), { onConflict: 'id' })
-        : supabase.from('mounjaro_pagamentos').delete().neq('id', ''),
-      data.fotos.length > 0
-        ? supabase.from('mounjaro_fotos').upsert(data.fotos.map(fotoToRow), { onConflict: 'id' })
-        : supabase.from('mounjaro_fotos').delete().neq('id', ''),
-      data.auditoria.length > 0
-        ? supabase.from('mounjaro_auditoria').upsert(data.auditoria.map(auditoriaToRow), { onConflict: 'id' })
-        : Promise.resolve(),
-    ]);
+    function addUid(row: Record<string, unknown>) {
+      if (uidFilter) row[uidFilter.column] = uidFilter.value;
+      return row;
+    }
 
-    // Deleta da nuvem registros que foram removidos localmente (quando há registros locais)
-    await Promise.all([
-      data.clientes.length > 0 ? syncDelete('mounjaro_clientes', data.clientes.map((c) => c.id)) : Promise.resolve(),
-      data.pesagens.length > 0 ? syncDelete('mounjaro_pesagens', data.pesagens.map((p) => p.id)) : Promise.resolve(),
-      data.doses.length > 0 ? syncDelete('mounjaro_doses', data.doses.map((d) => d.id)) : Promise.resolve(),
-      data.pagamentos.length > 0 ? syncDelete('mounjaro_pagamentos', data.pagamentos.map((p) => p.id)) : Promise.resolve(),
-      data.fotos.length > 0 ? syncDelete('mounjaro_fotos', data.fotos.map((f) => f.id)) : Promise.resolve(),
-    ]);
+    // Upsert de todos os registros locais (se houver)
+    const upserts = [];
+    if (data.clientes.length > 0) upserts.push(supabase.from('mounjaro_clientes').upsert(data.clientes.map(c => addUid(clienteToRow(c))), { onConflict: 'id' }));
+    if (data.pesagens.length > 0) upserts.push(supabase.from('mounjaro_pesagens').upsert(data.pesagens.map(p => addUid(pesagemToRow(p))), { onConflict: 'id' }));
+    if (data.doses.length > 0) upserts.push(supabase.from('mounjaro_doses').upsert(data.doses.map(d => addUid(doseToRow(d))), { onConflict: 'id' }));
+    if (data.pagamentos.length > 0) upserts.push(supabase.from('mounjaro_pagamentos').upsert(data.pagamentos.map(p => addUid(pagamentoToRow(p))), { onConflict: 'id' }));
+    if (data.fotos.length > 0) upserts.push(supabase.from('mounjaro_fotos').upsert(data.fotos.map(f => addUid(fotoToRow(f))), { onConflict: 'id' }));
+    if (data.auditoria.length > 0) upserts.push(supabase.from('mounjaro_auditoria').upsert(data.auditoria.map(a => addUid(auditoriaToRow(a))), { onConflict: 'id' }));
+    await Promise.all(upserts);
+
+    // Deleta da nuvem registros que foram removidos localmente
+    // (roda para TODAS as tabelas, mesmo as vazias — para propagar deleção)
+    const deletes = [];
+    deletes.push(syncDelete('mounjaro_clientes', (data.clientes || []).map((c) => c.id)));
+    deletes.push(syncDelete('mounjaro_pesagens', (data.pesagens || []).map((p) => p.id)));
+    deletes.push(syncDelete('mounjaro_doses', (data.doses || []).map((d) => d.id)));
+    deletes.push(syncDelete('mounjaro_pagamentos', (data.pagamentos || []).map((p) => p.id)));
+    deletes.push(syncDelete('mounjaro_fotos', (data.fotos || []).map((f) => f.id)));
+    await Promise.all(deletes);
 
     if (data.config) {
-      await supabase.from('mounjaro_config').upsert({
+      let cfgUpsert: Record<string, unknown> = {
         id: 'singleton',
         nome_clinica: data.config.nomeClinica ?? 'Saúde PRO',
         profissional: data.config.profissional ?? '',
@@ -284,26 +301,36 @@ export async function saveMounjaroCloud(_scopeOrData: MounjaroScope | MounjaroDb
         intervalo_padrao_dias: data.config.intervaloPadraoDias ?? 7,
         logo: data.config.logo ?? null,
         updated_at: new Date().toISOString(),
-      }, { onConflict: 'id' });
+      };
+      if (uidFilter) cfgUpsert[uidFilter.column] = uidFilter.value;
+      await supabase.from('mounjaro_config').upsert(cfgUpsert, { onConflict: 'id' });
     }
   } catch (e) {
     console.error('Mounjaro Supabase save error:', e);
   }
 }
 
-/** Apaga todos os dados do Mounjaro do Supabase. */
-export async function clearMounjaroCloud(): Promise<void> {
+/** Apaga todos os dados do Mounjaro do Supabase (ou do scope, se fornecido). */
+export async function clearMounjaroCloud(scope?: MounjaroScope): Promise<void> {
   if (!isSupabaseConfigured()) return;
+
+  const uidFilter = scope?.tipo === 'user' ? { column: 'user_id', value: scope.uid } : null;
+
+  function scopedDeleteAll(table: string) {
+    let query = supabase.from(table).delete().neq('id', '');
+    if (uidFilter) query = query.eq(uidFilter.column, uidFilter.value);
+    return query;
+  }
 
   try {
     await Promise.all([
-      supabase.from('mounjaro_clientes').delete().neq('id', ''),
-      supabase.from('mounjaro_pesagens').delete().neq('id', ''),
-      supabase.from('mounjaro_doses').delete().neq('id', ''),
-      supabase.from('mounjaro_pagamentos').delete().neq('id', ''),
-      supabase.from('mounjaro_fotos').delete().neq('id', ''),
-      supabase.from('mounjaro_auditoria').delete().neq('id', ''),
-      supabase.from('mounjaro_config').delete().neq('id', ''),
+      scopedDeleteAll('mounjaro_clientes'),
+      scopedDeleteAll('mounjaro_pesagens'),
+      scopedDeleteAll('mounjaro_doses'),
+      scopedDeleteAll('mounjaro_pagamentos'),
+      scopedDeleteAll('mounjaro_fotos'),
+      scopedDeleteAll('mounjaro_auditoria'),
+      scopedDeleteAll('mounjaro_config'),
     ]);
   } catch (e) {
     console.error('Mounjaro Supabase clear error:', e);
@@ -346,16 +373,16 @@ export async function criarClinica(nome: string, _donoUid: string): Promise<Clin
   return { id: `clinic_${codigo}`, nome: nome || 'Minha clinica', codigo, donoUid: _donoUid, criadoEm: new Date().toISOString() };
 }
 
-export async function loadMounjaroCloudScoped(_scope: MounjaroScope): Promise<Partial<MounjaroDb>> {
-  return loadMounjaroCloud();
+export async function loadMounjaroCloudScoped(scope: MounjaroScope): Promise<Partial<MounjaroDb>> {
+  return loadMounjaroCloud(scope);
 }
 
-export async function saveMounjaroCloudScoped(_scope: MounjaroScope, data: MounjaroDb): Promise<void> {
-  return saveMounjaroCloud(data);
+export async function saveMounjaroCloudScoped(scope: MounjaroScope, data: MounjaroDb): Promise<void> {
+  return saveMounjaroCloud(scope, data);
 }
 
-export async function clearMounjaroCloudScoped(_scope: MounjaroScope): Promise<void> {
-  return clearMounjaroCloud();
+export async function clearMounjaroCloudScoped(scope: MounjaroScope): Promise<void> {
+  return clearMounjaroCloud(scope);
 }
 
 export async function syncMounjaroThrottled(

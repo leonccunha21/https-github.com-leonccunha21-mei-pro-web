@@ -74,6 +74,7 @@ export interface ManicureWhatsAppInstance {
   status: 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING';
   qrCode?: string;
   createdAt: string;
+  updatedAt?: string;
 }
 
 export interface MensagemTemplate {
@@ -82,6 +83,7 @@ export interface MensagemTemplate {
   tipo: 'lembrete_1dia' | 'lembrete_1hora' | 'confirmacao' | 'personalizado';
   mensagem: string;
   ativo: boolean;
+  updatedAt?: string;
 }
 
 export interface MensagemEnviada {
@@ -94,6 +96,7 @@ export interface MensagemEnviada {
   status: 'enviado' | 'falha';
   dataEnvio: string;
   erro?: string;
+  updatedAt?: string;
 }
 
 export interface ConfigManicure {

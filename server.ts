@@ -59,7 +59,6 @@ function writeDb(db: LocalDb): void {
 }
 
 const app = express();
-app.use(express.json({ limit: '100mb' }));
 
 // ---------------------------------------------------------------------------
 // Stripe + Supabase admin (assinaturas)
@@ -165,6 +164,12 @@ app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async
     res.status(500).json({ error: 'Internal error' })
   }
 });
+
+// --- JSON parser para todas as outras rotas (deve vir DEPOIS do webhook) ---
+app.use(express.json({ limit: '100mb' }));
+
+// --- CORS global (deve vir antes de todas as rotas da API) ---
+app.use(cors);
 
 // Test Supabase connection status
 app.get('/api/supabase-status', async (_req, res) => {
@@ -272,8 +277,6 @@ function cors(req: express.Request, res: express.Response, next: express.NextFun
   if (req.method === 'OPTIONS') { res.sendStatus(204); return; }
   next();
 }
-
-app.use(cors);
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, version: 'stub-1.0.0' }));
 

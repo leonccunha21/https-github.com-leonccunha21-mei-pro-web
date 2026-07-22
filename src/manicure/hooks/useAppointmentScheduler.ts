@@ -69,11 +69,11 @@ export function useAppointmentScheduler({
                 data: formatarDataBR(ag.data),
                 hora: ag.hora.slice(0, 5),
               });
-              await enviarMensagem(instanceConectada.id, ag.telefoneCliente, msg);
+              const ok = await enviarMensagem(instanceConectada.id, ag.telefoneCliente, msg);
               onAddMensagem({
                 id: newId('msg'), agendamentoId: ag.id, clienteId: ag.clienteId,
                 clienteNome: ag.clienteNome, tipo: 'lembrete_1dia', mensagem: msg,
-                status: 'enviado', dataEnvio: new Date().toISOString(),
+                status: ok ? 'enviado' : 'erro', dataEnvio: new Date().toISOString(),
               });
             }
           }
@@ -91,11 +91,11 @@ export function useAppointmentScheduler({
                 data: formatarDataBR(ag.data),
                 hora: ag.hora.slice(0, 5),
               });
-              await enviarMensagem(instanceConectada.id, ag.telefoneCliente, msg);
+              const ok = await enviarMensagem(instanceConectada.id, ag.telefoneCliente, msg);
               onAddMensagem({
                 id: newId('msg'), agendamentoId: ag.id, clienteId: ag.clienteId,
                 clienteNome: ag.clienteNome, tipo: 'lembrete_1hora', mensagem: msg,
-                status: 'enviado', dataEnvio: new Date().toISOString(),
+                status: ok ? 'enviado' : 'erro', dataEnvio: new Date().toISOString(),
               });
             }
           }
@@ -112,12 +112,14 @@ export function useAppointmentScheduler({
   }, [agendamentos, templates, mensagensEnviadas, config, instances, onAddMensagem]);
 }
 
-async function enviarMensagem(instanceId: string, telefone: string, texto: string) {
+async function enviarMensagem(instanceId: string, telefone: string, texto: string): Promise<boolean> {
   const numero = telefone.replace(/\D/g, '');
   try {
     const mod = await import('../../lib/vps');
     await mod.whatsapp.send(instanceId, `55${numero}`, texto);
+    return true;
   } catch (e) {
     console.warn('Falha ao enviar WhatsApp (VPS offline?):', e);
+    return false;
   }
 }
