@@ -95,14 +95,15 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
 
   const handleBulkMarkReceived = () => {
     if (selectedIds.size === 0) return;
+    const now = new Date().toISOString();
     if (view === 'loans') {
       onSaveLoans(loans.map(l => selectedIds.has(l.id)
-        ? { ...l, paidAmount: loanTotal(l), status: 'paid' as const }
+        ? { ...l, paidAmount: loanTotal(l), status: 'paid' as const, updatedAt: now }
         : l));
     } else {
       const updated = sales
         .filter(s => selectedIds.has(s.id))
-        .map(s => ({ ...s, status: 'completed' as const, paidAt: new Date().toISOString() }));
+        .map(s => ({ ...s, status: 'completed' as const, paidAt: now, updatedAt: now }));
       onUpdateSales(updated);
     }
     clearSelection();
@@ -169,7 +170,8 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
 
   const handleConfirmPayment = (sale: Sale) => {
     if (window.confirm(`Confirmar pagamento de ${sale.clientName || 'Cliente'} no valor de R$ ${sale.total.toFixed(2)}?`)) {
-      onUpdateSale({ ...sale, status: 'completed', paidAt: new Date().toISOString() });
+      const now = new Date().toISOString();
+      onUpdateSale({ ...sale, status: 'completed', paidAt: now, updatedAt: now });
       setSelectedSale(null);
     }
   };
@@ -177,26 +179,30 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
   const handleMarkReceived = (sale: Sale) => {
     const label = sale.ecommerceOrderId ? `pedido ${sale.ecommerceOrderId}` : `venda ${sale.id}`;
     if (window.confirm(`Marcar como RECEBIDO (já caiu na conta) o ${label} no valor de R$ ${sale.total.toFixed(2)}?`)) {
-      onUpdateSale({ ...sale, status: 'completed', paidAt: new Date().toISOString() });
+      const now = new Date().toISOString();
+      onUpdateSale({ ...sale, status: 'completed', paidAt: now, updatedAt: now });
     }
   };
 
   const handlePartialPayment = (sale: Sale, amount: number) => {
     if (!(amount > 0)) return;
+    const now = new Date().toISOString();
     const paid = (sale.paidAmount || 0) + amount;
     const concluded = paid >= sale.total;
     onUpdateSale({
       ...sale,
       paidAmount: paid,
       status: concluded ? 'completed' : 'pending',
-      paidAt: concluded ? new Date().toISOString() : sale.paidAt
+      paidAt: concluded ? now : sale.paidAt,
+      updatedAt: now,
     });
     setPartialAmount('');
   };
 
   const handleConclude = (sale: Sale) => {
     if (window.confirm(`Concluir débito de ${sale.clientName || 'Cliente'} no valor de R$ ${sale.total.toFixed(2)}?`)) {
-      onUpdateSale({ ...sale, status: 'completed', paidAmount: sale.total, paidAt: new Date().toISOString() });
+      const now = new Date().toISOString();
+      onUpdateSale({ ...sale, status: 'completed', paidAmount: sale.total, paidAt: now, updatedAt: now });
       setSelectedSale(null);
     }
   };
@@ -234,10 +240,11 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
     if (!loanForm) return;
     const name = loanForm.borrowerName.trim();
     if (!name || loanForm.principal <= 0) return;
+    const now = new Date().toISOString();
     if (loanForm.id) {
-      onSaveLoans(loans.map(l => l.id === loanForm.id ? loanForm : l));
+      onSaveLoans(loans.map(l => l.id === loanForm.id ? { ...loanForm, updatedAt: now } : l));
     } else {
-      onSaveLoans([{ ...loanForm, id: `emp_${Date.now()}`, borrowerName: name, status: 'open', createdAt: new Date().toISOString() }, ...loans]);
+      onSaveLoans([{ ...loanForm, id: `emp_${Date.now()}`, borrowerName: name, status: 'open', createdAt: now, updatedAt: now }, ...loans]);
     }
     setShowLoanForm(false);
     setLoanForm(null);
@@ -245,16 +252,18 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
 
   const handleLoanPartial = (loan: Loan, amount: number) => {
     if (!(amount > 0)) return;
+    const now = new Date().toISOString();
     const paid = (loan.paidAmount || 0) + amount;
     const concluded = paid >= loanTotal(loan);
     onSaveLoans(loans.map(l => l.id === loan.id ? {
-      ...l, paidAmount: paid, status: concluded ? 'paid' : 'open'
+      ...l, paidAmount: paid, status: concluded ? 'paid' : 'open', updatedAt: now,
     } : l));
     setLoanPartial('');
   };
 
   const handleLoanPay = (loan: Loan) => {
-    onSaveLoans(loans.map(l => l.id === loan.id ? { ...l, paidAmount: loanTotal(l), status: 'paid' as const } : l));
+    const now = new Date().toISOString();
+    onSaveLoans(loans.map(l => l.id === loan.id ? { ...l, paidAmount: loanTotal(l), status: 'paid' as const, updatedAt: now } : l));
     setSelectedLoan(null);
   };
 

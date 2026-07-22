@@ -64,12 +64,16 @@ export default function DRE({ sales, expenses }: DREProps) {
   const monthlyData = useMemo(() => {
     const map = new Map<string, { sales: Sale[]; expenses: Expense[] }>();
     for (const s of filteredSales) {
-      const key = s.date.substring(0, 7);
+      // Garante chave YYYY-MM mesmo para datas ISO completas (ex: "2025-07-21T...")
+      // ou datas curtas "2025-07-21". Evita lixo se a data estiver em outro formato.
+      const raw = s.date || '';
+      const key = raw.length >= 7 && raw[4] === '-' ? raw.substring(0, 7) : new Date(raw).toISOString().substring(0, 7);
       if (!map.has(key)) map.set(key, { sales: [], expenses: [] });
       map.get(key)!.sales.push(s);
     }
     for (const e of filteredExpenses) {
-      const key = e.date.substring(0, 7);
+      const raw = e.date || '';
+      const key = raw.length >= 7 && raw[4] === '-' ? raw.substring(0, 7) : new Date(raw).toISOString().substring(0, 7);
       if (!map.has(key)) map.set(key, { sales: [], expenses: [] });
       map.get(key)!.expenses.push(e);
     }

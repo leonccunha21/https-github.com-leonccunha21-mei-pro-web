@@ -199,11 +199,15 @@ export default function Bills({ bills, onSaveBills }: BillsProps) {
   }, [bills.length]);
 
   const calcNextDueDate = (currentDueDate: string, recurrence: string): string => {
-    const d = new Date(currentDueDate);
+    // Parseia como data LOCAL (YYYY-MM-DD) para evitar o offset UTC que pode
+    // mover a data um dia atrás em fusos negativos como o do Brasil (UTC-3).
+    const [y, m, day] = currentDueDate.slice(0, 10).split('-').map(Number);
+    const d = new Date(y, m - 1, day); // data local, sem UTC
     if (recurrence === 'weekly') d.setDate(d.getDate() + 7);
     else if (recurrence === 'monthly') d.setMonth(d.getMonth() + 1);
     else if (recurrence === 'yearly') d.setFullYear(d.getFullYear() + 1);
-    return d.toISOString().slice(0, 10);
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
   };
 
   const handleMarkPaid = (bill: Bill) => {

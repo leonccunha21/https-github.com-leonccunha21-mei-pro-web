@@ -231,18 +231,20 @@ export default function Products({ products, categories, sales, onAddProduct, on
   };
   const handleBulkCategory = () => {
     if (!bulkCategoryValue) return;
+    const now = new Date().toISOString();
     selectedIds.forEach(id => {
       const p = products.find(p => p.id === id);
-      if (p) onUpdateProduct({ ...p, category: bulkCategoryValue });
+      if (p) onUpdateProduct({ ...p, category: bulkCategoryValue, updatedAt: now });
     });
     setSelectedIds(new Set()); setBulkAction(null);
   };
   const handleBulkStock = () => {
+    const now = new Date().toISOString();
     selectedIds.forEach(id => {
       const p = products.find(p => p.id === id);
       if (p) {
         const newStock = bulkActionType === 'add' ? p.stock + bulkStockValue : Math.max(0, p.stock - bulkStockValue);
-        onUpdateProduct({ ...p, stock: newStock });
+        onUpdateProduct({ ...p, stock: newStock, updatedAt: now });
       }
     });
     setSelectedIds(new Set()); setBulkAction(null);
