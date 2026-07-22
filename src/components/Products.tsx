@@ -2,11 +2,11 @@
 import { Product, Category, Sale, PriceHistoryEntry } from '../types';
 import { categorizeProduct } from '../lib/categorize';
 import LabelPrinter from './LabelPrinter';
-import { 
+import {
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck,
-  Trash, Archive, RotateCcw, Boxes, Copy, Tag
+  Trash, Archive, RotateCcw, Boxes, Copy, Tag, Merge
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -23,9 +23,10 @@ interface ProductsProps {
   onUnarchiveProduct: (id: string) => void;
   onClearAllProducts?: () => void;
   onAddCategory: (categoryName: string) => void;
+  onMergeProducts?: (keepId: string, duplicateIds: string[], newName: string, newCostPrice: number, newSalePrice: number) => void;
 }
 
-export default function Products({ products, categories, sales, onAddProduct, onUpdateProduct, onDeleteProduct, onArchiveProduct, onUnarchiveProduct, onClearAllProducts, onAddCategory }: ProductsProps) {
+export default function Products({ products, categories, sales, onAddProduct, onUpdateProduct, onDeleteProduct, onArchiveProduct, onUnarchiveProduct, onClearAllProducts, onAddCategory, onMergeProducts }: ProductsProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out' | 'ok'>('all');
@@ -49,6 +50,19 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const [showStockCheck, setShowStockCheck] = useState(false);
   const [missingProducts, setMissingProducts] = useState<{ name: string; productId: string; qty: number; costPrice: number; salePrice: number; suggestedCategory: string }[]>([]);
   const [showLabelPrinter, setShowLabelPrinter] = useState(false);
+
+  // --- Estados do modal de mesclagem de duplicatas ---
+  const [showMergeModal, setShowMergeModal] = useState(false);
+  // grupos de prováveis duplicatas detectados automaticamente
+  const [mergeGroups, setMergeGroups] = useState<{ products: Product[] }[]>([]);
+  // grupo sendo editado atualmente no wizard
+  const [mergeStep, setMergeStep] = useState(0);
+  // produto "principal" escolhido pelo usuário
+  const [mergeKeepId, setMergeKeepId] = useState('');
+  // nome final do produto mesclado (editável)
+  const [mergeName, setMergeName] = useState('');
+  const [mergeCostPrice, setMergeCostPrice] = useState(0);
+  const [mergeSalePrice, setMergeSalePrice] = useState(0);
 
   const [showPriceHistory, setShowPriceHistory] = useState<Product | null>(null);
   const [formCode, setFormCode] = useState('');
@@ -341,6 +355,88 @@ export default function Products({ products, categories, sales, onAddProduct, on
     onClearAllProducts?.();
   };
 
+  // ─── Detecção de duplicatas ───────────────────────────────────────────────
+  // Normaliza o nome removendo acentos, espaços extras e colocando em minúsculas
+  // para comparação fuzzy entre nomes similares.
+  const normalizeName = (name: string) =>
+    name.toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+      .replace(/[^a-z0-9\s]/g, '')                       // remove pontuação
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  // Calcula o coeficiente de Jaccard entre dois conjuntos de tokens.
+  // Retorna 0..1, onde 1 = idêntico.
+  const jaccardSimilarity = (a: string, b: string): number => {
+    const ta = new Set(normalizeName(a).split(' ').filter(Boolean));
+    const tb = new Set(normalizeName(b).split(' ').filter(Boolean));
+    if (ta.size === 0 && tb.size === 0) return 1;
+    const intersect = new Set([...ta].filter(t => tb.has(t)));
+    const union = new Set([...ta, ...tb]);
+    return intersect.size / union.size;
+  };
+
+  const handleDetectDuplicates = () => {
+    const active = products.filter(p => !p.archived);
+    const visited = new Set<string>();
+    const groups: { products: Product[] }[] = [];
+
+    for (let i = 0; i < active.length; i++) {
+      if (visited.has(active[i].id)) continue;
+      const group: Product[] = [active[i]];
+      for (let j = i + 1; j < active.length; j++) {
+        if (visited.has(active[j].id)) continue;
+        const sim = jaccardSimilarity(active[i].name, active[j].name);
+        if (sim >= 0.5) { // 50% de tokens em comum → provável duplicata
+          group.push(active[j]);
+          visited.add(active[j].id);
+        }
+      }
+      if (group.length >= 2) {
+        visited.add(active[i].id);
+        groups.push({ products: group });
+      }
+    }
+
+    if (groups.length === 0) {
+      alert('Nenhum produto duplicado ou similar encontrado no estoque ativo.');
+      return;
+    }
+
+    setMergeGroups(groups);
+    setMergeStep(0);
+    // Pré-seleciona o produto com maior estoque como principal
+    const first = groups[0].products;
+    const keeper = [...first].sort((a, b) => b.stock - a.stock)[0];
+    setMergeKeepId(keeper.id);
+    setMergeName(keeper.name);
+    setMergeCostPrice(keeper.costPrice);
+    setMergeSalePrice(keeper.salePrice);
+    setShowMergeModal(true);
+  };
+
+  const handleMergeConfirm = () => {
+    const group = mergeGroups[mergeStep];
+    if (!group || !mergeKeepId || !onMergeProducts) return;
+    const duplicateIds = group.products.map(p => p.id).filter(id => id !== mergeKeepId);
+    onMergeProducts(mergeKeepId, duplicateIds, mergeName.trim() || mergeGroups[mergeStep].products[0].name, mergeCostPrice, mergeSalePrice);
+
+    // Avança para o próximo grupo, ou fecha se acabou
+    const nextStep = mergeStep + 1;
+    if (nextStep < mergeGroups.length) {
+      setMergeStep(nextStep);
+      const nextGroup = mergeGroups[nextStep].products;
+      const nextKeeper = [...nextGroup].sort((a, b) => b.stock - a.stock)[0];
+      setMergeKeepId(nextKeeper.id);
+      setMergeName(nextKeeper.name);
+      setMergeCostPrice(nextKeeper.costPrice);
+      setMergeSalePrice(nextKeeper.salePrice);
+    } else {
+      setShowMergeModal(false);
+    }
+  };
+  // ─────────────────────────────────────────────────────────────────────────
+
   const handleExportFiltered = async () => {
     const XLSX = await import('xlsx');
     const headers = ['SKU', 'Nome', 'Categoria', 'Custo', 'Venda', 'Estoque', 'Mín', 'Margem%'];
@@ -393,6 +489,11 @@ export default function Products({ products, categories, sales, onAddProduct, on
           <button onClick={handleCheckStock} className="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 text-sm font-semibold rounded-lg border border-amber-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
             <ClipboardCheck className="h-4 w-4" /> <span className="hidden sm:inline">Verificar Vendas x Estoque</span><span className="sm:hidden">Verificar</span>
           </button>
+          {onMergeProducts && (
+            <button onClick={handleDetectDuplicates} className="px-4 py-2 bg-violet-50 hover:bg-violet-100 text-violet-700 text-sm font-semibold rounded-lg border border-violet-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+              <Merge className="h-4 w-4" /> <span className="hidden sm:inline">Mesclar Duplicatas</span><span className="sm:hidden">Mesclar</span>
+            </button>
+          )}
           <button onClick={() => setIsCategoryModalOpen(true)} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
             + Categoria
           </button>
@@ -882,6 +983,150 @@ export default function Products({ products, categories, sales, onAddProduct, on
         isOpen={showLabelPrinter}
         onClose={() => setShowLabelPrinter(false)}
       />
+
+      {/* ── MODAL DE MESCLAGEM DE DUPLICATAS ─────────────────────────────── */}
+      {showMergeModal && mergeGroups.length > 0 && (() => {
+        const group = mergeGroups[mergeStep];
+        const totalMergedStock = group.products.reduce((s, p) => s + p.stock, 0);
+        const affectedSales = sales.filter(s =>
+          s.items.some(it => group.products.some(p => p.id === it.productId && p.id !== mergeKeepId))
+        ).length;
+
+        return (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-lg border border-slate-200 dark:border-slate-700 flex flex-col max-h-[90vh]">
+              {/* Header */}
+              <div className="p-5 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between bg-violet-50 dark:bg-violet-950/30 rounded-t-2xl">
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <Merge className="h-5 w-5 text-violet-600" />
+                    Mesclar Produtos Similares
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Grupo {mergeStep + 1} de {mergeGroups.length} · {group.products.length} produtos similares detectados
+                  </p>
+                </div>
+                <button onClick={() => setShowMergeModal(false)} className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-white/60">
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              <div className="p-5 overflow-y-auto flex-1 space-y-4">
+                {/* Lista de produtos do grupo */}
+                <div>
+                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">Selecione o produto principal (os demais serão arquivados)</p>
+                  <div className="space-y-2">
+                    {group.products.map(p => (
+                      <label key={p.id} className={`flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${
+                        mergeKeepId === p.id
+                          ? 'border-violet-500 bg-violet-50 dark:bg-violet-950/30'
+                          : 'border-slate-200 dark:border-slate-700 hover:border-violet-300'
+                      }`}>
+                        <input
+                          type="radio"
+                          name="mergeKeep"
+                          value={p.id}
+                          checked={mergeKeepId === p.id}
+                          onChange={() => {
+                            setMergeKeepId(p.id);
+                            setMergeName(p.name);
+                            setMergeCostPrice(p.costPrice);
+                            setMergeSalePrice(p.salePrice);
+                          }}
+                          className="mt-0.5 accent-violet-600"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-semibold text-slate-900 dark:text-white">{p.name}</p>
+                          <div className="flex items-center gap-3 mt-1 flex-wrap">
+                            <span className="text-[10px] text-slate-500">SKU: <span className="font-mono">{p.code}</span></span>
+                            <span className="text-[10px] text-slate-500">Estoque: <span className="font-semibold text-slate-700 dark:text-slate-200">{p.stock} un</span></span>
+                            <span className="text-[10px] text-slate-500">Custo: <span className="font-mono">{p.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></span>
+                            <span className="text-[10px] text-slate-500">Venda: <span className="font-mono">{p.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></span>
+                          </div>
+                        </div>
+                        {mergeKeepId === p.id && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 bg-violet-600 text-white rounded-full shrink-0">principal</span>
+                        )}
+                      </label>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Campos editáveis do produto resultante */}
+                <div className="bg-slate-50 dark:bg-slate-700/40 rounded-xl p-4 border border-slate-200 dark:border-slate-600 space-y-3">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase">Produto resultante (editável)</p>
+                  <div>
+                    <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Nome final</label>
+                    <input
+                      type="text"
+                      value={mergeName}
+                      onChange={e => setMergeName(e.target.value)}
+                      className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 focus:outline-none focus:border-violet-400"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Custo (R$)</label>
+                      <input type="number" step="0.01" min="0" value={mergeCostPrice}
+                        onChange={e => setMergeCostPrice(Number(e.target.value))}
+                        className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 focus:outline-none focus:border-violet-400 font-mono" />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-slate-600 dark:text-slate-300 mb-1">Venda (R$)</label>
+                      <input type="number" step="0.01" min="0" value={mergeSalePrice}
+                        onChange={e => setMergeSalePrice(Number(e.target.value))}
+                        className="w-full px-3 py-2 text-sm border border-slate-200 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 focus:outline-none focus:border-violet-400 font-mono" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Resumo do impacto */}
+                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-xl p-3 space-y-1">
+                  <p className="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase">Impacto da mesclagem</p>
+                  <p className="text-xs text-amber-800 dark:text-amber-200">
+                    ✓ Estoque total mesclado: <b>{totalMergedStock} un</b>
+                  </p>
+                  <p className="text-xs text-amber-800 dark:text-amber-200">
+                    ✓ {group.products.length - 1} produto(s) serão arquivados (não excluídos)
+                  </p>
+                  {affectedSales > 0 && (
+                    <p className="text-xs text-amber-800 dark:text-amber-200">
+                      ✓ {affectedSales} venda(s) serão reapontadas para o produto principal
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="p-4 border-t border-slate-200 dark:border-slate-700 flex items-center justify-between gap-2 bg-slate-50/50 dark:bg-slate-800/50 rounded-b-2xl">
+                <button onClick={() => setShowMergeModal(false)}
+                  className="px-4 py-2 text-sm font-semibold text-slate-600 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors">
+                  Cancelar
+                </button>
+                <div className="flex items-center gap-2">
+                  {mergeStep > 0 && (
+                    <button onClick={() => {
+                      const prev = mergeStep - 1;
+                      setMergeStep(prev);
+                      const g = mergeGroups[prev].products;
+                      const k = [...g].sort((a, b) => b.stock - a.stock)[0];
+                      setMergeKeepId(k.id); setMergeName(k.name);
+                      setMergeCostPrice(k.costPrice); setMergeSalePrice(k.salePrice);
+                    }} className="px-4 py-2 text-sm font-semibold text-slate-600 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-100 transition-colors">
+                      ← Anterior
+                    </button>
+                  )}
+                  <button onClick={handleMergeConfirm} disabled={!mergeKeepId}
+                    className="px-5 py-2 text-sm font-bold text-white bg-violet-600 hover:bg-violet-700 disabled:opacity-50 rounded-lg transition-colors flex items-center gap-2">
+                    <Merge className="h-4 w-4" />
+                    {mergeStep < mergeGroups.length - 1 ? 'Mesclar e Próximo →' : 'Mesclar e Concluir'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
     </div>
   );
 }

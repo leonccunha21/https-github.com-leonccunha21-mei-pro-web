@@ -14,6 +14,12 @@ export default function Configuracoes({ config, setConfig }: Props) {
   const [form, setForm] = useState<ConfigMounjaro>(config);
   const [salvo, setSalvo] = useState(false);
 
+  // Sincroniza o formulário quando config muda externamente (ex: carregamento do Supabase).
+  React.useEffect(() => {
+    setForm(config);
+    setSalvo(false);
+  }, [config]);
+
   const atualizar = (k: keyof ConfigMounjaro, v: any) => {
     setForm((f) => ({ ...f, [k]: v }));
     setSalvo(false);

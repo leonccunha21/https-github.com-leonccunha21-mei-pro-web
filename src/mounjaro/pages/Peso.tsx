@@ -23,7 +23,7 @@ export default function Peso({ clientes, pesagens, doses, setPesagens, logAudito
   const [form, setForm] = useState<Partial<PesagemMounjaro>>({ peso: 0 });
 
   const clientesAtivos = clientes.filter((c) => c.ativo);
-  const clienteId = clienteSel || clienteSel === '' ? clienteSel : (clientesAtivos[0]?.id ?? '');
+  const clienteId = clienteSel || clientesAtivos[0]?.id || '';
   const cliente = clientes.find((c) => c.id === clienteId);
 
   const abrirNovo = (cid?: string) => {
@@ -121,28 +121,34 @@ export default function Peso({ clientes, pesagens, doses, setPesagens, logAudito
           </div>
 
           {/* IMC atual */}
-          {cliente.alturaCm && pesoAtual(cliente, pesagens, doses) > 0 && (
-            <Card>
-              <div className="flex items-center justify-between flex-wrap gap-2">
-                <div>
-                  <p className="text-sm text-slate-500">IMC atual</p>
-                  <p className="text-2xl font-bold">
-                    {calcIMC(pesoAtual(cliente, pesagens, doses), cliente.alturaCm)}
-                  </p>
-                  <p className="text-xs text-slate-400">{classificacaoIMC(calcIMC(pesoAtual(cliente, pesagens, doses), cliente.alturaCm))}</p>
-                </div>
-                {cliente.objetivoPeso && (
-                  <div className="text-right">
-                    <p className="text-sm text-slate-500">Meta</p>
-                    <p className="text-xl font-bold text-emerald-600">{cliente.objetivoPeso} kg</p>
-                    <p className="text-xs text-slate-400">
-                      faltam {Math.max(0, pesoAtual(cliente, pesagens, doses) - cliente.objetivoPeso)} kg
-                    </p>
+          {cliente.alturaCm && (() => {
+            const pa = pesoAtual(cliente, pesagens, doses);
+            if (!pa) return null;
+            const imc = calcIMC(pa, cliente.alturaCm!);
+            const faltam = cliente.objetivoPeso ? pa - cliente.objetivoPeso : null;
+            return (
+              <Card>
+                <div className="flex items-center justify-between flex-wrap gap-2">
+                  <div>
+                    <p className="text-sm text-slate-500">IMC atual</p>
+                    <p className="text-2xl font-bold">{imc}</p>
+                    <p className="text-xs text-slate-400">{classificacaoIMC(imc)}</p>
                   </div>
-                )}
-              </div>
-            </Card>
-          )}
+                  {cliente.objetivoPeso && (
+                    <div className="text-right">
+                      <p className="text-sm text-slate-500">Meta</p>
+                      <p className="text-xl font-bold text-emerald-600">{cliente.objetivoPeso} kg</p>
+                      <p className={`text-xs ${faltam !== null && faltam <= 0 ? 'text-emerald-600 font-semibold' : 'text-slate-400'}`}>
+                        {faltam !== null && faltam <= 0
+                          ? `✓ Meta atingida! (${Math.abs(faltam).toFixed(1)} kg abaixo)`
+                          : `faltam ${(faltam ?? 0).toFixed(1)} kg`}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </Card>
+            );
+          })()}
 
           {/* Gráfico de evolução */}
           <Card>

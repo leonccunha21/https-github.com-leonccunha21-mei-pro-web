@@ -72,25 +72,37 @@ export default function Fotos({ clientes, fotos, setFotos, logAuditoria }: Props
     logAuditoria({ entidade: 'foto', acao: 'criar', resumo: `Foto de ${cli?.nome || '—'}${legenda.trim() ? ` (${legenda.trim()})` : ''}`, clienteId, refId: foto.id });
     setModalAberto(false);
     setPreview(null);
-    setClienteId('');
+    // Mantém o cliente selecionado no filtro da listagem após salvar.
   };
 
   const excluir = (f: FotoEvolucao) => {
     if (!window.confirm('Excluir esta foto?')) return;
     const cli = clientes.find((c) => c.id === f.clienteId);
     setFotos(fotos.filter((x) => x.id !== f.id));
+    // Fecha o modal de visualização se a foto excluída era a que estava sendo vista.
+    if (ver?.id === f.id) setVer(null);
     logAuditoria({ entidade: 'foto', acao: 'excluir', resumo: `Foto de ${cli?.nome || '—'}`, clienteId: f.clienteId, refId: f.id });
   };
 
   const abrirVer = (f: FotoEvolucao) => {
-    setIdx(lista.findIndex((x) => x.id === f.id));
+    const i = lista.findIndex((x) => x.id === f.id);
+    setIdx(i >= 0 ? i : 0);
     setVer(f);
   };
   const nav = (dir: number) => {
+    if (lista.length === 0) return;
     const n = (idx + dir + lista.length) % lista.length;
     setIdx(n);
     setVer(lista[n]);
   };
+
+  // Recalcula idx se a foto atual ainda existe na lista (ex.: filtro mudou).
+  useEffect(() => {
+    if (!ver) return;
+    const i = lista.findIndex((x) => x.id === ver.id);
+    if (i === -1) { setVer(null); setIdx(0); }
+    else if (i !== idx) setIdx(i);
+  }, [lista, ver?.id]);
 
   // Atalhos de teclado no modo visualização
   useEffect(() => {

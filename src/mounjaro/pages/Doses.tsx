@@ -12,10 +12,11 @@ interface Props {
   pagamentos: PagamentoMounjaro[];
   setDoses: (d: DoseMounjaro[]) => void;
   setPagamentos: (p: PagamentoMounjaro[]) => void;
+  setDbAtomico: (patch: { doses?: DoseMounjaro[]; pagamentos?: PagamentoMounjaro[] }) => void;
   logAuditoria: LogAuditoriaFn;
 }
 
-export default function Doses({ clientes, doses, pagamentos, setDoses, setPagamentos, logAuditoria }: Props) {
+export default function Doses({ clientes, doses, pagamentos, setDoses, setPagamentos, setDbAtomico, logAuditoria }: Props) {
   const [busca, setBusca] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editandoId, setEditandoId] = useState<string | null>(null);
@@ -88,11 +89,14 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
   const excluir = (d: DoseMounjaro) => {
     if (!window.confirm('Excluir esta dose? Os pagamentos vinculados a ela serão desassociados.')) return;
     const cliente = clientes.find((c) => c.id === d.clienteId);
-    setDoses(doses.filter((x) => x.id !== d.id));
-    // Desassocia pagamentos que apontavam para esta dose (mantém o registro financeiro).
+    // BUG-07 fix: dose + pagamentos atualizados atomicamente em um único persist.
+    const novasDoses = doses.filter((x) => x.id !== d.id);
     const pagsAfetados = pagamentos.filter((p) => p.referenciaDoseId === d.id);
+    const novosPagamentos = pagsAfetados.length > 0
+      ? pagamentos.map((p) => (p.referenciaDoseId === d.id ? { ...p, referenciaDoseId: undefined } : p))
+      : pagamentos;
+    setDbAtomico({ doses: novasDoses, pagamentos: novosPagamentos });
     if (pagsAfetados.length > 0) {
-      setPagamentos(pagamentos.map((p) => (p.referenciaDoseId === d.id ? { ...p, referenciaDoseId: undefined } : p)));
       logAuditoria({ entidade: 'pagamento', acao: 'editar', resumo: `Desvinculou ${pagsAfetados.length} pagamento(s) da dose excluída`, clienteId: d.clienteId, refId: d.id });
     }
     logAuditoria({ entidade: 'dose', acao: 'excluir', resumo: `Dose ${d.dose} mg de ${cliente?.nome || '—'}`, clienteId: d.clienteId, refId: d.id });
@@ -108,21 +112,24 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
       toast.error('Informe o Valor (R$) na dose antes de cobrar, ou crie o pagamento manualmente.');
       return;
     }
-    // Cria o pagamento vinculado à dose e já marca a dose como paga.
+    // BUG-08 fix: pagamento + dose marcada como paga atomicamente em um único persist.
+    const now = new Date().toISOString();
     const novo: PagamentoMounjaro = {
       id: newId('pag'),
       clienteId: d.clienteId,
       dataVencimento: d.dataAplicacao,
-      dataPagamento: new Date().toISOString().slice(0, 10),
+      dataPagamento: now.slice(0, 10),
       descricao: `Dose ${d.dose} mg`,
       valor,
       status: 'pago',
       metodo: 'dinheiro',
       referenciaDoseId: d.id,
-      createdAt: new Date().toISOString(),
+      createdAt: now,
     };
-    setPagamentos([novo, ...pagamentos]);
-    setDoses(doses.map((x) => (x.id === d.id ? { ...x, pago: true } : x)));
+    setDbAtomico({
+      pagamentos: [novo, ...pagamentos],
+      doses: doses.map((x) => (x.id === d.id ? { ...x, pago: true } : x)),
+    });
     logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento ${formatarMoeda(novo.valor)} de ${cliente.nome} (dose ${d.dose} mg)`, clienteId: d.clienteId, refId: novo.id });
     toast.success(`Pagamento de ${formatarMoeda(valor)} registrado.`);
   };
@@ -134,6 +141,7 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
     return doses
       .filter((d) => !b || nomeCliente(d.clienteId).toLowerCase().includes(b))
       .sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [doses, busca, clientes]);
 
   // Lista de "próximas doses" sugeridas (clientes ativos sem dose recente)
@@ -216,7 +224,7 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
             </div>
             <div className="flex items-center gap-2 shrink-0">
               {d.pago ? <Badge tone="green">pago</Badge> : <Badge tone="amber">não pago</Badge>}
-              {d.valorDose && !jaTemPagamento(d) && (
+              {d.valorDose && !d.pago && !jaTemPagamento(d) && (
                 <button onClick={() => cobrar(d)} className="text-emerald-600 hover:text-emerald-700 text-xs font-medium" title="Registrar pagamento desta dose">cobrar</button>
               )}
               <button onClick={() => abrirEditar(d)} className="text-cyan-600 hover:text-cyan-800 text-sm" title="Editar">✎</button>
@@ -229,7 +237,7 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
 
       <Modal
         open={modalOpen}
-        title="Registrar dose"
+        title={editandoId ? 'Editar dose' : 'Registrar dose'}
         onClose={() => setModalOpen(false)}
         footer={
           <>

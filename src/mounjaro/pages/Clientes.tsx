@@ -17,10 +17,12 @@ interface Props {
   setDoses: (d: DoseMounjaro[]) => void;
   setPagamentos: (p: PagamentoMounjaro[]) => void;
   setFotos: (f: FotoEvolucao[]) => void;
+  /** Atualiza múltiplas entidades atomicamente em um único persist/sync. */
+  setDbAtomico: (patch: { clientes?: ClienteMounjaro[]; pesagens?: PesagemMounjaro[]; doses?: DoseMounjaro[]; pagamentos?: PagamentoMounjaro[]; fotos?: FotoEvolucao[]; auditoria?: RegistroAuditoria[] }) => void;
   logAuditoria: LogAuditoriaFn;
 }
 
-export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos, auditoria, setClientes, setPesagens, setDoses, setPagamentos, setFotos, logAuditoria }: Props) {
+export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos, auditoria, setClientes, setPesagens, setDoses, setPagamentos, setFotos, setDbAtomico, logAuditoria }: Props) {
   const [busca, setBusca] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [editando, setEditando] = useState<ClienteMounjaro | null>(null);
@@ -58,17 +60,23 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
         imcInicial: imc || undefined,
         updatedAt: agora,
       } as ClienteMounjaro;
-      setClientes(clientes.map((c) => (c.id === editando.id ? atualizado : c)));
-      logAuditoria({ entidade: 'cliente', acao: 'editar', resumo: `Cliente ${atualizado.nome}`, clienteId: atualizado.id, refId: atualizado.id });
-      // Se alterou o peso inicial, atualiza a pesagem-base (data de início) do paciente.
+
+      // BUG-01 + BUG-02 fix: cliente e pesagem alterados atomicamente.
+      // Se peso foi zerado/removido, remove a pesagem-base para não deixar dado órfão.
+      let novasPesagens = pesagens;
       if (pesoInicial) {
         const existente = pesagens.find((p) => p.clienteId === editando.id && p.observacoes === 'Peso inicial (cadastro)');
         if (existente) {
-          setPesagens(pesagens.map((p) => (p.id === existente.id ? { ...p, peso: pesoInicial, data: dataBase, updatedAt: agora } : p)));
+          novasPesagens = pesagens.map((p) => (p.id === existente.id ? { ...p, peso: pesoInicial, data: dataBase, updatedAt: agora } : p));
         } else {
-          setPesagens([{ id: newId('pes'), clienteId: editando.id, data: dataBase, peso: pesoInicial, observacoes: 'Peso inicial (cadastro)', createdAt: agora, updatedAt: agora }, ...pesagens]);
+          novasPesagens = [{ id: newId('pes'), clienteId: editando.id, data: dataBase, peso: pesoInicial, observacoes: 'Peso inicial (cadastro)', createdAt: agora, updatedAt: agora }, ...pesagens];
         }
+      } else {
+        // Peso removido — apaga a pesagem-base para não deixar dado fantasma.
+        novasPesagens = pesagens.filter((p) => !(p.clienteId === editando.id && p.observacoes === 'Peso inicial (cadastro)'));
       }
+      setDbAtomico({ clientes: clientes.map((c) => (c.id === editando.id ? atualizado : c)), pesagens: novasPesagens });
+      logAuditoria({ entidade: 'cliente', acao: 'editar', resumo: `Cliente ${atualizado.nome}`, clienteId: atualizado.id, refId: atualizado.id });
     } else {
       const novo: ClienteMounjaro = {
         id: newId('cl'),
@@ -93,10 +101,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
         createdAt: agora,
         updatedAt: agora,
       };
-      setClientes([novo, ...clientes]);
-      logAuditoria({ entidade: 'cliente', acao: 'criar', resumo: `Cliente ${novo.nome}`, clienteId: novo.id, refId: novo.id });
-      // Cria a pesagem inicial automaticamente para que os cálculos de evolução
-      // e o gráfico de peso comecem a partir do peso informado no cadastro.
+      // BUG-01 fix: criar cliente + pesagem inicial atomicamente em um único persist.
       if (pesoInicial) {
         const pInicial: PesagemMounjaro = {
           id: newId('pes'),
@@ -107,19 +112,26 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
           createdAt: agora,
           updatedAt: agora,
         };
-        setPesagens([pInicial, ...pesagens]);
+        setDbAtomico({ clientes: [novo, ...clientes], pesagens: [pInicial, ...pesagens] });
+      } else {
+        setClientes([novo, ...clientes]);
       }
+      logAuditoria({ entidade: 'cliente', acao: 'criar', resumo: `Cliente ${novo.nome}`, clienteId: novo.id, refId: novo.id });
     }
     setModalOpen(false);
   };
 
   const excluir = (c: ClienteMounjaro) => {
     if (!window.confirm(`Excluir ${c.nome}? Isso remove também pesagens, doses, pagamentos, fotos e histórico vinculados.`)) return;
-    setClientes(clientes.filter((x) => x.id !== c.id));
-    setPesagens(pesagens.filter((p) => p.clienteId !== c.id));
-    setDoses(doses.filter((d) => d.clienteId !== c.id));
-    setPagamentos(pagamentos.filter((p) => p.clienteId !== c.id));
-    setFotos(fotos.filter((f) => f.clienteId !== c.id));
+    // Usa setter atômico: todas as coleções são persistidas em um único save/sync,
+    // evitando que chamadas sequenciadas sobrescrevam umas às outras com dados antigos.
+    setDbAtomico({
+      clientes: clientes.filter((x) => x.id !== c.id),
+      pesagens: pesagens.filter((p) => p.clienteId !== c.id),
+      doses: doses.filter((d) => d.clienteId !== c.id),
+      pagamentos: pagamentos.filter((p) => p.clienteId !== c.id),
+      fotos: fotos.filter((f) => f.clienteId !== c.id),
+    });
     setDetalhe(null);
     logAuditoria({ entidade: 'cliente', acao: 'excluir', resumo: `Cliente ${c.nome} (e dados vinculados)`, clienteId: c.id, refId: c.id });
   };
@@ -201,7 +213,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
                 <div>
                   <p className="text-[11px] text-slate-400">Perdido</p>
                   <p className={`font-semibold ${perdido > 0 ? 'text-emerald-600' : perdido < 0 ? 'text-rose-500' : 'text-slate-500'}`}>
-                    {perdido !== 0 ? `${perdido > 0 ? '' : '+'}${perdido} kg` : '0,0 kg'}
+                    {perdido !== 0 ? `${perdido} kg` : '0,0 kg'}
                   </p>
                 </div>
               </div>
@@ -270,7 +282,7 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
           </>
         }
       >
-        {detalhe && <DetalheCliente cliente={detalhe} pesagens={pesagens} doses={doses} pagamentos={pagamentos} fotos={fotos} onUpdateCliente={(c) => { setClientes(clientes.map(x => x.id === c.id ? c : x)); setDetalhe(c); }} />}
+        {detalhe && <DetalheCliente cliente={detalhe} pesagens={pesagens} doses={doses} pagamentos={pagamentos} fotos={fotos} onUpdateCliente={(c) => { setDbAtomico({ clientes: clientes.map(x => x.id === c.id ? c : x) }); setDetalhe(c); }} />}
       </Modal>
     </div>
   );
@@ -288,6 +300,12 @@ function DetalheCliente({
 }) {
   const [editAnotacoes, setEditAnotacoes] = useState(false);
   const [anotacoes, setAnotacoes] = useState(cliente.observacoes || '');
+
+  // BUG-03 fix: sincroniza anotações quando o cliente prop muda externamente
+  // (ex: salvo de outra aba ou pelo setClientes no pai).
+  React.useEffect(() => {
+    if (!editAnotacoes) setAnotacoes(cliente.observacoes || '');
+  }, [cliente.observacoes, editAnotacoes]);
   const [compararFotos, setCompararFotos] = useState<[FotoEvolucao, FotoEvolucao] | null>(null);
   const [selecionandoComparacao, setSelecionandoComparacao] = useState<FotoEvolucao | null>(null);
   const peso = pesoAtual(cliente, pesagens, doses);
@@ -304,7 +322,7 @@ function DetalheCliente({
       <div className="grid grid-cols-3 gap-3">
         <StatCard title="Peso base" value={`${base || '-'} kg`} icon={<Scale size={18} />} accent="blue" />
         <StatCard title="Peso atual" value={`${peso || '-'} kg`} icon={<Scale size={18} />} accent="cyan" />
-        <StatCard title="Perda" value={`${perdido > 0 ? perdido : perdido < 0 ? `+${perdido}` : 0} kg`} icon={<Scale size={18} />} accent={perdido > 0 ? 'green' : perdido < 0 ? 'red' : 'blue'} />
+        <StatCard title="Perda" value={`${perdido} kg`} icon={<Scale size={18} />} accent={perdido > 0 ? 'green' : perdido < 0 ? 'red' : 'blue'} />
         <StatCard title="Doses aplicadas" value={doses.filter((d) => d.clienteId === cliente.id).length} icon={<Syringe size={18} />} accent="violet" />
         <StatCard title="Score pagamento" value={score.pontuacao} icon={<Wallet size={18} />} accent="amber"
           hint={`${score.pagamentosEmDia} em dia · ${score.pagamentosAtrasados} atrasados`} />
@@ -316,7 +334,15 @@ function DetalheCliente({
           <div className="flex gap-2 flex-wrap">
             {fotosCliente.slice(-6).map((f) => (
               <img key={f.id} src={f.imagem} alt={f.legenda || f.data} title={f.legenda || f.data}
-                onClick={() => selecionandoComparacao ? setCompararFotos([selecionandoComparacao, f]) || setSelecionandoComparacao(null) : setSelecionandoComparacao(f)}
+                onClick={() => {
+                  // BUG-04 fix: encadeamento seguro sem depender de || em void
+                  if (selecionandoComparacao && selecionandoComparacao.id !== f.id) {
+                    setCompararFotos([selecionandoComparacao, f]);
+                    setSelecionandoComparacao(null);
+                  } else {
+                    setSelecionandoComparacao(f);
+                  }
+                }}
                 className={`w-16 h-20 object-cover rounded-lg border-2 cursor-pointer transition-all hover:scale-105 ${selecionandoComparacao?.id === f.id ? 'border-cyan-500 ring-2 ring-cyan-300' : selecionandoComparacao ? 'border-yellow-400 opacity-60 hover:opacity-100' : 'border-slate-200 dark:border-slate-700'}`} />
             ))}
             {fotosCliente.length >= 2 && (

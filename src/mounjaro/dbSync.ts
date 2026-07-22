@@ -197,7 +197,8 @@ export async function loadMounjaroCloud(_scope?: MounjaroScope): Promise<Partial
       pagamentos: (pagamentos.data || []).map(rowToPagamento),
       fotos: (fotos.data || []).map(rowToFoto),
       auditoria: (auditoria.data || []).map((r: any) => ({
-        id: r.id, data: r.data, usuario: r.usuario ?? '',
+        id: r.id, data: r.data, createdAt: r.created_at ?? r.data,
+        usuario: r.usuario ?? '',
         entidade: r.entidade, acao: r.acao, resumo: r.resumo ?? '',
         clienteId: r.cliente_id ?? undefined, refId: r.ref_id ?? undefined,
       })),
@@ -216,31 +217,61 @@ export async function loadMounjaroCloud(_scope?: MounjaroScope): Promise<Partial
   }
 }
 
-/** Salva o banco completo do Mounjaro no Supabase. */
+/** Salva o banco completo do Mounjaro no Supabase.
+ *  Estratégia: upsert dos registros locais + delete dos ids que existem na nuvem
+ *  mas não estão mais no estado local (registros excluídos pelo usuário).
+ */
 export async function saveMounjaroCloud(_scopeOrData: MounjaroScope | MounjaroDb, maybeData?: MounjaroDb): Promise<void> {
   const data = maybeData || (_scopeOrData as MounjaroDb);
   if (!isSupabaseConfigured()) return;
 
   try {
+    // Helper: apaga da nuvem os ids que não estão no conjunto local.
+    async function syncDelete(table: string, localIds: string[]): Promise<void> {
+      if (localIds.length === 0) {
+        // Se não há registros locais, apaga TUDO da tabela
+        await supabase.from(table).delete().neq('id', '');
+        return;
+      }
+      // Busca ids que existem na nuvem
+      const { data: rows } = await supabase.from(table).select('id');
+      if (!rows || rows.length === 0) return;
+      const localSet = new Set(localIds);
+      const toDelete = rows.map((r: any) => r.id as string).filter((id) => !localSet.has(id));
+      if (toDelete.length > 0) {
+        await supabase.from(table).delete().in('id', toDelete);
+      }
+    }
+
+    // Upsert de todos os registros locais em paralelo
     await Promise.all([
       data.clientes.length > 0
         ? supabase.from('mounjaro_clientes').upsert(data.clientes.map(clienteToRow), { onConflict: 'id' })
-        : Promise.resolve(),
+        : supabase.from('mounjaro_clientes').delete().neq('id', ''),
       data.pesagens.length > 0
         ? supabase.from('mounjaro_pesagens').upsert(data.pesagens.map(pesagemToRow), { onConflict: 'id' })
-        : Promise.resolve(),
+        : supabase.from('mounjaro_pesagens').delete().neq('id', ''),
       data.doses.length > 0
         ? supabase.from('mounjaro_doses').upsert(data.doses.map(doseToRow), { onConflict: 'id' })
-        : Promise.resolve(),
+        : supabase.from('mounjaro_doses').delete().neq('id', ''),
       data.pagamentos.length > 0
         ? supabase.from('mounjaro_pagamentos').upsert(data.pagamentos.map(pagamentoToRow), { onConflict: 'id' })
-        : Promise.resolve(),
+        : supabase.from('mounjaro_pagamentos').delete().neq('id', ''),
       data.fotos.length > 0
         ? supabase.from('mounjaro_fotos').upsert(data.fotos.map(fotoToRow), { onConflict: 'id' })
-        : Promise.resolve(),
+        : supabase.from('mounjaro_fotos').delete().neq('id', ''),
       data.auditoria.length > 0
         ? supabase.from('mounjaro_auditoria').upsert(data.auditoria.map(auditoriaToRow), { onConflict: 'id' })
         : Promise.resolve(),
+    ]);
+
+    // Deleta da nuvem registros que foram removidos localmente (quando há registros locais)
+    await Promise.all([
+      data.clientes.length > 0 ? syncDelete('mounjaro_clientes', data.clientes.map((c) => c.id)) : Promise.resolve(),
+      data.pesagens.length > 0 ? syncDelete('mounjaro_pesagens', data.pesagens.map((p) => p.id)) : Promise.resolve(),
+      data.doses.length > 0 ? syncDelete('mounjaro_doses', data.doses.map((d) => d.id)) : Promise.resolve(),
+      data.pagamentos.length > 0 ? syncDelete('mounjaro_pagamentos', data.pagamentos.map((p) => p.id)) : Promise.resolve(),
+      data.fotos.length > 0 ? syncDelete('mounjaro_fotos', data.fotos.map((f) => f.id)) : Promise.resolve(),
     ]);
 
     if (data.config) {

@@ -140,7 +140,8 @@ export default function MounjaroApp() {
     setTimerState(timerRef.current);
   }, [getScope]);
 
-  useEffect(() => { document.documentElement.classList.toggle('dark', darkMode); }, []);
+  // BUG-14 fix: deps corretas para aplicar dark mode na montagem E em mudanças externas.
+  useEffect(() => { document.documentElement.classList.toggle('dark', darkMode); }, [darkMode]);
 
   // Observa autenticação
   useEffect(() => {
@@ -319,24 +320,24 @@ export default function MounjaroApp() {
     if (cloudUser) {
       setLoading(true);
       const scope: MounjaroScope = { tipo: 'user', uid: cloudUser.uid };
-      loadMounjaroCloud(scope).then((cloud) => {
-        const localRaw = loadMounjaroDb();
-        localRaw.then((local) => {
+      (async () => {
+        try {
+          const [cloud, local] = await Promise.all([loadMounjaroCloud(scope), loadMounjaroDb()]);
           const merged: MounjaroDb = {
-            clientes: mergePorId(local.clientes, cloud.clientes || []),
-            pesagens: mergePorId(local.pesagens, cloud.pesagens || []),
-            doses: mergePorId(local.doses, cloud.doses || []),
-            pagamentos: mergePorId(local.pagamentos, cloud.pagamentos || []),
-            fotos: mergePorId(local.fotos, cloud.fotos || []),
-            auditoria: mergePorId(local.auditoria, cloud.auditoria || []),
+            clientes: mergePorId(cloud.clientes || [], local.clientes),
+            pesagens: mergePorId(cloud.pesagens || [], local.pesagens),
+            doses: mergePorId(cloud.doses || [], local.doses),
+            pagamentos: mergePorId(cloud.pagamentos || [], local.pagamentos),
+            fotos: mergePorId(cloud.fotos || [], local.fotos),
+            auditoria: mergePorId(cloud.auditoria || [], local.auditoria),
             config: { ...defaultConfig(), ...(cloud.config || {}), ...(local.config || {}) },
             initialized: true,
           };
           setDb(merged);
           saveMounjaroDb(merged).catch(() => {});
-          setLoading(false);
-        });
-      }).catch(() => setLoading(false));
+        } catch { /* ignora — mantém o estado atual */ }
+        finally { setLoading(false); }
+      })();
     }
   };
 
@@ -348,6 +349,13 @@ export default function MounjaroApp() {
   const setPagamentos = (pagamentos: PagamentoMounjaro[]) => { setDb((d) => ({ ...d, pagamentos })); persist({ pagamentos }); };
   const setFotos = (fotos: FotoEvolucao[]) => { setDb((d) => ({ ...d, fotos })); persist({ fotos }); };
   const setConfig = (config: MounjaroDb['config']) => { setDb((d) => ({ ...d, config })); persist({ config }); };
+
+  // Setter atômico: atualiza MÚLTIPLAS entidades de uma vez em um único persist.
+  // Usado pela exclusão de cliente (que filtra clientes + pesagens + doses + pagamentos + fotos).
+  const setDbAtomico = (patch: Partial<MounjaroDb>) => {
+    setDb((d) => ({ ...d, ...patch }));
+    persist(patch);
+  };
 
   // Registro de auditoria: histórico de alterações críticas.
   const nomeUsuario = cloudUser?.displayName || cloudUser?.email || 'usuário';
@@ -388,7 +396,7 @@ export default function MounjaroApp() {
           initialized: true,
         };
         setDb(merged);
-        persist();
+        persist(merged);
         toast.success('Backup importado e sincronizado.');
       } catch {
         toast.error('Arquivo de backup inválido.');
@@ -587,10 +595,10 @@ export default function MounjaroApp() {
             transition={{ duration: 0.15 }}
           >
             {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
-            {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} fotos={db.fotos} auditoria={db.auditoria} setClientes={setClientes} setPesagens={setPesagens} setDoses={setDoses} setPagamentos={setPagamentos} setFotos={setFotos} logAuditoria={logAuditoria} />}
-            {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} pagamentos={db.pagamentos} setDoses={setDoses} setPagamentos={setPagamentos} logAuditoria={logAuditoria} />}
+            {activeTab === 'clientes' && <Clientes clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} fotos={db.fotos} auditoria={db.auditoria} setClientes={setClientes} setPesagens={setPesagens} setDoses={setDoses} setPagamentos={setPagamentos} setFotos={setFotos} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
+            {activeTab === 'doses' && <Doses clientes={db.clientes} doses={db.doses} pagamentos={db.pagamentos} setDoses={setDoses} setPagamentos={setPagamentos} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
             {activeTab === 'peso' && <Peso clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} setPesagens={setPesagens} logAuditoria={logAuditoria} />}
-            {activeTab === 'pagamentos' && <Pagamentos clientes={db.clientes} pagamentos={db.pagamentos} doses={db.doses} setPagamentos={setPagamentos} setDoses={setDoses} logAuditoria={logAuditoria} />}
+            {activeTab === 'pagamentos' && <Pagamentos clientes={db.clientes} pagamentos={db.pagamentos} doses={db.doses} setPagamentos={setPagamentos} setDoses={setDoses} setDbAtomico={setDbAtomico} logAuditoria={logAuditoria} />}
             {activeTab === 'relatorio' && <Relatorio clientes={db.clientes} pesagens={db.pesagens} doses={db.doses} pagamentos={db.pagamentos} config={db.config} />}
             {activeTab === 'fotos' && <Fotos clientes={db.clientes} fotos={db.fotos} setFotos={setFotos} logAuditoria={logAuditoria} />}
             {activeTab === 'auditoria' && <Auditoria auditoria={db.auditoria} clientes={db.clientes} />}

@@ -11,10 +11,11 @@ interface Props {
   doses: DoseMounjaro[];
   setPagamentos: (p: PagamentoMounjaro[]) => void;
   setDoses: (d: DoseMounjaro[]) => void;
+  setDbAtomico: (patch: { pagamentos?: PagamentoMounjaro[]; doses?: DoseMounjaro[] }) => void;
   logAuditoria: LogAuditoriaFn;
 }
 
-export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos, setDoses, logAuditoria }: Props) {
+export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos, setDoses, setDbAtomico, logAuditoria }: Props) {
   const [busca, setBusca] = useState('');
   const [filtroStatus, setFiltroStatus] = useState<'todos' | 'aberto' | 'pago'>('todos');
   const [modalOpen, setModalOpen] = useState(false);
@@ -55,11 +56,16 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
         dataPagamento: form.status === 'pago' ? (form.dataPagamento || new Date().toISOString().slice(0, 10)) : undefined,
         updatedAt: new Date().toISOString(),
       } as PagamentoMounjaro;
-      setPagamentos(pagamentos.map((p) => (p.id === editandoId ? atualizado : p)));
-      logAuditoria({ entidade: 'pagamento', acao: 'editar', resumo: `Pagamento ${formatarMoeda(atualizado.valor)} de ${nomeCliente(atualizado.clienteId)}`, clienteId: atualizado.clienteId, refId: editandoId });
+      // BUG-10 fix: pagamento + dose marcada atomicamente.
       if (atualizado.referenciaDoseId && atualizado.status === 'pago') {
-        setDoses(doses.map((d) => (d.id === atualizado.referenciaDoseId ? { ...d, pago: true } : d)));
+        setDbAtomico({
+          pagamentos: pagamentos.map((p) => (p.id === editandoId ? atualizado : p)),
+          doses: doses.map((d) => (d.id === atualizado.referenciaDoseId ? { ...d, pago: true } : d)),
+        });
+      } else {
+        setPagamentos(pagamentos.map((p) => (p.id === editandoId ? atualizado : p)));
       }
+      logAuditoria({ entidade: 'pagamento', acao: 'editar', resumo: `Pagamento ${formatarMoeda(atualizado.valor)} de ${nomeCliente(atualizado.clienteId)}`, clienteId: atualizado.clienteId, refId: editandoId });
     } else {
       const now = new Date().toISOString();
       const novo: PagamentoMounjaro = {
@@ -76,13 +82,16 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
         createdAt: now,
         updatedAt: now,
       };
-      setPagamentos([novo, ...pagamentos]);
-      logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento ${formatarMoeda(novo.valor)} de ${nomeCliente(novo.clienteId)}`, clienteId: novo.clienteId, refId: novo.id });
-
-      // Marca a dose vinculada como paga
+      // BUG-10 fix: criar pagamento + marcar dose como paga atomicamente.
       if (novo.referenciaDoseId && novo.status === 'pago') {
-        setDoses(doses.map((d) => (d.id === novo.referenciaDoseId ? { ...d, pago: true } : d)));
+        setDbAtomico({
+          pagamentos: [novo, ...pagamentos],
+          doses: doses.map((d) => (d.id === novo.referenciaDoseId ? { ...d, pago: true } : d)),
+        });
+      } else {
+        setPagamentos([novo, ...pagamentos]);
       }
+      logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento ${formatarMoeda(novo.valor)} de ${nomeCliente(novo.clienteId)}`, clienteId: novo.clienteId, refId: novo.id });
     }
     setModalOpen(false);
     setEditandoId(null);
@@ -96,15 +105,34 @@ export default function Pagamentos({ clientes, pagamentos, doses, setPagamentos,
       dataPagamento: now.slice(0, 10),
       updatedAt: now,
     };
-    setPagamentos(pagamentos.map((x) => (x.id === p.id ? atualizado : x)));
+    // BUG-09 fix: pagamento + dose atualizados atomicamente em um único persist.
     if (p.referenciaDoseId) {
-      setDoses(doses.map((d) => (d.id === p.referenciaDoseId ? { ...d, pago: true } : d)));
+      setDbAtomico({
+        pagamentos: pagamentos.map((x) => (x.id === p.id ? atualizado : x)),
+        doses: doses.map((d) => (d.id === p.referenciaDoseId ? { ...d, pago: true } : d)),
+      });
+    } else {
+      setPagamentos(pagamentos.map((x) => (x.id === p.id ? atualizado : x)));
     }
     logAuditoria({ entidade: 'pagamento', acao: 'editar', resumo: `Marcou como pago ${formatarMoeda(atualizado.valor)} de ${nomeCliente(p.clienteId)}`, clienteId: p.clienteId, refId: p.id });
   };
 
   const excluir = (p: PagamentoMounjaro) => {
     if (!window.confirm('Excluir este registro de pagamento?')) return;
+    // Se a dose vinculada foi marcada como paga por este pagamento, desmarca-a.
+    if (p.referenciaDoseId) {
+      const outroPagamentoPago = pagamentos.some(
+        (x) => x.id !== p.id && x.referenciaDoseId === p.referenciaDoseId && x.status === 'pago'
+      );
+      if (!outroPagamentoPago) {
+        setDbAtomico({
+          pagamentos: pagamentos.filter((x) => x.id !== p.id),
+          doses: doses.map((d) => d.id === p.referenciaDoseId ? { ...d, pago: false } : d),
+        });
+        logAuditoria({ entidade: 'pagamento', acao: 'excluir', resumo: `Pagamento ${formatarMoeda(p.valor)} de ${nomeCliente(p.clienteId)}`, clienteId: p.clienteId, refId: p.id });
+        return;
+      }
+    }
     setPagamentos(pagamentos.filter((x) => x.id !== p.id));
     logAuditoria({ entidade: 'pagamento', acao: 'excluir', resumo: `Pagamento ${formatarMoeda(p.valor)} de ${nomeCliente(p.clienteId)}`, clienteId: p.clienteId, refId: p.id });
   };

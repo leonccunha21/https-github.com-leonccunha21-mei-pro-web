@@ -52,24 +52,20 @@ export function emptyDb(): MounjaroDb {
 }
 
 export async function loadMounjaroDb(): Promise<MounjaroDb> {
-  if (isSupabaseConfigured()) {
-    try {
-      const cloud = await loadMounjaroCloud();
-      if (cloud && (cloud.clientes?.length || cloud.doses?.length)) {
-        const db: MounjaroDb = {
-          clientes: cloud.clientes || [], pesagens: cloud.pesagens || [],
-          doses: cloud.doses || [], pagamentos: cloud.pagamentos || [],
-          fotos: cloud.fotos || [], auditoria: cloud.auditoria || [],
-          config: { ...defaultConfig(), ...(cloud.config || {}) }, initialized: true,
-        };
-        try { await idbPut(db); } catch { /* ignore */ }
-        return db;
-      }
-    } catch { /* ignore */ }
-  }
+  // Estratégia: IndexedDB é a fonte primária (inclui deleções ainda não enviadas
+  // à nuvem). Se a nuvem estiver disponível, faz merge por id — o LOCAL prevalece
+  // em conflito (mesma lógica do useEffect de carga do App.tsx). Isso evita que
+  // um cliente deletado ressurja após recarregar a página antes do sync terminar.
+  let local: Partial<MounjaroDb> | null = null;
   try {
-    const local = await idbGet();
-    if (local && (Array.isArray(local.clientes) || Array.isArray(local.doses))) {
+    const raw = await idbGet();
+    if (raw && (Array.isArray(raw.clientes) || Array.isArray(raw.doses))) {
+      local = raw;
+    }
+  } catch { /* ignore */ }
+
+  if (!isSupabaseConfigured()) {
+    if (local) {
       return {
         clientes: local.clientes || [], pesagens: local.pesagens || [],
         doses: local.doses || [], pagamentos: local.pagamentos || [],
@@ -77,7 +73,37 @@ export async function loadMounjaroDb(): Promise<MounjaroDb> {
         config: { ...defaultConfig(), ...(local.config || {}) }, initialized: true,
       };
     }
+    return emptyDb();
+  }
+
+  // Com Supabase: retorna o local imediatamente (para não bloquear a UI com
+  // latência de rede). O App.tsx já faz o merge completo local+nuvem no seu
+  // próprio useEffect de carga, então aqui só precisamos garantir que o
+  // IndexedDB (que tem as deleções pendentes) seja a base.
+  if (local) {
+    return {
+      clientes: local.clientes || [], pesagens: local.pesagens || [],
+      doses: local.doses || [], pagamentos: local.pagamentos || [],
+      fotos: local.fotos || [], auditoria: local.auditoria || [],
+      config: { ...defaultConfig(), ...(local.config || {}) }, initialized: true,
+    };
+  }
+
+  // Sem cache local (primeira vez ou IndexedDB limpo): carrega da nuvem.
+  try {
+    const cloud = await loadMounjaroCloud();
+    if (cloud && (cloud.clientes?.length || cloud.doses?.length)) {
+      const db: MounjaroDb = {
+        clientes: cloud.clientes || [], pesagens: cloud.pesagens || [],
+        doses: cloud.doses || [], pagamentos: cloud.pagamentos || [],
+        fotos: cloud.fotos || [], auditoria: cloud.auditoria || [],
+        config: { ...defaultConfig(), ...(cloud.config || {}) }, initialized: true,
+      };
+      try { await idbPut(db); } catch { /* ignore */ }
+      return db;
+    }
   } catch { /* ignore */ }
+
   return emptyDb();
 }
 

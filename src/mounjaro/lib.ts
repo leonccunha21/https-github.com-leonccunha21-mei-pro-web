@@ -89,10 +89,10 @@ export function pesoPerdido(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[
   return Math.round((base - atual) * 10) / 10;
 }
 
-// Perda de peso média por dose (kg/dose).
+// Variação de peso média por dose (kg/dose). Positivo = perda média, negativo = ganho médio.
 export function perdaMediaPorDose(cliente: ClienteMounjaro, pesagens: PesagemMounjaro[], doses: DoseMounjaro[]): number {
   const totalPerdido = pesoPerdido(cliente, pesagens, doses);
-  if (totalPerdido <= 0) return 0;
+  if (totalPerdido === 0) return 0;
   const qtdDoses = doses.filter(d => d.clienteId === cliente.id).length;
   if (qtdDoses === 0) return 0;
   return Math.round((totalPerdido / qtdDoses) * 10) / 10;
@@ -132,14 +132,13 @@ export function calcularScore(
       nAtraso++;
     } else if (p.status === 'pendente') {
       pendentes++;
+      valorAberto += p.valor; // sempre conta como aberto, vencido ou não
       if (p.dataVencimento < hoje) {
         // pendente vencido conta como atraso parcial
         const diff = diasEntre(p.dataVencimento, hoje);
         somaAtraso += Math.max(0, diff);
         nAtraso++;
         atrasados++;
-      } else {
-        valorAberto += p.valor;
       }
     }
   }

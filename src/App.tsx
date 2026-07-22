@@ -232,7 +232,7 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
-  }, []);
+  }, [darkMode]);
 
   // Monitora conectividade (6.8)
   useEffect(() => {
@@ -773,6 +773,52 @@ export default function App() {
 
   // Delete Product - alias for archive (kept for compatibility)
   const handleDeleteProduct = handleArchiveProduct;
+
+  /**
+   * Mescla múltiplos produtos em um único "produto principal".
+   * - O produto principal (keepId) recebe a soma dos estoques de todos.
+   * - Todas as vendas que referenciam os ids duplicados são reapontadas para keepId.
+   * - Os produtos duplicados são arquivados (soft-delete).
+   */
+  const handleMergeProducts = (keepId: string, duplicateIds: string[], newName: string, newCostPrice: number, newSalePrice: number) => {
+    const now = new Date().toISOString();
+    const keeper = products.find(p => p.id === keepId);
+    if (!keeper) return;
+
+    // Soma estoque de todos os duplicados no produto principal
+    const totalStock = products
+      .filter(p => p.id === keepId || duplicateIds.includes(p.id))
+      .reduce((sum, p) => sum + p.stock, 0);
+
+    const updatedProducts = products.map(p => {
+      if (p.id === keepId) {
+        return { ...p, name: newName, costPrice: newCostPrice, salePrice: newSalePrice, stock: totalStock, updatedAt: now };
+      }
+      if (duplicateIds.includes(p.id)) {
+        return { ...p, archived: true, archivedAt: now, stock: 0, updatedAt: now };
+      }
+      return p;
+    });
+
+    // Reaponta vendas: troca productId e productName nos itens vinculados
+    const duplicateSet = new Set(duplicateIds);
+    const updatedSales = sales.map(sale => {
+      const hasAffectedItem = sale.items.some(it => duplicateSet.has(it.productId));
+      if (!hasAffectedItem) return sale;
+      return {
+        ...sale,
+        items: sale.items.map(it =>
+          duplicateSet.has(it.productId)
+            ? { ...it, productId: keepId, productName: newName }
+            : it
+        ),
+        updatedAt: now,
+      };
+    });
+
+    saveProductsToStorage(updatedProducts).catch(() => {});
+    saveSalesToStorage(updatedSales).catch(() => {});
+  };
 
   const handleClearAllProducts = () => {
     const updated = products.map(p => ({ ...p, archived: true, archivedAt: new Date().toISOString() }));
@@ -1934,7 +1980,7 @@ export default function App() {
             )}
 
             {activeTab === 'products' && (
-              <Products 
+              <Products
                 products={products}
                 categories={categories}
                 sales={sales}
@@ -1945,6 +1991,7 @@ export default function App() {
                 onUnarchiveProduct={handleUnarchiveProduct}
                 onClearAllProducts={handleClearAllProducts}
                 onAddCategory={handleAddCategory}
+                onMergeProducts={handleMergeProducts}
               />
             )}
 
