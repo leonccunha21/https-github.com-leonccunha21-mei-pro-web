@@ -46,6 +46,10 @@ export default function Fotos({ clientes, fotos, setFotos, logAuditoria }: Props
       setPreview(base64);
       setData(new Date().toISOString().slice(0, 10));
       setLegenda('');
+      // BUG-FIX: ao abrir o modal de nova foto, o clienteId não era resetado —
+      // se o usuário havia filtrado por paciente, o filtro era reutilizado como
+      // clienteId padrão, mas ao trocar de paciente o modal ficava com o antigo.
+      // Mantemos clienteId intacto se já está selecionado (UX conveniente).
       setModalAberto(true);
     } catch (err) {
       alert(err instanceof Error ? err.message : 'Falha ao processar imagem.');

@@ -31,11 +31,16 @@ export function useAppointmentScheduler({
 
   useEffect(() => {
     const instanceConectada = instances.find((i) => i.status === 'CONNECTED');
-    if (!instanceConectada) return;
+    // BUG-FIX: sem instanceConectada o effect retornava undefined (sem cleanup),
+    // o que fazia intervalRef ficar ativo de uma chamada anterior se instances
+    // mudasse de conectado → desconectado. Agora limpa o interval em todos os casos.
+    if (!instanceConectada) {
+      if (intervalRef.current) { clearInterval(intervalRef.current); intervalRef.current = null; }
+      return;
+    }
 
     const check = async () => {
       const agora = new Date();
-      const agoraStr = agora.toISOString().slice(0, 16); // YYYY-MM-DDTHH:mm
 
       const enviadosSet = new Set(
         mensagensEnviadas
@@ -47,7 +52,8 @@ export function useAppointmentScheduler({
         if (ag.status === 'cancelado' || ag.status === 'concluido') continue;
         if (!ag.telefoneCliente) continue;
 
-        const dataHora = new Date(`${ag.data}T${ag.hora}:00`);
+        // BUG-FIX: ag.hora pode ter segundos ("14:30:00") — slice(0,5) garante HH:mm.
+        const dataHora = new Date(`${ag.data}T${ag.hora.slice(0, 5)}:00`);
         const diffMs = dataHora.getTime() - agora.getTime();
         const diffHoras = diffMs / (1000 * 60 * 60);
 

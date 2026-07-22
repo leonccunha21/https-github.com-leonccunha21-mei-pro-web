@@ -511,12 +511,30 @@ app.get('/api/subscription', async (req, res) => {
   try {
     const existing = await getSubscriptionByUid(uid)
     if (!existing) return res.json(null)
-    res.json(existing)
+    // BUG-FIX: mapSubRow converte snake_case → camelCase conforme interface Subscription
+    res.json(mapSubRow(existing))
   } catch (err: any) {
     console.error('Subscription fetch error:', err.message)
     res.status(500).json({ error: err.message })
   }
 })
+
+function mapSubRow(row: any) {
+  return {
+    id: row.id,
+    userId: row.user_id,
+    email: row.email,
+    stripeCustomerId: row.stripe_customer_id ?? undefined,
+    stripeSubscriptionId: row.stripe_subscription_id ?? undefined,
+    status: row.status,
+    planId: row.plan_id,
+    trialEnd: row.trial_end ?? undefined,
+    currentPeriodEnd: row.current_period_end ?? undefined,
+    cancelAtPeriodEnd: row.cancel_at_period_end ?? false,
+    createdAt: row.created_at ?? new Date().toISOString(),
+    updatedAt: row.updated_at ?? new Date().toISOString(),
+  }
+}
 
 app.post('/api/subscription/start-trial', async (req, res) => {
   const { uid, email } = req.body || {}
@@ -525,7 +543,8 @@ app.post('/api/subscription/start-trial', async (req, res) => {
 
   try {
     const existing = await getSubscriptionByUid(uid)
-    if (existing) return res.json(existing)
+    // BUG-FIX: se já existe, retorna mapeado (camelCase) igual ao GET /api/subscription
+    if (existing) return res.json(mapSubRow(existing))
 
     const trialEnd = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
     const { data, error } = await supabaseAdmin
@@ -541,7 +560,8 @@ app.post('/api/subscription/start-trial', async (req, res) => {
       .maybeSingle()
 
     if (error) throw error
-    res.json(data)
+    // BUG-FIX: retorna mapeado (camelCase)
+    res.json(data ? mapSubRow(data) : null)
   } catch (err: any) {
     console.error('Start trial error:', err.message)
     res.status(500).json({ error: err.message })

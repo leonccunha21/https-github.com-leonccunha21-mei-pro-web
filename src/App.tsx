@@ -97,7 +97,7 @@ import { canAccess } from './lib/permissions';
 import { loadDb, saveDb, type LocalDb } from './lib/localDb';
 import { getBackupSchedule, shouldRunBackup, saveBackupSchedule } from './lib/backupScheduler';
 import { isSupabaseConfigured } from './lib/supabase';
-import { getSubscription, isActive as subIsActive } from './lib/subscription';
+import { getSubscription, startTrial, getTrialDaysRemaining, isActive as subIsActive } from './lib/subscription';
 
 // Firebase Auth é importado dinamicamente (sob demanda) para não
 // penalizar o carregamento inicial do app.
@@ -167,6 +167,7 @@ export default function App() {
   const [cloudUser, setCloudUser] = useState<User | null>(null);
   const [subscriptionChecked, setSubscriptionChecked] = useState(false);
   const [needsSubscription, setNeedsSubscription] = useState(false);
+  const [trialSub, setTrialSub] = useState<{ trialEnd?: string; status: string } | null>(null);
   const [supabaseConnected, setSupabaseConnected] = useState<boolean>(() => isSupabaseConfigured());
   const [isOnline, setIsOnline] = useState(navigator.onLine);
 
@@ -364,12 +365,24 @@ export default function App() {
     if (!cloudUser) { setLoading(false); return; }
     (async () => {
       try {
-        // Verifica assinatura
-        const sub = await getSubscription(cloudUser.uid)
+        let sub = await getSubscription(cloudUser.uid)
+        if (!sub) {
+          sub = await startTrial(cloudUser.uid, cloudUser.email || '')
+        }
         if (!sub || !subIsActive(sub.status)) {
           setNeedsSubscription(true)
           setLoading(false)
           return
+        }
+        if (sub.status === 'trialing') {
+          const daysLeft = getTrialDaysRemaining(sub.trialEnd)
+          if (daysLeft > 0) {
+            setTrialSub(sub)
+          } else {
+            setNeedsSubscription(true)
+            setLoading(false)
+            return
+          }
         }
         setNeedsSubscription(false)
 
@@ -1444,8 +1457,25 @@ export default function App() {
     );
   }
 
+  const isTrialing = trialSub?.status === 'trialing'
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans">
+    <div className={`min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col md:flex-row text-slate-800 dark:text-slate-200 antialiased font-sans ${isTrialing ? 'pt-10' : ''}`}>
+
+      {isTrialing && (
+        <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-indigo-500 to-fuchsia-500 text-white text-sm">
+          <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-2">
+            <span>
+              Teste grátis — <strong>{getTrialDaysRemaining(trialSub.trialEnd)}</strong> dias restantes
+            </span>
+            <button
+              onClick={() => setNeedsSubscription(true)}
+              className="text-xs font-bold bg-white/20 hover:bg-white/30 px-3 py-1 rounded-full transition-colors shrink-0"
+            >
+              Ver planos
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* MOBILE TOP HEADER */}
       <header className="md:hidden sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 flex items-center gap-3 px-4 py-3 shadow-sm">

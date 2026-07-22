@@ -151,8 +151,12 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
     if (!cliente || !servico) { toast.error('Cliente ou serviço inválido'); return; }
 
     if (editId) {
+      // BUG-FIX: ao editar agendamento, atualizava dados do cliente/serviço mas
+      // não copiava telefoneCliente do novo cliente selecionado. Resultado: trocar
+      // o cliente no edit deixava o telefone do cliente anterior → WPP errado.
       setAgendamentos(agendamentos.map((a) => a.id === editId ? {
         ...a, clienteId: form.clienteId, clienteNome: cliente.nome,
+        telefoneCliente: cliente.telefone,
         servicoId: form.servicoId, servicoNome: servico.nome, valor: servico.preco,
         data: form.data, hora: form.hora, observacoes: form.observacoes,
         updatedAt: new Date().toISOString(),

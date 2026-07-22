@@ -87,13 +87,15 @@ export default function SubscriptionGuard({ uid, email, children, allowUnsubscri
     )
   }
 
-  // Trialing expired → show plans
+  // Trialing expired (daysLeft === 0, mas ainda status 'trialing') → show plans
+  // BUG-FIX: `onBack` chamava `setShowPlans(true)` ao invés de `setShowPlans(false)`,
+  // causando loop infinito: clicar "Voltar" reabre a tela de planos.
   if (subscription && subscription.status === 'trialing') {
     return (
       <PlansPage
         uid={uid}
         email={email}
-        onBack={() => { if (!allowUnsubscribed) setShowPlans(true) }}
+        onBack={() => setShowPlans(false)}
       />
     )
   }
@@ -104,7 +106,7 @@ export default function SubscriptionGuard({ uid, email, children, allowUnsubscri
       <PlansPage
         uid={uid}
         email={email}
-        onBack={() => { if (!allowUnsubscribed) setShowPlans(true) }}
+        onBack={() => setShowPlans(false)}
       />
     )
   }

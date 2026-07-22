@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { ProdutoEstoque } from '../types';
 import { newId } from '../localDb';
-import { Package, Plus, Edit3, Search, AlertTriangle } from 'lucide-react';
+import { Package, Plus, Edit3, Trash2, Search, AlertTriangle } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface Props {
   produtos: ProdutoEstoque[];
   setProdutos: (p: ProdutoEstoque[]) => void;
 }
+
+// BUG-FIX: adicionado botão excluir produto (sem ele, produto incorreto ficava preso para sempre)
 
 export default function Estoque({ produtos, setProdutos }: Props) {
   const [busca, setBusca] = useState('');
@@ -88,6 +90,7 @@ export default function Estoque({ produtos, setProdutos }: Props) {
                 {baixo && <p className="text-[10px] text-amber-600 font-bold">Estoque baixo</p>}
               </div>
               <button onClick={() => openEdit(p)} className="p-2 rounded-lg text-slate-400 hover:text-fuchsia-600 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/20"><Edit3 className="h-4 w-4" /></button>
+              <button onClick={() => { if (window.confirm('Excluir este produto?')) setProdutos(produtos.filter(x => x.id !== p.id)); }} className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20" title="Excluir produto"><Trash2 className="h-4 w-4" /></button>
             </div>
           );
         })}
