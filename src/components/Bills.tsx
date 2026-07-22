@@ -180,20 +180,24 @@ export default function Bills({ bills, onSaveBills }: BillsProps) {
   const isOverdue = (dueDate: string, status: string) =>
     status === 'pending' && new Date(dueDate) < new Date(new Date().toDateString());
 
-  // Marca como vencidas automaticamente ao carregar e sempre que bills mudar
+  // Marca como vencidas automaticamente ao carregar e sempre que bills mudar.
+  // Deps: [bills.length] — só roda quando a quantidade de contas muda, não a
+  // cada mudança de status (que geraria loop infinito de save→render→save).
   useEffect(() => {
     if (!bills.length) return;
     const today = new Date().toISOString().slice(0, 10);
+    let hasChanges = false;
     const updated = bills.map(b => {
       if (b.status === 'pending' && b.dueDate < today) {
+        hasChanges = true;
         return { ...b, status: 'overdue' as const, updatedAt: new Date().toISOString() };
       }
       if (b.status === 'overdue' && b.dueDate >= today) {
+        hasChanges = true;
         return { ...b, status: 'pending' as const, updatedAt: new Date().toISOString() };
       }
       return b;
     });
-    const hasChanges = updated.some((b, i) => b.status !== bills[i].status);
     if (hasChanges) onSaveBills(updated);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bills.length]);

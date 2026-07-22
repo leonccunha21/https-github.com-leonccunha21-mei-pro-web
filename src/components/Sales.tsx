@@ -459,7 +459,7 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
       discount: discountPercent,
       total: finalTotal,
       subtotal,
-      notes: combinedNotes || undefined
+      notes: combinedNotes || undefined,
     });
 
     // Reset Form

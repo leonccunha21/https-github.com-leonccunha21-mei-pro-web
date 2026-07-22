@@ -367,7 +367,7 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
         <button
           onClick={() => setView('loans')}
           className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md transition-colors whitespace-nowrap ${
-            view === 'debits' ? 'text-slate-500 hover:text-slate-900' : 'bg-white text-slate-900 shadow-xs border border-slate-200/40'
+            view === 'loans' ? 'bg-white text-slate-900 shadow-xs border border-slate-200/40' : 'text-slate-500 hover:text-slate-900'
           }`}
         >
           <HandCoins className="h-3.5 w-3.5" /> Empréstimos

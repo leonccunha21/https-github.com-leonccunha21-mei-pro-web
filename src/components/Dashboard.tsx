@@ -162,6 +162,9 @@ export default function Dashboard({ products, sales, bills = [], onNavigate }: D
   const physicalProducts = products.filter(p => !isServiceProduct(p) && !p.archived);
   const lowStockProducts = physicalProducts.filter(p => p.status !== 'indisponivel' && p.minStock > 0 && p.stock <= p.minStock);
 
+  // Notificações disparadas uma vez por montagem — deps intencionalmente vazias
+  // (queremos notificar só ao abrir o painel, não a cada re-render).
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     const prefs = getPrefs();
     if (prefs.lowStockAlert && lowStockProducts.length > 0) {
@@ -174,7 +177,7 @@ export default function Dashboard({ products, sales, bills = [], onNavigate }: D
         sendNotification('Contas a Receber', `${pending.length} venda(s) pendente(s) — R$ ${total.toFixed(2)}`);
       }
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Últimas vendas (mais recentes primeiro), sempre mostrando as mais novas,
   // independentemente do filtro de ano do painel de métricas.
