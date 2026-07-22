@@ -1,5 +1,5 @@
 import { Product, Sale, Category, Expense, StoreInfo, ServiceOrder, Customer, Supplier, Purchase, CashSession, Loan, Lead, LeadExtractionJob, WhatsAppInstance, AIAgent, Opportunity, Bill, InternetUser } from '../types';
-import { supabase, isSupabaseConfigured } from './supabase';
+import { supabase, isSupabaseConfigured, supabaseUrl, supabaseAnonKey } from './supabase';
 
 export interface LocalDb {
   products: Product[];
@@ -167,6 +167,48 @@ async function syncToSupabase(db: LocalDb): Promise<void> {
 // Supabase fetch — buscar dados do Supabase para hidratar o IndexedDB
 // ============================================================
 
+async function restFetch<T>(table: string): Promise<{ data: T[] | null; error: any }> {
+  const url = `${supabaseUrl}/rest/v1/${table}?select=*&limit=10000`;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        apikey: supabaseAnonKey,
+        Authorization: `Bearer ${supabaseAnonKey}`,
+        Accept: 'application/json',
+      },
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      return { data: null, error: new Error(`HTTP ${res.status}: ${body}`) };
+    }
+    const data = await res.json();
+    return { data, error: null };
+  } catch (e) {
+    return { data: null, error: e };
+  }
+}
+
+async function restFetchSingle<T>(table: string, column: string, value: string): Promise<{ data: T | null; error: any }> {
+  const url = `${supabaseUrl}/rest/v1/${table}?${column}=eq.${encodeURIComponent(value)}&select=*&limit=1`;
+  try {
+    const res = await fetch(url, {
+      headers: {
+        apikey: supabaseAnonKey,
+        Authorization: `Bearer ${supabaseAnonKey}`,
+        Accept: 'application/json',
+      },
+    });
+    if (!res.ok) {
+      const body = await res.text();
+      return { data: null, error: new Error(`HTTP ${res.status}: ${body}`) };
+    }
+    const arr = await res.json();
+    return { data: arr?.[0] ?? null, error: null };
+  } catch (e) {
+    return { data: null, error: e };
+  }
+}
+
 async function fetchFromSupabase(): Promise<LocalDb | null> {
   if (!isSupabaseConfigured()) return null;
 
@@ -176,28 +218,27 @@ async function fetchFromSupabase(): Promise<LocalDb | null> {
       customers, suppliers, purchases, cashSessions, loans,
       leads, opportunities, bills, internetUsers, storeInfo,
     ] = await Promise.all([
-      supabase.from('products').select('*'),
-      supabase.from('sales').select('*'),
-      supabase.from('categories').select('*'),
-      supabase.from('expenses').select('*'),
-      supabase.from('service_orders').select('*'),
-      supabase.from('customers').select('*'),
-      supabase.from('suppliers').select('*'),
-      supabase.from('purchases').select('*'),
-      supabase.from('cash_sessions').select('*'),
-      supabase.from('loans').select('*'),
-      supabase.from('leads').select('*'),
-      supabase.from('opportunities').select('*'),
-      supabase.from('bills').select('*'),
-      supabase.from('internet_users').select('*'),
-      supabase.from('store_info').select('*').eq('id', 'singleton').maybeSingle(),
+      restFetch<any[]>('products'),
+      restFetch<any[]>('sales'),
+      restFetch<any[]>('categories'),
+      restFetch<any[]>('expenses'),
+      restFetch<any[]>('service_orders'),
+      restFetch<any[]>('customers'),
+      restFetch<any[]>('suppliers'),
+      restFetch<any[]>('purchases'),
+      restFetch<any[]>('cash_sessions'),
+      restFetch<any[]>('loans'),
+      restFetch<any[]>('leads'),
+      restFetch<any[]>('opportunities'),
+      restFetch<any[]>('bills'),
+      restFetch<any[]>('internet_users'),
+      restFetchSingle<any>('store_info', 'id', 'singleton'),
     ]);
 
     const hasError = [products, sales, categories, expenses, serviceOrders,
       customers, suppliers, purchases, cashSessions, loans,
       leads, opportunities, bills, internetUsers].some(r => r.error);
 
-    // Se alguma tabela não existe (PGRST116), retorna null para usar IndexedDB
     if (hasError) return null;
 
     return {
@@ -315,17 +356,7 @@ export async function saveDb(db: LocalDb): Promise<void> {
   // 2. Sync best-effort para Supabase (nuvem)
   syncToSupabase(db).catch((e) => {
     console.error('Supabase sync falhou:', e);
-  });
-
-  // 3. Best-effort server sync (ignorado no site estático)
-  try {
-    await fetch('/api/db', {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(db),
-    });
-  } catch { /* ignore */ }
-
+  });\n
   notifyDbUpdated();
 }
 

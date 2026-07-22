@@ -14,6 +14,7 @@
     "test": "node --import tsx --test src/lib/parsers.test.ts src/lib/dre.test.ts src/lib/ofxParser.test.ts src/lib/notifications.test.ts"
   },
   "dependencies": {
+    "@ericblade/quagga2": "^1.12.1",
     "@google/genai": "^2.4.0",
     "@supabase/ssr": "^0.12.3",
     "@supabase/supabase-js": "^2.110.8",
@@ -23,12 +24,14 @@
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "firebase": "^10.14.1",
+    "jsbarcode": "^3.12.3",
     "lucide-react": "^0.546.0",
     "motion": "^12.23.24",
     "qrcode": "^1.5.4",
     "react": "^19.0.1",
     "react-dom": "^19.0.1",
     "react-hot-toast": "^2.6.0",
+    "react-to-pdf": "^3.2.2",
     "recharts": "^3.9.2",
     "vite": "^6.2.3",
     "xlsx": "^0.18.5"

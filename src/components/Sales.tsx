@@ -3,6 +3,8 @@ import { Product, SaleItem, PaymentMethod, Customer } from '../types';
 import { roundCurrency } from '../lib/currency';
 import { generatePixPayload } from '../lib/pix';
 import QRCode from 'qrcode';
+import BarcodeScanner from './BarcodeScanner';
+import ReceiptPDF from './ReceiptPDF';
 import { 
   Search, 
   ShoppingCart, 
@@ -23,7 +25,8 @@ import {
   Clock,
   Loader2,
   QrCode,
-  Smartphone
+  Smartphone,
+  ScanBarcode
 } from 'lucide-react';
 
 interface SalesProps {
@@ -50,6 +53,7 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [allowNegativeStock, setAllowNegativeStock] = useState(true);
   const [creditSale, setCreditSale] = useState(false);
+  const [showScanner, setShowScanner] = useState(false);
 
   // Cart state
   const [cart, setCart] = useState<{
@@ -250,6 +254,16 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
 
   // Add to cart helper
   const isServiceProduct = (p: Product) => /^servi/i.test(p.category);
+
+  const handleBarcodeDetected = (code: string) => {
+    const product = products.find(p => p.code === code);
+    if (!product) {
+      setErrorMessage(`Código "${code}" não encontrado no catálogo.`);
+      setTimeout(() => setErrorMessage(null), 4000);
+      return;
+    }
+    handleAddToCart(product);
+  };
 
   const handleAddToCart = (product: Product) => {
     const isService = isServiceProduct(product);
@@ -511,11 +525,25 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
 
       {/* Persistent receipt button */}
       {lastSaleData && (
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           <button onClick={generateReceipt} className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg flex items-center justify-center gap-2 transition-colors cursor-pointer">
             <Printer className="h-4 w-4" />
-            Imprimir Último Recibo
+            Imprimir
           </button>
+          <ReceiptPDF
+            data={{
+              saleId: `V${Date.now().toString(36).toUpperCase()}`,
+              date: new Date(),
+              items: lastSaleData.items,
+              clientName: lastSaleData.clientName,
+              clientPhone: lastSaleData.clientPhone,
+              paymentMethod: lastSaleData.paymentMethod,
+              subtotal: lastSaleData.subtotal,
+              discount: lastSaleData.discount,
+              total: lastSaleData.total,
+              notes: lastSaleData.notes,
+            }}
+          />
           <button onClick={() => setLastSaleData(null)} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
             Dispensar
           </button>
@@ -549,8 +577,15 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
                 placeholder="Pesquisar produto..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-4 py-2.5 sm:py-2 text-sm bg-slate-50 hover:bg-slate-100/50 focus:bg-white text-slate-900 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                className="w-full pl-9 pr-12 py-2.5 sm:py-2 text-sm bg-slate-50 hover:bg-slate-100/50 focus:bg-white text-slate-900 border border-slate-200 rounded-lg outline-hidden focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
               />
+              <button
+                onClick={() => setShowScanner(true)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-emerald-600 transition-colors cursor-pointer"
+                title="Escanear código de barras"
+              >
+                <ScanBarcode className="h-5 w-5" />
+              </button>
             </div>
             
             {/* Category selection */}
@@ -1116,6 +1151,12 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
         </div>
 
       </div>
+
+      <BarcodeScanner
+        isOpen={showScanner}
+        onClose={() => setShowScanner(false)}
+        onDetected={handleBarcodeDetected}
+      />
     </div>
   );
 }

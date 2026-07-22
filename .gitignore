@@ -26,3 +26,6 @@ data/local-db.json
 src/extracted_data.json
 public/imported_data.json
 
+
+.vercel
+.env*

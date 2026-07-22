@@ -1,11 +1,12 @@
 ﻿import React, { useState, useMemo } from 'react';
 import { Product, Category, Sale, PriceHistoryEntry } from '../types';
 import { categorizeProduct } from '../lib/categorize';
+import LabelPrinter from './LabelPrinter';
 import { 
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck,
-  Trash, Archive, RotateCcw, Boxes, Copy
+  Trash, Archive, RotateCcw, Boxes, Copy, Tag
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -47,6 +48,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
 
   const [showStockCheck, setShowStockCheck] = useState(false);
   const [missingProducts, setMissingProducts] = useState<{ name: string; productId: string; qty: number; costPrice: number; salePrice: number; suggestedCategory: string }[]>([]);
+  const [showLabelPrinter, setShowLabelPrinter] = useState(false);
 
   const [showPriceHistory, setShowPriceHistory] = useState<Product | null>(null);
   const [formCode, setFormCode] = useState('');
@@ -382,6 +384,9 @@ export default function Products({ products, categories, sales, onAddProduct, on
           </button>
           <button onClick={handleExportFiltered} className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
             <Download className="h-4 w-4" /> <span className="hidden sm:inline">Exportar</span>
+          </button>
+          <button onClick={() => setShowLabelPrinter(true)} className="px-4 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-sm font-semibold rounded-lg border border-emerald-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <Tag className="h-4 w-4" /> <span className="hidden sm:inline">Etiquetas</span>
           </button>
           <button onClick={handleCheckStock} className="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 text-sm font-semibold rounded-lg border border-amber-200 flex items-center justify-center gap-2 transition-colors cursor-pointer">
             <ClipboardCheck className="h-4 w-4" /> <span className="hidden sm:inline">Verificar Vendas x Estoque</span><span className="sm:hidden">Verificar</span>
@@ -870,6 +875,11 @@ export default function Products({ products, categories, sales, onAddProduct, on
         </div>
       )}
       {showPriceHistory && <PriceHistoryModal product={showPriceHistory} onClose={() => setShowPriceHistory(null)} />}
+      <LabelPrinter
+        products={products}
+        isOpen={showLabelPrinter}
+        onClose={() => setShowLabelPrinter(false)}
+      />
     </div>
   );
 }

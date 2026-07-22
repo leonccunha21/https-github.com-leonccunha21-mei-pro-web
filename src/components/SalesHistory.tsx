@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { Sale, Product } from '../types';
+import ReceiptPDF from './ReceiptPDF';
 import {
   Search,
   X,
@@ -956,8 +957,22 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                   className="px-4 py-2 bg-slate-50 hover:bg-slate-100 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
                   <Printer className="h-3.5 w-3.5" />
-                  Imprimir Recibo
+                  Imprimir
                 </button>
+                <ReceiptPDF
+                  data={{
+                    saleId: selectedSale.id.substring(0, 8),
+                    date: parseSaleDate(selectedSale.date) || new Date(),
+                    items: selectedSale.items,
+                    clientName: selectedSale.clientName,
+                    clientPhone: selectedSale.clientPhone,
+                    paymentMethod: selectedSale.paymentMethod,
+                    subtotal: selectedSale.subtotal || selectedSale.total,
+                    discount: selectedSale.discount || 0,
+                    total: selectedSale.total,
+                    notes: selectedSale.notes,
+                  }}
+                />
               </div>
               <button
                 id="close-receipt-btn"
