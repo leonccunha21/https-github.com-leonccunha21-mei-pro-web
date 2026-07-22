@@ -1,7 +1,7 @@
 import { useState, useMemo, type ReactNode } from 'react';
-import { AgendamentoManicure, ClienteManicure, ServicoManicure, MovimentoCaixa, StatusAgendamento } from '../types';
+import { AgendamentoManicure, ClienteManicure, ServicoManicure, MovimentoCaixa, StatusAgendamento, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from '../types';
 import { newId } from '../localDb';
-import { Calendar as CalendarIcon, Plus, Clock, Check, X, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon } from 'lucide-react';
+import { Calendar as CalendarIcon, Plus, Clock, Check, X, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon, MessageCircle, Send, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -11,6 +11,10 @@ interface Props {
   setAgendamentos: (a: AgendamentoManicure[]) => void;
   setMovimentos: (m: MovimentoCaixa[]) => void;
   movimentos: MovimentoCaixa[];
+  instances: ManicureWhatsAppInstance[];
+  templates: MensagemTemplate[];
+  mensagensEnviadas: MensagemEnviada[];
+  onAddMensagem: (m: MensagemEnviada) => void;
 }
 
 const STATUS_MAP: Record<StatusAgendamento, { label: string; color: string; dot: string }> = {
@@ -35,7 +39,15 @@ function formatDate(ano: number, mes: number, dia: number) {
   return `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
 }
 
-export default function Agendamentos({ agendamentos, clientes, servicos, setAgendamentos, setMovimentos, movimentos }: Props) {
+function preencherTemplate(template: string, vars: Record<string, string>): string {
+  let msg = template;
+  for (const [key, value] of Object.entries(vars)) {
+    msg = msg.replace(new RegExp(`\\{\\{${key}\\}\\}`, 'g'), value);
+  }
+  return msg;
+}
+
+export default function Agendamentos({ agendamentos, clientes, servicos, setAgendamentos, setMovimentos, movimentos, instances, templates, mensagensEnviadas, onAddMensagem }: Props) {
   const hoje = new Date();
   const hojeStr = formatDate(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
   const [ano, setAno] = useState(hoje.getFullYear());
@@ -45,6 +57,43 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState({ clienteId: '', servicoId: '', data: '', hora: '', observacoes: '' });
+  const [sendingWpp, setSendingWpp] = useState<string | null>(null);
+
+  const instanceConectada = instances.find((i) => i.status === 'CONNECTED');
+  const templateConfirmacao = templates.find((t) => t.tipo === 'confirmacao' && t.ativo);
+
+  const enviarWhatsApp = async (ag: AgendamentoManicure, tipo: 'confirmacao' | 'manual') => {
+    if (!instanceConectada) { toast.error('Conecte o WhatsApp nas configurações primeiro.'); return; }
+    if (!ag.telefoneCliente) { toast.error('Cliente não possui telefone cadastrado.'); return; }
+    setSendingWpp(ag.id);
+    try {
+      const tmpl = tipo === 'confirmacao' && templateConfirmacao
+        ? templateConfirmacao
+        : { mensagem: `Olá ${ag.clienteNome.split(' ')[0]}, seu horário na ${ag.clienteNome} está confirmado para ${ag.data} às ${ag.hora.slice(0, 5)}.` };
+      const msg = tipo === 'confirmacao' && templateConfirmacao
+        ? preencherTemplate(templateConfirmacao.mensagem, { nome: ag.clienteNome.split(' ')[0], salao: '', data: ag.data, hora: ag.hora.slice(0, 5) })
+        : `Olá ${ag.clienteNome.split(' ')[0]}, seu agendamento na ${ag.servicoNome} é dia ${ag.data} às ${ag.hora.slice(0, 5)}. Confirme sua presença! 💅`;
+
+      const numero = ag.telefoneCliente.replace(/\D/g, '');
+      const mod = await import('../../lib/vps');
+      await mod.whatsapp.send(instanceConectada.id, `55${numero}`, msg);
+      onAddMensagem({
+        id: newId('msg'), agendamentoId: ag.id, clienteId: ag.clienteId,
+        clienteNome: ag.clienteNome, tipo: tipo, mensagem: msg,
+        status: 'enviado', dataEnvio: new Date().toISOString(),
+      });
+      toast.success('Mensagem enviada via WhatsApp!');
+    } catch {
+      toast.error('Falha ao enviar. VPS está offline?');
+      onAddMensagem({
+        id: newId('msg'), agendamentoId: ag.id, clienteId: ag.clienteId,
+        clienteNome: ag.clienteNome, tipo: tipo, mensagem: '',
+        status: 'falha', dataEnvio: new Date().toISOString(), erro: 'VPS offline',
+      });
+    } finally {
+      setSendingWpp(null);
+    }
+  };
 
   const servicosAtivos = servicos.filter((s) => s.ativo);
 
@@ -273,6 +322,16 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
                 )}
                 {ag.status === 'confirmado' && (
                   <button onClick={() => mudarStatus(ag.id, 'concluido')} className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" title="Concluir"><Check className="h-3.5 w-3.5" /></button>
+                )}
+                {ag.telefoneCliente && instanceConectada && (
+                  <button
+                    onClick={() => enviarWhatsApp(ag, 'manual')}
+                    disabled={sendingWpp === ag.id}
+                    className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 disabled:opacity-50"
+                    title="Enviar WhatsApp"
+                  >
+                    {sendingWpp === ag.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
+                  </button>
                 )}
                 <button onClick={() => openEdit(ag)} className="p-1.5 rounded-lg text-slate-400 hover:text-fuchsia-600"><ChevronRightIcon className="h-4 w-4" /></button>
               </div>

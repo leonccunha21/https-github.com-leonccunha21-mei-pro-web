@@ -1,4 +1,4 @@
-import { ManicureDb } from './types';
+import { ManicureDb, MensagemTemplate } from './types';
 
 const DB_NAME = 'manicure_local';
 const STORE = 'manicuredb';
@@ -45,8 +45,23 @@ export function defaultConfig(): ManicureDb['config'] {
   return { nomeSalao: 'Meu Salão', profissional: '', telefoneContato: '' };
 }
 
+export function templatesPadrao(): MensagemTemplate[] {
+  return [
+    { id: 'tmp_1dia', nome: 'Lembrete 1 dia antes', tipo: 'lembrete_1dia', ativo: true,
+      mensagem: 'Olá {{nome}}, passando para lembrar que seu horário na {{salao}} é amanhã ({{data}}) às {{hora}}. Confirme sua presença! 💅' },
+    { id: 'tmp_1hora', nome: 'Lembrete 1 hora antes', tipo: 'lembrete_1hora', ativo: true,
+      mensagem: 'Olá {{nome}}, seu horário na {{salao}} é em aproximadamente 1 hora ({{hora}). Te esperamos! ✨' },
+    { id: 'tmp_confirmacao', nome: 'Confirmação de agendamento', tipo: 'confirmacao', ativo: true,
+      mensagem: 'Olá {{nome}}, seu agendamento na {{salao}} foi confirmado! 📅 {{data}} às {{hora}}. Qualquer dúvida é só chamar.' },
+  ];
+}
+
 export function emptyDb(): ManicureDb {
-  return { clientes: [], servicos: [], agendamentos: [], movimentos: [], produtos: [], config: defaultConfig(), initialized: true };
+  return {
+    clientes: [], servicos: [], agendamentos: [], movimentos: [], produtos: [],
+    whatsappInstances: [], mensagemTemplates: templatesPadrao(), mensagensEnviadas: [],
+    config: defaultConfig(), initialized: true,
+  };
 }
 
 export async function loadManicureDb(): Promise<ManicureDb> {
@@ -57,6 +72,9 @@ export async function loadManicureDb(): Promise<ManicureDb> {
         clientes: raw.clientes || [], servicos: raw.servicos || [],
         agendamentos: raw.agendamentos || [], movimentos: raw.movimentos || [],
         produtos: raw.produtos || [],
+        whatsappInstances: raw.whatsappInstances || [],
+        mensagemTemplates: raw.mensagemTemplates && raw.mensagemTemplates.length > 0 ? raw.mensagemTemplates : templatesPadrao(),
+        mensagensEnviadas: raw.mensagensEnviadas || [],
         config: { ...defaultConfig(), ...(raw.config || {}) }, initialized: true,
       };
     }

@@ -3,9 +3,9 @@ import { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   LayoutDashboard, Users, Calendar, DollarSign, Package, Settings as SettingsIcon,
-  Scissors, ArrowLeft, Sun, Moon, Sparkles,
+  Scissors, ArrowLeft, Sun, Moon, Sparkles, MessageCircle,
 } from 'lucide-react';
-import { ManicureDb, ClienteManicure, ServicoManicure, AgendamentoManicure, MovimentoCaixa, ProdutoEstoque } from './types';
+import { ManicureDb, ClienteManicure, ServicoManicure, AgendamentoManicure, MovimentoCaixa, ProdutoEstoque, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from './types';
 import { emptyDb, loadManicureDb, saveManicureDb, defaultConfig } from './localDb';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
@@ -13,9 +13,11 @@ import Agendamentos from './pages/Agendamentos';
 import Caixa from './pages/Caixa';
 import Estoque from './pages/Estoque';
 import Servicos from './pages/Servicos';
+import WhatsAppConfig from './pages/WhatsAppConfig';
 import Configuracoes from './pages/Configuracoes';
+import { useAppointmentScheduler } from './hooks/useAppointmentScheduler';
 
-export type Tab = 'dashboard' | 'clientes' | 'agendamentos' | 'servicos' | 'caixa' | 'estoque' | 'configuracoes';
+export type Tab = 'dashboard' | 'clientes' | 'agendamentos' | 'servicos' | 'caixa' | 'estoque' | 'whatsapp' | 'configuracoes';
 
 const NAV: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
@@ -24,6 +26,7 @@ const NAV: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'servicos', label: 'Serviços', icon: <Scissors size={20} /> },
   { id: 'caixa', label: 'Caixa', icon: <DollarSign size={20} /> },
   { id: 'estoque', label: 'Estoque', icon: <Package size={20} /> },
+  { id: 'whatsapp', label: 'WhatsApp', icon: <MessageCircle size={20} /> },
   { id: 'configuracoes', label: 'Ajustes', icon: <SettingsIcon size={20} /> },
 ];
 
@@ -88,7 +91,16 @@ export default function ManicureApp() {
   const setAgendamentos = (agendamentos: AgendamentoManicure[]) => { setDb((d) => ({ ...d, agendamentos })); persist({ agendamentos }); };
   const setMovimentos = (movimentos: MovimentoCaixa[]) => { setDb((d) => ({ ...d, movimentos })); persist({ movimentos }); };
   const setProdutos = (produtos: ProdutoEstoque[]) => { setDb((d) => ({ ...d, produtos })); persist({ produtos }); };
+  const setWhatsAppInstances = (whatsappInstances: ManicureWhatsAppInstance[]) => { setDb((d) => ({ ...d, whatsappInstances })); persist({ whatsappInstances }); };
+  const setMensagemTemplates = (mensagemTemplates: MensagemTemplate[]) => { setDb((d) => ({ ...d, mensagemTemplates })); persist({ mensagemTemplates }); };
+  const addMensagemEnviada = (m: MensagemEnviada) => { setDb((d) => ({ ...d, mensagensEnviadas: [...d.mensagensEnviadas, m] })); persist({ mensagensEnviadas: [...db.mensagensEnviadas, m] }); };
   const setConfig = (config: ManicureDb['config']) => { setDb((d) => ({ ...d, config })); persist({ config }); };
+
+  useAppointmentScheduler({
+    agendamentos: db.agendamentos, templates: db.mensagemTemplates,
+    mensagensEnviadas: db.mensagensEnviadas, config: db.config,
+    instances: db.whatsappInstances, onAddMensagem: addMensagemEnviada,
+  });
 
   if (loading) {
     return (
@@ -168,10 +180,11 @@ export default function ManicureApp() {
           >
             {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
             {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} setClientes={setClientes} />}
-            {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} movimentos={db.movimentos} />}
+            {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} />}
             {activeTab === 'servicos' && <Servicos servicos={db.servicos} setServicos={setServicos} />}
             {activeTab === 'caixa' && <Caixa movimentos={db.movimentos} />}
             {activeTab === 'estoque' && <Estoque produtos={db.produtos} setProdutos={setProdutos} />}
+            {activeTab === 'whatsapp' && <WhatsAppConfig instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onSaveInstances={setWhatsAppInstances} onSaveTemplates={setMensagemTemplates} />}
             {activeTab === 'configuracoes' && <Configuracoes config={db.config} setConfig={setConfig} />}
           </motion.div>
         </AnimatePresence>

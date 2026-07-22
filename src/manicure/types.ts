@@ -35,6 +35,7 @@ export interface AgendamentoManicure {
   valor: number;
   status: StatusAgendamento;
   observacoes?: string;
+  telefoneCliente?: string;
   createdAt: string;
   updatedAt?: string;
 }
@@ -67,12 +68,41 @@ export interface ProdutoEstoque {
   updatedAt?: string;
 }
 
+export interface ManicureWhatsAppInstance {
+  id: string;
+  name: string;
+  status: 'CONNECTED' | 'DISCONNECTED' | 'CONNECTING';
+  qrCode?: string;
+  createdAt: string;
+}
+
+export interface MensagemTemplate {
+  id: string;
+  nome: string;
+  tipo: 'lembrete_1dia' | 'lembrete_1hora' | 'confirmacao' | 'personalizado';
+  mensagem: string;
+  ativo: boolean;
+}
+
+export interface MensagemEnviada {
+  id: string;
+  agendamentoId: string;
+  clienteId: string;
+  clienteNome: string;
+  tipo: 'lembrete_1dia' | 'lembrete_1hora' | 'manual' | 'confirmacao';
+  mensagem: string;
+  status: 'enviado' | 'falha';
+  dataEnvio: string;
+  erro?: string;
+}
+
 export interface ConfigManicure {
   nomeSalao: string;
   profissional: string;
   telefoneContato?: string;
   endereco?: string;
   logo?: string;
+  whatsAppInstanceId?: string;
 }
 
 export interface ManicureDb {
@@ -81,6 +111,9 @@ export interface ManicureDb {
   agendamentos: AgendamentoManicure[];
   movimentos: MovimentoCaixa[];
   produtos: ProdutoEstoque[];
+  whatsappInstances: ManicureWhatsAppInstance[];
+  mensagemTemplates: MensagemTemplate[];
+  mensagensEnviadas: MensagemEnviada[];
   config: ConfigManicure;
   initialized?: boolean;
 }
