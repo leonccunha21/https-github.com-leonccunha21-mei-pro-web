@@ -113,11 +113,11 @@ export default function MounjaroApp() {
     }).finally(() => setSyncing(false));
   }, [getScope]);
 
-  const persist = useCallback(() => {
+  // persist aceita os dados explicitamente (evita stale closure do stateRef após setDb)
+  const persist = useCallback((newData?: Partial<MounjaroDb>) => {
     // Salva LOCALMENTE de forma IMEDIATA (sem debounce) para não perder
     // dados ao recarregar a página. O envio à nuvem continua com debounce.
-    const cur = stateRef.current;
-    const data = { ...cur, initialized: true };
+    const data: MounjaroDb = { ...stateRef.current, ...newData, initialized: true };
     saveMounjaroDb(data).catch(() => {});
 
     if (timerRef.current) clearTimeout(timerRef.current);
@@ -341,19 +341,21 @@ export default function MounjaroApp() {
   };
 
   // --- Setters por entidade ---
-  const setClientes = (clientes: ClienteMounjaro[]) => { setDb((d) => ({ ...d, clientes })); persist(); };
-  const setPesagens = (pesagens: PesagemMounjaro[]) => { setDb((d) => ({ ...d, pesagens })); persist(); };
-  const setDoses = (doses: DoseMounjaro[]) => { setDb((d) => ({ ...d, doses })); persist(); };
-  const setPagamentos = (pagamentos: PagamentoMounjaro[]) => { setDb((d) => ({ ...d, pagamentos })); persist(); };
-  const setFotos = (fotos: FotoEvolucao[]) => { setDb((d) => ({ ...d, fotos })); persist(); };
-  const setConfig = (config: MounjaroDb['config']) => { setDb((d) => ({ ...d, config })); persist(); };
+  // Passa os dados explicitamente ao persist para evitar stale closure do stateRef
+  const setClientes = (clientes: ClienteMounjaro[]) => { setDb((d) => ({ ...d, clientes })); persist({ clientes }); };
+  const setPesagens = (pesagens: PesagemMounjaro[]) => { setDb((d) => ({ ...d, pesagens })); persist({ pesagens }); };
+  const setDoses = (doses: DoseMounjaro[]) => { setDb((d) => ({ ...d, doses })); persist({ doses }); };
+  const setPagamentos = (pagamentos: PagamentoMounjaro[]) => { setDb((d) => ({ ...d, pagamentos })); persist({ pagamentos }); };
+  const setFotos = (fotos: FotoEvolucao[]) => { setDb((d) => ({ ...d, fotos })); persist({ fotos }); };
+  const setConfig = (config: MounjaroDb['config']) => { setDb((d) => ({ ...d, config })); persist({ config }); };
 
   // Registro de auditoria: histórico de alterações críticas.
   const nomeUsuario = cloudUser?.displayName || cloudUser?.email || 'usuário';
   const logAuditoria = useCallback(
     (params: { entidade: 'cliente' | 'dose' | 'pagamento' | 'pesagem' | 'foto'; acao: 'criar' | 'editar' | 'excluir'; resumo: string; clienteId?: string; refId?: string }) => {
-      setDb((d) => ({ ...d, auditoria: criarRegistroAuditoria({ ...params, usuario: nomeUsuario }, d.auditoria) }));
-      persist();
+      const auditoria = criarRegistroAuditoria({ ...params, usuario: nomeUsuario }, stateRef.current.auditoria);
+      setDb((d) => ({ ...d, auditoria }));
+      persist({ auditoria });
     },
     [nomeUsuario, persist]
   );
