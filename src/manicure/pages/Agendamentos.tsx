@@ -284,7 +284,7 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
         {filtered.map((ag) => (
           <div
             key={ag.id}
-            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-fuchsia-200 dark:hover:border-fuchsia-800 transition-all overflow-hidden"
+            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-fuchsia-200 dark:hover:border-fuchsia-800 transition-all"
           >
             {/* Barra de status colorida no topo */}
             <div className={`h-1 w-full ${STATUS_MAP[ag.status].dot}`} />
