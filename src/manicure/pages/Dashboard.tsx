@@ -166,7 +166,7 @@ export default function Dashboard({ db, onNavigate, setAgendamentos, onAddMensag
       </div>
 
       {/* Agenda de Hoje */}
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700">
         <div className="flex items-center justify-between px-5 py-4 border-b border-slate-100 dark:border-slate-700">
           <h3 className="font-bold text-sm flex items-center gap-2">
             <Calendar className="h-4 w-4 text-fuchsia-600" />
