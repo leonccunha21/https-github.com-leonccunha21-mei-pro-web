@@ -56,6 +56,10 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
   const [whatsAppTarget, setWhatsAppTarget] = useState<AgendamentoManicure | null>(null);
   const [showNewCliente, setShowNewCliente] = useState(false);
   const [novoClienteForm, setNovoClienteForm] = useState({ nome: '', telefone: '' });
+  // Modal de pagamento ao concluir
+  const [pagamentoTarget, setPagamentoTarget] = useState<AgendamentoManicure | null>(null);
+  const [formaPagamento, setFormaPagamento] = useState<MovimentoCaixa['formaPagamento']>('dinheiro');
+  const [valorPagamento, setValorPagamento] = useState('');
 
   useEffect(() => {
     const handler = () => {
@@ -127,6 +131,17 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
     const servico = servicosAtivos.find((s) => s.id === form.servicoId);
     if (!cliente || !servico) { toast.error('Cliente ou serviço inválido'); return; }
 
+    // Aviso de conflito de horário
+    const conflito = agendamentos.find((a) =>
+      a.data === form.data &&
+      a.hora === form.hora &&
+      a.status !== 'cancelado' &&
+      a.id !== editId
+    );
+    if (conflito) {
+      toast(`⚠️ Já existe um agendamento às ${form.hora} para ${conflito.clienteNome}`, { icon: '⚠️', duration: 4000 });
+    }
+
     if (editId) {
       setAgendamentos(agendamentos.map((a) => a.id === editId ? {
         ...a, clienteId: form.clienteId, clienteNome: cliente.nome,
@@ -165,21 +180,38 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
     const ag = agendamentos.find((a) => a.id === id);
     if (!ag) return;
 
-    setAgendamentos(agendamentos.map((a) => a.id === id ? { ...a, status: novoStatus, updatedAt: new Date().toISOString() } : a));
-
     if (novoStatus === 'concluido') {
-      const jaTem = movimentos.some((m) => m.agendamentoId === id);
-      if (!jaTem) {
-        const mov: MovimentoCaixa = {
-          id: newId('mov'), data: new Date().toISOString().slice(0, 10),
-          tipo: 'entrada', descricao: `${ag.servicoNome} - ${ag.clienteNome}`,
-          valor: ag.valor, categoria: 'servico', formaPagamento: 'dinheiro',
-          clienteId: ag.clienteId, agendamentoId: ag.id, createdAt: new Date().toISOString(),
-        };
-        setMovimentos([...movimentos, mov]);
-      }
+      // Abre modal de pagamento antes de concluir
+      setPagamentoTarget(ag);
+      setFormaPagamento('dinheiro');
+      setValorPagamento(ag.valor.toFixed(2));
+      return;
     }
+
+    setAgendamentos(agendamentos.map((a) => a.id === id ? { ...a, status: novoStatus, updatedAt: new Date().toISOString() } : a));
     toast.success(`Status alterado para "${STATUS_MAP[novoStatus].label}"`);
+  };
+
+  const confirmarPagamento = () => {
+    if (!pagamentoTarget) return;
+    const ag = pagamentoTarget;
+    const valor = parseFloat(valorPagamento);
+    if (isNaN(valor) || valor <= 0) { toast.error('Valor inválido'); return; }
+
+    setAgendamentos(agendamentos.map((a) => a.id === ag.id ? { ...a, status: 'concluido', updatedAt: new Date().toISOString() } : a));
+
+    const jaTem = movimentos.some((m) => m.agendamentoId === ag.id);
+    if (!jaTem) {
+      const mov: MovimentoCaixa = {
+        id: newId('mov'), data: new Date().toISOString().slice(0, 10),
+        tipo: 'entrada', descricao: `${ag.servicoNome} - ${ag.clienteNome}`,
+        valor, categoria: 'servico', formaPagamento,
+        clienteId: ag.clienteId, agendamentoId: ag.id, createdAt: new Date().toISOString(),
+      };
+      setMovimentos([...movimentos, mov]);
+    }
+    toast.success('Serviço concluído e lançado no caixa!');
+    setPagamentoTarget(null);
   };
 
   const cells: ReactNode[] = [];
@@ -487,6 +519,74 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
         config={config}
         onAddMensagem={onAddMensagem}
       />
+
+      {/* Modal de Pagamento ao Concluir */}
+      {pagamentoTarget && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4" onClick={() => setPagamentoTarget(null)}>
+          <div className="w-full max-w-sm bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-xl bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
+                <Check className="h-5 w-5 text-emerald-600" />
+              </div>
+              <div>
+                <h3 className="font-bold text-slate-900 dark:text-slate-100">Concluir Serviço</h3>
+                <p className="text-xs text-slate-500">{pagamentoTarget.clienteNome} · {pagamentoTarget.servicoNome}</p>
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase mb-1.5 block">Forma de Pagamento</label>
+                <div className="grid grid-cols-3 gap-1.5">
+                  {([
+                    { v: 'dinheiro', l: 'Dinheiro' },
+                    { v: 'pix', l: 'Pix' },
+                    { v: 'cartao_debito', l: 'Débito' },
+                    { v: 'cartao_credito', l: 'Crédito' },
+                    { v: 'transferencia', l: 'Transfer.' },
+                  ] as { v: MovimentoCaixa['formaPagamento']; l: string }[]).map(({ v, l }) => (
+                    <button
+                      key={v}
+                      onClick={() => setFormaPagamento(v)}
+                      className={`py-2 rounded-xl text-xs font-bold transition-colors ${
+                        formaPagamento === v
+                          ? 'bg-emerald-600 text-white'
+                          : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
+                      }`}
+                    >
+                      {l}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-500 uppercase mb-1.5 block">Valor Cobrado (R$)</label>
+                <input
+                  type="number"
+                  value={valorPagamento}
+                  onChange={(e) => setValorPagamento(e.target.value)}
+                  min="0"
+                  step="0.01"
+                  className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2.5 text-sm font-bold text-emerald-600 outline-none focus:ring-2 focus:ring-emerald-500"
+                />
+                {parseFloat(valorPagamento) !== pagamentoTarget.valor && (
+                  <p className="text-[10px] text-amber-600 mt-1">Preço do serviço: R$ {pagamentoTarget.valor.toFixed(2)}</p>
+                )}
+              </div>
+            </div>
+
+            <div className="flex gap-2 mt-5">
+              <button onClick={() => setPagamentoTarget(null)} className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm hover:bg-slate-50 dark:hover:bg-slate-700">
+                Cancelar
+              </button>
+              <button onClick={confirmarPagamento} className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold flex items-center justify-center gap-2">
+                <Check className="h-4 w-4" /> Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

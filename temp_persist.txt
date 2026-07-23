@@ -1,0 +1,80 @@
+  // --- Nuvem: envia o banco completo, SEM PERDER DADO de nenhum aparelho ---
+  // Antes de subir, baixa a nuvem e faz UNIÃO por id (o mais recente vence por
+  // id, mas nada é descartado). Assim os dados de OUTROS aparelhos nunca somem.
+  // Depois sobe o resultado unificado. A nuvem passa a ter TUDO de todos.
+  const persist = (partial: Partial<LocalDb>) => {
+    const cur = stateRef.current;
+    const prev = pendingRef.current;
+    const merged: LocalDb = {
+      products: partial.products ?? prev.products ?? cur.products,
+      sales: partial.sales ?? prev.sales ?? cur.sales,
+      categories: partial.categories ?? prev.categories ?? cur.categories,
+      expenses: partial.expenses ?? prev.expenses ?? cur.expenses,
+      orders: partial.orders ?? prev.orders ?? cur.orders,
+      storeInfo: partial.storeInfo !== undefined ? partial.storeInfo : (prev.storeInfo !== undefined ? prev.storeInfo : cur.storeInfo),
+      customers: partial.customers ?? prev.customers ?? cur.customers,
+      suppliers: partial.suppliers ?? prev.suppliers ?? cur.suppliers,
+      purchases: partial.purchases ?? prev.purchases ?? cur.purchases,
+      cashSessions: partial.cashSessions ?? prev.cashSessions ?? cur.cashSessions,
+      loans: partial.loans ?? prev.loans ?? cur.loans,
+      leads: partial.leads ?? prev.leads ?? cur.leads ?? [],
+      leadJobs: partial.leadJobs ?? prev.leadJobs ?? cur.leadJobs ?? [],
+      whatsappInstances: partial.whatsappInstances ?? prev.whatsappInstances ?? cur.whatsappInstances ?? [],
+      aiAgents: partial.aiAgents ?? prev.aiAgents ?? cur.aiAgents ?? [],
+      opportunities: partial.opportunities ?? prev.opportunities ?? cur.opportunities ?? [],
+      bills: partial.bills ?? prev.bills ?? cur.bills ?? [],
+      internetUsers: partial.internetUsers ?? prev.internetUsers ?? cur.internetUsers ?? [],
+      initialized: true,
+    };
+    pendingRef.current = merged;
+
+    // Salva LOCALMENTE AGORA (imediato) — não perde ao recarregar.
+    saveDb(merged, (cloudErr) => {
+      showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
+    }).catch((e) => {
+      console.error('Erro ao salvar banco local:', e);
+      showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
+    });
+
+    // Debounce só para o timer de "pending" (evita múltiplos saves rápidos)
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = window.setTimeout(() => {
+      pendingRef.current = {};
+    }, 250);
+  };
+
+  // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)
+  useEffect(() => {
+    const flush = () => {
+      if (document.visibilityState === 'hidden' && Object.keys(pendingRef.current).length > 0) {
+        const db = pendingRef.current as LocalDb;
+        pendingRef.current = {};
+        if (saveTimer.current) {
+          clearTimeout(saveTimer.current);
+          saveTimer.current = null;
+        }
+        saveDb(db, (cloudErr) => {
+          showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
+        }).catch((e) => {
+          console.error('Erro ao salvar banco local:', e);
+          showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
+        });
+      }
+    };
+    document.addEventListener('visibilitychange', flush);
+    window.addEventListener('pagehide', flush);
+    return () => {
+      document.removeEventListener('visibilitychange', flush);
+      window.removeEventListener('pagehide', flush);
+    };
+  }, []);
+
+  // Re-sincroniza o estado quando OUTRA aba atualiza o banco (M3).
+  // Só reaplica se não houver gravação pendente local, para não sobrescrever
+  // edições em andamento nesta aba.
+  useEffect(() => {
+    if (typeof BroadcastChannel === 'undefined') return;
+    const ch = new BroadcastChannel('zmstore-sync');
+    ch.onmessage = (ev) => {
+      if (ev.data && ev.data.type === 'db-updated' && Object.keys(pendingRef.current).length === 0) {
+        loadDb().then(db => { if (db) applyLoadedDb(db); });

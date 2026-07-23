@@ -4,53 +4,16 @@
 A diretriz do documento de separar a infraestrutura em **Frontend (Vercel)** e **Backend (VPS contínua)** está perfeitamente correta. Plataformas Serverless como a Vercel têm limites rígidos de tempo de execução (timeouts de poucos segundos na versão gratuita/Pro) e não suportam processos rodando eternamente em segundo plano, o que é mandatório para websockets e scrapers.
 
 
+🔴 Implementar imediatamente:
 
+- [ ] #4 — Forma de pagamento ao concluir é um bug silencioso hoje — toda conclusão registra formaPagamento: 'dinheiro' no caixa sem perguntar, então o relatório de meios de pagamento está sempre errado. Correção simples: mini-modal com "Como foi pago?" ao clicar em ✓.
 
-Fix A: SalesHistory totalProfit usa sale.profit — recalcular com total-totalCost (SalesHistory.tsx:199)
-Fix B: Confirmar pagamento não adiciona updatedAt + paidAt (SalesHistory.tsx:241)
-Fix C: Cancelar venda não adiciona updatedAt no produto restaurado (App.tsx:911)
-Fix D: OS/Orçamento handleSubmit não grava updatedAt + handleStatusChange não grava updatedAt (OsOrcamento.tsx)
-Fix E: SalesHistory export Excel usa sale.profit — recalcular (SalesHistory.tsx:354)
+- [ ] #3 — Clientes sumidas no Dashboard — usando só dados que já existem (agendamentos + clientes), um bloco "Reconquistar" com as clientes sem visita há 30+ dias + botão WhatsApp direto. Zero nova tabela, impacto direto em receita.
 
+- [ ] #1 — Perfil da cliente — hoje ao clicar numa cliente em Clientes.tsx não acontece nada. Um modal com histórico de serviços, total gasto e última visita transforma completamente a experiência.
 
+- [ ] #2 — Gráfico de receita — a tela Caixa.tsx tem todos os dados mas exibe só lista plana. Um gráfico de barras SVG puro (sem biblioteca) com receita por dia da semana muda completamente a percepção de valor do sistema.
 
-### 📦 FASE 1 — Quick Wins de PDV (1–2 semanas)
-> Scanner de código de barras + PDF de recibos + etiquetas. Alto impacto, baixo esforço.
-
-#### 1.1 Scanner de Código de Barras no PDV
-- [x] Instalar dependência: `npm install @ericblade/quagga2`
-- [x] Criar `src/components/BarcodeScanner.tsx` — modal com feed da webcam
-- [x] Inicializar `Quagga.init()` com config para detectar EAN-13, EAN-8, Code128, UPC
-- [x] Callback de detecção: buscar produto pelo `code` (SKU) no catálogo
-- [x] Se encontrar → adicionar ao carrinho automaticamente; se não → toast "Produto não encontrado"
-- [x] Botão 📷 de câmera ao lado do campo de busca em `Sales.tsx`
-- [x] Testar com código de barras reais de produtos
-
-#### 1.2 PDF de Recibos (Download/Compartilhamento)
-- [x] Instalar dependência: `npm install react-to-pdf`
-- [x] Criar `src/components/ReceiptPDF.tsx` — template React do recibo
-  - Logo da loja, nome, CNPJ/CPF
-  - Lista de itens (nome, qtd, preço unitário, total)
-  - Forma de pagamento, desconto, total final
-  - Data/hora, número da venda
-- [x] Botões "Baixar PDF" e "Compartilhar" pós-venda em `Sales.tsx`
-- [x] Botões "Baixar PDF" e "Compartilhar" no `SalesHistory.tsx`
-- [x] Testar geração e download do PDF
-
-#### 1.3 Etiquetas de Produtos com Código de Barras/QR
-- [x] Instalar dependência: `npm install jsbarcode`
-- [x] Criar `src/components/LabelPrinter.tsx` — seleção de produtos → preview das etiquetas
-- [x] Layout da etiqueta: nome do produto, preço, código de barras (Code128), QR code
-- [x] Opções: cópias por etiqueta, seleção individual/múltipla, impressão A4 ou PDF
-- [x] Botão "Etiquetas" na tela de Produtos (`Products.tsx`)
-- [x] Testar impressão em folha A4 e preview no navegador
-
-**Dependências Fase 1:**
-```bash
-npm install @ericblade/quagga2 react-to-pdf jsbarcode
-```
-
----
 
 ### 📊 FASE 2 — Tabelas Robustas + State Management (2–3 semanas)
 > TanStack Table + TanStack Query. Melhoria massiva na usabilidade.
