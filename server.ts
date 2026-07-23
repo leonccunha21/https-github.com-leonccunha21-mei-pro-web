@@ -187,6 +187,9 @@ async function requireAuth(req: express.Request, res: express.Response, next: ex
     '/api/health',
     '/api/supabase-status',
     '/api/stripe/webhook',
+    '/api/create-checkout',
+    '/api/create-portal',
+    '/api/subscription',
   ];
   if (publicPaths.some(p => req.path.startsWith(p))) {
     return next();
