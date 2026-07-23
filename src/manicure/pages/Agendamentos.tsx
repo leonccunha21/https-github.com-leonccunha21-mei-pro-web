@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, type ReactNode } from 'react';
 import { AgendamentoManicure, ClienteManicure, ServicoManicure, MovimentoCaixa, StatusAgendamento, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance, ConfigManicure } from '../types';
 import { newId } from '../localDb';
-import { Calendar as CalendarIcon, Plus, Clock, Check, X, ChevronRight, ChevronLeft, MessageCircle, MoreVertical, Edit3, Trash2, Send, Loader2 } from 'lucide-react';
+import { Calendar as CalendarIcon, Plus, Clock, Check, X, ChevronRight, ChevronLeft, MessageCircle, MoreVertical, Edit3, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import WhatsAppMessageModal from '../components/WhatsAppMessageModal';
 
@@ -10,13 +10,14 @@ interface Props {
   clientes: ClienteManicure[];
   servicos: ServicoManicure[];
   setAgendamentos: (a: AgendamentoManicure[]) => void;
+  setClientes: (c: ClienteManicure[]) => void;
   setMovimentos: (m: MovimentoCaixa[]) => void;
   movimentos: MovimentoCaixa[];
   instances: ManicureWhatsAppInstance[];
   templates: MensagemTemplate[];
   mensagensEnviadas: MensagemEnviada[];
   onAddMensagem: (m: MensagemEnviada) => void;
-  config: ConfigManicure;
+  config: { nomeSalao: string };
 }
 
 const STATUS_MAP: Record<StatusAgendamento, { label: string; color: string; dot: string }> = {
@@ -41,7 +42,7 @@ function formatDate(ano: number, mes: number, dia: number) {
   return `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
 }
 
-export default function Agendamentos({ agendamentos, clientes, servicos, setAgendamentos, setMovimentos, movimentos, instances, templates, mensagensEnviadas, onAddMensagem, config }: Props) {
+export default function Agendamentos({ agendamentos, clientes, servicos, setAgendamentos, setClientes, setMovimentos, movimentos, instances, templates, mensagensEnviadas, onAddMensagem, config }: Props) {
   const hoje = new Date();
   const hojeStr = formatDate(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
   const [ano, setAno] = useState(hoje.getFullYear());
@@ -53,9 +54,8 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
   const [form, setForm] = useState({ clienteId: '', servicoId: '', data: '', hora: '', observacoes: '' });
   const [menuOpen, setMenuOpen] = useState<string | null>(null);
   const [whatsAppTarget, setWhatsAppTarget] = useState<AgendamentoManicure | null>(null);
-  const [sendingWpp, setSendingWpp] = useState<string | null>(null);
-
-  const instanceConectada = instances.find((i) => i.status === 'CONNECTED');
+  const [showNewCliente, setShowNewCliente] = useState(false);
+  const [novoClienteForm, setNovoClienteForm] = useState({ nome: '', telefone: '' });
 
   useEffect(() => {
     const handler = () => {
@@ -282,51 +282,77 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
 
       <div className="space-y-2">
         {filtered.map((ag) => (
-          <div key={ag.id} className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 hover:shadow-sm transition-shadow">
-            <div className="flex items-center gap-4">
-              <div className="flex flex-col items-center shrink-0 w-14">
-                <span className="text-lg font-bold text-slate-900 dark:text-slate-100 leading-tight">{ag.hora.slice(0, 5)}</span>
+          <div
+            key={ag.id}
+            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-fuchsia-200 dark:hover:border-fuchsia-800 transition-all overflow-hidden"
+          >
+            {/* Barra de status colorida no topo */}
+            <div className={`h-1 w-full ${STATUS_MAP[ag.status].dot}`} />
+
+            <div className="flex items-center gap-3 p-4">
+              {/* Hora em destaque */}
+              <div className="shrink-0 w-14 text-center">
+                <span className="text-xl font-bold text-slate-900 dark:text-slate-100 leading-tight">{ag.hora.slice(0, 5)}</span>
+                <p className="text-[9px] text-slate-400 uppercase mt-0.5">horário</p>
               </div>
-              <div className="w-0.5 h-10 bg-slate-200 dark:bg-slate-700 rounded-full shrink-0" />
+
+              <div className="w-px h-12 bg-slate-200 dark:bg-slate-700 rounded-full shrink-0" />
+
+              {/* Info do agendamento */}
               <div className="flex-1 min-w-0">
-                <p className="font-bold text-slate-900 dark:text-slate-100 truncate">{ag.clienteNome}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400">{ag.servicoNome} · R$ {ag.valor.toFixed(2)}</p>
-                {ag.observacoes && <p className="text-xs text-slate-400 mt-0.5 truncate">{ag.observacoes}</p>}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <p className="font-bold text-slate-900 dark:text-slate-100 truncate">{ag.clienteNome}</p>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${STATUS_MAP[ag.status].color}`}>
+                    {STATUS_MAP[ag.status].label}
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{ag.servicoNome}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className="text-sm font-bold text-emerald-600">R$ {ag.valor.toFixed(2)}</span>
+                  {ag.telefoneCliente && (
+                    <span className="text-[10px] text-slate-400">{ag.telefoneCliente}</span>
+                  )}
+                </div>
+                {ag.observacoes && <p className="text-xs text-slate-400 mt-0.5 truncate italic">{ag.observacoes}</p>}
               </div>
-              <div className="flex items-center gap-1.5 shrink-0">
-                <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase ${STATUS_MAP[ag.status].color}`}>
-                  {STATUS_MAP[ag.status].label}
-                </span>
 
-                {/* WhatsApp button - always visible when client has phone */}
-                {ag.telefoneCliente ? (
-                  <button
-                    onClick={() => setWhatsAppTarget(ag)}
-                    className="p-2 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
-                    title="Enviar mensagem WhatsApp"
-                  >
-                    <Send className="h-4 w-4" />
-                  </button>
-                ) : (
-                  <span className="text-[10px] text-slate-400 px-1">Sem tel.</span>
-                )}
-
-                {/* Status actions */}
+              {/* Ações */}
+              <div className="flex items-center gap-1 shrink-0">
+                {/* Status rápido */}
                 {ag.status === 'agendado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'confirmado')} className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200" title="Confirmar"><Check className="h-4 w-4" /></button>
+                  <button onClick={() => mudarStatus(ag.id, 'confirmado')} className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200" title="Confirmar">
+                    <Check className="h-3.5 w-3.5" />
+                  </button>
                 )}
                 {ag.status === 'confirmado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'concluido')} className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" title="Concluir"><Check className="h-4 w-4" /></button>
+                  <button onClick={() => mudarStatus(ag.id, 'concluido')} className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" title="Concluir">
+                    <Check className="h-3.5 w-3.5" />
+                  </button>
                 )}
                 {ag.status !== 'concluido' && ag.status !== 'cancelado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-2 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar"><X className="h-4 w-4" /></button>
+                  <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar">
+                    <X className="h-3.5 w-3.5" />
+                  </button>
                 )}
 
-                {/* More options */}
+                {/* WhatsApp — sempre visível */}
+                <button
+                  onClick={() => ag.telefoneCliente ? setWhatsAppTarget(ag) : toast.error('Cliente sem telefone cadastrado')}
+                  className={`p-1.5 rounded-lg transition-colors ${
+                    ag.telefoneCliente
+                      ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200'
+                      : 'bg-slate-100 dark:bg-slate-700 text-slate-400 opacity-50 cursor-not-allowed'
+                  }`}
+                  title={ag.telefoneCliente ? 'Enviar mensagem WhatsApp' : 'Sem telefone cadastrado'}
+                >
+                  <MessageCircle className="h-3.5 w-3.5" />
+                </button>
+
+                {/* Mais opções */}
                 <div className="relative">
                   <button
                     onClick={() => setMenuOpen(menuOpen === ag.id ? null : ag.id)}
-                    className="p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors border border-slate-200 dark:border-slate-600"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
                     title="Mais opções"
                   >
                     <MoreVertical className="h-4 w-4" />
@@ -335,27 +361,29 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
                   {menuOpen === ag.id && (
                     <>
                       <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(null)} />
-                      <div className="absolute right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[150px]">
+                      <div className="absolute right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[160px]">
                         <button
                           onClick={() => { setMenuOpen(null); openEdit(ag); }}
-                          className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                         >
                           <Edit3 className="h-3.5 w-3.5" /> Editar
                         </button>
                         <button
+                          onClick={() => { setMenuOpen(null); setWhatsAppTarget(ag); }}
+                          className={`w-full flex items-center gap-2 px-3 py-2 text-xs font-bold hover:bg-emerald-50 dark:hover:bg-emerald-900/20 ${
+                            ag.telefoneCliente ? 'text-emerald-600' : 'text-slate-400 cursor-not-allowed opacity-50'
+                          }`}
+                          disabled={!ag.telefoneCliente}
+                        >
+                          <MessageCircle className="h-3.5 w-3.5" /> Enviar WhatsApp
+                        </button>
+                        <div className="border-t border-slate-100 dark:border-slate-700 my-1" />
+                        <button
                           onClick={() => excluirAgendamento(ag.id)}
-                          className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
                         >
                           <Trash2 className="h-3.5 w-3.5" /> Excluir
                         </button>
-                        {ag.telefoneCliente && (
-                          <button
-                            onClick={() => { setMenuOpen(null); setWhatsAppTarget(ag); }}
-                            className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
-                          >
-                            <MessageCircle className="h-3.5 w-3.5" /> WhatsApp
-                          </button>
-                        )}
                       </div>
                     </>
                   )}
@@ -380,10 +408,54 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
           <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6" onClick={(e) => e.stopPropagation()}>
             <h3 className="text-lg font-bold mb-4">{editId ? 'Editar Agendamento' : 'Novo Agendamento'}</h3>
             <div className="space-y-3">
-              <select value={form.clienteId} onChange={(e) => setForm({ ...form, clienteId: e.target.value })} className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-fuchsia-500">
-                <option value="">Selecione o cliente</option>
-                {clientes.map((c) => <option key={c.id} value={c.id}>{c.nome}</option>)}
-              </select>
+              <div className="space-y-2">
+                <select value={form.clienteId} onChange={(e) => setForm({ ...form, clienteId: e.target.value })} className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-fuchsia-500">
+                  <option value="">Selecione o cliente</option>
+                  {clientes.map((c) => <option key={c.id} value={c.id}>{c.nome}{c.telefone ? ` - ${c.telefone}` : ''}</option>)}
+                </select>
+                <button
+                  type="button"
+                  onClick={() => setShowNewCliente(!showNewCliente)}
+                  className="text-xs font-bold text-fuchsia-600 hover:text-fuchsia-700 flex items-center gap-1"
+                >
+                  <Plus className="h-3 w-3" /> {showNewCliente ? 'Cancelar' : '+ Novo Cliente'}
+                </button>
+                {showNewCliente && (
+                  <div className="space-y-2 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <input
+                      value={novoClienteForm.nome}
+                      onChange={(e) => setNovoClienteForm({ ...novoClienteForm, nome: e.target.value })}
+                      placeholder="Nome do cliente *"
+                      className="w-full rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-fuchsia-500"
+                    />
+                    <input
+                      value={novoClienteForm.telefone}
+                      onChange={(e) => setNovoClienteForm({ ...novoClienteForm, telefone: e.target.value })}
+                      placeholder="Telefone (com DDD)"
+                      className="w-full rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-900 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-fuchsia-500"
+                    />
+                    <button
+                      onClick={() => {
+                        if (!novoClienteForm.nome.trim()) { toast.error('Nome é obrigatório'); return; }
+                        const novo: ClienteManicure = {
+                          id: newId('cli'),
+                          nome: novoClienteForm.nome.trim(),
+                          telefone: novoClienteForm.telefone.trim() || undefined,
+                          createdAt: new Date().toISOString(),
+                        };
+                        setClientes([...clientes, novo]);
+                        setForm({ ...form, clienteId: novo.id });
+                        setNovoClienteForm({ nome: '', telefone: '' });
+                        setShowNewCliente(false);
+                        toast.success('Cliente cadastrado!');
+                      }}
+                      className="w-full py-2 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 text-white text-xs font-bold"
+                    >
+                      Salvar Cliente
+                    </button>
+                  </div>
+                )}
+              </div>
               <select value={form.servicoId} onChange={(e) => setForm({ ...form, servicoId: e.target.value })} className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2.5 text-sm outline-none focus:ring-2 focus:ring-fuchsia-500">
                 <option value="">Selecione o serviço</option>
                 {servicosAtivos.map((s) => <option key={s.id} value={s.id}>{s.nome} - R$ {s.preco.toFixed(2)}</option>)}
