@@ -1,3 +1,5 @@
 export const roundCurrency = (value: number): number => {
-  return Math.round((value + 1e-9) * 100) / 100;
+  // Fix for floating point precision: use decimal.js-like approach
+  // 1.005 * 100 = 100.5 -> round = 101 -> /100 = 1.01
+  return Math.round(value * 100 + Number.EPSILON) / 100;
 };

@@ -61,16 +61,24 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
 
   const instanceConectada = instances.find((i) => i.status === 'CONNECTED');
   const templateConfirmacao = templates.find((t) => t.tipo === 'confirmacao' && t.ativo);
+  const templateLembrete = templates.find((t) => t.tipo === 'lembrete_1dia' && t.ativo);
 
-  const enviarWhatsApp = async (ag: AgendamentoManicure, tipo: 'confirmacao' | 'manual') => {
+  const enviarWhatsApp = async (ag: AgendamentoManicure, tipo: 'confirmacao' | 'lembrete_1dia') => {
     if (!instanceConectada) { toast.error('Conecte o WhatsApp nas configurações primeiro.'); return; }
     if (!ag.telefoneCliente) { toast.error('Cliente não possui telefone cadastrado.'); return; }
     setSendingWpp(ag.id);
     try {
       const nomeCliente = ag.clienteNome.split(' ')[0];
-      const msg = tipo === 'confirmacao' && templateConfirmacao
-        ? preencherTemplate(templateConfirmacao.mensagem, { nome: nomeCliente, salao: ag.servicoNome, data: ag.data, hora: ag.hora.slice(0, 5) })
-        : `Olá ${nomeCliente}, seu agendamento (${ag.servicoNome}) é dia ${ag.data} às ${ag.hora.slice(0, 5)}. Confirme sua presença! 💅`;
+      let msg = '';
+      if (tipo === 'confirmacao') {
+        msg = templateConfirmacao
+          ? preencherTemplate(templateConfirmacao.mensagem, { nome: nomeCliente, salao: ag.servicoNome, data: ag.data, hora: ag.hora.slice(0, 5) })
+          : `Olá ${nomeCliente}, seu agendamento (${ag.servicoNome}) está marcado para o dia ${new Date(ag.data + 'T12:00:00').toLocaleDateString('pt-BR')} às ${ag.hora.slice(0, 5)}. Confirme sua presença! 💅`;
+      } else {
+        msg = templateLembrete
+          ? preencherTemplate(templateLembrete.mensagem, { nome: nomeCliente, salao: ag.servicoNome, data: ag.data, hora: ag.hora.slice(0, 5) })
+          : `Olá ${nomeCliente}, passando para lembrar do seu agendamento (${ag.servicoNome}) amanhã às ${ag.hora.slice(0, 5)}! Te esperamos. 💅`;
+      }
 
       const numero = ag.telefoneCliente.replace(/\D/g, '');
       const mod = await import('../../lib/vps');
@@ -325,21 +333,33 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
                 {ag.status === 'agendado' && (
                   <div className="flex gap-1">
                     <button onClick={() => mudarStatus(ag.id, 'confirmado')} className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200" title="Confirmar"><Check className="h-3.5 w-3.5" /></button>
-                    <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar"><X className="h-3.5 w-3.5" /></button>
                   </div>
                 )}
                 {ag.status === 'confirmado' && (
                   <button onClick={() => mudarStatus(ag.id, 'concluido')} className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" title="Concluir"><Check className="h-3.5 w-3.5" /></button>
                 )}
+                {ag.status !== 'concluido' && ag.status !== 'cancelado' && (
+                  <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar Agendamento"><X className="h-3.5 w-3.5" /></button>
+                )}
                 {ag.telefoneCliente && instanceConectada && (
-                  <button
-                    onClick={() => enviarWhatsApp(ag, 'manual')}
-                    disabled={sendingWpp === ag.id}
-                    className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 disabled:opacity-50"
-                    title="Enviar WhatsApp"
-                  >
-                    {sendingWpp === ag.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
-                  </button>
+                  <div className="flex gap-1">
+                    <button
+                      onClick={() => enviarWhatsApp(ag, 'confirmacao')}
+                      disabled={sendingWpp === ag.id}
+                      className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 disabled:opacity-50"
+                      title="Enviar Confirmação (WhatsApp)"
+                    >
+                      {sendingWpp === ag.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
+                    </button>
+                    <button
+                      onClick={() => enviarWhatsApp(ag, 'lembrete_1dia')}
+                      disabled={sendingWpp === ag.id}
+                      className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 disabled:opacity-50"
+                      title="Enviar Lembrete (WhatsApp)"
+                    >
+                      {sendingWpp === ag.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <MessageCircle className="h-3.5 w-3.5" />}
+                    </button>
+                  </div>
                 )}
                 {ag.status === 'cancelado' && (
                   <button onClick={() => excluirAgendamento(ag.id)} className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600" title="Excluir agendamento cancelado">

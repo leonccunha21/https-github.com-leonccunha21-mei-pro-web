@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { MovimentoCaixa } from '../types';
 import { newId } from '../localDb';
-import { DollarSign, TrendingUp, TrendingDown, Search, Plus, X, Trash2 } from 'lucide-react';
+import { DollarSign, TrendingUp, TrendingDown, Search, Plus, X, Trash2, Pencil } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -30,21 +30,51 @@ export default function Caixa({ movimentos, setMovimentos }: Props) {
   }, [filtered]);
 
   const [showModal, setShowModal] = useState(false);
+  const [editandoId, setEditandoId] = useState<string | null>(null);
   const [form, setForm] = useState({ tipo: 'saida' as 'entrada' | 'saida', descricao: '', valor: '', categoria: 'despesa' as MovimentoCaixa['categoria'], formaPagamento: 'dinheiro' as MovimentoCaixa['formaPagamento'] });
+
+  const abrirNovaModal = () => {
+    setEditandoId(null);
+    setForm({ tipo: 'saida', descricao: '', valor: '', categoria: 'despesa', formaPagamento: 'dinheiro' });
+    setShowModal(true);
+  };
+
+  const abrirEdicao = (m: MovimentoCaixa) => {
+    setEditandoId(m.id);
+    setForm({
+      tipo: m.tipo,
+      descricao: m.descricao,
+      valor: m.valor.toString(),
+      categoria: m.categoria,
+      formaPagamento: m.formaPagamento || 'dinheiro'
+    });
+    setShowModal(true);
+  };
 
   const salvarMovimento = () => {
     if (!form.descricao.trim() || !form.valor) { toast.error('Descrição e valor são obrigatórios'); return; }
     const valor = parseFloat(form.valor);
     if (isNaN(valor) || valor <= 0) { toast.error('Valor inválido'); return; }
-    const novo: MovimentoCaixa = {
-      id: newId('mov'), data: new Date().toISOString().slice(0, 10),
-      tipo: form.tipo, descricao: form.descricao, valor,
-      categoria: form.categoria, formaPagamento: form.formaPagamento,
-      createdAt: new Date().toISOString(),
-    };
-    setMovimentos?.([...movimentos, novo]);
-    toast.success(`${form.tipo === 'entrada' ? 'Entrada' : 'Saída'} registrada`);
+
+    if (editandoId) {
+      const editado = movimentos.map(m => m.id === editandoId ? {
+        ...m, tipo: form.tipo, descricao: form.descricao, valor, categoria: form.categoria, formaPagamento: form.formaPagamento
+      } : m);
+      setMovimentos?.(editado);
+      toast.success('Lançamento atualizado');
+    } else {
+      const novo: MovimentoCaixa = {
+        id: newId('mov'), data: new Date().toISOString().slice(0, 10),
+        tipo: form.tipo, descricao: form.descricao, valor,
+        categoria: form.categoria, formaPagamento: form.formaPagamento,
+        createdAt: new Date().toISOString(),
+      };
+      setMovimentos?.([...movimentos, novo]);
+      toast.success(`${form.tipo === 'entrada' ? 'Entrada' : 'Saída'} registrada`);
+    }
+
     setShowModal(false);
+    setEditandoId(null);
     setForm({ tipo: 'saida', descricao: '', valor: '', categoria: 'despesa', formaPagamento: 'dinheiro' });
   };
 
@@ -56,7 +86,7 @@ export default function Caixa({ movimentos, setMovimentos }: Props) {
           <h2 className="text-xl font-bold">Caixa</h2>
         </div>
         {setMovimentos && (
-          <button onClick={() => setShowModal(true)} className="flex items-center gap-2 px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-700 text-white rounded-xl text-sm font-bold transition-colors">
+          <button onClick={abrirNovaModal} className="flex items-center gap-2 px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-700 text-white rounded-xl text-sm font-bold transition-colors">
             <Plus className="h-4 w-4" /> Lançar movimento
           </button>
         )}
@@ -110,15 +140,23 @@ export default function Caixa({ movimentos, setMovimentos }: Props) {
             <p className={`text-sm font-bold ${m.tipo === 'entrada' ? 'text-emerald-600' : 'text-rose-600'}`}>
               {m.tipo === 'entrada' ? '+' : '-'}R$ {m.valor.toFixed(2)}
             </p>
-            {/* BUG-FIX: sem botão para excluir movimentos manuais — adicionado */}
-            {setMovimentos && !m.agendamentoId && (
-              <button
-                onClick={() => { if (window.confirm('Excluir este lançamento?')) setMovimentos(movimentos.filter((x) => x.id !== m.id)); }}
-                className="p-1.5 rounded-lg text-slate-300 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20 shrink-0"
-                title="Excluir lançamento"
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-              </button>
+            {setMovimentos && (
+              <div className="flex items-center gap-1 shrink-0">
+                <button
+                  onClick={() => abrirEdicao(m)}
+                  className="p-1.5 rounded-lg text-slate-300 hover:text-cyan-600 hover:bg-cyan-50 dark:hover:bg-cyan-900/20"
+                  title="Editar lançamento"
+                >
+                  <Pencil className="h-3.5 w-3.5" />
+                </button>
+                <button
+                  onClick={() => { if (window.confirm('Excluir este lançamento?')) setMovimentos(movimentos.filter((x) => x.id !== m.id)); }}
+                  className="p-1.5 rounded-lg text-slate-300 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                  title="Excluir lançamento"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              </div>
             )}
           </div>
         ))}
@@ -131,7 +169,7 @@ export default function Caixa({ movimentos, setMovimentos }: Props) {
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4" onClick={() => setShowModal(false)}>
           <div className="w-full max-w-md bg-white dark:bg-slate-800 rounded-2xl shadow-lg border border-slate-200 dark:border-slate-700 p-6" onClick={(e) => e.stopPropagation()}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-bold">Lançar Movimento</h3>
+              <h3 className="text-lg font-bold">{editandoId ? 'Editar Movimento' : 'Lançar Movimento'}</h3>
               <button onClick={() => setShowModal(false)} className="text-slate-400 hover:text-slate-600"><X className="h-5 w-5" /></button>
             </div>
             <div className="space-y-3">

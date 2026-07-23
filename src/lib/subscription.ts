@@ -25,13 +25,37 @@ export type SubscriptionStatus =
 
 const API_BASE = import.meta.env.VITE_API_URL || ''
 
+function getAuthToken(): string {
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('sb-') && key.endsWith('-auth-token')) {
+      try {
+        const val = JSON.parse(localStorage.getItem(key) || '{}');
+        if (val.access_token) return val.access_token;
+      } catch {}
+    }
+  }
+  return '';
+}
+
+function authHeaders() {
+  const token = getAuthToken();
+  return {
+    'Content-Type': 'application/json',
+    ...(token ? { Authorization: `Bearer ${token}` } : {})
+  };
+}
+
 export function isActive(status: SubscriptionStatus): boolean {
   return status === 'active' || status === 'trialing'
 }
 
 export async function getSubscription(uid: string, signal?: AbortSignal): Promise<Subscription | null> {
   try {
-    const res = await fetch(`${API_BASE}/api/subscription?uid=${encodeURIComponent(uid)}`, { signal })
+    const res = await fetch(`${API_BASE}/api/subscription?uid=${encodeURIComponent(uid)}`, {
+      headers: authHeaders(),
+      signal
+    })
     if (!res.ok) { console.error('getSubscription HTTP', res.status); return null }
     return (await res.json()) as Subscription
   } catch (e) {
@@ -47,7 +71,7 @@ export async function createCheckoutSession(uid: string, email: string, priceId:
     if (coupon) body.coupon = coupon
     const res = await fetch(`${API_BASE}/api/create-checkout`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify(body),
     })
     if (!res.ok) { console.error('createCheckoutSession HTTP', res.status); return null }
@@ -70,7 +94,7 @@ export async function startTrial(uid: string, email: string, signal?: AbortSigna
   try {
     const res = await fetch(`${API_BASE}/api/subscription`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: authHeaders(),
       body: JSON.stringify({ uid, email }),
       signal,
     })

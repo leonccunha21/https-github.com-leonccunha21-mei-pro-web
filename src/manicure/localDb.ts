@@ -1,5 +1,4 @@
 import { ManicureDb, MensagemTemplate } from './types';
-import type { ManicureDb as ManicureDbT } from './dbSync';
 
 const DB_NAME = 'manicure_local';
 const STORE = 'manicuredb';
@@ -46,22 +45,32 @@ function openDb(version = 2): Promise<IDBDatabase> {
 
 async function idbGet(): Promise<Partial<ManicureDb> | null> {
   const db = await openDb();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE, 'readonly');
-    const req = tx.objectStore(STORE).get(KEY);
-    req.onsuccess = () => resolve((req.result as Partial<ManicureDb>) || null);
-    req.onerror = () => reject(req.error);
-  });
+  try {
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readonly');
+      const req = tx.objectStore(STORE).get(KEY);
+      tx.oncomplete = () => { db.close(); resolve((req.result as Partial<ManicureDb>) || null); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    });
+  } catch (e) {
+    db.close();
+    throw e;
+  }
 }
 
 async function idbPut(value: ManicureDb): Promise<void> {
   const db = await openDb();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(STORE, 'readwrite');
-    tx.objectStore(STORE).put(value, KEY);
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
-  });
+  try {
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction(STORE, 'readwrite');
+      tx.objectStore(STORE).put(value, KEY);
+      tx.oncomplete = () => { db.close(); resolve(); };
+      tx.onerror = () => { db.close(); reject(tx.error); };
+    });
+  } catch (e) {
+    db.close();
+    throw e;
+  }
 }
 
 async function metaGet(): Promise<SyncMeta> {
@@ -69,8 +78,8 @@ async function metaGet(): Promise<SyncMeta> {
   return new Promise((resolve) => {
     const tx = db.transaction('meta', 'readonly');
     const req = tx.objectStore('meta').get(META_KEY);
-    req.onsuccess = () => resolve(req.result || { lastSyncAt: null, pendingDeletions: {} });
-    req.onerror = () => resolve({ lastSyncAt: null, pendingDeletions: {} });
+    tx.oncomplete = () => { db.close(); resolve(req.result || { lastSyncAt: null, pendingDeletions: {} }); };
+    tx.onerror = () => { db.close(); resolve({ lastSyncAt: null, pendingDeletions: {} }); };
   });
 }
 
@@ -79,8 +88,8 @@ async function metaPut(meta: SyncMeta): Promise<void> {
   return new Promise((resolve, reject) => {
     const tx = db.transaction('meta', 'readwrite');
     tx.objectStore('meta').put(meta, META_KEY);
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
+    tx.oncomplete = () => { db.close(); resolve(); };
+    tx.onerror = () => { db.close(); reject(tx.error); };
   });
 }
 

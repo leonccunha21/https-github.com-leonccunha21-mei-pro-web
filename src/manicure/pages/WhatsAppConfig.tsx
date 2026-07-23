@@ -15,6 +15,8 @@ interface Props {
 export default function WhatsAppConfig({ instances, templates, mensagensEnviadas, onSaveInstances, onSaveTemplates }: Props) {
   const instancesRef = useRef(instances);
   useEffect(() => { instancesRef.current = instances; }, [instances]);
+  const templatesRef = useRef(templates);
+  useEffect(() => { templatesRef.current = templates; }, [templates]);
   const [showQrModal, setShowQrModal] = useState(false);
   const [connectingName, setConnectingName] = useState('');
   const [qrCode, setQrCode] = useState('');
@@ -29,7 +31,7 @@ export default function WhatsAppConfig({ instances, templates, mensagensEnviadas
       const mod = await import('../../lib/vps');
       const result = await mod.whatsapp.connect(connectingName.trim());
       setQrCode(result.qrCode);
-      onSaveInstances([...instances, {
+      onSaveInstances([...instancesRef.current, {
         id: result.instanceId, name: connectingName.trim(),
         status: 'CONNECTING', qrCode: result.qrCode, createdAt: new Date().toISOString(),
       }]);
@@ -57,7 +59,7 @@ export default function WhatsAppConfig({ instances, templates, mensagensEnviadas
       toast.error('Não foi possível conectar. Verifique se o servidor VPS está rodando.');
       // Cria instância local mesmo sem VPS (modo demonstração)
       const idLocal = newId('wa_');
-      onSaveInstances([...instances, {
+      onSaveInstances([...instancesRef.current, {
         id: idLocal, name: connectingName.trim(),
         status: 'CONNECTED', createdAt: new Date().toISOString(),
       }]);
@@ -89,7 +91,7 @@ export default function WhatsAppConfig({ instances, templates, mensagensEnviadas
 
   const saveTemplate = () => {
     if (!editForm.mensagem.trim()) { toast.error('Mensagem não pode ficar vazia'); return; }
-    onSaveTemplates(templates.map((t) => t.id === editingTemplate ? { ...t, nome: editForm.nome, mensagem: editForm.mensagem, ativo: editForm.ativo } : t));
+    onSaveTemplates(templatesRef.current.map((t) => t.id === editingTemplate ? { ...t, nome: editForm.nome, mensagem: editForm.mensagem, ativo: editForm.ativo } : t));
     toast.success('Template salvo');
     setEditingTemplate(null);
   };

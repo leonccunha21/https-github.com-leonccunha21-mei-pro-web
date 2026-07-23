@@ -59,7 +59,27 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
         pago: form.pago === true,
         updatedAt: new Date().toISOString(),
       } as DoseMounjaro;
-      setDoses(doses.map((d) => (d.id === editandoId ? atualizada : d)));
+      
+      const jaPago = pagamentos.some((p) => p.referenciaDoseId === editandoId);
+      if (atualizada.pago && atualizada.valorDose && !jaPago) {
+        const novoPag: PagamentoMounjaro = {
+          id: newId('pag'),
+          clienteId: atualizada.clienteId,
+          dataVencimento: atualizada.dataAplicacao,
+          dataPagamento: new Date().toISOString().slice(0, 10),
+          descricao: `Dose ${atualizada.dose} mg`,
+          valor: atualizada.valorDose,
+          status: 'pago',
+          metodo: 'dinheiro',
+          referenciaDoseId: atualizada.id,
+          createdAt: new Date().toISOString(),
+        };
+        setDbAtomico({ doses: doses.map((d) => (d.id === editandoId ? atualizada : d)), pagamentos: [novoPag, ...pagamentos] });
+        logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento automático da dose ${atualizada.dose} mg de ${cliente?.nome || '—'}`, clienteId: atualizada.clienteId, refId: novoPag.id });
+      } else {
+        setDoses(doses.map((d) => (d.id === editandoId ? atualizada : d)));
+      }
+      
       logAuditoria({ entidade: 'dose', acao: 'editar', resumo: `Dose ${atualizada.dose} mg de ${cliente?.nome || '—'}`, clienteId: form.clienteId, refId: editandoId });
     } else {
       const now = new Date().toISOString();
@@ -79,7 +99,25 @@ export default function Doses({ clientes, doses, pagamentos, setDoses, setPagame
         createdAt: now,
         updatedAt: now,
       };
-      setDoses([nova, ...doses]);
+
+      if (nova.pago && nova.valorDose) {
+        const novoPag: PagamentoMounjaro = {
+          id: newId('pag'),
+          clienteId: nova.clienteId,
+          dataVencimento: nova.dataAplicacao,
+          dataPagamento: new Date().toISOString().slice(0, 10),
+          descricao: `Dose ${nova.dose} mg`,
+          valor: nova.valorDose,
+          status: 'pago',
+          metodo: 'dinheiro',
+          referenciaDoseId: nova.id,
+          createdAt: new Date().toISOString(),
+        };
+        setDbAtomico({ doses: [nova, ...doses], pagamentos: [novoPag, ...pagamentos] });
+        logAuditoria({ entidade: 'pagamento', acao: 'criar', resumo: `Pagamento automático da dose ${nova.dose} mg de ${cliente?.nome || '—'}`, clienteId: nova.clienteId, refId: novoPag.id });
+      } else {
+        setDoses([nova, ...doses]);
+      }
       logAuditoria({ entidade: 'dose', acao: 'criar', resumo: `Dose ${nova.dose} mg de ${cliente?.nome || '—'}`, clienteId: form.clienteId, refId: nova.id });
     }
     setModalOpen(false);

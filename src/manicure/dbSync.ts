@@ -128,7 +128,6 @@ function templateToRow(t: ManicureDb['mensagemTemplates'][number]) {
   return prepareRow({
     id: t.id, nome: t.nome, tipo: t.tipo,
     mensagem: t.mensagem, ativo: t.ativo,
-    updated_at: t.updatedAt ?? null,
   });
 }
 function rowToTemplate(r: any): ManicureDb['mensagemTemplates'][number] {
@@ -145,7 +144,6 @@ function enviadaToRow(e: ManicureDb['mensagensEnviadas'][number]) {
     id: e.id, agendamento_id: e.agendamentoId, cliente_id: e.clienteId,
     cliente_nome: e.clienteNome, tipo: e.tipo, mensagem: e.mensagem,
     status: e.status, data_envio: e.dataEnvio, erro: e.erro ?? null,
-    updated_at: e.updatedAt ?? null,
   });
 }
 function rowToEnviada(r: any): ManicureDb['mensagensEnviadas'][number] {
@@ -254,19 +252,6 @@ export async function saveManicureCloudIncremental(data: ManicureDb): Promise<vo
 
 export async function clearManicureCloud(): Promise<void> {
   if (!isSupabaseConfigured()) return;
-  try {
-    await Promise.all([
-      supabase.from('manicure_clientes').delete().neq('id', ''),
-      supabase.from('manicure_servicos').delete().neq('id', ''),
-      supabase.from('manicure_agendamentos').delete().neq('id', ''),
-      supabase.from('manicure_movimentos').delete().neq('id', ''),
-      supabase.from('manicure_produtos').delete().neq('id', ''),
-      supabase.from('manicure_whatsapp_instances').delete().neq('id', ''),
-      supabase.from('manicure_mensagem_templates').delete().neq('id', ''),
-      supabase.from('manicure_mensagens_enviadas').delete().neq('id', ''),
-      supabase.from('manicure_config').delete().neq('id', ''),
-    ]);
-  } catch (e) {
-    console.error('Manicure Supabase clear error:', e);
-  }
+  console.warn('[clearManicureCloud] Skipped: manicure tables have no user scoping. Use with caution or implement proper scoping.');
+  // await Promise.all([...]) // Descomente apenas se tiver certeza que quer apagar TUDO
 }

@@ -73,7 +73,7 @@ export function useAppointmentScheduler({
               onAddMensagem({
                 id: newId('msg'), agendamentoId: ag.id, clienteId: ag.clienteId,
                 clienteNome: ag.clienteNome, tipo: 'lembrete_1dia', mensagem: msg,
-                status: ok ? 'enviado' : 'erro', dataEnvio: new Date().toISOString(),
+                status: ok ? 'enviado' : 'falha', dataEnvio: new Date().toISOString(),
               });
             }
           }
@@ -95,7 +95,7 @@ export function useAppointmentScheduler({
               onAddMensagem({
                 id: newId('msg'), agendamentoId: ag.id, clienteId: ag.clienteId,
                 clienteNome: ag.clienteNome, tipo: 'lembrete_1hora', mensagem: msg,
-                status: ok ? 'enviado' : 'erro', dataEnvio: new Date().toISOString(),
+                status: ok ? 'enviado' : 'falha', dataEnvio: new Date().toISOString(),
               });
             }
           }

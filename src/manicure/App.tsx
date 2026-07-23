@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, lazy, type ReactNode } from 'react';
+import { useState, useEffect, useRef, useCallback, lazy, type ReactNode, Suspense } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
@@ -10,7 +10,6 @@ import { getTrialDaysRemaining, getSubscription, startTrial, isActive as subIsAc
 const PlansPage = lazy(() => import('../components/PlansPage'));
 import { ManicureDb, ClienteManicure, ServicoManicure, AgendamentoManicure, MovimentoCaixa, ProdutoEstoque, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from './types';
 import { emptyDb, loadManicureDb, saveManicureDb, saveManicureDbLocalOnly, defaultConfig, addPendingDeletion, getSyncMeta, subscribeSyncMeta, loadManicureCloudCached } from './localDb';
-import { loadManicureCloud } from './dbSync';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
 import Agendamentos from './pages/Agendamentos';
@@ -211,7 +210,7 @@ export default function ManicureApp() {
   useEffect(() => {
     const onVisibility = () => {
       if (document.visibilityState === 'visible') {
-        loadManicureCloud().then((cloud) => {
+        loadManicureCloudCached().then((cloud) => {
           if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
             const mergeByIdTs = <T extends { id: string; updatedAt?: string; createdAt?: string }>(a: T[], b: T[]): T[] => {
               const map = new Map<string, T>();
@@ -280,7 +279,7 @@ export default function ManicureApp() {
 
   if (needsSubscription) {
     return (
-      <React.Suspense fallback={
+      <Suspense fallback={
         <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
           <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-fuchsia-600" />
         </div>
@@ -290,7 +289,7 @@ export default function ManicureApp() {
           email={(() => { try { return localStorage.getItem('zm_sub_email') || ''; } catch { return ''; } })()}
           onBack={() => { try { localStorage.removeItem('mei_pro_system_choice'); } catch {}; window.location.href = '/'; }}
         />
-      </React.Suspense>
+      </Suspense>
     );
   }
 

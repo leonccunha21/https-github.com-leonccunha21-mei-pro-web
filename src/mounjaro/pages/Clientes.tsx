@@ -1,9 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { Plus, Pencil, Trash2, UserPlus, Search, Scale, Syringe, Wallet, Download, X } from 'lucide-react';
+import { Plus, Pencil, Trash2, UserPlus, Search, Scale, Syringe, Wallet, Download, X, MessageCircle } from 'lucide-react';
 import { ClienteMounjaro, PesagemMounjaro, DoseMounjaro, PagamentoMounjaro, FotoEvolucao, RegistroAuditoria } from '../types';
 import { Card, Button, Field, SelectField, TextArea, Modal, Badge, StatCard } from '../ui';
 import { newId } from '../localDb';
-import { calcIMC, classificacaoIMC, pesoAtual, pesoBase, pesoPerdido, calcularScore, formatarMoeda, LogAuditoriaFn } from '../lib';
+import { calcIMC, classificacaoIMC, pesoAtual, pesoBase, pesoPerdido, calcularScore, formatarMoeda, LogAuditoriaFn, proximaDose, statusDose, mensagemLembreteDose } from '../lib';
 
 interface Props {
   clientes: ClienteMounjaro[];
@@ -289,6 +289,14 @@ export default function Clientes({ clientes, pesagens, doses, pagamentos, fotos,
   );
 }
 
+const abrirWhatsapp = (telefone: string | undefined, msg: string) => {
+  if (!telefone) return;
+  const clean = telefone.replace(/\D/g, '');
+  if (clean.length < 10) return;
+  const url = `https://wa.me/55${clean}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank');
+};
+
 function DetalheCliente({
   cliente, pesagens, doses, pagamentos, fotos, onUpdateCliente,
 }: {
@@ -314,6 +322,8 @@ function DetalheCliente({
   const perdido = pesoPerdido(cliente, pesagens, doses);
   const score = calcularScore(cliente.id, pagamentos);
   const ultimaDose = doses.filter((d) => d.clienteId === cliente.id).sort((a, b) => b.dataAplicacao.localeCompare(a.dataAplicacao))[0];
+  const proxima = ultimaDose ? proximaDose(ultimaDose) : null;
+  const status = ultimaDose ? statusDose(ultimaDose.dataAplicacao, ultimaDose.intervaloDias).status : 'ok';
   const fotosCliente = fotos
     .filter((f) => f.clienteId === cliente.id)
     .sort((a, b) => a.data.localeCompare(b.data));
@@ -376,7 +386,18 @@ function DetalheCliente({
 
       <div className="grid grid-cols-2 gap-2 text-sm">
         <InfoRow label="IMC inicial" value={cliente.imcInicial ? `${cliente.imcInicial} (${classificacaoIMC(cliente.imcInicial)})` : '-'} />
-        <InfoRow label="Telefone" value={cliente.telefone || '-'} />
+        <InfoRow label="Telefone" value={
+          <div className="flex items-center gap-2">
+            {cliente.telefone || '-'}
+            {cliente.telefone && (
+              <button onClick={() => abrirWhatsapp(cliente.telefone, mensagemLembreteDose(cliente, proxima, status))}
+                className="text-emerald-600 hover:text-emerald-700 p-1 rounded-full hover:bg-emerald-50 transition-colors"
+                title="Avisar sobre próxima dose">
+                <MessageCircle size={14} />
+              </button>
+            )}
+          </div>
+        } />
         <InfoRow label="E-mail" value={cliente.email || '-'} />
         <InfoRow label="Objetivo" value={cliente.objetivoPeso ? `${cliente.objetivoPeso} kg` : '-'} />
         <InfoRow label="Médico" value={cliente.medicoResponsavel || '-'} />
@@ -425,7 +446,7 @@ function DetalheCliente({
   );
 }
 
-function InfoRow({ label, value, full }: { label: string; value: string; full?: boolean }) {
+function InfoRow({ label, value, full }: { label: string; value: React.ReactNode; full?: boolean }) {
   return (
     <div className={full ? 'col-span-2' : ''}>
       <p className="text-xs text-slate-400">{label}</p>

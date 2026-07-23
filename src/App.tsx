@@ -157,6 +157,8 @@ export default function App() {
   // Toast de erro de persistência (M6)
   const [toastMsg, setToastMsg] = useState<string | null>(null);
   const toastTimer = useRef<number | null>(null);
+  // Guard against double-click on cancel sale
+  const cancelSaleLock = useRef<Set<string>>(new Set());
   const showToast = (msg: string) => {
     setToastMsg(msg);
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -954,6 +956,11 @@ export default function App() {
 
   // Cancel/Refund Sale (and restore stock)
   const handleCancelSale = (saleId: string) => {
+    // Guard against double-click
+    if (cancelSaleLock.current.has(saleId)) return;
+    cancelSaleLock.current.add(saleId);
+    setTimeout(() => cancelSaleLock.current.delete(saleId), 1000);
+
     const sale = sales.find(s => s.id === saleId);
     if (!sale) return;
     if (sale.status === 'cancelled') return;

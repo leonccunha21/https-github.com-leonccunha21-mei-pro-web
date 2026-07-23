@@ -96,6 +96,8 @@ async function upsertSubscription(uid: string, email: string, stripeCustomerId: 
   }, { onConflict: 'user_id' })
 }
 
+const processedEvents = new Set<string>();
+
 // Webhook precisa do body raw (sem JSON parser)
 // Registrado ANTES do express.json() para capturar o body cru
 app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
@@ -110,6 +112,13 @@ app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async
     console.error('Stripe webhook signature error:', err.message)
     return res.status(400).json({ error: 'Invalid signature' })
   }
+
+  // BUG-FIX: webhook idempotency
+  if (processedEvents.has(event.id)) {
+    return res.json({ received: true, note: 'Idempotency skip' })
+  }
+  processedEvents.add(event.id)
+  if (processedEvents.size > 2000) processedEvents.clear()
 
   try {
     switch (event.type) {
@@ -171,6 +180,42 @@ app.use(express.json({ limit: '100mb' }));
 // --- CORS global (deve vir antes de todas as rotas da API) ---
 app.use(cors);
 
+// --- Auth middleware: valida token Supabase (JWT) ---
+async function requireAuth(req: express.Request, res: express.Response, next: express.NextFunction) {
+  // Rotas públicas que não precisam de autenticação
+  const publicPaths = [
+    '/api/health',
+    '/api/supabase-status',
+    '/api/stripe/webhook',
+  ];
+  if (publicPaths.some(p => req.path.startsWith(p))) {
+    return next();
+  }
+
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ error: 'Token de autenticação ausente' });
+  }
+
+  const token = authHeader.substring(7);
+  if (!supabaseAdmin) {
+    return res.status(500).json({ error: 'Supabase não configurado' });
+  }
+
+  try {
+    const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
+    if (error || !user) {
+      return res.status(401).json({ error: 'Token inválido ou expirado' });
+    }
+    (req as any).user = user;
+    next();
+  } catch {
+    return res.status(401).json({ error: 'Erro ao validar token' });
+  }
+}
+
+app.use('/api', requireAuth);
+
 // Test Supabase connection status
 app.get('/api/supabase-status', async (_req, res) => {
   try {
@@ -226,10 +271,21 @@ app.get('/api/db', (_req, res) => {
   res.json(readDb());
 });
 
-app.put('/api/db', (req, res) => {
+let dbLock = Promise.resolve();
+
+app.put('/api/db', async (req, res) => {
   const body = (req.body || {}) as LocalDb;
-  const current = readDb();
-  const merged: LocalDb = {
+  
+  let release!: () => void;
+  const lockPromise = new Promise<void>(resolve => { release = resolve; });
+  const previousLock = dbLock;
+  dbLock = previousLock.then(() => lockPromise);
+  
+  await previousLock;
+
+  try {
+    const current = readDb();
+    const merged: LocalDb = {
     products: body.products ?? current.products ?? [],
     sales: body.sales ?? current.sales ?? [],
     categories: body.categories ?? current.categories ?? [],
@@ -242,8 +298,11 @@ app.put('/api/db', (req, res) => {
     cashSessions: body.cashSessions ?? current.cashSessions ?? [],
     loans: body.loans ?? current.loans ?? [],
   };
-  writeDb(merged);
-  res.json({ ok: true });
+    writeDb(merged);
+    res.json({ ok: true });
+  } finally {
+    release();
+  }
 });
 
 app.post('/api/db/reset', (_req, res) => {

@@ -317,8 +317,11 @@ export async function clearMounjaroCloud(scope?: MounjaroScope): Promise<void> {
   const uidFilter = scope?.tipo === 'user' ? { column: 'user_id', value: scope.uid } : null;
 
   function scopedDeleteAll(table: string) {
-    let query = supabase.from(table).delete().neq('id', '');
-    if (uidFilter) query = query.eq(uidFilter.column, uidFilter.value);
+    if (!uidFilter) {
+      console.warn(`[clearMounjaroCloud] Skipping delete for ${table}: no scope filter provided`);
+      return Promise.resolve({ data: null, error: null });
+    }
+    let query = supabase.from(table).delete().eq(uidFilter.column, uidFilter.value);
     return query;
   }
 

@@ -125,7 +125,7 @@ export default function MounjaroApp() {
     // Salva LOCALMENTE de forma IMEDIATA (sem debounce) para não perder
     // dados ao recarregar a página. O envio à nuvem continua com debounce.
     const data: MounjaroDb = { ...stateRef.current, ...newData, initialized: true };
-    saveMounjaroDb(data).catch((e) => console.error('saveMounjaroDb falhou:', e));
+    saveMounjaroDb(data).catch((e) => { console.error('saveMounjaroDb falhou:', e); toast.error('Erro ao salvar localmente'); });
 
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = window.setTimeout(() => {
@@ -250,7 +250,7 @@ export default function MounjaroApp() {
         // correto (inclui as deleções) — NÃO sobreescrever evita que a nuvem
         // ressuscite registros deletados localmente.
         if (!localTemDados && temDados) {
-          saveMounjaroDbLocalOnly(merged).catch(() => {});
+          saveMounjaroDbLocalOnly(merged).catch((e) => { console.error('saveMounjaroDbLocalOnly falhou:', e); toast.error('Erro ao salvar localmente'); });
         }
         setLastSync(new Date().toISOString());
       } catch (e) {
@@ -373,7 +373,7 @@ export default function MounjaroApp() {
           // local prevalece — mesma lógica do useEffect de carga: não sobrescreve IDB
           // com o merged (que pode ter dados da nuvem mais antigos do que o local)
           setDb(merged);
-          saveMounjaroDbLocalOnly(merged).catch(() => {});
+          saveMounjaroDbLocalOnly(merged).catch((e) => { console.error('saveMounjaroDbLocalOnly falhou:', e); toast.error('Erro ao salvar localmente'); });
         } catch { /* ignora — mantém o estado atual */ }
         finally { setLoading(false); }
       })();
