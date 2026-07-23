@@ -16,7 +16,7 @@ interface Props {
   templates: MensagemTemplate[];
   mensagensEnviadas: MensagemEnviada[];
   onAddMensagem: (m: MensagemEnviada) => void;
-  config: { nomeSalao: string };
+  config: ConfigManicure;
 }
 
 const STATUS_MAP: Record<StatusAgendamento, { label: string; color: string; dot: string }> = {
@@ -298,33 +298,35 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
                   {STATUS_MAP[ag.status].label}
                 </span>
 
-                {/* Status actions */}
-                {ag.status === 'agendado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'confirmado')} className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200" title="Confirmar"><Check className="h-3.5 w-3.5" /></button>
-                )}
-                {ag.status === 'confirmado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'concluido')} className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" title="Concluir"><Check className="h-3.5 w-3.5" /></button>
-                )}
-                {ag.status !== 'concluido' && ag.status !== 'cancelado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar"><X className="h-3.5 w-3.5" /></button>
-                )}
-
-                {/* WhatsApp button */}
-                {ag.telefoneCliente && (
+                {/* WhatsApp button - always visible when client has phone */}
+                {ag.telefoneCliente ? (
                   <button
                     onClick={() => setWhatsAppTarget(ag)}
-                    className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+                    className="p-2 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
                     title="Enviar mensagem WhatsApp"
                   >
-                    <Send className="h-3.5 w-3.5" />
+                    <Send className="h-4 w-4" />
                   </button>
+                ) : (
+                  <span className="text-[10px] text-slate-400 px-1">Sem tel.</span>
+                )}
+
+                {/* Status actions */}
+                {ag.status === 'agendado' && (
+                  <button onClick={() => mudarStatus(ag.id, 'confirmado')} className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200" title="Confirmar"><Check className="h-4 w-4" /></button>
+                )}
+                {ag.status === 'confirmado' && (
+                  <button onClick={() => mudarStatus(ag.id, 'concluido')} className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" title="Concluir"><Check className="h-4 w-4" /></button>
+                )}
+                {ag.status !== 'concluido' && ag.status !== 'cancelado' && (
+                  <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-2 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar"><X className="h-4 w-4" /></button>
                 )}
 
                 {/* More options */}
                 <div className="relative">
                   <button
                     onClick={() => setMenuOpen(menuOpen === ag.id ? null : ag.id)}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                    className="p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors border border-slate-200 dark:border-slate-600"
                     title="Mais opções"
                   >
                     <MoreVertical className="h-4 w-4" />
@@ -333,25 +335,23 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
                   {menuOpen === ag.id && (
                     <>
                       <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(null)} />
-                      <div className="absolute right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[140px]">
+                      <div className="absolute right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[150px]">
                         <button
                           onClick={() => { setMenuOpen(null); openEdit(ag); }}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                          className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                         >
                           <Edit3 className="h-3.5 w-3.5" /> Editar
                         </button>
-                        {ag.status === 'cancelado' && (
-                          <button
-                            onClick={() => excluirAgendamento(ag.id)}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
-                          >
-                            <Trash2 className="h-3.5 w-3.5" /> Excluir
-                          </button>
-                        )}
+                        <button
+                          onClick={() => excluirAgendamento(ag.id)}
+                          className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" /> Excluir
+                        </button>
                         {ag.telefoneCliente && (
                           <button
                             onClick={() => { setMenuOpen(null); setWhatsAppTarget(ag); }}
-                            className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                            className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
                           >
                             <MessageCircle className="h-3.5 w-3.5" /> WhatsApp
                           </button>

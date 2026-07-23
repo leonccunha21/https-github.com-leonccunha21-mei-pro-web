@@ -116,32 +116,32 @@ export default function Dashboard({ db, onNavigate, setAgendamentos, onAddMensag
                     <div className="relative">
                       <button
                         onClick={() => setMenuOpen(menuOpen === ag.id ? null : ag.id)}
-                        className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                        className="p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors border border-slate-200 dark:border-slate-600"
                         title="Mais opções"
                       >
-                        <MoreVertical className="h-3.5 w-3.5" />
+                        <MoreVertical className="h-4 w-4" />
                       </button>
 
                       {menuOpen === ag.id && (
                         <>
                           <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(null)} />
-                          <div className="absolute right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[140px]">
+                          <div className="absolute right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[150px]">
                             <button
                               onClick={() => editarAgendamento(ag)}
-                              className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                              className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
                             >
                               <Edit3 className="h-3.5 w-3.5" /> Editar
                             </button>
                             <button
                               onClick={() => excluirAgendamento(ag.id)}
-                              className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                              className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
                             >
                               <Trash2 className="h-3.5 w-3.5" /> Excluir
                             </button>
                             {ag.telefoneCliente && (
                               <button
                                 onClick={() => { setMenuOpen(null); setWhatsAppTarget(ag); }}
-                                className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                                className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-bold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
                               >
                                 <Smartphone className="h-3.5 w-3.5" /> WhatsApp
                               </button>
