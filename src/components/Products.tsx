@@ -2,11 +2,12 @@
 import { Product, Category, Sale, PriceHistoryEntry } from '../types';
 import { categorizeProduct } from '../lib/categorize';
 import LabelPrinter from './LabelPrinter';
+import toast from 'react-hot-toast';
 import {
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck,
-  Trash, Archive, RotateCcw, Boxes, Copy, Tag, Merge
+  Trash, Archive, RotateCcw, Boxes, Copy, Tag, Merge, MoreVertical, CheckCircle2
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -57,7 +58,9 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const [mergeGroups, setMergeGroups] = useState<{ products: Product[] }[]>([]);
   // grupo sendo editado atualmente no wizard
   const [mergeStep, setMergeStep] = useState(0);
-  // produto "principal" escolhido pelo usuário
+  // produtos selecionados para mesclar (checkboxes) - IDs
+  const [mergeSelectedIds, setMergeSelectedIds] = useState<Set<string>>(new Set());
+  // produto "principal" escolhido pelo usuário (entre os selecionados)
   const [mergeKeepId, setMergeKeepId] = useState('');
   // nome final do produto mesclado (editável)
   const [mergeName, setMergeName] = useState('');
@@ -405,9 +408,12 @@ export default function Products({ products, categories, sales, onAddProduct, on
 
     setMergeGroups(groups);
     setMergeStep(0);
+    // Pré-seleciona TODOS os produtos do primeiro grupo para mesclar (checkboxes marcados)
+    const firstGroupProducts = groups[0].products;
+    const allIds = new Set(firstGroupProducts.map(p => p.id));
+    setMergeSelectedIds(allIds);
     // Pré-seleciona o produto com maior estoque como principal
-    const first = groups[0].products;
-    const keeper = [...first].sort((a, b) => b.stock - a.stock)[0];
+    const keeper = [...firstGroupProducts].sort((a, b) => b.stock - a.stock)[0];
     setMergeKeepId(keeper.id);
     setMergeName(keeper.name);
     setMergeCostPrice(keeper.costPrice);
@@ -418,14 +424,25 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const handleMergeConfirm = () => {
     const group = mergeGroups[mergeStep];
     if (!group || !mergeKeepId || !onMergeProducts) return;
-    const duplicateIds = group.products.map(p => p.id).filter(id => id !== mergeKeepId);
-    onMergeProducts(mergeKeepId, duplicateIds, mergeName.trim() || mergeGroups[mergeStep].products[0].name, mergeCostPrice, mergeSalePrice);
+    // Apenas os IDs selecionados (checkboxes marcados) EXCETO o principal serão mesclados
+    const selectedIds: string[] = Array.from(mergeSelectedIds);
+    const duplicateIds = selectedIds.filter(id => id !== mergeKeepId);
+    
+    if (duplicateIds.length === 0) {
+      toast.error('Selecione pelo menos um produto para mesclar');
+      return;
+    }
+    
+    onMergeProducts(mergeKeepId, duplicateIds, mergeName.trim() || group.products[0].name, mergeCostPrice, mergeSalePrice);
 
     // Avança para o próximo grupo, ou fecha se acabou
     const nextStep = mergeStep + 1;
     if (nextStep < mergeGroups.length) {
       setMergeStep(nextStep);
       const nextGroup = mergeGroups[nextStep].products;
+      // Pré-seleciona todos do próximo grupo
+      const nextIds = new Set(nextGroup.map(p => p.id));
+      setMergeSelectedIds(nextIds);
       const nextKeeper = [...nextGroup].sort((a, b) => b.stock - a.stock)[0];
       setMergeKeepId(nextKeeper.id);
       setMergeName(nextKeeper.name);
@@ -1014,41 +1031,84 @@ export default function Products({ products, categories, sales, onAddProduct, on
               <div className="p-5 overflow-y-auto flex-1 space-y-4">
                 {/* Lista de produtos do grupo */}
                 <div>
-                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">Selecione o produto principal (os demais serão arquivados)</p>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-[10px] font-bold text-slate-500 uppercase">
+                      Selecione quais produtos mesclar (o principal fica, os marcados serão arquivados)
+                    </p>
+                    <div className="flex items-center gap-1">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const allIds = new Set(group.products.map(p => p.id));
+                          setMergeSelectedIds(allIds);
+                        }}
+                        className="px-2 py-1 text-[10px] font-semibold text-slate-600 hover:text-violet-600 transition-colors"
+                      >
+                        Selecionar todos
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setMergeSelectedIds(new Set())}
+                        className="px-2 py-1 text-[10px] font-semibold text-slate-400 hover:text-slate-600 transition-colors"
+                      >
+                        Limpar
+                      </button>
+                    </div>
+                  </div>
                   <div className="space-y-2">
-                    {group.products.map(p => (
-                      <label key={p.id} className={`flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${
-                        mergeKeepId === p.id
-                          ? 'border-violet-500 bg-violet-50 dark:bg-violet-950/30'
-                          : 'border-slate-200 dark:border-slate-700 hover:border-violet-300'
-                      }`}>
-                        <input
-                          type="radio"
-                          name="mergeKeep"
-                          value={p.id}
-                          checked={mergeKeepId === p.id}
-                          onChange={() => {
-                            setMergeKeepId(p.id);
-                            setMergeName(p.name);
-                            setMergeCostPrice(p.costPrice);
-                            setMergeSalePrice(p.salePrice);
-                          }}
-                          className="mt-0.5 accent-violet-600"
-                        />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-slate-900 dark:text-white">{p.name}</p>
-                          <div className="flex items-center gap-3 mt-1 flex-wrap">
-                            <span className="text-[10px] text-slate-500">SKU: <span className="font-mono">{p.code}</span></span>
-                            <span className="text-[10px] text-slate-500">Estoque: <span className="font-semibold text-slate-700 dark:text-slate-200">{p.stock} un</span></span>
-                            <span className="text-[10px] text-slate-500">Custo: <span className="font-mono">{p.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></span>
-                            <span className="text-[10px] text-slate-500">Venda: <span className="font-mono">{p.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></span>
+                    {group.products.map(p => {
+                      const isSelected = mergeSelectedIds.has(p.id);
+                      const isMain = mergeKeepId === p.id;
+                      return (
+                        <label key={p.id} className={`flex items-start gap-3 p-3 rounded-xl border-2 cursor-pointer transition-all ${
+                          isMain
+                            ? 'border-violet-500 bg-violet-50 dark:bg-violet-950/30'
+                            : isSelected
+                              ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/30'
+                              : 'border-slate-200 dark:border-slate-700 hover:border-violet-300'
+                        }`}>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={isSelected}
+                              onChange={(e) => {
+                                const newSet = new Set(mergeSelectedIds);
+                                if (e.target.checked) {
+                                  newSet.add(p.id);
+                                } else {
+                                  newSet.delete(p.id);
+                                }
+                                setMergeSelectedIds(newSet);
+                              }}
+                              className="mt-0.5 accent-violet-600 h-4 w-4"
+                            />
+                            {isMain && <span className="text-[10px] font-bold px-2 py-0.5 bg-violet-600 text-white rounded-full shrink-0">principal</span>}
                           </div>
-                        </div>
-                        {mergeKeepId === p.id && (
-                          <span className="text-[10px] font-bold px-2 py-0.5 bg-violet-600 text-white rounded-full shrink-0">principal</span>
-                        )}
-                      </label>
-                    ))}
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-slate-900 dark:text-white">{p.name}</p>
+                            <div className="flex items-center gap-3 mt-1 flex-wrap">
+                              <span className="text-[10px] text-slate-500">SKU: <span className="font-mono">{p.code}</span></span>
+                              <span className="text-[10px] text-slate-500">Estoque: <span className="font-semibold text-slate-700 dark:text-slate-200">{p.stock} un</span></span>
+                              <span className="text-[10px] text-slate-500">Custo: <span className="font-mono">{p.costPrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></span>
+                              <span className="text-[10px] text-slate-500">Venda: <span className="font-mono">{p.salePrice.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></span>
+                            </div>
+                          </div>
+                          <input
+                            type="radio"
+                            name="mergeKeep"
+                            value={p.id}
+                            checked={isMain}
+                            onChange={() => {
+                              setMergeKeepId(p.id);
+                              setMergeName(p.name);
+                              setMergeCostPrice(p.costPrice);
+                              setMergeSalePrice(p.salePrice);
+                            }}
+                            className="mt-0.5 accent-violet-600"
+                          />
+                        </label>
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -1104,7 +1164,7 @@ export default function Products({ products, categories, sales, onAddProduct, on
                   Cancelar
                 </button>
                 <div className="flex items-center gap-2">
-                  {mergeStep > 0 && (
+{mergeStep > 0 && (
                     <button onClick={() => {
                       const prev = mergeStep - 1;
                       setMergeStep(prev);
@@ -1112,11 +1172,14 @@ export default function Products({ products, categories, sales, onAddProduct, on
                       const k = [...g].sort((a, b) => b.stock - a.stock)[0];
                       setMergeKeepId(k.id); setMergeName(k.name);
                       setMergeCostPrice(k.costPrice); setMergeSalePrice(k.salePrice);
+                      // Pré-seleciona todos do grupo anterior
+                      const prevIds = new Set(g.map(p => p.id));
+                      setMergeSelectedIds(prevIds);
                     }} className="px-4 py-2 text-sm font-semibold text-slate-600 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-100 transition-colors">
-                      ← Anterior
+                       Anterior
                     </button>
                   )}
-                  {/* Pular: avança sem mesclar, útil quando o grupo não é realmente duplicata */}
+{/* Pular: avança sem mesclar, útil quando o grupo não é realmente duplicata */}
                   <button onClick={() => {
                     const next = mergeStep + 1;
                     if (next < mergeGroups.length) {
@@ -1125,11 +1188,14 @@ export default function Products({ products, categories, sales, onAddProduct, on
                       const k = [...g].sort((a, b) => b.stock - a.stock)[0];
                       setMergeKeepId(k.id); setMergeName(k.name);
                       setMergeCostPrice(k.costPrice); setMergeSalePrice(k.salePrice);
+                      // Pré-seleciona todos do próximo grupo
+                      const nextIds = new Set(g.map(p => p.id));
+                      setMergeSelectedIds(nextIds);
                     } else {
                       setShowMergeModal(false);
                     }
                   }} className="px-4 py-2 text-sm font-semibold text-slate-500 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors">
-                    {mergeStep < mergeGroups.length - 1 ? 'Pular →' : 'Pular e fechar'}
+                    {mergeStep < mergeGroups.length - 1 ? 'Pular ' : 'Pular e fechar'}
                   </button>
                   <button onClick={handleMergeConfirm} disabled={!mergeKeepId}
                     className="px-5 py-2 text-sm font-bold text-white bg-violet-600 hover:bg-violet-700 disabled:opacity-50 rounded-lg transition-colors flex items-center gap-2">
