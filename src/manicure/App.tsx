@@ -3,7 +3,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
 import {
   LayoutDashboard, Users, Calendar, DollarSign, Package, Settings as SettingsIcon,
-  Scissors, Sun, Moon, Sparkles, MessageCircle, X, ShoppingBag, Stethoscope,
+  Scissors, Sun, Moon, Sparkles, X, ShoppingBag, Stethoscope,
 } from 'lucide-react';
 import { getTrialDaysRemaining, getSubscription, startTrial, isActive as subIsActive } from '../lib/subscription';
 
@@ -16,11 +16,10 @@ import Agendamentos from './pages/Agendamentos';
 import Caixa from './pages/Caixa';
 import Estoque from './pages/Estoque';
 import Servicos from './pages/Servicos';
-import WhatsAppConfig from './pages/WhatsAppConfig';
 import Configuracoes from './pages/Configuracoes';
 import { useAppointmentScheduler } from './hooks/useAppointmentScheduler';
 
-export type Tab = 'dashboard' | 'clientes' | 'agendamentos' | 'servicos' | 'caixa' | 'estoque' | 'whatsapp' | 'configuracoes';
+export type Tab = 'dashboard' | 'clientes' | 'agendamentos' | 'servicos' | 'caixa' | 'estoque' | 'configuracoes';
 
 const NAV: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'dashboard', label: 'Painel', icon: <LayoutDashboard size={20} /> },
@@ -29,7 +28,6 @@ const NAV: { id: Tab; label: string; icon: ReactNode }[] = [
   { id: 'servicos', label: 'Serviços', icon: <Scissors size={20} /> },
   { id: 'caixa', label: 'Caixa', icon: <DollarSign size={20} /> },
   { id: 'estoque', label: 'Estoque', icon: <Package size={20} /> },
-  { id: 'whatsapp', label: 'WhatsApp', icon: <MessageCircle size={20} /> },
   { id: 'configuracoes', label: 'Ajustes', icon: <SettingsIcon size={20} /> },
 ];
 
@@ -418,14 +416,13 @@ export default function ManicureApp() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.15 }}
             >
-              {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} />}
+              {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} setAgendamentos={setAgendamentos} onAddMensagem={addMensagemEnviada} />}
               {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} setClientes={setClientes} />}
-              {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} />}
+              {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} config={db.config} />}
               {activeTab === 'servicos' && <Servicos servicos={db.servicos} setServicos={setServicos} />}
               {activeTab === 'caixa' && <Caixa movimentos={db.movimentos} setMovimentos={setMovimentos} />}
               {activeTab === 'estoque' && <Estoque produtos={db.produtos} setProdutos={setProdutos} />}
-              {activeTab === 'whatsapp' && <WhatsAppConfig instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onSaveInstances={setWhatsAppInstances} onSaveTemplates={setMensagemTemplates} />}
-              {activeTab === 'configuracoes' && <Configuracoes config={db.config} setConfig={setConfig} />}
+              {activeTab === 'configuracoes' && <Configuracoes instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} config={db.config} setConfig={setConfig} onSaveInstances={setWhatsAppInstances} onSaveTemplates={setMensagemTemplates} />}
             </motion.div>
           </AnimatePresence>
         </main>

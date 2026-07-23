@@ -1,8 +1,9 @@
-import { useState, useMemo, type ReactNode } from 'react';
+import { useState, useEffect, useMemo, type ReactNode } from 'react';
 import { AgendamentoManicure, ClienteManicure, ServicoManicure, MovimentoCaixa, StatusAgendamento, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from '../types';
 import { newId } from '../localDb';
-import { Calendar as CalendarIcon, Plus, Clock, Check, X, ChevronRight, ChevronLeft, ChevronRight as ChevronRightIcon, MessageCircle, Send, Loader2 } from 'lucide-react';
+import { Calendar as CalendarIcon, Plus, Clock, Check, X, ChevronRight, ChevronLeft, MessageCircle, MoreVertical, Edit3, Trash2, Send, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import WhatsAppMessageModal from '../components/WhatsAppMessageModal';
 
 interface Props {
   agendamentos: AgendamentoManicure[];
@@ -15,6 +16,7 @@ interface Props {
   templates: MensagemTemplate[];
   mensagensEnviadas: MensagemEnviada[];
   onAddMensagem: (m: MensagemEnviada) => void;
+  config: { nomeSalao: string };
 }
 
 const STATUS_MAP: Record<StatusAgendamento, { label: string; color: string; dot: string }> = {
@@ -39,15 +41,7 @@ function formatDate(ano: number, mes: number, dia: number) {
   return `${ano}-${String(mes + 1).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
 }
 
-function preencherTemplate(template: string, vars: Record<string, string>): string {
-  let msg = template;
-  for (const [key, value] of Object.entries(vars)) {
-    msg = msg.replace(new RegExp(`\\{\\{${key}\\}\\}`, 'g'), value);
-  }
-  return msg;
-}
-
-export default function Agendamentos({ agendamentos, clientes, servicos, setAgendamentos, setMovimentos, movimentos, instances, templates, mensagensEnviadas, onAddMensagem }: Props) {
+export default function Agendamentos({ agendamentos, clientes, servicos, setAgendamentos, setMovimentos, movimentos, instances, templates, mensagensEnviadas, onAddMensagem, config }: Props) {
   const hoje = new Date();
   const hojeStr = formatDate(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
   const [ano, setAno] = useState(hoje.getFullYear());
@@ -57,49 +51,24 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState({ clienteId: '', servicoId: '', data: '', hora: '', observacoes: '' });
+  const [menuOpen, setMenuOpen] = useState<string | null>(null);
+  const [whatsAppTarget, setWhatsAppTarget] = useState<AgendamentoManicure | null>(null);
   const [sendingWpp, setSendingWpp] = useState<string | null>(null);
 
   const instanceConectada = instances.find((i) => i.status === 'CONNECTED');
-  const templateConfirmacao = templates.find((t) => t.tipo === 'confirmacao' && t.ativo);
-  const templateLembrete = templates.find((t) => t.tipo === 'lembrete_1dia' && t.ativo);
 
-  const enviarWhatsApp = async (ag: AgendamentoManicure, tipo: 'confirmacao' | 'lembrete_1dia') => {
-    if (!instanceConectada) { toast.error('Conecte o WhatsApp nas configurações primeiro.'); return; }
-    if (!ag.telefoneCliente) { toast.error('Cliente não possui telefone cadastrado.'); return; }
-    setSendingWpp(ag.id);
-    try {
-      const nomeCliente = ag.clienteNome.split(' ')[0];
-      let msg = '';
-      if (tipo === 'confirmacao') {
-        msg = templateConfirmacao
-          ? preencherTemplate(templateConfirmacao.mensagem, { nome: nomeCliente, salao: ag.servicoNome, data: ag.data, hora: ag.hora.slice(0, 5) })
-          : `Olá ${nomeCliente}, seu agendamento (${ag.servicoNome}) está marcado para o dia ${new Date(ag.data + 'T12:00:00').toLocaleDateString('pt-BR')} às ${ag.hora.slice(0, 5)}. Confirme sua presença! 💅`;
-      } else {
-        msg = templateLembrete
-          ? preencherTemplate(templateLembrete.mensagem, { nome: nomeCliente, salao: ag.servicoNome, data: ag.data, hora: ag.hora.slice(0, 5) })
-          : `Olá ${nomeCliente}, passando para lembrar do seu agendamento (${ag.servicoNome}) amanhã às ${ag.hora.slice(0, 5)}! Te esperamos. 💅`;
+  useEffect(() => {
+    const handler = () => {
+      const storedId = localStorage.getItem('manicure_edit_agendamento');
+      if (storedId) {
+        localStorage.removeItem('manicure_edit_agendamento');
+        const ag = agendamentos.find((a) => a.id === storedId);
+        if (ag) openEdit(ag);
       }
-
-      const numero = ag.telefoneCliente.replace(/\D/g, '');
-      const mod = await import('../../lib/vps');
-      await mod.whatsapp.send(instanceConectada.id, `55${numero}`, msg);
-      onAddMensagem({
-        id: newId('msg'), agendamentoId: ag.id, clienteId: ag.clienteId,
-        clienteNome: ag.clienteNome, tipo: tipo, mensagem: msg,
-        status: 'enviado', dataEnvio: new Date().toISOString(),
-      });
-      toast.success('Mensagem enviada via WhatsApp!');
-    } catch {
-      toast.error('Falha ao enviar. VPS está offline?');
-      onAddMensagem({
-        id: newId('msg'), agendamentoId: ag.id, clienteId: ag.clienteId,
-        clienteNome: ag.clienteNome, tipo: tipo, mensagem: '',
-        status: 'falha', dataEnvio: new Date().toISOString(), erro: 'VPS offline',
-      });
-    } finally {
-      setSendingWpp(null);
-    }
-  };
+    };
+    window.addEventListener('manicure-edit-agendamento', handler);
+    return () => window.removeEventListener('manicure-edit-agendamento', handler);
+  }, [agendamentos]);
 
   const servicosAtivos = servicos.filter((s) => s.ativo);
 
@@ -159,9 +128,6 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
     if (!cliente || !servico) { toast.error('Cliente ou serviço inválido'); return; }
 
     if (editId) {
-      // BUG-FIX: ao editar agendamento, atualizava dados do cliente/serviço mas
-      // não copiava telefoneCliente do novo cliente selecionado. Resultado: trocar
-      // o cliente no edit deixava o telefone do cliente anterior → WPP errado.
       setAgendamentos(agendamentos.map((a) => a.id === editId ? {
         ...a, clienteId: form.clienteId, clienteNome: cliente.nome,
         telefoneCliente: cliente.telefone,
@@ -185,6 +151,7 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
   };
 
   const excluirAgendamento = (id: string) => {
+    setMenuOpen(null);
     if (!window.confirm('Excluir este agendamento?')) return;
     setAgendamentos(agendamentos.filter((a) => a.id !== id));
     toast.success('Agendamento excluído');
@@ -326,47 +293,73 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
                 <p className="text-xs text-slate-500 dark:text-slate-400">{ag.servicoNome} · R$ {ag.valor.toFixed(2)}</p>
                 {ag.observacoes && <p className="text-xs text-slate-400 mt-0.5 truncate">{ag.observacoes}</p>}
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-1.5 shrink-0">
                 <span className={`px-2.5 py-1 rounded-lg text-[10px] font-bold uppercase ${STATUS_MAP[ag.status].color}`}>
                   {STATUS_MAP[ag.status].label}
                 </span>
+
+                {/* Status actions */}
                 {ag.status === 'agendado' && (
-                  <div className="flex gap-1">
-                    <button onClick={() => mudarStatus(ag.id, 'confirmado')} className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200" title="Confirmar"><Check className="h-3.5 w-3.5" /></button>
-                  </div>
+                  <button onClick={() => mudarStatus(ag.id, 'confirmado')} className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200" title="Confirmar"><Check className="h-3.5 w-3.5" /></button>
                 )}
                 {ag.status === 'confirmado' && (
                   <button onClick={() => mudarStatus(ag.id, 'concluido')} className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" title="Concluir"><Check className="h-3.5 w-3.5" /></button>
                 )}
                 {ag.status !== 'concluido' && ag.status !== 'cancelado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar Agendamento"><X className="h-3.5 w-3.5" /></button>
+                  <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar"><X className="h-3.5 w-3.5" /></button>
                 )}
-                {ag.telefoneCliente && instanceConectada && (
-                  <div className="flex gap-1">
-                    <button
-                      onClick={() => enviarWhatsApp(ag, 'confirmacao')}
-                      disabled={sendingWpp === ag.id}
-                      className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 disabled:opacity-50"
-                      title="Enviar Confirmação (WhatsApp)"
-                    >
-                      {sendingWpp === ag.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Send className="h-3.5 w-3.5" />}
-                    </button>
-                    <button
-                      onClick={() => enviarWhatsApp(ag, 'lembrete_1dia')}
-                      disabled={sendingWpp === ag.id}
-                      className="p-1.5 rounded-lg text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 disabled:opacity-50"
-                      title="Enviar Lembrete (WhatsApp)"
-                    >
-                      {sendingWpp === ag.id ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <MessageCircle className="h-3.5 w-3.5" />}
-                    </button>
-                  </div>
-                )}
-                {ag.status === 'cancelado' && (
-                  <button onClick={() => excluirAgendamento(ag.id)} className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600" title="Excluir agendamento cancelado">
-                    <X className="h-3.5 w-3.5" />
+
+                {/* WhatsApp button */}
+                {ag.telefoneCliente && (
+                  <button
+                    onClick={() => setWhatsAppTarget(ag)}
+                    className="p-1.5 rounded-lg text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition-colors"
+                    title="Enviar mensagem WhatsApp"
+                  >
+                    <Send className="h-3.5 w-3.5" />
                   </button>
                 )}
-                <button onClick={() => openEdit(ag)} className="p-1.5 rounded-lg text-slate-400 hover:text-fuchsia-600"><ChevronRightIcon className="h-4 w-4" /></button>
+
+                {/* More options */}
+                <div className="relative">
+                  <button
+                    onClick={() => setMenuOpen(menuOpen === ag.id ? null : ag.id)}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                    title="Mais opções"
+                  >
+                    <MoreVertical className="h-4 w-4" />
+                  </button>
+
+                  {menuOpen === ag.id && (
+                    <>
+                      <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(null)} />
+                      <div className="absolute right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[140px]">
+                        <button
+                          onClick={() => { setMenuOpen(null); openEdit(ag); }}
+                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
+                        >
+                          <Edit3 className="h-3.5 w-3.5" /> Editar
+                        </button>
+                        {ag.status === 'cancelado' && (
+                          <button
+                            onClick={() => excluirAgendamento(ag.id)}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" /> Excluir
+                          </button>
+                        )}
+                        {ag.telefoneCliente && (
+                          <button
+                            onClick={() => { setMenuOpen(null); setWhatsAppTarget(ag); }}
+                            className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-emerald-600 hover:bg-emerald-50 dark:hover:bg-emerald-900/20"
+                          >
+                            <MessageCircle className="h-3.5 w-3.5" /> WhatsApp
+                          </button>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -408,6 +401,16 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
           </div>
         </div>
       )}
+
+      <WhatsAppMessageModal
+        isOpen={!!whatsAppTarget}
+        onClose={() => setWhatsAppTarget(null)}
+        agendamento={whatsAppTarget!}
+        templates={templates}
+        instances={instances}
+        config={config}
+        onAddMensagem={onAddMensagem}
+      />
     </div>
   );
 }
