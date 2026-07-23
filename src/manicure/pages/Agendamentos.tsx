@@ -154,6 +154,10 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
     setMenuOpen(null);
     if (!window.confirm('Excluir este agendamento?')) return;
     setAgendamentos(agendamentos.filter((a) => a.id !== id));
+    const movVinculados = movimentos.filter((m) => m.agendamentoId === id);
+    if (movVinculados.length > 0) {
+      setMovimentos(movimentos.filter((m) => m.agendamentoId !== id));
+    }
     toast.success('Agendamento excluído');
   };
 

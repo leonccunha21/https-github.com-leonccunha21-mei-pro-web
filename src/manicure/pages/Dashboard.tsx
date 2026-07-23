@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ManicureDb, AgendamentoManicure, MensagemEnviada, StatusAgendamento } from '../types';
+import { ManicureDb, AgendamentoManicure, MensagemEnviada, StatusAgendamento, MovimentoCaixa } from '../types';
 import { Calendar, Users, DollarSign, Scissors, Clock, Sparkles, MoreVertical, Edit3, Trash2, MessageCircle, Smartphone, Check, X, TrendingUp, ShoppingBag } from 'lucide-react';
 import toast from 'react-hot-toast';
 import WhatsAppMessageModal from '../components/WhatsAppMessageModal';
@@ -10,6 +10,7 @@ interface Props {
   db: ManicureDb;
   onNavigate: (tab: Tab) => void;
   setAgendamentos: (a: AgendamentoManicure[]) => void;
+  setMovimentos: (m: MovimentoCaixa[]) => void;
   onAddMensagem: (m: MensagemEnviada) => void;
 }
 
@@ -21,7 +22,7 @@ const STATUS_MAP: Record<StatusAgendamento, { label: string; color: string; dot:
   cancelado:    { label: 'Cancelado',   color: 'bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300',       dot: 'bg-rose-400'    },
 };
 
-export default function Dashboard({ db, onNavigate, setAgendamentos, onAddMensagem }: Props) {
+export default function Dashboard({ db, onNavigate, setAgendamentos, setMovimentos, onAddMensagem }: Props) {
   const hoje = new Date().toISOString().slice(0, 10);
   const agendadosHoje = db.agendamentos.filter((a) => a.data === hoje && a.status !== 'cancelado');
   const concluidosHoje = db.agendamentos.filter((a) => a.data === hoje && a.status === 'concluido').length;
@@ -55,6 +56,10 @@ export default function Dashboard({ db, onNavigate, setAgendamentos, onAddMensag
     setMenuOpen(null);
     if (!window.confirm('Excluir este agendamento?')) return;
     setAgendamentos(db.agendamentos.filter((a) => a.id !== id));
+    const movVinculados = db.movimentos.filter((m) => m.agendamentoId === id);
+    if (movVinculados.length > 0) {
+      setMovimentos(db.movimentos.filter((m) => m.agendamentoId !== id));
+    }
     toast.success('Agendamento excluído');
   };
 

@@ -510,6 +510,8 @@ export default function App() {
 
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
+  // Mutex para evitar race conditions no persist (várias abas/chamadas simultâneas)
+  const persistLock = React.useRef<Promise<void>>(Promise.resolve());
 
   // --- Nuvem: envia o banco completo, SEM PERDER DADO de nenhum aparelho ---
   // Antes de subir, baixa a nuvem e faz UNIÃO por id (o mais recente vence por

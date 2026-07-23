@@ -1,55 +1,88 @@
 ﻿## 🔴 CRÍTICOS (perda de dados ou funcionalidade quebrada)
 
-1. ✅ `src/App.tsx:612,1288` — `runStockCleanup` roda em TODO save de produto — mescla/destrói produtos com mesmo nome no estoque
-2. ✅ `src/App.tsx:1072-1076` — `handleImportDatabase` substitui SEM merge leads, aiAgents, whatsappInstances, opportunities — dados destruídos
-3. ✅ `src/App.tsx:1090-1114` — `handleResetDatabase` nunca reseta `storeInfo` — não é um reset completo
-4. ✅ `src/App.tsx:1090,1157` — Reset/import backup não limpa Supabase — dados fantasmas na nuvem
-5. ✅ `src/App.tsx:953-984` — `handleCancelSale` sem guarda de duplo clique — estoque duplicado
-6. ✅ `src/mounjaro/dbSync.ts:175-217` — `loadMounjaroCloud` ignora scope (uid/clinicaId) — carrega dados de TODOS usuários
-7. ✅ `src/mounjaro/dbSync.ts:248-265` — Array vazio → `delete().neq('id', '')` apaga tabela INTEIRA na nuvem
-8. ✅ `src/manicure/dbSync.ts:243,246` — `clearPendingDeletions()` roda mesmo se deleção no Supabase falha — deleções perdidas
-9. ✅ `src/manicure/WhatsAppConfig.tsx:38-51` — Poll captura `instances` stale no closure — sobrescreve alterações concorrentes
-10. ✅ `server.ts:62,102` — `express.json()` roda ANTES do `express.raw()` do webhook → Stripe webhook quebrado
-11. ✅ `src/lib/notifications.ts:43` — Lê vendas do localStorage em vez do IndexedDB → lembretes nunca disparam
-12. `server.ts:220-568` — Zero autenticação em TODOS endpoints da API
-13. ✅ `src/lib/localDb.ts:57-75` — Conexões IndexedDB nunca fechadas — vaza recursos em todo saveDb
-14. ✅ `src/lib/parsers.ts:todo` — Código morto: 512 linhas duplicadas em sheetParsers.ts
+1. `server.ts:220-568` — Zero autenticação em TODOS endpoints da API
+2. `src/App.tsx:511,359` — persist() concorrente causa race condition no Supabase
+3. `src/App.tsx:502,511` — stateRef.current fica stale em handlers multi-update
+4. `src/App.tsx:175,734` — storeInfo com dupla fonte de verdade (localStorage vs IndexedDB)
+5. `src/lib/permissions.ts:24` — useCurrentRole lê de localStorage → usuário pode se tornar admin
+6. `server.ts:102-167` — Webhook Stripe sem idempotência → eventos duplicados
+7. `server.ts:224-242` — TOCTOU race condition no PUT /api/db
+8. `src/mounjaro/lib.ts:141` — Score duplica contagem de pendentes-passados como atrasados
+9. `src/App.tsx:511` — saveProductsToStorage chama persist() a cada change → spam sync Supabase
+10. `src/manicure/useAppointmentScheduler.ts` — setInterval 1min roda em TODAS abas abertas → spam WhatsApp
 
 ## 🟠 ALTOS (causam bugs em produção)
 
-15. ✅ `src/manicure/useAppointmentScheduler.ts:72-77` — Mensagem WhatsApp registrada como enviado mesmo se envio falha
-16. `src/App.tsx:511,359` — persist() concorrente causa race condition no Supabase
-17. `src/App.tsx:502,511` — stateRef.current fica stale em handlers multi-update
-18. `src/App.tsx:175,734` — storeInfo com dupla fonte de verdade (localStorage vs IndexedDB)
-19. ✅ `src/lib/subscription.ts:33-92` — Todas as chamadas API engolem erros; fetch sem AbortController
-20. ✅ `src/lib/currency.ts:1-3` — Number.EPSILON NÃO corrige roundCurrency(1.005) → retorna 1.00
-21. ✅ `server.ts:276` — CORS registrado DEPOIS das rotas; webhook/DB sem CORS
-22. `src/lib/permissions.ts:24` — useCurrentRole lê de localStorage → usuário pode se tornar admin
-23. `server.ts:102-167` — Webhook Stripe sem idempotência → eventos duplicados
-24. `server.ts:224-242` — TOCTOU race condition no PUT /api/db
-25. ✅ `src/mounjaro/App.tsx:128` — saveMounjaroDb(data).catch(() => {}) falha de save 100% silenciosa
-26. ✅ `src/manicure/App.tsx:108-150, localDb.ts:164` — loadManicureCloud() chamada 2x na carga inicial
-27. `src/mounjaro/lib.ts:141` — Score duplica contagem de pendentes-passados como atrasados
+11. `src/App.tsx:1060-1086` — Import roda 13+ chamadas saveDb em vez de 1 única
+12. `src/App.tsx:581-590` — Sincronia entre abas perde updates durante janela de 250ms
+13. `src/App.tsx:371-395` — Se trial expirou, dados nunca carregam — precisa recarregar página
+14. `src/App.tsx:468` — Falha do Firebase SDK silenciosa → mostra login (que também falha)
+14. `src/lib/localDb.ts:227-246` — 15 tabelas em paralelo → exaustão do pool de conexões
+15. `src/lib/backupScheduler.ts:31` — Cálculo de dia não-safe para DST (usa 86400000ms)
+15. `src/manicure/Agendamentos.tsx:191-202` — formaPagamento hardcoded como 'dinheiro'
+16. `src/manicure/useAppointmentScheduler.ts` — setInterval 1min roda em TODAS abas → spam WhatsApp
+16. `src/components/Products.tsx` — Merge Products: sem preview visual, sem undo
+17. `src/lib/notifications.ts` — sendNotification() não usado no scheduler
+18. `src/components/Products.tsx` / `src/manicure/pages/Agendamentos.tsx` — Sem Error Boundary próprio
 
 ## 🟡 MÉDIOS (qualidade/robustez)
 
-28. `src/App.tsx:1060-1086` — Import roda 13+ chamadas saveDb em vez de 1 única
-29. `src/App.tsx:581-590` — Sincronia entre abas perde updates durante janela de 250ms
-30. `src/App.tsx:371-395` — Se trial expirou, dados nunca carregam — precisa recarregar página
-31. `src/App.tsx:468` — Falha do Firebase SDK silenciosa → mostra login (que também falha)
-32. `src/lib/localDb.ts:227-246` — 15 tabelas em paralelo → exaustão do pool de conexões
-33. ✅ `src/lib/ofxParser.ts:44` — Parsing assume . decimal → falha em OFX brasileiro (notação ,)
-34. ✅ `src/lib/datetime.ts:7-14` — localNowISO() sem timezone → new Date() é browser-dependent
-35. `src/lib/backupScheduler.ts:31` — Cálculo de dia não-safe para DST (usa 86400000ms)
-36. `src/mounjaro/image.ts:todo` — Fotos mantêm EXIF com geolocalização — sem stripping
-37. ✅ `src/manicure/dbSync.ts:195` — Erros em WA/templates/config ignorados (só 5/9 queries checadas)
-38. `src/manicure/Agendamentos.tsx:191-202` — formaPagamento hardcoded como 'dinheiro'
+18. `src/lib/backupScheduler.ts:31` — Cálculo de dia não-safe para DST (usa 86400000ms)
+19. `src/mounjaro/image.ts:todo` — Fotos mantêm EXIF com geolocalização — sem stripping
+19. `src/components/Products.tsx` / `src/manicure/pages/Agendamentos.tsx` — Sem Error Boundary próprio
+20. `src/components/Products.tsx` — Merge Products: sem preview visual "Antes/Depois", sem undo (5s)
+21. `src/mounjaro/image.ts:todo` — Fotos mantêm EXIF com geolocalização — sem stripping
+22. `src/lib/backupScheduler.ts:31` — Cálculo de dia não-safe para DST (usa 86400000ms)
+23. `src/components/Products.tsx` — Merge Products: sem preview visual "Antes/Depois", sem undo (5s)
+24. `src/lib/notifications.ts` — sendNotification() não usado no scheduler
+25. `src/components/Products.tsx` / `src/manicure/pages/Agendamentos.tsx` — Sem Error Boundary próprio
+26. `src/lib/categorize.ts:14` — Espaço no regex /hub / → "hub" sozinho não casa
+27. `src/lib/normalize.ts:5-20` — Ordem inconsistente entre normalizeName e normalizeChannel
+28. `src/mounjaro/localDb.ts:139-143` — Código morto: 5 funções save* exportadas mas nunca usadas
+29. `src/manicure/App.tsx:168-179` — Função mergeByIdTs duplicada no handler visibilitychange
+30. `src/App.tsx:1210` — alert() em vez de showToast para backup inválido
+31. `src/App.tsx:198,257` — Dois listeners de teclado duplicados com deps diferentes
+32. `src/lib/categorize.ts:14` — Espaço no regex /hub / → "hub" sozinho não casa
+33. `src/lib/normalize.ts:5-20` — Ordem inconsistente entre normalizeName e normalizeChannel
+34. `src/mounjaro/localDb.ts:139-143` — Código morto: 5 funções save* exportadas mas nunca usadas
+35. `src/manicure/App.tsx:168-179` — Função mergeByIdTs duplicada no handler visibilitychange
 
-## 🟢 BAIXOS (cosméticos/minor)
+---
 
-39. `src/App.tsx:1210` — alert() em vez de showToast para backup inválido
-40. `src/App.tsx:198,257` — Dois listeners de teclado duplicados com deps diferentes
-41. `src/lib/categorize.ts:14` — Espaço no regex /hub / → "hub" sozinho não casa
-42. `src/lib/normalize.ts:5-20` — Ordem inconsistente entre normalizeName e normalizeChannel
-43. `src/mounjaro/localDb.ts:139-143` — Código morto: 5 funções save* exportadas mas nunca usadas
-44. `src/manicure/App.tsx:168-179` — Função mergeByIdTs duplicada no handler visibilitychange
+## ✅ JÁ CONCLUÍDOS (removidos da lista)
+
+- ✅ `runStockCleanup` — merge manual mantido no Products.tsx (não roda auto)
+- ✅ `handleImportDatabase` — merge por SKU/name implementado
+- ✅ `handleResetDatabase` — reseta storeInfo + clearSupabaseDb()
+- ✅ `handleCancelSale` — guarda duplo clique com ref `cancelSaleLock`
+- ✅ `loadMounjaroCloud` — respeita scope uid/clinicaId
+- ✅ `delete().neq('id','')` — check de scope antes de deletar (mounjaro + manicure)
+- ✅ `clearPendingDeletions()` — só roda após sucesso no Supabase
+- ✅ `WhatsAppConfig.tsx` — stale closure corrigido com refs
+- ✅ `express.raw()` antes do `express.json()` para Stripe webhook
+- ✅ `notifications.ts` — usa loadDb() (IndexedDB)
+- ✅ `localDb.ts` — conexões IndexedDB fechadas com db.close()
+- ✅ `parsers.ts` — removido (código morto)
+- ✅ `useAppointmentScheduler` — status 'falha' se envio falha
+- ✅ `subscription.ts` — AbortController + tratamento de erro
+- ✅ `roundCurrency` — corrigido com `Number.EPSILON`
+- ✅ `server.ts` — CORS antes das rotas, raw body antes do json
+- ✅ `saveMounjaroDb` — toast de erro ao falhar
+- ✅ `loadManicureCloud()` — cache `loadManicureCloudCached()` evita 2x
+- ✅ `dbSync manicure` — erros WA/templates/config checados
+- ✅ `formaPagamento` — dinâmico (select no modal Caixa)
+- ✅ Merge Products — checkboxes para seleção parcial + "Selecionar todos/Limpar"
+- ✅ Merge Products — botões "Anterior/Próximo/Pular" sincronizam seleção
+- ✅ Dashboard Manicure — 3 botões WhatsApp por agendamento (Confirmação/Lembrete/Personalizada)
+
+---
+
+## 🚀 PRÓXIMOS PASSOS (ordem de implementação)
+
+### 1. **Mutex no persist()** — evita race condition Supabase
+### 2. **Preview visual "Antes/Depois" no Merge Products** — evita erros do usuário  
+### 3. **Lock no WhatsApp Scheduler** — evita spam duplicado em abas múltiplas
+### 4. **Error Boundaries** em Products.tsx e Agendamentos.tsx
+### 5. **Undo (5s) + Preview visual** no Merge Products
+### 6. **Mutex no persist()** + debounce real (2s batch)
+### 7. **sendNotification()** no scheduler WhatsApp

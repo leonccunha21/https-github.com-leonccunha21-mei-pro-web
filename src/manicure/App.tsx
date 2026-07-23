@@ -416,7 +416,7 @@ export default function ManicureApp() {
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.15 }}
             >
-              {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} setAgendamentos={setAgendamentos} onAddMensagem={addMensagemEnviada} />}
+              {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} onAddMensagem={addMensagemEnviada} />}
               {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} setClientes={setClientes} />}
               {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setClientes={setClientes} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} config={db.config} />}
               {activeTab === 'servicos' && <Servicos servicos={db.servicos} setServicos={setServicos} />}
