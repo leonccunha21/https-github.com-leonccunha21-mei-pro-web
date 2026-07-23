@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, type ReactNode } from 'react';
-import { AgendamentoManicure, ClienteManicure, ServicoManicure, MovimentoCaixa, StatusAgendamento, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance } from '../types';
+import { AgendamentoManicure, ClienteManicure, ServicoManicure, MovimentoCaixa, StatusAgendamento, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance, ConfigManicure } from '../types';
 import { newId } from '../localDb';
 import { Calendar as CalendarIcon, Plus, Clock, Check, X, ChevronRight, ChevronLeft, MessageCircle, MoreVertical, Edit3, Trash2, Send, Loader2 } from 'lucide-react';
 import toast from 'react-hot-toast';
