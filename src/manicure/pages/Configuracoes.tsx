@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { ManicureWhatsAppInstance, MensagemTemplate, MensagemEnviada, ConfigManicure } from '../types';
 import { newId } from '../localDb';
 import { loadManicureDb, saveManicureDb } from '../localDb';
@@ -23,6 +23,7 @@ export default function Configuracoes({ instances, templates, mensagensEnviadas,
   const [form, setForm] = useState({ nomeSalao: config.nomeSalao, profissional: config.profissional, telefoneContato: config.telefoneContato || '', endereco: config.endereco || '' });
   const [exporting, setExporting] = useState(false);
   const [importing, setImporting] = useState(false);
+  const [confirmImport, setConfirmImport] = useState<File | null>(null);
 
   // WhatsApp state
   const [showQrModal, setShowQrModal] = useState(false);
@@ -149,14 +150,20 @@ export default function Configuracoes({ instances, templates, mensagensEnviadas,
     finally { setExporting(false); }
   };
 
-  const importBackup = (file: File) => {
+  const importBackup = useCallback((file: File) => {
+    setConfirmImport(file);
+  }, []);
+
+  const confirmarImport = () => {
+    if (!confirmImport) return;
+    const file = confirmImport;
+    setConfirmImport(null);
     setImporting(true);
     const reader = new FileReader();
     reader.onload = async () => {
       try {
         const parsed = JSON.parse(String(reader.result)) as any;
-        if (!parsed.clientes && !parsed.servicos) { toast.error('Arquivo inválido'); return; }
-        if (!window.confirm('Importar este backup? Isso substituirá TODOS os dados atuais.')) { setImporting(false); return; }
+        if (!parsed.clientes && !parsed.servicos) { toast.error('Arquivo inválido'); setImporting(false); return; }
         await saveManicureDb(parsed);
         toast.success('Backup importado! Recarregando...');
         setTimeout(() => window.location.reload(), 1500);
@@ -325,6 +332,27 @@ export default function Configuracoes({ instances, templates, mensagensEnviadas,
           </label>
         </div>
       </div>
+
+      {/* Modal Confirmar Importação */}
+      {confirmImport && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4" onClick={() => setConfirmImport(null)}>
+          <div className="w-full max-w-sm bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mb-3">
+              <Upload className="h-5 w-5 text-amber-600" />
+            </div>
+            <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-1">Importar backup?</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-5">
+              Isso <strong className="text-rose-600">substituirá TODOS os dados atuais</strong> pelo conteúdo do arquivo <span className="font-mono text-xs">{confirmImport.name}</span>. Esta ação não pode ser desfeita.
+            </p>
+            <div className="flex gap-2">
+              <button onClick={() => setConfirmImport(null)} className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm hover:bg-slate-50 dark:hover:bg-slate-700">Cancelar</button>
+              <button onClick={confirmarImport} className="flex-1 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-sm font-bold flex items-center justify-center gap-2">
+                <Upload className="h-4 w-4" /> Importar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* QR Code Modal */}
       {showQrModal && (

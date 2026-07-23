@@ -517,45 +517,59 @@ export default function App() {
   // Antes de subir, baixa a nuvem e faz UNIÃO por id (o mais recente vence por
   // id, mas nada é descartado). Assim os dados de OUTROS aparelhos nunca somem.
   // Depois sobe o resultado unificado. A nuvem passa a ter TUDO de todos.
-  const persist = (partial: Partial<LocalDb>) => {
-    const cur = stateRef.current;
-    const prev = pendingRef.current;
-    const merged: LocalDb = {
-      products: partial.products ?? prev.products ?? cur.products,
-      sales: partial.sales ?? prev.sales ?? cur.sales,
-      categories: partial.categories ?? prev.categories ?? cur.categories,
-      expenses: partial.expenses ?? prev.expenses ?? cur.expenses,
-      orders: partial.orders ?? prev.orders ?? cur.orders,
-      storeInfo: partial.storeInfo !== undefined ? partial.storeInfo : (prev.storeInfo !== undefined ? prev.storeInfo : cur.storeInfo),
-      customers: partial.customers ?? prev.customers ?? cur.customers,
-      suppliers: partial.suppliers ?? prev.suppliers ?? cur.suppliers,
-      purchases: partial.purchases ?? prev.purchases ?? cur.purchases,
-      cashSessions: partial.cashSessions ?? prev.cashSessions ?? cur.cashSessions,
-      loans: partial.loans ?? prev.loans ?? cur.loans,
-      leads: partial.leads ?? prev.leads ?? cur.leads ?? [],
-      leadJobs: partial.leadJobs ?? prev.leadJobs ?? cur.leadJobs ?? [],
-      whatsappInstances: partial.whatsappInstances ?? prev.whatsappInstances ?? cur.whatsappInstances ?? [],
-      aiAgents: partial.aiAgents ?? prev.aiAgents ?? cur.aiAgents ?? [],
-      opportunities: partial.opportunities ?? prev.opportunities ?? cur.opportunities ?? [],
-      bills: partial.bills ?? prev.bills ?? cur.bills ?? [],
-      internetUsers: partial.internetUsers ?? prev.internetUsers ?? cur.internetUsers ?? [],
-      initialized: true,
-    };
-    pendingRef.current = merged;
+  const persist = async (partial: Partial<LocalDb>) => {
+    // Mutex: enfileira esta persistência após a anterior terminar
+    let releaseLock!: () => void;
+    const lockPromise = new Promise<void>(resolve => { releaseLock = resolve; });
+    const previousLock = persistLock.current;
+    persistLock.current = previousLock.then(() => lockPromise);
 
-    // Salva LOCALMENTE AGORA (imediato) — não perde ao recarregar.
-    saveDb(merged, (cloudErr) => {
-      showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
-    }).catch((e) => {
-      console.error('Erro ao salvar banco local:', e);
-      showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
-    });
+    await previousLock;
 
-    // Debounce só para o timer de "pending" (evita múltiplos saves rápidos)
-    if (saveTimer.current) clearTimeout(saveTimer.current);
-    saveTimer.current = window.setTimeout(() => {
-      pendingRef.current = {};
-    }, 250);
+    try {
+      const cur = stateRef.current;
+      const prev = pendingRef.current;
+      const merged: LocalDb = {
+        products: partial.products ?? prev.products ?? cur.products,
+        sales: partial.sales ?? prev.sales ?? cur.sales,
+        categories: partial.categories ?? prev.categories ?? cur.categories,
+        expenses: partial.expenses ?? prev.expenses ?? cur.expenses,
+        orders: partial.orders ?? prev.orders ?? cur.orders,
+        storeInfo: partial.storeInfo !== undefined ? partial.storeInfo : (prev.storeInfo !== undefined ? prev.storeInfo : cur.storeInfo),
+        customers: partial.customers ?? prev.customers ?? cur.customers,
+        suppliers: partial.suppliers ?? prev.suppliers ?? cur.suppliers,
+        purchases: partial.purchases ?? prev.purchases ?? cur.purchases,
+        cashSessions: partial.cashSessions ?? prev.cashSessions ?? cur.cashSessions,
+        loans: partial.loans ?? prev.loans ?? cur.loans,
+        leads: partial.leads ?? prev.leads ?? cur.leads ?? [],
+        leadJobs: partial.leadJobs ?? prev.leadJobs ?? cur.leadJobs ?? [],
+        whatsappInstances: partial.whatsappInstances ?? prev.whatsappInstances ?? cur.whatsappInstances ?? [],
+        aiAgents: partial.aiAgents ?? prev.aiAgents ?? cur.aiAgents ?? [],
+        opportunities: partial.opportunities ?? prev.opportunities ?? cur.opportunities ?? [],
+        bills: partial.bills ?? prev.bills ?? cur.bills ?? [],
+        internetUsers: partial.internetUsers ?? prev.internetUsers ?? cur.internetUsers ?? [],
+        initialized: true,
+      };
+      pendingRef.current = merged;
+
+      // Salva LOCALMENTE AGORA (imediato) — não perde ao recarregar.
+      saveDb(merged, (cloudErr) => {
+        showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
+      }).catch((e) => {
+        console.error('Erro ao salvar banco local:', e);
+        showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
+      });
+
+      // Debounce só para o timer de "pending" (evita múltiplos saves rápidos)
+      if (saveTimer.current) clearTimeout(saveTimer.current);
+      saveTimer.current = window.setTimeout(() => {
+        pendingRef.current = {};
+      }, 250);
+    } catch (e) {
+      console.error('Erro no persist:', e);
+    } finally {
+      releaseLock();
+    }
   };
 
   // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)

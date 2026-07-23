@@ -8,6 +8,7 @@ export interface ClienteManicure {
   endereco?: string;
   observacoes?: string;
   indicadoPor?: string;
+  dataNascimento?: string; // yyyy-mm-dd
   createdAt: string;
   updatedAt?: string;
 }

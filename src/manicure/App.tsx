@@ -264,13 +264,13 @@ export default function ManicureApp() {
   const setProdutos = (produtos: ProdutoEstoque[]) => { setDb((d) => ({ ...d, produtos })); persist({ produtos }); };
   const setWhatsAppInstances = (whatsappInstances: ManicureWhatsAppInstance[]) => { setDb((d) => ({ ...d, whatsappInstances })); persist({ whatsappInstances }); };
   const setMensagemTemplates = (mensagemTemplates: MensagemTemplate[]) => { setDb((d) => ({ ...d, mensagemTemplates })); persist({ mensagemTemplates }); };
-  const addMensagemEnviada = (m: MensagemEnviada) => {
+  const addMensagemEnviada = useCallback((m: MensagemEnviada) => {
     setDb((d) => {
       const updated = [...d.mensagensEnviadas, m];
       persist({ mensagensEnviadas: updated });
       return { ...d, mensagensEnviadas: updated };
     });
-  };
+  }, []);
   const setConfig = (config: ManicureDb['config']) => { setDb((d) => ({ ...d, config })); persist({ config }); };
 
   useAppointmentScheduler({
@@ -421,7 +421,7 @@ export default function ManicureApp() {
               transition={{ duration: 0.15 }}
             >
               {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} onAddMensagem={addMensagemEnviada} />}
-              {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} setClientes={setClientes} />}
+              {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} movimentos={db.movimentos} setClientes={setClientes} templates={db.mensagemTemplates} instances={db.whatsappInstances} config={db.config} onAddMensagem={addMensagemEnviada} onWhatsApp={(ag) => { setTimeout(() => window.dispatchEvent(new CustomEvent('manicure-whatsapp-cliente', { detail: ag })), 50); }} />}
               {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setClientes={setClientes} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} config={db.config} />}
               {activeTab === 'servicos' && <Servicos servicos={db.servicos} setServicos={setServicos} />}
               {activeTab === 'caixa' && <Caixa movimentos={db.movimentos} setMovimentos={setMovimentos} />}

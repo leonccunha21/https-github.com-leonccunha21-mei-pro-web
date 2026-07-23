@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ProdutoEstoque } from '../types';
 import { newId } from '../localDb';
-import { Package, Plus, Edit3, Trash2, Search, AlertTriangle } from 'lucide-react';
+import { Package, Plus, Edit3, Trash2, Search, AlertTriangle, X } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 interface Props {
@@ -16,6 +16,7 @@ export default function Estoque({ produtos, setProdutos }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState({ nome: '', descricao: '', quantidade: '0', unidade: 'un', precoCusto: '0', precoVenda: '0', fornecedor: '', estoqueMinimo: '1' });
+  const [confirmExcluir, setConfirmExcluir] = useState<string | null>(null);
 
   const filtered = produtos.filter((p) => p.nome.toLowerCase().includes(busca.toLowerCase()));
   const baixoEstoque = produtos.filter((p) => p.quantidade <= p.estoqueMinimo);
@@ -75,22 +76,39 @@ export default function Estoque({ produtos, setProdutos }: Props) {
         {filtered.map((p) => {
           const baixo = p.quantidade <= p.estoqueMinimo;
           return (
-            <div key={p.id} className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 flex items-center gap-4">
-              <div className="flex-1 min-w-0">
-                <p className="font-bold text-slate-900 dark:text-slate-100 truncate">{p.nome}</p>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-                  {p.fornecedor && `${p.fornecedor} · `}
-                  R$ {p.precoVenda.toFixed(2)} (custo: R$ {p.precoCusto.toFixed(2)})
-                </p>
+            <div key={p.id} className={`bg-white dark:bg-slate-800 rounded-2xl p-4 border transition-all ${baixo ? 'border-amber-300 dark:border-amber-700' : 'border-slate-200 dark:border-slate-700'}`}>
+              <div className="flex items-center gap-3">
+                <div className="flex-1 min-w-0">
+                  <p className="font-bold text-slate-900 dark:text-slate-100 truncate">{p.nome}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    {p.fornecedor && `${p.fornecedor} · `}
+                    Venda: R$ {p.precoVenda.toFixed(2)} · Custo: R$ {p.precoCusto.toFixed(2)}
+                  </p>
+                </div>
+
+                {/* Ajuste rápido ± */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <button
+                    onClick={() => setProdutos(produtos.map((x) => x.id === p.id ? { ...x, quantidade: Math.max(0, x.quantidade - 1), updatedAt: new Date().toISOString() } : x))}
+                    className="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 hover:bg-rose-200 font-bold text-sm flex items-center justify-center transition-colors"
+                    title="Diminuir"
+                  >−</button>
+                  <div className="text-center min-w-[48px]">
+                    <p className={`font-bold text-sm ${baixo ? 'text-amber-600' : 'text-slate-900 dark:text-slate-100'}`}>
+                      {p.quantidade} {p.unidade}
+                    </p>
+                    {baixo && <p className="text-[9px] text-amber-600 font-bold leading-none">baixo</p>}
+                  </div>
+                  <button
+                    onClick={() => setProdutos(produtos.map((x) => x.id === p.id ? { ...x, quantidade: x.quantidade + 1, updatedAt: new Date().toISOString() } : x))}
+                    className="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 hover:bg-emerald-200 font-bold text-sm flex items-center justify-center transition-colors"
+                    title="Aumentar"
+                  >+</button>
+                </div>
+
+                <button onClick={() => openEdit(p)} className="p-2 rounded-lg text-slate-400 hover:text-fuchsia-600 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/20"><Edit3 className="h-4 w-4" /></button>
+                <button onClick={() => setConfirmExcluir(p.id)} className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20" title="Excluir"><Trash2 className="h-4 w-4" /></button>
               </div>
-              <div className="text-right">
-                <p className={`font-bold text-sm ${baixo ? 'text-amber-600' : 'text-slate-900 dark:text-slate-100'}`}>
-                  {p.quantidade} {p.unidade}
-                </p>
-                {baixo && <p className="text-[10px] text-amber-600 font-bold">Estoque baixo</p>}
-              </div>
-              <button onClick={() => openEdit(p)} className="p-2 rounded-lg text-slate-400 hover:text-fuchsia-600 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/20"><Edit3 className="h-4 w-4" /></button>
-              <button onClick={() => { if (window.confirm('Excluir este produto?')) setProdutos(produtos.filter(x => x.id !== p.id)); }} className="p-2 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20" title="Excluir produto"><Trash2 className="h-4 w-4" /></button>
             </div>
           );
         })}
@@ -128,6 +146,25 @@ export default function Estoque({ produtos, setProdutos }: Props) {
             <div className="flex gap-2 mt-5">
               <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm hover:bg-slate-50 dark:hover:bg-slate-700">Cancelar</button>
               <button onClick={save} className="flex-1 py-2.5 rounded-xl bg-fuchsia-600 hover:bg-fuchsia-700 text-white text-sm font-bold">{editId ? 'Atualizar' : 'Cadastrar'}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {confirmExcluir && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4" onClick={() => setConfirmExcluir(null)}>
+          <div className="w-full max-w-sm bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="w-10 h-10 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center mb-3">
+              <Trash2 className="h-5 w-5 text-rose-600" />
+            </div>
+            <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-1">Excluir produto?</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-5">Esta ação não pode ser desfeita.</p>
+            <div className="flex gap-2">
+              <button onClick={() => setConfirmExcluir(null)} className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm hover:bg-slate-50 dark:hover:bg-slate-700">Cancelar</button>
+              <button
+                onClick={() => { setProdutos(produtos.filter(x => x.id !== confirmExcluir)); toast.success('Produto excluído'); setConfirmExcluir(null); }}
+                className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold"
+              >Excluir</button>
             </div>
           </div>
         </div>

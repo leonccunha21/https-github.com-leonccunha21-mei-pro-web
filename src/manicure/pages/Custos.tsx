@@ -25,6 +25,7 @@ export default function Custos({ movimentos, setMovimentos }: Props) {
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState({ descricao: '', valor: '', categoria: 'despesa' as MovimentoCaixa['categoria'] });
+  const [confirmExcluir, setConfirmExcluir] = useState<string | null>(null);
 
   const custos = useMemo(() => {
     const prefix = `${ano}-${String(mes + 1).padStart(2, '0')}`;
@@ -98,9 +99,14 @@ export default function Custos({ movimentos, setMovimentos }: Props) {
   };
 
   const excluir = (id: string) => {
-    if (!window.confirm('Excluir este custo?')) return;
-    setMovimentos(movimentos.filter((m) => m.id !== id));
+    setConfirmExcluir(id);
+  };
+
+  const confirmarExclusao = () => {
+    if (!confirmExcluir) return;
+    setMovimentos(movimentos.filter((m) => m.id !== confirmExcluir));
     toast.success('Custo excluído');
+    setConfirmExcluir(null);
   };
 
   return (
@@ -190,6 +196,22 @@ export default function Custos({ movimentos, setMovimentos }: Props) {
             <div className="flex gap-2 mt-5">
               <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm">Cancelar</button>
               <button onClick={save} className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold">{editId ? 'Atualizar' : 'Registrar'}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {confirmExcluir && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4" onClick={() => setConfirmExcluir(null)}>
+          <div className="w-full max-w-sm bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="w-10 h-10 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center mb-3">
+              <Trash2 className="h-5 w-5 text-rose-600" />
+            </div>
+            <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-1">Excluir custo?</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-5">Esta ação não pode ser desfeita.</p>
+            <div className="flex gap-2">
+              <button onClick={() => setConfirmExcluir(null)} className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm hover:bg-slate-50 dark:hover:bg-slate-700">Cancelar</button>
+              <button onClick={confirmarExclusao} className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold">Excluir</button>
             </div>
           </div>
         </div>

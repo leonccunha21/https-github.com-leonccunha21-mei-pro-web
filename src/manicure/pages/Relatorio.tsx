@@ -17,6 +17,17 @@ function formatMoney(v: number) { return `R$ ${v.toFixed(2)}`; }
 const CORES_PAG = ['#10b981', '#f59e0b', '#3b82f6', '#8b5cf6', '#ec4899', '#14b8a6'];
 const CORES_CAT = ['#f97316', '#06b6d4', '#a855f7', '#64748b'];
 
+// Dias úteis (seg-sex) num mês
+function diasUteisNoMes(ano: number, mes: number): number {
+  const total = new Date(ano, mes + 1, 0).getDate();
+  let uteis = 0;
+  for (let d = 1; d <= total; d++) {
+    const dow = new Date(ano, mes, d).getDay();
+    if (dow !== 0 && dow !== 6) uteis++;
+  }
+  return uteis;
+}
+
 export default function Relatorio({ movimentos, agendamentos, servicos, clientes }: Props) {
   const hoje = new Date();
   const [mes, setMes] = useState(hoje.getMonth());
@@ -27,12 +38,27 @@ export default function Relatorio({ movimentos, agendamentos, servicos, clientes
     return movimentos.filter((m) => m.data.startsWith(prefix));
   }, [movimentos, mes, ano]);
 
+  // Mês anterior para comparativos
+  const mesAntNum = mes === 0 ? 11 : mes - 1;
+  const anoAntNum = mes === 0 ? ano - 1 : ano;
+  const movimentosMesAnt = useMemo(() => {
+    const prefix = `${anoAntNum}-${String(mesAntNum + 1).padStart(2, '0')}`;
+    return movimentos.filter((m) => m.data.startsWith(prefix));
+  }, [movimentos, mesAntNum, anoAntNum]);
+
   const entradasMes = movimentosMes.filter((m) => m.tipo === 'entrada');
   const saidasMes = movimentosMes.filter((m) => m.tipo === 'saida');
   const receitaMes = entradasMes.reduce((s, m) => s + m.valor, 0);
   const custosMes = saidasMes.reduce((s, m) => s + m.valor, 0);
   const lucroMes = receitaMes - custosMes;
   const margemMes = receitaMes > 0 ? (lucroMes / receitaMes) * 100 : 0;
+
+  // Comparativos mês anterior
+  const receitaAnt = movimentosMesAnt.filter((m) => m.tipo === 'entrada').reduce((s, m) => s + m.valor, 0);
+  const custosAnt = movimentosMesAnt.filter((m) => m.tipo === 'saida').reduce((s, m) => s + m.valor, 0);
+  const lucroAnt = receitaAnt - custosAnt;
+  const margemAnt = receitaAnt > 0 ? (lucroAnt / receitaAnt) * 100 : 0;
+  const variacao = (atual: number, ant: number) => ant === 0 ? null : ((atual - ant) / ant) * 100;
 
   const agendamentosMes = agendamentos.filter((a) => a.data.startsWith(`${ano}-${String(mes + 1).padStart(2, '0')}`));
   const concluidosMes = agendamentosMes.filter((a) => a.status === 'concluido');
@@ -115,22 +141,38 @@ export default function Relatorio({ movimentos, agendamentos, servicos, clientes
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {/* Receita */}
+        {(() => { const v = variacao(receitaMes, receitaAnt); return (
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2 mb-2"><DollarSign className="h-4 w-4 text-emerald-600" /><span className="text-xs font-bold text-slate-500">Receita</span></div>
           <p className="text-xl font-bold text-emerald-600">{formatMoney(receitaMes)}</p>
+          {v !== null && <p className={`text-[11px] font-bold mt-1 ${v >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>{v >= 0 ? '▲' : '▼'} {Math.abs(v).toFixed(1)}% vs mês ant.</p>}
         </div>
+        ); })()}
+        {/* Custos */}
+        {(() => { const v = variacao(custosMes, custosAnt); return (
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2 mb-2"><TrendingDown className="h-4 w-4 text-rose-600" /><span className="text-xs font-bold text-slate-500">Custos</span></div>
           <p className="text-xl font-bold text-rose-600">{formatMoney(custosMes)}</p>
+          {v !== null && <p className={`text-[11px] font-bold mt-1 ${v <= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>{v >= 0 ? '▲' : '▼'} {Math.abs(v).toFixed(1)}% vs mês ant.</p>}
         </div>
+        ); })()}
+        {/* Lucro */}
+        {(() => { const v = variacao(lucroMes, lucroAnt); return (
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2 mb-2"><TrendingUp className="h-4 w-4 text-fuchsia-600" /><span className="text-xs font-bold text-slate-500">Lucro</span></div>
           <p className={`text-xl font-bold ${lucroMes >= 0 ? 'text-fuchsia-600' : 'text-rose-600'}`}>{formatMoney(lucroMes)}</p>
+          {v !== null && <p className={`text-[11px] font-bold mt-1 ${v >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>{v >= 0 ? '▲' : '▼'} {Math.abs(v).toFixed(1)}% vs mês ant.</p>}
         </div>
+        ); })()}
+        {/* Margem */}
+        {(() => { const v = variacao(margemMes, margemAnt); return (
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2 mb-2"><Percent className="h-4 w-4 text-blue-600" /><span className="text-xs font-bold text-slate-500">Margem</span></div>
           <p className={`text-xl font-bold ${margemMes >= 0 ? 'text-blue-600' : 'text-rose-600'}`}>{margemMes.toFixed(1)}%</p>
+          {v !== null && <p className={`text-[11px] font-bold mt-1 ${v >= 0 ? 'text-emerald-500' : 'text-rose-500'}`}>{v >= 0 ? '▲' : '▼'} {Math.abs(Math.round(v))} p.p. vs mês ant.</p>}
         </div>
+        ); })()}
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
@@ -149,7 +191,8 @@ export default function Relatorio({ movimentos, agendamentos, servicos, clientes
         </div>
         <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700">
           <div className="flex items-center gap-2 mb-2"><DollarSign className="h-4 w-4 text-amber-600" /><span className="text-xs font-bold text-slate-500">Média/Dia útil</span></div>
-          <p className="text-xl font-bold text-amber-600">{formatMoney(agendamentosMes.length > 0 ? receitaMes / Math.max(concluidosMes.length, 1) : 0)}</p>
+          <p className="text-xl font-bold text-amber-600">{formatMoney(receitaMes / Math.max(diasUteisNoMes(ano, mes), 1))}</p>
+          <p className="text-[10px] text-slate-400">{diasUteisNoMes(ano, mes)} dias úteis no mês</p>
         </div>
       </div>
 

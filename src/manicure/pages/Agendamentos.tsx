@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, type ReactNode } from 'react';
 import { AgendamentoManicure, ClienteManicure, ServicoManicure, MovimentoCaixa, StatusAgendamento, MensagemTemplate, MensagemEnviada, ManicureWhatsAppInstance, ConfigManicure } from '../types';
 import { newId } from '../localDb';
-import { Calendar as CalendarIcon, Plus, Clock, Check, X, ChevronRight, ChevronLeft, MessageCircle, MoreVertical, Edit3, Trash2 } from 'lucide-react';
+import { Calendar as CalendarIcon, Plus, Check, X, ChevronRight, ChevronLeft, MessageCircle, Edit3, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 import WhatsAppMessageModal from '../components/WhatsAppMessageModal';
 
@@ -17,7 +17,7 @@ interface Props {
   templates: MensagemTemplate[];
   mensagensEnviadas: MensagemEnviada[];
   onAddMensagem: (m: MensagemEnviada) => void;
-  config: { nomeSalao: string };
+  config: ConfigManicure;
 }
 
 const STATUS_MAP: Record<StatusAgendamento, { label: string; color: string; dot: string }> = {
@@ -52,10 +52,10 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
   const [showModal, setShowModal] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [form, setForm] = useState({ clienteId: '', servicoId: '', data: '', hora: '', observacoes: '' });
-  const [menuOpen, setMenuOpen] = useState<string | null>(null);
   const [whatsAppTarget, setWhatsAppTarget] = useState<AgendamentoManicure | null>(null);
   const [showNewCliente, setShowNewCliente] = useState(false);
   const [novoClienteForm, setNovoClienteForm] = useState({ nome: '', telefone: '' });
+  const [confirmExcluir, setConfirmExcluir] = useState<string | null>(null);
   // Modal de pagamento ao concluir
   const [pagamentoTarget, setPagamentoTarget] = useState<AgendamentoManicure | null>(null);
   const [formaPagamento, setFormaPagamento] = useState<MovimentoCaixa['formaPagamento']>('dinheiro');
@@ -166,14 +166,18 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
   };
 
   const excluirAgendamento = (id: string) => {
-    setMenuOpen(null);
-    if (!window.confirm('Excluir este agendamento?')) return;
-    setAgendamentos(agendamentos.filter((a) => a.id !== id));
-    const movVinculados = movimentos.filter((m) => m.agendamentoId === id);
+    setConfirmExcluir(id);
+  };
+
+  const confirmarExclusao = () => {
+    if (!confirmExcluir) return;
+    setAgendamentos(agendamentos.filter((a) => a.id !== confirmExcluir));
+    const movVinculados = movimentos.filter((m) => m.agendamentoId === confirmExcluir);
     if (movVinculados.length > 0) {
-      setMovimentos(movimentos.filter((m) => m.agendamentoId !== id));
+      setMovimentos(movimentos.filter((m) => m.agendamentoId !== confirmExcluir));
     }
     toast.success('Agendamento excluído');
+    setConfirmExcluir(null);
   };
 
   const mudarStatus = (id: string, novoStatus: StatusAgendamento) => {
@@ -256,7 +260,7 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
           <CalendarIcon className="h-6 w-6 text-fuchsia-600" />
           <h2 className="text-xl font-bold">Agenda</h2>
         </div>
-        <button onClick={() => openNew()} className="flex items-center gap-2 px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-700 text-white rounded-xl text-sm font-bold transition-colors">
+        <button onClick={() => openNew(selectedDate)} className="flex items-center gap-2 px-4 py-2 bg-fuchsia-600 hover:bg-fuchsia-700 text-white rounded-xl text-sm font-bold transition-colors">
           <Plus className="h-4 w-4" /> Novo Agendamento
         </button>
       </div>
@@ -320,61 +324,53 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
         {filtered.map((ag) => (
           <div
             key={ag.id}
-            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-fuchsia-200 dark:hover:border-fuchsia-800 transition-all"
+            className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-fuchsia-200 dark:hover:border-fuchsia-800 transition-all overflow-hidden"
           >
             {/* Barra de status colorida no topo */}
-            <div className={`h-1 w-full ${STATUS_MAP[ag.status].dot}`} />
+            <div className={`h-1.5 w-full ${STATUS_MAP[ag.status].dot}`} />
 
-            <div className="flex items-center gap-3 p-4">
-              {/* Hora em destaque */}
-              <div className="shrink-0 w-14 text-center">
-                <span className="text-xl font-bold text-slate-900 dark:text-slate-100 leading-tight">{ag.hora.slice(0, 5)}</span>
-                <p className="text-[9px] text-slate-400 uppercase mt-0.5">horário</p>
-              </div>
-
-              <div className="w-px h-12 bg-slate-200 dark:bg-slate-700 rounded-full shrink-0" />
-
-              {/* Info do agendamento */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <p className="font-bold text-slate-900 dark:text-slate-100 truncate">{ag.clienteNome}</p>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${STATUS_MAP[ag.status].color}`}>
-                    {STATUS_MAP[ag.status].label}
-                  </span>
+            <div className="p-4">
+              {/* Linha principal: hora + info + valor */}
+              <div className="flex items-start gap-3">
+                {/* Hora em destaque */}
+                <div className="shrink-0 w-14 text-center pt-0.5">
+                  <span className="text-xl font-bold text-slate-900 dark:text-slate-100 leading-tight font-mono">{ag.hora.slice(0, 5)}</span>
+                  <p className="text-[9px] text-slate-400 uppercase mt-0.5">horário</p>
                 </div>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{ag.servicoNome}</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-sm font-bold text-emerald-600">R$ {ag.valor.toFixed(2)}</span>
-                  {ag.telefoneCliente && (
-                    <span className="text-[10px] text-slate-400">{ag.telefoneCliente}</span>
+
+                <div className="w-px self-stretch bg-slate-200 dark:bg-slate-700 rounded-full shrink-0" />
+
+                {/* Info do agendamento */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="font-bold text-slate-900 dark:text-slate-100">{ag.clienteNome}</p>
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${STATUS_MAP[ag.status].color}`}>
+                      {STATUS_MAP[ag.status].label}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{ag.servicoNome}</p>
+                  <div className="flex items-center gap-3 mt-1 flex-wrap">
+                    <span className="text-sm font-bold text-emerald-600">R$ {ag.valor.toFixed(2)}</span>
+                    {ag.telefoneCliente && (
+                      <span className="text-[11px] text-slate-400 flex items-center gap-1">
+                        <MessageCircle className="h-3 w-3" />{ag.telefoneCliente}
+                      </span>
+                    )}
+                  </div>
+                  {ag.observacoes && (
+                    <p className="text-xs text-slate-400 mt-1 italic bg-slate-50 dark:bg-slate-700/50 px-2 py-1 rounded-lg">
+                      📝 {ag.observacoes}
+                    </p>
                   )}
                 </div>
-                {ag.observacoes && <p className="text-xs text-slate-400 mt-0.5 truncate italic">{ag.observacoes}</p>}
               </div>
 
-              {/* Ações */}
-              <div className="flex items-center gap-1 shrink-0">
-                {/* Status rápido */}
-                {ag.status === 'agendado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'confirmado')} className="p-1.5 rounded-lg bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200" title="Confirmar">
-                    <Check className="h-3.5 w-3.5" />
-                  </button>
-                )}
-                {ag.status === 'confirmado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'concluido')} className="p-1.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200" title="Concluir">
-                    <Check className="h-3.5 w-3.5" />
-                  </button>
-                )}
-                {ag.status !== 'concluido' && ag.status !== 'cancelado' && (
-                  <button onClick={() => mudarStatus(ag.id, 'cancelado')} className="p-1.5 rounded-lg bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200" title="Cancelar">
-                    <X className="h-3.5 w-3.5" />
-                  </button>
-                )}
-
-                {/* WhatsApp — sempre visível */}
+              {/* Rodapé de ações — sempre visível */}
+              <div className="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-slate-700 flex-wrap">
+                {/* Botão WhatsApp em destaque */}
                 <button
                   onClick={() => ag.telefoneCliente ? setWhatsAppTarget(ag) : toast.error('Cliente sem telefone cadastrado')}
-                  className={`p-1.5 rounded-lg transition-colors ${
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-colors ${
                     ag.telefoneCliente
                       ? 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200'
                       : 'bg-slate-100 dark:bg-slate-700 text-slate-400 opacity-50 cursor-not-allowed'
@@ -382,46 +378,81 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
                   title={ag.telefoneCliente ? 'Enviar mensagem WhatsApp' : 'Sem telefone cadastrado'}
                 >
                   <MessageCircle className="h-3.5 w-3.5" />
+                  WhatsApp
                 </button>
 
-                {/* Mais opções */}
-                <div className="relative">
-                  <button
-                    onClick={() => setMenuOpen(menuOpen === ag.id ? null : ag.id)}
-                    className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                    title="Mais opções"
-                  >
-                    <MoreVertical className="h-4 w-4" />
-                  </button>
+                {/* Botão Editar */}
+                <button
+                  onClick={() => openEdit(ag)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-fuchsia-100 dark:hover:bg-fuchsia-900/30 hover:text-fuchsia-700 dark:hover:text-fuchsia-300 transition-colors"
+                  title="Editar agendamento"
+                >
+                  <Edit3 className="h-3.5 w-3.5" />
+                  Editar
+                </button>
 
-                  {menuOpen === ag.id && (
-                    <>
-                      <div className="fixed inset-0 z-10" onClick={() => setMenuOpen(null)} />
-                      <div className="absolute right-0 top-full mt-1 z-20 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-1 min-w-[160px]">
-                        <button
-                          onClick={() => { setMenuOpen(null); openEdit(ag); }}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700"
-                        >
-                          <Edit3 className="h-3.5 w-3.5" /> Editar
-                        </button>
-                        <button
-                          onClick={() => { setMenuOpen(null); setWhatsAppTarget(ag); }}
-                          className={`w-full flex items-center gap-2 px-3 py-2 text-xs font-bold hover:bg-emerald-50 dark:hover:bg-emerald-900/20 ${
-                            ag.telefoneCliente ? 'text-emerald-600' : 'text-slate-400 cursor-not-allowed opacity-50'
-                          }`}
-                          disabled={!ag.telefoneCliente}
-                        >
-                          <MessageCircle className="h-3.5 w-3.5" /> Enviar WhatsApp
-                        </button>
-                        <div className="border-t border-slate-100 dark:border-slate-700 my-1" />
-                        <button
-                          onClick={() => excluirAgendamento(ag.id)}
-                          className="w-full flex items-center gap-2 px-3 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-900/20"
-                        >
-                          <Trash2 className="h-3.5 w-3.5" /> Excluir
-                        </button>
-                      </div>
-                    </>
+                {/* Botão Excluir */}
+                <button
+                  onClick={() => excluirAgendamento(ag.id)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-rose-50 dark:bg-rose-900/20 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/30 transition-colors"
+                  title="Excluir agendamento"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  Excluir
+                </button>
+
+                {/* Separador + botões de status rápido — à direita */}
+                <div className="flex-1" />
+                <div className="flex items-center gap-1">
+                  {ag.status === 'agendado' && (
+                    <button
+                      onClick={() => mudarStatus(ag.id, 'confirmado')}
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 hover:bg-amber-200 transition-colors"
+                      title="Confirmar presença"
+                    >
+                      <Check className="h-3 w-3" /> Confirmar
+                    </button>
+                  )}
+                  {ag.status === 'confirmado' && (
+                    <button
+                      onClick={() => mudarStatus(ag.id, 'em_andamento')}
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 hover:bg-purple-200 transition-colors"
+                      title="Iniciar atendimento"
+                    >
+                      <Check className="h-3 w-3" /> Iniciar
+                    </button>
+                  )}
+                  {ag.status === 'em_andamento' && (
+                    <button
+                      onClick={() => mudarStatus(ag.id, 'concluido')}
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-200 transition-colors"
+                      title="Concluir atendimento"
+                    >
+                      <Check className="h-3 w-3" /> Concluir
+                    </button>
+                  )}
+                  {ag.status !== 'concluido' && ag.status !== 'cancelado' && (
+                    <button
+                      onClick={() => mudarStatus(ag.id, 'cancelado')}
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 hover:bg-rose-200 transition-colors"
+                      title="Cancelar agendamento"
+                    >
+                      <X className="h-3 w-3" /> Cancelar
+                    </button>
+                  )}
+                  {ag.status === 'concluido' && (
+                    <span className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600">
+                      <Check className="h-3 w-3" /> Concluído
+                    </span>
+                  )}
+                  {ag.status === 'cancelado' && (
+                    <button
+                      onClick={() => mudarStatus(ag.id, 'agendado')}
+                      className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl text-[11px] font-bold bg-blue-50 dark:bg-blue-900/20 text-blue-600 hover:bg-blue-100 transition-colors"
+                      title="Reagendar"
+                    >
+                      <Check className="h-3 w-3" /> Reagendar
+                    </button>
                   )}
                 </div>
               </div>
@@ -519,6 +550,23 @@ export default function Agendamentos({ agendamentos, clientes, servicos, setAgen
         config={config}
         onAddMensagem={onAddMensagem}
       />
+
+      {/* Modal de Confirmação de Exclusão */}
+      {confirmExcluir && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center px-4" onClick={() => setConfirmExcluir(null)}>
+          <div className="w-full max-w-sm bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="w-10 h-10 rounded-full bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center mb-3">
+              <Trash2 className="h-5 w-5 text-rose-600" />
+            </div>
+            <h3 className="font-bold text-slate-900 dark:text-slate-100 mb-1">Excluir agendamento?</h3>
+            <p className="text-sm text-slate-500 dark:text-slate-400 mb-5">Esta ação não pode ser desfeita. O lançamento no caixa vinculado também será removido.</p>
+            <div className="flex gap-2">
+              <button onClick={() => setConfirmExcluir(null)} className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-slate-600 text-sm hover:bg-slate-50 dark:hover:bg-slate-700">Cancelar</button>
+              <button onClick={confirmarExclusao} className="flex-1 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-sm font-bold">Excluir</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal de Pagamento ao Concluir */}
       {pagamentoTarget && (
