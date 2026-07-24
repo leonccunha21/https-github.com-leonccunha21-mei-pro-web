@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
-import { Sale, Product } from '../types';
+import { Sale, Product, SaleItem } from '../types';
 import ReceiptPDF from './ReceiptPDF';
 import Pagination from './Pagination';
+import { roundCurrency } from '../lib/currency';
 import {
   Search,
   X,
@@ -20,7 +21,8 @@ import {
   Printer,
   AlertTriangle,
   ShoppingCart,
-  Trash2
+  Trash2,
+  Pencil
 } from 'lucide-react';
 
 interface SalesHistoryProps {
@@ -50,6 +52,13 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
   
   // Selected sale for detail modal
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+  const [editingSale, setEditingSale] = useState<Sale | null>(null);
+
+  const emptySale: Sale = {
+    id: '', date: '', items: [], total: 0, totalCost: 0, profit: 0,
+    status: 'completed', paymentMethod: 'pix', saleType: 'CPF', createdAt: '',
+  };
+  const [editForm, setEditForm] = useState<Sale>(emptySale);
 
   // Converte a data da venda para Date LOCAL, tratando os 3 formatos possíveis:
   // - "AAAA-MM-DD" (vendas importadas, sem hora) -> meia-noite LOCAL (não UTC)
@@ -620,21 +629,20 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-slate-200">
-                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Cód / Data</th>
-                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Cliente</th>
-                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Produto</th>
-                  <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Itens</th>
-                  <th className="px-4 py-3 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Pagamento</th>
-                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Valor Vendido</th>
-                  <th className="px-4 py-3 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Lucro</th>
-                  <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Status</th>
-                  <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Ações</th>
+                  <th className="px-3 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Cód / Data</th>
+                  <th className="px-3 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Cliente</th>
+                  <th className="px-3 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Produto / Itens</th>
+                  <th className="px-3 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 hidden md:table-cell">Pagamento</th>
+                  <th className="px-3 py-2.5 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Valor</th>
+                  <th className="px-3 py-2.5 text-right text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 hidden md:table-cell">Lucro</th>
+                  <th className="px-3 py-2.5 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Status</th>
+                  <th className="px-3 py-2.5 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Ações</th>
                 </tr>
               </thead>
               {paginatedGroups.map(group => (
                 <tbody key={group.key} className="text-sm">
                   <tr>
-                    <td colSpan={9} className="px-4 py-2 bg-slate-100/70 border-b border-slate-200">
+                    <td colSpan={8} className="px-3 py-2 bg-slate-100/70 border-b border-slate-200">
                       <span className="text-xs font-bold uppercase tracking-wider text-slate-500">{group.label}</span>
                       <span className="text-xs text-slate-400 ml-2">{group.sales.length} {group.sales.length === 1 ? 'venda' : 'vendas'}</span>
                     </td>
@@ -654,121 +662,115 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                       }`}
                     >
                       {/* ID / Date */}
-                      <td className="px-4 py-3 border-b border-slate-100 align-middle">
+                      <td className="px-3 py-2.5 border-b border-slate-100 align-middle">
                         <span className="font-mono text-xs font-bold block text-slate-400">#{sale.id.substring(0, 8)}</span>
-                        <span className="text-xs text-slate-500 block mt-0.5">{formatDate(sale.date)}</span>
+                        <span className="text-[10px] text-slate-500 block mt-0.5">{formatDate(sale.date)}</span>
                       </td>
 
                       {/* Client info */}
-                      <td className="px-4 py-3 border-b border-slate-100 align-middle font-semibold">
+                      <td className="px-3 py-2.5 border-b border-slate-100 align-middle font-semibold text-xs">
                         {sale.clientName ? (
                           <div>
                             <p className={isCancelled ? 'text-slate-400 line-through' : 'text-slate-900'}>{sale.clientName}</p>
-                            {sale.clientPhone && <p className="text-xs text-slate-400 font-mono mt-0.5">{sale.clientPhone}</p>}
+                            {sale.clientPhone && <p className="text-[10px] text-slate-400 font-mono mt-0.5">{sale.clientPhone}</p>}
                           </div>
                         ) : (
-                          <span className="text-slate-400 text-xs italic">Cliente não informado</span>
+                          <span className="text-slate-400 text-[10px] italic">—</span>
                         )}
                       </td>
 
-                      {/* Items count */}
-                      <td className="px-4 py-3 border-b border-slate-100 align-middle">
-                        <span className="font-mono font-medium text-slate-700 block">{totalItems} un</span>
+                      {/* Produto / Itens (merged) */}
+                      <td className="px-3 py-2.5 border-b border-slate-100 align-middle">
+                        <span className="font-mono font-medium text-slate-700 block text-xs">{totalItems} un</span>
                         <span className="text-[10px] text-slate-400 block max-w-[180px] truncate mt-0.5" title={sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', ')}>
-                          {sale.items.map(i => `${i.productName} (${i.quantity}x)`).join(', ')}
+                          {sale.items.map(i => `${i.productName}`).join(', ')}
                         </span>
                       </td>
 
-                      {/* Product names (first 2 products) */}
-                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-xs text-slate-600 max-w-[200px] truncate">
-                        {sale.items.slice(0, 2).map(i => i.productName).join(', ')}
-                        {sale.items.length > 2 && ' ...'}
-                      </td>
-
                       {/* Payment method */}
-                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-xs font-medium text-slate-600">
+                      <td className="px-3 py-2.5 border-b border-slate-100 align-middle text-[10px] font-medium text-slate-600 hidden md:table-cell">
                         {paymentMethodLabels[sale.paymentMethod] || sale.paymentMethod}
                       </td>
 
                       {/* Sold total */}
-                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-right font-mono font-bold text-slate-900">
+                      <td className="px-3 py-2.5 border-b border-slate-100 align-middle text-right font-mono font-bold text-slate-900 text-xs">
                         {formatCurrency(sale.total)}
                       </td>
 
                       {/* Profit */}
-                      <td className={`px-4 py-3 border-b border-slate-100 align-middle text-right font-mono font-extrabold ${
+                      <td className={`px-3 py-2.5 border-b border-slate-100 align-middle text-right font-mono font-extrabold text-xs hidden md:table-cell ${
                         isCancelled ? 'text-slate-300' : 'text-emerald-600'
                       }`}>
                         {isCancelled ? '—' : formatCurrency(sale.profit)}
                       </td>
 
                       {/* Status */}
-                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
+                      <td className="px-3 py-2.5 border-b border-slate-100 align-middle text-center">
                         {isCancelled ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-rose-50 text-rose-700 text-xs font-bold rounded-sm border border-rose-100">
-                            <XCircle className="h-3 w-3 shrink-0" /> Cancelada
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-rose-50 text-rose-700 text-[10px] font-bold rounded-sm border border-rose-100">
+                            <XCircle className="h-2.5 w-2.5 shrink-0" /> Cancelada
                           </span>
                         ) : isPending ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-amber-50 text-amber-700 text-xs font-bold rounded-sm border border-amber-200">
-                            <AlertTriangle className="h-3 w-3 shrink-0" /> Pendente
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-amber-50 text-amber-700 text-[10px] font-bold rounded-sm border border-amber-200">
+                            <AlertTriangle className="h-2.5 w-2.5 shrink-0" /> Pendente
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-sm border border-emerald-100">
-                            <CheckCircle className="h-3 w-3 shrink-0" /> Concluída
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-bold rounded-sm border border-emerald-100">
+                            <CheckCircle className="h-2.5 w-2.5 shrink-0" /> OK
                           </span>
                         )}
                       </td>
 
-                      {/* Details / Cancel Action */}
-                      <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
-                        <div className="flex items-center justify-center gap-1">
+                      {/* Actions */}
+                      <td className="px-3 py-2.5 border-b border-slate-100 align-middle text-center">
+                        <div className="flex items-center justify-center gap-0.5">
                           {isPending && (
                             <button
-                              id={`confirm-payment-${sale.id}`}
                               onClick={() => handleConfirmPayment(sale)}
-                              className="p-1.5 hover:bg-amber-100 text-amber-600 rounded-lg transition-colors"
+                              className="p-1 hover:bg-amber-100 text-amber-600 rounded-lg transition-colors"
                               title="Confirmar Pagamento"
-                              aria-label="Confirmar Pagamento"
                             >
-                              <CheckCircle className="h-4 w-4" />
+                              <CheckCircle className="h-3.5 w-3.5" />
                             </button>
                           )}
 
                           <button
-                            id={`details-${sale.id}`}
-                            onClick={() => setSelectedSale(sale)}
-                            className="p-1.5 hover:bg-slate-100 text-slate-600 rounded-lg transition-colors"
-                            title="Ver Cupom / Detalhes"
-                            aria-label="Ver Cupom / Detalhes"
+                            onClick={() => { setEditingSale(sale); setEditForm(JSON.parse(JSON.stringify(sale))); }}
+                            className="p-1 hover:bg-sky-100 text-sky-600 rounded-lg transition-colors"
+                            title="Editar venda"
                           >
-                            <Info className="h-4 w-4" />
+                            <Pencil className="h-3.5 w-3.5" />
+                          </button>
+
+                          <button
+                            onClick={() => setSelectedSale(sale)}
+                            className="p-1 hover:bg-slate-100 text-slate-600 rounded-lg transition-colors"
+                            title="Ver detalhes"
+                          >
+                            <Info className="h-3.5 w-3.5" />
                           </button>
                           
                           {!isCancelled && (
                             <button
-                              id={`cancel-${sale.id}`}
                               onClick={() => handleCancelClick(sale)}
-                              className="p-1.5 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors"
-                              title="Estornar / Cancelar venda"
-                              aria-label="Estornar / Cancelar venda"
+                              className="p-1 hover:bg-rose-50 text-rose-600 rounded-lg transition-colors"
+                              title="Cancelar venda"
                             >
-                              <CornerUpLeft className="h-4 w-4" />
+                              <CornerUpLeft className="h-3.5 w-3.5" />
                             </button>
                           )}
 
                           {onDeleteSale && (
                             <button
-                              id={`delete-${sale.id}`}
                               onClick={() => {
                                 if (window.confirm(`Apagar DEFINITIVAMENTE a venda #${sale.id.substring(0, 8)}?\n\nEsta ação não pode ser desfeita e a venda sumirá do histórico e de todos os cálculos.`)) {
                                   onDeleteSale(sale.id);
                                 }
                               }}
-                              className="p-2 hover:bg-rose-100 text-rose-700 rounded-lg transition-colors"
+                              className="p-1 hover:bg-rose-100 text-rose-700 rounded-lg transition-colors"
                               title="Apagar definitivamente"
-                              aria-label="Apagar definitivamente"
                             >
-                              <Trash2 className="h-4 w-4" />
+                              <Trash2 className="h-3.5 w-3.5" />
                             </button>
                           )}
                         </div>
@@ -782,7 +784,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
               {/* Summary Totals Row */}
               <tfoot>
                 <tr className="bg-slate-100 border-t-2 border-slate-200 text-sm">
-                  <td colSpan={4} className="px-4 py-3 border-b border-slate-100 align-middle font-bold text-slate-700 uppercase text-xs tracking-wider">
+                  <td colSpan={3} className="px-3 py-2.5 border-b border-slate-100 align-middle font-bold text-slate-700 uppercase text-xs tracking-wider">
                     {showDebtors 
                       ? `Total (${debtorSummary.count} ${debtorSummary.count === 1 ? 'venda' : 'vendas'} pendentes)`
                       : `Totais (${summaryTotals.totalCount} ${summaryTotals.totalCount === 1 ? 'venda' : 'vendas'} concluídas)`
@@ -1023,6 +1025,219 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
               </button>
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* EDIT MODAL */}
+      {editingSale && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-lg overflow-hidden border border-slate-200 flex flex-col max-h-[90vh]">
+            <div className="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+              <div>
+                <span className="text-[10px] font-mono text-slate-400 uppercase tracking-widest block">Editar Venda</span>
+                <h3 className="text-base font-black text-slate-900 mt-1">#{editingSale.id.substring(0, 8)}</h3>
+              </div>
+              <button onClick={() => setEditingSale(null)} className="text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-all">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-4 space-y-4 overflow-y-auto flex-1">
+              {/* Client info */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Cliente</label>
+                  <input
+                    type="text"
+                    value={editForm.clientName || ''}
+                    onChange={e => setEditForm({ ...editForm, clientName: e.target.value })}
+                    className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+                    placeholder="Nome do cliente"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Telefone</label>
+                  <input
+                    type="text"
+                    value={editForm.clientPhone || ''}
+                    onChange={e => setEditForm({ ...editForm, clientPhone: e.target.value })}
+                    className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+                    placeholder="(00) 00000-0000"
+                  />
+                </div>
+              </div>
+
+              {/* Payment method & Status */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Pagamento</label>
+                  <select
+                    value={editForm.paymentMethod}
+                    onChange={e => setEditForm({ ...editForm, paymentMethod: e.target.value as any })}
+                    className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+                  >
+                    <option value="pix">PIX</option>
+                    <option value="money">Dinheiro</option>
+                    <option value="card_credit">Cartão Crédito</option>
+                    <option value="card_debit">Cartão Débito</option>
+                    <option value="transfer">Transferência</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block mb-1">Tipo</label>
+                  <select
+                    value={editForm.saleType}
+                    onChange={e => setEditForm({ ...editForm, saleType: e.target.value as 'CPF' | 'CNPJ' })}
+                    className="w-full px-3 py-2 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-indigo-400"
+                  >
+                    <option value="CPF">CPF</option>
+                    <option value="CNPJ">CNPJ</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Items table */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Itens</label>
+                  <button
+                    onClick={() => {
+                      const newItem: SaleItem = { productId: `edit_${Date.now()}`, productName: '', quantity: 1, costPrice: 0, salePrice: 0, total: 0 };
+                      setEditForm({ ...editForm, items: [...editForm.items, newItem] });
+                    }}
+                    className="px-2 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-lg hover:bg-indigo-100 border border-indigo-200 transition-colors"
+                  >
+                    + Item
+                  </button>
+                </div>
+                <div className="space-y-2 max-h-52 overflow-y-auto">
+                  {editForm.items.map((item, idx) => (
+                    <div key={idx} className="p-2 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
+                      <div className="flex items-center justify-between">
+                        <input
+                          type="text"
+                          value={item.productName}
+                          onChange={e => {
+                            const newItems = [...editForm.items];
+                            newItems[idx] = { ...newItems[idx], productName: e.target.value };
+                            setEditForm({ ...editForm, items: newItems });
+                          }}
+                          className="flex-1 px-2 py-1 text-xs border border-slate-200 rounded focus:outline-none focus:border-indigo-400"
+                          placeholder="Nome do produto"
+                        />
+                        <button
+                          onClick={() => {
+                            const newItems = editForm.items.filter((_, i) => i !== idx);
+                            setEditForm({ ...editForm, items: newItems });
+                          }}
+                          className="ml-1 p-1 hover:bg-rose-50 text-rose-500 rounded"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-4 gap-1.5">
+                        <div>
+                          <label className="text-[9px] text-slate-400 block">Qtd</label>
+                          <input
+                            type="number" min={1}
+                            value={item.quantity}
+                            onChange={e => {
+                              const qty = Math.max(1, Number(e.target.value));
+                              const newItems = [...editForm.items];
+                              newItems[idx] = { ...newItems[idx], quantity: qty, total: qty * item.salePrice };
+                              setEditForm({ ...editForm, items: newItems });
+                            }}
+                            className="w-full px-1.5 py-1 text-xs border border-slate-200 rounded focus:outline-none focus:border-indigo-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] text-slate-400 block">Preço</label>
+                          <input
+                            type="number" min={0} step={0.01}
+                            value={item.salePrice}
+                            onChange={e => {
+                              const sp = Number(e.target.value) || 0;
+                              const newItems = [...editForm.items];
+                              newItems[idx] = { ...newItems[idx], salePrice: sp, total: sp * item.quantity };
+                              setEditForm({ ...editForm, items: newItems });
+                            }}
+                            className="w-full px-1.5 py-1 text-xs border border-slate-200 rounded focus:outline-none focus:border-indigo-400"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-[9px] text-slate-400 block">Custo</label>
+                          <input
+                            type="number" min={0} step={0.01}
+                            value={item.costPrice}
+                            onChange={e => {
+                              const newItems = [...editForm.items];
+                              newItems[idx] = { ...newItems[idx], costPrice: Number(e.target.value) || 0 };
+                              setEditForm({ ...editForm, items: newItems });
+                            }}
+                            className="w-full px-1.5 py-1 text-xs border border-slate-200 rounded focus:outline-none focus:border-indigo-400"
+                          />
+                        </div>
+                        <div className="flex items-end justify-end pb-1">
+                          <span className="text-xs font-mono font-bold text-slate-700">{(item.salePrice * item.quantity).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Live totals */}
+              <div className="bg-slate-100 p-3 rounded-xl space-y-1.5 border border-slate-200">
+                {(() => {
+                  const newTotalCost = editForm.items.reduce((a, i) => a + i.costPrice * i.quantity, 0);
+                  const newTotal = editForm.items.reduce((a, i) => a + i.salePrice * i.quantity, 0);
+                  const newProfit = newTotal - newTotalCost;
+                  return (<>
+                    <div className="flex justify-between text-xs text-slate-500">
+                      <span>Custo Total:</span>
+                      <span className="font-mono font-bold text-slate-700">{formatCurrency(newTotalCost)}</span>
+                    </div>
+                    <div className="flex justify-between text-xs text-slate-500">
+                      <span>Valor Venda:</span>
+                      <span className="font-mono font-bold text-slate-900">{formatCurrency(newTotal)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm font-black text-slate-950 pt-1.5 border-t border-slate-200">
+                      <span>Lucro:</span>
+                      <span className={`font-mono ${newProfit >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {formatCurrency(newProfit)}
+                      </span>
+                    </div>
+                  </>);
+                })()}
+              </div>
+            </div>
+
+            {/* Save / Cancel */}
+            <div className="p-4 border-t border-slate-200 flex items-center justify-end gap-2 bg-slate-50">
+              <button onClick={() => setEditingSale(null)} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 transition-colors cursor-pointer">
+                Cancelar
+              </button>
+              <button
+                onClick={() => {
+                  const newTotalCost = editForm.items.reduce((a, i) => a + i.costPrice * i.quantity, 0);
+                  const newTotal = editForm.items.reduce((a, i) => a + i.salePrice * i.quantity, 0);
+                  const updatedSale: Sale = {
+                    ...editForm,
+                    items: editForm.items.map(i => ({ ...i, total: i.salePrice * i.quantity })),
+                    totalCost: roundCurrency(newTotalCost),
+                    total: roundCurrency(newTotal),
+                    profit: roundCurrency(newTotal - newTotalCost),
+                    updatedAt: new Date().toISOString(),
+                  };
+                  onUpdateSale?.(updatedSale);
+                  setEditingSale(null);
+                  toast.success('Venda atualizada com sucesso!');
+                }}
+                className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-lg transition-colors cursor-pointer"
+              >
+                Salvar Alterações
+              </button>
+            </div>
           </div>
         </div>
       )}
