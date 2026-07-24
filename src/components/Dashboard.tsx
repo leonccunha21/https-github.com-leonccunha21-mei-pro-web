@@ -185,11 +185,10 @@ export default function Dashboard({ products, sales, bills = [], storeInfo, onNa
   // Últimas vendas (mais recentes primeiro), sempre mostrando as mais novas,
   // independentemente do filtro de ano do painel de métricas.
   const recentSales = useMemo(() => {
-    return [...sales]
-      .filter(s => s.status !== 'cancelled')
+    return [...completedSales]
       .sort((a, b) => (parseLocalDate(b.date).getTime()) - (parseLocalDate(a.date).getTime()))
       .slice(0, 8);
-  }, [sales]);
+  }, [completedSales]);
 
   const formatSaleDate = (dateStr: string): string => {
     const d = parseLocalDate(dateStr);
