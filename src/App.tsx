@@ -2228,6 +2228,7 @@ const marketingItems: NavItem[] = [
 )}
 
             {activeTab === 'settings' && (
+              <ErrorBoundary fallback={ErrorBoundaryFallback} onReset={() => {}}>
               <Settings 
                 products={products}
                 sales={sales}
@@ -2254,6 +2255,7 @@ const marketingItems: NavItem[] = [
                 onAppUsersChange={setAppUsers}
                 onCurrentUserRoleChange={setCurrentUserRole}
               />
+              </ErrorBoundary>
             )}
             </React.Suspense>
           </motion.div>
