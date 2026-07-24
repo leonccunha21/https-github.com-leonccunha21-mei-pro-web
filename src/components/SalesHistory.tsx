@@ -53,6 +53,9 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
   
   // Selected sale for detail modal
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
+
+  // Reset page when filters change
+  React.useEffect(() => { setCurrentPage(1); }, [searchQuery, statusFilter, paymentFilter, dateRange, customStart, customEnd, showDebtors]);
   const [editingSale, setEditingSale] = useState<Sale | null>(null);
   const [syncPrices, setSyncPrices] = useState(false);
 

@@ -1302,7 +1302,7 @@ export default function App() {
         setBills(db.bills);
         setInternetUsers(db.internetUsers);
 
-        persist(db);
+        saveDb(db).catch(() => showToast('Falha ao salvar backup.'));
       } catch {
         showToast('Arquivo de backup inválido.');
       }
