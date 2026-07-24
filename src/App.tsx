@@ -833,20 +833,6 @@ export default function App() {
 
   // Update Product
   const handleUpdateProduct = (updatedProduct: Product) => {
-    const old = products.find(p => p.id === updatedProduct.id);
-    if (old) {
-      const costDiff = updatedProduct.costPrice !== old.costPrice
-        ? Math.abs((updatedProduct.costPrice - old.costPrice) / (old.costPrice || 1)) * 100 : 0;
-      const saleDiff = updatedProduct.salePrice !== old.salePrice
-        ? Math.abs((updatedProduct.salePrice - old.salePrice) / (old.salePrice || 1)) * 100 : 0;
-      if (costDiff > 5 || saleDiff > 5) {
-        const parts: string[] = [];
-        if (costDiff > 5) parts.push(`custo ${costDiff > 50 ? '🔥' : ''}${costDiff.toFixed(0)}%`);
-        if (saleDiff > 5) parts.push(`venda ${saleDiff > 50 ? '🔥' : ''}${saleDiff.toFixed(0)}%`);
-        showToast(`${updatedProduct.name}: ${parts.join(', ')} — recalculando vendas afetadas`);
-        recalculateAllSales(products.map(p => p.id === updatedProduct.id ? updatedProduct : p));
-      }
-    }
     const updated = products.map(p => p.id === updatedProduct.id ? { ...updatedProduct, updatedAt: new Date().toISOString() } : p);
     saveProductsToStorage(updated, updatedProduct).catch(() => {});
   };
