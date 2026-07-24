@@ -2,8 +2,6 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { Product, SaleItem, PaymentMethod, Customer } from '../types';
 import { roundCurrency } from '../lib/currency';
 import { normalizeName } from '../lib/normalize';
-import { generatePixPayload } from '../lib/pix';
-import QRCode from 'qrcode';
 import BarcodeScanner from './BarcodeScanner';
 import ReceiptPDF from './ReceiptPDF';
 import { 
@@ -24,9 +22,7 @@ import {
   ChevronDown,
   ChevronRight,
   Clock,
-  Loader2,
-  QrCode,
-  Smartphone,
+  
   ScanBarcode
 } from 'lucide-react';
 
@@ -93,8 +89,6 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
   // Checkout feedback
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<boolean>(false);
-  const [pixQrCode, setPixQrCode] = useState<string | null>(null);
-  const [pixKeyMissing, setPixKeyMissing] = useState(false);
   const [lastSaleData, setLastSaleData] = useState<{
     items: SaleItem[];
     clientName?: string;
@@ -353,34 +347,6 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
   const discountAmount = roundCurrency((cartSubtotal * discountPercent) / 100);
   const cartTotal = Math.max(0, roundCurrency(cartSubtotal - discountAmount));
   const totalItemsCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-
-  // Generate PIX QR Code when payment method is PIX and cart total > 0
-  useEffect(() => {
-    if (paymentMethod === 'pix' && cartTotal > 0) {
-      let storeInfo: Record<string, string> = {};
-      try { storeInfo = JSON.parse(localStorage.getItem('zm_store_info') || '{}'); } catch {}
-      const pixKey = storeInfo.pixKey || '';
-      if (!pixKey) {
-        setPixQrCode(null);
-        setPixKeyMissing(true);
-        return;
-      }
-      setPixKeyMissing(false);
-      const payload = generatePixPayload({
-        pixKey,
-        merchantName: storeInfo.name || 'ZM Store',
-        merchantCity: storeInfo.city || 'Cidade',
-        amount: cartTotal,
-        transactionId: `PDV${Date.now().toString(36).toUpperCase()}`
-      });
-      QRCode.toDataURL(payload, { width: 300, margin: 2, color: { dark: '#1e293b', light: '#ffffff' } }).then(url => {
-        setPixQrCode(url);
-      });
-    } else {
-      setPixQrCode(null);
-      setPixKeyMissing(false);
-    }
-  }, [paymentMethod, cartTotal]);
 
   // Submit Sale Handler
   const handleCheckout = (e: React.FormEvent) => {
@@ -1066,34 +1032,6 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
                 </div>
               </div>
             </div>
-
-            {/* PIX QR Code */}
-            {paymentMethod === 'pix' && (
-              <div className="flex flex-col items-center p-4 bg-white border border-indigo-200 rounded-xl">
-                {pixKeyMissing ? (
-                  <div className="text-center py-4">
-                    <Smartphone className="h-8 w-8 text-amber-500 mx-auto mb-2" />
-                    <p className="text-xs font-bold text-amber-700">Chave PIX não configurada</p>
-                    <p className="text-[10px] text-amber-600 mt-1">Vá em Configurações &gt; Perfil da Loja e cadastre sua chave PIX.</p>
-                  </div>
-                ) : pixQrCode ? (
-                  <>
-                    <div className="flex items-center gap-2 mb-2">
-                      <QrCode className="h-4 w-4 text-indigo-600" />
-                      <span className="text-[10px] font-bold text-indigo-700 uppercase tracking-wider">Pague com PIX</span>
-                    </div>
-                    <img src={pixQrCode} alt="QR Code PIX" className="w-44 h-44" />
-                    <p className="text-[10px] text-slate-500 mt-2 text-center">Escaneie o QR Code com o app do seu banco para pagar</p>
-                    <p className="text-[10px] font-mono text-slate-400 mt-1">{cartTotal.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
-                  </>
-                ) : (
-                  <div className="flex items-center gap-2 py-2">
-                    <Loader2 className="h-4 w-4 animate-spin text-indigo-500" />
-                    <span className="text-xs text-slate-500">Gerando QR Code...</span>
-                  </div>
-                )}
-              </div>
-            )}
 
             {/* Sales Notes */}
             <div>

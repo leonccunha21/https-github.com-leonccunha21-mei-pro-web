@@ -178,6 +178,9 @@ export default function App() {
     try { return JSON.parse(localStorage.getItem('zm_store_info') || '{}') as { logoUrl?: string; name?: string }; } catch { return {} as { logoUrl?: string; name?: string }; }
   });
   useEffect(() => {
+    try { localStorage.setItem('zm_store_info', JSON.stringify(storeInfo)); } catch {}
+  }, [storeInfo]);
+  useEffect(() => {
     const handler = () => {
       try { setStoreInfo(JSON.parse(localStorage.getItem('zm_store_info') || '{}')); } catch {}
     };
@@ -234,16 +237,33 @@ export default function App() {
         toggleDarkMode();
         return;
       }
+
+      if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+        switch (e.key.toLowerCase()) {
+          case 'n':
+            e.preventDefault();
+            setActiveTab('sales');
+            break;
+          case '/':
+            e.preventDefault();
+            document.querySelector<HTMLInputElement>('input[type="text"], input[placeholder*="Buscar"], input[placeholder*="buscar"]')?.focus();
+            break;
+          case 'e':
+            e.preventDefault();
+            setActiveTab('settings');
+            break;
+        }
+      }
     };
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, []);
+  }, [cloudUser]);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
   }, [darkMode]);
 
-  // Monitora conectividade (6.8)
+  // Monitora conectividade
   useEffect(() => {
     const onOnline = () => setIsOnline(true);
     const onOffline = () => setIsOnline(false);
@@ -254,33 +274,6 @@ export default function App() {
       window.removeEventListener('offline', onOffline);
     };
   }, []);
-
-  // Atalhos de teclado (6.7)
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement)?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
-      if (e.ctrlKey || e.metaKey || e.altKey) return;
-
-      switch (e.key.toLowerCase()) {
-        case 'n':
-          e.preventDefault();
-          setActiveTab('sales');
-          break;
-        case '/':
-          e.preventDefault();
-          const searchInput = document.querySelector<HTMLInputElement>('input[type="text"], input[placeholder*="Buscar"], input[placeholder*="buscar"]');
-          searchInput?.focus();
-          break;
-        case 'e':
-          e.preventDefault();
-          setActiveTab('settings');
-          break;
-      }
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [cloudUser]);
 
   useEffect(() => {
     const color = storeInfo.primaryColor || '#4f46e5';
@@ -368,64 +361,61 @@ export default function App() {
     if (!cloudUser) { setLoading(false); return; }
     (async () => {
       try {
+        const db = await loadDb();
+
         let sub = await getSubscription(cloudUser.uid)
         try { localStorage.setItem('zm_sub_uid', cloudUser.uid); } catch {}
         try { localStorage.setItem('zm_sub_email', cloudUser.email ?? ''); } catch {}
 
-        if (!sub) {
+        if (!sub || !subIsActive(sub.status)) {
           setNeedsSubscription(true)
-          setLoading(false)
-          return
-        }
-        if (!subIsActive(sub.status)) {
-          setNeedsSubscription(true)
-          setLoading(false)
-          return
-        }
-        if (sub.status === 'trialing') {
-          const daysLeft = getTrialDaysRemaining(sub.trialEnd)
-          if (daysLeft > 0) {
-            setTrialSub(sub)
-            try { localStorage.setItem('zm_sub_trial', JSON.stringify(sub)); } catch {}
-          } else {
-            setNeedsSubscription(true)
-            try { localStorage.setItem('zm_sub_needed', 'true'); } catch {}
-            setLoading(false)
-            return
+          if (sub?.status === 'trialing') {
+            const daysLeft = getTrialDaysRemaining(sub.trialEnd)
+            if (daysLeft > 0) {
+              setTrialSub(sub)
+              setNeedsSubscription(false)
+              try { localStorage.setItem('zm_sub_trial', JSON.stringify(sub)); } catch {}
+            }
           }
+          if (!sub) try { localStorage.setItem('zm_sub_trial', ''); } catch {}
+          const res = await applyLoadedDb(db);
+          setSupabaseConnected(isSupabaseConfigured());
+          if (!res.hasDb) {
+            persist({
+              products: res.seededProducts, sales: res.s, categories: res.c, expenses: res.e,
+              orders: [], customers: res.seededCustomers,
+              suppliers: [], purchases: [], cashSessions: [], loans: [],
+              leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [],
+              opportunities: [], bills: [], internetUsers: [],
+              storeInfo: (db && db.storeInfo) || null, initialized: true,
+            });
+          }
+          setLoading(false)
+          return
         }
         setNeedsSubscription(false)
         try { localStorage.setItem('zm_sub_needed', 'false'); } catch {}
         try { localStorage.setItem('zm_sub_uid', cloudUser.uid); } catch {}
         try { localStorage.setItem('zm_sub_email', cloudUser.email ?? ''); } catch {}
 
-        const db = await loadDb();
+        if (sub.status === 'trialing') {
+          const daysLeft = getTrialDaysRemaining(sub.trialEnd)
+          if (daysLeft > 0) {
+            setTrialSub(sub)
+            try { localStorage.setItem('zm_sub_trial', JSON.stringify(sub)); } catch {}
+          }
+        }
+
         const res = await applyLoadedDb(db);
         setSupabaseConnected(isSupabaseConfigured());
-        // First run: persist the seeded initial data and mark the DB as initialized
-        // so a later "reset to empty" is respected (an empty DB is no longer
-        // interpreted as "fresh install, reload defaults").
         if (!res.hasDb) {
           persist({
-            products: res.seededProducts,
-            sales: res.s,
-            categories: res.c,
-            expenses: res.e,
-            orders: [],
-            customers: res.seededCustomers,
-            suppliers: [],
-            purchases: [],
-            cashSessions: [],
-            loans: [],
-            leads: [],
-            leadJobs: [],
-            whatsappInstances: [],
-            aiAgents: [],
-            opportunities: [],
-            bills: [],
-            internetUsers: [],
-            storeInfo: (db && db.storeInfo) || null,
-            initialized: true,
+            products: res.seededProducts, sales: res.s, categories: res.c, expenses: res.e,
+            orders: [], customers: res.seededCustomers,
+            suppliers: [], purchases: [], cashSessions: [], loans: [],
+            leads: [], leadJobs: [], whatsappInstances: [], aiAgents: [],
+            opportunities: [], bills: [], internetUsers: [],
+            storeInfo: (db && db.storeInfo) || null, initialized: true,
           });
         }
       } catch {
@@ -472,7 +462,10 @@ export default function App() {
         (user) => setCloudUser(user),
         () => setCloudUser(null)
       );
-    }).catch(() => setAuthReady(true));
+    }).catch(() => {
+      setAuthReady(true);
+      showToast('Falha ao carregar Firebase. Login indisponível.');
+    });
     return () => {
       cancelled = true;
       if (unsub) unsub();
@@ -510,15 +503,49 @@ export default function App() {
 
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
-  // Mutex para evitar race conditions no persist (várias abas/chamadas simultâneas)
   const persistLock = React.useRef<Promise<void>>(Promise.resolve());
 
-  // --- Nuvem: envia o banco completo, SEM PERDER DADO de nenhum aparelho ---
-  // Antes de subir, baixa a nuvem e faz UNIÃO por id (o mais recente vence por
-  // id, mas nada é descartado). Assim os dados de OUTROS aparelhos nunca somem.
-  // Depois sobe o resultado unificado. A nuvem passa a ter TUDO de todos.
+  const flushPending = React.useCallback(async () => {
+    const prev = pendingRef.current;
+    const partialKeys = Object.keys(prev) as (keyof LocalDb)[];
+    if (partialKeys.length === 0) return;
+    pendingRef.current = {};
+    const cur = stateRef.current;
+    const merged: LocalDb = {
+      products: partialKeys.includes('products') ? prev.products! : cur.products,
+      sales: partialKeys.includes('sales') ? prev.sales! : cur.sales,
+      categories: partialKeys.includes('categories') ? prev.categories! : cur.categories,
+      expenses: partialKeys.includes('expenses') ? prev.expenses! : cur.expenses,
+      orders: partialKeys.includes('orders') ? prev.orders! : cur.orders,
+      storeInfo: partialKeys.includes('storeInfo') ? prev.storeInfo! : cur.storeInfo,
+      customers: partialKeys.includes('customers') ? prev.customers! : cur.customers,
+      suppliers: partialKeys.includes('suppliers') ? prev.suppliers! : cur.suppliers,
+      purchases: partialKeys.includes('purchases') ? prev.purchases! : cur.purchases,
+      cashSessions: partialKeys.includes('cashSessions') ? prev.cashSessions! : cur.cashSessions,
+      loans: partialKeys.includes('loans') ? prev.loans! : cur.loans,
+      leads: partialKeys.includes('leads') ? prev.leads! : cur.leads ?? [],
+      leadJobs: partialKeys.includes('leadJobs') ? prev.leadJobs! : cur.leadJobs ?? [],
+      whatsappInstances: partialKeys.includes('whatsappInstances') ? prev.whatsappInstances! : cur.whatsappInstances ?? [],
+      aiAgents: partialKeys.includes('aiAgents') ? prev.aiAgents! : cur.aiAgents ?? [],
+      opportunities: partialKeys.includes('opportunities') ? prev.opportunities! : cur.opportunities ?? [],
+      bills: partialKeys.includes('bills') ? prev.bills! : cur.bills ?? [],
+      internetUsers: partialKeys.includes('internetUsers') ? prev.internetUsers! : cur.internetUsers ?? [],
+      initialized: true,
+    };
+    saveDb(merged, (cloudErr) => {
+      showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
+    }).catch((e) => {
+      console.error('Erro ao salvar banco local:', e);
+      showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
+    });
+  }, []);
+
+  const scheduleFlush = useCallback(() => {
+    if (saveTimer.current) clearTimeout(saveTimer.current);
+    saveTimer.current = window.setTimeout(flushPending, 2000);
+  }, [flushPending]);
+
   const persist = async (partial: Partial<LocalDb>) => {
-    // Mutex: enfileira esta persistência após a anterior terminar
     let releaseLock!: () => void;
     const lockPromise = new Promise<void>(resolve => { releaseLock = resolve; });
     const previousLock = persistLock.current;
@@ -529,7 +556,7 @@ export default function App() {
     try {
       const cur = stateRef.current;
       const prev = pendingRef.current;
-      const merged: LocalDb = {
+      pendingRef.current = {
         products: partial.products ?? prev.products ?? cur.products,
         sales: partial.sales ?? prev.sales ?? cur.sales,
         categories: partial.categories ?? prev.categories ?? cur.categories,
@@ -550,21 +577,7 @@ export default function App() {
         internetUsers: partial.internetUsers ?? prev.internetUsers ?? cur.internetUsers ?? [],
         initialized: true,
       };
-      pendingRef.current = merged;
-
-      // Salva LOCALMENTE AGORA (imediato) — não perde ao recarregar.
-      saveDb(merged, (cloudErr) => {
-        showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
-      }).catch((e) => {
-        console.error('Erro ao salvar banco local:', e);
-        showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
-      });
-
-      // Debounce só para o timer de "pending" (evita múltiplos saves rápidos)
-      if (saveTimer.current) clearTimeout(saveTimer.current);
-      saveTimer.current = window.setTimeout(() => {
-        pendingRef.current = {};
-      }, 250);
+      scheduleFlush();
     } catch (e) {
       console.error('Erro no persist:', e);
     } finally {
@@ -572,31 +585,20 @@ export default function App() {
     }
   };
 
-  // Flush imediato das alterações pendentes ao ocultar/fechar a aba (M5)
+// Flush imediato das alterações pendentes ao ocultar/fechar a aba
   useEffect(() => {
     const flush = () => {
-      if (document.visibilityState === 'hidden' && Object.keys(pendingRef.current).length > 0) {
-        const db = pendingRef.current as LocalDb;
-        pendingRef.current = {};
+      if (document.visibilityState === 'hidden') {
         if (saveTimer.current) {
           clearTimeout(saveTimer.current);
           saveTimer.current = null;
         }
-        saveDb(db, (cloudErr) => {
-          showToast(`⚠️ Nuvem: ${cloudErr} — dados salvos localmente.`);
-        }).catch((e) => {
-          console.error('Erro ao salvar banco local:', e);
-          showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
-        });
+        flushPending();
       }
     };
     document.addEventListener('visibilitychange', flush);
-    window.addEventListener('pagehide', flush);
-    return () => {
-      document.removeEventListener('visibilitychange', flush);
-      window.removeEventListener('pagehide', flush);
-    };
-  }, []);
+    return () => document.removeEventListener('visibilitychange', flush);
+  }, [flushPending]);
 
   // Re-sincroniza o estado quando OUTRA aba atualiza o banco (M3).
   // Só reaplica se não houver gravação pendente local, para não sobrescrever
@@ -1242,7 +1244,7 @@ export default function App() {
 
         persist(db);
       } catch {
-        alert('Arquivo de backup inválido.');
+        showToast('Arquivo de backup inválido.');
       }
     };
     reader.readAsText(file);
@@ -1692,325 +1694,105 @@ export default function App() {
 
           {/* Navigation Links */}
           <nav className="p-4 space-y-1">
-            {/* Tab 1: Dashboard */}
-            <button
-              id="nav-dashboard"
-              onClick={() => setActiveTab('dashboard')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'dashboard' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <LayoutDashboard className="h-4 w-4" />
-              Painel Geral
-            </button>
-
-            {canAccess('products', currentUserRole) && (<>
-            {/* Tab 2: Products */}
-            <button
-              id="nav-products"
-              onClick={() => setActiveTab('products')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'products' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Package className="h-4 w-4" />
-              Estoque
-            </button>
-            </>)}
-            {canAccess('pdv', currentUserRole) && (<>
-            <button
-              id="nav-pos"
-              onClick={() => setActiveTab('pos')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'pos' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <ShoppingCart className="h-4 w-4" />
-              Frente de Caixa
-            </button>
-            </>)}
-
-            {/* Tab 4: Sales History (com submenu Devedores) */}
-            <div>
-              <button
-                id="nav-sales"
-                onClick={() => setActiveTab('sales')}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                  activeTab === 'sales' 
-                    ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
+            {(() => {
+              interface NavItem {
+                tab: string;
+                label: string;
+                icon: React.ComponentType<{ className?: string }>;
+                permission?: string;
+                activeClass?: string;
+                badge?: number | null;
+                subItems?: Omit<NavItem, 'subItems' | 'badge'>[];
+              }
+              const canAccessFeature = (perm: string | undefined) =>
+                !perm || canAccess(perm as any, currentUserRole);
+              const baseClass = (isActive: boolean, custom?: string) =>
+                `w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                  isActive
+                    ? custom || 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
                     : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-                }`}
-              >
-                <History className="h-4 w-4" />
-                Vendas
-              </button>
-              <button
-                id="nav-debtors"
-                onClick={() => setActiveTab('debtors')}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer mt-0.5 pl-9 ${
-                  activeTab === 'debtors' 
-                    ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-                }`}
-              >
-                <Users className="h-4 w-4" />
-                Devedores
-              </button>
-              <button
-                id="nav-customers"
-                onClick={() => setActiveTab('customers')}
-                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer mt-0.5 pl-9 ${
-                  activeTab === 'customers' 
-                    ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                    : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-                }`}
-              >
-                <Users className="h-4 w-4" />
-                Clientes
-              </button>
-            </div>
-
-            {canAccess('reports', currentUserRole) && (<>
-            {/* Tab 5: Reports */}
-            <button
-              id="nav-reports"
-              onClick={() => setActiveTab('reports')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'reports' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <BarChart3 className="h-4 w-4" />
-              Relatórios
-            </button>
-            </>)}
-
-            {canAccess('dre', currentUserRole) && (<>
-            {/* Tab: DRE */}
-            <button
-              id="nav-dre"
-              onClick={() => setActiveTab('dre')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'dre' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <FileText className="h-4 w-4" />
-              DRE
-            </button>
-            </>)}
-
-            {canAccess('cash_flow', currentUserRole) && (<>
-            {/* Tab: Fluxo de Caixa */}
-            <button
-              id="nav-cashflow"
-              onClick={() => setActiveTab('cashflow')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'cashflow' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <DollarSign className="h-4 w-4" />
-              Fluxo de Caixa
-            </button>
-            </>)}
-
-            {canAccess('cash_closing', currentUserRole) && (<>
-            {/* Tab: Fechamento de Caixa */}
-            <button
-              id="nav-cashclosing"
-              onClick={() => setActiveTab('cashclosing')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'cashclosing' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Wallet className="h-4 w-4" />
-              Fechamento de Caixa
-            </button>
-            </>)}
-
-            {canAccess('bills', currentUserRole) && (<>
-            {/* Tab: Contas */}
-            <button
-              id="nav-bills"
-              onClick={() => setActiveTab('bills')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'bills'
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Receipt className="h-4 w-4" />
-              <span className="flex-1 text-left">Contas</span>
-              {billsAlertCount > 0 && (
-                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-rose-500 text-white min-w-[18px] text-center leading-tight">
-                  {billsAlertCount > 99 ? '99+' : billsAlertCount}
-                </span>
-              )}
-            </button>
-            </>)}
-
-            {canAccess('internet_sharing', currentUserRole) && (<>
-            {/* Tab: Internet Compartilhada */}
-            <button
-              id="nav-internet"
-              onClick={() => setActiveTab('internet')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'internet'
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Wifi className="h-4 w-4" />
-              Internet
-            </button>
-            </>)}
-
-            {canAccess('os_orcamento', currentUserRole) && (<>
-            {/* Tab 6: OS & Orçamentos */}
-            <button
-              id="nav-os"
-              onClick={() => setActiveTab('os')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'os' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <ClipboardList className="h-4 w-4" />
-              OS / Orçamento
-            </button>
-            </>)}
-
-            {canAccess('settings', currentUserRole) && (<>
-            {/* Tab: Configurações */}
-            <button
-              id="nav-settings"
-              onClick={() => setActiveTab('settings')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'settings' 
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold' 
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <SettingsIcon className="h-4 w-4" />
-              Configurações
-            </button>
-            </>)}
-
-            {/* Separator: Módulos Avançados */}
-            <div className="pt-3 pb-1">
-              <span className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-widest px-3">Módulos Avançados</span>
-            </div>
-
-            {canAccess('leads', currentUserRole) && (<>
-            {/* Tab: Leads */}
-            <button
-              id="nav-leads"
-              onClick={() => setActiveTab('leads')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'leads'
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Target className="h-4 w-4" />
-              Leads
-            </button>
-            </>)}
-
-            {canAccess('funnel', currentUserRole) && (<>
-            {/* Tab: Funil de Vendas */}
-            <button
-              id="nav-funnel"
-              onClick={() => setActiveTab('funnel')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'funnel'
-                  ? 'bg-primary-50 dark:bg-primary-900/30 text-primary font-bold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <KanbanSquare className="h-4 w-4" />
-              Funil de Vendas
-            </button>
-            </>)}
-
-            {canAccess('whatsapp', currentUserRole) && (<>
-            {/* Tab: WhatsApp */}
-            <button
-              id="nav-whatsapp"
-              onClick={() => setActiveTab('whatsapp')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'whatsapp'
-                  ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <MessageSquare className="h-4 w-4" />
-              WhatsApp
-            </button>
-            </>)}
-
-            {canAccess('ai', currentUserRole) && (<>
-            {/* Tab: IA */}
-            <button
-              id="nav-ai"
-              onClick={() => setActiveTab('ai')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'ai'
-                  ? 'bg-violet-50 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 font-bold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Brain className="h-4 w-4" />
-              Inteligência Artificial
-            </button>
-            </>)}
-
-            {canAccess('bank_conciliation', currentUserRole) && (<>
-            {/* Tab: Conciliação Bancária */}
-            <button
-              id="nav-conciliation"
-              onClick={() => setActiveTab('conciliation')}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                activeTab === 'conciliation'
-                  ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold'
-                  : 'text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
-              }`}
-            >
-              <Building2 className="h-4 w-4" />
-              Conciliação
-            </button>
-            </>)}
-
-            {/* Subsite Manicure PRO */}
-            <button
-              onClick={() => setShowChooser(true)}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-fuchsia-700 dark:text-fuchsia-400 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/30 bg-fuchsia-50/50 dark:bg-fuchsia-900/20"
-            >
-              <Sparkles className="h-4 w-4" />
-              Manicure PRO
-            </button>
-
-            {/* Subsite Saúde PRO */}
-            <button
-              onClick={() => setShowChooser(true)}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
-            >
-              <Stethoscope className="h-4 w-4" />
-              Saúde PRO
-            </button>
+                }`;
+              const renderBtn = (item: NavItem, extraClass = '') => {
+                const Icon = item.icon;
+                const isActive = activeTab === item.tab;
+                return (
+                  <button
+                    key={item.tab}
+                    id={`nav-${item.tab}`}
+                    onClick={() => setActiveTab(item.tab as ActiveTab)}
+                    className={`${baseClass(isActive, item.activeClass)} ${extraClass}`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span className="flex-1 text-left">{item.label}</span>
+                    {item.badge != null && item.badge > 0 && (
+                      <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-rose-500 text-white min-w-[18px] text-center leading-tight">
+                        {item.badge > 99 ? '99+' : item.badge}
+                      </span>
+                    )}
+                  </button>
+                );
+              };
+              const mainItems: NavItem[] = [
+                { tab: 'dashboard', label: 'Painel Geral', icon: LayoutDashboard },
+                { tab: 'products', label: 'Estoque', icon: Package, permission: 'products' },
+                { tab: 'pos', label: 'Frente de Caixa', icon: ShoppingCart, permission: 'pdv' },
+                { tab: 'reports', label: 'Relatórios', icon: BarChart3, permission: 'reports' },
+                { tab: 'dre', label: 'DRE', icon: FileText, permission: 'dre' },
+                { tab: 'cashflow', label: 'Fluxo de Caixa', icon: DollarSign, permission: 'cash_flow' },
+                { tab: 'cashclosing', label: 'Fechamento de Caixa', icon: Wallet, permission: 'cash_closing' },
+                { tab: 'bills', label: 'Contas', icon: Receipt, permission: 'bills', badge: billsAlertCount },
+                { tab: 'internet', label: 'Internet', icon: Wifi, permission: 'internet_sharing' },
+                { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList, permission: 'os_orcamento' },
+                { tab: 'settings', label: 'Configurações', icon: SettingsIcon, permission: 'settings' },
+              ];
+              const advancedItems: NavItem[] = [
+                { tab: 'leads', label: 'Leads', icon: Target, permission: 'leads' },
+                { tab: 'funnel', label: 'Funil de Vendas', icon: KanbanSquare, permission: 'funnel' },
+                { tab: 'whatsapp', label: 'WhatsApp', icon: MessageSquare, permission: 'whatsapp', activeClass: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold' },
+                { tab: 'ai', label: 'Inteligência Artificial', icon: Brain, permission: 'ai', activeClass: 'bg-violet-50 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 font-bold' },
+                { tab: 'conciliation', label: 'Conciliação', icon: Building2, permission: 'bank_conciliation', activeClass: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 font-bold' },
+              ];
+              const salesGroup: Omit<NavItem, 'subItems' | 'badge'>[] = [
+                { tab: 'sales', label: 'Vendas', icon: History },
+                { tab: 'debtors', label: 'Devedores', icon: Users },
+                { tab: 'customers', label: 'Clientes', icon: Users },
+              ];
+              return (
+                <>
+                  {mainItems.map(item =>
+                      canAccessFeature(item.permission) ? renderBtn(item) : null
+                  )}
+                  {/* Sales group */}
+                  <div>
+                    {salesGroup.map((item, i) =>
+                      renderBtn(item, i > 0 ? 'mt-0.5 pl-9' : '')
+                    )}
+                  </div>
+                  <div className="pt-3 pb-1">
+                    <span className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-widest px-3">Módulos Avançados</span>
+                  </div>
+                  {advancedItems.map(item =>
+                      canAccessFeature(item.permission) ? renderBtn(item) : null
+                  )}
+                  {/* Manicure PRO */}
+                  <button
+                    onClick={() => setShowChooser(true)}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-fuchsia-700 dark:text-fuchsia-400 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/30 bg-fuchsia-50/50 dark:bg-fuchsia-900/20"
+                  >
+                    <Sparkles className="h-4 w-4" />
+                    Manicure PRO
+                  </button>
+                  {/* Saúde PRO */}
+                  <button
+                    onClick={() => setShowChooser(true)}
+                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
+                  >
+                    <Stethoscope className="h-4 w-4" />
+                    Saúde PRO
+                  </button>
+                </>
+              );
+            })()}
           </nav>
         </div>
 
@@ -2119,19 +1901,24 @@ export default function App() {
             )}
 
             {activeTab === 'products' && (
-              <Products
-                products={products}
-                categories={categories}
-                sales={sales}
-                onAddProduct={handleAddProduct}
-                onUpdateProduct={handleUpdateProduct}
-                onDeleteProduct={handleDeleteProduct}
-                onArchiveProduct={handleArchiveProduct}
-                onUnarchiveProduct={handleUnarchiveProduct}
-                onClearAllProducts={handleClearAllProducts}
-                onAddCategory={handleAddCategory}
-                onMergeProducts={handleMergeProducts}
-              />
+              <ErrorBoundary
+                fallback={ErrorBoundaryFallback}
+                onReset={() => {}}
+              >
+                <Products
+                  products={products}
+                  categories={categories}
+                  sales={sales}
+                  onAddProduct={handleAddProduct}
+                  onUpdateProduct={handleUpdateProduct}
+                  onDeleteProduct={handleDeleteProduct}
+                  onArchiveProduct={handleArchiveProduct}
+                  onUnarchiveProduct={handleUnarchiveProduct}
+                  onClearAllProducts={handleClearAllProducts}
+                  onAddCategory={handleAddCategory}
+                  onMergeProducts={handleMergeProducts}
+                />
+              </ErrorBoundary>
             )}
 
             {activeTab === 'pos' && (

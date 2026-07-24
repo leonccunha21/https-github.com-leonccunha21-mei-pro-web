@@ -4,10 +4,10 @@
 
 export function normalizeName(name: string): string {
   return (name || '')
-    .trim()
-    .toLowerCase()
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
+    .trim()
+    .toLowerCase()
     .replace(/\s+/g, ' ');
 }
 
@@ -15,6 +15,6 @@ export function normalizeChannel(channel: string): string {
   return (channel || '')
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
-    .toLowerCase()
-    .trim();
+    .trim()
+    .toLowerCase();
 }

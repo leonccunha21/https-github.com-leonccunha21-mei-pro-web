@@ -20,6 +20,10 @@ export function canAccess(feature: Feature, role: UserRole): boolean {
   return rolePermissions[role]?.includes(feature) ?? false;
 }
 
+const VALID_ROLES: UserRole[] = ['admin', 'gerente', 'vendedor'];
+
 export function useCurrentRole(): UserRole {
-  return (localStorage.getItem('zm_current_role') as UserRole) || 'admin';
+  const stored = localStorage.getItem('zm_current_role') as UserRole | null;
+  if (stored && VALID_ROLES.includes(stored)) return stored;
+  return 'vendedor';
 }

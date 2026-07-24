@@ -1,6 +1,20 @@
 import { useState, useEffect, useRef, useCallback, lazy, type ReactNode, Suspense } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { motion, AnimatePresence } from 'motion/react';
+import { ErrorBoundary, ErrorBoundaryFallback } from '../components/ErrorBoundary';
+
+function mergeById<T extends { id: string; updatedAt?: string; createdAt?: string }>(a: T[], b: T[]): T[] {
+  const map = new Map<string, T>();
+  const ts = (x: T) => x.updatedAt ?? x.createdAt ?? '';
+  for (const x of a) map.set(x.id, x);
+  for (const x of b) {
+    const existing = map.get(x.id);
+    if (!existing || ts(x) >= ts(existing)) {
+      map.set(x.id, x);
+    }
+  }
+  return Array.from(map.values());
+}
 import {
   LayoutDashboard, Users, Calendar, DollarSign, Package, Settings as SettingsIcon,
   Scissors, Sun, Moon, Sparkles, X, ShoppingBag, Stethoscope, BarChart3, TrendingDown,
@@ -163,18 +177,6 @@ export default function ManicureApp() {
         const cloud = await loadManicureCloudCached();
         if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
           // Merge com resolução baseada em updatedAt — o registro mais recente vence
-          const mergeById = <T extends { id: string; updatedAt?: string; createdAt?: string }>(a: T[], b: T[]): T[] => {
-            const map = new Map<string, T>();
-            const ts = (x: T) => x.updatedAt ?? x.createdAt ?? '';
-            for (const x of a) map.set(x.id, x);
-            for (const x of b) {
-              const existing = map.get(x.id);
-              if (!existing || ts(x) >= ts(existing)) {
-                map.set(x.id, x);
-              }
-            }
-            return Array.from(map.values());
-          };
           const merged: ManicureDb = {
             ...local,
             clientes: mergeById(cloud.clientes || [], local.clientes),
@@ -214,29 +216,17 @@ export default function ManicureApp() {
       if (document.visibilityState === 'visible') {
         loadManicureCloudCached().then((cloud) => {
           if (cloud && (cloud.clientes?.length || cloud.agendamentos?.length)) {
-            const mergeByIdTs = <T extends { id: string; updatedAt?: string; createdAt?: string }>(a: T[], b: T[]): T[] => {
-              const map = new Map<string, T>();
-              const ts = (x: T) => x.updatedAt ?? x.createdAt ?? '';
-              for (const x of a) map.set(x.id, x);
-              for (const x of b) {
-                const existing = map.get(x.id);
-                if (!existing || ts(x) >= ts(existing)) {
-                  map.set(x.id, x);
-                }
-              }
-              return Array.from(map.values());
-            };
             const cur = stateRef.current;
             const merged: ManicureDb = {
               ...cur,
-              clientes: mergeByIdTs(cloud.clientes || [], cur.clientes),
-              servicos: mergeByIdTs(cloud.servicos || [], cur.servicos),
-              agendamentos: mergeByIdTs(cloud.agendamentos || [], cur.agendamentos),
-              movimentos: mergeByIdTs(cloud.movimentos || [], cur.movimentos),
-              produtos: mergeByIdTs(cloud.produtos || [], cur.produtos),
-              whatsappInstances: mergeByIdTs(cloud.whatsappInstances || [], cur.whatsappInstances),
-              mensagemTemplates: mergeByIdTs(cloud.mensagemTemplates || [], cur.mensagemTemplates),
-              mensagensEnviadas: mergeByIdTs(cloud.mensagensEnviadas || [], cur.mensagensEnviadas),
+              clientes: mergeById(cloud.clientes || [], cur.clientes),
+              servicos: mergeById(cloud.servicos || [], cur.servicos),
+              agendamentos: mergeById(cloud.agendamentos || [], cur.agendamentos),
+              movimentos: mergeById(cloud.movimentos || [], cur.movimentos),
+              produtos: mergeById(cloud.produtos || [], cur.produtos),
+              whatsappInstances: mergeById(cloud.whatsappInstances || [], cur.whatsappInstances),
+              mensagemTemplates: mergeById(cloud.mensagemTemplates || [], cur.mensagemTemplates),
+              mensagensEnviadas: mergeById(cloud.mensagensEnviadas || [], cur.mensagensEnviadas),
               config: { ...defaultConfig(), ...(cloud.config || {}), ...(cur.config || {}) },
             };
             setDb(merged);
@@ -422,7 +412,11 @@ export default function ManicureApp() {
             >
               {activeTab === 'dashboard' && <Dashboard db={db} onNavigate={setActiveTab} setAgendamentos={setAgendamentos} setMovimentos={setMovimentos} onAddMensagem={addMensagemEnviada} />}
               {activeTab === 'clientes' && <Clientes clientes={db.clientes} agendamentos={db.agendamentos} movimentos={db.movimentos} setClientes={setClientes} templates={db.mensagemTemplates} instances={db.whatsappInstances} config={db.config} onAddMensagem={addMensagemEnviada} onWhatsApp={(ag) => { setTimeout(() => window.dispatchEvent(new CustomEvent('manicure-whatsapp-cliente', { detail: ag })), 50); }} />}
-              {activeTab === 'agendamentos' && <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setClientes={setClientes} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} config={db.config} />}
+              {activeTab === 'agendamentos' && (
+                <ErrorBoundary fallback={ErrorBoundaryFallback} onReset={() => {}}>
+                  <Agendamentos agendamentos={db.agendamentos} clientes={db.clientes} servicos={db.servicos} setAgendamentos={setAgendamentos} setClientes={setClientes} setMovimentos={setMovimentos} movimentos={db.movimentos} instances={db.whatsappInstances} templates={db.mensagemTemplates} mensagensEnviadas={db.mensagensEnviadas} onAddMensagem={addMensagemEnviada} config={db.config} />
+                </ErrorBoundary>
+              )}
               {activeTab === 'servicos' && <Servicos servicos={db.servicos} setServicos={setServicos} />}
               {activeTab === 'caixa' && <Caixa movimentos={db.movimentos} setMovimentos={setMovimentos} />}
               {activeTab === 'relatorio' && <Relatorio movimentos={db.movimentos} agendamentos={db.agendamentos} servicos={db.servicos} clientes={db.clientes} />}

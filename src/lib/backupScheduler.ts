@@ -28,7 +28,7 @@ export function shouldRunBackup(prefs: BackupSchedulePrefs): boolean {
   if (prefs.frequency === 'weekly') {
     if (prefs.lastBackup) {
       const last = new Date(prefs.lastBackup);
-      const daysSince = Math.floor((now.getTime() - last.getTime()) / 86400000);
+      const daysSince = Math.floor((Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) - Date.UTC(last.getFullYear(), last.getMonth(), last.getDate())) / 86400000);
       if (daysSince < 7) return false;
     }
   }

@@ -235,27 +235,36 @@ async function fetchFromSupabase(): Promise<LocalDb | null> {
   if (!isSupabaseConfigured()) return null;
 
   try {
+    const fetches: (() => Promise<{ data: any; error: any }>)[] = [
+      () => restFetch<any[]>('products'),
+      () => restFetch<any[]>('sales'),
+      () => restFetch<any[]>('categories'),
+      () => restFetch<any[]>('expenses'),
+      () => restFetch<any[]>('service_orders'),
+      () => restFetch<any[]>('customers'),
+      () => restFetch<any[]>('suppliers'),
+      () => restFetch<any[]>('purchases'),
+      () => restFetch<any[]>('cash_sessions'),
+      () => restFetch<any[]>('loans'),
+      () => restFetch<any[]>('leads'),
+      () => restFetch<any[]>('opportunities'),
+      () => restFetch<any[]>('bills'),
+      () => restFetch<any[]>('internet_users'),
+      () => restFetchSingle<any>('store_info', 'id', 'singleton'),
+    ];
+
+    const results: { data: any; error: any }[] = [];
+    const CONCURRENCY = 5;
+    for (let i = 0; i < fetches.length; i += CONCURRENCY) {
+      const batch = await Promise.all(fetches.slice(i, i + CONCURRENCY).map(f => f()));
+      results.push(...batch);
+    }
+
     const [
       products, sales, categories, expenses, serviceOrders,
       customers, suppliers, purchases, cashSessions, loans,
       leads, opportunities, bills, internetUsers, storeInfo,
-    ] = await Promise.all([
-      restFetch<any[]>('products'),
-      restFetch<any[]>('sales'),
-      restFetch<any[]>('categories'),
-      restFetch<any[]>('expenses'),
-      restFetch<any[]>('service_orders'),
-      restFetch<any[]>('customers'),
-      restFetch<any[]>('suppliers'),
-      restFetch<any[]>('purchases'),
-      restFetch<any[]>('cash_sessions'),
-      restFetch<any[]>('loans'),
-      restFetch<any[]>('leads'),
-      restFetch<any[]>('opportunities'),
-      restFetch<any[]>('bills'),
-      restFetch<any[]>('internet_users'),
-      restFetchSingle<any>('store_info', 'id', 'singleton'),
-    ]);
+    ] = results;
 
     const hasError = [products, sales, categories, expenses, serviceOrders,
       customers, suppliers, purchases, cashSessions, loans,

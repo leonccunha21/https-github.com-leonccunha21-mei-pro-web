@@ -23,7 +23,7 @@ export type SubscriptionStatus =
   | 'incomplete_expired'
   | 'paused'
 
-const API_BASE = import.meta.env.VITE_API_URL || ''
+const API_BASE = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' ? window.location.origin : '')
 
 function getAuthToken(): string {
   for (let i = 0; i < localStorage.length; i++) {

@@ -11,7 +11,7 @@ export function categorizeProduct(name: string): string {
   }
 
   // Cabos e Adaptadores
-  if (/(cabo|adaptador|hub |hubusb|hub usb|extensor|conversor)/.test(n)) {
+  if (/(cabo|adaptador|hub|hubusb|hub usb|extensor|conversor)/.test(n)) {
     return 'Cabos e Adaptadores';
   }
 

@@ -136,8 +136,4 @@ export function newId(prefix: string): string {
   return `${prefix}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 }
 
-export function saveClientes(clientes: MounjaroDb['clientes'], db: MounjaroDb, persist: () => void) { db.clientes = clientes; persist(); }
-export function savePesagens(p: MounjaroDb['pesagens'], db: MounjaroDb, persist: () => void) { db.pesagens = p; persist(); }
-export function saveDoses(d: MounjaroDb['doses'], db: MounjaroDb, persist: () => void) { db.doses = d; persist(); }
-export function savePagamentos(p: MounjaroDb['pagamentos'], db: MounjaroDb, persist: () => void) { db.pagamentos = p; persist(); }
-export function saveFotos(f: MounjaroDb['fotos'], db: MounjaroDb, persist: () => void) { db.fotos = f; persist(); }
+

@@ -177,6 +177,14 @@ app.post('/api/stripe/webhook', express.raw({ type: 'application/json' }), async
 // --- JSON parser para todas as outras rotas (deve vir DEPOIS do webhook) ---
 app.use(express.json({ limit: '100mb' }));
 
+function cors(req: express.Request, res: express.Response, next: express.NextFunction) {
+  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') { res.sendStatus(204); return; }
+  next();
+}
+
 // --- CORS global (deve vir antes de todas as rotas da API) ---
 app.use(cors);
 
@@ -331,14 +339,6 @@ const ragDocs = new Map<string, RagDoc[]>();
 const DEMO_QR = 'data:image/svg+xml;base64,' + Buffer.from(
   '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect width="200" height="200" fill="#fff"/><rect x="20" y="20" width="60" height="60" fill="#000"/><rect x="120" y="20" width="60" height="60" fill="#000"/><rect x="20" y="120" width="60" height="60" fill="#000"/><rect x="90" y="90" width="20" height="20" fill="#000"/></svg>'
 ).toString('base64');
-
-function cors(req: express.Request, res: express.Response, next: express.NextFunction) {
-  res.header('Access-Control-Allow-Origin', req.headers.origin || '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') { res.sendStatus(204); return; }
-  next();
-}
 
 app.get('/api/health', (_req, res) => res.json({ ok: true, version: 'stub-1.0.0' }));
 

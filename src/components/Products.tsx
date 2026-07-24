@@ -1,4 +1,4 @@
-﻿import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { Product, Category, Sale, PriceHistoryEntry } from '../types';
 import { categorizeProduct } from '../lib/categorize';
 import LabelPrinter from './LabelPrinter';
@@ -68,6 +68,11 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const [mergeSalePrice, setMergeSalePrice] = useState(0);
 
   const [showPriceHistory, setShowPriceHistory] = useState<Product | null>(null);
+
+  const mergeSnapshotRef = useRef<{
+    keeper: Product;
+    duplicates: Product[];
+  } | null>(null);
   const [formCode, setFormCode] = useState('');
   const [formName, setFormName] = useState('');
   const [formCategory, setFormCategory] = useState('');
@@ -421,26 +426,61 @@ export default function Products({ products, categories, sales, onAddProduct, on
     setShowMergeModal(true);
   };
 
+  const handleUndoMerge = () => {
+    const snap = mergeSnapshotRef.current;
+    if (!snap) return;
+    onUnarchiveProduct(snap.keeper.id);
+    onUpdateProduct(snap.keeper);
+    for (const dup of snap.duplicates) {
+      onUnarchiveProduct(dup.id);
+      onUpdateProduct(dup);
+    }
+    mergeSnapshotRef.current = null;
+    toast.success('Mesclagem desfeita!', { duration: 2000 });
+  };
+
   const handleMergeConfirm = () => {
     const group = mergeGroups[mergeStep];
     if (!group || !mergeKeepId || !onMergeProducts) return;
-    // Apenas os IDs selecionados (checkboxes marcados) EXCETO o principal serão mesclados
     const selectedIds: string[] = Array.from(mergeSelectedIds);
     const duplicateIds = selectedIds.filter(id => id !== mergeKeepId);
-    
+
     if (duplicateIds.length === 0) {
       toast.error('Selecione pelo menos um produto para mesclar');
       return;
     }
-    
+
+    // Salva snapshot antes da mesclagem (para undo)
+    const keeper = products.find(p => p.id === mergeKeepId);
+    const duplicates = products.filter(p => duplicateIds.includes(p.id));
+    if (keeper) {
+      mergeSnapshotRef.current = { keeper: { ...keeper }, duplicates: duplicates.map(d => ({ ...d })) };
+    }
+
+    const isLast = mergeStep >= mergeGroups.length - 1;
     onMergeProducts(mergeKeepId, duplicateIds, mergeName.trim() || group.products[0].name, mergeCostPrice, mergeSalePrice);
+
+    // Toast de undo (5s)
+    if (mergeSnapshotRef.current) {
+      toast.custom((t) => (
+        <div className="bg-slate-900 text-white px-4 py-3 rounded-xl shadow-lg flex items-center gap-3 min-w-[280px]">
+          <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />
+          <span className="text-sm flex-1">Produtos mesclados</span>
+          <button
+            onClick={() => { handleUndoMerge(); toast.dismiss(t.id); }}
+            className="text-xs font-bold text-amber-400 hover:text-amber-300 uppercase tracking-wider"
+          >
+            Desfazer
+          </button>
+        </div>
+      ), { duration: 5000 });
+    }
 
     // Avança para o próximo grupo, ou fecha se acabou
     const nextStep = mergeStep + 1;
     if (nextStep < mergeGroups.length) {
       setMergeStep(nextStep);
       const nextGroup = mergeGroups[nextStep].products;
-      // Pré-seleciona todos do próximo grupo
       const nextIds = new Set(nextGroup.map(p => p.id));
       setMergeSelectedIds(nextIds);
       const nextKeeper = [...nextGroup].sort((a, b) => b.stock - a.stock)[0];
@@ -1140,18 +1180,57 @@ export default function Products({ products, categories, sales, onAddProduct, on
                   </div>
                 </div>
 
-                {/* Resumo do impacto */}
-                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800 rounded-xl p-3 space-y-1">
-                  <p className="text-[10px] font-bold text-amber-700 dark:text-amber-400 uppercase">Impacto da mesclagem</p>
-                  <p className="text-xs text-amber-800 dark:text-amber-200">
-                    ✓ Estoque total mesclado: <b>{totalMergedStock} un</b>
-                  </p>
-                  <p className="text-xs text-amber-800 dark:text-amber-200">
-                    ✓ {group.products.length - 1} produto(s) serão arquivados (não excluídos)
-                  </p>
+                {/* Preview Antes/Depois */}
+                <div className="bg-slate-50 dark:bg-slate-700/40 rounded-xl p-3 border border-slate-200 dark:border-slate-600">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">Preview da mesclagem</p>
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-slate-200 dark:border-slate-600">
+                        <th className="text-left py-1 pr-2 text-slate-400 font-semibold">Produto</th>
+                        <th className="text-center py-1 px-2 text-slate-400 font-semibold">Status</th>
+                        <th className="text-right py-1 px-2 text-slate-400 font-semibold">Estoque</th>
+                        <th className="text-right py-1 px-2 text-slate-400 font-semibold">Custo</th>
+                        <th className="text-right py-1 pl-2 text-slate-400 font-semibold">Venda</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {group.products.map(p => {
+                        const isKeeper = p.id === mergeKeepId;
+                        const isSelected = mergeSelectedIds.has(p.id);
+                        const isDuplicate = isSelected && !isKeeper;
+                        return (
+                          <tr key={p.id} className="border-b border-slate-100 dark:border-slate-700">
+                            <td className="py-1.5 pr-2">
+                              <span className={`font-medium ${isKeeper ? 'text-violet-700 dark:text-violet-300' : isDuplicate ? 'text-amber-700 dark:text-amber-300' : 'text-slate-400'}`}>
+                                {isKeeper ? '★ ' : isDuplicate ? '→ ' : '  '}{p.name}
+                              </span>
+                            </td>
+                            <td className="text-center py-1.5 px-2">
+                              {isKeeper ? <span className="text-[10px] font-bold text-violet-600 bg-violet-100 dark:bg-violet-900/40 px-1.5 py-0.5 rounded">principal</span>
+                                : isDuplicate ? <span className="text-[10px] font-bold text-amber-600 bg-amber-100 dark:bg-amber-900/40 px-1.5 py-0.5 rounded">arquivar</span>
+                                : <span className="text-[10px] text-slate-300">ignorado</span>}
+                            </td>
+                            <td className="text-right py-1.5 px-2 font-mono">
+                              {isKeeper ? <span className="text-violet-700 dark:text-violet-300">{p.stock} → <b>{totalMergedStock}</b></span>
+                                : isDuplicate ? <span className="text-amber-600 line-through">{p.stock}</span>
+                                : <span className="text-slate-400">{p.stock}</span>}
+                            </td>
+                            <td className="text-right py-1.5 px-2 font-mono">
+                              {isKeeper ? <span className="text-violet-700 dark:text-violet-300">{p.costPrice.toFixed(2)} → <b>{mergeCostPrice.toFixed(2)}</b></span>
+                                : <span className="text-slate-400">{p.costPrice.toFixed(2)}</span>}
+                            </td>
+                            <td className="text-right py-1.5 pl-2 font-mono">
+                              {isKeeper ? <span className="text-violet-700 dark:text-violet-300">{p.salePrice.toFixed(2)} → <b>{mergeSalePrice.toFixed(2)}</b></span>
+                                : <span className="text-slate-400">{p.salePrice.toFixed(2)}</span>}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
                   {affectedSales > 0 && (
-                    <p className="text-xs text-amber-800 dark:text-amber-200">
-                      ✓ {affectedSales} venda(s) serão reapontadas para o produto principal
+                    <p className="text-[10px] text-slate-500 mt-2 border-t border-slate-200 dark:border-slate-600 pt-2">
+                      ↳ {affectedSales} venda(s) serão reapontadas para o produto principal
                     </p>
                   )}
                 </div>

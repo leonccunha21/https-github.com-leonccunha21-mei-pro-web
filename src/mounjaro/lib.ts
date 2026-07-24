@@ -131,14 +131,14 @@ export function calcularScore(
       somaAtraso += Math.max(0, diff);
       nAtraso++;
     } else if (p.status === 'pendente') {
-      pendentes++;
-      valorAberto += p.valor; // sempre conta como aberto, vencido ou não
+      valorAberto += p.valor;
       if (p.dataVencimento < hoje) {
-        // pendente vencido conta como atraso parcial
         const diff = diasEntre(p.dataVencimento, hoje);
         somaAtraso += Math.max(0, diff);
         nAtraso++;
         atrasados++;
+      } else {
+        pendentes++;
       }
     }
   }
