@@ -2039,20 +2039,29 @@ const marketingItems: NavItem[] = [
                 onDeleteSale={deleteSale}
                 onFixDates={fixSaleDates}
                 onUpdateSale={(updatedSale) => {
-                  setSales(prev => {
-                    const updated = prev.map(s => s.id === updatedSale.id ? updatedSale : s);
-                    pendingRef.current.sales = updated;
-                    scheduleFlush();
-                    return updated;
-                  });
+                  const updated = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
+                  setSales(updated);
+                  pendingRef.current.sales = updated;
+                  persistLock.current = persistLock.current.then(() => {
+                    const cur = stateRef.current;
+                    const merged: LocalDb = {
+                      ...cur,
+                      sales: updated,
+                    };
+                    saveDb(merged);
+                    notifyTabs();
+                  }).catch(() => {});
                 }}
                 onUpdateProduct={(updatedProduct) => {
-                  setProducts(prev => {
-                    const updated = prev.map(p => p.id === updatedProduct.id ? updatedProduct : p);
-                    pendingRef.current.products = updated;
-                    scheduleFlush();
-                    return updated;
-                  });
+                  const updated = products.map(p => p.id === updatedProduct.id ? updatedProduct : p);
+                  setProducts(updated);
+                  pendingRef.current.products = updated;
+                  persistLock.current = persistLock.current.then(() => {
+                    const cur = stateRef.current;
+                    const merged: LocalDb = { ...cur, products: updated };
+                    saveDb(merged);
+                    notifyTabs();
+                  }).catch(() => {});
                 }}
               />
             )}

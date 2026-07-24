@@ -1,7 +1,7 @@
-﻿import React, { useState, useMemo, useEffect } from 'react';
+﻿import React, { useState, useMemo, useEffect, Suspense, lazy } from 'react';
 import { Sale, Loan, StoreInfo } from '../types';
 import { normalizeChannel } from '../lib/normalize';
-import WhatsAppCollections from './WhatsAppCollections';
+const WhatsAppCollections = lazy(() => import('./WhatsAppCollections'));
 import {
   User,
   DollarSign,
@@ -619,10 +619,12 @@ export default function Debtors({ sales, loans, storeInfo, onUpdateSale, onUpdat
       {/* WhatsApp Collections for Pending Sales */}
       {storeInfo && debtSales.some(s => s.status === 'pending') && (
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <WhatsAppCollections 
-            sales={debtSales.filter(s => s.status === 'pending')} 
-            storeInfo={storeInfo} 
-          />
+          <Suspense fallback={<div className="text-center py-4 text-slate-400 text-sm">Carregando...</div>}>
+            <WhatsAppCollections 
+              sales={debtSales.filter(s => s.status === 'pending')} 
+              storeInfo={storeInfo} 
+            />
+          </Suspense>
         </div>
       )}
 
