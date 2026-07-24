@@ -7,6 +7,7 @@ import {
   DollarSign, ShoppingBag, ArrowLeft, CreditCard, X, UserPlus, Clock, Copy
 } from 'lucide-react';
 import { DateFilter } from './DateFilter';
+import Pagination from './Pagination';
 
 interface CustomersProps {
   customers: Customer[];
@@ -21,6 +22,8 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState<Customer | null>(null);
+  const [pageSize, setPageSize] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const salesByCustomer = useMemo(() => {
     const map = new Map<string, Sale[]>();
@@ -41,6 +44,13 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
       .filter(c => !dateStart || new Date(c.createdAt) >= new Date(dateStart))
       .filter(c => !dateEnd || new Date(c.createdAt) <= new Date(dateEnd));
   }, [customers, search, dateStart, dateEnd]);
+
+  const paginatedCustomers = useMemo(() => {
+    const start = (currentPage - 1) * pageSize;
+    return filtered.slice(start, start + pageSize);
+  }, [filtered, currentPage, pageSize]);
+
+  const totalPages = Math.ceil(filtered.length / pageSize);
 
   const selected = customers.find(c => c.id === selectedId) || null;
   const selectedSales = selected ? (salesByCustomer.get(normalizeName(selected.name)) || []) : [];
@@ -203,7 +213,7 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-            {filtered.map(c => {
+            {paginatedCustomers.map(c => {
               const st = statsFor(c);
               return (
                 <div key={c.id}
@@ -224,13 +234,25 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
                 </div>
               );
             })}
-            {filtered.length === 0 && (
+            {paginatedCustomers.length === 0 && (
               <div className="col-span-full text-center py-12 text-slate-400 text-sm">
                 <UserPlus className="h-10 w-10 mx-auto mb-2 opacity-50" />
                 Nenhum cliente encontrado.
               </div>
             )}
           </div>
+          {filtered.length > 0 && (
+            <div className="mt-4">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+                pageSize={pageSize}
+                totalItems={filtered.length}
+                onPageSizeChange={(size) => { setPageSize(size); setCurrentPage(1); }}
+              />
+            </div>
+          )}
         </>
       )}
 

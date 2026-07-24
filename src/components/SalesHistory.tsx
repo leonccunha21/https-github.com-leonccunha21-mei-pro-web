@@ -615,6 +615,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
             </p>
           </div>
         ) : (
+          <>
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -820,6 +821,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
               onPageSizeChange={(size) => { setPageSize(size); setCurrentPage(1); }}
             />
           </div>
+          </>
         )}
       </div>
 
