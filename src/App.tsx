@@ -844,30 +844,43 @@ export default function App() {
         if (costDiff > 5) parts.push(`custo ${costDiff > 50 ? '🔥' : ''}${costDiff.toFixed(0)}%`);
         if (saleDiff > 5) parts.push(`venda ${saleDiff > 50 ? '🔥' : ''}${saleDiff.toFixed(0)}%`);
         showToast(`${updatedProduct.name}: ${parts.join(', ')} — recalculando vendas afetadas`);
-        const updatedSales = sales.map(s => {
-          if (s.status === 'cancelled') return s;
-          let changed = false;
-          const newItems = s.items.map(item => {
-            if (item.productId !== updatedProduct.id) return item;
-            const newCostPrice = old.costPrice !== updatedProduct.costPrice ? updatedProduct.costPrice : item.costPrice;
-            const newSalePrice = old.salePrice !== updatedProduct.salePrice ? updatedProduct.salePrice : item.salePrice;
-            if (newCostPrice === item.costPrice && newSalePrice === item.salePrice) return item;
-            changed = true;
-            return { ...item, costPrice: newCostPrice, salePrice: newSalePrice, total: newSalePrice * item.quantity };
-          });
-          if (!changed) return s;
-          const newTotalCost = roundCurrency(newItems.reduce((acc, item) => acc + item.costPrice * item.quantity, 0));
-          const newTotal = roundCurrency(newItems.reduce((acc, item) => acc + item.total, 0));
-          return { ...s, items: newItems, totalCost: newTotalCost, total: newTotal, profit: roundCurrency(newTotal - newTotalCost) };
-        });
-        if (updatedSales.some((s, i) => s !== sales[i])) {
-          setSales(updatedSales);
-          persist({ sales: updatedSales });
-        }
+        recalculateAllSales(products.map(p => p.id === updatedProduct.id ? updatedProduct : p));
       }
     }
     const updated = products.map(p => p.id === updatedProduct.id ? { ...updatedProduct, updatedAt: new Date().toISOString() } : p);
     saveProductsToStorage(updated, updatedProduct).catch(() => {});
+  };
+
+  // Recalcula TODAS as vendas a partir dos preços atuais dos produtos
+  const recalculateAllSales = (currentProducts: Product[]) => {
+    let updatedCount = 0;
+    const updatedSales = sales.map(s => {
+      if (s.status === 'cancelled') return s;
+      let changed = false;
+      const newItems = s.items.map(item => {
+        const product = currentProducts.find(p =>
+          p.id === item.productId || p.name.toLowerCase().trim() === (item.productName || '').toLowerCase().trim()
+        );
+        if (!product) return item;
+        const newCostPrice = product.costPrice;
+        const newSalePrice = product.salePrice;
+        if (newCostPrice === item.costPrice && newSalePrice === item.salePrice) return item;
+        changed = true;
+        updatedCount++;
+        return { ...item, costPrice: newCostPrice, salePrice: newSalePrice, total: roundCurrency(newSalePrice * item.quantity) };
+      });
+      if (!changed) return s;
+      const newTotalCost = roundCurrency(newItems.reduce((acc, item) => acc + item.costPrice * item.quantity, 0));
+      const newTotal = roundCurrency(newItems.reduce((acc, item) => acc + item.total, 0));
+      return { ...s, items: newItems, totalCost: newTotalCost, total: newTotal, profit: roundCurrency(newTotal - newTotalCost) };
+    });
+    if (updatedSales.some((s, i) => s !== sales[i])) {
+      setSales(updatedSales);
+      persist({ sales: updatedSales });
+      showToast(`${updatedCount} itens atualizados com os preços atuais do estoque.`);
+    } else {
+      showToast('Nenhuma venda precisou ser alterada.');
+    }
   };
 
   // Archive Product (soft delete)
@@ -2316,6 +2329,12 @@ const marketingItems: NavItem[] = [
                   className="px-4 py-2 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-2"
                 >
                   Exportar Controle
+                </button>
+                <button
+                  onClick={() => recalculateAllSales(products)}
+                  className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold transition-colors cursor-pointer flex items-center gap-2"
+                >
+                  Recalcular Vendas (estoque → vendas)
                 </button>
                 <button
                   onClick={handleAddMissingProducts}
