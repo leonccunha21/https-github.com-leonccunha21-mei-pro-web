@@ -200,18 +200,36 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
   const totalSales = filteredSales.length;
   const totalPages = Math.ceil(totalSales / pageSize);
   const paginatedGroups = useMemo(() => {
+    const startIndex = (currentPage - 1) * pageSize;
     let count = 0;
+    let skipped = 0;
     const result: typeof groupedSales = [];
+    
     for (const group of groupedSales) {
-      const remaining = pageSize - count;
-      if (remaining <= 0) break;
-      if (group.sales.length <= remaining) {
-        result.push(group);
-        count += group.sales.length;
-      } else {
-        result.push({ ...group, sales: group.sales.slice(0, remaining) });
-        count += remaining;
+      // Skip groups until we reach the start index
+      if (skipped + group.sales.length <= startIndex) {
+        skipped += group.sales.length;
+        continue;
       }
+      
+      // Start adding sales from this group
+      const groupStart = Math.max(0, startIndex - skipped);
+      let added = 0;
+      
+      for (let i = groupStart; i < group.sales.length; i++) {
+        if (count >= pageSize) break;
+        added++;
+        count++;
+      }
+      
+      if (added > 0) {
+        result.push({
+          ...group,
+          sales: group.sales.slice(groupStart, groupStart + added)
+        });
+      }
+      
+      if (count >= pageSize) break;
     }
     return result;
   }, [groupedSales, currentPage, pageSize]);
