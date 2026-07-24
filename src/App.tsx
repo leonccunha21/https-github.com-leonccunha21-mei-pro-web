@@ -48,6 +48,11 @@ const WhatsAppPage = lazy(() => import('./components/WhatsApp'));
 const AIModulePage = lazy(() => import('./components/AIModule'));
 const FunnelPage = lazy(() => import('./components/Funnel'));
 const SystemChooser = lazy(() => import('./components/SystemChooser'));
+const PostScheduler = lazy(() => import('./components/PostScheduler'));
+const ReferralProgram = lazy(() => import('./components/ReferralProgram'));
+const SeasonalityChart = lazy(() => import('./components/SeasonalityChart'));
+const WhatsAppAutomation = lazy(() => import('./components/WhatsAppAutomation'));
+const MarginReport = lazy(() => import('./components/MarginReport'));
 const DRE = lazy(() => import('./components/DRE'));
 const BankConciliationPage = lazy(() => import('./components/BankConciliation'));
 const BillsPage = lazy(() => import('./components/Bills'));
@@ -84,6 +89,9 @@ import {
   Receipt,
   Keyboard,
   X,
+  Calendar,
+  Share2,
+  Bot,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from 'react-hot-toast';
@@ -1682,8 +1690,11 @@ export default function App() {
                 { tab: 'ai', label: 'Inteligência Artificial', icon: Brain },
                 { tab: 'conciliation', label: 'Conciliação', icon: Building2 },
                 { tab: 'bills', label: 'Contas', icon: Receipt },
-                { tab: 'internet', label: 'Internet', icon: Wifi },
-                { tab: 'manicure', label: 'Manicure PRO', icon: Sparkles },
+{ tab: 'internet', label: 'Internet', icon: Wifi },
+{ tab: 'marketing', label: 'Marketing', icon: Calendar },
+{ tab: 'referrals', label: 'Indicações', icon: Share2 },
+{ tab: 'automation', label: 'Automação', icon: Bot },
+{ tab: 'manicure', label: 'Manicure PRO', icon: Sparkles },
                 { tab: 'mounjaro', label: 'Saúde PRO', icon: Stethoscope },
                 { tab: 'settings', label: 'Configurações', icon: SettingsIcon },
               ] as const).map(item => {
@@ -1785,19 +1796,24 @@ export default function App() {
                   </button>
                 );
               };
-              const mainItems: NavItem[] = [
-                { tab: 'dashboard', label: 'Painel Geral', icon: LayoutDashboard },
-                { tab: 'products', label: 'Estoque', icon: Package, permission: 'products' },
-                { tab: 'pos', label: 'Frente de Caixa', icon: ShoppingCart, permission: 'pdv' },
-                { tab: 'reports', label: 'Relatórios', icon: BarChart3, permission: 'reports' },
-                { tab: 'dre', label: 'DRE', icon: FileText, permission: 'dre' },
-                { tab: 'cashflow', label: 'Fluxo de Caixa', icon: DollarSign, permission: 'cash_flow' },
-                { tab: 'cashclosing', label: 'Fechamento de Caixa', icon: Wallet, permission: 'cash_closing' },
-                { tab: 'bills', label: 'Contas', icon: Receipt, permission: 'bills', badge: billsAlertCount },
-                { tab: 'internet', label: 'Internet', icon: Wifi, permission: 'internet_sharing' },
-                { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList, permission: 'os_orcamento' },
-                { tab: 'settings', label: 'Configurações', icon: SettingsIcon, permission: 'settings' },
-              ];
+const mainItems: NavItem[] = [
+  { tab: 'dashboard', label: 'Painel Geral', icon: LayoutDashboard },
+  { tab: 'products', label: 'Estoque', icon: Package, permission: 'products' },
+  { tab: 'pos', label: 'Frente de Caixa', icon: ShoppingCart, permission: 'pdv' },
+  { tab: 'reports', label: 'Relatórios', icon: BarChart3, permission: 'reports' },
+  { tab: 'dre', label: 'DRE', icon: FileText, permission: 'dre' },
+  { tab: 'cashflow', label: 'Fluxo de Caixa', icon: DollarSign, permission: 'cash_flow' },
+  { tab: 'cashclosing', label: 'Fechamento de Caixa', icon: Wallet, permission: 'cash_closing' },
+  { tab: 'bills', label: 'Contas', icon: Receipt, permission: 'bills', badge: billsAlertCount },
+  { tab: 'internet', label: 'Internet', icon: Wifi, permission: 'internet_sharing' },
+  { tab: 'os', label: 'OS / Orçamento', icon: ClipboardList, permission: 'os_orcamento' },
+  { tab: 'settings', label: 'Configurações', icon: SettingsIcon, permission: 'settings' },
+];
+const marketingItems: NavItem[] = [
+  { tab: 'marketing', label: 'Calendário', icon: Calendar, permission: 'marketing' },
+  { tab: 'referrals', label: 'Indicações', icon: Share2, permission: 'referrals' },
+  { tab: 'automation', label: 'Automação', icon: Bot, permission: 'automation' },
+];
               const advancedItems: NavItem[] = [
                 { tab: 'leads', label: 'Leads', icon: Target, permission: 'leads' },
                 { tab: 'funnel', label: 'Funil de Vendas', icon: KanbanSquare, permission: 'funnel' },
@@ -1821,12 +1837,18 @@ export default function App() {
                       renderBtn(item, i > 0 ? 'mt-0.5 pl-9' : '')
                     )}
                   </div>
-                  <div className="pt-3 pb-1">
-                    <span className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-widest px-3">Módulos Avançados</span>
-                  </div>
-                  {advancedItems.map(item =>
-                      canAccessFeature(item.permission) ? renderBtn(item) : null
-                  )}
+<div className="pt-3 pb-1">
+  <span className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-widest px-3">Módulos Avançados</span>
+</div>
+{advancedItems.map(item =>
+    canAccessFeature(item.permission) ? renderBtn(item) : null
+)}
+<div className="pt-3 pb-1">
+  <span className="text-[9px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-widest px-3">Marketing</span>
+</div>
+{marketingItems.map(item =>
+    canAccessFeature(item.permission) ? renderBtn(item) : null
+)}
                   {/* Manicure PRO */}
                   <button
                     onClick={() => window.location.href = '/manicure'}
@@ -1950,6 +1972,10 @@ export default function App() {
       if (tab === 'pos') setActiveTab('pos');
       if (tab === 'sales') setActiveTab('sales');
       if (tab === 'bills') setActiveTab('bills');
+      if (tab === 'marketing') setActiveTab('marketing');
+      if (tab === 'referrals') setActiveTab('referrals');
+      if (tab === 'automation') setActiveTab('automation');
+      if (tab === 'reports') setActiveTab('reports');
     }}
   />
 )}
@@ -2150,12 +2176,30 @@ export default function App() {
               />
             )}
 
-            {activeTab === 'internet' && (
-              <InternetSharingPage
-                internetUsers={internetUsers}
-                onSaveInternetUsers={saveInternetUsersToStorage}
-              />
-            )}
+{activeTab === 'internet' && (
+  <InternetSharingPage
+    internetUsers={internetUsers}
+    onSaveInternetUsers={saveInternetUsersToStorage}
+  />
+)}
+
+{activeTab === 'marketing' && (
+  <div className="space-y-4">
+    <PostScheduler products={products} storeInfo={storeInfo as StoreInfo} />
+    <SeasonalityChart products={products} sales={sales} storeInfo={storeInfo as StoreInfo} />
+  </div>
+)}
+
+{activeTab === 'referrals' && (
+  <ReferralProgram products={products} storeInfo={storeInfo as StoreInfo} />
+)}
+
+{activeTab === 'automation' && (
+  <div className="space-y-4">
+    <WhatsAppAutomation products={products} storeInfo={storeInfo as StoreInfo} />
+    <MarginReport products={products} sales={sales} storeInfo={storeInfo as StoreInfo} />
+  </div>
+)}
 
             {activeTab === 'settings' && (
               <Settings 

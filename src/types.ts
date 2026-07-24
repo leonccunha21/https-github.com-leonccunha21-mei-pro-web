@@ -129,7 +129,7 @@ export interface InternetUser {
   updatedAt?: string;
 }
 
-export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'dre' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel' | 'conciliation' | 'bills' | 'internet';
+export type ActiveTab = 'dashboard' | 'products' | 'pos' | 'sales' | 'reports' | 'dre' | 'settings' | 'os' | 'debtors' | 'cashflow' | 'customers' | 'purchases' | 'cashclosing' | 'leads' | 'whatsapp' | 'ai' | 'funnel' | 'conciliation' | 'bills' | 'internet' | 'marketing' | 'referrals' | 'automation';
 
 export const PRO_PLAN_LIMITS = {
   WHATSAPP_CONNECTIONS: 5,

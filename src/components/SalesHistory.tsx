@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { Sale, Product } from '../types';
 import ReceiptPDF from './ReceiptPDF';
+import Pagination from './Pagination';
 import {
   Search,
   X,
@@ -37,6 +38,8 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
   const [showProductSummary, setShowProductSummary] = useState(false);
   const [showDebtors, setShowDebtors] = useState(false);
+  const [pageSize, setPageSize] = useState(20);
+  const [currentPage, setCurrentPage] = useState(1);
   
   // Date range state
   const [dateRange, setDateRange] = useState<'today' | '7days' | '30days' | 'all' | 'custom'>('all');
@@ -183,6 +186,26 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
     });
     return groups;
   }, [filteredSales]);
+
+  // Pagination
+  const totalSales = filteredSales.length;
+  const totalPages = Math.ceil(totalSales / pageSize);
+  const paginatedGroups = useMemo(() => {
+    let count = 0;
+    const result: typeof groupedSales = [];
+    for (const group of groupedSales) {
+      const remaining = pageSize - count;
+      if (remaining <= 0) break;
+      if (group.sales.length <= remaining) {
+        result.push(group);
+        count += group.sales.length;
+      } else {
+        result.push({ ...group, sales: group.sales.slice(0, remaining) });
+        count += remaining;
+      }
+    }
+    return result;
+  }, [groupedSales, currentPage, pageSize]);
 
   // Debtor summary
   const debtorSummary = useMemo(() => {
@@ -607,7 +630,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                   <th className="px-4 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50">Ações</th>
                 </tr>
               </thead>
-              {groupedSales.map(group => (
+              {paginatedGroups.map(group => (
                 <tbody key={group.key} className="text-sm">
                   <tr>
                     <td colSpan={9} className="px-4 py-2 bg-slate-100/70 border-b border-slate-200">
@@ -786,6 +809,16 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                 </tr>
               </tfoot>
             </table>
+          </div>
+          <div className="px-4 py-2 border-t border-slate-200">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              pageSize={pageSize}
+              totalItems={totalSales}
+              onPageSizeChange={(size) => { setPageSize(size); setCurrentPage(1); }}
+            />
           </div>
         )}
       </div>

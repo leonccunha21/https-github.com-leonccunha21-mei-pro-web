@@ -10,9 +10,9 @@ import {
   Printer,
   ClipboardList,
   CheckCircle2,
-  Calendar
 } from 'lucide-react';
 import { DateFilter } from './DateFilter';
+import { ErrorBoundary, ErrorBoundaryFallback } from './ErrorBoundary';
 
 interface OsOrcamentoProps {
   products: Product[];
@@ -38,6 +38,14 @@ const statusLabels: Record<string, { label: string; color: string }> = {
 };
 
 export default function OsOrcamento({ products, storeInfo, orders: initialOrders, onOrdersChange, onConvertToSale }: OsOrcamentoProps) {
+  return (
+    <ErrorBoundary fallback={ErrorBoundaryFallback} onReset={() => {}}>
+      <OsOrcamentoInner products={products} storeInfo={storeInfo} orders={initialOrders} onOrdersChange={onOrdersChange} onConvertToSale={onConvertToSale} />
+    </ErrorBoundary>
+  );
+}
+
+function OsOrcamentoInner({ products, storeInfo, orders: initialOrders, onOrdersChange, onConvertToSale }: OsOrcamentoProps) {
   // Não usa estado local derivado da prop — usa a prop diretamente para evitar
   // dessincronização quando o pai atualiza os dados (ex: importação de backup).
   const orders = initialOrders;
