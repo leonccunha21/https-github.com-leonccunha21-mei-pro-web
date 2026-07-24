@@ -54,6 +54,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
   // Selected sale for detail modal
   const [selectedSale, setSelectedSale] = useState<Sale | null>(null);
   const [editingSale, setEditingSale] = useState<Sale | null>(null);
+  const [syncPrices, setSyncPrices] = useState(false);
 
   const emptySale: Sale = {
     id: '', date: '', items: [], total: 0, totalCost: 0, profit: 0,
@@ -754,7 +755,7 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                           )}
 
                           <button
-                            onClick={() => { setEditingSale(sale); setEditForm(JSON.parse(JSON.stringify(sale))); }}
+                            onClick={() => { setEditingSale(sale); setSyncPrices(false); setEditForm(JSON.parse(JSON.stringify(sale))); }}
                             className="p-1 hover:bg-sky-100 text-sky-600 rounded-lg transition-colors"
                             title="Editar venda"
                           >
@@ -1232,7 +1233,17 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
             </div>
 
             {/* Save / Cancel */}
-            <div className="p-4 border-t border-slate-200 flex items-center justify-end gap-2 bg-slate-50">
+            <div className="p-4 border-t border-slate-200 flex items-center justify-between gap-2 bg-slate-50">
+              <label className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={syncPrices}
+                  onChange={e => setSyncPrices(e.target.checked)}
+                  className="accent-indigo-600 w-3.5 h-3.5"
+                />
+                Atualizar preço no estoque também
+              </label>
+              <div className="flex items-center gap-2">
               <button onClick={() => setEditingSale(null)} className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-lg border border-slate-200 transition-colors cursor-pointer">
                 Cancelar
               </button>
@@ -1285,17 +1296,19 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                         }
                       }
                     }
-                    // Sincroniza precos: se o item editado tem preco/custo diferente do produto, atualiza
-                    editForm.items.forEach(item => {
-                      const product = findProduct(item);
-                      if (!product) return;
-                      const changes: Partial<Product> = {};
-                      if (item.salePrice !== product.salePrice) changes.salePrice = item.salePrice;
-                      if (item.costPrice !== product.costPrice) changes.costPrice = item.costPrice;
-                      if (Object.keys(changes).length > 0) {
-                        onUpdateProduct({ ...product, ...changes });
-                      }
-                    });
+                    // Sincroniza precos (so se syncPrices estiver ativo)
+                    if (syncPrices) {
+                      editForm.items.forEach(item => {
+                        const product = findProduct(item);
+                        if (!product) return;
+                        const changes: Partial<Product> = {};
+                        if (item.salePrice !== product.salePrice) changes.salePrice = item.salePrice;
+                        if (item.costPrice !== product.costPrice) changes.costPrice = item.costPrice;
+                        if (Object.keys(changes).length > 0) {
+                          onUpdateProduct({ ...product, ...changes });
+                        }
+                      });
+                    }
                   }
                   onUpdateSale?.(updatedSale);
                   setEditingSale(null);
