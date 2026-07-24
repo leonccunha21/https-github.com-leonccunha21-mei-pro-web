@@ -4,6 +4,11 @@ import { normalizeName } from '../lib/normalize';
 import SalesChart from './SalesChart';
 import StockAlert from './StockAlert';
 import WhatsAppCollections from './WhatsAppCollections';
+import PostScheduler from './PostScheduler';
+import ReferralProgram from './ReferralProgram';
+import SeasonalityChart from './SeasonalityChart';
+import WhatsAppAutomation from './WhatsAppAutomation';
+import MarginReport from './MarginReport';
 import { getPrefs, sendNotification } from '../lib/notifications';
 import {
   TrendingUp,
@@ -774,6 +779,37 @@ export default function Dashboard({ products, sales, bills = [], storeInfo, onNa
           <WhatsAppCollections sales={sales} storeInfo={storeInfo} />
         </div>
       )}
+
+      {/* Marketing & Social Media Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Post Scheduler */}
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <PostScheduler products={products} storeInfo={storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' }} />
+        </div>
+
+        {/* Referral Program */}
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <ReferralProgram products={products} storeInfo={storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' }} />
+        </div>
+      </div>
+
+      {/* Automation Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* WhatsApp Automation */}
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <WhatsAppAutomation products={products} storeInfo={storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' }} />
+        </div>
+
+        {/* Seasonality Chart */}
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <SeasonalityChart products={products} sales={sales} storeInfo={storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' }} />
+        </div>
+      </div>
+
+      {/* Margin Report - Full Width */}
+      <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+        <MarginReport products={products} sales={sales} storeInfo={storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' }} />
+      </div>
     </div>
   );
 }

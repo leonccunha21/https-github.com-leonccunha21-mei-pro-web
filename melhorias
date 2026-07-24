@@ -102,7 +102,7 @@
 18. [ok] 15 tabelas paralelo → batch de 5  
 19. [ok] Trial expirado → loadDb() antes  
 20. [ok] Refatorar sidebar com array + map  
-21. Ativar strict: true no tsconfig.json
+21. Pendente — Ativar strict: true no tsconfig.json (gera muitos erros, fazer sessão dedicada)
 22. Service Worker funcional (PWA)
 23. EXIF stripping nas imagens do Mounjaro
 24. stateRef.current stale em multi-update
@@ -138,11 +138,41 @@
   - [x] Guia passo a passo para criação do catálogo
   - [x] Instruções de importação via CSV
 
-- [ ] **Agendamento de Posts (Meta Business Suite API)**
-  - [ ] Calendário visual de publicações
-  - [ ] Conexão com Instagram/Facebook via API
-  - [ ] Automação: "Poste todo dia às 19h"
-  - [ ] Métricas de engajamento integradas
+- [x] **Calendário de Publicações** ✅
+  - [x] Calendário visual de publicações
+  - [x] Agendamento de posts com templates
+  - [x] Seleção de produtos e datas
+  - [x] Status: pendente, enviado, cancelado
+  - [x] Componente PostScheduler.tsx
+
+- [x] **Programa de Indicação** ✅
+  - [x] Gerenciamento de indicações
+  - [x] Créditos para quem indica e indicado
+  - [x] Compartilhamento via WhatsApp
+  - [x] Ranking de top indicadores
+  - [x] Componente ReferralProgram.tsx
+
+- [x] **Análise de Sazonalidade** ✅
+  - [x] Gráfico de vendas mensais/trimestrais
+  - [x] Dicas sazonais por mês
+  - [x] Melhor/pior mês
+  - [x] Filtro por ano
+  - [x] Componente SeasonalityChart.tsx
+
+- [x] **WhatsApp Automático** ✅
+  - [x] Promoções agendadas
+  - [x] Templates: Promoção, Novidade, Últimas, Destaque, Personalizado
+  - [x] Segmentação de público
+  - [x] Envio recorrente (diário/semanal/mensal)
+  - [x] Componente WhatsAppAutomation.tsx
+
+- [x] **Relatório de Margem** ✅
+  - [x] Análise de lucratividade por produto
+  - [x] Margem %, lucro/unidade, receita total
+  - [x] Filtros por categoria e margem mínima
+  - [x] Ordenação por diferentes campos
+  - [x] Exportação CSV
+  - [x] Componente MarginReport.tsx
 
 - [x] **Notificações Automáticas de Estoque** ✅
   - [x] Alerta quando estoque ≤ mínimo
