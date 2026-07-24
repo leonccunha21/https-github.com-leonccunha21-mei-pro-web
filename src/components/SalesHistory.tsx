@@ -1285,6 +1285,17 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                         }
                       }
                     }
+                    // Sincroniza precos: se o item editado tem preco/custo diferente do produto, atualiza
+                    editForm.items.forEach(item => {
+                      const product = findProduct(item);
+                      if (!product) return;
+                      const changes: Partial<Product> = {};
+                      if (item.salePrice !== product.salePrice) changes.salePrice = item.salePrice;
+                      if (item.costPrice !== product.costPrice) changes.costPrice = item.costPrice;
+                      if (Object.keys(changes).length > 0) {
+                        onUpdateProduct({ ...product, ...changes });
+                      }
+                    });
                   }
                   onUpdateSale?.(updatedSale);
                   setEditingSale(null);
