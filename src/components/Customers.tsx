@@ -25,6 +25,9 @@ export default function Customers({ customers, sales, onSaveCustomers }: Custome
   const [pageSize, setPageSize] = useState(20);
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Reset page when filters change
+  React.useEffect(() => { setCurrentPage(1); }, [search, dateStart, dateEnd]);
+
   const salesByCustomer = useMemo(() => {
     const map = new Map<string, Sale[]>();
     for (const s of sales) {

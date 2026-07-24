@@ -9,7 +9,7 @@ interface MarginReportProps {
   storeInfo: StoreInfo;
 }
 
-type SortField = 'margin' | 'profit' | 'revenue' | 'cost' | 'unitsSold';
+type SortField = 'marginPercent' | 'totalProfit' | 'totalRevenue' | 'totalCost' | 'unitsSold';
 type SortOrder = 'asc' | 'desc';
 
 interface ProductMargin {
@@ -258,9 +258,9 @@ export default function MarginReport({ products, sales, storeInfo }: MarginRepor
       {/* Sort Buttons */}
       <div className="flex gap-2 overflow-x-auto pb-1">
         {[
-          { field: 'margin' as SortField, label: 'Margem' },
-          { field: 'profit' as SortField, label: 'Lucro' },
-          { field: 'revenue' as SortField, label: 'Receita' },
+          { field: 'marginPercent' as SortField, label: 'Margem' },
+          { field: 'totalProfit' as SortField, label: 'Lucro' },
+          { field: 'totalRevenue' as SortField, label: 'Receita' },
           { field: 'unitsSold' as SortField, label: 'Unidades' },
         ].map(s => (
           <button
