@@ -2104,18 +2104,19 @@ const marketingItems: NavItem[] = [
               />
             )}
 
-            {activeTab === 'debtors' && (
-              <Debtors 
-                sales={sales}
-                loans={loans}
-                onUpdateSale={(updatedSale) => {
-                  const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
-                  saveSalesToStorage(updatedSales, updatedSale);
-                }}
-                onUpdateSales={updateSalesBulk}
-                onSaveLoans={saveLoansToStorage}
-              />
-            )}
+{activeTab === 'debtors' && (
+  <Debtors 
+    sales={sales}
+    loans={loans}
+    storeInfo={storeInfo as StoreInfo}
+    onUpdateSale={(updatedSale) => {
+      const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
+      saveSalesToStorage(updatedSales, updatedSale);
+    }}
+    onUpdateSales={updateSalesBulk}
+    onSaveLoans={saveLoansToStorage}
+  />
+)}
 
             {activeTab === 'customers' && (
               <Customers

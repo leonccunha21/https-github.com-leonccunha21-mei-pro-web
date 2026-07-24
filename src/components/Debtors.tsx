@@ -1,6 +1,7 @@
 ﻿import React, { useState, useMemo, useEffect } from 'react';
-import { Sale, Loan } from '../types';
+import { Sale, Loan, StoreInfo } from '../types';
 import { normalizeChannel } from '../lib/normalize';
+import WhatsAppCollections from './WhatsAppCollections';
 import {
   User,
   DollarSign,
@@ -26,12 +27,13 @@ import { trackingUrl, statusLabel, STATUS_COLORS, fetchTrackingStatus } from '..
 interface DebtorsProps {
   sales: Sale[];
   loans: Loan[];
+  storeInfo?: StoreInfo;
   onUpdateSale: (sale: Sale) => void;
   onUpdateSales: (sales: Sale[]) => void;
   onSaveLoans: (loans: Loan[]) => void;
 }
 
-export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onSaveLoans }: DebtorsProps) {
+export default function Debtors({ sales, loans, storeInfo, onUpdateSale, onUpdateSales, onSaveLoans }: DebtorsProps) {
   const [view, setView] = useState<'debits' | 'loans' | 'marketplace'>(() => {
     const saved = localStorage.getItem('zmstore-debtors-view');
     return saved === 'debits' || saved === 'loans' || saved === 'marketplace' ? saved : 'debits';
@@ -614,6 +616,15 @@ export default function Debtors({ sales, loans, onUpdateSale, onUpdateSales, onS
         )}
       </div>
 
+      {/* WhatsApp Collections for Pending Sales */}
+      {storeInfo && debtSales.some(s => s.status === 'pending') && (
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <WhatsAppCollections 
+            sales={debtSales.filter(s => s.status === 'pending')} 
+            storeInfo={storeInfo} 
+          />
+        </div>
+      )}
 
       {selectedSale && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">

@@ -3,7 +3,6 @@ import { Product, Sale, Bill, StoreInfo } from '../types';
 import { normalizeName } from '../lib/normalize';
 import SalesChart from './SalesChart';
 import StockAlert from './StockAlert';
-import WhatsAppCollections from './WhatsAppCollections';
 import { getPrefs, sendNotification } from '../lib/notifications';
 import {
   TrendingUp,
@@ -764,13 +763,6 @@ export default function Dashboard({ products, sales, bills = [], storeInfo, onNa
       {lowStockProducts.length > 0 && (
         <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
           <StockAlert products={products} storeInfo={storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' }} />
-        </div>
-      )}
-
-      {/* WhatsApp Collections */}
-      {sales.some(s => s.status === 'pending') && storeInfo && (
-        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-          <WhatsAppCollections sales={sales} storeInfo={storeInfo} />
         </div>
       )}
 
