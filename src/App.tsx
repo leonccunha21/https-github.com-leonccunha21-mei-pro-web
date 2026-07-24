@@ -2041,7 +2041,8 @@ const marketingItems: NavItem[] = [
                 onUpdateSale={(updatedSale) => {
                   setSales(prev => {
                     const updated = prev.map(s => s.id === updatedSale.id ? updatedSale : s);
-                    saveSalesToStorage(updated, updatedSale);
+                    pendingRef.current.sales = updated;
+                    scheduleFlush();
                     return updated;
                   });
                 }}
