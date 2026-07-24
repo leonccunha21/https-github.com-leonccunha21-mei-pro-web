@@ -2039,8 +2039,11 @@ const marketingItems: NavItem[] = [
                 onDeleteSale={deleteSale}
                 onFixDates={fixSaleDates}
                 onUpdateSale={(updatedSale) => {
-                  const updatedSales = sales.map(s => s.id === updatedSale.id ? updatedSale : s);
-                  saveSalesToStorage(updatedSales, updatedSale);
+                  setSales(prev => {
+                    const updated = prev.map(s => s.id === updatedSale.id ? updatedSale : s);
+                    saveSalesToStorage(updated, updatedSale);
+                    return updated;
+                  });
                 }}
               />
             )}
