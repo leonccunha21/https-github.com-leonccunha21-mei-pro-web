@@ -805,6 +805,39 @@ export default function App() {
 
   // Update Product
   const handleUpdateProduct = (updatedProduct: Product) => {
+    const old = products.find(p => p.id === updatedProduct.id);
+    if (old) {
+      const costDiff = updatedProduct.costPrice !== old.costPrice
+        ? Math.abs((updatedProduct.costPrice - old.costPrice) / (old.costPrice || 1)) * 100 : 0;
+      const saleDiff = updatedProduct.salePrice !== old.salePrice
+        ? Math.abs((updatedProduct.salePrice - old.salePrice) / (old.salePrice || 1)) * 100 : 0;
+      if (costDiff > 5 || saleDiff > 5) {
+        const parts: string[] = [];
+        if (costDiff > 5) parts.push(`custo ${costDiff > 50 ? '🔥' : ''}${costDiff.toFixed(0)}%`);
+        if (saleDiff > 5) parts.push(`venda ${saleDiff > 50 ? '🔥' : ''}${saleDiff.toFixed(0)}%`);
+        showToast(`${updatedProduct.name}: ${parts.join(', ')} — recalculando vendas afetadas`);
+        const updatedSales = sales.map(s => {
+          if (s.status === 'cancelled') return s;
+          let changed = false;
+          const newItems = s.items.map(item => {
+            if (item.productId !== updatedProduct.id) return item;
+            const newCostPrice = old.costPrice !== updatedProduct.costPrice ? updatedProduct.costPrice : item.costPrice;
+            const newSalePrice = old.salePrice !== updatedProduct.salePrice ? updatedProduct.salePrice : item.salePrice;
+            if (newCostPrice === item.costPrice && newSalePrice === item.salePrice) return item;
+            changed = true;
+            return { ...item, costPrice: newCostPrice, salePrice: newSalePrice, total: newSalePrice * item.quantity };
+          });
+          if (!changed) return s;
+          const newTotalCost = roundCurrency(newItems.reduce((acc, item) => acc + item.costPrice * item.quantity, 0));
+          const newTotal = roundCurrency(newItems.reduce((acc, item) => acc + item.total, 0));
+          return { ...s, items: newItems, totalCost: newTotalCost, total: newTotal, profit: roundCurrency(newTotal - newTotalCost) };
+        });
+        if (updatedSales.some((s, i) => s !== sales[i])) {
+          setSales(updatedSales);
+          persist({ sales: updatedSales });
+        }
+      }
+    }
     const updated = products.map(p => p.id === updatedProduct.id ? { ...updatedProduct, updatedAt: new Date().toISOString() } : p);
     saveProductsToStorage(updated, updatedProduct).catch(() => {});
   };
@@ -1905,19 +1938,20 @@ export default function App() {
                 fallback={ErrorBoundaryFallback}
                 onReset={() => {}}
               >
-                <Products
-                  products={products}
-                  categories={categories}
-                  sales={sales}
-                  onAddProduct={handleAddProduct}
-                  onUpdateProduct={handleUpdateProduct}
-                  onDeleteProduct={handleDeleteProduct}
-                  onArchiveProduct={handleArchiveProduct}
-                  onUnarchiveProduct={handleUnarchiveProduct}
-                  onClearAllProducts={handleClearAllProducts}
-                  onAddCategory={handleAddCategory}
-                  onMergeProducts={handleMergeProducts}
-                />
+<Products
+  products={products}
+  categories={categories}
+  sales={sales}
+  storeInfo={storeInfo as StoreInfo}
+  onAddProduct={handleAddProduct}
+  onUpdateProduct={handleUpdateProduct}
+  onDeleteProduct={handleDeleteProduct}
+  onArchiveProduct={handleArchiveProduct}
+  onUnarchiveProduct={handleUnarchiveProduct}
+  onClearAllProducts={handleClearAllProducts}
+  onAddCategory={handleAddCategory}
+  onMergeProducts={handleMergeProducts}
+/>
               </ErrorBoundary>
             )}
 

@@ -1,13 +1,14 @@
 ﻿import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { Product, Category, Sale, PriceHistoryEntry } from '../types';
+import { Product, Category, Sale, PriceHistoryEntry, StoreInfo } from '../types';
 import { categorizeProduct } from '../lib/categorize';
 import LabelPrinter from './LabelPrinter';
+import StoryGenerator from './StoryGenerator';
 import toast from 'react-hot-toast';
 import {
   Plus, Search, Edit2, Trash2, AlertTriangle, Filter, Minus, ArrowUpRight,
   Sparkles, Barcode, X, ChevronUp, ChevronDown, ChevronLeft, ChevronRight,
   ArrowUpDown, CheckSquare, Square, Download, Layers, ClipboardCheck,
-  Trash, Archive, RotateCcw, Boxes, Copy, Tag, Merge, MoreVertical, CheckCircle2
+  Trash, Archive, RotateCcw, Boxes, Copy, Tag, Merge, MoreVertical, CheckCircle2, Image
 } from 'lucide-react';
 
 type SortField = 'name' | 'category' | 'costPrice' | 'salePrice' | 'stock' | 'margin';
@@ -17,6 +18,7 @@ interface ProductsProps {
   products: Product[];
   categories: Category[];
   sales: Sale[];
+  storeInfo: StoreInfo;
   onAddProduct: (product: Omit<Product, 'id' | 'createdAt'>) => void;
   onUpdateProduct: (product: Product) => void;
   onDeleteProduct: (id: string) => void;
@@ -27,7 +29,7 @@ interface ProductsProps {
   onMergeProducts?: (keepId: string, duplicateIds: string[], newName: string, newCostPrice: number, newSalePrice: number) => void;
 }
 
-export default function Products({ products, categories, sales, onAddProduct, onUpdateProduct, onDeleteProduct, onArchiveProduct, onUnarchiveProduct, onClearAllProducts, onAddCategory, onMergeProducts }: ProductsProps) {
+export default function Products({ products, categories, sales, storeInfo, onAddProduct, onUpdateProduct, onDeleteProduct, onArchiveProduct, onUnarchiveProduct, onClearAllProducts, onAddCategory, onMergeProducts }: ProductsProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [stockFilter, setStockFilter] = useState<'all' | 'low' | 'out' | 'ok'>('all');
@@ -67,9 +69,10 @@ export default function Products({ products, categories, sales, onAddProduct, on
   const [mergeCostPrice, setMergeCostPrice] = useState(0);
   const [mergeSalePrice, setMergeSalePrice] = useState(0);
 
-  const [showPriceHistory, setShowPriceHistory] = useState<Product | null>(null);
+const [showPriceHistory, setShowPriceHistory] = useState<Product | null>(null);
+const [storyGeneratorProduct, setStoryGeneratorProduct] = useState<Product | null>(null);
 
-  const mergeSnapshotRef = useRef<{
+const mergeSnapshotRef = useRef<{
     keeper: Product;
     duplicates: Product[];
   } | null>(null);
@@ -692,15 +695,16 @@ export default function Products({ products, categories, sales, onAddProduct, on
                         <span className="text-[10px] px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded font-medium inline-block mt-1">{p.category}</span>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 shrink-0">
-                      <button onClick={() => handleDuplicateProduct(p)} className="p-1.5 hover:bg-slate-100 text-slate-500 rounded-lg transition-colors" title="Duplicar" aria-label="Duplicar"><Copy className="h-4 w-4" /></button>
-                      <button onClick={() => handleOpenEditModal(p)} className="p-1.5 hover:bg-indigo-50 text-indigo-600 rounded-lg transition-colors"><Edit2 className="h-4 w-4" /></button>
-                      {p.archived ? (
-                        <button onClick={() => onUnarchiveProduct(p.id)} className="p-1.5 hover:bg-emerald-50 text-emerald-600 rounded-lg transition-colors" title="Restaurar" aria-label="Restaurar"><RotateCcw className="h-4 w-4" /></button>
-                      ) : (
-                        <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1.5 hover:bg-amber-50 text-amber-600 rounded-lg transition-colors" title="Arquivar" aria-label="Arquivar"><Archive className="h-4 w-4" /></button>
-                      )}
-                    </div>
+<div className="flex items-center gap-1 shrink-0">
+  <button onClick={() => setStoryGeneratorProduct(p)} className="p-1.5 hover:bg-purple-50 text-purple-600 rounded-lg transition-colors" title="Gerar Story" aria-label="Gerar Story"><Image className="h-4 w-4" /></button>
+  <button onClick={() => handleDuplicateProduct(p)} className="p-1.5 hover:bg-slate-100 text-slate-500 rounded-lg transition-colors" title="Duplicar" aria-label="Duplicar"><Copy className="h-4 w-4" /></button>
+  <button onClick={() => handleOpenEditModal(p)} className="p-1.5 hover:bg-indigo-50 text-indigo-600 rounded-lg transition-colors"><Edit2 className="h-4 w-4" /></button>
+  {p.archived ? (
+    <button onClick={() => onUnarchiveProduct(p.id)} className="p-1.5 hover:bg-emerald-50 text-emerald-600 rounded-lg transition-colors" title="Restaurar" aria-label="Restaurar"><RotateCcw className="h-4 w-4" /></button>
+  ) : (
+    <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1.5 hover:bg-amber-50 text-amber-600 rounded-lg transition-colors" title="Arquivar" aria-label="Arquivar"><Archive className="h-4 w-4" /></button>
+  )}
+</div>
                   </div>
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-100">
                     <div className="flex items-center gap-3">
@@ -817,17 +821,18 @@ export default function Products({ products, categories, sales, onAddProduct, on
                             {margin.toFixed(0)}%
                           </span>
                         </td>
-                        <td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
-                          <div className="flex items-center justify-center gap-0.5">
-                            <button onClick={() => handleDuplicateProduct(p)} className="p-1 hover:bg-slate-100 text-slate-500 rounded transition-colors" title="Duplicar" aria-label="Duplicar"><Copy className="h-3.5 w-3.5" /></button>
-                            <button onClick={() => handleOpenEditModal(p)} className="p-1 hover:bg-indigo-50 text-indigo-600 rounded transition-colors" title="Editar" aria-label="Editar"><Edit2 className="h-3.5 w-3.5" /></button>
-                            {p.archived ? (
-                              <button onClick={() => onUnarchiveProduct(p.id)} className="p-1 hover:bg-emerald-50 text-emerald-600 rounded transition-colors" title="Restaurar" aria-label="Restaurar"><RotateCcw className="h-3.5 w-3.5" /></button>
-                            ) : (
-                              <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1 hover:bg-amber-50 text-amber-600 rounded transition-colors" title="Arquivar" aria-label="Arquivar"><Archive className="h-3.5 w-3.5" /></button>
-              )}
-                          </div>
-                        </td>
+<td className="px-4 py-3 border-b border-slate-100 align-middle text-center">
+  <div className="flex items-center justify-center gap-0.5">
+    <button onClick={() => setStoryGeneratorProduct(p)} className="p-1 hover:bg-purple-50 text-purple-600 rounded transition-colors" title="Gerar Story" aria-label="Gerar Story"><Image className="h-3.5 w-3.5" /></button>
+    <button onClick={() => handleDuplicateProduct(p)} className="p-1 hover:bg-slate-100 text-slate-500 rounded transition-colors" title="Duplicar" aria-label="Duplicar"><Copy className="h-3.5 w-3.5" /></button>
+    <button onClick={() => handleOpenEditModal(p)} className="p-1 hover:bg-indigo-50 text-indigo-600 rounded transition-colors" title="Editar" aria-label="Editar"><Edit2 className="h-3.5 w-3.5" /></button>
+    {p.archived ? (
+      <button onClick={() => onUnarchiveProduct(p.id)} className="p-1 hover:bg-emerald-50 text-emerald-600 rounded transition-colors" title="Restaurar" aria-label="Restaurar"><RotateCcw className="h-3.5 w-3.5" /></button>
+    ) : (
+      <button onClick={() => { if (window.confirm(`Arquivar "${p.name}"?`)) onArchiveProduct(p.id); }} className="p-1 hover:bg-amber-50 text-amber-600 rounded transition-colors" title="Arquivar" aria-label="Arquivar"><Archive className="h-3.5 w-3.5" /></button>
+    )}
+  </div>
+</td>
                       </tr>
                     );
                   })}
@@ -1287,6 +1292,15 @@ export default function Products({ products, categories, sales, onAddProduct, on
           </div>
         );
       })()}
+
+      {/* STORY GENERATOR MODAL */}
+      {storyGeneratorProduct && (
+        <StoryGenerator
+          product={storyGeneratorProduct}
+          storeInfo={storeInfo}
+          onClose={() => setStoryGeneratorProduct(null)}
+        />
+      )}
     </div>
   );
 }

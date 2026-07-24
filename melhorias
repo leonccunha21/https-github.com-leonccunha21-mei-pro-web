@@ -33,7 +33,7 @@
 26. [ok] `src/lib/subscription.ts:26` — API_BASE vazio vira caminho relativo, pode quebrar em produção
 27. `public/sw.js` — Service Worker vazio (sem install/activate/fetch), PWA não funcional
 28. [ok] Sidebar — Botões de navegação com ~8 linhas JSX duplicado cada (~40% menos código com array + map)
-29. **Exportador de Conteúdo Instagram/WhatsApp** — StoryGenerator.tsx com templates para eletrônicos
+29. **Exportador de Conteúdo Instagram/WhatsApp** — StoryGenerator.tsx com templates para eletrônicos ✅ IMPLEMENTADO
 30. **Integração WhatsApp Business Catalog** — Sync automática de produtos via Meta Commerce Manager API
 
 ---
@@ -126,13 +126,13 @@
 - [ ] WhatsApp Cobranças (Evolution API real)
 
 ### FASE 4 — Marketing & Social Media (NOVO)
-- [ ] **Exportador de Conteúdo para Instagram/WhatsApp**
-  - [ ] Componente `StoryGenerator.tsx`
-  - [ ] Template automático (foto + preço + texto)
-  - [ ] Download de imagem 1080x1920px (formato Story)
-  - [ ] Texto copiado para clipboard
-  - [ ] Link WhatsApp com mensagem pré-definida
-  - [ ] Templates para: Novidade, Promoção, Últimas Unidades, Depoimento
+- [x] **Exportador de Conteúdo para Instagram/WhatsApp** ✅
+  - [x] Componente `StoryGenerator.tsx`
+  - [x] Template automático (foto + preço + texto)
+  - [x] Download de imagem 1080x1920px (formato Story)
+  - [x] Texto copiado para clipboard
+  - [x] Link WhatsApp com mensagem pré-definida
+  - [x] Templates para: Novidade, Promoção, Últimas Unidades, Destaque
 
 - [ ] **Integração WhatsApp Business Catalog (API)**
   - [ ] Sincronizar produtos cadastrados → catálogo WhatsApp automaticamente
@@ -154,4 +154,4 @@
 
 ---
 
-**Status atual:** v2.24.9 — 4 bugs críticos pendentes, 49 itens concluídos + 4 novos (Marketing/Social Media).
+**Status atual:** v2.24.9 — 4 bugs críticos pendentes, 50 itens concluídos (incluindo Story Generator).
