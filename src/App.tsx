@@ -2046,6 +2046,14 @@ const marketingItems: NavItem[] = [
                     return updated;
                   });
                 }}
+                onUpdateProduct={(updatedProduct) => {
+                  setProducts(prev => {
+                    const updated = prev.map(p => p.id === updatedProduct.id ? updatedProduct : p);
+                    pendingRef.current.products = updated;
+                    scheduleFlush();
+                    return updated;
+                  });
+                }}
               />
             )}
 

@@ -32,9 +32,10 @@ interface SalesHistoryProps {
   onDeleteSale?: (saleId: string) => void;
   onFixDates?: () => number;
   onUpdateSale?: (updatedSale: Sale) => void;
+  onUpdateProduct?: (updatedProduct: Product) => void;
 }
 
-export default function SalesHistory({ sales, products, onCancelSale, onDeleteSale, onFixDates, onUpdateSale }: SalesHistoryProps) {
+export default function SalesHistory({ sales, products, onCancelSale, onDeleteSale, onFixDates, onUpdateSale, onUpdateProduct }: SalesHistoryProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'completed' | 'cancelled'>('all');
   const [paymentFilter, setPaymentFilter] = useState<string>('all');
@@ -1247,6 +1248,44 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                     profit: roundCurrency(newTotal - newTotalCost),
                     updatedAt: new Date().toISOString(),
                   };
+                  // Ajusta estoque: compara itens antigos vs novos
+                  if (onUpdateProduct && editingSale) {
+                    const findProduct = (item: SaleItem) =>
+                      products.find(p => p.id === item.productId) ||
+                      products.find(p => p.name.toLowerCase().trim() === (item.productName || '').toLowerCase().trim());
+                    const oldMap = new Map<string, { item: SaleItem; product: Product | undefined }>();
+                    editingSale.items.forEach(item => {
+                      const key = item.productId || item.productName;
+                      oldMap.set(key, { item, product: findProduct(item) });
+                    });
+                    const newMap = new Map<string, { item: SaleItem; product: Product | undefined }>();
+                    editForm.items.forEach(item => {
+                      const key = item.productId || item.productName;
+                      newMap.set(key, { item, product: findProduct(item) });
+                    });
+                    // Produtos que sumiram (removidos) → devolver estoque
+                    for (const [key, { item, product }] of oldMap) {
+                      if (!newMap.has(key) && product) {
+                        onUpdateProduct({ ...product, stock: product.stock + item.quantity });
+                      }
+                    }
+                    // Produtos novos (adicionados) → deduzir estoque
+                    for (const [key, { item, product }] of newMap) {
+                      if (!oldMap.has(key) && product) {
+                        onUpdateProduct({ ...product, stock: Math.max(0, product.stock - item.quantity) });
+                      }
+                    }
+                    // Produtos em ambos → ajustar pela diferença
+                    for (const [key, { item: oldItem, product }] of oldMap) {
+                      const newEntry = newMap.get(key);
+                      if (newEntry && product) {
+                        const diff = oldItem.quantity - newEntry.item.quantity;
+                        if (diff !== 0) {
+                          onUpdateProduct({ ...product, stock: Math.max(0, product.stock + diff) });
+                        }
+                      }
+                    }
+                  }
                   onUpdateSale?.(updatedSale);
                   setEditingSale(null);
                   toast.success('Venda atualizada com sucesso!');
