@@ -1128,8 +1128,9 @@ export default function SalesHistory({ sales, products, onCancelSale, onDeleteSa
                     className="px-2 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-bold rounded-lg hover:bg-indigo-100 border border-indigo-200 transition-colors"
                   >
                     + Item
-                  </button>
-                </div>
+</button>
+            </div>
+            </div>
                 <div className="space-y-2 max-h-52 overflow-y-auto">
                   {editForm.items.map((item, idx) => (
                     <div key={idx} className="p-2 bg-slate-50 rounded-lg border border-slate-200 space-y-1.5">
