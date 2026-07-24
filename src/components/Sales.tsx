@@ -23,6 +23,7 @@ import {
   ChevronRight,
   Clock,
   
+Users,
   ScanBarcode
 } from 'lucide-react';
 
@@ -557,7 +558,31 @@ export default function Sales({ products, customers = [], onRegisterSale, onNavi
                 <ScanBarcode className="h-5 w-5" />
               </button>
             </div>
-            
+
+            {/* Customer quick-select when searching */}
+            {searchQuery.trim().length > 0 && customers.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {customers
+                  .filter(c => {
+                    const q = normalizeName(searchQuery);
+                    return normalizeName(c.name).includes(q) || (c.phone || '').replace(/\D/g, '').includes(searchQuery.replace(/\D/g, ''));
+                  })
+                  .slice(0, 5)
+                  .map(c => (
+                    <button
+                      key={c.id}
+                      type="button"
+                      onClick={() => { setClientName(c.name); setClientPhone(c.phone || ''); }}
+                      className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 border border-indigo-200 dark:border-indigo-800 text-xs font-bold transition-colors cursor-pointer"
+                    >
+                      <Users className="h-3 w-3" />
+                      {c.name}
+                      {c.phone && <span className="text-[10px] font-mono opacity-60">{c.phone}</span>}
+                    </button>
+                  ))}
+              </div>
+            )}
+
             {/* Category selection */}
             <select
               id="catalog-category-filter"

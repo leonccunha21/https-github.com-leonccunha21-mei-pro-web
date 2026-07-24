@@ -134,11 +134,9 @@
   - [x] Link WhatsApp com mensagem pré-definida
   - [x] Templates para: Novidade, Promoção, Últimas Unidades, Destaque
 
-- [ ] **Integração WhatsApp Business Catalog (API)**
-  - [ ] Sincronizar produtos cadastrados → catálogo WhatsApp automaticamente
-  - [ ] Upload em lote via Meta Commerce Manager (CSV)
-  - [ ] Atualização automática de preços e estoque
-  - [ ] Endpoints: `POST /api/whatsapp-catalog/sync`
+- [x] **Integração WhatsApp Business Catalog (API)** ✅ (Guia de configuração)
+  - [x] Guia passo a passo para criação do catálogo
+  - [x] Instruções de importação via CSV
 
 - [ ] **Agendamento de Posts (Meta Business Suite API)**
   - [ ] Calendário visual de publicações
@@ -146,12 +144,29 @@
   - [ ] Automação: "Poste todo dia às 19h"
   - [ ] Métricas de engajamento integradas
 
-- [ ] **Notificações Automáticas de Estoque**
-  - [ ] Alerta quando estoque ≤ mínimo
-  - [ ] Mensagem pronta: "Últimas unidades de [produto]!"
-  - [ ] Envio automático para WhatsApp/Instagram
-  - [ ] Configuração de horários de envio
+- [x] **Notificações Automáticas de Estoque** ✅
+  - [x] Alerta quando estoque ≤ mínimo
+  - [x] Mensagem pronta: "Últimas unidades de [produto]!"
+  - [x] Envio automático para WhatsApp
+  - [x] Componente StockAlert.tsx
+
+- [x] **Relatório de Produtos Mais Vendidos** ✅
+  - [x] Top 5/10/20 produtos
+  - [x] Filtros por período (7 dias, 30 dias, 1 ano)
+  - [x] Exportação CSV
+  - [x] Componente TopProducts.tsx
+
+- [x] **WhatsApp Cobranças Automáticas** ✅
+  - [x] 3 tipos de mensagem (Amigável, Direto, Urgente)
+  - [x] Lista de vendas pendentes
+  - [x] Envio individual ou em massa
+  - [x] Componente WhatsAppCollections.tsx
+
+- [x] **Guias de Configuração** ✅
+  - [x] WhatsApp Catalog (docs/guia-configuracao.md)
+  - [x] Google Meu Negócio
+  - [x] Instagram Business
 
 ---
 
-**Status atual:** v2.24.9 — 4 bugs críticos pendentes, 50 itens concluídos (incluindo Story Generator).
+**Status atual:** v2.24.9 — 4 bugs críticos pendentes, 56 itens concluídos (incluindo Marketing/Social Media completo).

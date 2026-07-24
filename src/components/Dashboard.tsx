@@ -1,7 +1,9 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Product, Sale, Bill } from '../types';
+import { Product, Sale, Bill, StoreInfo } from '../types';
 import { normalizeName } from '../lib/normalize';
 import SalesChart from './SalesChart';
+import StockAlert from './StockAlert';
+import WhatsAppCollections from './WhatsAppCollections';
 import { getPrefs, sendNotification } from '../lib/notifications';
 import {
   TrendingUp,
@@ -24,6 +26,7 @@ interface DashboardProps {
   products: Product[];
   sales: Sale[];
   bills?: Bill[];
+  storeInfo?: StoreInfo;
   onNavigate: (tab: 'products' | 'pos' | 'sales' | 'bills') => void;
 }
 
@@ -87,7 +90,7 @@ function parseLocalDate(dateStr: string, defaultTime: string = '00:00:00'): Date
   return new Date();
 }
 
-export default function Dashboard({ products, sales, bills = [], onNavigate }: DashboardProps) {
+export default function Dashboard({ products, sales, bills = [], storeInfo, onNavigate }: DashboardProps) {
   const [timeRange, setTimeRange] = useState<'all' | '1day' | '7days' | '14days' | '30days' | '1year' | 'custom'>('all');
   const [hideValues, setHideValues] = useState(false);
   const money = (v: number) =>
@@ -757,6 +760,20 @@ export default function Dashboard({ products, sales, bills = [], onNavigate }: D
           </div>
         </div>
       </div>
+
+      {/* Stock Alerts */}
+      {lowStockProducts.length > 0 && (
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <StockAlert products={products} storeInfo={storeInfo || { name: '', cnpj: '', phone: '', email: '', address: '', city: '', state: '', ownerName: '', notes: '', logoUrl: '' }} />
+        </div>
+      )}
+
+      {/* WhatsApp Collections */}
+      {sales.some(s => s.status === 'pending') && storeInfo && (
+        <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+          <WhatsAppCollections sales={sales} storeInfo={storeInfo} />
+        </div>
+      )}
     </div>
   );
 }

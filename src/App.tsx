@@ -504,6 +504,18 @@ export default function App() {
   const pendingRef = React.useRef<Partial<LocalDb>>({});
   const saveTimer = React.useRef<number | null>(null);
   const persistLock = React.useRef<Promise<void>>(Promise.resolve());
+  const dbVersionRef = React.useRef(0);
+
+  const notifyTabs = useCallback(() => {
+    if (typeof BroadcastChannel === 'undefined') return;
+    dbVersionRef.current = (dbVersionRef.current + 1) % 1000000;
+    try { localStorage.setItem('zmstore_db_version', String(dbVersionRef.current)); } catch {}
+    try {
+      const ch = new BroadcastChannel('zmstore-sync');
+      ch.postMessage({ type: 'db-updated', version: dbVersionRef.current });
+      ch.close();
+    } catch { /* ignore */ }
+  }, []);
 
   const flushPending = React.useCallback(async () => {
     const prev = pendingRef.current;
@@ -538,7 +550,8 @@ export default function App() {
       console.error('Erro ao salvar banco local:', e);
       showToast('Falha ao salvar os dados. Verifique o armazenamento do navegador.');
     });
-  }, []);
+    notifyTabs();
+  }, [notifyTabs]);
 
   const scheduleFlush = useCallback(() => {
     if (saveTimer.current) clearTimeout(saveTimer.current);
@@ -600,19 +613,26 @@ export default function App() {
     return () => document.removeEventListener('visibilitychange', flush);
   }, [flushPending]);
 
-  // Re-sincroniza o estado quando OUTRA aba atualiza o banco (M3).
-  // Só reaplica se não houver gravação pendente local, para não sobrescrever
-  // edições em andamento nesta aba.
+  // Re-sincroniza o estado quando OUTRA aba atualiza o banco.
+  // Usa contador de versão no localStorage para evitar race condition
+  // entre BroadcastChannel e IndexedDB (janela de 250ms).
   useEffect(() => {
     if (typeof BroadcastChannel === 'undefined') return;
     const ch = new BroadcastChannel('zmstore-sync');
     ch.onmessage = (ev) => {
       if (ev.data && ev.data.type === 'db-updated' && Object.keys(pendingRef.current).length === 0) {
-        loadDb().then(db => { if (db) applyLoadedDb(db); });
+        const version = ev.data.version;
+        const current = Number(localStorage.getItem('zmstore_db_version') || '0');
+        if (version > current) {
+          localStorage.setItem('zmstore_db_version', String(version));
+          loadDb().then(db => { if (db) applyLoadedDb(db); });
+        }
       }
     };
     return () => ch.close();
   }, []);
+
+  // Incrementa versão a cada persist e notifica outras abas
 
   const handleCloudSignIn = async () => {
     try {
@@ -1809,7 +1829,7 @@ export default function App() {
                   )}
                   {/* Manicure PRO */}
                   <button
-                    onClick={() => setShowChooser(true)}
+                    onClick={() => window.location.href = '/manicure'}
                     className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-fuchsia-700 dark:text-fuchsia-400 hover:bg-fuchsia-50 dark:hover:bg-fuchsia-900/30 bg-fuchsia-50/50 dark:bg-fuchsia-900/20"
                   >
                     <Sparkles className="h-4 w-4" />
@@ -1817,7 +1837,7 @@ export default function App() {
                   </button>
                   {/* Saúde PRO */}
                   <button
-                    onClick={() => setShowChooser(true)}
+                    onClick={() => window.location.href = '/mounjaro'}
                     className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-900/30 bg-cyan-50/50 dark:bg-cyan-900/20"
                   >
                     <Stethoscope className="h-4 w-4" />
@@ -1919,19 +1939,20 @@ export default function App() {
                 <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
               </div>
             }>
-            {activeTab === 'dashboard' && (
-              <Dashboard
-                products={products}
-                sales={sales}
-                bills={bills}
-                onNavigate={(tab) => {
-                  if (tab === 'products') setActiveTab('products');
-                  if (tab === 'pos') setActiveTab('pos');
-                  if (tab === 'sales') setActiveTab('sales');
-                  if (tab === 'bills') setActiveTab('bills');
-                }}
-              />
-            )}
+{activeTab === 'dashboard' && (
+  <Dashboard
+    products={products}
+    sales={sales}
+    bills={bills}
+    storeInfo={storeInfo as StoreInfo}
+    onNavigate={(tab) => {
+      if (tab === 'products') setActiveTab('products');
+      if (tab === 'pos') setActiveTab('pos');
+      if (tab === 'sales') setActiveTab('sales');
+      if (tab === 'bills') setActiveTab('bills');
+    }}
+  />
+)}
 
             {activeTab === 'products' && (
               <ErrorBoundary
